@@ -6,22 +6,34 @@
     "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen:generate": "graphql-codegen --config codegen.ts",
+    "prebuild": "yarn codegen:generate",
+    "predev": "yarn codegen:generate"
   },
   "dependencies": {
+    "@stokei/graphql": "*",
+    "@stokei/ui": "*",
+    "@stokei/utils": "*",
     "next": "13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@stokei/ui": "*"
+    "urql": "^3.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "eslint": "7.32.0",
-    "eslint-config-custom": "*",
-    "tsconfig": "*",
+    "@graphql-codegen/cli": "^2.16.2",
+    "@graphql-codegen/client-preset": "^1.2.4",
+    "@graphql-codegen/import-types-preset": "^2.2.6",
+    "@graphql-codegen/typescript": "^2.8.6",
+    "@graphql-codegen/typescript-operations": "^2.5.11",
+    "@graphql-codegen/typescript-urql": "^3.7.3",
+    "@stokei/eslint-config-custom": "*",
+    "@stokei/tsconfig": "*",
     "@types/node": "^17.0.12",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
+    "eslint": "7.32.0",
     "typescript": "^4.5.3"
   }
 }

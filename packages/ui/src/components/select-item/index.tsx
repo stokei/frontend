@@ -11,7 +11,13 @@ export interface SelectItemProps extends StackProps {
 
 export const SelectItem: React.FC<SelectItemProps> = forwardRef(
   ({ children, value, ...props }, ref) => {
-    const { onChooseItem, onCloseList, value: currentItem } = useSelect();
+    const {
+      value: currentItem,
+      isMultiple,
+      onChooseItem,
+      onCloseList,
+      onRemoveChooseItem,
+    } = useSelect();
 
     const isActive = useMemo(() => {
       if (Array.isArray(currentItem)) {
@@ -21,26 +27,43 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
     }, [value, currentItem]);
 
     const onChooseItemValue = useCallback(() => {
-      onChooseItem?.(value);
+      if (!isActive) {
+        onChooseItem?.(value);
+      } else {
+        onRemoveChooseItem?.(value);
+      }
+      if (isMultiple) {
+        return;
+      }
       onCloseList();
-    }, [onChooseItem, value]);
+    }, [
+      value,
+      isActive,
+      isMultiple,
+      onCloseList,
+      onChooseItem,
+      onRemoveChooseItem,
+    ]);
 
     return (
       <Stack
         direction="row"
-        paddingY="3"
+        padding="3"
+        alignItems="center"
         _hover={{
           background: "gray.100",
         }}
         {...props}
         onClick={onChooseItemValue}
       >
+        <Stack flex="1" direction="column">
+          {children}
+        </Stack>
         {isActive && (
           <Box>
-            <Icon name="star" />
+            <Icon name="check" color="success.500" fontSize="lg" />
           </Box>
         )}
-        <Stack direction="column">{children}</Stack>
       </Stack>
     );
   }

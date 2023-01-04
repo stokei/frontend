@@ -4,6 +4,10 @@ import {
   AiOutlineArrowRight,
   AiOutlineArrowUp,
   AiOutlineBank,
+  AiOutlineCaretDown,
+  AiOutlineCaretLeft,
+  AiOutlineCaretRight,
+  AiOutlineCaretUp,
   AiOutlineEnvironment,
   AiOutlineEye,
   AiOutlineEyeInvisible,
@@ -25,6 +29,7 @@ import { BiLineChart } from "react-icons/bi";
 import {
   BsBell,
   BsCart,
+  BsCheck,
   BsFullscreen,
   BsFullscreenExit,
   BsListUl,
@@ -74,6 +79,10 @@ export const ArrowRightIcon = AiOutlineArrowRight;
 export const ArrowLeftIcon = AiOutlineArrowLeft;
 export const ArrowDownIcon = AiOutlineArrowDown;
 export const ArrowUpIcon = AiOutlineArrowUp;
+export const CaretRightIcon = AiOutlineCaretRight;
+export const CaretLeftIcon = AiOutlineCaretLeft;
+export const CaretDownIcon = AiOutlineCaretDown;
+export const CaretUpIcon = AiOutlineCaretUp;
 export const AboutIcon = AiOutlineInfoCircle;
 export const VideoIcon = AiOutlineVideoCamera;
 export const HomeIcon = AiOutlineHome;
@@ -83,6 +92,7 @@ export const PlanIcon = FaMoneyBill;
 export const DashboardIcon = BiLineChart;
 export const OrderIcon = BsListUl;
 export const CartIcon = BsCart;
+export const CheckIcon = BsCheck;
 export const StoreIcon = FaStore;
 export const SubscriptionIcon = FaFileContract;
 export const AppIcon = TbApps;

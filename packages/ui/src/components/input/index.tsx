@@ -10,12 +10,15 @@ export interface InputProps extends ChakraInputProps {
   readonly ref?: ForwardedRef<any>;
 }
 
-export const Input: React.FC<InputProps> = forwardRef(({ ...props }, ref) => (
-  <ChakraInput
-    focusBorderColor="primary.500"
-    colorScheme="primary"
-    {...props}
-    ref={ref}
-    errorBorderColor="error.500"
-  />
-));
+export const Input: React.FC<InputProps> = forwardRef(
+  ({ isLoading, ...props }, ref) => (
+    <ChakraInput
+      focusBorderColor="primary.500"
+      colorScheme="primary"
+      size="md"
+      {...props}
+      ref={ref}
+      errorBorderColor="error.500"
+    />
+  )
+);

@@ -55,7 +55,7 @@ export const Select: React.FC<SelectProps> = forwardRef(
           <Stack
             sx={{
               ".chakra-popover__popper": {
-                position: "unset !important",
+                position: "relative !important",
               },
             }}
             w="full"

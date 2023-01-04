@@ -8,6 +8,7 @@ export interface SelectContextValues {
   readonly isOpenList?: boolean;
   readonly isLoading?: boolean;
   readonly isDisabled?: boolean;
+  readonly isMultiple?: boolean;
   readonly onOpenList: () => void;
   readonly onCloseList: () => void;
   readonly onChooseItem: (value: string) => void;
@@ -40,8 +41,12 @@ export const SelectProvider: React.FC<
   onRemoveChooseItem,
   value,
 }) => {
+  const isMultiple = useMemo(() => value && Array.isArray(value), [value]);
+
   const configValues: SelectContextValues = useMemo(
     () => ({
+      value,
+      isMultiple,
       isOpenList,
       isLoading,
       isDisabled,
@@ -49,9 +54,10 @@ export const SelectProvider: React.FC<
       onCloseList,
       onChooseItem,
       onRemoveChooseItem,
-      value,
     }),
     [
+      value,
+      isMultiple,
       isOpenList,
       isLoading,
       isDisabled,
@@ -59,7 +65,6 @@ export const SelectProvider: React.FC<
       onCloseList,
       onChooseItem,
       onRemoveChooseItem,
-      value,
     ]
   );
 

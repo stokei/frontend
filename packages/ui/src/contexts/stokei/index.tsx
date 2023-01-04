@@ -4,21 +4,17 @@ import React, { PropsWithChildren, useMemo } from "react";
 import { Language, StokeiConfig } from "../../interfaces";
 import { theme } from "../../styles/themes";
 
-import "@uppy/core/dist/style.css";
-import "@uppy/dashboard/dist/style.css";
-import "@uppy/image-editor/dist/style.css";
-
 export interface StokeiContextValues {
-  readonly appId: string;
+  readonly appId?: string;
   readonly accountId?: string;
   readonly language?: Language;
-  readonly cloudflareAPIToken: string;
+  readonly cloudflareAPIToken?: string;
 }
 
 export interface StokeiContextProps {
-  readonly appId: string;
+  readonly appId?: string;
   readonly accountId?: string;
-  readonly cloudflareAPIToken: string;
+  readonly cloudflareAPIToken?: string;
   readonly language?: Language;
   readonly config?: StokeiConfig;
 }
