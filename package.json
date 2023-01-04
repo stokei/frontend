@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "@stokei/frontend",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -13,7 +13,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "eslint-config-custom": "*",
+    "@stokei/eslint-config-custom": "*",
     "prettier": "latest",
     "turbo": "latest"
   },

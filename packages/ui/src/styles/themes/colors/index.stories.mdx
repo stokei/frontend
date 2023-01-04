@@ -1,0 +1,37 @@
+import {
+  Canvas,
+  Meta,
+  ColorPalette,
+  ColorItem,
+  Story
+} from '@storybook/addon-docs';
+
+import { decorators } from '../../../storybook/decorators';
+
+import { colors } from '.';
+
+<Meta title="Styles/Colors" decorators={decorators} />
+
+export const Template = (args) => (
+  <ColorPalette>
+    {Object.entries(colors).map(([colorKey, colorValue]) => (
+      <ColorItem
+        key={colorKey}
+        title={colorKey}
+        colors={Object.entries(colorValue).reduce(
+          (prevHue, [currentHue, currentHex]) => ({
+            ...prevHue,
+            [currentHue]: currentHex
+          }),
+          {}
+        )}
+      />
+    ))}
+  </ColorPalette>
+);
+
+# Colors
+
+<Canvas>
+  <Story name="Default">{Template.bind({})}</Story>
+</Canvas>

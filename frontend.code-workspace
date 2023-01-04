@@ -1,0 +1,20 @@
+{
+    "folders": [
+      {
+        "path": "."
+      }
+    ],
+    "settings": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+      },
+      "editor.formatOnSave": true,
+      "javascript.updateImportsOnFileMove.enabled": "always",
+      "typescript.updateImportsOnFileMove.enabled": "always",
+      "jest.autoRun": {
+        "watch": false
+      }
+    }
+  }
+  

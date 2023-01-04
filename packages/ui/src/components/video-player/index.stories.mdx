@@ -1,0 +1,27 @@
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs';
+import { decorators } from '../../storybook/decorators';
+
+import { VideoPlayer } from '.';
+
+<Meta
+  title="Components/VideoPlayer"
+  component={VideoPlayer}
+  decorators={decorators}
+  args={{
+    id: 'stokei-player',
+    src: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
+    width: 'md'
+  }}
+/>
+
+export const Template = (args) => <VideoPlayer {...args} />;
+
+# VideoPlayer
+
+<Canvas>
+  <Story name="Player">{Template.bind({})}</Story>
+</Canvas>
+
+# Props
+
+<ArgsTable of={VideoPlayer} />

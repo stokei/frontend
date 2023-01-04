@@ -1,19 +1,38 @@
 {
-  "name": "ui",
+  "name": "@stokei/ui",
   "version": "0.0.0",
   "main": "./index.tsx",
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "TIMING=1 eslint \"**/*.ts*\""
+    "lint": "TIMING=1 eslint \"**/*.ts*\"",
+    "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
+    "@stokei/eslint-config-custom": "*",
+    "@stokei/tsconfig": "*",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "eslint": "^7.32.0",
-    "eslint-config-custom": "*",
     "react": "^18.2.0",
-    "tsconfig": "*",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.4.6",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@uppy/core": "^3.0.4",
+    "@uppy/dashboard": "^3.2.0",
+    "@uppy/drag-drop": "^3.0.1",
+    "@uppy/file-input": "^3.0.1",
+    "@uppy/image-editor": "^2.1.0",
+    "@uppy/locales": "^3.0.4",
+    "@uppy/progress-bar": "^3.0.1",
+    "@uppy/react": "^3.0.2",
+    "@uppy/tus": "^3.0.5",
+    "@uppy/xhr-upload": "^3.0.4",
+    "framer-motion": "^8.1.5",
+    "hls.js": "^1.2.9",
+    "nprogress": "^0.2.0"
   }
 }

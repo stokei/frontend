@@ -1,0 +1,30 @@
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs';
+import { decorators } from '../../storybook/decorators';
+
+import { ImageUploader } from '.';
+
+<Meta
+  title="Components/ImageUploader"
+  component={ImageUploader}
+  decorators={decorators}
+  args={{
+    uploadURL:
+      'http://localhost:4000/v1/uploads/images/file_clbo5aldu000gm2i41i35hobb',
+    onSuccess: () => console.log('Upload image successfully!'),
+    onError: () => console.log('Upload image failed!')
+  }}
+/>
+
+export const Template = (args) => <ImageUploader {...args} />;
+
+# ImageUploader
+
+<Canvas>
+  <Story name="Upload" args={null}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+# Props
+
+<ArgsTable of={ImageUploader} />
