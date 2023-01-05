@@ -1,1 +1,1 @@
-export { Provider as ClientProvider } from "urql"
+export { Provider as StokeiGraphQLClientProvider } from "urql";

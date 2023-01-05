@@ -1,11 +1,13 @@
-import { forwardRef } from "@chakra-ui/react";
+import { forwardRef, theme, useMultiStyleConfig } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useSelect } from "../../hooks";
+import { Box } from "../box";
 import { Icon, IconName } from "../icon";
 import { Input, InputProps } from "../input";
 import { InputGroup } from "../input-group";
 import { InputRightElement } from "../input-right-element";
 import { Loading } from "../loading";
+import { Stack } from "../stack";
 
 export interface SelectInputProps extends InputProps {
   readonly rightIcon?: IconName;
@@ -13,8 +15,14 @@ export interface SelectInputProps extends InputProps {
 
 export const SelectInput: React.FC<SelectInputProps> = forwardRef(
   ({ children, onFocus, size, rightIcon, ...props }, ref) => {
-    const { onOpenList, isDisabled, isLoading, isOpenList, isMultiple, value } =
-      useSelect();
+    const {
+      onOpenList,
+      isDisabled,
+      isLoading,
+      isOpenList,
+      isMultiple,
+      hasValue,
+    } = useSelect();
     const onFocusInput = useCallback(
       (e) => {
         onOpenList();
@@ -23,36 +31,60 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
       [onFocus, onOpenList]
     );
 
+    const isAllowedToAddMultiStyles = isMultiple && hasValue && !!children;
+
+    const themeInput: any = useMultiStyleConfig("Input", props);
+    const inputStylesProps = {
+      ...(isAllowedToAddMultiStyles && {
+        ...themeInput.field,
+        _focusWithin: themeInput.field._focus,
+        pos: "relative",
+        minH: "10",
+        py: 0,
+        px: 0,
+        spacing: 0,
+      }),
+    };
+
     return (
-      <InputGroup>
-        <Input
-          isDisabled={isLoading || isDisabled}
-          focusBorderColor="primary.500"
-          colorScheme="primary"
-          errorBorderColor="error.500"
-          autoComplete="off"
-          size={size}
-          {...props}
-          ref={ref}
-          onFocus={onFocusInput}
-        />
-        <InputRightElement
-          height="full"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          {isLoading ? (
-            <Loading size={size} />
-          ) : (
-            <Icon
-              color="gray.500"
-              fontSize="xs"
-              name={rightIcon || (isOpenList ? "caretUp" : "caretRight")}
-            />
-          )}
-        </InputRightElement>
-      </InputGroup>
+      <Stack
+        direction="column"
+        {...(isAllowedToAddMultiStyles && inputStylesProps)}
+        height="auto"
+      >
+        {hasValue && children && (
+          <Box padding={isMultiple ? "3" : undefined} paddingBottom={0}>
+            {children}
+          </Box>
+        )}
+        <InputGroup padding={isAllowedToAddMultiStyles ? "3" : undefined}>
+          <Input
+            isDisabled={isLoading || isDisabled}
+            autoComplete="off"
+            size={size}
+            {...props}
+            variant={isAllowedToAddMultiStyles ? "unstyled" : props.variant}
+            ref={ref}
+            onFocus={onFocusInput}
+          />
+          <InputRightElement
+            height="full"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {isLoading ? (
+              <Loading size={size} />
+            ) : (
+              <Icon
+                color="gray.500"
+                fontSize="xs"
+                name={rightIcon || (isOpenList ? "caretUp" : "caretRight")}
+              />
+            )}
+          </InputRightElement>
+        </InputGroup>
+      </Stack>
     );
   }
 );

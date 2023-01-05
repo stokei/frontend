@@ -18,6 +18,7 @@ export const SelectList: React.FC<SelectListProps> = forwardRef(
         opacity="0"
         rounded="sm"
         border="none"
+        shadow="base"
         zIndex="popover"
         overflowY="auto"
         _focus={{

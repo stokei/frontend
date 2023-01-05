@@ -14,9 +14,9 @@ import {
 export interface ClientConfig {
   readonly isServerSide: boolean;
   readonly url: string;
-  readonly getAccessToken: () => string;
-  readonly getRefreshToken: () => string;
-  readonly getAppId: () => string;
+  readonly getAccessToken: () => string | undefined;
+  readonly getRefreshToken: () => string | undefined;
+  readonly getAppId: () => string | undefined;
 }
 export const createGraphqlClient = (config: ClientConfig) => {
   const ssrCache = ssrExchange({ isClient: !config.isServerSide });

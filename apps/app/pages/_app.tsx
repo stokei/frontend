@@ -1,18 +1,38 @@
-import { getAppIdFromNextRouter } from "@/../../packages/utils";
-import { CLOUDFLARE_TOKEN } from "@/environments";
+import { useMemo } from "react";
+import { useRouter } from "next/router";
+
+import { StokeiGraphQLClientProvider } from "@stokei/graphql";
 import { StokeiProvider } from "@stokei/ui";
+import { getAppIdFromNextRouter } from "@stokei/utils";
+
+import { CLOUDFLARE_TOKEN } from "@/environments";
 
 import "@stokei/ui/src/styles/css/global.css";
-import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { createAPIClient } from "@/services/graphql/client";
 
 export default function MyApp({ Component, pageProps }: any) {
   const router = useRouter();
-  const appId = useMemo(() => getAppIdFromNextRouter(router), []);
+  const appId = useMemo(() => getAppIdFromNextRouter(router), [router]);
+
+  const stokeiGraphQLClient = useMemo(
+    () =>
+      createAPIClient({
+        getAccessToken() {
+          return "";
+        },
+        getRefreshToken() {
+          return "";
+        },
+        getAppId: () => appId,
+      }),
+    []
+  );
 
   return (
-    <StokeiProvider appId={appId} cloudflareAPIToken={CLOUDFLARE_TOKEN}>
-      <Component {...pageProps} />
-    </StokeiProvider>
+    <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.getInstance()}>
+      <StokeiProvider appId={appId} cloudflareAPIToken={CLOUDFLARE_TOKEN}>
+        <Component {...pageProps} />
+      </StokeiProvider>
+    </StokeiGraphQLClientProvider>
   );
 }

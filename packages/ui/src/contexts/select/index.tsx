@@ -4,6 +4,7 @@ export { ColorModeScript } from "@chakra-ui/react";
 
 export interface SelectContextValues {
   readonly value: any;
+  readonly hasValue: boolean;
   readonly options?: string[];
   readonly isOpenList?: boolean;
   readonly isLoading?: boolean;
@@ -42,10 +43,18 @@ export const SelectProvider: React.FC<
   value,
 }) => {
   const isMultiple = useMemo(() => value && Array.isArray(value), [value]);
+  const hasValue = useMemo(() => {
+    const isArray = Array.isArray(value);
+    if (isArray) {
+      return !!value?.length;
+    }
+    return !!value;
+  }, [value]);
 
   const configValues: SelectContextValues = useMemo(
     () => ({
       value,
+      hasValue,
       isMultiple,
       isOpenList,
       isLoading,
@@ -57,6 +66,7 @@ export const SelectProvider: React.FC<
     }),
     [
       value,
+      hasValue,
       isMultiple,
       isOpenList,
       isLoading,

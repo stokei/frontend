@@ -20,15 +20,19 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-const defaultOptions = ["Valor 1", "Valor 2", "Valor 3"];
+const defaultOptions = Array.from(
+  { length: 15 },
+  (_, value) => `Valor ${value}`
+);
 export default function Home() {
-  const [singleOptions, setSingleOptions] = useState<string[]>(defaultOptions);
-  const [multiOptions, setMultiOptions] = useState<string[]>(defaultOptions);
+  const [singleQuery, setSingleQuery] = useState<string>("");
+  const [multiQuery, setMultiQuery] = useState<string>("");
 
   const [singleValue, setSingleValue] = useState<string>("");
   const [multiValue, setMultiValue] = useState<string[]>([]);
+
   const addMultiItem = (value: string) => {
     setMultiValue((oldValues) => {
       if (oldValues.includes(value)) {
@@ -36,6 +40,7 @@ export default function Home() {
       }
       return [...oldValues, value];
     });
+    setMultiQuery("");
   };
   const removeMultiItem = (value: string) => {
     setMultiValue((oldValues) => {
@@ -44,19 +49,26 @@ export default function Home() {
       }
       return oldValues.filter((filteredValue) => filteredValue !== value);
     });
+    setMultiQuery("");
   };
 
-  const onChangeQuery = (isMulti: boolean, value: string) => {
-    const set = isMulti ? setMultiOptions : setSingleOptions;
-    set((oldOptions) => {
-      if (!value) {
-        return defaultOptions;
-      }
-      return oldOptions.filter((option) =>
-        option.match(new RegExp(value, "i"))
-      );
-    });
-  };
+  const multiOptions = useMemo(() => {
+    if (!multiQuery) {
+      return defaultOptions;
+    }
+    return defaultOptions.filter((option) =>
+      option.match(new RegExp(multiQuery, "i"))
+    );
+  }, [multiQuery]);
+
+  const singleOptions = useMemo(() => {
+    if (!singleQuery) {
+      return defaultOptions;
+    }
+    return defaultOptions.filter((option) =>
+      option.match(new RegExp(singleQuery, "i"))
+    );
+  }, [singleQuery]);
 
   return (
     <Container padding="5">
@@ -75,28 +87,26 @@ export default function Home() {
                   id="select-multi"
                   placeholder="Escolha seus usuários..."
                   rightIcon="search"
-                  onChange={(e) => onChangeQuery(true, e.target.value)}
-                />
-                {multiValue && (
-                  <SelectTagList
-                    w="auto"
-                    h="full"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    {multiValue?.map((val) => (
-                      <SelectTagItem key={val}>
-                        <Tag paddingY="2" paddingX="3">
-                          <Avatar size="xs" marginRight="2" name={val} />
-                          <TagLabel>{val}</TagLabel>
-                          <TagCloseButton
-                            onClick={() => removeMultiItem(val)}
-                          />
-                        </Tag>
-                      </SelectTagItem>
-                    ))}
-                  </SelectTagList>
-                )}
+                  value={multiQuery}
+                  onChange={(e) => setMultiQuery(e.target.value)}
+                >
+                  {multiValue && (
+                    <SelectTagList>
+                      {multiValue?.map((val) => (
+                        <SelectTagItem key={val}>
+                          <Tag paddingY="2" paddingX="3">
+                            <Avatar size="xs" marginRight="2" name={val} />
+                            <TagLabel>{val}</TagLabel>
+                            <TagCloseButton
+                              onClick={() => removeMultiItem(val)}
+                            />
+                          </Tag>
+                        </SelectTagItem>
+                      ))}
+                    </SelectTagList>
+                  )}
+                </SelectInput>
+
                 <SelectList>
                   {multiOptions?.map((option) => (
                     <SelectItem key={option} value={option}>
@@ -120,18 +130,8 @@ export default function Home() {
                 onChooseItem={setSingleValue}
                 onRemoveChooseItem={() => setSingleValue("")}
               >
-                <SelectInput
-                  id="select-single"
-                  placeholder="Escolha seu usuário..."
-                  onChange={(e) => onChangeQuery(false, e.target.value)}
-                />
-                {singleValue && (
-                  <SelectTagList
-                    w="auto"
-                    h="full"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
+                {singleValue ? (
+                  <SelectTagList>
                     <SelectTagItem>
                       <Tag>
                         <TagLabel>{singleValue}</TagLabel>
@@ -139,6 +139,13 @@ export default function Home() {
                       </Tag>
                     </SelectTagItem>
                   </SelectTagList>
+                ) : (
+                  <SelectInput
+                    id="select-single"
+                    placeholder="Escolha seu usuário..."
+                    value={singleQuery}
+                    onChange={(e) => setSingleQuery(e.target.value)}
+                  />
                 )}
                 <SelectList>
                   {singleOptions?.map((option) => (

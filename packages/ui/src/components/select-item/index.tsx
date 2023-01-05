@@ -32,9 +32,6 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
       } else {
         onRemoveChooseItem?.(value);
       }
-      if (isMultiple) {
-        return;
-      }
       onCloseList();
     }, [
       value,
@@ -50,6 +47,7 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
         direction="row"
         padding="3"
         alignItems="center"
+        role="listitem"
         _hover={{
           background: "gray.50",
         }}
