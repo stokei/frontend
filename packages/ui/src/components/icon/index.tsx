@@ -28,6 +28,7 @@ export const icons = {
   caretUp: IconComponent.CaretUpIcon,
   caretLeft: IconComponent.CaretLeftIcon,
   caretRight: IconComponent.CaretRightIcon,
+  search: IconComponent.SearchIcon,
   about: IconComponent.AboutIcon,
   video: IconComponent.VideoIcon,
   home: IconComponent.HomeIcon,

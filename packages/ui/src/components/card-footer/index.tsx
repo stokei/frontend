@@ -1,14 +1,13 @@
 import React from "react";
-import { BoxProps, Box } from "../box";
+import {
+  CardFooter as ChakraCardFooter,
+  CardFooterProps as ChakraCardFooterProps,
+} from "@chakra-ui/react";
 
-export interface CardFooterProps extends BoxProps {}
+export interface CardFooterProps extends ChakraCardFooterProps {}
 export const CardFooter: React.FC<CardFooterProps> = ({
   children,
   ...props
 }) => {
-  return (
-    <Box width="full" padding="5" {...props}>
-      {children}
-    </Box>
-  );
+  return <ChakraCardFooter {...props}>{children}</ChakraCardFooter>;
 };

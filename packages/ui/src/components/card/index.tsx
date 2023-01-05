@@ -1,18 +1,14 @@
 import React from "react";
-import { StackProps, Stack } from "../stack";
+import {
+  Card as ChakraCard,
+  CardProps as ChakraCardProps,
+} from "@chakra-ui/react";
 
-export interface CardProps extends StackProps {}
+export interface CardProps extends ChakraCardProps {}
 export const Card: React.FC<CardProps> = ({ children, ...props }) => {
   return (
-    <Stack
-      borderWidth="1"
-      rounded="md"
-      width="full"
-      shadow="sm"
-      spacing="0"
-      {...props}
-    >
+    <ChakraCard width="full" variant="outline" size="sm" {...props}>
       {children}
-    </Stack>
+    </ChakraCard>
   );
 };

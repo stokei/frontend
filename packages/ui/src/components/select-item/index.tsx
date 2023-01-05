@@ -51,8 +51,9 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
         padding="3"
         alignItems="center"
         _hover={{
-          background: "gray.100",
+          background: "gray.50",
         }}
+        background={isActive ? "gray.50" : props.background}
         {...props}
         onClick={onChooseItemValue}
       >

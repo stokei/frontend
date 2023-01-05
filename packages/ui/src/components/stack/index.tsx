@@ -6,5 +6,7 @@ import {
 export interface StackProps extends ChakraStackProps {}
 
 export const Stack: React.FC<StackProps> = ({ children, ...props }) => (
-  <ChakraStack {...props}>{children}</ChakraStack>
+  <ChakraStack width="full" {...props}>
+    {children}
+  </ChakraStack>
 );

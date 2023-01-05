@@ -11,17 +11,14 @@ export const SelectList: React.FC<SelectListProps> = forwardRef(
   ({ children, containerRef, ...props }, ref) => {
     return (
       <PopoverContent
-        background="white.500"
+        width="full"
         maxHeight="250px"
-        mt="4"
-        py="4"
+        position="absolute"
+        background="white.500"
         opacity="0"
-        rounded="md"
+        rounded="sm"
         border="none"
-        shadow="base"
-        pos="absolute"
         zIndex="popover"
-        w="full"
         overflowY="auto"
         _focus={{
           boxShadow: "none",

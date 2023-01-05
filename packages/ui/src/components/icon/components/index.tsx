@@ -21,6 +21,7 @@ import {
   AiOutlineMore,
   AiOutlinePhone,
   AiOutlineReload,
+  AiOutlineSearch,
   AiOutlineSmile,
   AiOutlineUser,
   AiOutlineVideoCamera,
@@ -74,6 +75,7 @@ export const BackIcon = AiOutlineArrowLeft;
 export const MenuIcon = AiOutlineMenu;
 export const AddressIcon = AiOutlineEnvironment;
 export const MenuEllipsisIcon = AiOutlineMore;
+export const SearchIcon = AiOutlineSearch;
 export const LogoutIcon = AiOutlineLogout;
 export const ArrowRightIcon = AiOutlineArrowRight;
 export const ArrowLeftIcon = AiOutlineArrowLeft;

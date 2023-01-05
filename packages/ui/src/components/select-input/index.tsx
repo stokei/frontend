@@ -1,18 +1,20 @@
-import { useCallback } from "react";
 import { forwardRef } from "@chakra-ui/react";
+import { useCallback } from "react";
 import { useSelect } from "../../hooks";
+import { Icon, IconName } from "../icon";
 import { Input, InputProps } from "../input";
 import { InputGroup } from "../input-group";
 import { InputRightElement } from "../input-right-element";
-import { Icon } from "../icon";
 import { Loading } from "../loading";
-import { Box } from "../box";
 
-export interface SelectInputProps extends InputProps {}
+export interface SelectInputProps extends InputProps {
+  readonly rightIcon?: IconName;
+}
 
 export const SelectInput: React.FC<SelectInputProps> = forwardRef(
-  ({ children, onFocus, size, ...props }, ref) => {
-    const { onOpenList, isDisabled, isLoading, isOpenList } = useSelect();
+  ({ children, onFocus, size, rightIcon, ...props }, ref) => {
+    const { onOpenList, isDisabled, isLoading, isOpenList, isMultiple, value } =
+      useSelect();
     const onFocusInput = useCallback(
       (e) => {
         onOpenList();
@@ -34,19 +36,21 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
           ref={ref}
           onFocus={onFocusInput}
         />
-        <InputRightElement>
-          <Box
-            height="full"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            {isLoading ? (
-              <Loading size={size} />
-            ) : (
-              <Icon name={isOpenList ? "caretUp" : "caretDown"} />
-            )}
-          </Box>
+        <InputRightElement
+          height="full"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          {isLoading ? (
+            <Loading size={size} />
+          ) : (
+            <Icon
+              color="gray.500"
+              fontSize="xs"
+              name={rightIcon || (isOpenList ? "caretUp" : "caretRight")}
+            />
+          )}
         </InputRightElement>
       </InputGroup>
     );
