@@ -23,6 +23,10 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
       isMultiple,
       hasValue,
     } = useSelect();
+
+    const isBlocked = isLoading || isDisabled || props?.isDisabled;
+    const isAllowedToAddMultiStyles = isMultiple && hasValue && !!children;
+
     const onFocusInput = useCallback(
       (e) => {
         onOpenList();
@@ -30,8 +34,6 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
       },
       [onFocus, onOpenList]
     );
-
-    const isAllowedToAddMultiStyles = isMultiple && hasValue && !!children;
 
     const themeInput: any = useMultiStyleConfig("Input", props);
     const inputStylesProps = {
@@ -51,15 +53,20 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
         direction="column"
         {...(isAllowedToAddMultiStyles && inputStylesProps)}
         height="auto"
+        cursor={isBlocked ? "not-allowed" : undefined}
       >
         {hasValue && children && (
-          <Box padding={isMultiple ? "3" : undefined} paddingBottom={0}>
+          <Box
+            padding={isMultiple ? "3" : undefined}
+            paddingBottom={0}
+            cursor={isBlocked ? "not-allowed" : undefined}
+          >
             {children}
           </Box>
         )}
         <InputGroup padding={isAllowedToAddMultiStyles ? "3" : undefined}>
           <Input
-            isDisabled={isLoading || isDisabled}
+            isDisabled={isBlocked}
             autoComplete="off"
             size={size}
             {...props}

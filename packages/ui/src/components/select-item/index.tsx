@@ -14,10 +14,14 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
     const {
       value: currentItem,
       isMultiple,
+      isLoading,
+      isDisabled,
       onChooseItem,
       onCloseList,
       onRemoveChooseItem,
     } = useSelect();
+
+    const isBlocked = isLoading || isDisabled;
 
     const isActive = useMemo(() => {
       if (Array.isArray(currentItem)) {
@@ -27,14 +31,18 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
     }, [value, currentItem]);
 
     const onChooseItemValue = useCallback(() => {
+      if (isBlocked) {
+        return;
+      }
+      onCloseList();
       if (!isActive) {
         onChooseItem?.(value);
       } else {
         onRemoveChooseItem?.(value);
       }
-      onCloseList();
     }, [
       value,
+      isBlocked,
       isActive,
       isMultiple,
       onCloseList,
