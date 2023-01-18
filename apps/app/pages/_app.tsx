@@ -17,19 +17,16 @@ export default function MyApp({ Component, pageProps }: any) {
   const stokeiGraphQLClient = useMemo(
     () =>
       createAPIClient({
-        getAccessToken() {
-          return "";
-        },
-        getRefreshToken() {
-          return "";
-        },
         getAppId: () => appId,
+        onLogout() {
+          router;
+        },
       }),
-    []
+    [appId]
   );
 
   return (
-    <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.getInstance()}>
+    <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
       <StokeiProvider appId={appId} cloudflareAPIToken={CLOUDFLARE_TOKEN}>
         <Component {...pageProps} />
       </StokeiProvider>

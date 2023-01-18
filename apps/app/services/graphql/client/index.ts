@@ -1,15 +1,14 @@
-import { STOKEI_API_BASE_URL } from "@/environments";
+import { STOKEI_API_GRAPHQL_URL } from "@/environments";
 import { createGraphqlClient } from "@stokei/graphql";
 
 export interface StokeiAPIConfig {
-  readonly getAccessToken: () => string | undefined;
-  readonly getRefreshToken: () => string | undefined;
   readonly getAppId: () => string | undefined;
+  readonly onLogout: () => void;
 }
 
 export const createAPIClient = (config: StokeiAPIConfig) =>
   createGraphqlClient({
-    url: STOKEI_API_BASE_URL,
+    url: STOKEI_API_GRAPHQL_URL,
     isServerSide: typeof window === "undefined",
     ...config,
   });
