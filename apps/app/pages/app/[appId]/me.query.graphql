@@ -1,0 +1,10 @@
+query MeAccount {
+  me {
+    id
+    firstname
+    lastname
+    fullname
+    email
+    username
+  }
+}

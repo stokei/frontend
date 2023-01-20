@@ -10,13 +10,18 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useCurrentAppQuery } from "./current-app.query.graphql.generated";
 import { useLoginMutation } from "./login.mutation.graphql.generated";
 import { useMeAccountQuery } from "./me.query.graphql.generated";
 
-export default function Home() {
+interface Props {}
+
+const Page: NextPage<Props> = () => {
   const router = useRouter();
+
   const [
     {
       fetching: isLoadingLoginMutation,
@@ -31,6 +36,14 @@ export default function Home() {
     reload,
   ] = useMeAccountQuery();
 
+  const [
+    {
+      fetching: isLoadingCurrentAppQuery,
+      data: dataCurrentAppQuery,
+      error: errorCurrentAppQuery,
+    },
+  ] = useCurrentAppQuery();
+
   useEffect(() => {
     if (dataLoginMutation) {
       setAccessToken(
@@ -44,7 +57,9 @@ export default function Home() {
 
   return (
     <Container padding="5">
-      <Title marginBottom="5">App</Title>
+      <Title marginBottom="5">
+        App {dataCurrentAppQuery?.currentApp?.name}
+      </Title>
       <Stack direction="row">
         <Card background="background.50">
           <CardHeader>
@@ -54,6 +69,7 @@ export default function Home() {
             <Stack>
               <Text>MeError: {errorMeQuery?.message}</Text>
               <Text>LoginError: {errorLoginMutation?.message}</Text>
+              <Text>AppError: {errorCurrentAppQuery?.message}</Text>
             </Stack>
           </CardBody>
           <CardFooter>
@@ -78,4 +94,6 @@ export default function Home() {
       </Stack>
     </Container>
   );
-}
+};
+
+export default Page;

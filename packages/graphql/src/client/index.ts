@@ -24,21 +24,16 @@ import {
   setAccessToken,
   setRefreshToken,
 } from "../services";
-import { isBoolean } from "../utils/is-boolean";
 
 export interface ClientConfig {
-  readonly withCredentials?: boolean;
   readonly isServerSide: boolean;
   readonly url: string;
-  readonly getAppId: () => string | undefined;
-  readonly onLogout: () => void;
+  readonly appId?: string;
+  readonly onLogout?: () => void;
 }
 
 export const createGraphqlClient = (config: ClientConfig) => {
   const ssrCache = ssrExchange({ isClient: !config.isServerSide });
-  const withCredentials = isBoolean(config?.withCredentials)
-    ? !!config?.withCredentials
-    : true;
 
   const exchanges = [
     ssrCache,
@@ -82,7 +77,7 @@ export const createGraphqlClient = (config: ClientConfig) => {
       addAuthToOperation({ operation }) {
         const accessToken = getAccessToken();
         const refreshToken = getRefreshToken();
-        const appId = config?.getAppId();
+        const appId = config?.appId;
         const fetchOptions =
           typeof operation.context.fetchOptions === "function"
             ? operation.context.fetchOptions?.()
@@ -102,7 +97,7 @@ export const createGraphqlClient = (config: ClientConfig) => {
         });
       },
       async getAuth({ authState, mutate }) {
-        const appId = config?.getAppId();
+        const appId = config?.appId;
 
         const responseRefreshAccessMutation =
           await mutate<RefreshAccessMutationSchemaResponse>(
@@ -149,7 +144,7 @@ export const createGraphqlClient = (config: ClientConfig) => {
       fetchOptions: () => {
         const accessToken = getAccessToken();
         const refreshToken = getRefreshToken();
-        const appId = config?.getAppId();
+        const appId = config?.appId;
         return {
           headers: {
             ...(accessToken && {
