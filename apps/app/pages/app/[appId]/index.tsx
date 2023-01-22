@@ -73,7 +73,10 @@ const Page: NextPage<Props> = () => {
             </Stack>
           </CardBody>
           <CardFooter>
-            <Button isLoading={isLoadingMeQuery} onClick={reload}>
+            <Button
+              isLoading={isLoadingMeQuery}
+              onClick={() => reload({ requestPolicy: "network-only" })}
+            >
               Reload
             </Button>
             <Button

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "codegen:generate": "graphql-codegen --config codegen.ts",
+    "codegen:generate:watch": "graphql-codegen --config codegen.ts --watch",
     "prebuild": "yarn codegen:generate",
     "predev": "yarn codegen:generate"
   },

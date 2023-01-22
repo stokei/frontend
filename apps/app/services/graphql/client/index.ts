@@ -7,7 +7,7 @@ export interface StokeiAPIConfig {
   readonly onLogout?: () => void;
 }
 
-export const createAPIClient = (config: StokeiAPIConfig) =>
+export const createAPIClient = (config?: StokeiAPIConfig) =>
   createGraphqlClient({
     url: STOKEI_API_GRAPHQL_URL,
     isServerSide:

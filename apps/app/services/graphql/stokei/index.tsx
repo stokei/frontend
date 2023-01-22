@@ -1798,7 +1798,8 @@ export type QueryCurrencyArgs = {
 
 
 export type QueryDomainArgs = {
-  id: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 

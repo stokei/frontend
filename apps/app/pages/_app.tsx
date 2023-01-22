@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useMemo } from "react";
 
 import { StokeiGraphQLClientProvider } from "@stokei/graphql";
@@ -10,18 +9,16 @@ import { CLOUDFLARE_TOKEN } from "@/environments";
 import { createAPIClient } from "@/services/graphql/client";
 import "@stokei/ui/src/styles/css/global.css";
 
-function MyApp({ Component, pageProps, appId }: any) {
-  const router = useRouter();
-
+function MyApp({ Component, pageProps, appId, router }: any) {
   const stokeiGraphQLClient = useMemo(
     () =>
       createAPIClient({
-        getAppId: () => appId,
+        appId,
         onLogout() {
           router.reload();
         },
       }),
-    [appId]
+    [appId, router]
   );
 
   return (
