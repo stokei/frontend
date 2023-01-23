@@ -9,6 +9,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "dev:app": "turbo run dev --scope=@stokei/app",
+    "dev:website": "turbo run dev --scope=@stokei/website",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

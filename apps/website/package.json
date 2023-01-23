@@ -16,6 +16,7 @@
     "@stokei/graphql": "*",
     "@stokei/ui": "*",
     "@stokei/utils": "*",
+    "@stokei/translations": "*",
     "next": "13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

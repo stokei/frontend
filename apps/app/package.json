@@ -16,6 +16,7 @@
     "@stokei/graphql": "*",
     "@stokei/ui": "*",
     "@stokei/utils": "*",
+    "@stokei/translations": "*",
     "next": "13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -33,8 +34,8 @@
     "@stokei/eslint-config-custom": "*",
     "@stokei/tsconfig": "*",
     "@types/node": "^17.0.12",
-    "@types/react": "^18.0.22",
-    "@types/react-dom": "^18.0.7",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "eslint": "7.32.0",
     "typescript": "^4.5.3"
   }

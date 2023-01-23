@@ -4,14 +4,14 @@ import React, { PropsWithChildren, useMemo } from "react";
 import { Language, StokeiConfig } from "../../interfaces";
 import { theme } from "../../styles/themes";
 
-export interface StokeiContextValues {
+export interface StokeiUIContextValues {
   readonly appId?: string;
   readonly accountId?: string;
   readonly language?: Language;
   readonly cloudflareAPIToken?: string;
 }
 
-export interface StokeiContextProps {
+export interface StokeiUIContextProps {
   readonly appId?: string;
   readonly accountId?: string;
   readonly cloudflareAPIToken?: string;
@@ -19,10 +19,10 @@ export interface StokeiContextProps {
   readonly config?: StokeiConfig;
 }
 
-export const StokeiContext = React.createContext({} as StokeiContextValues);
+export const StokeiUIContext = React.createContext({} as StokeiUIContextValues);
 
-export const StokeiProvider: React.FC<
-  PropsWithChildren<StokeiContextProps>
+export const StokeiUIProvider: React.FC<
+  PropsWithChildren<StokeiUIContextProps>
 > = ({ children, config, appId, accountId, cloudflareAPIToken, language }) => {
   const themeData = useMemo(() => theme(config), []);
   const stokeiConfig = useMemo(
@@ -31,9 +31,9 @@ export const StokeiProvider: React.FC<
   );
   return (
     <ChakraProvider theme={themeData}>
-      <StokeiContext.Provider value={stokeiConfig}>
+      <StokeiUIContext.Provider value={stokeiConfig}>
         {children}
-      </StokeiContext.Provider>
+      </StokeiUIContext.Provider>
     </ChakraProvider>
   );
 };

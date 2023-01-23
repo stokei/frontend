@@ -6,7 +6,12 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    transpilePackages: ["@stokei/ui", "@stokei/utils", "@stokei/graphql"],
+    transpilePackages: [
+      "@stokei/ui",
+      "@stokei/utils",
+      "@stokei/graphql",
+      "@stokei/translations",
+    ],
   },
 };
 
