@@ -13,14 +13,17 @@
     "predev": "yarn codegen:generate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
     "@stokei/graphql": "*",
+    "@stokei/translations": "*",
     "@stokei/ui": "*",
     "@stokei/utils": "*",
-    "@stokei/translations": "*",
     "next": "13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "urql": "^3.0.3"
+    "react-hook-form": "^7.42.1",
+    "urql": "^3.0.3",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
