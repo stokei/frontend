@@ -6,21 +6,33 @@ export const useTranslations = <TKeys = string>() => {
 
   const formatMessage = useCallback(
     ({ id }: { id: TKeys }, values?: Record<string, any>) => {
-      return intl.formatMessage({ id: id as any }, values);
+      try {
+        return intl.formatMessage({ id: id as any }, values);
+      } catch (error) {
+        return undefined;
+      }
     },
     []
   );
 
   const formatDate = useCallback(
     (date: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
-      return intl.formatDate(date);
+      try {
+        return intl.formatDate(date);
+      } catch (error) {
+        return undefined;
+      }
     },
     []
   );
 
   const formatTime = useCallback(
     (time: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
-      return intl.formatTime(time);
+      try {
+        return intl.formatTime(time);
+      } catch (error) {
+        return undefined;
+      }
     },
     []
   );

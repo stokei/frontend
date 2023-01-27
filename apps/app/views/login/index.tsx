@@ -1,52 +1,59 @@
-import { FC } from "react";
-import { useForm } from "react-hook-form";
-import {
-  Button,
-  Card,
-  CardBody,
-  Container,
-  Form,
-  FormControl,
-  FormErrorMessage,
-  Input,
-  InputGroup,
-  InputPassword,
-  Label,
-  Stack,
-  Title,
-} from "@stokei/ui";
+import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import { useTranslations } from "@/hooks";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { getRoutes } from "@/routes";
+import {
+  Box,
+  Container,
+  FormLogin,
+  FormLoginOnSubmitData,
+  useToast,
+} from "@stokei/ui";
+import { useRouter } from "next/router";
+import { FC } from "react";
+import { useLoginMutation } from "./login.graphql.generated";
 
 interface LoginPageProps {}
 
 export const LoginPage: FC<LoginPageProps> = () => {
-  const tranlate = useTranslations();
+  const router = useRouter();
+  const translate = useTranslations();
+  const { onShowToast } = useToast();
 
-  const validationSchema = z.object({
-    email: z
-      .string()
-      .min(1, { message: tranlate.formatMessage({ id: "emailIsRequired" }) })
-      .email({
-        message: tranlate.formatMessage({ id: "mustBeAValidEmail" }),
-      }),
-    password: z.string().min(6, {
-      message: tranlate.formatMessage({
-        id: "passwordMustBeAtleastSixCharacters",
-      }),
-    }),
-  });
+  const [{ fetching: isLoadingLogin }, onLogin] = useLoginMutation();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<z.infer<typeof validationSchema>>({
-    resolver: zodResolver(validationSchema),
-  });
+  const onSubmit = async ({ email, password }: FormLoginOnSubmitData) => {
+    try {
+      const response = await onLogin({
+        input: {
+          email,
+          password,
+        },
+      });
+      if (!!response?.data?.login?.accessToken) {
+        const data = response.data.login;
+        setAccessToken(data.accessToken, data.prefixToken);
+        setRefreshToken(data.refreshToken);
 
-  const onSubmit = (data: any) => console.log(data);
+        onShowToast({
+          title: translate.formatMessage({ id: "loginSuccessfully" }),
+          status: "success",
+        });
+      }
+
+      if (!!response.error?.message?.match(/emailNotFound/i)) {
+        onShowToast({
+          title: translate.formatMessage({ id: "emailNotFound" }),
+          status: "error",
+        });
+      }
+      if (!!response.error?.message?.match(/passwordNotFound/i)) {
+        onShowToast({
+          title: translate.formatMessage({ id: "passwordNotFound" }),
+          status: "error",
+        });
+      }
+    } catch (error) {}
+  };
 
   return (
     <Container
@@ -55,45 +62,16 @@ export const LoginPage: FC<LoginPageProps> = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Stack maxWidth="500px" direction="column" spacing="4">
-        <Title marginBottom="5" textAlign="center">
-          {tranlate.formatMessage({ id: "title" })}
-        </Title>
-        <Card background="background.50">
-          <CardBody>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Stack spacing="4">
-                <FormControl isInvalid={!!errors?.email}>
-                  <Label htmlFor="email">
-                    {tranlate.formatMessage({ id: "email" })}
-                  </Label>
-                  <InputGroup>
-                    <Input id="email" {...register("email")} />
-                  </InputGroup>
-                  <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors?.password}>
-                  <Label htmlFor="password">
-                    {tranlate.formatMessage({ id: "password" })}
-                  </Label>
-                  <InputPassword id="password" {...register("password")} />
-                  <FormErrorMessage>
-                    {errors?.password?.message}
-                  </FormErrorMessage>
-                </FormControl>
-                <Stack
-                  direction={["column", "column", "row", "row"]}
-                  spacing="4"
-                >
-                  <Button type="submit">
-                    {tranlate.formatMessage({ id: "enter" })}
-                  </Button>
-                </Stack>
-              </Stack>
-            </Form>
-          </CardBody>
-        </Card>
-      </Stack>
+      <Box width="full" maxWidth={["full", "full", "500px", "500px"]}>
+        <FormLogin
+          isLoading={isLoadingLogin}
+          onRedirectToForgotPasswordURL={() =>
+            router.push(getRoutes().forgotPassword)
+          }
+          onRedirectToSignUpURL={() => router.push(getRoutes().signUp)}
+          onSubmit={onSubmit}
+        />
+      </Box>
     </Container>
   );
 };

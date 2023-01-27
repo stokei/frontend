@@ -1,11 +1,8 @@
 export const ptBRMessages = {
-  title: "Título",
+  loginSuccessfully: "Login efetuado com successo!",
+  emailNotFound: "Email não encontrado!",
+  passwordNotFound: "Senha não encontrada!",
   email: "Email",
   password: "Senha",
   cancel: "Cancelar",
-  save: "Salvar",
-  enter: "Entrar",
-  emailIsRequired: "Email é obrigatório",
-  mustBeAValidEmail: "Digite um email válido",
-  passwordMustBeAtleastSixCharacters: "A senha deve ter mais que 6 caracteres",
 };

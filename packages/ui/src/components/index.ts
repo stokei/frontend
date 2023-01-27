@@ -40,6 +40,7 @@ export * from "./input-group";
 export * from "./input-password";
 export * from "./form";
 export * from "./form-control";
+export * from "./forms";
 export * from "./label";
 export * from "./grid";
 export * from "./icon";
