@@ -1,5 +1,5 @@
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
-import { useTranslations } from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
 import { getRoutes } from "@/routes";
 import {
   Box,
@@ -18,6 +18,7 @@ export const LoginPage: FC<LoginPageProps> = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
+  const { onShowAPIError } = useAPIErrors();
 
   const [{ fetching: isLoadingLogin }, onLogin] = useLoginMutation();
 
@@ -40,17 +41,10 @@ export const LoginPage: FC<LoginPageProps> = () => {
         });
       }
 
-      if (!!response.error?.message?.match(/emailNotFound/i)) {
-        onShowToast({
-          title: translate.formatMessage({ id: "emailNotFound" }),
-          status: "error",
-        });
-      }
-      if (!!response.error?.message?.match(/passwordNotFound/i)) {
-        onShowToast({
-          title: translate.formatMessage({ id: "passwordNotFound" }),
-          status: "error",
-        });
+      if (!!response.error?.graphQLErrors?.length) {
+        response.error.graphQLErrors.map((error) =>
+          onShowAPIError({ message: error?.message })
+        );
       }
     } catch (error) {}
   };
@@ -62,7 +56,7 @@ export const LoginPage: FC<LoginPageProps> = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Box width="full" maxWidth={["full", "full", "500px", "500px"]}>
+      <Box width="full" maxWidth={["full", "full", "400px", "400px"]}>
         <FormLogin
           isLoading={isLoadingLogin}
           onRedirectToForgotPasswordURL={() =>

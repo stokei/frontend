@@ -7,7 +7,7 @@ import {
 export interface CardProps extends ChakraCardProps {}
 export const Card: React.FC<CardProps> = ({ children, ...props }) => {
   return (
-    <ChakraCard width="full" variant="outline" size="sm" {...props}>
+    <ChakraCard width="full" variant="outline" size="md" {...props}>
       {children}
     </ChakraCard>
   );

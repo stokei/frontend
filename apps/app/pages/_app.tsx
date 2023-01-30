@@ -2,7 +2,11 @@ import { useMemo } from "react";
 
 import { StokeiGraphQLClientProvider } from "@stokei/graphql";
 import { Messages, TranslationsProvider } from "@stokei/translations";
-import { StokeiUIProvider, uiTranslationsMessages } from "@stokei/ui";
+import {
+  StokeiUIProvider,
+  uiTranslationsMessages,
+  LoadingTransition,
+} from "@stokei/ui";
 import { getAppIdFromNextRouter } from "@stokei/utils";
 
 import { CLOUDFLARE_TOKEN } from "@/environments";
@@ -12,6 +16,7 @@ import { CurrentAppProvider } from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
 import "@stokei/ui/src/styles/css/global.css";
+import { Router } from "next/router";
 
 const messages: Messages = {
   "pt-BR": {
@@ -23,6 +28,10 @@ const messages: Messages = {
     ...enUSMessages,
   },
 };
+
+Router.events.on("routeChangeStart", () => LoadingTransition.start());
+Router.events.on("routeChangeError", () => LoadingTransition.done());
+Router.events.on("routeChangeComplete", () => LoadingTransition.done());
 
 function MyApp({ Component, pageProps, appId, router }: any) {
   const stokeiGraphQLClient = useMemo(
