@@ -118,6 +118,7 @@ export type App = {
   active: Scalars['Boolean'];
   avatar?: Maybe<Image>;
   blockedAt?: Maybe<Scalars['String']>;
+  colors?: Maybe<Colors>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   currency: Currency;
@@ -134,6 +135,12 @@ export type App = {
   status: AppStatus;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+};
+
+
+export type AppColorsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllColorsInput>;
+  page?: InputMaybe<PaginationInput>;
 };
 
 
@@ -449,6 +456,13 @@ export type CreateLanguageInput = {
 export type CreateModuleInput = {
   name: Scalars['String'];
   parent: Scalars['String'];
+};
+
+export type CreateOrUpdateColorInput = {
+  color: Scalars['String'];
+  parent: Scalars['String'];
+  themeMode: ThemeMode;
+  type: ColorType;
 };
 
 export type CreatePaymentMethodInput = {
@@ -842,6 +856,7 @@ export type Mutation = {
   createImageUploadURL: CreateFileUploadUrlResponse;
   createLanguage: Language;
   createModule: Module;
+  createOrUpdateColor: Color;
   createPaymentMethod: PaymentMethod;
   createPhone: Phone;
   createPlan: Plan;
@@ -963,6 +978,11 @@ export type MutationCreateLanguageArgs = {
 
 export type MutationCreateModuleArgs = {
   input: CreateModuleInput;
+};
+
+
+export type MutationCreateOrUpdateColorArgs = {
+  input: CreateOrUpdateColorInput;
 };
 
 

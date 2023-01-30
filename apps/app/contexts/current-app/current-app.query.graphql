@@ -1,6 +1,0 @@
-query CurrentApp {
-  currentApp {
-    id
-    name
-  }
-}

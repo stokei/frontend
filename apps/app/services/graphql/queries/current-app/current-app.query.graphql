@@ -1,0 +1,13 @@
+query CurrentGlobalApp {
+  currentApp {
+    id
+    name
+    colors {
+      items {
+        color
+        themeMode
+        type
+      }
+    }
+  }
+}

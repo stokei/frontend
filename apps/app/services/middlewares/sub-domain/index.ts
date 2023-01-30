@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { gql } from "urql";
 
 const currentAppQuery = gql`
-  query CurrentApp($domain: String!) {
+  query CurrentAppSubDomain($domain: String!) {
     currentApp {
       id
       name

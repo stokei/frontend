@@ -1,8 +1,14 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -13,129 +19,128 @@ export type Scalars = {
 };
 
 export type Access = {
-  __typename?: 'Access';
-  active?: Maybe<Scalars['Boolean']>;
+  __typename?: "Access";
+  active?: Maybe<Scalars["Boolean"]>;
   app?: Maybe<App>;
-  canceledAt?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
+  canceledAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  expiresIn?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  updatedAt?: Maybe<Scalars['String']>;
+  expiresIn?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type Accesses = {
-  __typename?: 'Accesses';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Accesses";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Access>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Account = {
-  __typename?: 'Account';
+  __typename?: "Account";
   app: App;
   avatar?: Maybe<Image>;
-  canceledAt?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
+  canceledAt?: Maybe<Scalars["String"]>;
+  country?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  email: Scalars['String'];
-  firstname: Scalars['String'];
-  fullname: Scalars['String'];
-  id: Scalars['ID'];
-  isStokei: Scalars['Boolean'];
-  lastname: Scalars['String'];
+  email: Scalars["String"];
+  firstname: Scalars["String"];
+  fullname: Scalars["String"];
+  id: Scalars["ID"];
+  isStokei: Scalars["Boolean"];
+  lastname: Scalars["String"];
   status: AccountStatus;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
-  username: Scalars['String'];
+  username: Scalars["String"];
 };
 
 export enum AccountStatus {
-  Active = 'ACTIVE',
-  Blocked = 'BLOCKED',
-  Canceled = 'CANCELED',
-  Inactive = 'INACTIVE'
+  Active = "ACTIVE",
+  Blocked = "BLOCKED",
+  Canceled = "CANCELED",
+  Inactive = "INACTIVE",
 }
 
 export type Accounts = {
-  __typename?: 'Accounts';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Accounts";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Account>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Address = {
-  __typename?: 'Address';
+  __typename?: "Address";
   app?: Maybe<App>;
-  city: Scalars['String'];
-  complement?: Maybe<Scalars['String']>;
-  country: Scalars['String'];
-  createdAt?: Maybe<Scalars['String']>;
+  city: Scalars["String"];
+  complement?: Maybe<Scalars["String"]>;
+  country: Scalars["String"];
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  default: Scalars['Boolean'];
-  id: Scalars['ID'];
-  number: Scalars['String'];
-  postalCode: Scalars['String'];
-  state: Scalars['String'];
-  street: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  default: Scalars["Boolean"];
+  id: Scalars["ID"];
+  number: Scalars["String"];
+  postalCode: Scalars["String"];
+  state: Scalars["String"];
+  street: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type Addresses = {
-  __typename?: 'Addresses';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Addresses";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Address>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type App = {
-  __typename?: 'App';
-  activatedAt?: Maybe<Scalars['String']>;
-  active: Scalars['Boolean'];
+  __typename?: "App";
+  activatedAt?: Maybe<Scalars["String"]>;
+  active: Scalars["Boolean"];
   avatar?: Maybe<Image>;
-  blockedAt?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
+  blockedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
   currency: Currency;
   currentSubscriptionContract?: Maybe<SubscriptionContract>;
-  deactivatedAt?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
+  deactivatedAt?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars["String"]>;
   icon?: Maybe<Image>;
-  id: Scalars['ID'];
-  isStokei: Scalars['Boolean'];
+  id: Scalars["ID"];
+  isStokei: Scalars["Boolean"];
   logo?: Maybe<Image>;
-  name: Scalars['String'];
+  name: Scalars["String"];
   phones?: Maybe<Phones>;
-  slug: Scalars['String'];
+  slug: Scalars["String"];
   status: AppStatus;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
-
 
 export type AppPhonesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPhonesInput>;
@@ -143,337 +148,337 @@ export type AppPhonesArgs = {
 };
 
 export type AppAdmin = {
-  __typename?: 'AppAdmin';
+  __typename?: "AppAdmin";
   admin: Account;
   app: App;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
-  updatedAt?: Maybe<Scalars['String']>;
+  id: Scalars["ID"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type AppAdmins = {
-  __typename?: 'AppAdmins';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "AppAdmins";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<AppAdmin>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type AppInstructor = {
-  __typename?: 'AppInstructor';
+  __typename?: "AppInstructor";
   app: App;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
+  id: Scalars["ID"];
   instructor: Account;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type AppInstructors = {
-  __typename?: 'AppInstructors';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "AppInstructors";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<AppInstructor>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export enum AppStatus {
-  Active = 'ACTIVE',
-  Blocked = 'BLOCKED',
-  Inactive = 'INACTIVE'
+  Active = "ACTIVE",
+  Blocked = "BLOCKED",
+  Inactive = "INACTIVE",
 }
 
 export type Apps = {
-  __typename?: 'Apps';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Apps";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<App>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type AuthResponse = {
-  __typename?: 'AuthResponse';
-  accessToken: Scalars['String'];
+  __typename?: "AuthResponse";
+  accessToken: Scalars["String"];
   account: MeAccount;
-  prefixToken: Scalars['String'];
-  refreshToken: Scalars['String'];
+  prefixToken: Scalars["String"];
+  refreshToken: Scalars["String"];
 };
 
 export enum BillingScheme {
-  PerUnit = 'PER_UNIT',
-  Tiered = 'TIERED'
+  PerUnit = "PER_UNIT",
+  Tiered = "TIERED",
 }
 
 export type CancelSubscriptionContractInput = {
-  subscriptionContract: Scalars['String'];
+  subscriptionContract: Scalars["String"];
 };
 
 export type ChangePasswordInput = {
-  code: Scalars['String'];
-  email: Scalars['String'];
-  password: Scalars['String'];
+  code: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Checkout = {
-  __typename?: 'Checkout';
-  clientSecret: Scalars['String'];
+  __typename?: "Checkout";
+  clientSecret: Scalars["String"];
   subscriptionContract: SubscriptionContract;
 };
 
 export type Color = {
-  __typename?: 'Color';
+  __typename?: "Color";
   app?: Maybe<App>;
-  color: Scalars['String'];
-  createdAt?: Maybe<Scalars['String']>;
+  color: Scalars["String"];
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
+  id: Scalars["ID"];
   themeMode: ThemeMode;
   type: ColorType;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export enum ColorType {
-  Error = 'ERROR',
-  Heading = 'HEADING',
-  Info = 'INFO',
-  Primary = 'PRIMARY',
-  Secondary = 'SECONDARY',
-  Success = 'SUCCESS',
-  Text = 'TEXT',
-  Warning = 'WARNING'
+  Error = "ERROR",
+  Heading = "HEADING",
+  Info = "INFO",
+  Primary = "PRIMARY",
+  Secondary = "SECONDARY",
+  Success = "SUCCESS",
+  Text = "TEXT",
+  Warning = "WARNING",
 }
 
 export type Colors = {
-  __typename?: 'Colors';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Colors";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Color>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Course = {
-  __typename?: 'Course';
-  active: Scalars['Boolean'];
+  __typename?: "Course";
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
   avatar?: Maybe<Image>;
-  canceledAt?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
+  canceledAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  description?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type CourseInstructor = {
-  __typename?: 'CourseInstructor';
+  __typename?: "CourseInstructor";
   app?: Maybe<App>;
   course: Course;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
+  id: Scalars["ID"];
   instructor: Account;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type CourseInstructors = {
-  __typename?: 'CourseInstructors';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "CourseInstructors";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<CourseInstructor>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type CourseStudent = {
-  __typename?: 'CourseStudent';
+  __typename?: "CourseStudent";
   app?: Maybe<App>;
   course: Course;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
+  id: Scalars["ID"];
   student: Account;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type CourseStudents = {
-  __typename?: 'CourseStudents';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "CourseStudents";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<CourseStudent>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Courses = {
-  __typename?: 'Courses';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Courses";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Course>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type CreateAddressInput = {
-  city: Scalars['String'];
-  complement?: InputMaybe<Scalars['String']>;
-  country: Scalars['String'];
-  number: Scalars['String'];
-  parent: Scalars['String'];
-  postalCode: Scalars['String'];
-  state: Scalars['String'];
-  street: Scalars['String'];
+  city: Scalars["String"];
+  complement?: InputMaybe<Scalars["String"]>;
+  country: Scalars["String"];
+  number: Scalars["String"];
+  parent: Scalars["String"];
+  postalCode: Scalars["String"];
+  state: Scalars["String"];
+  street: Scalars["String"];
 };
 
 export type CreateAppAdminInput = {
-  admin: Scalars['String'];
+  admin: Scalars["String"];
 };
 
 export type CreateAppInput = {
-  currency: Scalars['String'];
-  email: Scalars['String'];
-  language: Scalars['String'];
-  name: Scalars['String'];
+  currency: Scalars["String"];
+  email: Scalars["String"];
+  language: Scalars["String"];
+  name: Scalars["String"];
 };
 
 export type CreateAppInstructorInput = {
-  instructor: Scalars['String'];
+  instructor: Scalars["String"];
 };
 
 export type CreateCheckoutInput = {
-  customer?: InputMaybe<Scalars['String']>;
-  price: Scalars['String'];
+  customer?: InputMaybe<Scalars["String"]>;
+  price: Scalars["String"];
 };
 
 export type CreateColorInput = {
-  color: Scalars['String'];
-  parent: Scalars['String'];
+  color: Scalars["String"];
+  parent: Scalars["String"];
   themeMode: ThemeMode;
   type: ColorType;
 };
 
 export type CreateCourseInput = {
-  avatar?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  parent: Scalars['String'];
+  avatar?: InputMaybe<Scalars["String"]>;
+  description?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
+  parent: Scalars["String"];
 };
 
 export type CreateCourseInstructorInput = {
-  course: Scalars['String'];
-  instructor: Scalars['String'];
+  course: Scalars["String"];
+  instructor: Scalars["String"];
 };
 
 export type CreateCourseStudentInput = {
-  course: Scalars['String'];
-  student: Scalars['String'];
+  course: Scalars["String"];
+  student: Scalars["String"];
 };
 
 export type CreateCurrencyInput = {
-  id: Scalars['String'];
-  minorUnit: Scalars['Int'];
-  name: Scalars['String'];
-  symbol: Scalars['String'];
+  id: Scalars["String"];
+  minorUnit: Scalars["Int"];
+  name: Scalars["String"];
+  symbol: Scalars["String"];
 };
 
 export type CreateCustomerPortalSessionInput = {
-  customer?: InputMaybe<Scalars['String']>;
-  returnUrl: Scalars['String'];
+  customer?: InputMaybe<Scalars["String"]>;
+  returnUrl: Scalars["String"];
 };
 
 export type CreateDomainInput = {
-  default?: InputMaybe<Scalars['Boolean']>;
-  language: Scalars['String'];
-  name: Scalars['String'];
-  parent: Scalars['String'];
+  default?: InputMaybe<Scalars["Boolean"]>;
+  language: Scalars["String"];
+  name: Scalars["String"];
+  parent: Scalars["String"];
 };
 
 export type CreateFileUploadUrlResponse = {
-  __typename?: 'CreateFileUploadURLResponse';
+  __typename?: "CreateFileUploadURLResponse";
   file: File;
-  uploadURL: Scalars['String'];
+  uploadURL: Scalars["String"];
 };
 
 export type CreateLanguageInput = {
-  icon?: InputMaybe<Scalars['String']>;
-  id: Scalars['String'];
-  name: Scalars['String'];
+  icon?: InputMaybe<Scalars["String"]>;
+  id: Scalars["String"];
+  name: Scalars["String"];
 };
 
 export type CreateModuleInput = {
-  name: Scalars['String'];
-  parent: Scalars['String'];
+  name: Scalars["String"];
+  parent: Scalars["String"];
 };
 
 export type CreatePaymentMethodInput = {
-  stripePaymentMethod: Scalars['String'];
+  stripePaymentMethod: Scalars["String"];
 };
 
 export type CreatePhoneInput = {
-  areaCode: Scalars['String'];
-  countryCode: Scalars['String'];
-  number: Scalars['String'];
-  parent: Scalars['String'];
+  areaCode: Scalars["String"];
+  countryCode: Scalars["String"];
+  number: Scalars["String"];
+  parent: Scalars["String"];
 };
 
 export type CreatePlanInput = {
-  name: Scalars['String'];
+  name: Scalars["String"];
   type: PlanType;
 };
 
 export type CreatePriceInput = {
-  amount?: InputMaybe<Scalars['Int']>;
+  amount?: InputMaybe<Scalars["Int"]>;
   billingScheme: BillingScheme;
-  fromAmount?: InputMaybe<Scalars['Int']>;
+  fromAmount?: InputMaybe<Scalars["Int"]>;
   inventoryType: InventoryType;
-  parent: Scalars['String'];
-  quantity?: InputMaybe<Scalars['Int']>;
+  parent: Scalars["String"];
+  quantity?: InputMaybe<Scalars["Int"]>;
   recurring?: InputMaybe<CreateRecurringInput>;
   tiers?: InputMaybe<Array<CreatePriceTierInput>>;
   tiersMode: TiersMode;
@@ -481,314 +486,312 @@ export type CreatePriceInput = {
 };
 
 export type CreatePriceTierInput = {
-  amount: Scalars['Int'];
-  infinite: Scalars['Boolean'];
-  upTo?: InputMaybe<Scalars['Int']>;
+  amount: Scalars["Int"];
+  infinite: Scalars["Boolean"];
+  upTo?: InputMaybe<Scalars["Int"]>;
 };
 
 export type CreateProductInput = {
-  checkoutVisible: Scalars['Boolean'];
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  parent: Scalars['String'];
+  checkoutVisible: Scalars["Boolean"];
+  description?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
+  parent: Scalars["String"];
 };
 
 export type CreateRecurringInput = {
   interval: IntervalType;
-  intervalCount: Scalars['Int'];
+  intervalCount: Scalars["Int"];
   usageType: UsageType;
 };
 
 export type CreateVideoAuthorInput = {
-  author: Scalars['String'];
-  video: Scalars['String'];
+  author: Scalars["String"];
+  video: Scalars["String"];
 };
 
 export type CreateVideoInput = {
-  description?: InputMaybe<Scalars['String']>;
-  file: Scalars['String'];
-  name: Scalars['String'];
-  parent: Scalars['String'];
-  poster?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars["String"]>;
+  file: Scalars["String"];
+  name: Scalars["String"];
+  parent: Scalars["String"];
+  poster?: InputMaybe<Scalars["String"]>;
 };
 
 export type Currencies = {
-  __typename?: 'Currencies';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Currencies";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Currency>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Currency = {
-  __typename?: 'Currency';
-  activatedAt?: Maybe<Scalars['String']>;
-  active: Scalars['Boolean'];
+  __typename?: "Currency";
+  activatedAt?: Maybe<Scalars["String"]>;
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  deactivatedAt?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  minorUnit: Scalars['Int'];
-  name: Scalars['String'];
-  symbol: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  deactivatedAt?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  minorUnit: Scalars["Int"];
+  name: Scalars["String"];
+  symbol: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type CustomerPortalSession = {
-  __typename?: 'CustomerPortalSession';
-  id: Scalars['ID'];
-  url: Scalars['String'];
+  __typename?: "CustomerPortalSession";
+  id: Scalars["ID"];
+  url: Scalars["String"];
 };
 
 export type Domain = {
-  __typename?: 'Domain';
-  activatedAt?: Maybe<Scalars['String']>;
-  active: Scalars['Boolean'];
+  __typename?: "Domain";
+  activatedAt?: Maybe<Scalars["String"]>;
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  id: Scalars["ID"];
+  name: Scalars["String"];
   status: DomainStatus;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export enum DomainStatus {
-  Active = 'ACTIVE',
-  Error = 'ERROR',
-  Pending = 'PENDING'
+  Active = "ACTIVE",
+  Error = "ERROR",
+  Pending = "PENDING",
 }
 
 export type Domains = {
-  __typename?: 'Domains';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Domains";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Domain>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Feature = {
-  __typename?: 'Feature';
+  __typename?: "Feature";
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  description?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  parent: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  parent: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type Features = {
-  __typename?: 'Features';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Features";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Feature>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type File = {
-  __typename?: 'File';
-  active: Scalars['Boolean'];
+  __typename?: "File";
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  duration: Scalars['Int'];
-  extension?: Maybe<Scalars['String']>;
-  filename: Scalars['String'];
-  id: Scalars['ID'];
-  mimetype?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['Int']>;
+  duration: Scalars["Int"];
+  extension?: Maybe<Scalars["String"]>;
+  filename: Scalars["String"];
+  id: Scalars["ID"];
+  mimetype?: Maybe<Scalars["String"]>;
+  size?: Maybe<Scalars["Int"]>;
   status: FileStatus;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars["String"]>;
 };
 
 export enum FileStatus {
-  Active = 'ACTIVE',
-  Encoding = 'ENCODING',
-  Error = 'ERROR',
-  Pending = 'PENDING'
+  Active = "ACTIVE",
+  Encoding = "ENCODING",
+  Error = "ERROR",
+  Pending = "PENDING",
 }
 
 export type ForgotPasswordInput = {
-  email: Scalars['String'];
+  email: Scalars["String"];
 };
 
 export type Image = {
-  __typename?: 'Image';
+  __typename?: "Image";
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
   file: File;
-  id: Scalars['ID'];
-  updatedAt?: Maybe<Scalars['String']>;
+  id: Scalars["ID"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
-  url: Scalars['String'];
+  url: Scalars["String"];
 };
 
 export type Images = {
-  __typename?: 'Images';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Images";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Image>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export enum IntervalType {
-  Day = 'DAY',
-  Month = 'MONTH',
-  Week = 'WEEK',
-  Year = 'YEAR'
+  Day = "DAY",
+  Month = "MONTH",
+  Week = "WEEK",
+  Year = "YEAR",
 }
 
 export enum InventoryType {
-  Finite = 'FINITE',
-  Infinite = 'INFINITE'
+  Finite = "FINITE",
+  Infinite = "INFINITE",
 }
 
 export type Invoice = {
-  __typename?: 'Invoice';
-  active: Scalars['Boolean'];
+  __typename?: "Invoice";
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
-  canceledAt?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
+  canceledAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
   currency: Currency;
   customer: Account;
-  id: Scalars['ID'];
-  paidAt?: Maybe<Scalars['String']>;
-  paymentErrorAt?: Maybe<Scalars['String']>;
+  id: Scalars["ID"];
+  paidAt?: Maybe<Scalars["String"]>;
+  paymentErrorAt?: Maybe<Scalars["String"]>;
   paymentMethod?: Maybe<PaymentMethod>;
   status: InvoiceStatus;
   subscription: SubscriptionContract;
   subscriptionContract?: Maybe<SubscriptionContract>;
-  subtotalAmount: Scalars['Float'];
-  totalAmount: Scalars['Float'];
-  updatedAt?: Maybe<Scalars['String']>;
+  subtotalAmount: Scalars["Float"];
+  totalAmount: Scalars["Float"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars["String"]>;
 };
 
 export enum InvoiceStatus {
-  Canceled = 'CANCELED',
-  Paid = 'PAID',
-  PaymentError = 'PAYMENT_ERROR',
-  Pending = 'PENDING'
+  Canceled = "CANCELED",
+  Paid = "PAID",
+  PaymentError = "PAYMENT_ERROR",
+  Pending = "PENDING",
 }
 
 export type Invoices = {
-  __typename?: 'Invoices';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Invoices";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Invoice>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Language = {
-  __typename?: 'Language';
-  activatedAt?: Maybe<Scalars['String']>;
-  active: Scalars['Boolean'];
+  __typename?: "Language";
+  activatedAt?: Maybe<Scalars["String"]>;
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  deactivatedAt?: Maybe<Scalars['String']>;
+  deactivatedAt?: Maybe<Scalars["String"]>;
   icon?: Maybe<Image>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type Languages = {
-  __typename?: 'Languages';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Languages";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Language>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Link = {
-  __typename?: 'Link';
-  url: Scalars['String'];
+  __typename?: "Link";
+  url: Scalars["String"];
 };
 
 export type LoginInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type MeAccount = {
-  __typename?: 'MeAccount';
+  __typename?: "MeAccount";
   accesses?: Maybe<Accesses>;
   app: App;
   avatar?: Maybe<Image>;
-  canceledAt?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
+  canceledAt?: Maybe<Scalars["String"]>;
+  country?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  dateBirthday?: Maybe<Scalars['String']>;
-  email: Scalars['String'];
-  firstname: Scalars['String'];
-  fullname: Scalars['String'];
-  id: Scalars['ID'];
-  isStokei: Scalars['Boolean'];
-  lastname: Scalars['String'];
+  dateBirthday?: Maybe<Scalars["String"]>;
+  email: Scalars["String"];
+  firstname: Scalars["String"];
+  fullname: Scalars["String"];
+  id: Scalars["ID"];
+  isStokei: Scalars["Boolean"];
+  lastname: Scalars["String"];
   paymentMethods?: Maybe<PaymentMethods>;
   phones?: Maybe<Phones>;
   status: AccountStatus;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
-  username: Scalars['String'];
+  username: Scalars["String"];
 };
-
 
 export type MeAccountAccessesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAccessesInput>;
   page?: InputMaybe<PaginationInput>;
 };
-
 
 export type MeAccountPhonesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPhonesInput>;
@@ -796,35 +799,35 @@ export type MeAccountPhonesArgs = {
 };
 
 export type Module = {
-  __typename?: 'Module';
+  __typename?: "Module";
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  description?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type Modules = {
-  __typename?: 'Modules';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Modules";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Module>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   cancelSubscriptionContract: SubscriptionContract;
-  changePassword: Scalars['Boolean'];
+  changePassword: Scalars["Boolean"];
   createAddress: Address;
   createApp: App;
   createAppAdmin: AppAdmin;
@@ -850,7 +853,7 @@ export type Mutation = {
   createVideo: Video;
   createVideoAuthor: VideoAuthor;
   createVideoUploadURL: CreateFileUploadUrlResponse;
-  forgotPassword: Scalars['Boolean'];
+  forgotPassword: Scalars["Boolean"];
   login: AuthResponse;
   refreshAccess: AuthResponse;
   removeAccess: Access;
@@ -885,279 +888,225 @@ export type Mutation = {
   updateVideo: Video;
 };
 
-
 export type MutationCancelSubscriptionContractArgs = {
   input: CancelSubscriptionContractInput;
 };
-
 
 export type MutationChangePasswordArgs = {
   input: ChangePasswordInput;
 };
 
-
 export type MutationCreateAddressArgs = {
   input: CreateAddressInput;
 };
-
 
 export type MutationCreateAppArgs = {
   input: CreateAppInput;
 };
 
-
 export type MutationCreateAppAdminArgs = {
   input: CreateAppAdminInput;
 };
-
 
 export type MutationCreateAppInstructorArgs = {
   input: CreateAppInstructorInput;
 };
 
-
 export type MutationCreateCheckoutArgs = {
   input: CreateCheckoutInput;
 };
-
 
 export type MutationCreateColorArgs = {
   input: CreateColorInput;
 };
 
-
 export type MutationCreateCourseArgs = {
   input: CreateCourseInput;
 };
-
 
 export type MutationCreateCourseInstructorArgs = {
   input: CreateCourseInstructorInput;
 };
 
-
 export type MutationCreateCourseStudentArgs = {
   input: CreateCourseStudentInput;
 };
-
 
 export type MutationCreateCurrencyArgs = {
   input: CreateCurrencyInput;
 };
 
-
 export type MutationCreateCustomerPortalSessionArgs = {
   input: CreateCustomerPortalSessionInput;
 };
-
 
 export type MutationCreateDomainArgs = {
   input: CreateDomainInput;
 };
 
-
 export type MutationCreateLanguageArgs = {
   input: CreateLanguageInput;
 };
-
 
 export type MutationCreateModuleArgs = {
   input: CreateModuleInput;
 };
 
-
 export type MutationCreatePaymentMethodArgs = {
   input: CreatePaymentMethodInput;
 };
-
 
 export type MutationCreatePhoneArgs = {
   input: CreatePhoneInput;
 };
 
-
 export type MutationCreatePlanArgs = {
   input: CreatePlanInput;
 };
-
 
 export type MutationCreatePriceArgs = {
   input: CreatePriceInput;
 };
 
-
 export type MutationCreateProductArgs = {
   input: CreateProductInput;
 };
-
 
 export type MutationCreateVideoArgs = {
   input: CreateVideoInput;
 };
 
-
 export type MutationCreateVideoAuthorArgs = {
   input: CreateVideoAuthorInput;
 };
-
 
 export type MutationForgotPasswordArgs = {
   input: ForgotPasswordInput;
 };
 
-
 export type MutationLoginArgs = {
   input: LoginInput;
 };
-
 
 export type MutationRemoveAccessArgs = {
   input: RemoveAccessInput;
 };
 
-
 export type MutationRemoveAddressArgs = {
   input: RemoveAddressInput;
 };
-
 
 export type MutationRemoveAppAdminArgs = {
   input: RemoveAppAdminInput;
 };
 
-
 export type MutationRemoveAppInstructorArgs = {
   input: RemoveAppInstructorInput;
 };
-
 
 export type MutationRemoveColorArgs = {
   input: RemoveColorInput;
 };
 
-
 export type MutationRemoveCourseArgs = {
   input: RemoveCourseInput;
 };
-
 
 export type MutationRemoveCourseInstructorArgs = {
   input: RemoveCourseInstructorInput;
 };
 
-
 export type MutationRemoveCurrencyArgs = {
   input: RemoveCurrencyInput;
 };
-
 
 export type MutationRemoveDomainArgs = {
   input: RemoveDomainInput;
 };
 
-
 export type MutationRemoveImageArgs = {
   input: RemoveImageInput;
 };
-
 
 export type MutationRemoveLanguageArgs = {
   input: RemoveLanguageInput;
 };
 
-
 export type MutationRemoveModuleArgs = {
   input: RemoveModuleInput;
 };
-
 
 export type MutationRemovePaymentMethodArgs = {
   input: RemovePaymentMethodInput;
 };
 
-
 export type MutationRemovePhoneArgs = {
   input: RemovePhoneInput;
 };
-
 
 export type MutationRemovePriceArgs = {
   input: RemovePriceInput;
 };
 
-
 export type MutationRemoveVideoArgs = {
   input: RemoveVideoInput;
 };
-
 
 export type MutationRemoveVideoAuthorArgs = {
   input: RemoveVideoAuthorInput;
 };
 
-
 export type MutationSignUpArgs = {
   input: SignUpInput;
 };
-
 
 export type MutationUpdateAccountArgs = {
   input: UpdateAccountInput;
 };
 
-
 export type MutationUpdateAddressArgs = {
   input: UpdateAddressInput;
 };
-
 
 export type MutationUpdateAppArgs = {
   input: UpdateAppInput;
 };
 
-
 export type MutationUpdateColorArgs = {
   input: UpdateColorInput;
 };
-
 
 export type MutationUpdateCourseArgs = {
   input: UpdateCourseInput;
 };
 
-
 export type MutationUpdateCurrencyArgs = {
   input: UpdateCurrencyInput;
 };
-
 
 export type MutationUpdateLanguageArgs = {
   input: UpdateLanguageInput;
 };
 
-
 export type MutationUpdateModuleArgs = {
   input: UpdateModuleInput;
 };
-
 
 export type MutationUpdatePriceArgs = {
   input: UpdatePriceInput;
 };
 
-
 export type MutationUpdateSubscriptionContractArgs = {
   input: UpdateSubscriptionContractInput;
 };
-
 
 export type MutationUpdateVideoArgs = {
   input: UpdateVideoInput;
 };
 
 export enum OrderBy {
-  Asc = 'ASC',
-  Desc = 'DESC'
+  Asc = "ASC",
+  Desc = "DESC",
 }
 
 export type OrderByDataFindAllAccessesInput = {
@@ -1424,92 +1373,91 @@ export type OrderByDataFindAllVideosInput = {
 };
 
 export type PaginationInput = {
-  limit?: InputMaybe<Scalars['Int']>;
-  number?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
+  number?: InputMaybe<Scalars["Int"]>;
 };
 
 export type PaymentMethod = {
-  __typename?: 'PaymentMethod';
+  __typename?: "PaymentMethod";
   app?: Maybe<App>;
-  cardBrand?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
+  cardBrand?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
-  lastFourCardNumber?: Maybe<Scalars['String']>;
+  id: Scalars["ID"];
+  lastFourCardNumber?: Maybe<Scalars["String"]>;
   parent: Account;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type PaymentMethods = {
-  __typename?: 'PaymentMethods';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "PaymentMethods";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<PaymentMethod>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Phone = {
-  __typename?: 'Phone';
-  activatedAt?: Maybe<Scalars['String']>;
-  active: Scalars['Boolean'];
+  __typename?: "Phone";
+  activatedAt?: Maybe<Scalars["String"]>;
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
-  areaCode: Scalars['String'];
-  countryCode: Scalars['String'];
-  createdAt?: Maybe<Scalars['String']>;
+  areaCode: Scalars["String"];
+  countryCode: Scalars["String"];
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  default: Scalars['Boolean'];
-  fullnumber: Scalars['String'];
-  id: Scalars['ID'];
-  number: Scalars['String'];
+  default: Scalars["Boolean"];
+  fullnumber: Scalars["String"];
+  id: Scalars["ID"];
+  number: Scalars["String"];
   status: PhoneStatus;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
-  validatedAt?: Maybe<Scalars['String']>;
-  validationCode: Scalars['String'];
+  validatedAt?: Maybe<Scalars["String"]>;
+  validationCode: Scalars["String"];
 };
 
 export enum PhoneStatus {
-  Active = 'ACTIVE',
-  Invalid = 'INVALID',
-  Pending = 'PENDING'
+  Active = "ACTIVE",
+  Invalid = "INVALID",
+  Pending = "PENDING",
 }
 
 export type Phones = {
-  __typename?: 'Phones';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Phones";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Phone>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Plan = {
-  __typename?: 'Plan';
-  active: Scalars['Boolean'];
+  __typename?: "Plan";
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars["String"]>;
   features?: Maybe<Features>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  id: Scalars["ID"];
+  name: Scalars["String"];
   type: PlanType;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
-
 
 export type PlanFeaturesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllFeaturesInput>;
@@ -1517,101 +1465,101 @@ export type PlanFeaturesArgs = {
 };
 
 export enum PlanType {
-  Admin = 'ADMIN',
-  Course = 'COURSE',
-  Domain = 'DOMAIN',
-  Instructor = 'INSTRUCTOR',
-  Storage = 'STORAGE'
+  Admin = "ADMIN",
+  Course = "COURSE",
+  Domain = "DOMAIN",
+  Instructor = "INSTRUCTOR",
+  Storage = "STORAGE",
 }
 
 export type Plans = {
-  __typename?: 'Plans';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Plans";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Plan>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Price = {
-  __typename?: 'Price';
-  active: Scalars['Boolean'];
-  amount?: Maybe<Scalars['Float']>;
+  __typename?: "Price";
+  active: Scalars["Boolean"];
+  amount?: Maybe<Scalars["Float"]>;
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
   currency: Currency;
-  default: Scalars['Boolean'];
-  fromAmount?: Maybe<Scalars['Float']>;
-  id: Scalars['ID'];
+  default: Scalars["Boolean"];
+  fromAmount?: Maybe<Scalars["Float"]>;
+  id: Scalars["ID"];
   inventoryType: InventoryType;
-  nickname?: Maybe<Scalars['String']>;
+  nickname?: Maybe<Scalars["String"]>;
   product: Product;
-  purchaseUrl: Scalars['String'];
-  quantity: Scalars['Int'];
+  purchaseUrl: Scalars["String"];
+  quantity: Scalars["Int"];
   recurring?: Maybe<Recurring>;
   type: PriceType;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export enum PriceType {
-  OneTime = 'ONE_TIME',
-  Recurring = 'RECURRING'
+  OneTime = "ONE_TIME",
+  Recurring = "RECURRING",
 }
 
 export type Prices = {
-  __typename?: 'Prices';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Prices";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Price>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Product = {
-  __typename?: 'Product';
-  activatedAt?: Maybe<Scalars['String']>;
-  active: Scalars['String'];
+  __typename?: "Product";
+  activatedAt?: Maybe<Scalars["String"]>;
+  active: Scalars["String"];
   app?: Maybe<App>;
   avatar?: Maybe<Image>;
-  checkoutVisible: Scalars['Boolean'];
-  createdAt?: Maybe<Scalars['String']>;
+  checkoutVisible: Scalars["Boolean"];
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  deactivatedAt?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  deactivatedAt?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type Products = {
-  __typename?: 'Products';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Products";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Product>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   access: Access;
   accesses: Accesses;
   account: Account;
@@ -1664,11 +1612,9 @@ export type Query = {
   videos: Videos;
 };
 
-
 export type QueryAccessArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryAccessesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAccessesInput>;
@@ -1676,11 +1622,9 @@ export type QueryAccessesArgs = {
   where?: InputMaybe<WhereDataFindAllAccessesInput>;
 };
 
-
 export type QueryAccountArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryAccountsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAccountsInput>;
@@ -1688,11 +1632,9 @@ export type QueryAccountsArgs = {
   where?: InputMaybe<WhereDataFindAllAccountsInput>;
 };
 
-
 export type QueryAddressArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryAddressesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAddressesInput>;
@@ -1700,16 +1642,13 @@ export type QueryAddressesArgs = {
   where?: InputMaybe<WhereDataFindAllAddressesInput>;
 };
 
-
 export type QueryAppArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryAppAdminArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryAppAdminsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAppAdminsInput>;
@@ -1717,11 +1656,9 @@ export type QueryAppAdminsArgs = {
   where?: InputMaybe<WhereDataFindAllAppAdminsInput>;
 };
 
-
 export type QueryAppInstructorArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryAppInstructorsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAppInstructorsInput>;
@@ -1729,18 +1666,15 @@ export type QueryAppInstructorsArgs = {
   where?: InputMaybe<WhereDataFindAllAppInstructorsInput>;
 };
 
-
 export type QueryAppsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAppsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllAppsInput>;
 };
 
-
 export type QueryColorArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryColorsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllColorsInput>;
@@ -1748,16 +1682,13 @@ export type QueryColorsArgs = {
   where?: InputMaybe<WhereDataFindAllColorsInput>;
 };
 
-
 export type QueryCourseArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryCourseInstructorArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryCourseInstructorsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllCourseInstructorsInput>;
@@ -1765,11 +1696,9 @@ export type QueryCourseInstructorsArgs = {
   where?: InputMaybe<WhereDataFindAllCourseInstructorsInput>;
 };
 
-
 export type QueryCourseStudentArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryCourseStudentsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllCourseStudentsInput>;
@@ -1777,13 +1706,11 @@ export type QueryCourseStudentsArgs = {
   where?: InputMaybe<WhereDataFindAllCourseStudentsInput>;
 };
 
-
 export type QueryCoursesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllCoursesInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllCoursesInput>;
 };
-
 
 export type QueryCurrenciesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllCurrenciesInput>;
@@ -1791,17 +1718,14 @@ export type QueryCurrenciesArgs = {
   where?: InputMaybe<WhereDataFindAllCurrenciesInput>;
 };
 
-
 export type QueryCurrencyArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryDomainArgs = {
-  id?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
-
 
 export type QueryDomainsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllDomainsInput>;
@@ -1809,11 +1733,9 @@ export type QueryDomainsArgs = {
   where?: InputMaybe<WhereDataFindAllDomainsInput>;
 };
 
-
 export type QueryImageArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryImagesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllImagesInput>;
@@ -1821,11 +1743,9 @@ export type QueryImagesArgs = {
   where?: InputMaybe<WhereDataFindAllImagesInput>;
 };
 
-
 export type QueryInvoiceArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryInvoicesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllInvoicesInput>;
@@ -1833,11 +1753,9 @@ export type QueryInvoicesArgs = {
   where?: InputMaybe<WhereDataFindAllInvoicesInput>;
 };
 
-
 export type QueryLanguageArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryLanguagesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllLanguagesInput>;
@@ -1845,11 +1763,9 @@ export type QueryLanguagesArgs = {
   where?: InputMaybe<WhereDataFindAllLanguagesInput>;
 };
 
-
 export type QueryModuleArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryModulesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllModulesInput>;
@@ -1857,11 +1773,9 @@ export type QueryModulesArgs = {
   where?: InputMaybe<WhereDataFindAllModulesInput>;
 };
 
-
 export type QueryPaymentMethodArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryPaymentMethodsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPaymentMethodsInput>;
@@ -1869,11 +1783,9 @@ export type QueryPaymentMethodsArgs = {
   where?: InputMaybe<WhereDataFindAllPaymentMethodsInput>;
 };
 
-
 export type QueryPhoneArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryPhonesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPhonesInput>;
@@ -1881,11 +1793,9 @@ export type QueryPhonesArgs = {
   where?: InputMaybe<WhereDataFindAllPhonesInput>;
 };
 
-
 export type QueryPlanArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryPlansArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPlansInput>;
@@ -1893,11 +1803,9 @@ export type QueryPlansArgs = {
   where?: InputMaybe<WhereDataFindAllPlansInput>;
 };
 
-
 export type QueryPriceArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryPricesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPricesInput>;
@@ -1905,11 +1813,9 @@ export type QueryPricesArgs = {
   where?: InputMaybe<WhereDataFindAllPricesInput>;
 };
 
-
 export type QueryProductArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryProductsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllProductsInput>;
@@ -1917,11 +1823,9 @@ export type QueryProductsArgs = {
   where?: InputMaybe<WhereDataFindAllProductsInput>;
 };
 
-
 export type QuerySubscriptionContractArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QuerySubscriptionContractsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllSubscriptionContractsInput>;
@@ -1929,23 +1833,19 @@ export type QuerySubscriptionContractsArgs = {
   where?: InputMaybe<WhereDataFindAllSubscriptionContractsInput>;
 };
 
-
 export type QueryVideoArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryVideoAuthorArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryVideoAuthorsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllVideoAuthorsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllVideoAuthorsInput>;
 };
-
 
 export type QueryVideosArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllVideosInput>;
@@ -1954,14 +1854,14 @@ export type QueryVideosArgs = {
 };
 
 export type Recurring = {
-  __typename?: 'Recurring';
+  __typename?: "Recurring";
   app?: Maybe<App>;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
+  id: Scalars["ID"];
   interval: IntervalType;
-  intervalCount: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  intervalCount: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
   usageType: UsageType;
 };
@@ -2035,137 +1935,137 @@ export type RemoveVideoInput = {
 };
 
 export type RemoveWhereAccessInput = {
-  access: Scalars['String'];
+  access: Scalars["String"];
 };
 
 export type RemoveWhereAddressInput = {
-  address: Scalars['String'];
+  address: Scalars["String"];
 };
 
 export type RemoveWhereAppAdminInput = {
-  admin: Scalars['String'];
-  app: Scalars['String'];
+  admin: Scalars["String"];
+  app: Scalars["String"];
 };
 
 export type RemoveWhereAppInstructorInput = {
-  app: Scalars['String'];
-  instructor: Scalars['String'];
+  app: Scalars["String"];
+  instructor: Scalars["String"];
 };
 
 export type RemoveWhereColorInput = {
-  color: Scalars['String'];
-  parent: Scalars['String'];
+  color: Scalars["String"];
+  parent: Scalars["String"];
 };
 
 export type RemoveWhereCourseInput = {
-  course: Scalars['String'];
-  parent: Scalars['String'];
+  course: Scalars["String"];
+  parent: Scalars["String"];
 };
 
 export type RemoveWhereCourseInstructorInput = {
-  course: Scalars['String'];
-  instructor: Scalars['String'];
+  course: Scalars["String"];
+  instructor: Scalars["String"];
 };
 
 export type RemoveWhereCurrencyInput = {
-  currency: Scalars['String'];
+  currency: Scalars["String"];
 };
 
 export type RemoveWhereDomainInput = {
-  domain: Scalars['String'];
+  domain: Scalars["String"];
 };
 
 export type RemoveWhereImageInput = {
-  image: Scalars['String'];
+  image: Scalars["String"];
 };
 
 export type RemoveWhereLanguageInput = {
-  language: Scalars['String'];
+  language: Scalars["String"];
 };
 
 export type RemoveWhereModuleInput = {
-  module: Scalars['String'];
+  module: Scalars["String"];
 };
 
 export type RemoveWherePaymentMethodInput = {
-  paymentMethod: Scalars['String'];
+  paymentMethod: Scalars["String"];
 };
 
 export type RemoveWherePhoneInput = {
-  phone: Scalars['String'];
+  phone: Scalars["String"];
 };
 
 export type RemoveWherePriceInput = {
-  price: Scalars['String'];
+  price: Scalars["String"];
 };
 
 export type RemoveWhereVideoAuthorInput = {
-  author: Scalars['String'];
-  video: Scalars['String'];
+  author: Scalars["String"];
+  video: Scalars["String"];
 };
 
 export type RemoveWhereVideoInput = {
-  video: Scalars['String'];
+  video: Scalars["String"];
 };
 
 export type SignUpInput = {
-  email: Scalars['String'];
-  firstname: Scalars['String'];
-  lastname: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  firstname: Scalars["String"];
+  lastname: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type SubscriptionContract = {
-  __typename?: 'SubscriptionContract';
-  active: Scalars['Boolean'];
+  __typename?: "SubscriptionContract";
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
-  automaticRenew: Scalars['Boolean'];
-  canceledAt?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
+  automaticRenew: Scalars["Boolean"];
+  canceledAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  endAt?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
+  endAt?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
   lastInvoice?: Maybe<Invoice>;
   paymentMethod?: Maybe<PaymentMethod>;
-  startAt?: Maybe<Scalars['String']>;
+  startAt?: Maybe<Scalars["String"]>;
   status: SubscriptionContractStatus;
   type: SubscriptionContractType;
-  updatedAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export enum SubscriptionContractStatus {
-  Active = 'ACTIVE',
-  Canceled = 'CANCELED',
-  Pending = 'PENDING'
+  Active = "ACTIVE",
+  Canceled = "CANCELED",
+  Pending = "PENDING",
 }
 
 export enum SubscriptionContractType {
-  OneTime = 'ONE_TIME',
-  Recurring = 'RECURRING'
+  OneTime = "ONE_TIME",
+  Recurring = "RECURRING",
 }
 
 export type SubscriptionContracts = {
-  __typename?: 'SubscriptionContracts';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "SubscriptionContracts";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<SubscriptionContract>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export enum ThemeMode {
-  Dark = 'DARK',
-  Light = 'LIGHT'
+  Dark = "DARK",
+  Light = "LIGHT",
 }
 
 export enum TiersMode {
-  Volume = 'VOLUME'
+  Volume = "VOLUME",
 }
 
 export type UpdateAccountInput = {
@@ -2197,70 +2097,70 @@ export type UpdateCurrencyInput = {
 };
 
 export type UpdateDataAccountInput = {
-  avatar?: InputMaybe<Scalars['String']>;
-  dateBirthday?: InputMaybe<Scalars['String']>;
-  firstname?: InputMaybe<Scalars['String']>;
-  lastname?: InputMaybe<Scalars['String']>;
+  avatar?: InputMaybe<Scalars["String"]>;
+  dateBirthday?: InputMaybe<Scalars["String"]>;
+  firstname?: InputMaybe<Scalars["String"]>;
+  lastname?: InputMaybe<Scalars["String"]>;
 };
 
 export type UpdateDataAddressInput = {
-  city?: InputMaybe<Scalars['String']>;
-  complement?: InputMaybe<Scalars['String']>;
-  country?: InputMaybe<Scalars['String']>;
-  number?: InputMaybe<Scalars['String']>;
-  parent?: InputMaybe<Scalars['String']>;
-  postalCode?: InputMaybe<Scalars['String']>;
-  state?: InputMaybe<Scalars['String']>;
-  street?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars["String"]>;
+  complement?: InputMaybe<Scalars["String"]>;
+  country?: InputMaybe<Scalars["String"]>;
+  number?: InputMaybe<Scalars["String"]>;
+  parent?: InputMaybe<Scalars["String"]>;
+  postalCode?: InputMaybe<Scalars["String"]>;
+  state?: InputMaybe<Scalars["String"]>;
+  street?: InputMaybe<Scalars["String"]>;
 };
 
 export type UpdateDataAppInput = {
-  avatar?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  icon?: InputMaybe<Scalars['String']>;
-  logo?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  plan?: InputMaybe<Scalars['String']>;
+  avatar?: InputMaybe<Scalars["String"]>;
+  description?: InputMaybe<Scalars["String"]>;
+  icon?: InputMaybe<Scalars["String"]>;
+  logo?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  plan?: InputMaybe<Scalars["String"]>;
 };
 
 export type UpdateDataColorInput = {
-  color: Scalars['String'];
+  color: Scalars["String"];
 };
 
 export type UpdateDataCourseInput = {
-  avatar?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+  avatar?: InputMaybe<Scalars["String"]>;
+  description?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
 };
 
 export type UpdateDataCurrencyInput = {
-  minorUnit?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  symbol?: InputMaybe<Scalars['String']>;
+  minorUnit?: InputMaybe<Scalars["Int"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  symbol?: InputMaybe<Scalars["String"]>;
 };
 
 export type UpdateDataLanguageInput = {
-  icon?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type UpdateDataModuleInput = {
-  description?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
 };
 
 export type UpdateDataPriceInput = {
-  fromAmount?: InputMaybe<Scalars['Int']>;
-  quantity?: InputMaybe<Scalars['Int']>;
+  fromAmount?: InputMaybe<Scalars["Int"]>;
+  quantity?: InputMaybe<Scalars["Int"]>;
 };
 
 export type UpdateDataSubscriptionContractInput = {
-  automaticRenew?: InputMaybe<Scalars['Boolean']>;
-  defaultStripePaymentMethod?: InputMaybe<Scalars['String']>;
+  automaticRenew?: InputMaybe<Scalars["Boolean"]>;
+  defaultStripePaymentMethod?: InputMaybe<Scalars["String"]>;
 };
 
 export type UpdateDataVideoInput = {
-  name: Scalars['String'];
+  name: Scalars["String"];
 };
 
 export type UpdateLanguageInput = {
@@ -2289,110 +2189,110 @@ export type UpdateVideoInput = {
 };
 
 export type UpdateWhereAddressInput = {
-  address: Scalars['String'];
+  address: Scalars["String"];
 };
 
 export type UpdateWhereColorInput = {
-  color: Scalars['String'];
+  color: Scalars["String"];
 };
 
 export type UpdateWhereCourseInput = {
-  course: Scalars['String'];
+  course: Scalars["String"];
 };
 
 export type UpdateWhereCurrencyInput = {
-  currency: Scalars['String'];
+  currency: Scalars["String"];
 };
 
 export type UpdateWhereLanguageInput = {
-  language: Scalars['String'];
+  language: Scalars["String"];
 };
 
 export type UpdateWhereModuleInput = {
-  module: Scalars['String'];
+  module: Scalars["String"];
 };
 
 export type UpdateWherePriceInput = {
-  price: Scalars['String'];
+  price: Scalars["String"];
 };
 
 export type UpdateWhereSubscriptionContractInput = {
-  subscriptionContract: Scalars['String'];
+  subscriptionContract: Scalars["String"];
 };
 
 export type UpdateWhereVideoInput = {
-  video: Scalars['String'];
+  video: Scalars["String"];
 };
 
 export enum UsageType {
-  Licensed = 'LICENSED',
-  Metered = 'METERED'
+  Licensed = "LICENSED",
+  Metered = "METERED",
 }
 
 export type Video = {
-  __typename?: 'Video';
-  active: Scalars['Boolean'];
+  __typename?: "Video";
+  active: Scalars["Boolean"];
   app?: Maybe<App>;
   authors: VideoAuthors;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars["String"]>;
   file: File;
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  id: Scalars["ID"];
+  name: Scalars["String"];
   poster?: Maybe<Image>;
-  slug: Scalars['String'];
-  updatedAt?: Maybe<Scalars['String']>;
+  slug: Scalars["String"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type VideoAuthor = {
-  __typename?: 'VideoAuthor';
+  __typename?: "VideoAuthor";
   app?: Maybe<App>;
   author: Account;
-  createdAt?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars["String"]>;
   createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
-  updatedAt?: Maybe<Scalars['String']>;
+  id: Scalars["ID"];
+  updatedAt?: Maybe<Scalars["String"]>;
   updatedBy?: Maybe<Account>;
 };
 
 export type VideoAuthors = {
-  __typename?: 'VideoAuthors';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "VideoAuthors";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<VideoAuthor>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type Videos = {
-  __typename?: 'Videos';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
+  __typename?: "Videos";
+  currentPage: Scalars["Int"];
+  firstPage: Scalars["Int"];
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
   items?: Maybe<Array<Video>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
+  lastPage: Scalars["Int"];
+  nextPage: Scalars["Int"];
+  previousPage: Scalars["Int"];
+  totalCount: Scalars["Int"];
+  totalPages: Scalars["Int"];
 };
 
 export type WhereDataBooleanInput = {
-  equals?: InputMaybe<Scalars['Boolean']>;
+  equals?: InputMaybe<Scalars["Boolean"]>;
 };
 
 export type WhereDataFindAllAccessesDataInput = {
   active?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   parent?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
@@ -2408,7 +2308,7 @@ export type WhereDataFindAllAccountsDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
   email?: InputMaybe<WhereDataStringInput>;
   firstname?: InputMaybe<WhereDataSearchInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   lastname?: InputMaybe<WhereDataSearchInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
   username?: InputMaybe<WhereDataStringInput>;
@@ -2425,7 +2325,7 @@ export type WhereDataFindAllAddressesDataInput = {
   complement?: InputMaybe<WhereDataSearchInput>;
   country?: InputMaybe<WhereDataSearchInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   parent?: InputMaybe<WhereDataStringInput>;
   postalCode?: InputMaybe<WhereDataStringInput>;
   state?: InputMaybe<WhereDataSearchInput>;
@@ -2443,7 +2343,7 @@ export type WhereDataFindAllAppAdminsDataInput = {
   admin?: InputMaybe<WhereDataStringInput>;
   app?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 
@@ -2456,7 +2356,7 @@ export type WhereDataFindAllAppAdminsInput = {
 export type WhereDataFindAllAppInstructorsDataInput = {
   app?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   instructor?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
@@ -2472,7 +2372,7 @@ export type WhereDataFindAllAppsDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
   currency?: InputMaybe<WhereDataStringInput>;
   description?: InputMaybe<WhereDataSearchInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataSearchInput>;
   parent?: InputMaybe<WhereDataStringInput>;
   plan?: InputMaybe<WhereDataStringInput>;
@@ -2488,7 +2388,7 @@ export type WhereDataFindAllAppsInput = {
 
 export type WhereDataFindAllColorsDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   parent?: InputMaybe<WhereDataStringInput>;
   themeMode?: InputMaybe<ThemeMode>;
   type?: InputMaybe<ColorType>;
@@ -2504,7 +2404,7 @@ export type WhereDataFindAllColorsInput = {
 export type WhereDataFindAllCourseInstructorsDataInput = {
   course?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   instructor?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
@@ -2518,7 +2418,7 @@ export type WhereDataFindAllCourseInstructorsInput = {
 export type WhereDataFindAllCourseStudentsDataInput = {
   course?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   student?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
@@ -2532,7 +2432,7 @@ export type WhereDataFindAllCourseStudentsInput = {
 export type WhereDataFindAllCoursesDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
   description?: InputMaybe<WhereDataSearchInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataSearchInput>;
   parent?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -2546,7 +2446,7 @@ export type WhereDataFindAllCoursesInput = {
 
 export type WhereDataFindAllCurrenciesDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   minorUnit?: InputMaybe<WhereDataIntInput>;
   name?: InputMaybe<WhereDataSearchInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -2561,7 +2461,7 @@ export type WhereDataFindAllCurrenciesInput = {
 export type WhereDataFindAllDomainsDataInput = {
   active?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataSearchInput>;
   parent?: InputMaybe<WhereDataStringInput>;
   status?: InputMaybe<DomainStatus>;
@@ -2576,7 +2476,7 @@ export type WhereDataFindAllDomainsInput = {
 
 export type WhereDataFindAllImagesDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataSearchInput>;
   parent?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -2594,7 +2494,7 @@ export type WhereDataFindAllInvoicesDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
   currency?: InputMaybe<WhereDataStringInput>;
   customer?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   status?: InputMaybe<InvoiceStatus>;
   subscription?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -2609,7 +2509,7 @@ export type WhereDataFindAllInvoicesInput = {
 export type WhereDataFindAllLanguagesDataInput = {
   active?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataSearchInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
@@ -2623,7 +2523,7 @@ export type WhereDataFindAllLanguagesInput = {
 export type WhereDataFindAllModulesDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
   description?: InputMaybe<WhereDataSearchInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataSearchInput>;
   parent?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -2638,7 +2538,7 @@ export type WhereDataFindAllModulesInput = {
 export type WhereDataFindAllPaymentMethodsDataInput = {
   active?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   parent?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
@@ -2654,7 +2554,7 @@ export type WhereDataFindAllPhonesDataInput = {
   areaCode?: InputMaybe<WhereDataStringInput>;
   countryCode?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   number?: InputMaybe<WhereDataStringInput>;
   parent?: InputMaybe<WhereDataStringInput>;
   status?: InputMaybe<PhoneStatus>;
@@ -2675,7 +2575,7 @@ export type WhereDataFindAllPlansDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
   hasCustomDomain?: InputMaybe<WhereDataBooleanInput>;
   hasCustomSite?: InputMaybe<WhereDataBooleanInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataStringInput>;
   quantityClassroomsPerCourses?: InputMaybe<WhereDataIntInput>;
   quantityCourses?: InputMaybe<WhereDataIntInput>;
@@ -2693,7 +2593,7 @@ export type WhereDataFindAllPlansInput = {
 
 export type WhereDataFindAllPricesDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   inventoryType?: InputMaybe<InventoryType>;
   parent?: InputMaybe<WhereDataStringInput>;
   recurringIntervalCount?: InputMaybe<WhereDataIntInput>;
@@ -2713,7 +2613,7 @@ export type WhereDataFindAllProductsDataInput = {
   checkoutVisible?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   description?: InputMaybe<WhereDataSearchInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataSearchInput>;
   parent?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -2729,7 +2629,7 @@ export type WhereDataFindAllSubscriptionContractsDataInput = {
   active?: InputMaybe<WhereDataBooleanInput>;
   automaticRenew?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   parent?: InputMaybe<WhereDataStringInput>;
   product?: InputMaybe<WhereDataStringInput>;
   status?: InputMaybe<SubscriptionContractStatus>;
@@ -2746,7 +2646,7 @@ export type WhereDataFindAllSubscriptionContractsInput = {
 export type WhereDataFindAllVideoAuthorsDataInput = {
   author?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
   video?: InputMaybe<WhereDataStringInput>;
 };
@@ -2759,7 +2659,7 @@ export type WhereDataFindAllVideoAuthorsInput = {
 
 export type WhereDataFindAllVideosDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars["String"]>>;
   name?: InputMaybe<WhereDataSearchInput>;
   parent?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -2772,16 +2672,16 @@ export type WhereDataFindAllVideosInput = {
 };
 
 export type WhereDataIntInput = {
-  equals?: InputMaybe<Scalars['Int']>;
+  equals?: InputMaybe<Scalars["Int"]>;
 };
 
 export type WhereDataSearchInput = {
-  endsWith?: InputMaybe<Scalars['String']>;
-  equals?: InputMaybe<Scalars['String']>;
-  search?: InputMaybe<Scalars['String']>;
-  startsWith?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars["String"]>;
+  equals?: InputMaybe<Scalars["String"]>;
+  search?: InputMaybe<Scalars["String"]>;
+  startsWith?: InputMaybe<Scalars["String"]>;
 };
 
 export type WhereDataStringInput = {
-  equals?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars["String"]>;
 };
