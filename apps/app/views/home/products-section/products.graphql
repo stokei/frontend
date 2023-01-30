@@ -1,0 +1,12 @@
+query Products($where: WhereDataFindAllProductsInput!) {
+  products(where: $where) {
+    items {
+      id
+      name
+      description
+      avatar {
+        url
+      }
+    }
+  }
+}

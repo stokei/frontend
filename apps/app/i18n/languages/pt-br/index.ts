@@ -6,6 +6,8 @@ export const ptBRMessages = {
   lastnameNotFound: "Sobrenome não encontrado!",
   passwordNotFound: "Senha não encontrada!",
   accountAlreadyExists: "Usuário já existe!",
+  allRightsReserved: "© {year} {company}. Todos direitos reservados.",
+  home: "Início",
   email: "Email",
   password: "Senha",
   cancel: "Cancelar",

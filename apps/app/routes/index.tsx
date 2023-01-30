@@ -1,5 +1,6 @@
 export const getRoutes = () => {
   return {
+    home: "/",
     notFound: "/404",
     login: "/auth/login",
     signUp: "/auth/signup",

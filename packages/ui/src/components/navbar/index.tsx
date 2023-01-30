@@ -8,7 +8,6 @@ export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => (
     paddingX="5"
     paddingY="3"
     margin={0}
-    borderBottomWidth={1}
     borderColor="background.300"
     {...props}
     flexDirection="row"

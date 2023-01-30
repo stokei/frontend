@@ -1,11 +1,9 @@
-import { useMemo } from "react";
-
 import { StokeiGraphQLClientProvider } from "@stokei/graphql";
 import { Messages, TranslationsProvider } from "@stokei/translations";
 import {
+  LoadingTransition,
   StokeiUIProvider,
   uiTranslationsMessages,
-  LoadingTransition,
 } from "@stokei/ui";
 import { getAppIdFromNextRouter } from "@stokei/utils";
 
@@ -15,13 +13,15 @@ import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAppProvider } from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
-import "@stokei/ui/src/styles/css/global.css";
-import { Router } from "next/router";
 import {
   CurrentGlobalAppDocument,
   CurrentGlobalAppQuery,
 } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 import { formatAppColorsToThemeColors } from "@/utils";
+import "@stokei/ui/src/styles/css/global.css";
+import { Router } from "next/router";
+import { useMemo } from "react";
+import { getRoutes } from "@/routes";
 
 const messages: Messages = {
   "pt-BR": {
@@ -43,12 +43,22 @@ function MyApp({
   pageProps,
   appId,
   currentApp,
-  stokeiGraphQLClient,
   themeColors,
+  router,
 }: any) {
+  const stokeiGraphQLClient = useMemo(
+    () =>
+      createAPIClient({
+        appId,
+        onLogout() {
+          router?.push(getRoutes().home);
+        },
+      }),
+    [appId, router]
+  );
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
-      <CurrentAppProvider isLoading={false} currentApp={currentApp}>
+      <CurrentAppProvider currentApp={currentApp}>
         <StokeiUIProvider
           config={{
             colors: themeColors,
@@ -78,7 +88,6 @@ MyApp.getInitialProps = async (ctx: any) => {
   return {
     appId,
     currentApp: currentApp?.data?.currentApp,
-    stokeiGraphQLClient,
     themeColors: formatAppColorsToThemeColors(
       currentApp?.data?.currentApp?.colors?.items
     ),

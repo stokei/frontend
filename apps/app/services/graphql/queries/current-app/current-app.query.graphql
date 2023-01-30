@@ -2,6 +2,9 @@ query CurrentGlobalApp {
   currentApp {
     id
     name
+    logo {
+      url
+    }
     colors {
       items {
         color
