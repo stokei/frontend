@@ -2,7 +2,7 @@ import defaultLogoURL from "@/assets/logo.png";
 import { Footer } from "@/components/footer";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { getRoutes } from "@/routes";
-import { Box, Button, Image, Navbar, Stack } from "@stokei/ui";
+import { Box, Button, Container, Image, Navbar, Stack } from "@stokei/ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
@@ -23,7 +23,7 @@ export const HomePage: FC<HomePageProps> = () => {
             <Image
               width={["12", "12", "20", "20"]}
               height="fit-content"
-              src={currentApp?.logo?.url}
+              src={currentApp?.logo?.file?.url || ""}
               fallbackSrc={defaultLogoURL.src}
               alt={translate.formatMessage({ id: "home" })}
             />
@@ -44,6 +44,12 @@ export const HomePage: FC<HomePageProps> = () => {
       <Box paddingY="10">
         <ProductsSection />
       </Box>
+      <Container>
+        <ProductsSection />
+      </Container>
+      <Container paddingLeft="0">
+        <ProductsSection />
+      </Container>
       <Footer />
     </>
   );

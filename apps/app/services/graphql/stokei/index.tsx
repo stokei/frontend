@@ -447,6 +447,10 @@ export type CreateFileUploadUrlResponse = {
   uploadURL: Scalars['String'];
 };
 
+export type CreateImageInput = {
+  file: Scalars['String'];
+};
+
 export type CreateLanguageInput = {
   icon?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
@@ -661,7 +665,6 @@ export type Image = {
   id: Scalars['ID'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
-  url: Scalars['String'];
 };
 
 export type Images = {
@@ -853,6 +856,7 @@ export type Mutation = {
   createCurrency: Currency;
   createCustomerPortalSession: CustomerPortalSession;
   createDomain: Domain;
+  createImage: Image;
   createImageUploadURL: CreateFileUploadUrlResponse;
   createLanguage: Language;
   createModule: Module;
@@ -968,6 +972,11 @@ export type MutationCreateCustomerPortalSessionArgs = {
 
 export type MutationCreateDomainArgs = {
   input: CreateDomainInput;
+};
+
+
+export type MutationCreateImageArgs = {
+  input: CreateImageInput;
 };
 
 

@@ -1,7 +1,8 @@
 import { useCurrentApp } from "@/hooks";
-import { Container, Grid, GridItem, SimpleGrid } from "@stokei/ui";
+import { Container, Grid, GridItem, Loading, SimpleGrid } from "@stokei/ui";
 import { FC, useEffect } from "react";
 import { Product } from "../product";
+import { ProductSkeleton } from "../product-skeleton";
 import { useProductsQuery } from "./products.graphql.generated";
 
 interface ProductsSectionProps {}
@@ -32,15 +33,25 @@ export const ProductsSection: FC<ProductsSectionProps> = () => {
   return (
     <Container paddingY="5">
       <SimpleGrid columns={[2, 2, 4, 4]} spacing="5">
-        {dataProducts?.products?.items?.map((product) => (
-          <Product
-            key={product?.id}
-            id={product?.id}
-            name={product?.name}
-            avatar={product?.avatar?.url || ""}
-            description={product?.description}
-          />
-        ))}
+        {isLoading ? (
+          <>
+            {Array.from({ length: 8 }).map(() => (
+              <ProductSkeleton />
+            ))}
+          </>
+        ) : (
+          <>
+            {dataProducts?.products?.items?.map((product) => (
+              <Product
+                key={product?.id}
+                id={product?.id}
+                name={product?.name}
+                avatar={product?.avatar?.file?.url || ""}
+                description={product?.description}
+              />
+            ))}
+          </>
+        )}
       </SimpleGrid>
     </Container>
   );

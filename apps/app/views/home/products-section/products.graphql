@@ -5,7 +5,9 @@ query Products($where: WhereDataFindAllProductsInput!) {
       name
       description
       avatar {
-        url
+        file {
+          url
+        }
       }
     }
   }

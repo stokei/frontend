@@ -3,7 +3,9 @@ query CurrentGlobalApp {
     id
     name
     logo {
-      url
+      file {
+        url
+      }
     }
     colors {
       items {
