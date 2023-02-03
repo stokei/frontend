@@ -1,0 +1,26 @@
+fragment Price on Price {
+  id
+  fromAmount
+  amount
+  unit
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  billingScheme
+  tiersMode
+  tiers {
+    items {
+      id
+      amount
+      upTo
+      infinite
+    }
+  }
+  recurring {
+    usageType
+    intervalCount
+    interval
+  }
+}

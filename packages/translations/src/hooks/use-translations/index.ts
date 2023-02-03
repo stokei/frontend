@@ -15,6 +15,27 @@ export const useTranslations = <TKeys = string>() => {
     []
   );
 
+  const formatMoney = useCallback(
+    ({
+      currency,
+      amount,
+      minorUnit,
+    }: {
+      currency: string;
+      amount: number;
+      minorUnit: number;
+    }) => {
+      try {
+        return new Intl.NumberFormat(intl.locale, {
+          currency,
+        }).format(amount / Math.pow(10, minorUnit));
+      } catch (error) {
+        return undefined;
+      }
+    },
+    []
+  );
+
   const formatDate = useCallback(
     (date: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
       try {
@@ -37,5 +58,5 @@ export const useTranslations = <TKeys = string>() => {
     []
   );
 
-  return { formatMessage, formatDate, formatTime };
+  return { formatMessage, formatMoney, formatDate, formatTime };
 };

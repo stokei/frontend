@@ -44,12 +44,6 @@ export const HomePage: FC<HomePageProps> = () => {
       <Box paddingY="10">
         <ProductsSection />
       </Box>
-      <Container>
-        <ProductsSection />
-      </Container>
-      <Container paddingLeft="0">
-        <ProductsSection />
-      </Container>
       <Footer />
     </>
   );

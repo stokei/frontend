@@ -9,6 +9,35 @@ query Products($where: WhereDataFindAllProductsInput!) {
           url
         }
       }
+      defaultPrice {
+        ...Price
+      }
+      prices {
+        items {
+          ...Price
+        }
+      }
+      course {
+        instructors {
+          items {
+            id
+            instructor {
+              fullname
+            }
+          }
+        }
+      }
+      plan {
+        id
+        name
+        features {
+          items {
+            id
+            name
+            description
+          }
+        }
+      }
     }
   }
 }

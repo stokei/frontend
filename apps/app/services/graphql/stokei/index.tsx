@@ -296,15 +296,22 @@ export type Course = {
   createdBy?: Maybe<Account>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  instructors?: Maybe<CourseInstructors>;
   name: Scalars['String'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };
 
+
+export type CourseInstructorsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllAccountsInput>;
+  page?: InputMaybe<PaginationInput>;
+};
+
 export type CourseInstructor = {
   __typename?: 'CourseInstructor';
   app?: Maybe<App>;
-  course: Course;
+  course?: Maybe<Course>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
@@ -330,7 +337,7 @@ export type CourseInstructors = {
 export type CourseStudent = {
   __typename?: 'CourseStudent';
   app?: Maybe<App>;
-  course: Course;
+  course?: Maybe<Course>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
@@ -488,14 +495,17 @@ export type CreatePlanInput = {
 export type CreatePriceInput = {
   amount?: InputMaybe<Scalars['Int']>;
   billingScheme: BillingScheme;
+  defaultPrice?: InputMaybe<Scalars['Boolean']>;
   fromAmount?: InputMaybe<Scalars['Int']>;
   inventoryType: InventoryType;
+  nickname?: InputMaybe<Scalars['String']>;
   parent: Scalars['String'];
   quantity?: InputMaybe<Scalars['Int']>;
   recurring?: InputMaybe<CreateRecurringInput>;
   tiers?: InputMaybe<Array<CreatePriceTierInput>>;
   tiersMode: TiersMode;
   type: PriceType;
+  unit?: InputMaybe<Scalars['String']>;
 };
 
 export type CreatePriceTierInput = {
@@ -1392,6 +1402,16 @@ export type OrderByDataFindAllPlansInput = {
   updatedBy?: InputMaybe<OrderBy>;
 };
 
+export type OrderByDataFindAllPriceTiersInput = {
+  amount?: InputMaybe<OrderBy>;
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  infinite?: InputMaybe<OrderBy>;
+  upTo?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
 export type OrderByDataFindAllPricesInput = {
   amount?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
@@ -1403,6 +1423,7 @@ export type OrderByDataFindAllPricesInput = {
   recurringIntervalCount?: InputMaybe<OrderBy>;
   recurringIntervalType?: InputMaybe<OrderBy>;
   type?: InputMaybe<OrderBy>;
+  unit?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -1572,21 +1593,57 @@ export type Price = {
   active: Scalars['Boolean'];
   amount?: Maybe<Scalars['Float']>;
   app?: Maybe<App>;
+  billingScheme?: Maybe<BillingScheme>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   currency: Currency;
   default: Scalars['Boolean'];
   fromAmount?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
-  inventoryType: InventoryType;
+  inventoryType?: Maybe<InventoryType>;
   nickname?: Maybe<Scalars['String']>;
-  product: Product;
-  purchaseUrl: Scalars['String'];
   quantity: Scalars['Int'];
   recurring?: Maybe<Recurring>;
+  tiers?: Maybe<PriceTiers>;
+  tiersMode?: Maybe<TiersMode>;
   type: PriceType;
+  unit?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+};
+
+
+export type PriceTiersArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllPriceTiersInput>;
+  page?: InputMaybe<PaginationInput>;
+};
+
+export type PriceTier = {
+  __typename?: 'PriceTier';
+  amount: Scalars['Float'];
+  app?: Maybe<App>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  infinite: Scalars['Boolean'];
+  parent: Scalars['String'];
+  upTo?: Maybe<Scalars['Float']>;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export type PriceTiers = {
+  __typename?: 'PriceTiers';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<PriceTier>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
 };
 
 export enum PriceType {
@@ -1615,14 +1672,25 @@ export type Product = {
   app?: Maybe<App>;
   avatar?: Maybe<Image>;
   checkoutVisible: Scalars['Boolean'];
+  course?: Maybe<Course>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   deactivatedAt?: Maybe<Scalars['String']>;
+  defaultPrice?: Maybe<Price>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
+  parent?: Maybe<Scalars['String']>;
+  plan?: Maybe<Plan>;
+  prices?: Maybe<Prices>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+};
+
+
+export type ProductPricesArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllPricesInput>;
+  page?: InputMaybe<PaginationInput>;
 };
 
 export type Products = {
@@ -1988,11 +2056,11 @@ export type Recurring = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
-  interval: IntervalType;
-  intervalCount: Scalars['String'];
+  interval?: Maybe<IntervalType>;
+  intervalCount: Scalars['Int'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
-  usageType: UsageType;
+  usageType?: Maybe<UsageType>;
 };
 
 export type RemoveAccessInput = {
@@ -2728,6 +2796,7 @@ export type WhereDataFindAllPricesDataInput = {
   recurringIntervalCount?: InputMaybe<WhereDataIntInput>;
   recurringIntervalType?: InputMaybe<IntervalType>;
   type?: InputMaybe<PriceType>;
+  unit?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 
