@@ -9,8 +9,9 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useLoginMutation } from "./login.graphql.generated";
+import { getLoginResponseURL } from "@/utils";
 
 interface LoginPageProps {}
 
@@ -21,6 +22,11 @@ export const LoginPage: FC<LoginPageProps> = () => {
   const { onShowAPIError } = useAPIErrors();
 
   const [{ fetching: isLoadingLogin }, onLogin] = useLoginMutation();
+
+  const redirectToWhenLoginSuccessfully = useMemo(
+    () => router.query?.redirectTo?.toString(),
+    [router]
+  );
 
   const onSubmit = async ({ email, password }: FormLoginOnSubmitData) => {
     try {
@@ -39,6 +45,13 @@ export const LoginPage: FC<LoginPageProps> = () => {
           title: translate.formatMessage({ id: "loginSuccessfully" }),
           status: "success",
         });
+        window?.location?.assign(
+          getLoginResponseURL({
+            redirectTo: redirectToWhenLoginSuccessfully || undefined,
+            isAdmin: !!data.account.isAdmin,
+          })
+        );
+        return;
       }
 
       if (!!response.error?.graphQLErrors?.length) {
@@ -62,7 +75,14 @@ export const LoginPage: FC<LoginPageProps> = () => {
           onRedirectToForgotPasswordURL={() =>
             router.push(getRoutes().forgotPassword)
           }
-          onRedirectToSignUpURL={() => router.push(getRoutes().signUp)}
+          onRedirectToSignUpURL={() =>
+            router.push({
+              pathname: getRoutes().signUp,
+              query: {
+                redirectTo: redirectToWhenLoginSuccessfully,
+              },
+            })
+          }
           onSubmit={onSubmit}
         />
       </Box>

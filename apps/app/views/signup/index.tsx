@@ -1,5 +1,6 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { getRoutes } from "@/routes";
+import { getLoginResponseURL } from "@/utils";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
   Box,
@@ -9,7 +10,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useSignUpMutation } from "./signup.graphql.generated";
 
 interface SignUpPageProps {}
@@ -21,6 +22,11 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
   const { onShowAPIError } = useAPIErrors();
 
   const [{ fetching: isLoadingSignUp }, onSignUp] = useSignUpMutation();
+
+  const redirectToWhenSignUpSuccessfully = useMemo(
+    () => router.query?.redirectTo?.toString(),
+    [router]
+  );
 
   const onSubmit = async ({
     email,
@@ -46,6 +52,13 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
           title: translate.formatMessage({ id: "signUpSuccessfully" }),
           status: "success",
         });
+        window?.location?.assign(
+          getLoginResponseURL({
+            redirectTo: redirectToWhenSignUpSuccessfully || undefined,
+            isAdmin: !!data.account.isAdmin,
+          })
+        );
+        return;
       }
 
       if (!!response.error?.graphQLErrors?.length) {
@@ -66,7 +79,14 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
       <Box width="full" maxWidth={["full", "full", "400px", "400px"]}>
         <FormSignUp
           isLoading={isLoadingSignUp}
-          onRedirectToLoginURL={() => router.push(getRoutes().login)}
+          onRedirectToLoginURL={() =>
+            router.push({
+              pathname: getRoutes().login,
+              query: {
+                redirectTo: redirectToWhenSignUpSuccessfully,
+              },
+            })
+          }
           onSubmit={onSubmit}
         />
       </Box>

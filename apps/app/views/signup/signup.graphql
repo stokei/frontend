@@ -6,6 +6,7 @@ mutation SignUp($input: SignUpInput!) {
     account {
       id
       fullname
+      isAdmin
       app {
         id
         name

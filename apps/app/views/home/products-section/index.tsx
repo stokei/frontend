@@ -1,9 +1,10 @@
 import { useCurrentApp } from "@/hooks";
-import { Container, Grid, GridItem, Loading, SimpleGrid } from "@stokei/ui";
+import { OrderBy } from "@/services/graphql/stokei";
+import { Container, SimpleGrid } from "@stokei/ui";
 import { FC, useEffect } from "react";
 import { Product } from "../product";
 import { ProductSkeleton } from "../product-skeleton";
-import { useProductsQuery } from "./products.graphql.generated";
+import { useProductsQuery } from "./products.query.graphql.generated";
 
 interface ProductsSectionProps {}
 
@@ -21,6 +22,9 @@ export const ProductsSection: FC<ProductsSectionProps> = () => {
             },
           },
         },
+        orderBy: {
+          createdAt: OrderBy.Desc,
+        },
       },
     });
 
@@ -29,8 +33,6 @@ export const ProductsSection: FC<ProductsSectionProps> = () => {
       loadQuery();
     }
   }, [currentApp, loadQuery]);
-
-  console.log(dataProducts?.products?.items);
 
   return (
     <Container paddingY="5">
@@ -51,6 +53,8 @@ export const ProductsSection: FC<ProductsSectionProps> = () => {
                 avatar={product?.avatar?.file?.url || ""}
                 description={product?.description}
                 defaultPrice={product?.defaultPrice}
+                plan={product?.plan}
+                course={product?.course}
                 prices={product?.prices?.items}
               />
             ))}

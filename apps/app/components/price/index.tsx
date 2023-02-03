@@ -38,7 +38,12 @@ export const Price: FC<PriceProps> = ({ price, ...props }) => {
       <Text fontSize="md" fontWeight="600">
         {price?.currency?.symbol}
       </Text>
-      <Text fontSize="3xl" fontWeight="900" lineHeight="shorter">
+      <Text
+        fontSize="3xl"
+        color="primary.500"
+        fontWeight="900"
+        lineHeight="shorter"
+      >
         {priceAmount}
       </Text>
       {priceRecurringIntervalTypeKey && (

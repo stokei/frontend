@@ -2,10 +2,13 @@ import * as Types from '../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
 import { PriceFragmentDoc } from '../../../components/price/price.fragment.graphql.generated';
+import { HomeProductsCourseFragmentDoc } from '../product/products-course.fragment.graphql.generated';
+import { HomeProductsPlanFragmentDoc } from '../product/products-plan.fragment.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type ProductsQueryVariables = Types.Exact<{
   where: Types.WhereDataFindAllProductsInput;
+  orderBy?: Types.InputMaybe<Types.OrderByDataFindAllProductsInput>;
 }>;
 
 
@@ -13,8 +16,8 @@ export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'Pr
 
 
 export const ProductsDocument = gql`
-    query Products($where: WhereDataFindAllProductsInput!) {
-  products(where: $where) {
+    query Products($where: WhereDataFindAllProductsInput!, $orderBy: OrderByDataFindAllProductsInput) {
+  products(where: $where, orderBy: $orderBy) {
     items {
       id
       name
@@ -33,30 +36,17 @@ export const ProductsDocument = gql`
         }
       }
       course {
-        instructors {
-          items {
-            id
-            instructor {
-              fullname
-            }
-          }
-        }
+        ...HomeProductsCourse
       }
       plan {
-        id
-        name
-        features {
-          items {
-            id
-            name
-            description
-          }
-        }
+        ...HomeProductsPlan
       }
     }
   }
 }
-    ${PriceFragmentDoc}`;
+    ${PriceFragmentDoc}
+${HomeProductsCourseFragmentDoc}
+${HomeProductsPlanFragmentDoc}`;
 
 export function useProductsQuery(options: Omit<Urql.UseQueryArgs<ProductsQueryVariables>, 'query'>) {
   return Urql.useQuery<ProductsQuery, ProductsQueryVariables>({ query: ProductsDocument, ...options });

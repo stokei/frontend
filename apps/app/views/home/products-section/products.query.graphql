@@ -1,0 +1,31 @@
+query Products(
+  $where: WhereDataFindAllProductsInput!
+  $orderBy: OrderByDataFindAllProductsInput
+) {
+  products(where: $where, orderBy: $orderBy) {
+    items {
+      id
+      name
+      description
+      avatar {
+        file {
+          url
+        }
+      }
+      defaultPrice {
+        ...Price
+      }
+      prices {
+        items {
+          ...Price
+        }
+      }
+      course {
+        ...HomeProductsCourse
+      }
+      plan {
+        ...HomeProductsPlan
+      }
+    }
+  }
+}

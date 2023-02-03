@@ -8,7 +8,7 @@ export const SimpleFooter: FC<SimpleFooterProps> = ({ ...props }) => {
   const translate = useTranslations();
 
   return (
-    <Footer justify="center" {...props}>
+    <Footer justify="center" paddingY="4" {...props}>
       <Box>
         <Text>
           {translate.formatMessage(

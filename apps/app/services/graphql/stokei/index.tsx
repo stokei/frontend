@@ -800,6 +800,7 @@ export type MeAccount = {
   firstname: Scalars['String'];
   fullname: Scalars['String'];
   id: Scalars['ID'];
+  isAdmin?: Maybe<Scalars['Boolean']>;
   isStokei: Scalars['Boolean'];
   lastname: Scalars['String'];
   paymentMethods?: Maybe<PaymentMethods>;
