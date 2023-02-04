@@ -1599,11 +1599,12 @@ export type Price = {
   createdBy?: Maybe<Account>;
   currency: Currency;
   default: Scalars['Boolean'];
+  discountPercent?: Maybe<Scalars['Float']>;
   fromAmount?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   inventoryType?: Maybe<InventoryType>;
   nickname?: Maybe<Scalars['String']>;
-  quantity: Scalars['Int'];
+  quantity: Scalars['Float'];
   recurring?: Maybe<Recurring>;
   tiers?: Maybe<PriceTiers>;
   tiersMode?: Maybe<TiersMode>;

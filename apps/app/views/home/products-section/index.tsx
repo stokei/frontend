@@ -36,7 +36,7 @@ export const ProductsSection: FC<ProductsSectionProps> = () => {
 
   return (
     <Container paddingY="5">
-      <SimpleGrid columns={[2, 2, 4, 4]} spacing="5">
+      <SimpleGrid columns={[1, 2, 3, 4]} spacing="5">
         {isLoading ? (
           <>
             {Array.from({ length: 8 }).map((_, i) => (
@@ -55,7 +55,6 @@ export const ProductsSection: FC<ProductsSectionProps> = () => {
                 defaultPrice={product?.defaultPrice}
                 plan={product?.plan}
                 course={product?.course}
-                prices={product?.prices?.items}
               />
             ))}
           </>

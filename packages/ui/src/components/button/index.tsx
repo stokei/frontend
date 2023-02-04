@@ -28,6 +28,7 @@ export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
   }, [props]);
   return (
     <ChakraButton
+      rounded="full"
       {...props}
       colorScheme={props.colorScheme || "primary"}
       textColor={buttonTextColor}

@@ -2,6 +2,7 @@ fragment Price on Price {
   id
   fromAmount
   amount
+  discountPercent
   unit
   currency {
     id

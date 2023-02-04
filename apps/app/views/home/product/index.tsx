@@ -1,28 +1,23 @@
 import {
-  Avatar,
-  AvatarGroup,
+  Badge,
   Box,
-  Button,
   Card,
   CardBody,
-  CardFooter,
+  CardHeader,
   Description,
   Image,
-  Link,
   Stack,
   Title,
 } from "@stokei/ui";
-import NextLink from "next/link";
 import { FC, memo, useCallback, useMemo } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { PriceFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useTranslations } from "@/hooks";
 import { getRoutes } from "@/routes";
 import { useRouter } from "next/router";
-import { HomeProductsPlanFragment } from "./products-plan.fragment.graphql.generated";
 import { HomeProductsCourseFragment } from "./products-course.fragment.graphql.generated";
+import { HomeProductsPlanFragment } from "./products-plan.fragment.graphql.generated";
 
 export interface ProductProps {
   readonly id: string;
@@ -32,7 +27,6 @@ export interface ProductProps {
   readonly plan?: HomeProductsPlanFragment | null;
   readonly course?: HomeProductsCourseFragment | null;
   readonly defaultPrice?: PriceFragment | null;
-  readonly prices?: PriceFragment[] | null;
 }
 
 export const Product: FC<ProductProps> = memo(
@@ -41,22 +35,15 @@ export const Product: FC<ProductProps> = memo(
     name,
     description,
     avatar,
-    prices,
     defaultPrice,
     course,
     plan,
   }) => {
-    const translate = useTranslations();
     const router = useRouter();
 
-    const price = useMemo(
-      () => defaultPrice || prices?.[0],
-      [defaultPrice, prices]
-    );
-
     const checkoutURL = useMemo(
-      () => getRoutes().checkout.home({ price: price?.id || "" }),
-      [price]
+      () => getRoutes().checkout.home({ price: defaultPrice?.id || "" }),
+      [defaultPrice]
     );
 
     const goToCheckout = useCallback(() => {
@@ -73,15 +60,31 @@ export const Product: FC<ProductProps> = memo(
           boxShadow: "md",
         }}
       >
-        <Image
-          width="full"
-          height="fit-content"
-          src={avatar}
-          fallbackSrc={defaultNoImage.src}
-        />
+        <CardHeader position="relative" padding="0">
+          <Image
+            width="full"
+            height="fit-content"
+            src={avatar}
+            fallbackSrc={defaultNoImage.src}
+          />
+          {defaultPrice?.discountPercent && (
+            <Box
+              position="absolute"
+              transform="rotate(45deg)"
+              right="-7"
+              top="3"
+            >
+              <Badge variant="solid" width="24">
+                {defaultPrice?.discountPercent}% OFF
+              </Badge>
+            </Box>
+          )}
+        </CardHeader>
         <CardBody>
+          <Title size="md" marginBottom="5">
+            {name}
+          </Title>
           <Stack spacing="3">
-            <Title size="md">{name}</Title>
             {!!course?.instructors?.items?.length && (
               <Description>
                 {course?.instructors?.items
@@ -89,7 +92,7 @@ export const Product: FC<ProductProps> = memo(
                   .join(", ")}
               </Description>
             )}
-            {price && <Price price={price} />}
+            {defaultPrice && <Price price={defaultPrice} />}
           </Stack>
         </CardBody>
       </Card>

@@ -15,11 +15,6 @@ query Products(
       defaultPrice {
         ...Price
       }
-      prices {
-        items {
-          ...Price
-        }
-      }
       course {
         ...HomeProductsCourse
       }

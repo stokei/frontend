@@ -22,6 +22,16 @@ export const Price: FC<PriceProps> = ({ price, ...props }) => {
     return price.tiers?.items?.[0]?.amount;
   }, [price]);
 
+  const fromPriceAmount = useMemo(() => {
+    if (price?.fromAmount && price.billingScheme === BillingScheme.PerUnit) {
+      return translate.formatMoney({
+        amount: price?.fromAmount,
+        currency: price?.currency?.id,
+        minorUnit: price?.currency?.minorUnit,
+      });
+    }
+  }, [price]);
+
   const priceRecurringIntervalTypeKey = useMemo(() => {
     if (!price?.recurring?.interval) {
       return undefined;
@@ -34,28 +44,43 @@ export const Price: FC<PriceProps> = ({ price, ...props }) => {
   }, [price]);
 
   return (
-    <Stack direction="row" align="center" {...props}>
-      <Text fontSize="md" fontWeight="600">
-        {price?.currency?.symbol}
-      </Text>
-      <Text
-        fontSize="3xl"
-        color="primary.500"
-        fontWeight="900"
-        lineHeight="shorter"
-      >
-        {priceAmount}
-      </Text>
-      {priceRecurringIntervalTypeKey && (
-        <Text fontSize="lg" color="gray.500">
-          {price?.unit ? "/" + price?.unit : ""}/
-          {translate
-            .formatMessage({
-              id: priceRecurringIntervalTypeKey as any,
-            })
-            ?.toLowerCase()}
-        </Text>
+    <Stack width="full" direction="column" spacing="1" {...props}>
+      {fromPriceAmount && (
+        <Stack direction="row" align="center">
+          <Text
+            fontSize="md"
+            color="text.300"
+            fontWeight="600"
+            textDecoration="line-through"
+          >
+            {price?.currency?.symbol} {fromPriceAmount}
+          </Text>
+        </Stack>
       )}
+
+      <Stack width="full" direction="row" align="center">
+        <Text fontSize="md" fontWeight="600">
+          {price?.currency?.symbol}
+        </Text>
+        <Text
+          fontSize="3xl"
+          color="primary.500"
+          fontWeight="900"
+          lineHeight="shorter"
+        >
+          {priceAmount}
+        </Text>
+        {priceRecurringIntervalTypeKey && (
+          <Text fontSize="lg" color="text.200">
+            {price?.unit ? "/" + price?.unit : ""}/
+            {translate
+              .formatMessage({
+                id: priceRecurringIntervalTypeKey as any,
+              })
+              ?.toLowerCase()}
+          </Text>
+        )}
+      </Stack>
     </Stack>
   );
 };
