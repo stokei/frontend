@@ -2,20 +2,17 @@ import { NavbarLogo, NavbarUserInformation } from "@/components";
 import { Footer } from "@/components/footer";
 import { Box, Navbar } from "@stokei/ui";
 import { FC } from "react";
-import { ProductsSection } from "./products-section";
 
-interface HomePageProps {}
+interface CoursePageProps {}
 
-export const HomePage: FC<HomePageProps> = () => {
+export const CoursePage: FC<CoursePageProps> = () => {
   return (
     <>
       <Navbar>
         <NavbarLogo />
         <NavbarUserInformation />
       </Navbar>
-      <Box paddingY="10">
-        <ProductsSection />
-      </Box>
+      <Box paddingY="10">Course</Box>
       <Footer />
     </>
   );

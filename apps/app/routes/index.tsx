@@ -3,7 +3,14 @@ export const getRoutes = () => {
     home: "/",
     notFound: "/404",
     checkout: {
-      home: ({ price }: { price: string }) => "/checkout/" + (price || ""),
+      home: ({ product }: { product: string }) =>
+        "/checkout/" + (product || ""),
+    },
+    course: {
+      home: ({ product }: { product: string }) => "/course/" + (product || ""),
+    },
+    plan: {
+      home: ({ product }: { product: string }) => "/course/" + (product || ""),
     },
     admins: {
       home: "/admins",

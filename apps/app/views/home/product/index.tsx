@@ -41,14 +41,16 @@ export const Product: FC<ProductProps> = memo(
   }) => {
     const router = useRouter();
 
-    const checkoutURL = useMemo(
-      () => getRoutes().checkout.home({ price: defaultPrice?.id || "" }),
-      [defaultPrice]
-    );
+    const productURL = useMemo(() => {
+      if (!!course) {
+        return getRoutes().course.home({ product: productId || "" });
+      }
+      return getRoutes().plan.home({ product: productId || "" });
+    }, [productId, course]);
 
     const goToCheckout = useCallback(() => {
-      router.push(checkoutURL);
-    }, [checkoutURL, router]);
+      router.push(productURL);
+    }, [productURL, router]);
 
     return (
       <Card
