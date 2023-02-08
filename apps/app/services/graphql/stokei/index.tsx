@@ -534,10 +534,11 @@ export type CreateVideoAuthorInput = {
 
 export type CreateVideoInput = {
   description?: InputMaybe<Scalars['String']>;
-  file: Scalars['String'];
+  file?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   parent: Scalars['String'];
   poster?: InputMaybe<Scalars['String']>;
+  private?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type Currencies = {
@@ -833,6 +834,13 @@ export type Module = {
   name: Scalars['String'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+  videos?: Maybe<Videos>;
+};
+
+
+export type ModuleVideosArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllVideosInput>;
+  page?: InputMaybe<PaginationInput>;
 };
 
 export type Modules = {
@@ -1467,9 +1475,12 @@ export type OrderByDataFindAllVideoAuthorsInput = {
 };
 
 export type OrderByDataFindAllVideosInput = {
+  active?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
+  private?: InputMaybe<OrderBy>;
+  slug?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -2359,7 +2370,10 @@ export type UpdateDataSubscriptionContractInput = {
 };
 
 export type UpdateDataVideoInput = {
-  name: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  poster?: InputMaybe<Scalars['String']>;
+  private?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type UpdateLanguageInput = {
@@ -2440,6 +2454,7 @@ export type Video = {
   id: Scalars['ID'];
   name: Scalars['String'];
   poster?: Maybe<Image>;
+  private: Scalars['Boolean'];
   slug: Scalars['String'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
@@ -2858,10 +2873,14 @@ export type WhereDataFindAllVideoAuthorsInput = {
 };
 
 export type WhereDataFindAllVideosDataInput = {
+  active?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
+  description?: InputMaybe<WhereDataSearchInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
   name?: InputMaybe<WhereDataSearchInput>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  private?: InputMaybe<WhereDataBooleanInput>;
+  slug?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 

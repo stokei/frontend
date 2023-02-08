@@ -1,0 +1,10 @@
+fragment CoursePageModule on Module {
+  id
+  name
+  videos {
+    items {
+      id
+      name
+    }
+  }
+}

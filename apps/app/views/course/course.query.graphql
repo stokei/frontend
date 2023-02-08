@@ -1,0 +1,26 @@
+query GetProductCourse($product: String!) {
+  product(id: $product) {
+    id
+    name
+    description
+    avatar {
+      file {
+        url
+      }
+    }
+    defaultPrice {
+      ...Price
+    }
+    course {
+      id
+      instructors {
+        items {
+          id
+          instructor {
+            fullname
+          }
+        }
+      }
+    }
+  }
+}

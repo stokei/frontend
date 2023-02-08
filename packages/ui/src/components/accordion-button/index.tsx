@@ -8,8 +8,4 @@ export interface AccordionButtonProps extends ChakraAccordionButtonProps {}
 export const AccordionButton: React.FC<AccordionButtonProps> = ({
   children,
   ...props
-}) => (
-  <ChakraAccordionButton colorScheme="primary" {...props}>
-    {children}
-  </ChakraAccordionButton>
-);
+}) => <ChakraAccordionButton {...props}>{children}</ChakraAccordionButton>;

@@ -1,0 +1,10 @@
+query GetModules(
+  $where: WhereDataFindAllModulesInput
+  $orderBy: OrderByDataFindAllModulesInput
+) {
+  modules(where: $where, orderBy: $orderBy) {
+    items {
+      ...CoursePageModule
+    }
+  }
+}

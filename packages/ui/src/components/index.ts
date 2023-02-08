@@ -2,6 +2,7 @@ export * from "./accordion";
 export * from "./accordion-button";
 export * from "./accordion-icon";
 export * from "./accordion-item";
+export * from "./accordion-label";
 export * from "./accordion-panel";
 export * from "./alert-dialog";
 export * from "./alert-dialog-body";
