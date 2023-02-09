@@ -1,9 +1,9 @@
-import { useMemo } from "react";
 import {
   Button as ChakraButton,
   ButtonProps as ChakraButtonProps,
 } from "@chakra-ui/react";
-import { IColor, IColorHue, IColorName } from "../../interfaces";
+import { useMemo } from "react";
+import { IColorName } from "../../interfaces";
 
 export interface ButtonProps extends ChakraButtonProps {}
 export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {

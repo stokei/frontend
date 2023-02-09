@@ -7,6 +7,7 @@ export interface LinkProps extends ChakraLinkProps {}
 
 export const Link: React.FC<LinkProps> = ({ children, _hover, ...props }) => (
   <ChakraLink
+    color="primary.500"
     colorScheme="primary"
     rel="noopener"
     _hover={{

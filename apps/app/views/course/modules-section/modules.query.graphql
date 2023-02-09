@@ -3,6 +3,7 @@ query GetModules(
   $orderBy: OrderByDataFindAllModulesInput
 ) {
   modules(where: $where, orderBy: $orderBy) {
+    totalCount
     items {
       ...CoursePageModule
     }

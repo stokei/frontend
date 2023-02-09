@@ -1,6 +1,7 @@
 import {
   Badge,
   Box,
+  Button,
   Card,
   CardBody,
   CardHeader,
@@ -14,6 +15,7 @@ import { FC, memo, useCallback, useMemo } from "react";
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { PriceFragment } from "@/components/price/price.fragment.graphql.generated";
+import { useTranslations } from "@/hooks";
 import { getRoutes } from "@/routes";
 import { useRouter } from "next/router";
 import { HomeProductsCourseFragment } from "./products-course.fragment.graphql.generated";
@@ -40,6 +42,7 @@ export const Product: FC<ProductProps> = memo(
     plan,
   }) => {
     const router = useRouter();
+    const translate = useTranslations();
 
     const productURL = useMemo(() => {
       if (!!course) {
@@ -53,15 +56,7 @@ export const Product: FC<ProductProps> = memo(
     }, [productURL, router]);
 
     return (
-      <Card
-        background="background.50"
-        overflow="hidden"
-        onClick={goToCheckout}
-        _hover={{
-          cursor: "pointer",
-          boxShadow: "md",
-        }}
-      >
+      <Card background="background.50" overflow="hidden">
         <CardHeader position="relative" padding="0">
           <Image
             width="full"
@@ -83,19 +78,28 @@ export const Product: FC<ProductProps> = memo(
           )}
         </CardHeader>
         <CardBody>
-          <Title size="md" marginBottom="5">
-            {name}
-          </Title>
-          <Stack spacing="3">
-            {!!course?.instructors?.items?.length && (
-              <Description>
-                {course?.instructors?.items
-                  ?.map((instructor) => instructor.instructor?.fullname)
-                  .join(", ")}
-              </Description>
-            )}
-            {defaultPrice && <Price price={defaultPrice} />}
-          </Stack>
+          <Box width="full" flexDirection="column" height="full">
+            <Title size="md" marginBottom="5">
+              {name}
+            </Title>
+            <Box width="full" flexDirection="column" flex="1">
+              <Stack spacing="3" flex="1">
+                {!!course?.instructors?.items?.length && (
+                  <Description>
+                    {course?.instructors?.items
+                      ?.map((instructor) => instructor.instructor?.fullname)
+                      .join(", ")}
+                  </Description>
+                )}
+              </Stack>
+              <Box marginBottom="5">
+                {defaultPrice && <Price price={defaultPrice} />}
+              </Box>
+              <Button width="full" onClick={goToCheckout}>
+                {translate.formatMessage({ id: "buyNow" })}
+              </Button>
+            </Box>
+          </Box>
         </CardBody>
       </Card>
     );

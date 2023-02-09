@@ -24,7 +24,6 @@ import {
   AiOutlineSearch,
   AiOutlineSmile,
   AiOutlineUser,
-  AiOutlineVideoCamera,
 } from "react-icons/ai";
 import { BiLineChart } from "react-icons/bi";
 import {
@@ -36,6 +35,7 @@ import {
   BsListUl,
   BsMoon,
   BsPauseFill,
+  BsPlayCircle,
   BsPlayFill,
   BsStar,
   BsStarFill,
@@ -86,7 +86,7 @@ export const CaretLeftIcon = AiOutlineCaretLeft;
 export const CaretDownIcon = AiOutlineCaretDown;
 export const CaretUpIcon = AiOutlineCaretUp;
 export const AboutIcon = AiOutlineInfoCircle;
-export const VideoIcon = AiOutlineVideoCamera;
+export const VideoIcon = BsPlayCircle;
 export const HomeIcon = AiOutlineHome;
 export const PlusIcon = FiPlus;
 export const SettingIcon = FiSettings;

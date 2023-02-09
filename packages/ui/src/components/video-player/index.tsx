@@ -31,24 +31,15 @@ const Video: React.FC<VideoProps> = forwardRef(({ ...props }, ref) => (
   <Box as="video" width="full" height="full" {...props} ref={ref} />
 ));
 
-export interface VideoPlayerViewerData {
-  readonly userId: string;
-  readonly fullname: string;
-}
 export interface VideoPlayerProps extends BoxProps {
   readonly id: string;
   readonly src: string;
-  readonly videoId: string;
-  readonly videoName: string;
-  readonly viewer?: VideoPlayerViewerData;
   readonly poster: string;
 }
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   id,
   src,
   poster,
-  videoId,
-  videoName,
   ...props
 }) => {
   const playerRef = useRef<any>(null);
@@ -76,11 +67,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       const element = document?.getElementById(videoContainerID);
       element
         ?.requestFullscreen({ navigationUI: "hide" })
-        .catch((error) => console.log(error.message));
+        .catch((error: any) => console.log(error.message));
     } else {
       const isOpenFullScreen = document?.fullscreenElement;
       if (isOpenFullScreen) {
-        document.exitFullscreen().catch((error) => console.log(error.message));
+        document
+          .exitFullscreen()
+          .catch((error: any) => console.log(error.message));
       }
     }
   }, [videoContainerID, isFullScreen]);
@@ -120,7 +113,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       if (isOpenPictureInPicture) {
         document
           .exitPictureInPicture()
-          .catch((error) => console.log(error.message));
+          .catch((error: any) => console.log(error.message));
       }
     }
   }, [isPictureInPicture]);

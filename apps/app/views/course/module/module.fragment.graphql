@@ -1,10 +1,16 @@
 fragment CoursePageModule on Module {
   id
   name
-  videos {
+  videos(orderBy: { name: ASC }) {
+    totalCount
     items {
       id
       name
+      private
+      file {
+        url
+        duration
+      }
     }
   }
 }

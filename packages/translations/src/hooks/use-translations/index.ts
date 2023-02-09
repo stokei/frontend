@@ -25,6 +25,9 @@ export const useTranslations = <TKeys = string>() => {
       amount: number;
       minorUnit: number;
     }) => {
+      if (!amount || minorUnit < 0) {
+        return;
+      }
       try {
         return new Intl.NumberFormat(intl.locale, {
           currency,
@@ -38,6 +41,9 @@ export const useTranslations = <TKeys = string>() => {
 
   const formatDate = useCallback(
     (date: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
+      if (!date) {
+        return;
+      }
       try {
         return intl.formatDate(date);
       } catch (error) {
@@ -49,10 +55,13 @@ export const useTranslations = <TKeys = string>() => {
 
   const formatTime = useCallback(
     (time: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
+      if (!time) {
+        return;
+      }
       try {
         return intl.formatTime(time);
       } catch (error) {
-        return undefined;
+        return;
       }
     },
     []

@@ -1,17 +1,18 @@
 import defaultLogoURL from "@/assets/logo.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { getRoutes } from "@/routes";
-import { Image, Link, Stack, StackProps } from "@stokei/ui";
+import { Box, BoxProps, Image, Link } from "@stokei/ui";
+import NextLink from "next/link";
 import { FC } from "react";
 
-export interface NavbarLogoProps extends StackProps {}
+export interface NavbarLogoProps extends BoxProps {}
 export const NavbarLogo: FC<NavbarLogoProps> = ({ ...props }) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 
   return (
-    <Stack align="center" direction="row" {...props}>
-      <Link href={getRoutes().home}>
+    <Box width="52" align="center" {...props}>
+      <Link as={NextLink} href={getRoutes().home}>
         <Image
           width={["12", "12", "20", "20"]}
           height="fit-content"
@@ -20,6 +21,6 @@ export const NavbarLogo: FC<NavbarLogoProps> = ({ ...props }) => {
           alt={translate.formatMessage({ id: "home" })}
         />
       </Link>
-    </Stack>
+    </Box>
   );
 };

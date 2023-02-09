@@ -33,7 +33,7 @@ export const theme = (config?: StokeiConfig) => {
         initialColorMode: "light",
         useSystemColorMode: false,
         body: {
-          bg: "background.100",
+          bg: "background.50",
         },
         p: {
           color: "text.500",

@@ -448,6 +448,12 @@ export type CreateDomainInput = {
   parent: Scalars['String'];
 };
 
+export type CreateFeatureInput = {
+  description?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  parent: Scalars['String'];
+};
+
 export type CreateFileUploadUrlResponse = {
   __typename?: 'CreateFileUploadURLResponse';
   file: File;
@@ -875,6 +881,7 @@ export type Mutation = {
   createCurrency: Currency;
   createCustomerPortalSession: CustomerPortalSession;
   createDomain: Domain;
+  createFeature: Feature;
   createImage: Image;
   createImageUploadURL: CreateFileUploadUrlResponse;
   createLanguage: Language;
@@ -901,6 +908,7 @@ export type Mutation = {
   removeCourseInstructor: CourseInstructor;
   removeCurrency: Currency;
   removeDomain: Domain;
+  removeFeature: Feature;
   removeImage: Image;
   removeLanguage: Language;
   removeModule: Module;
@@ -991,6 +999,11 @@ export type MutationCreateCustomerPortalSessionArgs = {
 
 export type MutationCreateDomainArgs = {
   input: CreateDomainInput;
+};
+
+
+export type MutationCreateFeatureArgs = {
+  input: CreateFeatureInput;
 };
 
 
@@ -1101,6 +1114,11 @@ export type MutationRemoveCurrencyArgs = {
 
 export type MutationRemoveDomainArgs = {
   input: RemoveDomainInput;
+};
+
+
+export type MutationRemoveFeatureArgs = {
+  input: RemoveFeatureInput;
 };
 
 
@@ -1691,6 +1709,7 @@ export type Product = {
   deactivatedAt?: Maybe<Scalars['String']>;
   defaultPrice?: Maybe<Price>;
   description?: Maybe<Scalars['String']>;
+  features?: Maybe<Features>;
   id: Scalars['ID'];
   name: Scalars['String'];
   parent?: Maybe<Scalars['String']>;
@@ -1698,6 +1717,12 @@ export type Product = {
   prices?: Maybe<Prices>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+};
+
+
+export type ProductFeaturesArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllFeaturesInput>;
+  page?: InputMaybe<PaginationInput>;
 };
 
 
@@ -1747,6 +1772,8 @@ export type Query = {
   currentApp: App;
   domain: Domain;
   domains: Domains;
+  feature: Feature;
+  features: Features;
   image: Image;
   images: Images;
   invoice: Invoice;
@@ -1917,6 +1944,18 @@ export type QueryDomainsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllDomainsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllDomainsInput>;
+};
+
+
+export type QueryFeatureArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryFeaturesArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllFeaturesInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllFeaturesInput>;
 };
 
 
@@ -2112,6 +2151,10 @@ export type RemoveDomainInput = {
   where: RemoveWhereDomainInput;
 };
 
+export type RemoveFeatureInput = {
+  where: RemoveWhereFeatureInput;
+};
+
 export type RemoveImageInput = {
   where: RemoveWhereImageInput;
 };
@@ -2183,6 +2226,10 @@ export type RemoveWhereCurrencyInput = {
 
 export type RemoveWhereDomainInput = {
   domain: Scalars['String'];
+};
+
+export type RemoveWhereFeatureInput = {
+  feature: Scalars['String'];
 };
 
 export type RemoveWhereImageInput = {
@@ -2450,7 +2497,7 @@ export type Video = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   description?: Maybe<Scalars['String']>;
-  file: File;
+  file?: Maybe<File>;
   id: Scalars['ID'];
   name: Scalars['String'];
   poster?: Maybe<Image>;
@@ -2686,6 +2733,21 @@ export type WhereDataFindAllDomainsInput = {
   AND?: InputMaybe<WhereDataFindAllDomainsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllDomainsDataInput>;
   OR?: InputMaybe<WhereDataFindAllDomainsDataInput>;
+};
+
+export type WhereDataFindAllFeaturesDataInput = {
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  description?: InputMaybe<WhereDataSearchInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  name?: InputMaybe<WhereDataSearchInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllFeaturesInput = {
+  AND?: InputMaybe<WhereDataFindAllFeaturesDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllFeaturesDataInput>;
+  OR?: InputMaybe<WhereDataFindAllFeaturesDataInput>;
 };
 
 export type WhereDataFindAllImagesDataInput = {

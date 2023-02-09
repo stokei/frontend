@@ -1,5 +1,5 @@
 import { OrderBy } from "@/services/graphql/stokei";
-import { Accordion, Container } from "@stokei/ui";
+import { Accordion, Box, Container } from "@stokei/ui";
 import { FC } from "react";
 import { Module } from "../module";
 import { ModuleSkeleton } from "../module-skeleton";
@@ -27,10 +27,10 @@ export const ModulesSection: FC<ModulesSectionProps> = ({ courseId }) => {
     });
 
   return (
-    <Container paddingY="5">
+    <Box width="full" flex="1" flexDirection="column">
       {isLoading ? (
         <>
-          {Array.from({ length: 8 }).map((_, i) => (
+          {Array.from({ length: 3 }).map((_, i) => (
             <ModuleSkeleton key={i} />
           ))}
         </>
@@ -41,6 +41,6 @@ export const ModulesSection: FC<ModulesSectionProps> = ({ courseId }) => {
           ))}
         </Accordion>
       )}
-    </Container>
+    </Box>
   );
 };

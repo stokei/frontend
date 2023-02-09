@@ -8,12 +8,20 @@ query GetProductCourse($product: String!) {
         url
       }
     }
+    features {
+      totalCount
+      items {
+        id
+        name
+      }
+    }
     defaultPrice {
       ...Price
     }
     course {
       id
       instructors {
+        totalCount
         items {
           id
           instructor {

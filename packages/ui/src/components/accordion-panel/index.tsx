@@ -8,4 +8,8 @@ export interface AccordionPanelProps extends ChakraAccordionPanelProps {}
 export const AccordionPanel: React.FC<AccordionPanelProps> = ({
   children,
   ...props
-}) => <ChakraAccordionPanel {...props}>{children}</ChakraAccordionPanel>;
+}) => (
+  <ChakraAccordionPanel borderTopWidth="thin" padding="4" {...props}>
+    {children}
+  </ChakraAccordionPanel>
+);
