@@ -1,31 +1,36 @@
-import { useState, useEffect, useMemo } from "react";
 import Uppy from "@uppy/core";
-import { Dashboard, useUppy } from "@uppy/react";
+import { Dashboard, DashboardModal, useUppy } from "@uppy/react";
 import Tus from "@uppy/tus";
+import { useEffect, useMemo } from "react";
 import { MAX_VIDEO_SIZE } from "../../constants/file-sizes";
-import { useStokei } from "../../hooks";
-import { Stack, StackProps } from "../stack";
+import { useStokeiUI } from "../../hooks";
 import { getUploaderLanguage } from "../../utils/get-uploader-language";
+import { Box, BoxProps } from "../box";
 
-export interface VideoUploaderProps extends Omit<StackProps, "onError"> {
+export interface VideoUploaderProps extends Omit<BoxProps, "onError"> {
   readonly id: string;
+  readonly isOpen?: boolean;
   readonly uploadURL: string;
   readonly accept?: string[];
-  readonly onSuccess: (fileId: string) => void;
+  readonly onClose: () => void;
+  readonly onSuccess: () => void;
   readonly onError: () => void;
 }
 
 export const VideoUploader: React.FC<VideoUploaderProps> = ({
   accept,
+  isOpen,
   uploadURL,
   onSuccess,
   onError,
   ...props
 }) => {
-  const [fileId, setFileId] = useState("");
-
-  const { appId, accountId, cloudflareAPIToken, language } = useStokei();
-
+  const { appId, accountId, cloudflareAPIToken, language } = useStokeiUI();
+  /**
+   *
+   *  verificar porque a URL NÃO MUDA QUANDO TENTA MUDAR O uploadURL
+   *
+   */
   const currentLanguage = useMemo(
     () => getUploaderLanguage(language),
     [language]
@@ -54,13 +59,6 @@ export const VideoUploader: React.FC<VideoUploaderProps> = ({
       onShouldRetry() {
         return false;
       },
-      onAfterResponse(req, res) {
-        const body = res.getBody();
-        const bodyFormated = body && JSON.parse(body);
-        if (bodyFormated?.file?.id) {
-          setFileId(bodyFormated?.file?.id);
-        }
-      },
     });
   });
 
@@ -71,11 +69,11 @@ export const VideoUploader: React.FC<VideoUploaderProps> = ({
   useEffect(() => {
     uppy.on("upload-success", (result) => {
       const isSuccess = !!result?.data;
-      if (fileId && isSuccess) {
-        onSuccess?.(fileId);
+      if (isSuccess) {
+        onSuccess?.();
       }
     });
-  }, [uppy, fileId, onSuccess]);
+  }, [uppy, onSuccess]);
 
   useEffect(() => {
     uppy.on("upload-error", (result) => {
@@ -87,14 +85,15 @@ export const VideoUploader: React.FC<VideoUploaderProps> = ({
   }, [uppy, onError]);
 
   return (
-    <Stack width="full" spacing="4" direction="column" {...props}>
-      <Dashboard
+    <Box width="full" flexDirection="column" {...props}>
+      <DashboardModal
         width="100%"
         height="100%"
         uppy={uppy}
+        open={isOpen}
         doneButtonHandler={() => {}}
         hideProgressAfterFinish
       />
-    </Stack>
+    </Box>
   );
 };

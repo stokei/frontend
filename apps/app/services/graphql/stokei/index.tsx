@@ -650,7 +650,7 @@ export type File = {
   app?: Maybe<App>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
-  duration: Scalars['Int'];
+  duration?: Maybe<Scalars['Float']>;
   extension?: Maybe<Scalars['String']>;
   filename: Scalars['String'];
   id: Scalars['ID'];

@@ -1,4 +1,4 @@
-import { forwardRef } from "@chakra-ui/react";
+import { chakra, forwardRef } from "@chakra-ui/react";
 import React, {
   useCallback,
   useEffect,
@@ -27,8 +27,9 @@ type VideoProps = BoxProps &
     React.VideoHTMLAttributes<HTMLVideoElement>,
     "height" | "width" | "color"
   >;
+
 const Video: React.FC<VideoProps> = forwardRef(({ ...props }, ref) => (
-  <Box as="video" width="full" height="full" {...props} ref={ref} />
+  <chakra.video width="full" height="full" {...props} ref={ref} />
 ));
 
 export interface VideoPlayerProps extends BoxProps {
@@ -274,7 +275,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                 setDuration((e.target as any).duration ?? 0)
               }
               onTimeUpdate={onChangeCurrentTime}
-              onLoadStart={() => setIsLoading(true)}
+              onWaiting={() => setIsLoading(true)}
               onCanPlay={() => setIsLoading(false)}
               onContextMenu={(event) => event.preventDefault()}
             />

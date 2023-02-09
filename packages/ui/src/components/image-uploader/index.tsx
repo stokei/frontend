@@ -4,7 +4,7 @@ import { Dashboard, useUppy } from "@uppy/react";
 import XHRUpload from "@uppy/xhr-upload";
 import { useEffect, useMemo } from "react";
 import { MAX_IMAGE_SIZE } from "../../constants/file-sizes";
-import { useStokei } from "../../hooks";
+import { useStokeiUI } from "../../hooks";
 import { getUploaderLanguage } from "../../utils/get-uploader-language";
 import { Stack, StackProps } from "../stack";
 
@@ -24,7 +24,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   onError,
   ...props
 }) => {
-  const { language } = useStokei();
+  const { language } = useStokeiUI();
 
   const currentLanguage = useMemo(
     () => getUploaderLanguage(language),
