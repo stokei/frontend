@@ -1,21 +1,13 @@
-import { NavbarLogo, NavbarUserInformation } from "@/components";
-import { Footer } from "@/components/footer";
-import { useCreateVideoUploadURL, useTranslations } from "@/hooks";
-import {
-  Button,
-  Container,
-  Navbar,
-  Stack,
-  useDisclosure,
-  VideoUploader,
-} from "@stokei/ui";
-import { FC, useMemo, useState } from "react";
-import { CheckoutInfo } from "./checkout-info";
-import { CourseDescription } from "./course-description";
-import { useGetProductCourseQuery } from "./course.query.graphql.generated";
-import { Features } from "./features";
-import { Header } from "./header";
-import { ModulesSection } from "./modules-section";
+import { useTranslations } from "@/hooks";
+import { Container, Stack } from "@stokei/ui";
+import { FC, useMemo } from "react";
+import { CheckoutInfo } from "./components/checkout-info";
+import { CourseDescription } from "./components/course-description";
+import { Features } from "./components/features";
+import { Header } from "./components/header";
+import { ModulesSection } from "./components/modules-section";
+import { useGetProductCourseQuery } from "./graphql/course.query.graphql.generated";
+import { CourseLayout } from "./layout";
 
 interface CoursePageProps {
   readonly productId: string;
@@ -23,8 +15,6 @@ interface CoursePageProps {
 
 export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
   const translate = useTranslations();
-  const [uploadURL, setUploadURL] = useState("");
-  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const [{ data: dataGetProduct, fetching: isLoadingGetProduct }] =
     useGetProductCourseQuery({
@@ -35,36 +25,8 @@ export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
 
   const product = useMemo(() => dataGetProduct?.product, [dataGetProduct]);
 
-  const [{ fetching: isLoadingCreateUploadURL }, executeCreateUploadURL] =
-    useCreateVideoUploadURL();
-
-  const onStartUpload = async () => {
-    try {
-      const data = await executeCreateUploadURL({});
-      if (data.data?.response) {
-        setUploadURL(data.data?.response.uploadURL || "");
-        onOpen();
-      }
-    } catch (e) {}
-  };
-
   return (
-    <>
-      <Navbar>
-        <NavbarLogo />
-        <NavbarUserInformation />
-      </Navbar>
-      <Button isLoading={isLoadingCreateUploadURL} onClick={onStartUpload}>
-        Upload start
-      </Button>
-      <VideoUploader
-        id="uploader"
-        isOpen={isOpen}
-        uploadURL={uploadURL}
-        onClose={onClose}
-        onError={() => console.log({ error: "ALGUM ERRO" })}
-        onSuccess={() => console.log({ OK: true })}
-      />
+    <CourseLayout isLoading={isLoadingGetProduct}>
       <Container paddingY="10" background="black.500">
         <Header product={product} />
       </Container>
@@ -88,7 +50,6 @@ export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
           <CheckoutInfo product={product} />
         </Stack>
       </Container>
-      <Footer />
-    </>
+    </CourseLayout>
   );
 };

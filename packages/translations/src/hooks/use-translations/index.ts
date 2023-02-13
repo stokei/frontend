@@ -55,11 +55,16 @@ export const useTranslations = <TKeys = string>() => {
 
   const formatTime = useCallback(
     (time: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
-      if (!time) {
-        return;
-      }
       try {
-        return intl.formatTime(time);
+        if (typeof time === "number") {
+          if (time < 0) {
+            return "00:00";
+          }
+          const date = new Date();
+          date.setTime(time);
+          return intl.formatTime(date);
+        }
+        return time && intl.formatTime(time);
       } catch (error) {
         return;
       }

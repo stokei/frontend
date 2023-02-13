@@ -11,6 +11,8 @@ export const ptBRMessages = {
   login: "Faça login",
   hide: "Esconder",
   show: "Mostrar",
+  addVideo: "Adicionar video",
+  addImage: "Adicionar image",
   emailPlaceholder: "example@email.com",
   firstnamePlaceholder: "Digite o nome",
   lastnamePlaceholder: "Digite o sobrenome",

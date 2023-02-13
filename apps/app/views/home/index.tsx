@@ -1,22 +1,36 @@
-import { NavbarLogo, NavbarUserInformation } from "@/components";
-import { Footer } from "@/components/footer";
-import { Box, Navbar } from "@stokei/ui";
+import { useCurrentApp } from "@/hooks";
+import { OrderBy } from "@/services/graphql/stokei";
+import { Box } from "@stokei/ui";
 import { FC } from "react";
-import { ProductsSection } from "./products-section";
+import { HomeLayout } from "./layout";
+import { ProductsList } from "./components/products-list";
+import { useProductsQuery } from "./graphql/products.query.graphql.generated";
 
 interface HomePageProps {}
 
 export const HomePage: FC<HomePageProps> = () => {
+  const { currentApp } = useCurrentApp();
+  const [{ fetching: isLoadingProducts, data: dataProducts }] =
+    useProductsQuery({
+      variables: {
+        where: {
+          AND: {
+            app: {
+              equals: currentApp?.id,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: OrderBy.Desc,
+        },
+      },
+    });
+
   return (
-    <>
-      <Navbar>
-        <NavbarLogo />
-        <NavbarUserInformation />
-      </Navbar>
+    <HomeLayout isLoading={isLoadingProducts}>
       <Box paddingY="10">
-        <ProductsSection />
+        <ProductsList products={dataProducts?.products} />
       </Box>
-      <Footer />
-    </>
+    </HomeLayout>
   );
 };

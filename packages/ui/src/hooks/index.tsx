@@ -6,6 +6,7 @@ export * from "./use-outside-click";
 export * from "./use-select";
 export * from "./use-stokei";
 export * from "./use-toast";
+export * from "./use-uppy";
 export * from "./use-translations";
 export * from "./use-video-fullscreen";
 export * from "./use-video-picture-in-picture";

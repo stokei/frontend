@@ -1,0 +1,17 @@
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    accessToken
+    refreshToken
+    prefixToken
+    account {
+      id
+      fullname
+      isAdmin
+      app {
+        id
+        name
+      }
+      email
+    }
+  }
+}

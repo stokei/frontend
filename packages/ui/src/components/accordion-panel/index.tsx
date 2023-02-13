@@ -9,7 +9,12 @@ export const AccordionPanel: React.FC<AccordionPanelProps> = ({
   children,
   ...props
 }) => (
-  <ChakraAccordionPanel borderTopWidth="thin" padding="4" {...props}>
+  <ChakraAccordionPanel
+    borderTopWidth="thin"
+    padding="4"
+    background="background.50"
+    {...props}
+  >
     {children}
   </ChakraAccordionPanel>
 );

@@ -10,7 +10,7 @@ export const AccordionButton: React.FC<AccordionButtonProps> = ({
   ...props
 }) => (
   <ChakraAccordionButton
-    background="background.100"
+    background="background.200"
     paddingY="3"
     paddingX="4"
     {...props}

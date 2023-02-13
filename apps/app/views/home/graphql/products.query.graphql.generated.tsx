@@ -2,8 +2,8 @@ import * as Types from '../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
 import { PriceFragmentDoc } from '../../../components/price/price.fragment.graphql.generated';
-import { HomeProductsCourseFragmentDoc } from '../product/products-course.fragment.graphql.generated';
-import { HomeProductsPlanFragmentDoc } from '../product/products-plan.fragment.graphql.generated';
+import { HomeProductsCourseFragmentDoc } from './products-course.fragment.graphql.generated';
+import { HomeProductsPlanFragmentDoc } from './products-plan.fragment.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type ProductsQueryVariables = Types.Exact<{

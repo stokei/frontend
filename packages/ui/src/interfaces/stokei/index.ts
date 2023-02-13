@@ -1,6 +1,7 @@
 export interface StokeiConfigColor {
   readonly text?: string;
   readonly heading?: string;
+  readonly background?: string;
   readonly primary?: string;
   readonly secondary?: string;
   readonly success?: string;

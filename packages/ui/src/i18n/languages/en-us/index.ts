@@ -10,6 +10,8 @@ export const enUSMessages: Record<I18nKey, string> = {
   save: "Save",
   enter: "Enter",
   login: "Log in",
+  addVideo: "Add video",
+  addImage: "Add image",
   noAccount: "No account?",
   signUp: "Sign up",
   hide: "Hide",

@@ -1,0 +1,11 @@
+fragment HomeProductsPlan on Plan {
+  id
+  name
+  features {
+    items {
+      id
+      name
+      description
+    }
+  }
+}

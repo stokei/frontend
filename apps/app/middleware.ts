@@ -1,14 +1,11 @@
-// middleware.ts
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { gql } from "urql";
-import { createAPIClient } from "./services/graphql/client";
+import { NextResponse } from "next/server";
+import { DOMAIN } from "./environments";
 import {
   withCustomDomain,
   withLocalDomain,
   withSubDomain,
 } from "./services/middlewares";
-import { DOMAIN } from "./environments";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

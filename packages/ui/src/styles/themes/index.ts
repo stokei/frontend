@@ -15,6 +15,8 @@ const setThemeConfigColors = (colors?: StokeiConfigColor) => ({
   ...(colors?.text && generatePaletteToChakraUI("text", colors?.text)),
   ...(colors?.heading && generatePaletteToChakraUI("heading", colors?.heading)),
   ...(colors?.primary && generatePaletteToChakraUI("primary", colors?.primary)),
+  ...(colors?.background &&
+    generatePaletteToChakraUI("background", colors?.background)),
   ...(colors?.secondary &&
     generatePaletteToChakraUI("secondary", colors?.secondary)),
   ...(colors?.success && generatePaletteToChakraUI("success", colors?.success)),
@@ -33,7 +35,7 @@ export const theme = (config?: StokeiConfig) => {
         initialColorMode: "light",
         useSystemColorMode: false,
         body: {
-          bg: "background.50",
+          bg: "background.100",
         },
         p: {
           color: "text.500",

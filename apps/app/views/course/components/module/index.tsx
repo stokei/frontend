@@ -17,7 +17,7 @@ import {
 import { FC, memo, useState } from "react";
 import { VideoPreviewModal } from "../video-preview-modal";
 
-import { CoursePageModuleFragment } from "./module.fragment.graphql.generated";
+import { CoursePageModuleFragment } from "../../graphql/module.fragment.graphql.generated";
 
 export interface ModuleProps {
   readonly module: CoursePageModuleFragment;
@@ -71,13 +71,13 @@ export const Module: FC<ModuleProps> = memo(({ module }) => {
                         {translate.formatMessage({ id: "view" })}
                       </Link>
                     )}
-                    {/**
-                     *
-                     * FAZER FUNÇÃO DO duration
-                     *
-                     */}
-                    {video.file?.duration && video.file?.duration > 0 ? (
-                      <Text>{translate.formatTime(video.file?.duration)}</Text>
+
+                    {video.active ||
+                    (video.file?.duration && video.file?.duration >= 0) ? (
+                      <Text>
+                        {/**  FAZER FUNÇÃO DE CONVERTER DURAÇÃO, POIS ESSE FORMAT TIME É PARA HORA DE UMA DATA */}
+                        {translate.formatTime(video.file?.duration || 0)}
+                      </Text>
                     ) : (
                       <Text textTransform="uppercase">
                         {translate.formatMessage({ id: "comingSoon" })}
