@@ -1,0 +1,19 @@
+fragment HomePageProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  defaultPrice {
+    ...Price
+  }
+  course {
+    ...HomeProductsCourse
+  }
+  plan {
+    ...HomeProductsPlan
+  }
+}

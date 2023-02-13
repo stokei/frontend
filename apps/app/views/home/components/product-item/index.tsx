@@ -48,7 +48,7 @@ export const ProductItem: FC<ProductItemProps> = memo(
       if (!!course) {
         return getRoutes().course.home({ product: productId || "" });
       }
-      return getRoutes().plan.home({ product: productId || "" });
+      return "";
     }, [productId, course]);
 
     const goToCheckout = useCallback(() => {

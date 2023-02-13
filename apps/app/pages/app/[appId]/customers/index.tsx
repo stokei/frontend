@@ -1,4 +1,4 @@
-import { TermsPage } from "@/views";
+import { TermsPage } from "@/views/terms";
 import { NextPage } from "next";
 
 interface Props {}

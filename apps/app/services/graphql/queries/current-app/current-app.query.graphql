@@ -2,6 +2,7 @@ query CurrentGlobalApp {
   currentApp {
     id
     name
+    isStokei
     logo {
       file {
         url

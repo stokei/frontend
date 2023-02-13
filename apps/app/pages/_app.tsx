@@ -10,9 +10,14 @@ import { getAppIdFromNextRouter } from "@stokei/utils";
 import { CLOUDFLARE_TOKEN } from "@/environments";
 
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
-import { CurrentAppProvider } from "@/contexts";
+import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
+import { getRoutes } from "@/routes";
 import { createAPIClient } from "@/services/graphql/client";
+import {
+  CurrentAccountDocument,
+  CurrentAccountQuery,
+} from "@/services/graphql/queries/current-account/current-account.query.graphql.generated";
 import {
   CurrentGlobalAppDocument,
   CurrentGlobalAppQuery,
@@ -21,7 +26,6 @@ import { formatAppColorsToThemeColors } from "@/utils";
 import "@stokei/ui/src/styles/css/global.css";
 import { Router } from "next/router";
 import { useMemo } from "react";
-import { getRoutes } from "@/routes";
 
 const messages: Messages = {
   "pt-BR": {
@@ -43,6 +47,7 @@ function MyApp({
   pageProps,
   appId,
   currentApp,
+  currentAccount,
   themeColors,
   router,
 }: any) {
@@ -59,17 +64,22 @@ function MyApp({
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
       <CurrentAppProvider currentApp={currentApp}>
-        <StokeiUIProvider
-          config={{
-            colors: themeColors,
-          }}
-          appId={appId}
-          cloudflareAPIToken={CLOUDFLARE_TOKEN}
-        >
-          <TranslationsProvider language={DEFAULT_LANGUAGE} messages={messages}>
-            <Component {...pageProps} />
-          </TranslationsProvider>
-        </StokeiUIProvider>
+        <CurrentAccountProvider currentAccount={currentAccount}>
+          <StokeiUIProvider
+            config={{
+              colors: themeColors,
+            }}
+            appId={appId}
+            cloudflareAPIToken={CLOUDFLARE_TOKEN}
+          >
+            <TranslationsProvider
+              language={DEFAULT_LANGUAGE}
+              messages={messages}
+            >
+              <Component {...pageProps} />
+            </TranslationsProvider>
+          </StokeiUIProvider>
+        </CurrentAccountProvider>
       </CurrentAppProvider>
     </StokeiGraphQLClientProvider>
   );
@@ -84,6 +94,12 @@ MyApp.getInitialProps = async (ctx: any) => {
   const currentApp = await stokeiGraphQLClient.api
     .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {})
     .toPromise();
+
+  const currentAccount = await stokeiGraphQLClient.api
+    .query<CurrentAccountQuery>(CurrentAccountDocument, {})
+    .toPromise();
+
+  console.log({ currentAccount: currentAccount.error?.graphQLErrors });
 
   return {
     appId,

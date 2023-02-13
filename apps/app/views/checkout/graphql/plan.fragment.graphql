@@ -1,0 +1,4 @@
+fragment CheckoutProductPlan on Plan {
+  id
+  name
+}

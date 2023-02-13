@@ -918,6 +918,7 @@ export type Mutation = {
   removeVideo: Video;
   removeVideoAuthor: VideoAuthor;
   signUp: AuthResponse;
+  subscribeProduct: Checkout;
   updateAccount: Account;
   updateAddress: Address;
   updateApp: App;
@@ -1164,6 +1165,11 @@ export type MutationRemoveVideoAuthorArgs = {
 
 export type MutationSignUpArgs = {
   input: SignUpInput;
+};
+
+
+export type MutationSubscribeProductArgs = {
+  input: SubscribeProductInput;
 };
 
 
@@ -2272,6 +2278,10 @@ export type SignUpInput = {
   password: Scalars['String'];
 };
 
+export type SubscribeProductInput = {
+  price: Scalars['String'];
+};
+
 export type SubscriptionContract = {
   __typename?: 'SubscriptionContract';
   active: Scalars['Boolean'];
@@ -2892,7 +2902,7 @@ export type WhereDataFindAllProductsDataInput = {
   description?: InputMaybe<WhereDataSearchInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
   name?: InputMaybe<WhereDataSearchInput>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 

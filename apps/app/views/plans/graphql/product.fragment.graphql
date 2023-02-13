@@ -1,0 +1,24 @@
+fragment PlansProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  features {
+    totalCount
+    items {
+      id
+      name
+    }
+  }
+  defaultPrice {
+    ...Price
+  }
+  plan {
+    id
+    name
+  }
+}

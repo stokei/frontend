@@ -1,0 +1,12 @@
+fragment CheckoutProductCourse on Course {
+  id
+  instructors {
+    totalCount
+    items {
+      id
+      instructor {
+        fullname
+      }
+    }
+  }
+}

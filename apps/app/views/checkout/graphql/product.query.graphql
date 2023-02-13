@@ -1,0 +1,28 @@
+query GetCheckoutProduct($product: String!) {
+  product(id: $product) {
+    id
+    name
+    description
+    avatar {
+      file {
+        url
+      }
+    }
+    features {
+      totalCount
+      items {
+        id
+        name
+      }
+    }
+    defaultPrice {
+      ...Price
+    }
+    course {
+      ...CheckoutProductCourse
+    }
+    plan {
+      ...CheckoutProductPlan
+    }
+  }
+}

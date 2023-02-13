@@ -3,14 +3,23 @@ export const getRoutes = () => {
     home: "/",
     notFound: "/404",
     checkout: {
-      home: ({ product }: { product: string }) =>
-        "/checkout/" + (product || ""),
+      home: ({
+        product,
+        clientSecret,
+      }: {
+        product: string;
+        clientSecret: string;
+      }) =>
+        "/checkout/" +
+        (product || "") +
+        "/payment?clientSecret=" +
+        (clientSecret || ""),
     },
     course: {
-      home: ({ product }: { product: string }) => "/course/" + (product || ""),
+      home: ({ product }: { product: string }) => "/courses/" + (product || ""),
     },
-    plan: {
-      home: ({ product }: { product: string }) => "/course/" + (product || ""),
+    plans: {
+      home: "/plans",
     },
     admins: {
       home: "/admins",

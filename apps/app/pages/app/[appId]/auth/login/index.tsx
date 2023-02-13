@@ -1,4 +1,4 @@
-import { LoginPage } from "@/views";
+import { LoginPage } from "@/views/auth";
 import { NextPage } from "next";
 
 interface Props {}

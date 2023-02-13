@@ -9,21 +9,19 @@ interface ProductsListProps {
 
 export const ProductsList: FC<ProductsListProps> = ({ products }) => {
   return (
-    <Container as="section" paddingY="5">
-      <SimpleGrid columns={[1, 2, 3, 4]} spacing="5">
-        {products?.items?.map((product) => (
-          <ProductItem
-            key={product?.id}
-            id={product?.id}
-            name={product?.name}
-            avatar={product?.avatar?.file?.url || ""}
-            description={product?.description}
-            defaultPrice={product?.defaultPrice}
-            plan={product?.plan}
-            course={product?.course}
-          />
-        ))}
-      </SimpleGrid>
-    </Container>
+    <SimpleGrid columns={[1, 2, 3, 4]} spacing="5">
+      {products?.items?.map((product) => (
+        <ProductItem
+          key={product?.id}
+          id={product?.id}
+          name={product?.name}
+          avatar={product?.avatar?.file?.url || ""}
+          description={product?.description}
+          defaultPrice={product?.defaultPrice}
+          plan={product?.plan}
+          course={product?.course}
+        />
+      ))}
+    </SimpleGrid>
   );
 };

@@ -1,17 +1,21 @@
 fragment CoursePageModule on Module {
   id
   name
-  videos(orderBy: { name: ASC }) {
+  videos(orderBy: { createdAt: ASC }) {
     totalCount
     items {
-      id
-      name
-      private
-      active
-      file {
-        url
-        duration
-      }
+      ...CoursePageModuleVideo
     }
+  }
+}
+
+fragment CoursePageModuleVideo on Video {
+  id
+  name
+  private
+  active
+  file {
+    url
+    duration
   }
 }

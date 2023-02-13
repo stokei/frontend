@@ -78,6 +78,16 @@ export const createGraphqlClient = (config: ClientConfig) => {
         const accessToken = getAccessToken();
         const refreshToken = getRefreshToken();
         const appId = config?.appId;
+
+        /*
+          Verifiacr porque o token ta invalido
+        */
+        console.log({
+          accessToken,
+          refreshToken,
+          appId,
+        });
+
         const fetchOptions =
           typeof operation.context.fetchOptions === "function"
             ? operation.context.fetchOptions?.()

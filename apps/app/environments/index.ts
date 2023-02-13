@@ -11,3 +11,6 @@ export const STOKEI_API_BASE_URL: string =
 
 export const STOKEI_API_GRAPHQL_URL: string =
   process.env.STOKEI_API_GRAPHQL_URL || "http://localhost:4000/graphql";
+
+export const STRIPE_PUBLISHABLE_KEY: string =
+  process.env.STRIPE_PUBLISHABLE_KEY || "";

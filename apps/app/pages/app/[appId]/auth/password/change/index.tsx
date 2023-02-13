@@ -1,4 +1,4 @@
-import { ChangePasswordPage } from "@/views";
+import { ChangePasswordPage } from "@/views/auth";
 import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
 
 interface Props {

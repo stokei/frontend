@@ -1,4 +1,4 @@
-import { PrivacyPage } from "@/views";
+import { PrivacyPage } from "@/views/privacy";
 import { NextPage } from "next";
 
 interface Props {}

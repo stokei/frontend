@@ -5,7 +5,7 @@ import { CheckoutInfo } from "./components/checkout-info";
 import { CourseDescription } from "./components/course-description";
 import { Features } from "./components/features";
 import { Header } from "./components/header";
-import { ModulesSection } from "./components/modules-section";
+import { ModulesList } from "./components/modules-list";
 import { useGetProductCourseQuery } from "./graphql/course.query.graphql.generated";
 import { CourseLayout } from "./layout";
 
@@ -35,8 +35,8 @@ export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
           spacing="10"
           direction={["column-reverse", "column-reverse", "row", "row"]}
         >
-          <Stack spacing="10" direction="column">
-            <ModulesSection courseId={product?.course?.id} />
+          <Stack spacing="10" direction="column" width="auto" flex="1">
+            <ModulesList courseId={product?.course?.id} />
 
             {!!product?.features?.totalCount && (
               <Features features={product?.features} />

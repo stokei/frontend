@@ -40,7 +40,7 @@ export const colors = {
   ...generatePaletteToChakraUI("primary", "#24615e"),
   ...generatePaletteToChakraUI("secondary", "#EE833C"),
   ...generatePaletteToChakraUI("text", "#3c5251"),
-  ...generatePaletteToChakraUI("heading", "#0C2221"),
+  ...generatePaletteToChakraUI("heading", "#143937"),
   ...generatePaletteToChakraUI("background", "#8fa3a3", {
     "50": "#ffffff",
     "100": "#fbfefe",

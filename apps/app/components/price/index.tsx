@@ -9,7 +9,7 @@ export interface PriceProps extends StackProps {
   price?: PriceFragment | null;
   size?: "md" | "lg";
 }
-export const Price: FC<PriceProps> = ({ price, size, ...props }) => {
+export const Price: FC<PriceProps> = ({ price, size, justify, ...props }) => {
   const translate = useTranslations();
 
   const priceAmount = useMemo(() => {
@@ -47,7 +47,7 @@ export const Price: FC<PriceProps> = ({ price, size, ...props }) => {
   return (
     <Stack width="full" direction="column" spacing="1" {...props}>
       {fromPriceAmount && (
-        <Stack direction="row" align="center">
+        <Stack direction="row" align="center" justify={justify}>
           <Text
             fontSize={size === "lg" ? "md" : "sm"}
             color="text.300"
@@ -59,7 +59,7 @@ export const Price: FC<PriceProps> = ({ price, size, ...props }) => {
         </Stack>
       )}
 
-      <Stack width="full" direction="row" align="center">
+      <Stack width="full" direction="row" align="center" justify={justify}>
         <Text fontSize="md" fontWeight="600">
           {price?.currency?.symbol}
         </Text>

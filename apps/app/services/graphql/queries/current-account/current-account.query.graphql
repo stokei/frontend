@@ -1,0 +1,19 @@
+query CurrentAccount {
+  me {
+    id
+    isAdmin
+    firstname
+    lastname
+    fullname
+    isStokei
+    email
+    username
+    status
+    createdAt
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+}

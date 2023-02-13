@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
+import { secondsToTime } from "../../utils/seconds-to-time";
 
 export const useTranslations = <TKeys = string>() => {
   const intl = useIntl();
@@ -53,18 +54,15 @@ export const useTranslations = <TKeys = string>() => {
     []
   );
 
-  const formatTime = useCallback(
+  const formatDateTime = useCallback(
     (time: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
       try {
         if (typeof time === "number") {
-          if (time < 0) {
+          if (time <= 0) {
             return "00:00";
           }
-          const date = new Date();
-          date.setTime(time);
-          return intl.formatTime(date);
         }
-        return time && intl.formatTime(time);
+        return intl.formatTime(time);
       } catch (error) {
         return;
       }
@@ -72,5 +70,13 @@ export const useTranslations = <TKeys = string>() => {
     []
   );
 
-  return { formatMessage, formatMoney, formatDate, formatTime };
+  const formatTime = useCallback((seconds: number) => {
+    try {
+      return secondsToTime(seconds);
+    } catch (error) {
+      return;
+    }
+  }, []);
+
+  return { formatMessage, formatMoney, formatDate, formatTime, formatDateTime };
 };

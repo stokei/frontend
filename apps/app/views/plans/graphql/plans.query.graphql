@@ -1,0 +1,10 @@
+query GetProductPlans(
+  $where: WhereDataFindAllProductsInput!
+  $orderBy: OrderByDataFindAllProductsInput
+) {
+  products(where: $where, orderBy: $orderBy) {
+    items {
+      ...PlansProduct
+    }
+  }
+}

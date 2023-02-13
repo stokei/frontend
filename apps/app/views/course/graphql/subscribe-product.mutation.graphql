@@ -1,0 +1,14 @@
+mutation SubscribeProduct($input: SubscribeProductInput!) {
+  subscribeProduct(input: $input) {
+    clientSecret
+    subscriptionContract {
+      id
+      active
+      status
+      type
+      lastInvoice {
+        id
+      }
+    }
+  }
+}

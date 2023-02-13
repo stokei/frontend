@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CurrentGlobalAppQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type CurrentGlobalAppQuery = { __typename?: 'Query', currentApp: { __typename?: 'App', id: string, name: string, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } };
+export type CurrentGlobalAppQuery = { __typename?: 'Query', currentApp: { __typename?: 'App', id: string, name: string, isStokei: boolean, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } };
 
 
 export const CurrentGlobalAppDocument = gql`
@@ -14,6 +14,7 @@ export const CurrentGlobalAppDocument = gql`
   currentApp {
     id
     name
+    isStokei
     logo {
       file {
         url
