@@ -24,6 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (
   }
   return {
     props: {
+      clientSecret,
       productId,
     },
   };

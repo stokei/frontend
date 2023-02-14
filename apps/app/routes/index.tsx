@@ -12,7 +12,7 @@ export const getRoutes = () => {
       }) =>
         "/checkout/" +
         (product || "") +
-        "/payment?clientSecret=" +
+        "?clientSecret=" +
         (clientSecret || ""),
     },
     course: {

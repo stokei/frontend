@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
-import { getLoginResponseURL } from "@/utils";
+import { getDashboardHomePageURL } from "@/utils";
 import { LoginLayout } from "./layout";
 
 interface LoginPageProps {}
@@ -47,7 +47,7 @@ export const LoginPage: FC<LoginPageProps> = () => {
           status: "success",
         });
         window?.location?.assign(
-          getLoginResponseURL({
+          getDashboardHomePageURL({
             redirectTo: redirectToWhenLoginSuccessfully || undefined,
             isAdmin: !!data.account.isAdmin,
           })

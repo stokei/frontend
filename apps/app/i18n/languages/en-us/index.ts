@@ -39,4 +39,9 @@ export const enUSMessages: Record<I18nKeyWithoutUITranslations, string> = {
   email: "Email",
   password: "Password",
   cancel: "Cancel",
+  paymentSucceeded: "Payment succeeded!",
+  yourPaymentIsProcessing: "Your payment is processing.",
+  yourPaymentWasNotSuccessfulPleaseTryAgain:
+    "Your payment was not successful, please try again.",
+  somethingWentWrong: "Something went wrong.",
 };

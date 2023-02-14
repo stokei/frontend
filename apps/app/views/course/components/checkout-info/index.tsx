@@ -1,6 +1,7 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { useAPIErrors, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
 import { getRoutes } from "@/routes";
 import { Box, Button, Card, CardBody, Image, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
@@ -16,6 +17,7 @@ export interface CheckoutInfoProps {
 export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
   const router = useRouter();
   const translate = useTranslations();
+  const { isAuthenticated } = useCurrentAccount();
 
   const { onShowAPIError } = useAPIErrors();
 
@@ -30,12 +32,19 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
         },
       });
       if (!!response?.data?.subscribeProduct) {
-        router.push(
-          getRoutes().checkout.home({
-            product: product?.id || "",
-            clientSecret: response?.data?.subscribeProduct?.clientSecret || "",
-          })
-        );
+        const checkoutURL = getRoutes().checkout.home({
+          product: product?.id || "",
+          clientSecret: response?.data?.subscribeProduct?.clientSecret || "",
+        });
+        if (!isAuthenticated) {
+          router.push(getRoutes().login, {
+            query: {
+              redirectTo: checkoutURL,
+            },
+          });
+          return;
+        }
+        router.push(checkoutURL);
         return;
       }
 
@@ -71,7 +80,11 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
               />
             )}
             <Price size="lg" price={product?.defaultPrice} />
-            <Button width="full" onClick={onRedirectToCheckout}>
+            <Button
+              width="full"
+              onClick={onRedirectToCheckout}
+              isLoading={isLoadingSubscribeProduct}
+            >
               {translate.formatMessage({ id: "buyNow" })}
             </Button>
             {!!product?.features?.totalCount && (

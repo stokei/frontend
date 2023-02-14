@@ -1,4 +1,4 @@
-import { makeOperation } from "@urql/core";
+import { AnyVariables, makeOperation, OperationResult } from "@urql/core";
 import { authExchange } from "@urql/exchange-auth";
 import {
   cacheExchange,
@@ -24,11 +24,14 @@ import {
   setAccessToken,
   setRefreshToken,
 } from "../services";
+import { isAuthError } from "../utils";
 
 export interface ClientConfig {
   readonly isServerSide: boolean;
   readonly url: string;
   readonly appId?: string;
+  readonly getAccessToken: () => string | undefined;
+  readonly getRefreshToken: () => string | undefined;
   readonly onLogout?: () => void;
 }
 
@@ -39,15 +42,14 @@ export const createGraphqlClient = (config: ClientConfig) => {
     ssrCache,
     dedupExchange,
     cacheExchange,
-    ssrCache,
     authExchange({
-      willAuthError({ operation }) {
+      willAuthError({ operation, authState }) {
         const routesWithoutRefreshAccess: string[] = [
           "login",
           "signUp",
           "refreshAccess",
         ];
-        return !(
+        const isAllowedToRefreshAccess = !(
           operation.kind === "mutation" &&
           operation.query.definitions.some((definition) => {
             return (
@@ -61,37 +63,24 @@ export const createGraphqlClient = (config: ClientConfig) => {
             );
           })
         );
+        return isAllowedToRefreshAccess;
       },
-      didAuthError({ error }) {
-        const isAuthError = error.graphQLErrors.some(
-          (e) => e.extensions?.code === "invalidToken"
-        );
-        if (isAuthError) {
-          removeAccessToken();
-          removeRefreshToken();
+      addAuthToOperation({ operation, authState }) {
+        const { accessToken, refreshToken, appId }: any = authState || {};
 
-          config?.onLogout?.();
+        if (!accessToken || !refreshToken) {
+          return operation;
         }
-        return false;
-      },
-      addAuthToOperation({ operation }) {
-        const accessToken = getAccessToken();
-        const refreshToken = getRefreshToken();
-        const appId = config?.appId;
 
-        /*
-          Verifiacr porque o token ta invalido
-        */
-        console.log({
-          accessToken,
-          refreshToken,
-          appId,
-        });
-
-        const fetchOptions =
+        const fetchOptions: any =
           typeof operation.context.fetchOptions === "function"
             ? operation.context.fetchOptions?.()
             : operation.context.fetchOptions || {};
+
+        const headers = new Headers();
+        headers.append(ACCESS_TOKEN_HEADER_NAME, accessToken);
+        headers.append(REFRESH_TOKEN_HEADER_NAME, refreshToken);
+        headers.append(APP_ID_HEADER_NAME, appId);
 
         return makeOperation(operation.kind, operation, {
           ...operation.context,
@@ -99,47 +88,69 @@ export const createGraphqlClient = (config: ClientConfig) => {
             ...fetchOptions,
             headers: {
               ...fetchOptions?.headers,
-              [ACCESS_TOKEN_HEADER_NAME]: accessToken,
-              [REFRESH_TOKEN_HEADER_NAME]: refreshToken,
-              [APP_ID_HEADER_NAME]: appId,
+              ...headers,
             },
           },
         });
       },
       async getAuth({ authState, mutate }) {
+        const accessToken = config?.getAccessToken();
+        const refreshToken = config?.getRefreshToken();
         const appId = config?.appId;
 
-        const responseRefreshAccessMutation =
-          await mutate<RefreshAccessMutationSchemaResponse>(
-            refreshAccessMutationSchema
-          );
+        const currentAuthState: any = authState;
+
+        const responseRefreshAccessMutation: OperationResult<
+          RefreshAccessMutationSchemaResponse,
+          AnyVariables
+        > = await mutate(
+          refreshAccessMutationSchema,
+          {},
+          {
+            fetchOptions: {
+              headers: {
+                [ACCESS_TOKEN_HEADER_NAME]: accessToken || "",
+                [REFRESH_TOKEN_HEADER_NAME]: refreshToken || "",
+                [APP_ID_HEADER_NAME]: appId || "",
+              },
+            },
+          }
+        );
 
         if (responseRefreshAccessMutation.data?.response) {
-          setAccessToken(
-            responseRefreshAccessMutation.data.response.accessToken,
-            responseRefreshAccessMutation.data.response.prefixToken
+          const refreshAccessData = responseRefreshAccessMutation.data.response;
+          const newAccessToken = setAccessToken(
+            refreshAccessData.accessToken,
+            refreshAccessData.prefixToken
           );
-          setRefreshToken(
-            responseRefreshAccessMutation.data.response.refreshToken
+          const newRefreshToken = setRefreshToken(
+            refreshAccessData.refreshToken
           );
-          let accessToken: string =
-            responseRefreshAccessMutation.data.response.accessToken;
-          if (responseRefreshAccessMutation.data.response.prefixToken) {
-            accessToken =
-              responseRefreshAccessMutation.data.response.prefixToken +
-              " " +
-              responseRefreshAccessMutation.data.response.accessToken;
-          }
 
+          return {
+            ...currentAuthState,
+            appId,
+            accessToken: newAccessToken,
+            refreshToken: newRefreshToken,
+          };
+        }
+        const hasAuthError =
+          responseRefreshAccessMutation?.error?.graphQLErrors.some((e) =>
+            isAuthError((e.extensions?.code as string) || "")
+          );
+        if (hasAuthError) {
+          removeAccessToken();
+          removeRefreshToken();
+
+          config?.onLogout?.();
+        }
+
+        if (appId) {
           return {
             ...(authState as any),
             appId,
-            accessToken,
-            refreshToken:
-              responseRefreshAccessMutation.data.response.refreshToken,
           };
         }
-
         return null;
       },
     }),
@@ -148,13 +159,17 @@ export const createGraphqlClient = (config: ClientConfig) => {
 
   return {
     ssrCache,
+    accessToken: config?.getAccessToken(),
+    refreshToken: config?.getRefreshToken(),
+    appId: config?.appId,
     api: createClient({
       url: config.url,
       exchanges,
       fetchOptions: () => {
-        const accessToken = getAccessToken();
-        const refreshToken = getRefreshToken();
+        const accessToken = config?.getAccessToken();
+        const refreshToken = config?.getRefreshToken();
         const appId = config?.appId;
+
         return {
           headers: {
             ...(accessToken && {

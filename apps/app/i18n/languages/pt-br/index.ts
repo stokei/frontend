@@ -37,4 +37,9 @@ export const ptBRMessages = {
   email: "Email",
   password: "Senha",
   cancel: "Cancelar",
+  paymentSucceeded: "Pagamento efetuado com sucesso!",
+  yourPaymentIsProcessing: "Seu pagamento esta sendo processado.",
+  yourPaymentWasNotSuccessfulPleaseTryAgain:
+    "Seu pagamento não foi efetuado, por favor tente novamente.",
+  somethingWentWrong: "Algum erro ocorreu.",
 };

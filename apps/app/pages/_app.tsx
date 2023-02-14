@@ -7,7 +7,7 @@ import {
 } from "@stokei/ui";
 import { getAppIdFromNextRouter } from "@stokei/utils";
 
-import { CLOUDFLARE_TOKEN } from "@/environments";
+import { CLOUDFLARE_TOKEN, STRIPE_PUBLISHABLE_KEY } from "@/environments";
 
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
@@ -26,6 +26,10 @@ import { formatAppColorsToThemeColors } from "@/utils";
 import "@stokei/ui/src/styles/css/global.css";
 import { Router } from "next/router";
 import { useMemo } from "react";
+import {
+  getServerSideAccessToken,
+  getServerSideRefreshToken,
+} from "@/services/cookies";
 
 const messages: Messages = {
   "pt-BR": {
@@ -85,25 +89,29 @@ function MyApp({
   );
 }
 
-MyApp.getInitialProps = async (ctx: any) => {
-  const router = ctx?.router;
+MyApp.getInitialProps = async ({ router, ctx }: any) => {
   const appId = getAppIdFromNextRouter(router);
   const stokeiGraphQLClient = createAPIClient({
     appId,
+    cookies: ctx?.req?.cookies,
   });
+
   const currentApp = await stokeiGraphQLClient.api
     .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {})
     .toPromise();
 
-  const currentAccount = await stokeiGraphQLClient.api
-    .query<CurrentAccountQuery>(CurrentAccountDocument, {})
-    .toPromise();
+  let currentAccount;
 
-  console.log({ currentAccount: currentAccount.error?.graphQLErrors });
+  try {
+    currentAccount = await stokeiGraphQLClient.api
+      .query<CurrentAccountQuery>(CurrentAccountDocument, {})
+      .toPromise();
+  } catch (error) {}
 
   return {
     appId,
     currentApp: currentApp?.data?.currentApp,
+    currentAccount: currentAccount?.data?.me,
     themeColors: formatAppColorsToThemeColors(
       currentApp?.data?.currentApp?.colors?.items
     ),

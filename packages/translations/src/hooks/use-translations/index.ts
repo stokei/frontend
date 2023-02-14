@@ -78,5 +78,12 @@ export const useTranslations = <TKeys = string>() => {
     }
   }, []);
 
-  return { formatMessage, formatMoney, formatDate, formatTime, formatDateTime };
+  return {
+    locale: intl.locale,
+    formatMessage,
+    formatMoney,
+    formatDate,
+    formatTime,
+    formatDateTime,
+  };
 };

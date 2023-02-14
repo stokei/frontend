@@ -1,13 +1,25 @@
-import { CurrentAccountQuery } from "@/services/graphql/queries/current-account/current-account.query.graphql.generated";
-import { createContext, FC, PropsWithChildren, useMemo } from "react";
+import {
+  CurrentAccountQuery,
+  useCurrentAccountQuery,
+} from "@/services/graphql/queries/current-account/current-account.query.graphql.generated";
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+export type CurrentAccount = CurrentAccountQuery["me"];
 
 export interface CurrentAccountProviderProps {
   readonly currentAccount?: CurrentAccount;
 }
 
-export type CurrentAccount = CurrentAccountQuery["me"];
 export interface CurrentAccountProviderValues {
   readonly isAuthenticated?: boolean;
+  readonly isLoading?: boolean;
   readonly currentAccount?: CurrentAccount;
 }
 
@@ -17,13 +29,28 @@ export const CurrentAccountContext = createContext(
 
 export const CurrentAccountProvider: FC<
   PropsWithChildren<CurrentAccountProviderProps>
-> = ({ currentAccount, children }) => {
+> = ({ currentAccount: currentAccountProp, children }) => {
+  const [currentAccount, setCurrentAccount] = useState<
+    CurrentAccount | undefined
+  >(currentAccountProp);
+
+  const [{ fetching: isLoading, data }] = useCurrentAccountQuery({
+    pause: !!currentAccountProp,
+  });
+
+  useEffect(() => {
+    if (!!data?.me) {
+      setCurrentAccount(data.me);
+    }
+  }, [data]);
+
   const values: CurrentAccountProviderValues = useMemo(
     () => ({
       isAuthenticated: !!currentAccount,
       currentAccount,
+      isLoading,
     }),
-    [currentAccount]
+    [currentAccount, isLoading]
   );
 
   return (

@@ -1,6 +1,6 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { getRoutes } from "@/routes";
-import { getLoginResponseURL } from "@/utils";
+import { getDashboardHomePageURL } from "@/utils";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
   Box,
@@ -54,7 +54,7 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
           status: "success",
         });
         window?.location?.assign(
-          getLoginResponseURL({
+          getDashboardHomePageURL({
             redirectTo: redirectToWhenSignUpSuccessfully || undefined,
             isAdmin: !!data.account.isAdmin,
           })

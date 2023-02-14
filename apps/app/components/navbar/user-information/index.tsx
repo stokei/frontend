@@ -10,12 +10,12 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
   ...props
 }) => {
   const router = useRouter();
-  const { isAuthenticated, currentAccount } = useCurrentAccount();
+  const { currentAccount } = useCurrentAccount();
   const translate = useTranslations();
 
   return (
     <Stack align="center" justify="flex-end" direction="row" {...props}>
-      {isAuthenticated ? (
+      {!!currentAccount ? (
         <Button>{currentAccount?.firstname}</Button>
       ) : (
         <>

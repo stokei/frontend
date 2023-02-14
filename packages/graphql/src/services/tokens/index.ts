@@ -19,7 +19,7 @@ export const setAccessToken = (
   if (prefixTokenValue) {
     value = prefixTokenValue + " " + accessTokenValue;
   }
-  setCookie(ACCESS_TOKEN_HEADER_NAME, value, options);
+  return setCookie(ACCESS_TOKEN_HEADER_NAME, value, options);
 };
 export const removeAccessToken = (options?: CookieAttributes) =>
   removeCookie(ACCESS_TOKEN_HEADER_NAME, options);
