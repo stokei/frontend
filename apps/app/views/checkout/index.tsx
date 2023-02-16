@@ -1,4 +1,5 @@
 import defaultNoImage from "@/assets/no-image.png";
+import { Price } from "@/components";
 import { STRIPE_PUBLISHABLE_KEY } from "@/environments";
 import { useTranslations } from "@/hooks";
 import { Card, CardBody, Container, Image, Stack, Title } from "@stokei/ui";
@@ -43,7 +44,10 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({
               src={product?.avatar?.file?.url || ""}
               fallbackSrc={defaultNoImage.src}
             />
+
             <Title marginBottom="5">{product?.name}</Title>
+
+            <Price justify="center" size="lg" price={product?.defaultPrice} />
           </Stack>
         </Container>
         <Container justify="center" align="center">
@@ -59,7 +63,6 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({
                     theme: "stripe",
                   },
                   locale: translate.locale as any,
-                  clientSecret,
                 }}
               >
                 <CheckoutForm clientSecret={clientSecret} product={product} />

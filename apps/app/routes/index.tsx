@@ -8,7 +8,7 @@ export const getRoutes = () => {
         clientSecret,
       }: {
         product: string;
-        clientSecret: string;
+        clientSecret?: string;
       }) =>
         "/checkout/" +
         (product || "") +

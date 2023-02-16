@@ -1,0 +1,9 @@
+fragment CheckoutPaymentMethod on PaymentMethod {
+  id
+  parent
+  cardBrand
+  cardExpiryMonth
+  cardExpiryYear
+  lastFourCardNumber
+  stripePaymentMethod
+}

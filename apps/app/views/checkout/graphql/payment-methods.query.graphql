@@ -1,0 +1,7 @@
+query GetPaymentMethods($where: WhereDataFindAllPaymentMethodsInput) {
+  paymentMethods(where: $where) {
+    items {
+      ...CheckoutPaymentMethod
+    }
+  }
+}

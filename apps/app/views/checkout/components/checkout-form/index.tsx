@@ -1,27 +1,18 @@
-import { Price } from "@/components";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { getDashboardHomePageURL } from "@/utils";
-import {
-  Box,
-  Button,
-  Form,
-  Icon,
-  IconName,
-  Loading,
-  Stack,
-  Text,
-  useToast,
-} from "@stokei/ui";
-import {
-  PaymentElement,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
+import { Button, Form, Loading, Skeleton, Stack, useToast } from "@stokei/ui";
+import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { PaymentIntent } from "@stripe/stripe-js";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import {
+  CreatePaymentMethodMutation,
+  useCreatePaymentMethodMutation,
+} from "../../graphql/create-payment-method.mutation.graphql.generated";
 import { GetCheckoutProductQuery } from "../../graphql/product.query.graphql.generated";
+import { PaymentMethodsList } from "../payment-methods-list";
+import { PaymentSuccessfully } from "../payment-successfully";
 
 interface CheckoutFormProps {
   readonly product?: GetCheckoutProductQuery["product"];
@@ -30,11 +21,13 @@ interface CheckoutFormProps {
 
 export const CheckoutForm: FC<CheckoutFormProps> = ({
   product,
-  clientSecret,
+  clientSecret: clientSecretURLParam,
 }) => {
   const [isLoadingForm, setLoadingForm] = useState(true);
   const [isLoadingPayment, setLoadingPayment] = useState(false);
   const [paymentSuccessfully, setPaymentSuccessfully] = useState(false);
+  const [paymentMethod, setPaymentMethod] =
+    useState<CreatePaymentMethodMutation["createPaymentMethod"]>();
 
   const translate = useTranslations();
   const { currentAccount } = useCurrentAccount();
@@ -43,6 +36,17 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({
   const stripe = useStripe();
   const elements = useElements();
   const { onShowAPIError } = useAPIErrors();
+
+  /*
+    VERIFICAR SE AINDA HÁ ERRO:
+    - AO CLICAR EM COMPRAR QUANDO ESTÁ LOGADO
+    - AO CLICAR EM COMPRAR QUANDO NÃO ESTÁ LOGADO
+    - QUANDO CARREGA O CHECKOUT COM CLIENT_SECRET
+    - QUANDO CARREGA O CHECKOUT SEM CLIENT_SECRET
+  */
+
+  const [{ fetching: isCreatingPaymentMethod }, onCreatePaymentMethod] =
+    useCreatePaymentMethodMutation();
 
   const onShowPaymentCallback = (
     paymentIntentStatus?: PaymentIntent.Status
@@ -85,14 +89,17 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({
         return;
       }
 
-      if (!clientSecret) {
+      if (!clientSecretURLParam) {
+        setLoadingForm(false);
         return;
       }
 
-      stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-        setPaymentSuccessfully(paymentIntent?.status === "succeeded");
-        setLoadingForm(false);
-      });
+      stripe
+        .retrievePaymentIntent(clientSecretURLParam)
+        .then(({ paymentIntent }) => {
+          setPaymentSuccessfully(paymentIntent?.status === "succeeded");
+          setLoadingForm(false);
+        });
     };
     loadPaymentIntentStatus();
   }, [stripe]);
@@ -103,65 +110,66 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({
     }
     setLoadingPayment(true);
 
-    const result = await stripe.confirmPayment({
-      elements,
-      redirect: "if_required",
-      confirmParams: {
-        return_url: "https://example.com/order/123/complete",
-      },
-    });
+    const clientSecret = "PEGAR O CLIENT SECRET DA REQUEST";
 
-    if (result.error) {
-      onShowAPIError({ message: result.error.message });
-    } else {
-      stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-        onShowPaymentCallback(paymentIntent?.status);
-      });
-    }
+    const currentURLClass = new URL(window.location.href);
+    currentURLClass.searchParams.set("clientSecret", clientSecret);
+    const currentURL = currentURLClass.toString();
+
+    console.log({ location: currentURL });
+    // const result = await stripe.confirmPayment({
+    //   elements,
+    //   redirect: "if_required",
+    //   confirmParams: {
+    //     return_url: "https://example.com/order/123/complete",
+    //   },
+    // });
+
+    // if (result.error) {
+    //   onShowAPIError({ message: result.error.message });
+    // } else {
+    //   stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+    //     onShowPaymentCallback(paymentIntent?.status);
+    //   });
+    // }
     setLoadingPayment(false);
   };
 
   return (
-    <Form onSubmit={onSubmit}>
-      <Stack direction="column" spacing="5">
-        {isLoadingForm ? (
-          <Box width="full" align="center" justify="center">
-            <Loading />
-          </Box>
-        ) : (
-          <>
-            {paymentSuccessfully ? (
-              <Stack
-                direction="column"
-                align="center"
-                justify="center"
-                spacing="1"
-              >
-                <Icon fontSize="6xl" color="success.500" name="check" />
-                <Text fontSize="lg" fontWeight="semibold">
-                  {translate.formatMessage({ id: "paymentSucceeded" })}
-                </Text>
-              </Stack>
-            ) : (
-              <>
-                <Price
-                  justify="center"
-                  size="lg"
-                  price={product?.defaultPrice}
-                />
-                <PaymentElement
-                  options={{
-                    layout: "tabs",
-                  }}
-                />
-                <Button width="full" type="submit" isLoading={isLoadingPayment}>
-                  {translate.formatMessage({ id: "subscribe" })}
-                </Button>
-              </>
-            )}
-          </>
-        )}
-      </Stack>
-    </Form>
+    <Stack direction="column" spacing="5">
+      {isLoadingForm ? (
+        <Stack direction="column" spacing="4" align="center" justify="center">
+          <Skeleton height="16" width="30%" marginBottom="4" />
+          <Stack direction="column" spacing="4">
+            <Skeleton height="16" />
+            <Skeleton height="16" />
+            <Skeleton height="16" />
+          </Stack>
+          <Loading />
+        </Stack>
+      ) : (
+        <>
+          {paymentSuccessfully ? (
+            <PaymentSuccessfully />
+          ) : (
+            <>
+              <PaymentMethodsList onChoosePaymentMethod={setPaymentMethod} />
+
+              {paymentMethod && (
+                <Form onSubmit={onSubmit}>
+                  <Button
+                    width="full"
+                    type="submit"
+                    isLoading={isLoadingPayment}
+                  >
+                    {translate.formatMessage({ id: "subscribe" })}
+                  </Button>
+                </Form>
+              )}
+            </>
+          )}
+        </>
+      )}
+    </Stack>
   );
 };

@@ -37,6 +37,11 @@ export const ptBRMessages = {
   email: "Email",
   password: "Senha",
   cancel: "Cancelar",
+  chooseYourCard: "Escolha seu cartão",
+  creditCard: "Cartão de Credito",
+  validUntil: "Válido até",
+  addCard: "Adicionar Cartão",
+  addNewCard: "Adicionar novo cartão",
   paymentSucceeded: "Pagamento efetuado com sucesso!",
   yourPaymentIsProcessing: "Seu pagamento esta sendo processado.",
   yourPaymentWasNotSuccessfulPleaseTryAgain:

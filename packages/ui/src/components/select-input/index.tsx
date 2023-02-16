@@ -28,7 +28,7 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
     const isAllowedToAddMultiStyles = isMultiple && hasValue && !!children;
 
     const onFocusInput = useCallback(
-      (e) => {
+      (e: any) => {
         onOpenList();
         onFocus?.(e);
       },

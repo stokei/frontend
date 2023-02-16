@@ -41,12 +41,15 @@ export const useTranslations = <TKeys = string>() => {
   );
 
   const formatDate = useCallback(
-    (date: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
+    (
+      date: Parameters<Intl.DateTimeFormat["format"]>[0],
+      options?: Intl.DateTimeFormatOptions & { format?: string }
+    ) => {
       if (!date) {
         return;
       }
       try {
-        return intl.formatDate(date);
+        return intl.formatDate(date, options);
       } catch (error) {
         return undefined;
       }
@@ -55,14 +58,17 @@ export const useTranslations = <TKeys = string>() => {
   );
 
   const formatDateTime = useCallback(
-    (time: Parameters<Intl.DateTimeFormat["format"]>[0]) => {
+    (
+      time: Parameters<Intl.DateTimeFormat["format"]>[0],
+      options?: Intl.DateTimeFormatOptions & { format?: string }
+    ) => {
       try {
         if (typeof time === "number") {
           if (time <= 0) {
             return "00:00";
           }
         }
-        return intl.formatTime(time);
+        return intl.formatTime(time, options);
       } catch (error) {
         return;
       }

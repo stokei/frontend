@@ -1396,10 +1396,9 @@ export type OrderByDataFindAllModulesInput = {
 };
 
 export type OrderByDataFindAllPaymentMethodsInput = {
+  cardBrand?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
-  provider?: InputMaybe<OrderBy>;
-  type?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -1518,11 +1517,14 @@ export type PaymentMethod = {
   __typename?: 'PaymentMethod';
   app?: Maybe<App>;
   cardBrand?: Maybe<Scalars['String']>;
+  cardExpiryMonth?: Maybe<Scalars['String']>;
+  cardExpiryYear?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
   lastFourCardNumber?: Maybe<Scalars['String']>;
-  parent: Account;
+  parent: Scalars['String'];
+  stripePaymentMethod?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };
@@ -2822,10 +2824,11 @@ export type WhereDataFindAllModulesInput = {
 };
 
 export type WhereDataFindAllPaymentMethodsDataInput = {
-  active?: InputMaybe<WhereDataBooleanInput>;
+  app?: InputMaybe<WhereDataStringInput>;
+  cardBrand?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 

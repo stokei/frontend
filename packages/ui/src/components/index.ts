@@ -125,6 +125,7 @@ export * from "./tag";
 export * from "./tag-close-button";
 export * from "./tag-label";
 export * from "./radio";
+export * from "./radio-card";
 export * from "./radio-group";
 export * from "./textarea";
 export * from "./title";

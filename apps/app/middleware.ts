@@ -11,7 +11,11 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const [domain] = request.headers.get("host")?.split(":") || [];
-  if (pathname.startsWith("/_next") || pathname.startsWith("/favicon.ico")) {
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/favicon.ico") ||
+    pathname.startsWith("/assets")
+  ) {
     return NextResponse.next();
   }
 

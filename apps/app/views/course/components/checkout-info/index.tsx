@@ -25,35 +25,19 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
     useSubscribeProductMutation();
 
   const onRedirectToCheckout = async () => {
-    try {
-      const response = await onExecuteSubscribeProduct({
-        input: {
-          price: product?.defaultPrice?.id || "",
+    const checkoutURL = getRoutes().checkout.home({
+      product: product?.id || "",
+    });
+    if (!isAuthenticated) {
+      router.push({
+        pathname: getRoutes().login,
+        query: {
+          redirectTo: checkoutURL,
         },
       });
-      if (!!response?.data?.subscribeProduct) {
-        const checkoutURL = getRoutes().checkout.home({
-          product: product?.id || "",
-          clientSecret: response?.data?.subscribeProduct?.clientSecret || "",
-        });
-        if (!isAuthenticated) {
-          router.push(getRoutes().login, {
-            query: {
-              redirectTo: checkoutURL,
-            },
-          });
-          return;
-        }
-        router.push(checkoutURL);
-        return;
-      }
-
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {}
+      return;
+    }
+    router.push(checkoutURL);
   };
 
   return (

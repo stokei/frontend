@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (
     context?.query?.productId?.toString() ||
     context?.params?.productId?.toString();
   const clientSecret = context?.query?.clientSecret?.toString();
-  if (!productId || !clientSecret) {
+  if (!productId) {
     return {
       notFound: true,
     };

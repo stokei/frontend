@@ -39,6 +39,11 @@ export const enUSMessages: Record<I18nKeyWithoutUITranslations, string> = {
   email: "Email",
   password: "Password",
   cancel: "Cancel",
+  chooseYourCard: "Choose your card",
+  creditCard: "Credit Card",
+  validUntil: "Valid until",
+  addCard: "Add Card",
+  addNewCard: "Add new card",
   paymentSucceeded: "Payment succeeded!",
   yourPaymentIsProcessing: "Your payment is processing.",
   yourPaymentWasNotSuccessfulPleaseTryAgain:
