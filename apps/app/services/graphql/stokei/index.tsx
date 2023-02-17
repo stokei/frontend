@@ -402,6 +402,7 @@ export type CreateAppInstructorInput = {
 
 export type CreateCheckoutInput = {
   customer?: InputMaybe<Scalars['String']>;
+  paymentMethod: Scalars['String'];
   price: Scalars['String'];
 };
 
@@ -2281,6 +2282,7 @@ export type SignUpInput = {
 };
 
 export type SubscribeProductInput = {
+  paymentMethod: Scalars['String'];
   price: Scalars['String'];
 };
 

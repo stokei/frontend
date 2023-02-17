@@ -12,8 +12,7 @@ export const getRoutes = () => {
       }) =>
         "/checkout/" +
         (product || "") +
-        "?clientSecret=" +
-        (clientSecret || ""),
+        (clientSecret ? "?clientSecret=" + clientSecret : ""),
     },
     course: {
       home: ({ product }: { product: string }) => "/courses/" + (product || ""),

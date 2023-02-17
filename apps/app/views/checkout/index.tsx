@@ -14,13 +14,9 @@ const stripeLoadElements = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 interface CheckoutPageProps {
   readonly productId: string;
-  readonly clientSecret: string;
 }
 
-export const CheckoutPage: FC<CheckoutPageProps> = ({
-  productId,
-  clientSecret,
-}) => {
+export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
   const translate = useTranslations();
 
   const [{ fetching: isLoadingProduct, data: dataProduct }] =
@@ -65,7 +61,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({
                   locale: translate.locale as any,
                 }}
               >
-                <CheckoutForm clientSecret={clientSecret} product={product} />
+                <CheckoutForm product={product} />
               </Elements>
             </CardBody>
           </Card>

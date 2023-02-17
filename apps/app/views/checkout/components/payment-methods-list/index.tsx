@@ -20,12 +20,14 @@ import { CreateCreditCardModal } from "../create-credit-card-modal";
 import { PaymentMethodItem } from "../payment-method-item";
 
 interface PaymentMethodsListProps {
+  readonly selectedPaymentMethod?: CheckoutPaymentMethodFragment;
   readonly onChoosePaymentMethod: (
     paymentMethod: CheckoutPaymentMethodFragment
   ) => void;
 }
 
 export const PaymentMethodsList: FC<PaymentMethodsListProps> = ({
+  selectedPaymentMethod,
   onChoosePaymentMethod,
 }) => {
   const [paymentMethods, setPaymentMethods] = useState<
@@ -97,6 +99,9 @@ export const PaymentMethodsList: FC<PaymentMethodsListProps> = ({
               {paymentMethods.map((currentPaymentMethod) => (
                 <PaymentMethodItem
                   key={currentPaymentMethod.id}
+                  isActive={
+                    currentPaymentMethod?.id === selectedPaymentMethod?.id
+                  }
                   paymentMethod={currentPaymentMethod}
                   onChoosePaymentMethod={() =>
                     onChoosePaymentMethod(currentPaymentMethod)

@@ -3,11 +3,10 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 
 interface Props {
   readonly productId: string;
-  readonly clientSecret: string;
 }
 
-const Page: NextPage<Props> = ({ productId, clientSecret }) => {
-  return <CheckoutPage productId={productId} clientSecret={clientSecret} />;
+const Page: NextPage<Props> = ({ productId }) => {
+  return <CheckoutPage productId={productId} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -16,7 +15,6 @@ export const getServerSideProps: GetServerSideProps = async (
   const productId =
     context?.query?.productId?.toString() ||
     context?.params?.productId?.toString();
-  const clientSecret = context?.query?.clientSecret?.toString();
   if (!productId) {
     return {
       notFound: true,
@@ -24,7 +22,6 @@ export const getServerSideProps: GetServerSideProps = async (
   }
   return {
     props: {
-      clientSecret,
       productId,
     },
   };

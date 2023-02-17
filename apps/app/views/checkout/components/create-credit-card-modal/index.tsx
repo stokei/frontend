@@ -18,7 +18,7 @@ export const CreateCreditCardModal: FC<CreateCreditCardModalProps> = ({
   const translate = useTranslations();
   return (
     <Modal isOpen={!!isOpen} onClose={onClose}>
-      <ModalHeader>{translate.formatMessage({ id: "save" })}</ModalHeader>
+      <ModalHeader>{translate.formatMessage({ id: "addNewCard" })}</ModalHeader>
       <ModalBody>
         <CreateCreditCardForm onSuccess={onSuccess} />
       </ModalBody>

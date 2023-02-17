@@ -1,29 +1,36 @@
 import { useTranslations } from "@/hooks";
-import { Box, Image, Radio, RadioCard, Stack, Text } from "@stokei/ui";
+import { getCardFlagURL } from "@/utils";
+import { Box, Button, Image, Radio, RadioCard, Stack, Text } from "@stokei/ui";
 import { FC, memo } from "react";
 import { CheckoutPaymentMethodFragment } from "../../graphql/payment-method.fragment.graphql.generated";
 
 interface PaymentMethodItemProps {
+  readonly isActive?: boolean;
   readonly paymentMethod?: CheckoutPaymentMethodFragment;
   readonly onChoosePaymentMethod: () => void;
 }
 
 export const PaymentMethodItem: FC<PaymentMethodItemProps> = memo(
-  ({ paymentMethod }) => {
+  ({ paymentMethod, onChoosePaymentMethod, isActive }) => {
     const translate = useTranslations();
     return (
-      <Stack rounded="md" borderWidth="thin">
-        <RadioCard
-          paddingX="5"
-          paddingY="3"
+      <Stack>
+        <Button
+          padding="5"
+          rounded="md"
+          borderWidth="thin"
           id={paymentMethod?.id || ""}
-          value={paymentMethod?.id || ""}
+          onClick={onChoosePaymentMethod}
+          variant="ghost"
+          colorScheme="gray"
+          isActive={isActive}
         >
           <Stack direction="row" spacing="4" align="center">
             <Image
               width="12"
               height="fit-content"
-              src={`/assets/card-flags/${paymentMethod?.cardBrand?.toLowerCase()}.svg`}
+              src={getCardFlagURL(paymentMethod?.cardBrand)}
+              fallbackSrc={getCardFlagURL()}
               alt={paymentMethod?.cardBrand || ""}
             />
             <Box width="full" align="center" justify="flex-end">
@@ -64,7 +71,7 @@ export const PaymentMethodItem: FC<PaymentMethodItemProps> = memo(
               </Stack>
             </Box>
           </Stack>
-        </RadioCard>
+        </Button>
       </Stack>
     );
   }

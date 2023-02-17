@@ -7,7 +7,6 @@ import { Box, Button, Card, CardBody, Image, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { GetProductCourseQuery } from "../../graphql/course.query.graphql.generated";
-import { useSubscribeProductMutation } from "../../graphql/subscribe-product.mutation.graphql.generated";
 import { Features } from "../features";
 
 export interface CheckoutInfoProps {
@@ -20,9 +19,6 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
   const { isAuthenticated } = useCurrentAccount();
 
   const { onShowAPIError } = useAPIErrors();
-
-  const [{ fetching: isLoadingSubscribeProduct }, onExecuteSubscribeProduct] =
-    useSubscribeProductMutation();
 
   const onRedirectToCheckout = async () => {
     const checkoutURL = getRoutes().checkout.home({
@@ -64,11 +60,7 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
               />
             )}
             <Price size="lg" price={product?.defaultPrice} />
-            <Button
-              width="full"
-              onClick={onRedirectToCheckout}
-              isLoading={isLoadingSubscribeProduct}
-            >
+            <Button width="full" onClick={onRedirectToCheckout}>
               {translate.formatMessage({ id: "buyNow" })}
             </Button>
             {!!product?.features?.totalCount && (
