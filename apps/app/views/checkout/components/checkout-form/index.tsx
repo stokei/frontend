@@ -83,17 +83,16 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({ product }) => {
             onChoosePaymentMethod={setPaymentMethod}
           />
 
-          {paymentMethod && (
-            <Form onSubmit={onSubmit}>
-              <Button
-                width="full"
-                type="submit"
-                isLoading={isLoadingSubscribeProduct}
-              >
-                {translate.formatMessage({ id: "subscribe" })}
-              </Button>
-            </Form>
-          )}
+          <Form onSubmit={onSubmit}>
+            <Button
+              width="full"
+              type="submit"
+              isDisabled={!paymentMethod}
+              isLoading={isLoadingSubscribeProduct}
+            >
+              {translate.formatMessage({ id: "subscribe" })}
+            </Button>
+          </Form>
         </>
       )}
     </Stack>
