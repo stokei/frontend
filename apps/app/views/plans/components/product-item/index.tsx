@@ -16,7 +16,7 @@ import { FC, memo, useCallback, useMemo } from "react";
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { useTranslations } from "@/hooks";
-import { getRoutes } from "@/routes";
+import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { PlansProductFragment } from "../../graphql/product.fragment.graphql.generated";
 import { Features } from "../features";

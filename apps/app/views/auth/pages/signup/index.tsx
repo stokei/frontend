@@ -1,5 +1,5 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { getRoutes } from "@/routes";
+import { routes } from "@/routes";
 import { getDashboardHomePageURL } from "@/utils";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
@@ -83,7 +83,7 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
             isLoading={isLoadingSignUp}
             onRedirectToLoginURL={() =>
               router.push({
-                pathname: getRoutes().login,
+                pathname: routes.login,
                 query: {
                   redirectTo: redirectToWhenSignUpSuccessfully,
                 },

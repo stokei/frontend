@@ -1,10 +1,10 @@
-import { TermsPage } from "@/views/terms";
+import { AdminsHomePage } from "@/views/admins";
 import { NextPage } from "next";
 
 interface Props {}
 
 const Page: NextPage<Props> = () => {
-  return <TermsPage />;
+  return <AdminsHomePage />;
 };
 
 export default Page;

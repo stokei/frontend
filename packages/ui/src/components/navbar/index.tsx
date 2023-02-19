@@ -8,11 +8,10 @@ export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => (
     paddingX="5"
     paddingY="3"
     margin={0}
-    borderColor="background.300"
-    {...props}
     flexDirection="row"
-    justifyContent="space-between"
-    alignItems="center"
+    justify="space-between"
+    align="center"
+    {...props}
   >
     {children}
   </Container>

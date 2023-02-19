@@ -10,7 +10,7 @@ export interface DrawerProps extends ChakraDrawerProps {}
 export const Drawer: React.FC<DrawerProps> = ({ children, ...props }) => (
   <ChakraDrawer {...props}>
     <ChakraDrawerOverlay />
-    <ChakraDrawerContent>
+    <ChakraDrawerContent background="background.50">
       <ChakraDrawerCloseButton />
       {children}
     </ChakraDrawerContent>

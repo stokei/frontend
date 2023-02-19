@@ -1,0 +1,7 @@
+query GetCourses($where: WhereDataFindAllCoursesInput) {
+  courses(where: $where) {
+    items {
+      ...AdminsCourse
+    }
+  }
+}

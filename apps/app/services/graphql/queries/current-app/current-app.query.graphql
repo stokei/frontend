@@ -3,6 +3,11 @@ query CurrentGlobalApp {
     id
     name
     isStokei
+    icon {
+      file {
+        url
+      }
+    }
     logo {
       file {
         url

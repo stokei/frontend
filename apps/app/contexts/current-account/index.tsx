@@ -2,6 +2,7 @@ import {
   CurrentAccountQuery,
   useCurrentAccountQuery,
 } from "@/services/graphql/queries/current-account/current-account.query.graphql.generated";
+import { getDashboardHomePageURL } from "@/utils";
 import {
   createContext,
   FC,
@@ -18,6 +19,7 @@ export interface CurrentAccountProviderProps {
 }
 
 export interface CurrentAccountProviderValues {
+  readonly homePageURL?: string;
   readonly isAuthenticated?: boolean;
   readonly isLoading?: boolean;
   readonly currentAccount?: CurrentAccount;
@@ -38,6 +40,11 @@ export const CurrentAccountProvider: FC<
     pause: !!currentAccountProp,
   });
 
+  const homePageURL = useMemo(
+    () => getDashboardHomePageURL({ isAdmin: !!currentAccount?.isAdmin }),
+    [currentAccount]
+  );
+
   useEffect(() => {
     if (!!data?.me) {
       setCurrentAccount(data.me);
@@ -49,8 +56,9 @@ export const CurrentAccountProvider: FC<
       isAuthenticated: !!currentAccount,
       currentAccount,
       isLoading,
+      homePageURL,
     }),
-    [currentAccount, isLoading]
+    [currentAccount, homePageURL, isLoading]
   );
 
   return (

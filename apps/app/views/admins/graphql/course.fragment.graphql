@@ -1,0 +1,25 @@
+fragment AdminsCourse on Course {
+  id
+  name
+  avatar {
+    file {
+      url
+    }
+  }
+  instructors {
+    totalCount
+    items {
+      id
+      instructor {
+        id
+        firstname
+        fullname
+        avatar {
+          file {
+            url
+          }
+        }
+      }
+    }
+  }
+}

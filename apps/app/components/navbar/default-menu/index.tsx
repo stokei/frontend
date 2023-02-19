@@ -1,6 +1,6 @@
 import defaultLogoURL from "@/assets/logo.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { getRoutes } from "@/routes";
+import { routes } from "@/routes";
 import { Image, Link, NavbarNavLink, Stack, StackProps } from "@stokei/ui";
 import NextLink from "next/link";
 import { FC } from "react";
@@ -17,14 +17,14 @@ export const NavbarDefaultMenu: FC<NavbarDefaultMenuProps> = ({ ...props }) => {
       display={["none", "none", "flex", "flex"]}
       {...props}
     >
-      <NavbarNavLink as={NextLink} href={getRoutes().home}>
+      <NavbarNavLink as={NextLink} href={routes.home}>
         {translate.formatMessage({ id: "home" })}
       </NavbarNavLink>
-      <NavbarNavLink as={NextLink} href={getRoutes().home}>
+      <NavbarNavLink as={NextLink} href={routes.home}>
         {translate.formatMessage({ id: "courses" })}
       </NavbarNavLink>
       {!!currentApp?.isStokei && (
-        <NavbarNavLink as={NextLink} href={getRoutes().plans.home}>
+        <NavbarNavLink as={NextLink} href={routes.plans.home}>
           {translate.formatMessage({ id: "plans" })}
         </NavbarNavLink>
       )}

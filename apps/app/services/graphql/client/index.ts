@@ -3,6 +3,7 @@ import {
   getServerSideAccessToken,
   getServerSideRefreshToken,
 } from "@/services/cookies";
+import { onLogout } from "@/utils";
 import {
   createGraphqlClient,
   getAccessToken,
@@ -12,11 +13,11 @@ import {
 export interface StokeiAPIConfig {
   readonly cookies?: Record<string, string | undefined>;
   readonly appId?: string;
-  readonly onLogout?: () => void;
 }
 
 export const createAPIClient = (config?: StokeiAPIConfig) =>
   createGraphqlClient({
+    onLogout,
     getAccessToken: () => {
       if (config?.cookies) {
         return getServerSideAccessToken(config?.cookies);

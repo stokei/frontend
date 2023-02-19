@@ -2,7 +2,7 @@ import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { getRoutes } from "@/routes";
+import { routes } from "@/routes";
 import { Box, Button, Card, CardBody, Image, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC } from "react";
@@ -21,12 +21,12 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
   const { onShowAPIError } = useAPIErrors();
 
   const onRedirectToCheckout = async () => {
-    const checkoutURL = getRoutes().checkout.home({
+    const checkoutURL = routes.checkout.home({
       product: product?.id || "",
     });
     if (!isAuthenticated) {
       router.push({
-        pathname: getRoutes().login,
+        pathname: routes.login,
         query: {
           redirectTo: checkoutURL,
         },

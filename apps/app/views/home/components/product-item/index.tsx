@@ -16,7 +16,7 @@ import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { PriceFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
-import { getRoutes } from "@/routes";
+import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { HomeProductsCourseFragment } from "../../graphql/products-course.fragment.graphql.generated";
 import { HomeProductsPlanFragment } from "../../graphql/products-plan.fragment.graphql.generated";
@@ -46,7 +46,7 @@ export const ProductItem: FC<ProductItemProps> = memo(
 
     const productURL = useMemo(() => {
       if (!!course) {
-        return getRoutes().course.home({ product: productId || "" });
+        return routes.course.home({ product: productId || "" });
       }
       return "";
     }, [productId, course]);

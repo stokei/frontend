@@ -26,12 +26,24 @@ export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
         return props.textColor;
     }
   }, [props]);
+
+  const noPadding = useMemo(() => props.variant === "link", [props.variant]);
+  const padding = useMemo(() => {
+    if (noPadding) {
+      return { x: "0", y: "0" };
+    }
+    if (props.size === "sm" || props.size === "xs") {
+      return { x: "3", y: "2" };
+    }
+    return { x: "4", y: "3" };
+  }, [props.size, noPadding]);
+
   return (
     <ChakraButton
       rounded="full"
       height="fit-content"
-      paddingX="4"
-      paddingY="3"
+      paddingX={padding.x}
+      paddingY={padding.y}
       {...props}
       colorScheme={props.colorScheme || "primary"}
       textColor={buttonTextColor}

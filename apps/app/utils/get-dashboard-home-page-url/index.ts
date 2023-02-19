@@ -1,4 +1,4 @@
-import { getRoutes } from "@/routes";
+import { routes } from "@/routes";
 
 export interface GetDashboardHomePageURLData {
   readonly redirectTo?: string;
@@ -13,7 +13,7 @@ export const getDashboardHomePageURL = ({
     return redirectTo;
   }
   if (!isAdmin) {
-    return getRoutes().customers.home;
+    return routes.customers.home;
   }
-  return getRoutes().admins.home;
+  return routes.admins.home;
 };

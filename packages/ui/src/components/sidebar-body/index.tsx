@@ -6,7 +6,7 @@ export const SidebarBody: React.FC<SidebarBodyProps> = ({
   children,
   ...props
 }) => (
-  <Stack padding="5" spacing="2" {...props} direction="column" flex="1">
+  <Stack padding="5" spacing="0" direction="column" flex="1" {...props}>
     {children}
   </Stack>
 );

@@ -7,12 +7,11 @@ import {
 } from "@stokei/ui";
 import { getAppIdFromNextRouter } from "@stokei/utils";
 
-import { CLOUDFLARE_TOKEN, STRIPE_PUBLISHABLE_KEY } from "@/environments";
+import { CLOUDFLARE_TOKEN } from "@/environments";
 
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
-import { getRoutes } from "@/routes";
 import { createAPIClient } from "@/services/graphql/client";
 import {
   CurrentAccountDocument,
@@ -26,10 +25,6 @@ import { formatAppColorsToThemeColors } from "@/utils";
 import "@stokei/ui/src/styles/css/global.css";
 import { Router } from "next/router";
 import { useMemo } from "react";
-import {
-  getServerSideAccessToken,
-  getServerSideRefreshToken,
-} from "@/services/cookies";
 
 const messages: Messages = {
   "pt-BR": {
@@ -59,9 +54,6 @@ function MyApp({
     () =>
       createAPIClient({
         appId,
-        onLogout() {
-          router?.push(getRoutes().home);
-        },
       }),
     [appId, router]
   );

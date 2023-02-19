@@ -1,6 +1,6 @@
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { getRoutes } from "@/routes";
+import { routes } from "@/routes";
 import {
   Box,
   Container,
@@ -75,11 +75,11 @@ export const LoginPage: FC<LoginPageProps> = () => {
           <FormLogin
             isLoading={isLoadingLogin}
             onRedirectToForgotPasswordURL={() =>
-              router.push(getRoutes().forgotPassword)
+              router.push(routes.forgotPassword)
             }
             onRedirectToSignUpURL={() =>
               router.push({
-                pathname: getRoutes().signUp,
+                pathname: routes.signUp,
                 query: {
                   redirectTo: redirectToWhenLoginSuccessfully,
                 },
