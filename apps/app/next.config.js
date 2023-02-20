@@ -9,14 +9,13 @@ const nextConfig = {
     locales: ["pt-BR"],
     defaultLocale: "pt-BR",
   },
-  experimental: {
-    transpilePackages: [
-      "@stokei/ui",
-      "@stokei/utils",
-      "@stokei/graphql",
-      "@stokei/translations",
-    ],
-  },
+  transpilePackages: [
+    "@stokei/ui",
+    "@stokei/utils",
+    "@stokei/graphql",
+    "@stokei/translations",
+  ],
+  experimental: {},
 };
 
 module.exports = nextConfig;
