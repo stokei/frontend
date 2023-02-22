@@ -35,8 +35,8 @@ export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
     if (props.size === "sm" || props.size === "xs") {
       return { x: "3", y: "2" };
     }
-    return { x: "4", y: "3" };
-  }, [props.size, noPadding]);
+    return { x: props.paddingX || "4", y: props.paddingY || "3" };
+  }, [props.size, props.paddingY, props.paddingX, noPadding]);
 
   return (
     <ChakraButton

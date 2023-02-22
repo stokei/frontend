@@ -35,7 +35,7 @@ export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
     return (
       <Link
         width="full"
-        padding="3"
+        paddingY="3"
         paddingX="5"
         alignItems="center"
         color="text.500"

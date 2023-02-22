@@ -21,12 +21,15 @@ export const routes = {
   },
   admins: {
     home: "/admins",
-    balances: "/balances",
+    financial: "/financial",
     subscriptions: "/admins/subscriptions",
-    admins: "/admins/admins",
-    instructors: "/admins/instructors",
     courses: "/admins/courses",
-    students: "/admins/students",
+    sales: "/admins/sales",
+    members: {
+      all: "/admins/members/all",
+      admins: "/admins/members/admins",
+      instructors: "/admins/members/instructors",
+    },
     settings: {
       home: "/admins/settings",
     },

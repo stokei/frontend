@@ -4,6 +4,7 @@ export * from "./use-upload-files";
 export * from "./use-merge-refs";
 export * from "./use-outside-click";
 export * from "./use-select";
+export * from "./use-sidebar-group";
 export * from "./use-stokei";
 export * from "./use-toast";
 export * from "./use-uppy";

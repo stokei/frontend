@@ -1,0 +1,7 @@
+query GetAppAdmins($where: WhereDataFindAllAppAdminsInput) {
+  appAdmins(where: $where) {
+    items {
+      ...AppAdmin
+    }
+  }
+}

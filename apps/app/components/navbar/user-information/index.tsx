@@ -25,7 +25,14 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
   const translate = useTranslations();
 
   return (
-    <Stack align="center" justify="flex-end" direction="row" {...props}>
+    <Stack
+      width="auto"
+      flex="1"
+      align="center"
+      justify="flex-end"
+      direction="row"
+      {...props}
+    >
       {!!currentAccount ? (
         <>
           <NavbarUserInformationDrawer

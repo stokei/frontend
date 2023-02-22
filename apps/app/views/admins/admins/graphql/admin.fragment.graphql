@@ -1,0 +1,14 @@
+fragment AppAdmin on AppAdmin {
+  id
+  admin {
+    id
+    firstname
+    fullname
+    email
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+}

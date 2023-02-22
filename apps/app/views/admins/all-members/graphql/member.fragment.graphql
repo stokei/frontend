@@ -1,0 +1,11 @@
+fragment AppMember on Account {
+  id
+  firstname
+  fullname
+  email
+  avatar {
+    file {
+      url
+    }
+  }
+}

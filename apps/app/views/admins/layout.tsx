@@ -1,11 +1,19 @@
-import { Footer, AppLogo, Sidebar, SidebarOpenButton } from "@/components";
+import { AppLogo, Footer, Sidebar } from "@/components";
 import { SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
+import {
+  Box,
+  SidebarBody,
+  SidebarGroup,
+  SidebarGroupButton,
+  SidebarGroupPanel,
+  SidebarHeader,
+  SidebarNavLink,
+} from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useCallback } from "react";
+import { FC, PropsWithChildren, useMemo } from "react";
 
 export interface AdminLayoutProps {}
 
@@ -14,6 +22,11 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
 }) => {
   const router = useRouter();
   const translate = useTranslations();
+
+  const membersIsActive = useMemo(
+    () => Object.values(routes.admins.members).includes(router.asPath),
+    [router.asPath]
+  );
 
   return (
     <SidebarProvider>
@@ -32,10 +45,10 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.admins.balances}
-              isActive={router.asPath === routes.admins.balances}
+              href={routes.admins.financial}
+              isActive={router.asPath === routes.admins.financial}
             >
-              {translate.formatMessage({ id: "balances" })}
+              {translate.formatMessage({ id: "financial" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
@@ -46,31 +59,45 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.admins.admins}
-              isActive={router.asPath === routes.admins.admins}
+              href={routes.admins.sales}
+              isActive={router.asPath === routes.admins.sales}
             >
-              {translate.formatMessage({ id: "admins" })}
+              {translate.formatMessage({ id: "sales" })}
             </SidebarNavLink>
-            <SidebarNavLink
-              as={NextLink}
-              href={routes.admins.students}
-              isActive={router.asPath === routes.admins.students}
-            >
-              {translate.formatMessage({ id: "students" })}
-            </SidebarNavLink>
+            <SidebarGroup isActive={membersIsActive}>
+              <SidebarGroupButton>
+                {translate.formatMessage({ id: "members" })}
+              </SidebarGroupButton>
+              <SidebarGroupPanel>
+                <SidebarNavLink
+                  as={NextLink}
+                  href={routes.admins.members.all}
+                  isActive={router.asPath === routes.admins.members.all}
+                >
+                  {translate.formatMessage({ id: "all" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  as={NextLink}
+                  href={routes.admins.members.admins}
+                  isActive={router.asPath === routes.admins.members.admins}
+                >
+                  {translate.formatMessage({ id: "admins" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  as={NextLink}
+                  href={routes.admins.members.instructors}
+                  isActive={router.asPath === routes.admins.members.instructors}
+                >
+                  {translate.formatMessage({ id: "instructors" })}
+                </SidebarNavLink>
+              </SidebarGroupPanel>
+            </SidebarGroup>
             <SidebarNavLink
               as={NextLink}
               href={routes.admins.courses}
               isActive={router.asPath === routes.admins.courses}
             >
               {translate.formatMessage({ id: "courses" })}
-            </SidebarNavLink>
-            <SidebarNavLink
-              as={NextLink}
-              href={routes.admins.instructors}
-              isActive={router.asPath === routes.admins.instructors}
-            >
-              {translate.formatMessage({ id: "instructors" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}

@@ -1,0 +1,20 @@
+query GetAppMembers($where: WhereDataFindAllAccountsInput) {
+  accounts(where: $where) {
+    items {
+      id
+      firstname
+      lastname
+      fullname
+      isStokei
+      email
+      username
+      status
+      createdAt
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
+}
