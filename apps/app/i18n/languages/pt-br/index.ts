@@ -56,6 +56,7 @@ export const ptBRMessages = {
   admin: "Administrador",
   admins: "Administradores",
   search: "Pesquisar",
+  owner: "Proprietário",
   all: "Todos",
   allMembers: "Todos membros",
   invoice: "Fatura",

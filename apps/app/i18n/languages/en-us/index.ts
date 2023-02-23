@@ -61,6 +61,7 @@ export const enUSMessages: Record<I18nKeyWithoutUITranslations, string> = {
   admin: "Admin",
   admins: "Admins",
   search: "Pesquisar",
+  owner: "Owner",
   all: "All",
   allMembers: "All members",
   invoice: "Invoice",

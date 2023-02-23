@@ -2,6 +2,7 @@ query CurrentAccount {
   me {
     id
     isAdmin
+    isInstructor
     firstname
     lastname
     fullname

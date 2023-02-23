@@ -1,4 +1,5 @@
 export * from "./use-clipboard";
+export * from "./use-debounce";
 export * from "./use-disclosure";
 export * from "./use-upload-files";
 export * from "./use-merge-refs";

@@ -3,18 +3,15 @@ import { useSidebarGroup } from "../../hooks";
 import { Button, ButtonProps } from "../button";
 import { Icon } from "../icon";
 
-export interface SidebarGroupButtonProps extends ButtonProps {
-  readonly isActive?: boolean;
-}
+export interface SidebarGroupButtonProps extends ButtonProps {}
 
 export const SidebarGroupButton: React.FC<SidebarGroupButtonProps> = ({
   children,
-  isActive,
   ...props
 }) => {
   const [activeStyle, setActiveStyle] = useState({});
 
-  const { isOpen, onToggle } = useSidebarGroup();
+  const { isOpen, onToggle, isActive } = useSidebarGroup();
 
   const hoverStyle = useMemo(
     () => ({
@@ -28,10 +25,7 @@ export const SidebarGroupButton: React.FC<SidebarGroupButtonProps> = ({
     if (isActive) {
       setActiveStyle({
         ...hoverStyle,
-        paddingLeft: "4",
-        borderLeftWidth: "thick",
         fontWeight: "semibold",
-        borderLeftColor: "primary.500",
         roundedLeft: "0",
       });
     } else {

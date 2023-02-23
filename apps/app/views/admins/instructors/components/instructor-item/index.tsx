@@ -17,14 +17,19 @@ export const InstructorItem: FC<InstructorItemProps> = memo(
     return (
       <Card background="background.50" overflow="hidden">
         <CardHeader>
-          <Stack direction="row" spacing="5">
+          <Stack direction="column" spacing="5" align="center" justify="center">
             <Avatar
+              size="lg"
               name={appInstructor?.instructor?.fullname}
               src={appInstructor?.instructor?.avatar?.file?.url || ""}
             />
             <Stack width="auto" flex="1" direction="column" spacing="1">
-              <Title size="md">{appInstructor?.instructor?.firstname}</Title>
-              <Text>{appInstructor?.instructor?.email}</Text>
+              <Title size="md" textAlign="center">
+                {appInstructor?.instructor?.fullname}
+              </Title>
+              <Text justifyContent="center">
+                {appInstructor?.instructor?.email}
+              </Text>
             </Stack>
           </Stack>
         </CardHeader>

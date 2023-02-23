@@ -20,9 +20,15 @@ export const Loading: FC<LoadingProps> = () => {
           {Array.from({ length: 6 }).map((_, i) => (
             <Card key={i} background="background.50">
               <CardHeader>
-                <Stack direction="row" spacing="5">
+                <Stack
+                  direction="column"
+                  spacing="5"
+                  align="center"
+                  justify="center"
+                >
                   <SkeletonCircle />
                   <Box
+                    width="full"
                     align="center"
                     justify="center"
                     flexDirection="column"

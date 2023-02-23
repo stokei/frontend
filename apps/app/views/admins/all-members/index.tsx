@@ -15,6 +15,7 @@ import {
   InputRightElement,
   Label,
   Stack,
+  useDebounce,
 } from "@stokei/ui";
 import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -41,23 +42,13 @@ export const MembersPage: FC<MembersPageProps> = () => {
   const {
     register,
     watch,
-
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
 
-  const searchQueryText = watch("search");
-
-  useEffect(() => {
-    // ADICIONAR DEBOUNCE
-    if (searchQueryText) {
-      setSearchQuery(searchQueryText);
-    } else {
-      setSearchQuery("");
-    }
-  }, [searchQueryText]);
+  const searchQueryText = useDebounce(watch("search"), 500);
 
   const [{ data: dataGetMembers, fetching: isLoading }] = useGetAppMembersQuery(
     {
@@ -67,10 +58,10 @@ export const MembersPage: FC<MembersPageProps> = () => {
           ...(searchQueryText && {
             OR: {
               firstname: {
-                startsWith: searchQueryText,
+                search: searchQueryText,
               },
               lastname: {
-                startsWith: searchQueryText,
+                search: searchQueryText,
               },
             },
           }),
@@ -105,7 +96,6 @@ export const MembersPage: FC<MembersPageProps> = () => {
                     <InputGroup>
                       <Input
                         id="search"
-                        type="search"
                         placeholder={translate.formatMessage({
                           id: "search",
                         })}
