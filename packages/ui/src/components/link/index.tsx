@@ -9,7 +9,7 @@ export interface LinkProps extends ChakraLinkProps {
 }
 
 export const Link: React.FC<LinkProps> = forwardRef(
-  ({ children, _hover, ...props }, ref) => (
+  ({ children, _hover, href, ...props }, ref) => (
     <ChakraLink
       color="primary.500"
       colorScheme="primary"
@@ -18,6 +18,7 @@ export const Link: React.FC<LinkProps> = forwardRef(
         ..._hover,
         textDecoration: "none",
       }}
+      href={href || ""}
       {...props}
       ref={ref as any}
     >

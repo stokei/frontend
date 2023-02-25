@@ -1,0 +1,10 @@
+query GetAppInvoices(
+  $where: WhereDataFindAllInvoicesInput
+  $orderBy: OrderByDataFindAllInvoicesInput
+) {
+  invoices(where: $where, orderBy: $orderBy) {
+    items {
+      ...AppInvoice
+    }
+  }
+}

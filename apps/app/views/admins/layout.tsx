@@ -52,17 +52,17 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.admins.subscriptions}
-              isActive={router.asPath === routes.admins.subscriptions}
+              href={routes.admins.subscriptions.home}
+              isActive={router.asPath === routes.admins.subscriptions.home}
             >
               {translate.formatMessage({ id: "subscriptions" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.admins.sales}
-              isActive={router.asPath === routes.admins.sales}
+              href={routes.admins.invoices}
+              isActive={router.asPath === routes.admins.invoices}
             >
-              {translate.formatMessage({ id: "sales" })}
+              {translate.formatMessage({ id: "invoices" })}
             </SidebarNavLink>
             <SidebarGroup isActive={membersIsActive}>
               <SidebarGroupButton>

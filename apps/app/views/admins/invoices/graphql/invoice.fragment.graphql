@@ -1,0 +1,45 @@
+fragment AppInvoice on Invoice {
+  id
+  customerApp {
+    id
+    name
+    logo {
+      file {
+        url
+      }
+    }
+  }
+  customerAccount {
+    id
+    firstname
+    fullname
+    email
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+  subscriptionContract {
+    id
+  }
+  paymentMethod {
+    id
+    cardBrand
+    cardExpiryMonth
+    cardExpiryYear
+    lastFourCardNumber
+  }
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  status
+  totalAmount
+  subtotalAmount
+  url
+  paidAt
+  canceledAt
+  paymentErrorAt
+}

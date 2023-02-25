@@ -23,7 +23,7 @@ export const InstructorItem: FC<InstructorItemProps> = memo(
               name={appInstructor?.instructor?.fullname}
               src={appInstructor?.instructor?.avatar?.file?.url || ""}
             />
-            <Stack width="auto" flex="1" direction="column" spacing="1">
+            <Stack direction="column" spacing="1">
               <Title size="md" textAlign="center">
                 {appInstructor?.instructor?.fullname}
               </Title>

@@ -24,9 +24,9 @@ export const useTranslations = <TKeys = string>() => {
     }: {
       currency: string;
       amount: number;
-      minorUnit: number;
+      minorUnit?: number;
     }) => {
-      if (!amount || minorUnit < 0) {
+      if (!amount || !minorUnit || minorUnit < 0) {
         return;
       }
       try {

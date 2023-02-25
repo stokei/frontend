@@ -22,11 +22,13 @@ export const routes = {
   admins: {
     home: "/admins",
     financial: "/financial",
-    subscriptions: "/admins/subscriptions",
+    subscriptions: {
+      home: "/admins/subscriptions",
+    },
     courses: "/admins/courses",
-    sales: "/admins/sales",
+    invoices: "/admins/invoices",
     members: {
-      all: "/admins/members/all",
+      all: "/admins/members",
       admins: "/admins/members/admins",
       instructors: "/admins/members/instructors",
     },

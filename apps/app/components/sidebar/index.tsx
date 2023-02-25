@@ -21,7 +21,7 @@ export const Sidebar: FC<PropsWithChildren<SidebarProps>> = ({
       flexDirection="column"
       display={["none", "none", "flex", "flex"]}
     >
-      <Box width="280px" height="full" position="fixed">
+      <Box width="280px" height="full" position="fixed" overflowY="auto">
         <SidebarUI
           width="full"
           height="full"

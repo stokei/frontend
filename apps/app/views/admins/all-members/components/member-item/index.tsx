@@ -58,7 +58,7 @@ export const MemberItem: FC<MemberItemProps> = memo(({ appMember }) => {
               </Tag>
             )}
           </Stack>
-          <Stack width="auto" flex="1" direction="column" spacing="1">
+          <Stack direction="column" spacing="1">
             <Title size="md" textAlign="center">
               {appMember?.fullname}
             </Title>

@@ -722,7 +722,8 @@ export type Invoice = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   currency: Currency;
-  customer: Account;
+  customerAccount?: Maybe<Account>;
+  customerApp?: Maybe<App>;
   id: Scalars['ID'];
   paidAt?: Maybe<Scalars['String']>;
   paymentErrorAt?: Maybe<Scalars['String']>;

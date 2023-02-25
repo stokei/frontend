@@ -9,7 +9,7 @@ export interface BoxProps extends ChakraFlexProps {
 }
 export const Box: React.FC<BoxProps> = forwardRef<BoxProps, "div">(
   ({ children, ...props }, ref) => (
-    <ChakraFlex flexDirection="row" ref={ref} {...props}>
+    <ChakraFlex flexDirection="row" height="fit-content" ref={ref} {...props}>
       {children}
     </ChakraFlex>
   )
