@@ -1,7 +1,0 @@
-query GetAppInstructors($where: WhereDataFindAllAppInstructorsInput) {
-  appInstructors(where: $where) {
-    items {
-      ...AppInstructor
-    }
-  }
-}
