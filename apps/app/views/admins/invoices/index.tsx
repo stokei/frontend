@@ -1,7 +1,7 @@
-import { useCurrentApp } from "@/hooks";
+import { useCurrentApp, usePagination } from "@/hooks";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
-import { Box, Container } from "@stokei/ui";
+import { Box, Container, Pagination } from "@stokei/ui";
 import { FC, useEffect, useState } from "react";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
@@ -14,12 +14,17 @@ interface InvoicesPageProps {}
 export const InvoicesPage: FC<InvoicesPageProps> = () => {
   const [invoices, setInvoices] = useState<AppInvoiceFragment[]>([]);
 
+  const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
 
   const [{ data: dataGetInvoices, fetching: isLoading }] =
     useGetAppInvoicesQuery({
       pause: !currentApp,
       variables: {
+        page: {
+          limit: 10,
+          number: currentPage,
+        },
         orderBy: {
           createdAt: OrderBy.Desc,
         },
@@ -53,6 +58,16 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
         ) : (
           <Container paddingY="5">
             <InvoicesList invoices={invoices} />
+            {dataGetInvoices?.invoices?.totalPages &&
+              dataGetInvoices?.invoices?.totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  onChangePage={onChangePage}
+                  hasNextPage={!!dataGetInvoices?.invoices?.hasNextPage}
+                  hasPreviousPage={!!dataGetInvoices?.invoices?.hasPreviousPage}
+                  totalPages={dataGetInvoices?.invoices?.totalPages || 1}
+                />
+              )}
           </Container>
         )}
       </Box>

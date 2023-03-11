@@ -1,9 +1,4 @@
-import {
-  Footer,
-  NavbarDefaultMenu,
-  NavbarLogo,
-  NavbarUserInformation,
-} from "@/components";
+import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
 import { Navbar } from "@stokei/ui";
 import { FC, PropsWithChildren } from "react";
 import { Loading } from "./loading";
@@ -20,7 +15,6 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
     <>
       <Navbar>
         <NavbarLogo />
-        <NavbarDefaultMenu />
         <NavbarUserInformation />
       </Navbar>
       {isLoading ? <Loading /> : <>{children}</>}

@@ -1,8 +1,15 @@
 query GetAppInvoices(
   $where: WhereDataFindAllInvoicesInput
   $orderBy: OrderByDataFindAllInvoicesInput
+  $page: PaginationInput
 ) {
-  invoices(where: $where, orderBy: $orderBy) {
+  invoices(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
     items {
       ...AppInvoice
     }

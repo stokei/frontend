@@ -1,0 +1,10 @@
+fragment LandingPageProductsCourse on Course {
+  instructors {
+    items {
+      id
+      instructor {
+        fullname
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+fragment AppMember on Account {
+  id
+  firstname
+  lastname
+  fullname
+  email
+  username
+  status
+  createdAt
+  isStokei
+  isOwner
+  roles {
+    totalCount
+    items {
+      id
+      name
+    }
+  }
+  avatar {
+    file {
+      url
+    }
+  }
+}

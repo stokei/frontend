@@ -66,6 +66,8 @@ export const enUSMessages: Record<I18nKeyWithoutUITranslations, string> = {
   paymentMethod: "Payment method",
   admin: "Admin",
   admins: "Admins",
+  module: "Module",
+  modules: "Modules",
   search: "Pesquisar",
   owner: "Owner",
   active: "Active",

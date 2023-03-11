@@ -56,10 +56,17 @@ export type Account = {
   isOwner?: Maybe<Scalars['Boolean']>;
   isStokei: Scalars['Boolean'];
   lastname: Scalars['String'];
+  roles?: Maybe<Roles>;
   status: AccountStatus;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
   username: Scalars['String'];
+};
+
+
+export type AccountRolesArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllRolesInput>;
+  page?: InputMaybe<PaginationInput>;
 };
 
 export enum AccountStatus {
@@ -128,6 +135,7 @@ export type App = {
   currentSubscriptionContract?: Maybe<SubscriptionContract>;
   deactivatedAt?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  hero?: Maybe<Hero>;
   icon?: Maybe<Image>;
   id: Scalars['ID'];
   isStokei: Scalars['Boolean'];
@@ -150,56 +158,6 @@ export type AppColorsArgs = {
 export type AppPhonesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPhonesInput>;
   page?: InputMaybe<PaginationInput>;
-};
-
-export type AppAdmin = {
-  __typename?: 'AppAdmin';
-  admin: Account;
-  app: App;
-  createdAt?: Maybe<Scalars['String']>;
-  createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
-  updatedAt?: Maybe<Scalars['String']>;
-  updatedBy?: Maybe<Account>;
-};
-
-export type AppAdmins = {
-  __typename?: 'AppAdmins';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
-  items?: Maybe<Array<AppAdmin>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
-};
-
-export type AppInstructor = {
-  __typename?: 'AppInstructor';
-  app: App;
-  createdAt?: Maybe<Scalars['String']>;
-  createdBy?: Maybe<Account>;
-  id: Scalars['ID'];
-  instructor: Account;
-  updatedAt?: Maybe<Scalars['String']>;
-  updatedBy?: Maybe<Account>;
-};
-
-export type AppInstructors = {
-  __typename?: 'AppInstructors';
-  currentPage: Scalars['Int'];
-  firstPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
-  items?: Maybe<Array<AppInstructor>>;
-  lastPage: Scalars['Int'];
-  nextPage: Scalars['Int'];
-  previousPage: Scalars['Int'];
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
 };
 
 export enum AppStatus {
@@ -237,6 +195,65 @@ export enum BillingScheme {
 
 export type CancelSubscriptionContractInput = {
   subscriptionContract: Scalars['String'];
+};
+
+export type Catalog = {
+  __typename?: 'Catalog';
+  app?: Maybe<App>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  items?: Maybe<CatalogItems>;
+  parent: Scalars['String'];
+  subtitle?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+
+export type CatalogItemsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllCatalogItemsInput>;
+  page?: InputMaybe<PaginationInput>;
+};
+
+export type CatalogItem = {
+  __typename?: 'CatalogItem';
+  app?: Maybe<App>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  product: Product;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export type CatalogItems = {
+  __typename?: 'CatalogItems';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<CatalogItem>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
+export type Catalogs = {
+  __typename?: 'Catalogs';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<Catalog>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
 };
 
 export type ChangePasswordInput = {
@@ -388,10 +405,6 @@ export type CreateAddressInput = {
   street: Scalars['String'];
 };
 
-export type CreateAppAdminInput = {
-  admin: Scalars['String'];
-};
-
 export type CreateAppInput = {
   currency: Scalars['String'];
   email: Scalars['String'];
@@ -399,8 +412,15 @@ export type CreateAppInput = {
   name: Scalars['String'];
 };
 
-export type CreateAppInstructorInput = {
-  instructor: Scalars['String'];
+export type CreateCatalogInput = {
+  parent: Scalars['String'];
+  subtitle?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+};
+
+export type CreateCatalogItemInput = {
+  catalog: Scalars['String'];
+  product: Scalars['String'];
 };
 
 export type CreateCheckoutInput = {
@@ -462,6 +482,16 @@ export type CreateFileUploadUrlResponse = {
   __typename?: 'CreateFileUploadURLResponse';
   file: File;
   uploadURL: Scalars['String'];
+};
+
+export type CreateHeroInput = {
+  backgroundImage?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  parent: Scalars['String'];
+  subtitle?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  titleHighlight?: InputMaybe<Scalars['String']>;
+  video?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateImageInput = {
@@ -677,6 +707,37 @@ export type ForgotPasswordInput = {
   email: Scalars['String'];
 };
 
+export type Hero = {
+  __typename?: 'Hero';
+  app: App;
+  backgroundImage?: Maybe<Image>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Hero>;
+  id: Scalars['ID'];
+  image?: Maybe<Image>;
+  parent: Scalars['String'];
+  subtitle?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  titleHighlight?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Hero>;
+  video?: Maybe<Video>;
+};
+
+export type Heros = {
+  __typename?: 'Heros';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<Hero>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
 export type Image = {
   __typename?: 'Image';
   app?: Maybe<App>;
@@ -819,6 +880,7 @@ export type MeAccount = {
   lastname: Scalars['String'];
   paymentMethods?: Maybe<PaymentMethods>;
   phones?: Maybe<Phones>;
+  roles?: Maybe<Roles>;
   status: AccountStatus;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
@@ -834,6 +896,12 @@ export type MeAccountAccessesArgs = {
 
 export type MeAccountPhonesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPhonesInput>;
+  page?: InputMaybe<PaginationInput>;
+};
+
+
+export type MeAccountRolesArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllRolesInput>;
   page?: InputMaybe<PaginationInput>;
 };
 
@@ -876,10 +944,10 @@ export type Mutation = {
   changePassword: Scalars['Boolean'];
   createAddress: Address;
   createApp: App;
-  createAppAdmin: AppAdmin;
-  createAppInstructor: AppInstructor;
   createAppStripeDashboardLink: Link;
   createAppStripeOnboarding: Link;
+  createCatalog: Catalog;
+  createCatalogItem: CatalogItem;
   createCheckout: Checkout;
   createColor: Color;
   createCourse: Course;
@@ -889,6 +957,7 @@ export type Mutation = {
   createCustomerPortalSession: CustomerPortalSession;
   createDomain: Domain;
   createFeature: Feature;
+  createHero: Hero;
   createImage: Image;
   createImageUploadURL: CreateFileUploadUrlResponse;
   createLanguage: Language;
@@ -908,14 +977,15 @@ export type Mutation = {
   removeAccess: Access;
   removeAccount: Account;
   removeAddress: Address;
-  removeAppAdmin: AppAdmin;
-  removeAppInstructor: AppInstructor;
+  removeCatalog: Catalog;
+  removeCatalogItem: CatalogItem;
   removeColor: Color;
   removeCourse: Course;
   removeCourseInstructor: CourseInstructor;
   removeCurrency: Currency;
   removeDomain: Domain;
   removeFeature: Feature;
+  removeHero: Hero;
   removeImage: Image;
   removeLanguage: Language;
   removeModule: Module;
@@ -929,9 +999,11 @@ export type Mutation = {
   updateAccount: Account;
   updateAddress: Address;
   updateApp: App;
+  updateCatalog: Catalog;
   updateColor: Color;
   updateCourse: Course;
   updateCurrency: Currency;
+  updateHero: Hero;
   updateLanguage: Language;
   updateModule: Module;
   updatePrice: Price;
@@ -960,13 +1032,13 @@ export type MutationCreateAppArgs = {
 };
 
 
-export type MutationCreateAppAdminArgs = {
-  input: CreateAppAdminInput;
+export type MutationCreateCatalogArgs = {
+  input: CreateCatalogInput;
 };
 
 
-export type MutationCreateAppInstructorArgs = {
-  input: CreateAppInstructorInput;
+export type MutationCreateCatalogItemArgs = {
+  input: CreateCatalogItemInput;
 };
 
 
@@ -1012,6 +1084,11 @@ export type MutationCreateDomainArgs = {
 
 export type MutationCreateFeatureArgs = {
   input: CreateFeatureInput;
+};
+
+
+export type MutationCreateHeroArgs = {
+  input: CreateHeroInput;
 };
 
 
@@ -1090,13 +1167,13 @@ export type MutationRemoveAddressArgs = {
 };
 
 
-export type MutationRemoveAppAdminArgs = {
-  input: RemoveAppAdminInput;
+export type MutationRemoveCatalogArgs = {
+  input: RemoveCatalogInput;
 };
 
 
-export type MutationRemoveAppInstructorArgs = {
-  input: RemoveAppInstructorInput;
+export type MutationRemoveCatalogItemArgs = {
+  input: RemoveCatalogItemInput;
 };
 
 
@@ -1127,6 +1204,11 @@ export type MutationRemoveDomainArgs = {
 
 export type MutationRemoveFeatureArgs = {
   input: RemoveFeatureInput;
+};
+
+
+export type MutationRemoveHeroArgs = {
+  input: RemoveHeroInput;
 };
 
 
@@ -1195,6 +1277,11 @@ export type MutationUpdateAppArgs = {
 };
 
 
+export type MutationUpdateCatalogArgs = {
+  input: UpdateCatalogInput;
+};
+
+
 export type MutationUpdateColorArgs = {
   input: UpdateColorInput;
 };
@@ -1207,6 +1294,11 @@ export type MutationUpdateCourseArgs = {
 
 export type MutationUpdateCurrencyArgs = {
   input: UpdateCurrencyInput;
+};
+
+
+export type MutationUpdateHeroArgs = {
+  input: UpdateHeroInput;
 };
 
 
@@ -1275,20 +1367,6 @@ export type OrderByDataFindAllAddressesInput = {
   updatedBy?: InputMaybe<OrderBy>;
 };
 
-export type OrderByDataFindAllAppAdminsInput = {
-  createdAt?: InputMaybe<OrderBy>;
-  createdBy?: InputMaybe<OrderBy>;
-  updatedAt?: InputMaybe<OrderBy>;
-  updatedBy?: InputMaybe<OrderBy>;
-};
-
-export type OrderByDataFindAllAppInstructorsInput = {
-  createdAt?: InputMaybe<OrderBy>;
-  createdBy?: InputMaybe<OrderBy>;
-  updatedAt?: InputMaybe<OrderBy>;
-  updatedBy?: InputMaybe<OrderBy>;
-};
-
 export type OrderByDataFindAllAppsInput = {
   activatedAt?: InputMaybe<OrderBy>;
   active?: InputMaybe<OrderBy>;
@@ -1301,6 +1379,21 @@ export type OrderByDataFindAllAppsInput = {
   plan?: InputMaybe<OrderBy>;
   slug?: InputMaybe<OrderBy>;
   status?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
+export type OrderByDataFindAllCatalogItemsInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
+export type OrderByDataFindAllCatalogsInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  title?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -1359,6 +1452,13 @@ export type OrderByDataFindAllFeaturesInput = {
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
+export type OrderByDataFindAllHerosInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -1479,6 +1579,14 @@ export type OrderByDataFindAllProductsInput = {
   description?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
   stripeProduct?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
+export type OrderByDataFindAllRolesInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -1769,11 +1877,11 @@ export type Query = {
   address: Address;
   addresses: Addresses;
   app: App;
-  appAdmin: AppAdmin;
-  appAdmins: AppAdmins;
-  appInstructor: AppInstructor;
-  appInstructors: AppInstructors;
   apps: Apps;
+  catalog: Catalog;
+  catalogItem: CatalogItem;
+  catalogItems: CatalogItems;
+  catalogs: Catalogs;
   color: Color;
   colors: Colors;
   course: Course;
@@ -1789,6 +1897,8 @@ export type Query = {
   domains: Domains;
   feature: Feature;
   features: Features;
+  hero: Hero;
+  heros: Heros;
   image: Image;
   images: Images;
   invoice: Invoice;
@@ -1858,34 +1968,34 @@ export type QueryAppArgs = {
 };
 
 
-export type QueryAppAdminArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryAppAdminsArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllAppAdminsInput>;
-  page?: InputMaybe<PaginationInput>;
-  where?: InputMaybe<WhereDataFindAllAppAdminsInput>;
-};
-
-
-export type QueryAppInstructorArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryAppInstructorsArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllAppInstructorsInput>;
-  page?: InputMaybe<PaginationInput>;
-  where?: InputMaybe<WhereDataFindAllAppInstructorsInput>;
-};
-
-
 export type QueryAppsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAppsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllAppsInput>;
+};
+
+
+export type QueryCatalogArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryCatalogItemArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryCatalogItemsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllCatalogItemsInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllCatalogItemsInput>;
+};
+
+
+export type QueryCatalogsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllCatalogsInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllCatalogsInput>;
 };
 
 
@@ -1971,6 +2081,18 @@ export type QueryFeaturesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllFeaturesInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllFeaturesInput>;
+};
+
+
+export type QueryHeroArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryHerosArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllHerosInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllHerosInput>;
 };
 
 
@@ -2138,12 +2260,12 @@ export type RemoveAddressInput = {
   where: RemoveWhereAddressInput;
 };
 
-export type RemoveAppAdminInput = {
-  where: RemoveWhereAppAdminInput;
+export type RemoveCatalogInput = {
+  where: RemoveWhereCatalogInput;
 };
 
-export type RemoveAppInstructorInput = {
-  where: RemoveWhereAppInstructorInput;
+export type RemoveCatalogItemInput = {
+  where: RemoveWhereCatalogItemInput;
 };
 
 export type RemoveColorInput = {
@@ -2168,6 +2290,10 @@ export type RemoveDomainInput = {
 
 export type RemoveFeatureInput = {
   where: RemoveWhereFeatureInput;
+};
+
+export type RemoveHeroInput = {
+  where: RemoveWhereHeroInput;
 };
 
 export type RemoveImageInput = {
@@ -2210,14 +2336,13 @@ export type RemoveWhereAddressInput = {
   address: Scalars['String'];
 };
 
-export type RemoveWhereAppAdminInput = {
-  admin: Scalars['String'];
-  app: Scalars['String'];
+export type RemoveWhereCatalogInput = {
+  catalog: Scalars['String'];
 };
 
-export type RemoveWhereAppInstructorInput = {
-  app: Scalars['String'];
-  instructor: Scalars['String'];
+export type RemoveWhereCatalogItemInput = {
+  catalog: Scalars['String'];
+  product: Scalars['String'];
 };
 
 export type RemoveWhereColorInput = {
@@ -2245,6 +2370,10 @@ export type RemoveWhereDomainInput = {
 
 export type RemoveWhereFeatureInput = {
   feature: Scalars['String'];
+};
+
+export type RemoveWhereHeroInput = {
+  hero: Scalars['String'];
 };
 
 export type RemoveWhereImageInput = {
@@ -2278,6 +2407,32 @@ export type RemoveWhereVideoAuthorInput = {
 
 export type RemoveWhereVideoInput = {
   video: Scalars['String'];
+};
+
+export type Role = {
+  __typename?: 'Role';
+  app?: Maybe<App>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  parent: Scalars['String'];
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export type Roles = {
+  __typename?: 'Roles';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<Role>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
 };
 
 export type SignUpInput = {
@@ -2358,6 +2513,11 @@ export type UpdateAppInput = {
   data: UpdateDataAppInput;
 };
 
+export type UpdateCatalogInput = {
+  data: UpdateDataCatalogInput;
+  where: UpdateWhereCatalogInput;
+};
+
 export type UpdateColorInput = {
   data: UpdateDataColorInput;
   where: UpdateWhereColorInput;
@@ -2394,10 +2554,15 @@ export type UpdateDataAddressInput = {
 export type UpdateDataAppInput = {
   avatar?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  hero?: InputMaybe<Scalars['String']>;
   icon?: InputMaybe<Scalars['String']>;
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  plan?: InputMaybe<Scalars['String']>;
+};
+
+export type UpdateDataCatalogInput = {
+  subtitle?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateDataColorInput = {
@@ -2407,13 +2572,22 @@ export type UpdateDataColorInput = {
 export type UpdateDataCourseInput = {
   avatar?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateDataCurrencyInput = {
   minorUnit?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   symbol?: InputMaybe<Scalars['String']>;
+};
+
+export type UpdateDataHeroInput = {
+  backgroundImage?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
+  subtitle?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  titleHighlight?: InputMaybe<Scalars['String']>;
+  video?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateDataLanguageInput = {
@@ -2441,6 +2615,11 @@ export type UpdateDataVideoInput = {
   name?: InputMaybe<Scalars['String']>;
   poster?: InputMaybe<Scalars['String']>;
   private?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type UpdateHeroInput = {
+  data: UpdateDataHeroInput;
+  where: UpdateWhereHeroInput;
 };
 
 export type UpdateLanguageInput = {
@@ -2472,6 +2651,10 @@ export type UpdateWhereAddressInput = {
   address: Scalars['String'];
 };
 
+export type UpdateWhereCatalogInput = {
+  catalog: Scalars['String'];
+};
+
 export type UpdateWhereColorInput = {
   color: Scalars['String'];
 };
@@ -2482,6 +2665,10 @@ export type UpdateWhereCourseInput = {
 
 export type UpdateWhereCurrencyInput = {
   currency: Scalars['String'];
+};
+
+export type UpdateWhereHeroInput = {
+  hero: Scalars['String'];
 };
 
 export type UpdateWhereLanguageInput = {
@@ -2581,7 +2768,7 @@ export type WhereDataFindAllAccessesDataInput = {
 export type WhereDataFindAllAccessesInput = {
   AND?: InputMaybe<WhereDataFindAllAccessesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllAccessesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllAccessesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllAccessesDataInput>>;
 };
 
 export type WhereDataFindAllAccountsDataInput = {
@@ -2598,7 +2785,7 @@ export type WhereDataFindAllAccountsDataInput = {
 export type WhereDataFindAllAccountsInput = {
   AND?: InputMaybe<WhereDataFindAllAccountsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllAccountsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllAccountsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllAccountsDataInput>>;
 };
 
 export type WhereDataFindAllAddressesDataInput = {
@@ -2617,35 +2804,7 @@ export type WhereDataFindAllAddressesDataInput = {
 export type WhereDataFindAllAddressesInput = {
   AND?: InputMaybe<WhereDataFindAllAddressesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllAddressesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllAddressesDataInput>;
-};
-
-export type WhereDataFindAllAppAdminsDataInput = {
-  admin?: InputMaybe<WhereDataStringInput>;
-  app?: InputMaybe<WhereDataStringInput>;
-  createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
-  updatedBy?: InputMaybe<WhereDataStringInput>;
-};
-
-export type WhereDataFindAllAppAdminsInput = {
-  AND?: InputMaybe<WhereDataFindAllAppAdminsDataInput>;
-  NOT?: InputMaybe<WhereDataFindAllAppAdminsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllAppAdminsDataInput>;
-};
-
-export type WhereDataFindAllAppInstructorsDataInput = {
-  app?: InputMaybe<WhereDataStringInput>;
-  createdBy?: InputMaybe<WhereDataStringInput>;
-  ids?: InputMaybe<Array<Scalars['String']>>;
-  instructor?: InputMaybe<WhereDataStringInput>;
-  updatedBy?: InputMaybe<WhereDataStringInput>;
-};
-
-export type WhereDataFindAllAppInstructorsInput = {
-  AND?: InputMaybe<WhereDataFindAllAppInstructorsDataInput>;
-  NOT?: InputMaybe<WhereDataFindAllAppInstructorsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllAppInstructorsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllAddressesDataInput>>;
 };
 
 export type WhereDataFindAllAppsDataInput = {
@@ -2664,7 +2823,36 @@ export type WhereDataFindAllAppsDataInput = {
 export type WhereDataFindAllAppsInput = {
   AND?: InputMaybe<WhereDataFindAllAppsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllAppsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllAppsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllAppsDataInput>>;
+};
+
+export type WhereDataFindAllCatalogItemsDataInput = {
+  catalog?: InputMaybe<WhereDataStringInput>;
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  product?: InputMaybe<WhereDataStringInput>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllCatalogItemsInput = {
+  AND?: InputMaybe<WhereDataFindAllCatalogItemsDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllCatalogItemsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllCatalogItemsDataInput>>;
+};
+
+export type WhereDataFindAllCatalogsDataInput = {
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  parent?: InputMaybe<WhereDataStringInput>;
+  subtitle?: InputMaybe<WhereDataSearchInput>;
+  title?: InputMaybe<WhereDataSearchInput>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllCatalogsInput = {
+  AND?: InputMaybe<WhereDataFindAllCatalogsDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllCatalogsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllCatalogsDataInput>>;
 };
 
 export type WhereDataFindAllColorsDataInput = {
@@ -2679,7 +2867,7 @@ export type WhereDataFindAllColorsDataInput = {
 export type WhereDataFindAllColorsInput = {
   AND?: InputMaybe<WhereDataFindAllColorsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllColorsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllColorsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllColorsDataInput>>;
 };
 
 export type WhereDataFindAllCourseInstructorsDataInput = {
@@ -2693,7 +2881,7 @@ export type WhereDataFindAllCourseInstructorsDataInput = {
 export type WhereDataFindAllCourseInstructorsInput = {
   AND?: InputMaybe<WhereDataFindAllCourseInstructorsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllCourseInstructorsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllCourseInstructorsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllCourseInstructorsDataInput>>;
 };
 
 export type WhereDataFindAllCourseStudentsDataInput = {
@@ -2707,7 +2895,7 @@ export type WhereDataFindAllCourseStudentsDataInput = {
 export type WhereDataFindAllCourseStudentsInput = {
   AND?: InputMaybe<WhereDataFindAllCourseStudentsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllCourseStudentsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllCourseStudentsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllCourseStudentsDataInput>>;
 };
 
 export type WhereDataFindAllCoursesDataInput = {
@@ -2722,7 +2910,7 @@ export type WhereDataFindAllCoursesDataInput = {
 export type WhereDataFindAllCoursesInput = {
   AND?: InputMaybe<WhereDataFindAllCoursesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllCoursesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllCoursesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllCoursesDataInput>>;
 };
 
 export type WhereDataFindAllCurrenciesDataInput = {
@@ -2736,7 +2924,7 @@ export type WhereDataFindAllCurrenciesDataInput = {
 export type WhereDataFindAllCurrenciesInput = {
   AND?: InputMaybe<WhereDataFindAllCurrenciesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllCurrenciesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllCurrenciesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllCurrenciesDataInput>>;
 };
 
 export type WhereDataFindAllDomainsDataInput = {
@@ -2752,7 +2940,7 @@ export type WhereDataFindAllDomainsDataInput = {
 export type WhereDataFindAllDomainsInput = {
   AND?: InputMaybe<WhereDataFindAllDomainsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllDomainsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllDomainsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllDomainsDataInput>>;
 };
 
 export type WhereDataFindAllFeaturesDataInput = {
@@ -2767,7 +2955,21 @@ export type WhereDataFindAllFeaturesDataInput = {
 export type WhereDataFindAllFeaturesInput = {
   AND?: InputMaybe<WhereDataFindAllFeaturesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllFeaturesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllFeaturesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllFeaturesDataInput>>;
+};
+
+export type WhereDataFindAllHerosDataInput = {
+  app?: InputMaybe<WhereDataSearchInput>;
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllHerosInput = {
+  AND?: InputMaybe<WhereDataFindAllHerosDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllHerosDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllHerosDataInput>>;
 };
 
 export type WhereDataFindAllImagesDataInput = {
@@ -2781,7 +2983,7 @@ export type WhereDataFindAllImagesDataInput = {
 export type WhereDataFindAllImagesInput = {
   AND?: InputMaybe<WhereDataFindAllImagesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllImagesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllImagesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllImagesDataInput>>;
 };
 
 export type WhereDataFindAllInvoicesDataInput = {
@@ -2799,7 +3001,7 @@ export type WhereDataFindAllInvoicesDataInput = {
 export type WhereDataFindAllInvoicesInput = {
   AND?: InputMaybe<WhereDataFindAllInvoicesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllInvoicesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllInvoicesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllInvoicesDataInput>>;
 };
 
 export type WhereDataFindAllLanguagesDataInput = {
@@ -2813,7 +3015,7 @@ export type WhereDataFindAllLanguagesDataInput = {
 export type WhereDataFindAllLanguagesInput = {
   AND?: InputMaybe<WhereDataFindAllLanguagesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllLanguagesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllLanguagesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllLanguagesDataInput>>;
 };
 
 export type WhereDataFindAllModulesDataInput = {
@@ -2828,7 +3030,7 @@ export type WhereDataFindAllModulesDataInput = {
 export type WhereDataFindAllModulesInput = {
   AND?: InputMaybe<WhereDataFindAllModulesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllModulesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllModulesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllModulesDataInput>>;
 };
 
 export type WhereDataFindAllPaymentMethodsDataInput = {
@@ -2843,7 +3045,7 @@ export type WhereDataFindAllPaymentMethodsDataInput = {
 export type WhereDataFindAllPaymentMethodsInput = {
   AND?: InputMaybe<WhereDataFindAllPaymentMethodsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllPaymentMethodsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllPaymentMethodsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllPaymentMethodsDataInput>>;
 };
 
 export type WhereDataFindAllPhonesDataInput = {
@@ -2862,7 +3064,7 @@ export type WhereDataFindAllPhonesDataInput = {
 export type WhereDataFindAllPhonesInput = {
   AND?: InputMaybe<WhereDataFindAllPhonesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllPhonesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllPhonesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllPhonesDataInput>>;
 };
 
 export type WhereDataFindAllPlansDataInput = {
@@ -2885,7 +3087,7 @@ export type WhereDataFindAllPlansDataInput = {
 export type WhereDataFindAllPlansInput = {
   AND?: InputMaybe<WhereDataFindAllPlansDataInput>;
   NOT?: InputMaybe<WhereDataFindAllPlansDataInput>;
-  OR?: InputMaybe<WhereDataFindAllPlansDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllPlansDataInput>>;
 };
 
 export type WhereDataFindAllPricesDataInput = {
@@ -2903,7 +3105,7 @@ export type WhereDataFindAllPricesDataInput = {
 export type WhereDataFindAllPricesInput = {
   AND?: InputMaybe<WhereDataFindAllPricesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllPricesDataInput>;
-  OR?: InputMaybe<WhereDataFindAllPricesDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllPricesDataInput>>;
 };
 
 export type WhereDataFindAllProductsDataInput = {
@@ -2920,7 +3122,7 @@ export type WhereDataFindAllProductsDataInput = {
 export type WhereDataFindAllProductsInput = {
   AND?: InputMaybe<WhereDataFindAllProductsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllProductsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllProductsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllProductsDataInput>>;
 };
 
 export type WhereDataFindAllSubscriptionContractsDataInput = {
@@ -2938,7 +3140,7 @@ export type WhereDataFindAllSubscriptionContractsDataInput = {
 export type WhereDataFindAllSubscriptionContractsInput = {
   AND?: InputMaybe<WhereDataFindAllSubscriptionContractsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllSubscriptionContractsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllSubscriptionContractsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllSubscriptionContractsDataInput>>;
 };
 
 export type WhereDataFindAllVideoAuthorsDataInput = {
@@ -2952,7 +3154,7 @@ export type WhereDataFindAllVideoAuthorsDataInput = {
 export type WhereDataFindAllVideoAuthorsInput = {
   AND?: InputMaybe<WhereDataFindAllVideoAuthorsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllVideoAuthorsDataInput>;
-  OR?: InputMaybe<WhereDataFindAllVideoAuthorsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllVideoAuthorsDataInput>>;
 };
 
 export type WhereDataFindAllVideosDataInput = {
@@ -2970,7 +3172,7 @@ export type WhereDataFindAllVideosDataInput = {
 export type WhereDataFindAllVideosInput = {
   AND?: InputMaybe<WhereDataFindAllVideosDataInput>;
   NOT?: InputMaybe<WhereDataFindAllVideosDataInput>;
-  OR?: InputMaybe<WhereDataFindAllVideosDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllVideosDataInput>>;
 };
 
 export type WhereDataIntInput = {

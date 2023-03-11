@@ -1,0 +1,46 @@
+query Catalogs(
+  $where: WhereDataFindAllCatalogsInput!
+  $orderBy: OrderByDataFindAllCatalogsInput
+) {
+  catalogs(where: $where, orderBy: $orderBy) {
+    totalCount
+    items {
+      ...LandingPageCatalog
+    }
+  }
+}
+
+fragment LandingPageCatalog on Catalog {
+  id
+  title
+  subtitle
+  items {
+    totalCount
+    items {
+      id
+      product {
+        ...LandingPageCatalogProduct
+      }
+    }
+  }
+}
+
+fragment LandingPageCatalogProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  defaultPrice {
+    ...Price
+  }
+  course {
+    ...LandingPageProductsCourse
+  }
+  plan {
+    ...LandingPageProductsPlan
+  }
+}

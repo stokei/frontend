@@ -6,7 +6,13 @@ mutation SignUp($input: SignUpInput!) {
     account {
       id
       fullname
-      isAdmin
+      isOwner
+      roles {
+        totalCount
+        items {
+          name
+        }
+      }
       app {
         id
         name

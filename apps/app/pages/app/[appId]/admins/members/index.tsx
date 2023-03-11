@@ -1,4 +1,4 @@
-import { MembersPage } from "@/views/admins/all-members";
+import { MembersPage } from "@/views/admins/members";
 import { NextPage } from "next";
 
 interface Props {}

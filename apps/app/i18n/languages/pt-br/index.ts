@@ -64,6 +64,8 @@ export const ptBRMessages = {
   allMembers: "Todos membros",
   invoice: "Fatura",
   invoices: "Faturas",
+  module: "Módulo",
+  modules: "Módulos",
   status: "Status",
   total: "Total",
   subtotal: "Subtotal",

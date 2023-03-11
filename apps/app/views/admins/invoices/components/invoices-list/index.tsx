@@ -15,12 +15,15 @@ export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
       <SimpleGrid
         paddingY="2"
         paddingX="5"
-        columns={[1, 1, 5, 5]}
-        row={[5, 5, 1, 1]}
+        columns={[1, 1, 6, 6]}
+        row={[6, 6, 1, 1]}
         spacing="5"
       >
         <Title fontSize="sm">
           {translate.formatMessage({ id: "student" })}
+        </Title>
+        <Title fontSize="sm">
+          {translate.formatMessage({ id: "product" })}
         </Title>
         <Title fontSize="sm">
           {translate.formatMessage({ id: "subtotal" })}

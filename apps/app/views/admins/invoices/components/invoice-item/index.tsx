@@ -48,11 +48,23 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
     <Card background="background.50">
       <CardBody>
         <SimpleGrid
-          columns={[1, 1, 5, 5]}
-          row={[5, 5, 1, 1]}
+          columns={[1, 1, 6, 6]}
+          row={[6, 6, 1, 1]}
           spacing="5"
           alignItems="center"
         >
+          <Stack direction="row" spacing="4" align="center">
+            <Avatar
+              size="sm"
+              src={invoice?.customerAccount?.avatar?.file?.url || ""}
+              name={invoice?.customerAccount?.fullname}
+            />
+            <Stack direction="column" spacing="4">
+              <Text fontWeight="bold">
+                {invoice?.customerAccount?.fullname}
+              </Text>
+            </Stack>
+          </Stack>
           <Stack direction="row" spacing="4" align="center">
             <Avatar
               size="sm"

@@ -8,7 +8,7 @@ export type SignUpMutationVariables = Types.Exact<{
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResponse', accessToken: string, prefixToken: string, refreshToken: string, account: { __typename?: 'MeAccount', id: string, fullname: string, isAdmin?: boolean | null, email: string, app: { __typename?: 'App', id: string, name: string } } } };
+export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResponse', accessToken: string, prefixToken: string, refreshToken: string, account: { __typename?: 'MeAccount', id: string, fullname: string, isOwner?: boolean | null, email: string, roles?: { __typename?: 'Roles', totalCount: number, items?: Array<{ __typename?: 'Role', name: string }> | null } | null, app: { __typename?: 'App', id: string, name: string } } } };
 
 
 export const SignUpDocument = gql`
@@ -20,7 +20,13 @@ export const SignUpDocument = gql`
     account {
       id
       fullname
-      isAdmin
+      isOwner
+      roles {
+        totalCount
+        items {
+          name
+        }
+      }
       app {
         id
         name

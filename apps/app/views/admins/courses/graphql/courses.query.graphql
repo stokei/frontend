@@ -1,5 +1,11 @@
-query GetCourses($where: WhereDataFindAllCoursesInput) {
-  courses(where: $where) {
+query GetCourses($where: WhereDataFindAllCoursesInput, $page: PaginationInput) {
+  courses(where: $where, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
     items {
       ...AppCourse
     }

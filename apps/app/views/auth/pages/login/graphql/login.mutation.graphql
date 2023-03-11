@@ -6,7 +6,13 @@ mutation Login($input: LoginInput!) {
     account {
       id
       fullname
-      isAdmin
+      isOwner
+      roles {
+        totalCount
+        items {
+          name
+        }
+      }
       app {
         id
         name

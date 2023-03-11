@@ -1,4 +1,4 @@
-import { useTranslations } from "@/hooks";
+import { usePagination, useTranslations } from "@/hooks";
 import { AdminLayout } from "@/views/admins/layout";
 import {
   Box,
@@ -8,6 +8,7 @@ import {
   NotFoundIcon,
   NotFoundSubtitle,
   NotFoundTitle,
+  Pagination,
   useDisclosure,
 } from "@stokei/ui";
 import { FC, useCallback, useEffect, useState } from "react";
@@ -29,7 +30,16 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
   const [courses, setCourses] = useState<AppCourseFragment[]>([]);
 
   const translate = useTranslations();
-  const [{ data: dataGetCourses, fetching: isLoading }] = useGetCoursesQuery();
+  const { currentPage, onChangePage } = usePagination();
+
+  const [{ data: dataGetCourses, fetching: isLoading }] = useGetCoursesQuery({
+    variables: {
+      page: {
+        limit: 10,
+        number: currentPage,
+      },
+    },
+  });
 
   useEffect(() => {
     if (!!dataGetCourses?.courses?.items?.length) {
@@ -54,7 +64,7 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
           <Loading />
         ) : (
           <Container paddingY="5">
-            {courses?.length > 1 ? (
+            {courses?.length > 0 ? (
               <Box width="full" marginBottom="5">
                 <Button onClick={onOpenAddCourseDrawer}>
                   {translate.formatMessage({ id: "addCourse" })}
@@ -75,6 +85,17 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
               </NotFound>
             )}
             <CoursesList courses={courses} />
+            {dataGetCourses?.courses?.totalPages &&
+              dataGetCourses?.courses?.totalPages > 1 && (
+                <Pagination
+                  marginTop="5"
+                  currentPage={currentPage}
+                  onChangePage={onChangePage}
+                  hasNextPage={!!dataGetCourses?.courses?.hasNextPage}
+                  hasPreviousPage={!!dataGetCourses?.courses?.hasPreviousPage}
+                  totalPages={dataGetCourses?.courses?.totalPages || 1}
+                />
+              )}
           </Container>
         )}
       </Box>

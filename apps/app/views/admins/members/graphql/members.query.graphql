@@ -1,0 +1,16 @@
+query GetAppMembers(
+  $where: WhereDataFindAllAccountsInput
+  $page: PaginationInput
+) {
+  accounts(where: $where, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppMember
+    }
+  }
+}

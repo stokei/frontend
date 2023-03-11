@@ -1,6 +1,8 @@
-import { setAccessToken, setRefreshToken } from "@stokei/graphql";
+import { RoleName } from "@/constants/role-names";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
+import { getDashboardHomePageURL } from "@/utils";
+import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
   Box,
   Container,
@@ -11,7 +13,6 @@ import {
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
-import { getDashboardHomePageURL } from "@/utils";
 import { LoginLayout } from "./layout";
 
 interface LoginPageProps {}
@@ -49,7 +50,11 @@ export const LoginPage: FC<LoginPageProps> = () => {
         window?.location?.assign(
           getDashboardHomePageURL({
             redirectTo: redirectToWhenLoginSuccessfully || undefined,
-            isAdmin: !!data.account.isAdmin,
+            isAdmin:
+              !!data.account?.isOwner ||
+              !!data.account?.roles?.items?.some(
+                (role) => role.name === RoleName.ADMIN
+              ),
           })
         );
         return;

@@ -26,12 +26,18 @@ export const routes = {
       home: "/admins/subscriptions",
     },
     courses: "/admins/courses",
-    invoices: "/admins/invoices",
-    members: {
-      all: "/admins/members",
-      admins: "/admins/members/admins",
-      instructors: "/admins/members/instructors",
+    course: ({ course }: { course?: string }) => {
+      const baseURL = "/admins/course/" + (course || "");
+      return {
+        home: baseURL,
+        instructors: baseURL + "/instructors",
+        modules: baseURL + "/modules",
+        products: baseURL + "/products",
+        students: baseURL + "/students",
+      };
     },
+    invoices: "/admins/invoices",
+    members: "/admins/members",
     settings: {
       home: "/admins/settings",
     },

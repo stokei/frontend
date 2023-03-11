@@ -1,3 +1,4 @@
+import { RoleName } from "@/constants/role-names";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { getDashboardHomePageURL } from "@/utils";
@@ -11,8 +12,8 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
-import { SignUpLayout } from "./layout";
 import { useSignUpMutation } from "./graphql/signup.mutation.graphql.generated";
+import { SignUpLayout } from "./layout";
 
 interface SignUpPageProps {}
 
@@ -56,7 +57,11 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
         window?.location?.assign(
           getDashboardHomePageURL({
             redirectTo: redirectToWhenSignUpSuccessfully || undefined,
-            isAdmin: !!data.account.isAdmin,
+            isAdmin:
+              !!data.account?.isOwner ||
+              !!data.account?.roles?.items?.some(
+                (role) => role.name === RoleName.ADMIN
+              ),
           })
         );
         return;

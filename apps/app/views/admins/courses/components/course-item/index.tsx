@@ -17,6 +17,7 @@ import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
 import { useRouter } from "next/router";
 import { AppCourseFragment } from "../../graphql/course.fragment.graphql.generated";
+import { routes } from "@/routes";
 
 export interface CourseItemProps {
   readonly course?: AppCourseFragment;
@@ -55,7 +56,12 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
                   ))}
                 </AvatarGroup>
               )}
-              <Button width="full">
+              <Button
+                width="full"
+                onClick={() =>
+                  router.push(routes.admins.course({ course: course?.id }).home)
+                }
+              >
                 {translate.formatMessage({ id: "showDetails" })}
               </Button>
             </Stack>

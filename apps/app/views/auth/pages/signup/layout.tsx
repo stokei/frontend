@@ -1,9 +1,4 @@
-import {
-  Footer,
-  NavbarDefaultMenu,
-  NavbarLogo,
-  NavbarUserInformation,
-} from "@/components";
+import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
 import { Navbar } from "@stokei/ui";
 import { FC, PropsWithChildren } from "react";
 
@@ -16,7 +11,6 @@ export const SignUpLayout: FC<PropsWithChildren<SignUpLayoutProps>> = ({
     <>
       <Navbar>
         <NavbarLogo />
-        <NavbarDefaultMenu />
         <NavbarUserInformation />
       </Navbar>
       {children}

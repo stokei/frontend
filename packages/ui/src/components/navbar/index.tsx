@@ -5,7 +5,6 @@ export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => (
   <Container
     as="nav"
     width="full"
-    paddingX="5"
     paddingY="3"
     margin={0}
     flexDirection="row"

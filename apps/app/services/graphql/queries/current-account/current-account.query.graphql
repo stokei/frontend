@@ -1,8 +1,6 @@
 query CurrentAccount {
   me {
     id
-    isAdmin
-    isInstructor
     firstname
     lastname
     fullname
@@ -10,6 +8,12 @@ query CurrentAccount {
     email
     username
     status
+    roles {
+      totalCount
+      items {
+        name
+      }
+    }
     createdAt
     avatar {
       file {
