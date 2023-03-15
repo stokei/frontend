@@ -3,10 +3,10 @@ import { BillingScheme } from "@/services/graphql/stokei";
 import { getI18nKeyFromRecurringInterval } from "@/utils";
 import { Stack, StackProps, Text } from "@stokei/ui";
 import { FC, useMemo } from "react";
-import { PriceFragment } from "./price.fragment.graphql.generated";
+import { PriceComponentFragment } from "./price.fragment.graphql.generated";
 
 export interface PriceProps extends StackProps {
-  price?: PriceFragment | null;
+  price?: PriceComponentFragment | null;
   size?: "md" | "lg";
 }
 export const Price: FC<PriceProps> = ({ price, size, justify, ...props }) => {

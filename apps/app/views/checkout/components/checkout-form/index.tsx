@@ -1,6 +1,5 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { getDashboardHomePageURL } from "@/utils";
 import { Button, Form, Stack } from "@stokei/ui";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { useRouter } from "next/router";
@@ -21,7 +20,7 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({ product }) => {
     useState<CreatePaymentMethodMutation["createPaymentMethod"]>();
 
   const translate = useTranslations();
-  const { currentAccount } = useCurrentAccount();
+  const { homePageURL } = useCurrentAccount();
   const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
@@ -29,14 +28,6 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({ product }) => {
 
   const [{ fetching: isLoadingSubscribeProduct }, onExecuteSubscribeProduct] =
     useSubscribeProductMutation();
-
-  /*
-    VERIFICAR SE AINDA HÁ ERRO:
-    - AO CLICAR EM COMPRAR QUANDO ESTÁ LOGADO
-    - AO CLICAR EM COMPRAR QUANDO NÃO ESTÁ LOGADO
-    - QUANDO CARREGA O CHECKOUT COM CLIENT_SECRET
-    - QUANDO CARREGA O CHECKOUT SEM CLIENT_SECRET
-  */
 
   const onSubmit = async () => {
     if (!stripe || !elements) {
@@ -53,11 +44,7 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({ product }) => {
 
       if (!!response?.data?.subscribeProduct) {
         setPaymentSuccessfully(true);
-        router.push(
-          getDashboardHomePageURL({
-            isAdmin: !!currentAccount?.isAdmin,
-          })
-        );
+        router.push(homePageURL || "");
         return;
       }
       if (!!response.error?.graphQLErrors?.length) {

@@ -16,19 +16,28 @@ query GetProductCourse($product: String!) {
       }
     }
     defaultPrice {
-      ...Price
+      ...PriceComponent
     }
-    course {
-      id
-      instructors {
-        totalCount
-        items {
-          id
-          instructor {
-            fullname
-          }
-        }
-      }
+    parent {
+      __typename
+      ...CoursePageParentCourse
     }
+  }
+}
+
+fragment CoursePageParentCourse on Course {
+  courseId: id
+  instructors {
+    totalCount
+    items {
+      ...CoursePageParentCourseInstructor
+    }
+  }
+}
+
+fragment CoursePageParentCourseInstructor on CourseInstructor {
+  id
+  instructor {
+    fullname
   }
 }

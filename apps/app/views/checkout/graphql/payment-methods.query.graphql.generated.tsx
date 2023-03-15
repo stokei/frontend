@@ -1,7 +1,6 @@
 import * as Types from '../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
-import { CheckoutPaymentMethodFragmentDoc } from './payment-method.fragment.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type GetPaymentMethodsQueryVariables = Types.Exact<{
@@ -11,7 +10,19 @@ export type GetPaymentMethodsQueryVariables = Types.Exact<{
 
 export type GetPaymentMethodsQuery = { __typename?: 'Query', paymentMethods: { __typename?: 'PaymentMethods', items?: Array<{ __typename?: 'PaymentMethod', id: string, parent: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null, stripePaymentMethod?: string | null }> | null } };
 
+export type CheckoutPaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, parent: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null, stripePaymentMethod?: string | null };
 
+export const CheckoutPaymentMethodFragmentDoc = gql`
+    fragment CheckoutPaymentMethod on PaymentMethod {
+  id
+  parent
+  cardBrand
+  cardExpiryMonth
+  cardExpiryYear
+  lastFourCardNumber
+  stripePaymentMethod
+}
+    `;
 export const GetPaymentMethodsDocument = gql`
     query GetPaymentMethods($where: WhereDataFindAllPaymentMethodsInput) {
   paymentMethods(where: $where) {

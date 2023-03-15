@@ -1,0 +1,38 @@
+fragment SortedItemComponent on SortedItem {
+  id
+  parent
+  index
+  item {
+    __typename
+    ...SortedItemComponentHero
+    ...SortedItemComponentCatalog
+  }
+}
+
+fragment SortedItemComponentHero on Hero {
+  heroId: id
+  heroTitle: title
+  titleHighlight
+  heroSubtitle: subtitle
+  video {
+    file {
+      url
+    }
+  }
+  image {
+    file {
+      url
+    }
+  }
+  backgroundImage {
+    file {
+      url
+    }
+  }
+}
+
+fragment SortedItemComponentCatalog on Catalog {
+  catalogId: id
+  catalogTitle: title
+  catalogSubtitle: subtitle
+}

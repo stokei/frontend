@@ -1,3 +1,4 @@
+import { RoleName } from "@/constants/role-names";
 import {
   CurrentAccountQuery,
   useCurrentAccountQuery,
@@ -7,6 +8,7 @@ import {
   createContext,
   FC,
   PropsWithChildren,
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -23,6 +25,7 @@ export interface CurrentAccountProviderValues {
   readonly isAuthenticated?: boolean;
   readonly isLoading?: boolean;
   readonly currentAccount?: CurrentAccount;
+  readonly hasSomeRole?: (roleNames: RoleName[]) => boolean;
 }
 
 export const CurrentAccountContext = createContext(
@@ -40,8 +43,21 @@ export const CurrentAccountProvider: FC<
     pause: !!currentAccountProp,
   });
 
+  const hasSomeRole = useCallback(
+    (roleNames: RoleName[]) => {
+      const hasRole = roleNames.some((roleName) => {
+        return currentAccount?.roles?.items?.map(
+          (role) => role.name === roleName
+        );
+      });
+
+      return hasRole;
+    },
+    [currentAccount]
+  );
+
   const homePageURL = useMemo(
-    () => getDashboardHomePageURL({ isAdmin: !!currentAccount?.isAdmin }),
+    () => getDashboardHomePageURL({ isAdmin: !!hasSomeRole([RoleName.ADMIN]) }),
     [currentAccount]
   );
 
@@ -57,8 +73,9 @@ export const CurrentAccountProvider: FC<
       currentAccount,
       isLoading,
       homePageURL,
+      hasSomeRole,
     }),
-    [currentAccount, homePageURL, isLoading]
+    [currentAccount, homePageURL, isLoading, hasSomeRole]
   );
 
   return (

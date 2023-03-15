@@ -1,4 +1,4 @@
-fragment Price on Price {
+fragment PriceComponent on Price {
   id
   fromAmount
   amount

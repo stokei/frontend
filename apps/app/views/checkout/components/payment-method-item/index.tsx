@@ -1,8 +1,8 @@
 import { useTranslations } from "@/hooks";
 import { getCardFlagURL } from "@/utils";
-import { Box, Button, Image, Radio, RadioCard, Stack, Text } from "@stokei/ui";
+import { Box, Button, Image, Stack, Text } from "@stokei/ui";
 import { FC, memo } from "react";
-import { CheckoutPaymentMethodFragment } from "../../graphql/payment-method.fragment.graphql.generated";
+import { CheckoutPaymentMethodFragment } from "../../graphql/payment-methods.query.graphql.generated";
 
 interface PaymentMethodItemProps {
   readonly isActive?: boolean;

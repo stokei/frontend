@@ -88,7 +88,7 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
             isLoading={isLoadingSignUp}
             onRedirectToLoginURL={() =>
               router.push({
-                pathname: routes.login,
+                pathname: routes.auth.login,
                 query: {
                   redirectTo: redirectToWhenSignUpSuccessfully,
                 },

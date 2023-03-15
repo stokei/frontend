@@ -16,13 +16,30 @@ query GetCheckoutProduct($product: String!) {
       }
     }
     defaultPrice {
-      ...Price
+      ...PriceComponent
     }
-    course {
+    parent {
+      __typename
       ...CheckoutProductCourse
-    }
-    plan {
       ...CheckoutProductPlan
     }
   }
+}
+
+fragment CheckoutProductCourse on Course {
+  courseId: id
+  instructors {
+    totalCount
+    items {
+      id
+      instructor {
+        fullname
+      }
+    }
+  }
+}
+
+fragment CheckoutProductPlan on Plan {
+  planId: id
+  planName: name
 }

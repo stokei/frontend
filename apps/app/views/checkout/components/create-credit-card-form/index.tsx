@@ -1,21 +1,10 @@
 import { CardInput } from "@/components";
 import { useAPIErrors, useTranslations } from "@/hooks";
-import {
-  Button,
-  Form,
-  FormControl,
-  Icon,
-  Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Stack,
-  Text,
-} from "@stokei/ui";
+import { Button, Form, FormControl, Label, Stack } from "@stokei/ui";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FC, useState } from "react";
 import { useCreatePaymentMethodMutation } from "../../graphql/create-payment-method.mutation.graphql.generated";
-import { CheckoutPaymentMethodFragment } from "../../graphql/payment-method.fragment.graphql.generated";
+import { CheckoutPaymentMethodFragment } from "../../graphql/payment-methods.query.graphql.generated";
 
 interface CreateCreditCardFormProps {
   readonly onSuccess: (paymentMethod: CheckoutPaymentMethodFragment) => void;

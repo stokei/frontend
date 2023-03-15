@@ -1,5 +1,6 @@
 import { RoleName } from "@/constants/role-names";
 import { useAPIErrors, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
 import { getDashboardHomePageURL } from "@/utils";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
@@ -80,11 +81,11 @@ export const LoginPage: FC<LoginPageProps> = () => {
           <FormLogin
             isLoading={isLoadingLogin}
             onRedirectToForgotPasswordURL={() =>
-              router.push(routes.forgotPassword)
+              router.push(routes.auth.forgotPassword)
             }
             onRedirectToSignUpURL={() =>
               router.push({
-                pathname: routes.signUp,
+                pathname: routes.auth.signUp,
                 query: {
                   redirectTo: redirectToWhenLoginSuccessfully,
                 },

@@ -1,7 +1,7 @@
 import * as Types from '../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
-import { CheckoutPaymentMethodFragmentDoc } from './payment-method.fragment.graphql.generated';
+import { CheckoutPaymentMethodFragmentDoc } from './payment-methods.query.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CreatePaymentMethodMutationVariables = Types.Exact<{

@@ -1,6 +1,7 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
-import { useAPIErrors, useTranslations } from "@/hooks";
+import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
 import { Box, Button, Card, CardBody, Image, Stack } from "@stokei/ui";
@@ -10,23 +11,29 @@ import { GetProductCourseQuery } from "../../graphql/course.query.graphql.genera
 import { Features } from "../features";
 
 export interface CheckoutInfoProps {
-  readonly product?: GetProductCourseQuery["product"] | null;
+  readonly productId?: string;
+  readonly avatarURL?: string;
+  readonly defaultPrice?: PriceComponentFragment | null;
+  readonly features?: GetProductCourseQuery["product"]["features"] | null;
 }
 
-export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
+export const CheckoutInfo: FC<CheckoutInfoProps> = ({
+  productId,
+  avatarURL,
+  features,
+  defaultPrice,
+}) => {
   const router = useRouter();
   const translate = useTranslations();
   const { isAuthenticated } = useCurrentAccount();
 
-  const { onShowAPIError } = useAPIErrors();
-
   const onRedirectToCheckout = async () => {
     const checkoutURL = routes.checkout.home({
-      product: product?.id || "",
+      product: productId || "",
     });
     if (!isAuthenticated) {
       router.push({
-        pathname: routes.login,
+        pathname: routes.auth.login,
         query: {
           redirectTo: checkoutURL,
         },
@@ -50,22 +57,20 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({ product }) => {
       >
         <CardBody>
           <Stack direction="column" spacing="4">
-            {product?.avatar?.file?.url && (
+            {avatarURL && (
               <Image
                 width="full"
                 height="fit-content"
                 rounded="md"
-                src={product?.avatar?.file?.url || ""}
+                src={avatarURL || ""}
                 fallbackSrc={defaultNoImage.src}
               />
             )}
-            <Price size="lg" price={product?.defaultPrice} />
+            <Price size="lg" price={defaultPrice} />
             <Button width="full" onClick={onRedirectToCheckout}>
               {translate.formatMessage({ id: "buyNow" })}
             </Button>
-            {!!product?.features?.totalCount && (
-              <Features features={product?.features} />
-            )}
+            {!!features?.totalCount && <Features features={features} />}
           </Stack>
         </CardBody>
       </Card>

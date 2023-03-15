@@ -1,18 +1,9 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
+import { Box, Button, Loading, Stack, Title, useDisclosure } from "@stokei/ui";
+import { FC, useCallback, useEffect, useState } from "react";
 import {
-  Box,
-  Button,
-  Icon,
-  Loading,
-  Stack,
-  Title,
-  useDisclosure,
-} from "@stokei/ui";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { CheckoutPaymentMethodFragment } from "../../graphql/payment-method.fragment.graphql.generated";
-import {
-  GetPaymentMethodsQuery,
+  CheckoutPaymentMethodFragment,
   useGetPaymentMethodsQuery,
 } from "../../graphql/payment-methods.query.graphql.generated";
 import { CreateCreditCardForm } from "../create-credit-card-form";

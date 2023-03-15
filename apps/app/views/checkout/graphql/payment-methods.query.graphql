@@ -5,3 +5,13 @@ query GetPaymentMethods($where: WhereDataFindAllPaymentMethodsInput) {
     }
   }
 }
+
+fragment CheckoutPaymentMethod on PaymentMethod {
+  id
+  parent
+  cardBrand
+  cardExpiryMonth
+  cardExpiryYear
+  lastFourCardNumber
+  stripePaymentMethod
+}

@@ -256,6 +256,17 @@ export type Catalogs = {
   totalPages: Scalars['Int'];
 };
 
+export type ChangeFromSortedItemToSortedItemInput = {
+  fromItem: Scalars['String'];
+  toItem: Scalars['String'];
+};
+
+export type ChangeFromSortedItemToSortedItemResponse = {
+  __typename?: 'ChangeFromSortedItemToSortedItemResponse';
+  fromItem?: Maybe<SortedItem>;
+  toItem?: Maybe<SortedItem>;
+};
+
 export type ChangePasswordInput = {
   code: Scalars['String'];
   email: Scalars['String'];
@@ -565,6 +576,11 @@ export type CreateRecurringInput = {
   interval: IntervalType;
   intervalCount: Scalars['Int'];
   usageType: UsageType;
+};
+
+export type CreateSortedItemInput = {
+  item: Scalars['String'];
+  parent: Scalars['String'];
 };
 
 export type CreateVideoAuthorInput = {
@@ -941,6 +957,7 @@ export type Modules = {
 export type Mutation = {
   __typename?: 'Mutation';
   cancelSubscriptionContract: SubscriptionContract;
+  changeFromSortedItemToSortedItem: ChangeFromSortedItemToSortedItemResponse;
   changePassword: Scalars['Boolean'];
   createAddress: Address;
   createApp: App;
@@ -968,6 +985,7 @@ export type Mutation = {
   createPlan: Plan;
   createPrice: Price;
   createProduct: Product;
+  createSortedItem: SortedItem;
   createVideo: Video;
   createVideoAuthor: VideoAuthor;
   createVideoUploadURL: CreateFileUploadUrlResponse;
@@ -992,6 +1010,7 @@ export type Mutation = {
   removePaymentMethod: PaymentMethod;
   removePhone: Phone;
   removePrice: Price;
+  removeSortedItem: SortedItem;
   removeVideo: Video;
   removeVideoAuthor: VideoAuthor;
   signUp: AuthResponse;
@@ -1014,6 +1033,11 @@ export type Mutation = {
 
 export type MutationCancelSubscriptionContractArgs = {
   input: CancelSubscriptionContractInput;
+};
+
+
+export type MutationChangeFromSortedItemToSortedItemArgs = {
+  input: ChangeFromSortedItemToSortedItemInput;
 };
 
 
@@ -1137,6 +1161,11 @@ export type MutationCreateProductArgs = {
 };
 
 
+export type MutationCreateSortedItemArgs = {
+  input: CreateSortedItemInput;
+};
+
+
 export type MutationCreateVideoArgs = {
   input: CreateVideoInput;
 };
@@ -1239,6 +1268,11 @@ export type MutationRemovePhoneArgs = {
 
 export type MutationRemovePriceArgs = {
   input: RemovePriceInput;
+};
+
+
+export type MutationRemoveSortedItemArgs = {
+  input: RemoveSortedItemInput;
 };
 
 
@@ -1591,6 +1625,18 @@ export type OrderByDataFindAllRolesInput = {
   updatedBy?: InputMaybe<OrderBy>;
 };
 
+export type OrderByDataFindAllSortedItemsInput = {
+  index?: InputMaybe<OrderBy>;
+};
+
+export type OrderByDataFindAllSubscriptionContractItemsInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  quantity?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
 export type OrderByDataFindAllSubscriptionContractsInput = {
   active?: InputMaybe<OrderBy>;
   automaticRenew?: InputMaybe<OrderBy>;
@@ -1822,11 +1868,10 @@ export type Prices = {
 export type Product = {
   __typename?: 'Product';
   activatedAt?: Maybe<Scalars['String']>;
-  active: Scalars['String'];
+  active: Scalars['Boolean'];
   app?: Maybe<App>;
   avatar?: Maybe<Image>;
   checkoutVisible: Scalars['Boolean'];
-  course?: Maybe<Course>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   deactivatedAt?: Maybe<Scalars['String']>;
@@ -1835,8 +1880,7 @@ export type Product = {
   features?: Maybe<Features>;
   id: Scalars['ID'];
   name: Scalars['String'];
-  parent?: Maybe<Scalars['String']>;
-  plan?: Maybe<Plan>;
+  parent?: Maybe<ProductParentUnion>;
   prices?: Maybe<Prices>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
@@ -1853,6 +1897,8 @@ export type ProductPricesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPricesInput>;
   page?: InputMaybe<PaginationInput>;
 };
+
+export type ProductParentUnion = Course | Plan;
 
 export type Products = {
   __typename?: 'Products';
@@ -1918,6 +1964,8 @@ export type Query = {
   prices: Prices;
   product: Product;
   products: Products;
+  sortedItem: SortedItem;
+  sortedItems: SortedItems;
   subscriptionContract: SubscriptionContract;
   subscriptionContracts: SubscriptionContracts;
   video: Video;
@@ -2204,6 +2252,18 @@ export type QueryProductsArgs = {
 };
 
 
+export type QuerySortedItemArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QuerySortedItemsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllSortedItemsInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllSortedItemsInput>;
+};
+
+
 export type QuerySubscriptionContractArgs = {
   id: Scalars['String'];
 };
@@ -2320,6 +2380,10 @@ export type RemovePriceInput = {
   where: RemoveWherePriceInput;
 };
 
+export type RemoveSortedItemInput = {
+  where: RemoveWhereSortedItemInput;
+};
+
 export type RemoveVideoAuthorInput = {
   where: RemoveWhereVideoAuthorInput;
 };
@@ -2400,6 +2464,10 @@ export type RemoveWherePriceInput = {
   price: Scalars['String'];
 };
 
+export type RemoveWhereSortedItemInput = {
+  sortedItem: Scalars['String'];
+};
+
 export type RemoveWhereVideoAuthorInput = {
   author: Scalars['String'];
   video: Scalars['String'];
@@ -2442,6 +2510,35 @@ export type SignUpInput = {
   password: Scalars['String'];
 };
 
+export type SortedItem = {
+  __typename?: 'SortedItem';
+  app?: Maybe<App>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  index?: Maybe<Scalars['Int']>;
+  item?: Maybe<SortedItemUnion>;
+  parent?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export type SortedItemUnion = Catalog | CatalogItem | Hero;
+
+export type SortedItems = {
+  __typename?: 'SortedItems';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<SortedItem>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
 export type SubscribeProductInput = {
   paymentMethod: Scalars['String'];
   price: Scalars['String'];
@@ -2457,6 +2554,7 @@ export type SubscriptionContract = {
   createdBy?: Maybe<Account>;
   endAt?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  items?: Maybe<SubscriptionContractItems>;
   lastInvoice?: Maybe<Invoice>;
   paymentMethod?: Maybe<PaymentMethod>;
   startAt?: Maybe<Scalars['String']>;
@@ -2464,6 +2562,43 @@ export type SubscriptionContract = {
   type: SubscriptionContractType;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+};
+
+
+export type SubscriptionContractItemsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllSubscriptionContractItemsInput>;
+  page?: InputMaybe<PaginationInput>;
+};
+
+export type SubscriptionContractItem = {
+  __typename?: 'SubscriptionContractItem';
+  app?: Maybe<App>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  parent: Scalars['String'];
+  price: Price;
+  product?: Maybe<SubscriptionContractItemProductUnion>;
+  quantity: Scalars['Int'];
+  recurring?: Maybe<Recurring>;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export type SubscriptionContractItemProductUnion = Course | Plan;
+
+export type SubscriptionContractItems = {
+  __typename?: 'SubscriptionContractItems';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<SubscriptionContractItem>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
 };
 
 export enum SubscriptionContractStatus {
@@ -3123,6 +3258,20 @@ export type WhereDataFindAllProductsInput = {
   AND?: InputMaybe<WhereDataFindAllProductsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllProductsDataInput>;
   OR?: InputMaybe<Array<WhereDataFindAllProductsDataInput>>;
+};
+
+export type WhereDataFindAllSortedItemsDataInput = {
+  app?: InputMaybe<WhereDataStringInput>;
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllSortedItemsInput = {
+  AND?: InputMaybe<WhereDataFindAllSortedItemsDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllSortedItemsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllSortedItemsDataInput>>;
 };
 
 export type WhereDataFindAllSubscriptionContractsDataInput = {

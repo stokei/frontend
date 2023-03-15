@@ -54,10 +54,13 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
         </>
       ) : (
         <>
-          <Button variant="ghost" onClick={() => router.push(routes.login)}>
+          <Button
+            variant="ghost"
+            onClick={() => router.push(routes.auth.login)}
+          >
             {translate.formatMessage({ id: "login" })}
           </Button>
-          <Button onClick={() => router.push(routes.signUp)}>
+          <Button onClick={() => router.push(routes.auth.signUp)}>
             {translate.formatMessage({ id: "signUp" })}
           </Button>
         </>

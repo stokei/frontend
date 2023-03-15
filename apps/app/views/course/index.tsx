@@ -1,4 +1,3 @@
-import { useTranslations } from "@/hooks";
 import { Container, Stack } from "@stokei/ui";
 import { FC, useMemo } from "react";
 import { CheckoutInfo } from "./components/checkout-info";
@@ -14,8 +13,6 @@ interface CoursePageProps {
 }
 
 export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
-  const translate = useTranslations();
-
   const [{ data: dataGetProduct, fetching: isLoadingGetProduct }] =
     useGetProductCourseQuery({
       variables: {
@@ -24,11 +21,18 @@ export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
     });
 
   const product = useMemo(() => dataGetProduct?.product, [dataGetProduct]);
+  const course = useMemo(
+    () => (product?.parent?.__typename === "Course" ? product?.parent : null),
+    [dataGetProduct]
+  );
 
   return (
     <CourseLayout isLoading={isLoadingGetProduct}>
       <Container paddingY="10" background="black.500">
-        <Header product={product} />
+        <Header
+          instructors={course?.instructors?.items || []}
+          productName={product?.name}
+        />
       </Container>
       <Container paddingY="10">
         <Stack
@@ -36,7 +40,7 @@ export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
           direction={["column-reverse", "column-reverse", "row", "row"]}
         >
           <Stack spacing="10" direction="column" width="auto" flex="1">
-            <ModulesList courseId={product?.course?.id} />
+            <ModulesList courseId={course?.courseId} />
 
             {!!product?.features?.totalCount && (
               <Features features={product?.features} />
@@ -47,7 +51,12 @@ export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
             )}
           </Stack>
 
-          <CheckoutInfo product={product} />
+          <CheckoutInfo
+            avatarURL={product?.avatar?.file?.url || ""}
+            productId={product?.id}
+            defaultPrice={product?.defaultPrice}
+            features={product?.features}
+          />
         </Stack>
       </Container>
     </CourseLayout>

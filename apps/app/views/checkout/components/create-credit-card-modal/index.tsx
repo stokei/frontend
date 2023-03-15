@@ -1,7 +1,7 @@
 import { useTranslations } from "@/hooks";
 import { Modal, ModalBody, ModalHeader } from "@stokei/ui";
 import { FC } from "react";
-import { CheckoutPaymentMethodFragment } from "../../graphql/payment-method.fragment.graphql.generated";
+import { CheckoutPaymentMethodFragment } from "../../graphql/payment-methods.query.graphql.generated";
 import { CreateCreditCardForm } from "../create-credit-card-form";
 
 interface CreateCreditCardModalProps {
