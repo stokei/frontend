@@ -18,14 +18,16 @@ import { PriceComponentFragment } from "@/components/price/price.fragment.graphq
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
-import { LandingPageCatalogItemProductFragment } from "../../graphql/catalog-items.query.graphql.generated";
+import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/sorted-item.fragment.graphql.generated";
 
 export interface CatalogItemProps {
-  readonly productId: string;
-  readonly name: string;
+  readonly productId?: string;
+  readonly name?: string;
   readonly avatar?: string;
   readonly avatarURL?: string;
-  readonly parent?: LandingPageCatalogItemProductFragment["parent"] | null;
+  readonly parent?:
+    | SortedItemComponentCatalogItemProductFragment["parent"]
+    | null;
   readonly defaultPrice?: PriceComponentFragment | null;
 }
 

@@ -1,10 +1,11 @@
 import { FC, memo } from "react";
 
 import { Catalog } from "../catalog";
+import { CatalogItem } from "../catalog-item";
 import { HeroWithImage } from "../hero-with-image";
 import { HeroWithTitle } from "../hero-with-title";
 import { HeroWithVideo } from "../hero-with-video";
-import { SortedItemComponentFragment } from "./sorted-item.query.graphql.generated";
+import { SortedItemComponentFragment } from "./sorted-item.fragment.graphql.generated";
 
 export interface SortedItemFactoryProps {
   readonly sortedItem?: SortedItemComponentFragment | null;
@@ -20,6 +21,19 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
           catalogId={sortedItem?.item?.catalogId}
           title={sortedItem?.item?.catalogTitle}
           subtitle={sortedItem?.item?.catalogSubtitle}
+          {...props}
+        />
+      );
+    }
+
+    if (type === "CatalogItem") {
+      return (
+        <CatalogItem
+          productId={sortedItem?.item?.product?.id}
+          name={sortedItem?.item?.product?.name}
+          avatar={sortedItem?.item?.product?.avatar?.file?.url || ""}
+          defaultPrice={sortedItem?.item?.product?.defaultPrice}
+          parent={sortedItem?.item?.product?.parent}
           {...props}
         />
       );

@@ -1,0 +1,16 @@
+query SortedItems(
+  $where: WhereDataFindAllSortedItemsInput!
+  $page: PaginationInput
+) {
+  sortedItems(where: $where, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...SortedItemComponent
+    }
+  }
+}

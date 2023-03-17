@@ -3,6 +3,7 @@ import { FC, memo, useMemo } from "react";
 import { useCatalogItemsQuery } from "../../views/landing-page/graphql/catalog-items.query.graphql.generated";
 
 import { CatalogItem } from "../catalog-item";
+import { useSortedItemsQuery } from "./sorted-items.query.graphql.generated";
 
 export interface CatalogProps {
   readonly catalogId?: string;
@@ -12,13 +13,13 @@ export interface CatalogProps {
 
 export const Catalog: FC<CatalogProps> = memo(
   ({ catalogId, title, subtitle }) => {
-    const [{ data: dataCatalogItems, fetching: isLoadingCatalogItems }] =
-      useCatalogItemsQuery({
+    const [{ fetching: isLoading, data: dataSortedItems }] =
+      useSortedItemsQuery({
         pause: !catalogId,
         variables: {
           where: {
             AND: {
-              catalog: {
+              parent: {
                 equals: catalogId,
               },
             },
@@ -27,15 +28,19 @@ export const Catalog: FC<CatalogProps> = memo(
       });
 
     const catalogItems = useMemo(
-      () => dataCatalogItems?.catalogItems?.items,
-      [dataCatalogItems]
+      () => dataSortedItems?.sortedItems?.items,
+      [dataSortedItems]
     );
 
     return (
       <Box flexDirection="column" as="section" paddingY="5">
         <Container>
           <Title fontSize="lg">{title}</Title>
-          {subtitle && <Text marginBottom="5">{subtitle}</Text>}
+          {subtitle && (
+            <Text fontSize="sm" marginBottom="5" color="text.300">
+              {subtitle}
+            </Text>
+          )}
         </Container>
         {!!catalogItems?.length && (
           <Box flexDirection="row" overflowY="hidden">
@@ -49,17 +54,24 @@ export const Catalog: FC<CatalogProps> = memo(
               }}
               paddingLeft="0"
             >
-              {catalogItems?.map(({ product }) => (
-                <Box key={product?.id} flexDirection="column" paddingLeft="5">
-                  <CatalogItem
-                    productId={product?.id}
-                    name={product?.name}
-                    avatar={product?.avatar?.file?.url || ""}
-                    defaultPrice={product?.defaultPrice}
-                    parent={product?.parent}
-                  />
-                </Box>
-              ))}
+              {catalogItems?.map(
+                ({ item }) =>
+                  item?.__typename === "CatalogItem" && (
+                    <Box
+                      key={item?.product?.id}
+                      flexDirection="column"
+                      paddingLeft="5"
+                    >
+                      <CatalogItem
+                        productId={item?.product?.id}
+                        name={item?.product?.name}
+                        avatar={item?.product?.avatar?.file?.url || ""}
+                        defaultPrice={item?.product?.defaultPrice}
+                        parent={item?.product?.parent}
+                      />
+                    </Box>
+                  )
+              )}
             </Container>
           </Box>
         )}
