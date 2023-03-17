@@ -57,6 +57,7 @@ import { FiPlus, FiSettings } from "react-icons/fi";
 import { TbApps } from "react-icons/tb";
 
 import {
+  RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
   RiErrorWarningFill,
   RiPictureInPicture2Line,
@@ -113,6 +114,7 @@ export const StopIcon = BsStopFill;
 export const TrashIcon = BsTrash;
 export const OkIcon = RiCheckboxCircleFill;
 export const ErrorIcon = RiErrorWarningFill;
+export const CircleOutlinedIcon = RiCheckboxBlankCircleLine;
 export const ReloadIcon = AiOutlineReload;
 export const VolumeMutedIcon = BsVolumeMute;
 export const VolumeUnmutedIcon = BsVolumeUp;

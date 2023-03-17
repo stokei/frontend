@@ -61,6 +61,7 @@ export const icons = {
   exitPictureInPicture: IconComponent.ExitPictureInPictureIcon,
   reload: IconComponent.ReloadIcon,
   error: IconComponent.ErrorIcon,
+  circleOutlined: IconComponent.CircleOutlinedIcon,
   ok: IconComponent.OkIcon,
   trash: IconComponent.TrashIcon,
 };
