@@ -2,16 +2,22 @@ import { StepsProvider } from "../../contexts";
 import { Stack, StackProps } from "../stack";
 
 export interface StepsProps extends StackProps {
+  readonly orientation?: "horizontal" | "vertical";
   readonly currentStep: string;
   readonly onChangeStep: (stepIndex: string) => void;
 }
 export const Steps: React.FC<StepsProps> = ({
+  orientation,
   children,
   currentStep,
   onChangeStep,
   ...props
 }) => (
-  <StepsProvider currentStep={currentStep} onChangeStep={onChangeStep}>
+  <StepsProvider
+    orientation={orientation}
+    currentStep={currentStep}
+    onChangeStep={onChangeStep}
+  >
     <Stack width="full" direction="column" spacing="5" {...props}>
       {children}
     </Stack>
