@@ -13,14 +13,11 @@ export const Price: FC<PriceProps> = ({ price, size, justify, ...props }) => {
   const translate = useTranslations();
 
   const priceAmount = useMemo(() => {
-    if (price?.amount && price?.billingScheme === BillingScheme.PerUnit) {
-      return translate.formatMoney({
-        amount: price?.amount,
-        currency: price?.currency?.id,
-        minorUnit: price?.currency?.minorUnit,
-      });
-    }
-    return price?.tiers?.items?.[0]?.amount;
+    return translate.formatMoney({
+      amount: price?.amount || 0,
+      currency: price?.currency?.id || "",
+      minorUnit: price?.currency?.minorUnit,
+    });
   }, [price]);
 
   const fromPriceAmount = useMemo(() => {
@@ -74,6 +71,10 @@ export const Price: FC<PriceProps> = ({ price, size, justify, ...props }) => {
         {priceRecurringIntervalTypeKey && (
           <Text fontSize={size === "lg" ? "lg" : "md"} color="text.200">
             {price?.unit ? "/" + price?.unit : ""}/
+            {price?.recurring?.intervalCount &&
+            price?.recurring?.intervalCount > 1
+              ? price?.recurring?.intervalCount + " "
+              : ""}
             {translate
               .formatMessage({
                 id: priceRecurringIntervalTypeKey as any,

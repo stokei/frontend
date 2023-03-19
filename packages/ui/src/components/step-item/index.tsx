@@ -35,7 +35,7 @@ export const StepItem: React.FC<StepItemProps> = ({
 
   const iconData = useMemo<{ name: IconName; color: string }>(() => {
     let name: IconName = icon || "circleOutlined";
-    let color: string = "";
+    let color: string = "primary.400";
     if (isCompleted) {
       name = "ok";
       color = "success.500";
@@ -60,11 +60,11 @@ export const StepItem: React.FC<StepItemProps> = ({
 
   return (
     <Stack
-      width="auto"
+      width={["full", "full", "auto", "auto"]}
       direction="row"
       spacing="3"
       rounded="md"
-      paddingY="1"
+      paddingY="2"
       paddingX="3"
       background={isCurrentStep ? "gray.100" : undefined}
       cursor={!isDisabled ? "pointer" : undefined}

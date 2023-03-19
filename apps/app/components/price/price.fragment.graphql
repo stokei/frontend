@@ -1,5 +1,6 @@
 fragment PriceComponent on Price {
   id
+  nickname
   fromAmount
   amount
   discountPercent

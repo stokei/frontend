@@ -99,6 +99,7 @@ export * from "./select-input";
 export * from "./select-tag-list";
 export * from "./select-tag-item";
 export * from "./select-list";
+export * from "./select-search-input";
 export * from "./select-item";
 export * from "./simple-grid";
 export * from "./sidebar";

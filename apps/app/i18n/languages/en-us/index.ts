@@ -1,6 +1,6 @@
-import { I18nKeyWithoutUITranslations } from "@/interfaces/i18n-key";
+import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
-export const enUSMessages: Record<I18nKeyWithoutUITranslations, string> = {
+export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   loginSuccessfully: "Login successfully!",
   signUpSuccessfully: "Sign up successfully!",
   firstnameNotFound: "Firstname not found!",
@@ -8,8 +8,14 @@ export const enUSMessages: Record<I18nKeyWithoutUITranslations, string> = {
   emailNotFound: "Email not found!",
   passwordNotFound: "Password not found!",
   recommendedCourses: "Recommended courses",
+  next: "Next",
+  previous: "Previous",
   plan: "Plan",
   plans: "Plans",
+  summary: "Summary",
+  result: "Result",
+  payment: "Payment",
+  payments: "Payments",
   student: "Student",
   students: "Students",
   addCourse: "Add course",

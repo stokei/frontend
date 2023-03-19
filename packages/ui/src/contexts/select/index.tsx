@@ -11,6 +11,7 @@ export interface SelectContextValues {
   readonly isDisabled?: boolean;
   readonly isMultiple?: boolean;
   readonly onOpenList: () => void;
+  readonly onToggleList: () => void;
   readonly onCloseList: () => void;
   readonly onChooseItem: (value: string) => void;
   readonly onRemoveChooseItem: (value: string) => void;
@@ -22,6 +23,7 @@ export interface SelectContextProps {
   readonly isLoading?: boolean;
   readonly isDisabled?: boolean;
   readonly onOpenList: () => void;
+  readonly onToggleList: () => void;
   readonly onCloseList: () => void;
   readonly onChooseItem: (value: string) => void;
   readonly onRemoveChooseItem: (value: string) => void;
@@ -37,6 +39,7 @@ export const SelectProvider: React.FC<
   isLoading,
   isDisabled,
   onOpenList,
+  onToggleList,
   onCloseList,
   onChooseItem,
   onRemoveChooseItem,
@@ -61,6 +64,7 @@ export const SelectProvider: React.FC<
       isDisabled,
       onOpenList,
       onCloseList,
+      onToggleList,
       onChooseItem,
       onRemoveChooseItem,
     }),
@@ -73,6 +77,7 @@ export const SelectProvider: React.FC<
       isDisabled,
       onOpenList,
       onCloseList,
+      onToggleList,
       onChooseItem,
       onRemoveChooseItem,
     ]

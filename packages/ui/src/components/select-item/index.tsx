@@ -6,7 +6,7 @@ import { Icon } from "../icon";
 import { Box } from "../box";
 
 export interface SelectItemProps extends StackProps {
-  readonly value: string;
+  readonly value: any;
 }
 
 export const SelectItem: React.FC<SelectItemProps> = forwardRef(
@@ -60,6 +60,7 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
           background: "gray.50",
         }}
         background={isActive ? "gray.50" : props.background}
+        cursor="pointer"
         {...props}
         onClick={onChooseItemValue}
       >

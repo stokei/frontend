@@ -18,6 +18,12 @@ query GetCheckoutProduct($product: String!) {
     defaultPrice {
       ...PriceComponent
     }
+    prices {
+      totalCount
+      items {
+        ...PriceComponent
+      }
+    }
     parent {
       __typename
       ...CheckoutProductCourse

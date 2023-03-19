@@ -32,7 +32,7 @@ export const LandingPage: FC<LandingPageProps> = () => {
   return (
     <LandingPageLayout>
       {sortedItems?.items?.map((sortedItem) => (
-        <SortedItemFactory sortedItem={sortedItem} />
+        <SortedItemFactory key={sortedItem?.id} sortedItem={sortedItem} />
       ))}
     </LandingPageLayout>
   );

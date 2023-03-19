@@ -42,6 +42,7 @@ export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
     <ChakraButton
       rounded="full"
       height="fit-content"
+      h="fit-content"
       paddingX={padding.x}
       paddingY={padding.y}
       {...props}

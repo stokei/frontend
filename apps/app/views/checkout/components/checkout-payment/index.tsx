@@ -1,3 +1,4 @@
+import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { Button, Form, Stack } from "@stokei/ui";
@@ -5,16 +6,21 @@ import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
 import { CreatePaymentMethodMutation } from "../../graphql/create-payment-method.mutation.graphql.generated";
-import { GetCheckoutProductQuery } from "../../graphql/product.query.graphql.generated";
 import { useSubscribeProductMutation } from "../../graphql/subscribe-product.mutation.graphql.generated";
 import { PaymentMethodsList } from "../payment-methods-list";
 import { PaymentSuccessfully } from "../payment-successfully";
 
-interface CheckoutFormProps {
-  readonly product?: GetCheckoutProductQuery["product"];
+interface CheckoutPaymentProps {
+  readonly productId?: string;
+  readonly avatarURL?: string;
+  readonly price?: PriceComponentFragment | null;
+  readonly onPreviousStep: () => void;
 }
 
-export const CheckoutForm: FC<CheckoutFormProps> = ({ product }) => {
+export const CheckoutPayment: FC<CheckoutPaymentProps> = ({
+  price,
+  onPreviousStep,
+}) => {
   const [paymentSuccessfully, setPaymentSuccessfully] = useState(false);
   const [paymentMethod, setPaymentMethod] =
     useState<CreatePaymentMethodMutation["createPaymentMethod"]>();
@@ -37,7 +43,7 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({ product }) => {
     try {
       const response = await onExecuteSubscribeProduct({
         input: {
-          price: product?.defaultPrice?.id || "",
+          price: price?.id || "",
           paymentMethod: paymentMethod?.id || "",
         },
       });
@@ -71,14 +77,19 @@ export const CheckoutForm: FC<CheckoutFormProps> = ({ product }) => {
           />
 
           <Form onSubmit={onSubmit}>
-            <Button
-              width="full"
-              type="submit"
-              isDisabled={!paymentMethod}
-              isLoading={isLoadingSubscribeProduct}
-            >
-              {translate.formatMessage({ id: "subscribe" })}
-            </Button>
+            <Stack direction="column" align="center">
+              <Button
+                width="full"
+                type="submit"
+                isDisabled={!paymentMethod}
+                isLoading={isLoadingSubscribeProduct}
+              >
+                {translate.formatMessage({ id: "next" })}
+              </Button>
+              <Button width="full" variant="ghost" onClick={onPreviousStep}>
+                {translate.formatMessage({ id: "previous" })}
+              </Button>
+            </Stack>
           </Form>
         </>
       )}

@@ -9,8 +9,8 @@ export interface SelectProps extends Omit<StackProps, "onChange"> {
   readonly isLoading?: boolean;
   readonly isDisabled?: boolean;
   readonly value: any;
-  readonly onChooseItem: (value: string) => void;
-  readonly onRemoveChooseItem: (value: string) => void;
+  readonly onChooseItem: (value: any) => void;
+  readonly onRemoveChooseItem: (value: any) => void;
   readonly ref?: ForwardedRef<any>;
 }
 
@@ -31,6 +31,7 @@ export const Select: React.FC<SelectProps> = forwardRef(
       isOpen: isOpenList,
       onOpen: onOpenList,
       onClose: onCloseList,
+      onToggle: onToggleList,
     } = useDisclosure();
     return (
       <SelectProvider
@@ -41,6 +42,7 @@ export const Select: React.FC<SelectProps> = forwardRef(
         isLoading={isLoading}
         isDisabled={isDisabled}
         onOpenList={onOpenList}
+        onToggleList={onToggleList}
         onCloseList={onCloseList}
       >
         <Popover

@@ -1,22 +1,25 @@
-import { forwardRef, theme, useMultiStyleConfig } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { forwardRef, useMultiStyleConfig } from "@chakra-ui/react";
+import { ReactNode, useCallback } from "react";
 import { useSelect } from "../../hooks";
 import { Box } from "../box";
+import { Button } from "../button";
 import { Icon, IconName } from "../icon";
-import { Input, InputProps } from "../input";
-import { InputGroup } from "../input-group";
-import { InputRightElement } from "../input-right-element";
+import { InputProps } from "../input";
 import { Loading } from "../loading";
-import { Stack } from "../stack";
+import { SelectTagItem } from "../select-tag-item";
+import { SelectTagList } from "../select-tag-list";
 
 export interface SelectInputProps extends InputProps {
   readonly rightIcon?: IconName;
+  readonly item: (value: any) => ReactNode;
 }
 
 export const SelectInput: React.FC<SelectInputProps> = forwardRef(
-  ({ children, onFocus, size, rightIcon, ...props }, ref) => {
+  ({ children, onClick, size, rightIcon, item, ...props }, ref) => {
     const {
-      onOpenList,
+      value,
+      onToggleList,
+      onCloseList,
       isDisabled,
       isLoading,
       isOpenList,
@@ -27,71 +30,75 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
     const isBlocked = isLoading || isDisabled || props?.isDisabled;
     const isAllowedToAddMultiStyles = isMultiple && hasValue && !!children;
 
-    const onFocusInput = useCallback(
+    const onClickInput = useCallback(
       (e: any) => {
-        onOpenList();
-        onFocus?.(e);
+        onToggleList();
+        onClick?.(e);
       },
-      [onFocus, onOpenList]
+      [onClick, onToggleList]
     );
 
     const themeInput: any = useMultiStyleConfig("Input", props);
-    const inputStylesProps = {
-      ...(isAllowedToAddMultiStyles && {
-        ...themeInput.field,
-        _focusWithin: themeInput.field._focus,
-        pos: "relative",
-        minH: "10",
-        py: 0,
-        px: 0,
-        spacing: 0,
-      }),
-    };
 
     return (
-      <Stack
-        direction="column"
-        {...(isAllowedToAddMultiStyles && inputStylesProps)}
-        height="auto"
+      <Button
+        {...themeInput.field}
+        _focusWithin={themeInput.field._focus}
+        height="fit-content"
+        h="fit-content"
+        pos="relative"
+        minH="10"
+        py="0"
+        px="0"
+        spacing="0"
+        alignItems="center"
+        justifyContent="space-between"
         cursor={isBlocked ? "not-allowed" : undefined}
+        isDisabled={isBlocked}
+        onClick={onClickInput}
+        onBlur={onCloseList}
+        variant="unstyled"
       >
-        {hasValue && children && (
-          <Box
-            padding={isMultiple ? "3" : undefined}
-            paddingBottom={0}
-            cursor={isBlocked ? "not-allowed" : undefined}
-          >
-            {children}
-          </Box>
-        )}
-        <InputGroup padding={isAllowedToAddMultiStyles ? "3" : undefined}>
-          <Input
-            isDisabled={isBlocked}
-            autoComplete="off"
-            size={size}
-            {...props}
-            variant={isAllowedToAddMultiStyles ? "unstyled" : props.variant}
-            ref={ref}
-            onFocus={onFocusInput}
-          />
-          <InputRightElement
-            height="full"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
+        <Box
+          width="full"
+          flexDirection="row"
+          align="center"
+          justify="space-between"
+        >
+          {hasValue && (
+            <Box
+              maxWidth="full"
+              flex="1"
+              height="full"
+              paddingX="3"
+              cursor={isBlocked ? "not-allowed" : undefined}
+            >
+              <SelectTagList>
+                {isMultiple ? (
+                  value?.map((currentValue: any) => (
+                    <SelectTagItem key={currentValue?.id}>
+                      {item?.(currentValue)}
+                    </SelectTagItem>
+                  ))
+                ) : (
+                  <SelectTagItem>{item?.(value)}</SelectTagItem>
+                )}
+              </SelectTagList>
+            </Box>
+          )}
+          <Box paddingX="3" height="full">
             {isLoading ? (
               <Loading size={size} />
             ) : (
               <Icon
                 color="gray.500"
                 fontSize="xs"
-                name={rightIcon || (isOpenList ? "caretUp" : "caretRight")}
+                name={rightIcon || (isOpenList ? "caretUp" : "caretDown")}
               />
             )}
-          </InputRightElement>
-        </InputGroup>
-      </Stack>
+          </Box>
+        </Box>
+      </Button>
     );
   }
 );

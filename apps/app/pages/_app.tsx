@@ -1,4 +1,8 @@
-import { StokeiGraphQLClientProvider } from "@stokei/graphql";
+import {
+  StokeiGraphQLClientProvider,
+  ptBRMessages as ptBRMessagesStokeiGraphQL,
+  enUSMessages as enUSMessagesStokeiGraphQL,
+} from "@stokei/graphql";
 import { Messages, TranslationsProvider } from "@stokei/translations";
 import {
   LoadingTransition,
@@ -29,10 +33,12 @@ import { useMemo } from "react";
 const messages: Messages = {
   "pt-BR": {
     ...uiTranslationsMessages["pt-BR"],
+    ...ptBRMessagesStokeiGraphQL,
     ...ptBRMessages,
   },
   "en-US": {
     ...uiTranslationsMessages["en-US"],
+    ...enUSMessagesStokeiGraphQL,
     ...enUSMessages,
   },
 };

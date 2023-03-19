@@ -10,7 +10,7 @@ export const useTranslations = <TKeys = string>() => {
       try {
         return intl.formatMessage({ id: id as any }, values);
       } catch (error) {
-        return undefined;
+        return "";
       }
     },
     []

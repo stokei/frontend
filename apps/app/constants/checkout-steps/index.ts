@@ -1,0 +1,6 @@
+export enum CheckoutStep {
+  SUBSCRIPTION = "SUBSCRIPTION",
+  PAYMENT = "PAYMENT",
+  SUMMARY = "SUMMARY",
+  RESULT = "RESULT",
+}

@@ -3,8 +3,8 @@ import { Stack, StackProps } from "../stack";
 
 export interface StepsProps extends StackProps {
   readonly orientation?: "horizontal" | "vertical";
-  readonly currentStep: string;
-  readonly onChangeStep: (stepIndex: string) => void;
+  readonly currentStep: any;
+  readonly onChangeStep: (stepIndex: any) => void;
 }
 export const Steps: React.FC<StepsProps> = ({
   orientation,

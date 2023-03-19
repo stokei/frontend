@@ -57,15 +57,13 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
       >
         <CardBody>
           <Stack direction="column" spacing="4">
-            {avatarURL && (
-              <Image
-                width="full"
-                height="fit-content"
-                rounded="md"
-                src={avatarURL || ""}
-                fallbackSrc={defaultNoImage.src}
-              />
-            )}
+            <Image
+              width="full"
+              height="fit-content"
+              rounded="md"
+              src={avatarURL || ""}
+              fallbackSrc={defaultNoImage.src}
+            />
             <Price size="lg" price={defaultPrice} />
             <Button width="full" onClick={onRedirectToCheckout}>
               {translate.formatMessage({ id: "buyNow" })}

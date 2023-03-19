@@ -1,4 +1,5 @@
 import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
+import { routes } from "@/routes";
 import { Navbar } from "@stokei/ui";
 import { FC, PropsWithChildren } from "react";
 
@@ -10,7 +11,7 @@ export const SignUpLayout: FC<PropsWithChildren<SignUpLayoutProps>> = ({
   return (
     <>
       <Navbar>
-        <NavbarLogo />
+        <NavbarLogo href={routes.home} />
         <NavbarUserInformation />
       </Navbar>
       {children}
