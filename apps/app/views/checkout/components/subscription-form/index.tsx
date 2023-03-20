@@ -1,11 +1,12 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import {
-  Box,
   Button,
+  ButtonGroup,
+  FormControl,
   Image,
+  Label,
   Select,
   SelectInput,
   SelectItem,
@@ -14,7 +15,6 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { useRouter } from "next/router";
 import { FC } from "react";
 
 interface SubscriptionFormProps {
@@ -33,14 +33,12 @@ export const SubscriptionForm: FC<SubscriptionFormProps> = ({
   prices,
   onChoosePrice,
   onNextStep,
-  ...props
 }) => {
   const translate = useTranslations();
-  const router = useRouter();
 
   return (
-    <Stack direction="column" spacing="5" justify="center" align="center">
-      <Stack direction="row" spacing="5" align="center">
+    <Stack direction="column" spacing="5">
+      <Stack direction="row" spacing="5" align="center" marginBottom="5">
         <Image
           width="24"
           height="fit-content"
@@ -49,64 +47,63 @@ export const SubscriptionForm: FC<SubscriptionFormProps> = ({
           fallbackSrc={defaultNoImage.src}
         />
 
-        <Title fontSize="lg" marginBottom="5">
-          {productName}
-        </Title>
+        <Title fontSize="lg">{productName}</Title>
       </Stack>
 
-      <Select
-        value={currentPrice}
-        onChooseItem={onChoosePrice}
-        onRemoveChooseItem={onChoosePrice}
-      >
-        <SelectInput
-          id="select-current-price"
-          item={(valueCurrentPrice) => (
-            <Stack direction="row" spacing="3">
-              {valueCurrentPrice?.nickname && (
-                <>
-                  <Text>{valueCurrentPrice?.nickname}</Text>
-                  <Text>--</Text>
-                </>
-              )}
-              <Text>
-                {valueCurrentPrice?.currency?.symbol}
-                {translate.formatMoney({
-                  amount: valueCurrentPrice?.amount || 0,
-                  currency: valueCurrentPrice?.currency?.id || "",
-                  minorUnit: valueCurrentPrice?.currency?.minorUnit,
-                })}
-              </Text>
-            </Stack>
-          )}
-        />
-        <SelectList>
-          {prices?.map((price) => (
-            <SelectItem key={price?.id} value={price}>
+      <FormControl>
+        <Label>{translate.formatMessage({ id: "chooseYourPlan" })}</Label>
+        <Select
+          value={currentPrice}
+          onChooseItem={onChoosePrice}
+          onRemoveChooseItem={onChoosePrice}
+        >
+          <SelectInput
+            id="select-current-price"
+            item={(valueCurrentPrice) => (
               <Stack direction="row" spacing="3">
-                <Text>{price?.nickname}</Text>
-                <Text>--</Text>
+                {valueCurrentPrice?.nickname && (
+                  <>
+                    <Text>{valueCurrentPrice?.nickname}</Text>
+                    <Text>--</Text>
+                  </>
+                )}
                 <Text>
-                  {price?.currency?.symbol}
+                  {valueCurrentPrice?.currency?.symbol}
                   {translate.formatMoney({
-                    amount: price?.amount || 0,
-                    currency: price?.currency?.id,
-                    minorUnit: price?.currency?.minorUnit,
+                    amount: valueCurrentPrice?.amount || 0,
+                    currency: valueCurrentPrice?.currency?.id || "",
+                    minorUnit: valueCurrentPrice?.currency?.minorUnit,
                   })}
                 </Text>
               </Stack>
-            </SelectItem>
-          ))}
-        </SelectList>
-      </Select>
+            )}
+          />
+          <SelectList>
+            {prices?.map((price) => (
+              <SelectItem key={price?.id} value={price}>
+                <Stack direction="row" spacing="3">
+                  <Text>{price?.nickname}</Text>
+                  <Text>--</Text>
+                  <Text>
+                    {price?.currency?.symbol}
+                    {translate.formatMoney({
+                      amount: price?.amount || 0,
+                      currency: price?.currency?.id,
+                      minorUnit: price?.currency?.minorUnit,
+                    })}
+                  </Text>
+                </Stack>
+              </SelectItem>
+            ))}
+          </SelectList>
+        </Select>
+      </FormControl>
 
-      <Price size="lg" price={currentPrice} />
-
-      <Stack direction="column" align="center">
-        <Button width="full" onClick={onNextStep} isDisabled={!currentPrice}>
+      <ButtonGroup width="full" justifyContent="flex-end">
+        <Button onClick={onNextStep} isDisabled={!currentPrice}>
           {translate.formatMessage({ id: "next" })}
         </Button>
-      </Stack>
+      </ButtonGroup>
     </Stack>
   );
 };

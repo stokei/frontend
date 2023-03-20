@@ -1,27 +1,77 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useTranslations } from "@/hooks";
-import { Box, Button, Card, CardBody, Image, Stack, Title } from "@stokei/ui";
+import { useAPIErrors, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
+import { Button, Image, Stack, Title } from "@stokei/ui";
+import { useElements, useStripe } from "@stripe/react-stripe-js";
+import { useRouter } from "next/router";
 import { FC } from "react";
+import { CheckoutPaymentMethodFragment } from "../../graphql/payment-methods.query.graphql.generated";
+import { useSubscribeProductMutation } from "../../graphql/subscribe-product.mutation.graphql.generated";
 
 export interface CheckoutSummaryProps {
   readonly productId?: string;
   readonly productName?: string;
   readonly avatarURL?: string;
   readonly canBuy?: boolean;
-  readonly price?: PriceComponentFragment | null;
+  readonly currentPrice?: PriceComponentFragment | null;
+  readonly currentPaymentMethod?:
+    | CheckoutPaymentMethodFragment
+    | undefined
+    | null;
+  readonly onNextStep: (buySuccessfully: boolean) => void;
+  readonly onPreviousStep: () => void;
 }
 
 export const CheckoutSummary: FC<CheckoutSummaryProps> = ({
   productName,
   canBuy,
   avatarURL,
-  price,
+  currentPrice,
+  currentPaymentMethod,
+  onNextStep,
+  onPreviousStep,
 }) => {
   const translate = useTranslations();
+  const { homePageURL } = useCurrentAccount();
+  const stripe = useStripe();
+  const elements = useElements();
+  const router = useRouter();
+  const { onShowAPIError } = useAPIErrors();
 
-  const onBuy = async () => {};
+  const [{ fetching: isLoadingSubscribeProduct }, onExecuteSubscribeProduct] =
+    useSubscribeProductMutation();
+
+  const onBuy = async () => {
+    if (!stripe || !elements) {
+      return;
+    }
+
+    try {
+      const response = await onExecuteSubscribeProduct({
+        input: {
+          price: currentPrice?.id || "",
+          paymentMethod: currentPaymentMethod?.id || "",
+        },
+      });
+
+      if (!!response?.data?.subscribeProduct) {
+        onNextStep?.(true);
+        router.push(homePageURL || "");
+        return;
+      }
+      if (!!response.error?.graphQLErrors?.length) {
+        response.error.graphQLErrors.map((error) =>
+          onShowAPIError({ message: error?.message })
+        );
+      }
+    } catch (error) {
+      onShowAPIError({
+        message: translate.formatMessage({ id: "somethingWentWrong" }),
+      });
+    }
+  };
 
   return (
     <Stack direction="column" spacing="4">
@@ -38,11 +88,16 @@ export const CheckoutSummary: FC<CheckoutSummaryProps> = ({
           {productName}
         </Title>
       </Stack>
-      <Price size="lg" price={price} />
-      <Button width="full" onClick={onBuy} isDisabled={!canBuy}>
+      <Price size="lg" price={currentPrice} />
+      <Button
+        width="full"
+        onClick={onBuy}
+        isLoading={isLoadingSubscribeProduct}
+        isDisabled={!canBuy}
+      >
         {translate.formatMessage({ id: "subscribe" })}
       </Button>
-      <Button width="full" onClick={onBuy} isDisabled={!canBuy}>
+      <Button width="full" onClick={onPreviousStep} isDisabled={!canBuy}>
         {translate.formatMessage({ id: "previous" })}
       </Button>
     </Stack>

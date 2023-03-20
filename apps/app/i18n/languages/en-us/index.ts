@@ -10,6 +10,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   recommendedCourses: "Recommended courses",
   next: "Next",
   previous: "Previous",
+  chooseYourPlan: "Choose your plan",
   plan: "Plan",
   plans: "Plans",
   summary: "Summary",

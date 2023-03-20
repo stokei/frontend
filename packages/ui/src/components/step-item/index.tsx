@@ -35,7 +35,7 @@ export const StepItem: React.FC<StepItemProps> = ({
 
   const iconData = useMemo<{ name: IconName; color: string }>(() => {
     let name: IconName = icon || "circleOutlined";
-    let color: string = "primary.400";
+    let color: string = isCurrentStep ? "primary.500" : "text.500";
     if (isCompleted) {
       name = "ok";
       color = "success.500";
@@ -45,7 +45,7 @@ export const StepItem: React.FC<StepItemProps> = ({
       color = "error.500";
     }
     return { name, color };
-  }, [icon, isCompleted, isInvalid]);
+  }, [icon, isCompleted, isInvalid, isCurrentStep]);
 
   const onChangeSetepClicked = useCallback(
     (e: any) => {
@@ -66,7 +66,7 @@ export const StepItem: React.FC<StepItemProps> = ({
       rounded="md"
       paddingY="2"
       paddingX="3"
-      background={isCurrentStep ? "gray.100" : undefined}
+      background={isCurrentStep ? "gray.50" : undefined}
       cursor={!isDisabled ? "pointer" : undefined}
       align="center"
       {...props}
@@ -75,7 +75,9 @@ export const StepItem: React.FC<StepItemProps> = ({
     >
       <Icon fontSize="2xl" name={iconData?.name} color={iconData?.color} />
       <Stack direction="column" spacing="1">
-        <Title fontSize="md">{title}</Title>
+        <Title fontSize="md" color={isCurrentStep ? "primary.500" : undefined}>
+          {title}
+        </Title>
         {subtitle && (
           <Text fontSize="xs" color="text.300">
             {subtitle}

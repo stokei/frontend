@@ -27,6 +27,7 @@ import { SubscriptionForm } from "./components/subscription-form";
 import { useGetCheckoutProductQuery } from "./graphql/product.query.graphql.generated";
 import { CheckoutLayout } from "./layout";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { CheckoutPaymentMethodFragment } from "./graphql/payment-methods.query.graphql.generated";
 
 const stripeLoadElements = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
@@ -35,11 +36,15 @@ interface CheckoutPageProps {
 }
 
 export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
+  const [paymentSuccessfully, setPaymentSuccessfully] = useState(false);
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(
     CheckoutStep.SUBSCRIPTION
   );
   const [currentPrice, setCurrentPrice] = useState<
     PriceComponentFragment | undefined | null
+  >();
+  const [currentPaymentMethod, setCurrentPaymentMethod] = useState<
+    CheckoutPaymentMethodFragment | undefined | null
   >();
   const translate = useTranslations();
 
@@ -52,7 +57,10 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
 
   const product = useMemo(() => dataProduct?.product, [dataProduct]);
   const paymentIsEnabled = useMemo(() => !!currentPrice, [currentPrice]);
-  const summaryIsEnabled = useMemo(() => !!product, [product]);
+  const summaryIsEnabled = useMemo(
+    () => !!product && !!paymentIsEnabled && !!currentPaymentMethod,
+    [product, paymentIsEnabled, currentPaymentMethod]
+  );
   const resultIsEnabled = useMemo(() => false, []);
 
   useEffect(() => {
@@ -60,6 +68,11 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
       setCurrentPrice(product.defaultPrice || undefined);
     }
   }, [product]);
+
+  const onPaymentSuccessfully = () => {
+    setPaymentSuccessfully(true);
+    setCurrentStep(CheckoutStep.RESULT);
+  };
 
   return (
     <CheckoutLayout isLoading={isLoadingProduct}>
@@ -118,10 +131,12 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                       }}
                     >
                       <CheckoutPayment
-                        price={currentPrice}
+                        currentPrice={currentPrice}
+                        onChangeCurrentPaymentMethod={setCurrentPaymentMethod}
                         onPreviousStep={() =>
                           setCurrentStep(CheckoutStep.SUBSCRIPTION)
                         }
+                        onNextStep={() => setCurrentStep(CheckoutStep.SUMMARY)}
                       />
                     </Elements>
                   </StepPanel>
@@ -130,7 +145,11 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                       productId={product?.id}
                       productName={product?.name}
                       avatarURL={product?.avatar?.file?.url || ""}
-                      price={currentPrice}
+                      currentPrice={currentPrice}
+                      onPreviousStep={() =>
+                        setCurrentStep(CheckoutStep.PAYMENT)
+                      }
+                      onNextStep={onPaymentSuccessfully}
                     />
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.RESULT}>
