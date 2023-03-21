@@ -1,6 +1,13 @@
 import { CardInput } from "@/components";
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { Button, Form, FormControl, Label, Stack } from "@stokei/ui";
+import {
+  Button,
+  ButtonGroup,
+  Form,
+  FormControl,
+  Label,
+  Stack,
+} from "@stokei/ui";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FC, useState } from "react";
 import { useCreatePaymentMethodMutation } from "../../graphql/create-payment-method.mutation.graphql.generated";
@@ -68,13 +75,14 @@ export const CreateCreditCardForm: FC<CreateCreditCardFormProps> = ({
           <Label>{translate.formatMessage({ id: "creditCard" })}</Label>
           <CardInput />
         </FormControl>
-        <Button
-          width="full"
-          isLoading={isCreatingPaymentMethod}
-          onClick={onCreateCreditCardPaymentMethod}
-        >
-          {translate.formatMessage({ id: "addCard" })}
-        </Button>
+        <ButtonGroup justifyContent="flex-end">
+          <Button
+            isLoading={isCreatingPaymentMethod}
+            onClick={onCreateCreditCardPaymentMethod}
+          >
+            {translate.formatMessage({ id: "addCard" })}
+          </Button>
+        </ButtonGroup>
       </Stack>
     </Form>
   );

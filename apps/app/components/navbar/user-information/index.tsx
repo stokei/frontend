@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
 export interface NavbarUserInformationProps extends StackProps {}
@@ -23,6 +23,10 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
   const router = useRouter();
   const { currentAccount, homePageURL } = useCurrentAccount();
   const translate = useTranslations();
+  const redirectTo = useMemo(
+    () => router.query?.redirectTo?.toString() || "",
+    [router]
+  );
 
   return (
     <Stack
@@ -56,11 +60,27 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
         <>
           <Button
             variant="ghost"
-            onClick={() => router.push(routes.auth.login)}
+            onClick={() =>
+              router.push({
+                pathname: routes.auth.login,
+                query: {
+                  redirectTo,
+                },
+              })
+            }
           >
             {translate.formatMessage({ id: "login" })}
           </Button>
-          <Button onClick={() => router.push(routes.auth.signUp)}>
+          <Button
+            onClick={() =>
+              router.push({
+                pathname: routes.auth.signUp,
+                query: {
+                  redirectTo,
+                },
+              })
+            }
+          >
             {translate.formatMessage({ id: "signUp" })}
           </Button>
         </>

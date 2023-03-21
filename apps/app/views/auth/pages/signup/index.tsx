@@ -13,7 +13,7 @@ import {
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { useSignUpMutation } from "./graphql/signup.mutation.graphql.generated";
-import { SignUpLayout } from "./layout";
+import { AuthLayout } from "../../layout";
 
 interface SignUpPageProps {}
 
@@ -76,7 +76,7 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
   };
 
   return (
-    <SignUpLayout>
+    <AuthLayout>
       <Container
         display="flex"
         paddingY="5"
@@ -98,6 +98,6 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
           />
         </Box>
       </Container>
-    </SignUpLayout>
+    </AuthLayout>
   );
 };

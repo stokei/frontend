@@ -31,14 +31,14 @@ export const SidebarGroupButton: React.FC<SidebarGroupButtonProps> = ({
     } else {
       setActiveStyle({});
     }
-  }, [isActive]);
+  }, [hoverStyle, isActive]);
 
   const onClick = useCallback(
     (e: any) => {
       onToggle();
       props.onClick?.(e);
     },
-    [onToggle, props.onClick]
+    [onToggle, props]
   );
 
   return (

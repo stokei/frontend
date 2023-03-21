@@ -30,7 +30,7 @@ export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
       } else {
         setActiveStyle({});
       }
-    }, [isActive]);
+    }, [hoverStyle, isActive]);
 
     return (
       <Link
@@ -54,3 +54,5 @@ export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
     );
   }
 );
+
+SidebarNavLink.displayName = "SidebarNavLink";

@@ -45,6 +45,7 @@ export const SubscriptionForm: FC<SubscriptionFormProps> = ({
           rounded="md"
           src={avatarURL || ""}
           fallbackSrc={defaultNoImage.src}
+          alt={translate.formatMessage({ id: "product" })}
         />
 
         <Title fontSize="lg">{productName}</Title>

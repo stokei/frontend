@@ -14,9 +14,11 @@ import {
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
-import { LoginLayout } from "./layout";
+import { AuthLayout } from "../../layout";
 
-interface LoginPageProps {}
+interface LoginPageProps {
+  readonly redirectTo?: string;
+}
 
 export const LoginPage: FC<LoginPageProps> = () => {
   const router = useRouter();
@@ -70,7 +72,7 @@ export const LoginPage: FC<LoginPageProps> = () => {
   };
 
   return (
-    <LoginLayout>
+    <AuthLayout>
       <Container
         display="flex"
         paddingY="5"
@@ -95,6 +97,6 @@ export const LoginPage: FC<LoginPageProps> = () => {
           />
         </Box>
       </Container>
-    </LoginLayout>
+    </AuthLayout>
   );
 };

@@ -1,24 +1,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FC } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Box,
   Button,
   Card,
   CardBody,
-  CardHeader,
   Form,
   FormControl,
   FormErrorMessage,
   Input,
   InputGroup,
-  InputPassword,
   Label,
   Stack,
   Text,
   Title,
-} from "@stokei/ui";
-import { FC } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+} from "../..";
 import { useTranslations } from "../../../hooks";
 
 export interface FormForgotPasswordOnSubmitData {

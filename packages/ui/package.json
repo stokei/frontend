@@ -5,11 +5,11 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "TIMING=1 eslint \"**/*.ts*\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint": "eslint \"**/*.ts*\"",
+    "lint:fix": "eslint \"**/*.ts*\" --fix"
   },
   "devDependencies": {
-    "@stokei/eslint-config-custom": "*",
+    "eslint-config-custom": "*",
     "@stokei/translations": "*",
     "@stokei/tsconfig": "*",
     "@types/js-cookie": "^3.0.2",

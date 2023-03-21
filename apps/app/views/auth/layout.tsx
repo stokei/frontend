@@ -3,11 +3,11 @@ import { routes } from "@/routes";
 import { Navbar } from "@stokei/ui";
 import { FC, PropsWithChildren } from "react";
 
-export interface ForgotPasswordLayoutProps {}
+export interface AuthLayoutProps {}
 
-export const ForgotPasswordLayout: FC<
-  PropsWithChildren<ForgotPasswordLayoutProps>
-> = ({ children }) => {
+export const AuthLayout: FC<PropsWithChildren<AuthLayoutProps>> = ({
+  children,
+}) => {
   return (
     <>
       <Navbar>

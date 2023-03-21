@@ -7,6 +7,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   lastnameNotFound: "Lastname not found!",
   emailNotFound: "Email not found!",
   passwordNotFound: "Password not found!",
+  sorryWeCouldntFindWhatYouNeeded: "Sorry, we couldn't find what you needed.",
+  sorryAnErrorOccurred: "Sorry, an error occurred.",
   recommendedCourses: "Recommended courses",
   next: "Next",
   previous: "Previous",

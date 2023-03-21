@@ -79,3 +79,5 @@ export const Catalog: FC<CatalogProps> = memo(
     );
   }
 );
+
+Catalog.displayName = "Catalog";

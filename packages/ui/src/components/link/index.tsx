@@ -26,3 +26,5 @@ export const Link: React.FC<LinkProps> = forwardRef(
     </ChakraLink>
   )
 );
+
+Link.displayName = "Link";

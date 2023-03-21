@@ -8,7 +8,7 @@ import {
 } from "@stokei/ui";
 import { FC } from "react";
 import { useForgotPasswordMutation } from "./graphql/forgot-password.mutation.graphql.generated";
-import { ForgotPasswordLayout } from "./layout";
+import { AuthLayout } from "../../layout";
 
 interface ForgotPasswordPageProps {}
 
@@ -43,7 +43,7 @@ export const ForgotPasswordPage: FC<ForgotPasswordPageProps> = () => {
   };
 
   return (
-    <ForgotPasswordLayout>
+    <AuthLayout>
       <Container
         display="flex"
         paddingY="5"
@@ -57,6 +57,6 @@ export const ForgotPasswordPage: FC<ForgotPasswordPageProps> = () => {
           />
         </Box>
       </Container>
-    </ForgotPasswordLayout>
+    </AuthLayout>
   );
 };

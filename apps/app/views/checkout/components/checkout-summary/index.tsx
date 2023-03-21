@@ -3,12 +3,13 @@ import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { Button, Image, Stack, Title } from "@stokei/ui";
+import { Button, ButtonGroup, Image, Stack, Title } from "@stokei/ui";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { CheckoutPaymentMethodFragment } from "../../graphql/payment-methods.query.graphql.generated";
 import { useSubscribeProductMutation } from "../../graphql/subscribe-product.mutation.graphql.generated";
+import { PaymentMethodItem } from "../payment-method-item";
 
 export interface CheckoutSummaryProps {
   readonly productId?: string;
@@ -25,8 +26,8 @@ export interface CheckoutSummaryProps {
 }
 
 export const CheckoutSummary: FC<CheckoutSummaryProps> = ({
-  productName,
   canBuy,
+  productName,
   avatarURL,
   currentPrice,
   currentPaymentMethod,
@@ -74,32 +75,43 @@ export const CheckoutSummary: FC<CheckoutSummaryProps> = ({
   };
 
   return (
-    <Stack direction="column" spacing="4">
-      <Stack direction="row" spacing="5" align="center">
-        <Image
-          width="24"
-          height="fit-content"
-          rounded="md"
-          src={avatarURL || ""}
-          fallbackSrc={defaultNoImage.src}
-        />
+    <Stack direction="column" spacing="8">
+      <Stack direction="column" spacing="2">
+        <Stack direction="row" spacing="5" align="center" marginBottom="5">
+          <Image
+            width="24"
+            height="fit-content"
+            rounded="md"
+            src={avatarURL || ""}
+            fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "product" })}
+          />
 
-        <Title fontSize="lg" marginBottom="5">
-          {productName}
-        </Title>
+          <Title fontSize="lg">{productName}</Title>
+        </Stack>
+
+        <Price size="lg" price={currentPrice} />
       </Stack>
-      <Price size="lg" price={currentPrice} />
-      <Button
-        width="full"
-        onClick={onBuy}
-        isLoading={isLoadingSubscribeProduct}
-        isDisabled={!canBuy}
-      >
-        {translate.formatMessage({ id: "subscribe" })}
-      </Button>
-      <Button width="full" onClick={onPreviousStep} isDisabled={!canBuy}>
-        {translate.formatMessage({ id: "previous" })}
-      </Button>
+
+      <Stack direction="column" spacing="2">
+        <Title fontSize="lg">
+          {translate.formatMessage({ id: "paymentMethod" })}
+        </Title>
+        <PaymentMethodItem paymentMethod={currentPaymentMethod} />
+      </Stack>
+
+      <ButtonGroup width="full" justifyContent="space-between">
+        <Button variant="ghost" onClick={onPreviousStep}>
+          {translate.formatMessage({ id: "previous" })}
+        </Button>
+        <Button
+          onClick={onBuy}
+          isLoading={isLoadingSubscribeProduct}
+          isDisabled={!canBuy}
+        >
+          {translate.formatMessage({ id: "subscribe" })}
+        </Button>
+      </ButtonGroup>
     </Stack>
   );
 };

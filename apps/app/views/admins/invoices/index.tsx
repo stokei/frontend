@@ -1,4 +1,5 @@
 import { useCurrentApp, usePagination } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
 import { Box, Container, Pagination } from "@stokei/ui";
@@ -16,6 +17,11 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
 
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
+  const { currentAccount } = useCurrentAccount();
+
+  /*
+    VERIFICAR PORQUE NÃO ESTA LISTANDO AS FATURAS
+  */
 
   const [{ data: dataGetInvoices, fetching: isLoading }] =
     useGetAppInvoicesQuery({
@@ -36,7 +42,7 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
           },
           NOT: {
             customer: {
-              equals: currentApp?.id,
+              equals: currentAccount?.id,
             },
           },
         },

@@ -4,6 +4,7 @@ import {
   useCurrentAccountQuery,
 } from "@/services/graphql/queries/current-account/current-account.query.graphql.generated";
 import { getDashboardHomePageURL } from "@/utils";
+import { useRouter } from "next/router";
 import {
   createContext,
   FC,
@@ -39,6 +40,8 @@ export const CurrentAccountProvider: FC<
     CurrentAccount | undefined
   >(currentAccountProp);
 
+  const router = useRouter();
+
   const [{ fetching: isLoading, data }] = useCurrentAccountQuery({
     pause: !!currentAccountProp,
   });
@@ -58,7 +61,7 @@ export const CurrentAccountProvider: FC<
 
   const homePageURL = useMemo(
     () => getDashboardHomePageURL({ isAdmin: !!hasSomeRole([RoleName.ADMIN]) }),
-    [currentAccount]
+    [hasSomeRole]
   );
 
   useEffect(() => {

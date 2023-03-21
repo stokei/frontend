@@ -25,6 +25,7 @@ export * from "./card-header";
 export * from "./card-body";
 export * from "./card-footer";
 export * from "./checkbox";
+export * from "./checkbox-card";
 export * from "./checkbox-group";
 export * from "./circular-progress";
 export * from "./circular-progress-label";

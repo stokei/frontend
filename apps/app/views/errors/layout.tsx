@@ -3,9 +3,9 @@ import { routes } from "@/routes";
 import { Navbar } from "@stokei/ui";
 import { FC, PropsWithChildren } from "react";
 
-export interface SignUpLayoutProps {}
+export interface ErrorLayoutProps {}
 
-export const SignUpLayout: FC<PropsWithChildren<SignUpLayoutProps>> = ({
+export const ErrorLayout: FC<PropsWithChildren<ErrorLayoutProps>> = ({
   children,
 }) => {
   return (

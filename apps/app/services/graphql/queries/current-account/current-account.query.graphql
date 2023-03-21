@@ -5,6 +5,7 @@ query CurrentAccount {
     lastname
     fullname
     isStokei
+    isOwner
     email
     username
     status

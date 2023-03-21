@@ -1,15 +1,15 @@
-import { forwardRef, useRadio } from "@chakra-ui/react";
+import { forwardRef } from "@chakra-ui/react";
 import { ForwardedRef } from "react";
 import { Box } from "../box";
-import { Radio, RadioProps } from "../radio";
+import { Checkbox, CheckboxProps } from "../checkbox";
 import { Stack } from "../stack";
 
-export interface RadioCardProps extends RadioProps {
+export interface CheckboxCardProps extends CheckboxProps {
   readonly id: string;
   readonly ref?: ForwardedRef<any>;
 }
 
-export const RadioCard: React.FC<RadioCardProps> = forwardRef(
+export const CheckboxCard: React.FC<CheckboxCardProps> = forwardRef(
   ({ id, children, ...props }, ref) => {
     return (
       <Box
@@ -23,7 +23,7 @@ export const RadioCard: React.FC<RadioCardProps> = forwardRef(
         borderColor={props?.isChecked ? "primary.500" : undefined}
       >
         <Stack width="full" direction="row" spacing="5">
-          <Radio id={id} ref={ref} {...props} />
+          <Checkbox id={id} ref={ref} {...props} />
           {children}
         </Stack>
       </Box>

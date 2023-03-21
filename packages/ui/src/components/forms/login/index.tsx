@@ -14,7 +14,7 @@ import {
   Stack,
   Text,
   Title,
-} from "@stokei/ui";
+} from "../..";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

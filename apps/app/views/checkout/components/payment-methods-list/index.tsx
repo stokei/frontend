@@ -1,6 +1,15 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { Box, Button, Loading, Stack, Title, useDisclosure } from "@stokei/ui";
+import {
+  Box,
+  Button,
+  Loading,
+  RadioCard,
+  RadioGroup,
+  Stack,
+  Title,
+  useDisclosure,
+} from "@stokei/ui";
 import { FC, useCallback, useEffect, useState } from "react";
 import {
   CheckoutPaymentMethodFragment,
@@ -62,9 +71,22 @@ export const PaymentMethodsList: FC<PaymentMethodsListProps> = ({
         ...currentPaymentMethods,
         paymentMethod,
       ]);
+      onChoosePaymentMethod(paymentMethod);
       onCloseCreatePaymentMethodModal();
     },
-    [onCloseCreatePaymentMethodModal]
+    [onChoosePaymentMethod, onCloseCreatePaymentMethodModal]
+  );
+
+  const onChangePaymentMethod = useCallback(
+    (value: string) => {
+      const paymentMethod = paymentMethods?.find(
+        (method) => method.id === value
+      );
+      if (paymentMethod) {
+        onChoosePaymentMethod(paymentMethod);
+      }
+    },
+    [onChoosePaymentMethod, paymentMethods]
   );
 
   return (
@@ -87,19 +109,26 @@ export const PaymentMethodsList: FC<PaymentMethodsListProps> = ({
             <CreateCreditCardForm onSuccess={onAddNewPaymentMethod} />
           ) : (
             <>
-              {paymentMethods.map((currentPaymentMethod) => (
-                <PaymentMethodItem
-                  key={currentPaymentMethod.id}
-                  isActive={
-                    currentPaymentMethod?.id === selectedPaymentMethod?.id
-                  }
-                  paymentMethod={currentPaymentMethod}
-                  onChoosePaymentMethod={() =>
-                    onChoosePaymentMethod(currentPaymentMethod)
-                  }
-                />
-              ))}
-              <Button variant="ghost" onClick={onOpenCreatePaymentMethodModal}>
+              <RadioGroup
+                onChange={onChangePaymentMethod}
+                value={selectedPaymentMethod?.id || ""}
+              >
+                <Stack direction="column" spacing="4">
+                  {paymentMethods.map((currentPaymentMethod) => (
+                    <RadioCard
+                      key={currentPaymentMethod.id}
+                      id={"payment-method-" + currentPaymentMethod?.id}
+                      value={currentPaymentMethod?.id}
+                      isChecked={
+                        currentPaymentMethod?.id === selectedPaymentMethod?.id
+                      }
+                    >
+                      <PaymentMethodItem paymentMethod={currentPaymentMethod} />
+                    </RadioCard>
+                  ))}
+                </Stack>
+              </RadioGroup>
+              <Button variant="link" onClick={onOpenCreatePaymentMethodModal}>
                 {translate.formatMessage({ id: "addNewCard" })}
               </Button>
             </>

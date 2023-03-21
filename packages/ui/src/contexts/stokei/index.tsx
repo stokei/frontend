@@ -24,7 +24,7 @@ export const StokeiUIContext = React.createContext({} as StokeiUIContextValues);
 export const StokeiUIProvider: React.FC<
   PropsWithChildren<StokeiUIContextProps>
 > = ({ children, config, appId, accountId, cloudflareAPIToken, language }) => {
-  const themeData = useMemo(() => theme(config), []);
+  const themeData = useMemo(() => theme(config), [config]);
   const stokeiConfig = useMemo(
     () => ({ appId, accountId, cloudflareAPIToken, language }),
     [appId, accountId, cloudflareAPIToken, language]

@@ -25,11 +25,6 @@ export const CheckoutPayment: FC<CheckoutPaymentProps> = ({
 }) => {
   const translate = useTranslations();
 
-  /**
-   *
-   * ARRUMAR A ESCOLHA DO CARTÃO QUE ESTA BUGADA
-   */
-
   return (
     <Stack direction="column" spacing="10">
       <PaymentMethodsList
@@ -37,15 +32,11 @@ export const CheckoutPayment: FC<CheckoutPaymentProps> = ({
         onChoosePaymentMethod={onChangeCurrentPaymentMethod}
       />
 
-      <ButtonGroup width="full" justifyContent="flex-end">
-        <Button width="full" variant="ghost" onClick={onPreviousStep}>
+      <ButtonGroup width="full" justifyContent="space-between">
+        <Button variant="ghost" onClick={onPreviousStep}>
           {translate.formatMessage({ id: "previous" })}
         </Button>
-        <Button
-          width="full"
-          onClick={onNextStep}
-          isDisabled={!currentPaymentMethod}
-        >
+        <Button onClick={onNextStep} isDisabled={!currentPaymentMethod}>
           {translate.formatMessage({ id: "next" })}
         </Button>
       </ButtonGroup>

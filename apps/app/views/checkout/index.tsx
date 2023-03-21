@@ -36,6 +36,7 @@ interface CheckoutPageProps {
 }
 
 export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
+  const [resultIsEnabled, setResultIsEnabled] = useState(false);
   const [paymentSuccessfully, setPaymentSuccessfully] = useState(false);
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(
     CheckoutStep.SUBSCRIPTION
@@ -61,7 +62,6 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     () => !!product && !!paymentIsEnabled && !!currentPaymentMethod,
     [product, paymentIsEnabled, currentPaymentMethod]
   );
-  const resultIsEnabled = useMemo(() => false, []);
 
   useEffect(() => {
     if (product) {
@@ -71,6 +71,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
 
   const onPaymentSuccessfully = () => {
     setPaymentSuccessfully(true);
+    setResultIsEnabled(true);
     setCurrentStep(CheckoutStep.RESULT);
   };
 
@@ -108,55 +109,60 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
               />
             </StepList>
             <StepPanels>
-              <Card background="background.50">
-                <CardBody>
-                  <StepPanel stepIndex={CheckoutStep.SUBSCRIPTION}>
-                    <SubscriptionForm
-                      avatarURL={product?.avatar?.file?.url || ""}
-                      productName={product?.name}
-                      prices={product?.prices?.items || []}
-                      currentPrice={currentPrice}
-                      onChoosePrice={setCurrentPrice}
-                      onNextStep={() => setCurrentStep(CheckoutStep.PAYMENT)}
-                    />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.PAYMENT}>
-                    <Elements
-                      stripe={stripeLoadElements}
-                      options={{
-                        appearance: {
-                          theme: "stripe",
-                        },
-                        locale: translate.locale as any,
-                      }}
-                    >
+              <Elements
+                stripe={stripeLoadElements}
+                options={{
+                  appearance: {
+                    theme: "stripe",
+                  },
+                  locale: translate.locale as any,
+                }}
+              >
+                <Card background="background.50">
+                  <CardBody>
+                    <StepPanel stepIndex={CheckoutStep.SUBSCRIPTION}>
+                      <SubscriptionForm
+                        avatarURL={product?.avatar?.file?.url || ""}
+                        productName={product?.name}
+                        prices={product?.prices?.items || []}
+                        currentPrice={currentPrice}
+                        onChoosePrice={setCurrentPrice}
+                        onNextStep={() => setCurrentStep(CheckoutStep.PAYMENT)}
+                      />
+                    </StepPanel>
+                    <StepPanel stepIndex={CheckoutStep.PAYMENT}>
                       <CheckoutPayment
                         currentPrice={currentPrice}
+                        currentPaymentMethod={currentPaymentMethod}
                         onChangeCurrentPaymentMethod={setCurrentPaymentMethod}
                         onPreviousStep={() =>
                           setCurrentStep(CheckoutStep.SUBSCRIPTION)
                         }
                         onNextStep={() => setCurrentStep(CheckoutStep.SUMMARY)}
                       />
-                    </Elements>
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.SUMMARY}>
-                    <CheckoutSummary
-                      productId={product?.id}
-                      productName={product?.name}
-                      avatarURL={product?.avatar?.file?.url || ""}
-                      currentPrice={currentPrice}
-                      onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.PAYMENT)
-                      }
-                      onNextStep={onPaymentSuccessfully}
-                    />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.RESULT}>
-                    <CheckoutResult />
-                  </StepPanel>
-                </CardBody>
-              </Card>
+                    </StepPanel>
+                    <StepPanel stepIndex={CheckoutStep.SUMMARY}>
+                      <CheckoutSummary
+                        canBuy={summaryIsEnabled}
+                        productId={product?.id}
+                        productName={product?.name}
+                        avatarURL={product?.avatar?.file?.url || ""}
+                        currentPrice={currentPrice}
+                        currentPaymentMethod={currentPaymentMethod}
+                        onPreviousStep={() =>
+                          setCurrentStep(CheckoutStep.PAYMENT)
+                        }
+                        onNextStep={onPaymentSuccessfully}
+                      />
+                    </StepPanel>
+                    <StepPanel stepIndex={CheckoutStep.RESULT}>
+                      <CheckoutResult
+                        paymentSuccessfully={paymentSuccessfully}
+                      />
+                    </StepPanel>
+                  </CardBody>
+                </Card>
+              </Elements>
             </StepPanels>
           </Steps>
         </Box>

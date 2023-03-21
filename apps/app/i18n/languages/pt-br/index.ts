@@ -5,6 +5,8 @@ export const ptBRMessages = {
   firstnameNotFound: "Nome não encontrado!",
   lastnameNotFound: "Sobrenome não encontrado!",
   passwordNotFound: "Senha não encontrada!",
+  sorryWeCouldntFindWhatYouNeeded: "Desculpe, não encontramos o que precisava.",
+  sorryAnErrorOccurred: "Desculpe, algum erro ocorreu.",
   recommendedCourses: "Cursos recomendados",
   plan: "Plano",
   plans: "Planos",

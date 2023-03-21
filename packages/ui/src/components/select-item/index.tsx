@@ -40,15 +40,7 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
       } else {
         onRemoveChooseItem?.(value);
       }
-    }, [
-      value,
-      isBlocked,
-      isActive,
-      isMultiple,
-      onCloseList,
-      onChooseItem,
-      onRemoveChooseItem,
-    ]);
+    }, [value, isBlocked, isActive, onCloseList, onChooseItem, onRemoveChooseItem]);
 
     return (
       <Stack

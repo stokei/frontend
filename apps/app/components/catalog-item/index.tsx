@@ -60,6 +60,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
             height="fit-content"
             src={avatar}
             fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "course" })}
           />
           {defaultPrice?.discountPercent && (
             <Box
@@ -102,3 +103,5 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
     );
   }
 );
+
+CatalogItem.displayName = "CatalogItem";

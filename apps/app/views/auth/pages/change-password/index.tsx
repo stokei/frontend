@@ -7,6 +7,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { FC } from "react";
+import { AuthLayout } from "../../layout";
 import { useChangePasswordMutation } from "./graphql/change-password.mutation.graphql.generated";
 
 interface ChangePasswordPageProps {
@@ -49,18 +50,20 @@ export const ChangePasswordPage: FC<ChangePasswordPageProps> = ({ code }) => {
   };
 
   return (
-    <Container
-      display="flex"
-      paddingY="5"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Box width="full" maxWidth={["full", "full", "400px", "400px"]}>
-        <FormChangePassword
-          isLoading={isLoadingChangePassword}
-          onSubmit={onSubmit}
-        />
-      </Box>
-    </Container>
+    <AuthLayout>
+      <Container
+        display="flex"
+        paddingY="5"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box width="full" maxWidth={["full", "full", "400px", "400px"]}>
+          <FormChangePassword
+            isLoading={isLoadingChangePassword}
+            onSubmit={onSubmit}
+          />
+        </Box>
+      </Container>
+    </AuthLayout>
   );
 };

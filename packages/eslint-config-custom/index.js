@@ -8,9 +8,9 @@ module.exports = {
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": 0,
-    "react/no-array-index-key": "warn",
+    "react/no-array-index-key": "off",
     "react-hooks/exhaustive-deps": [
-      "warn",
+      "error",
       {
         enableDangerousAutofixThisMayCauseInfiniteLoops: true,
       },

@@ -77,3 +77,5 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
     return <></>;
   }
 );
+
+SortedItemFactory.displayName = "SortedItemFactory";
