@@ -29,6 +29,8 @@ import { formatAppColorsToThemeColors } from "@/utils";
 import "@stokei/ui/src/styles/css/global.css";
 import { Router } from "next/router";
 import { useMemo } from "react";
+import { RoleName } from "@/constants/role-names";
+import { routes } from "@/routes";
 
 const messages: Messages = {
   "pt-BR": {
@@ -61,7 +63,7 @@ function MyApp({
       createAPIClient({
         appId,
       }),
-    [appId, router]
+    [appId]
   );
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
@@ -88,6 +90,7 @@ function MyApp({
 }
 
 MyApp.getInitialProps = async ({ router, ctx }: any) => {
+  const response = ctx?.res;
   const appId = getAppIdFromNextRouter(router);
   const stokeiGraphQLClient = createAPIClient({
     appId,
@@ -106,10 +109,28 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
       .toPromise();
   } catch (error) {}
 
+  const currentAppData = currentApp?.data?.currentApp;
+  const currentAccountData = currentAccount?.data?.me;
+
+  if (!!currentAccountData && !!currentAppData) {
+    const isAppOwner = currentAccountData?.isOwner;
+    const isAppAdmin = currentAccountData?.roles?.items?.some(
+      (role) => role.name === RoleName.ADMIN
+    );
+
+    const isAdminDashboard = router.pathname?.match(/\/app\/\[appId\]\/admins/);
+    if (!isAppOwner && !isAppAdmin && isAdminDashboard) {
+      response?.writeHead(301, {
+        Location: routes.customers.home,
+      });
+      response?.end();
+    }
+  }
+
   return {
     appId,
-    currentApp: currentApp?.data?.currentApp,
-    currentAccount: currentAccount?.data?.me,
+    currentApp: currentAppData,
+    currentAccount: currentAccountData,
     themeColors: formatAppColorsToThemeColors(
       currentApp?.data?.currentApp?.colors?.items
     ),
