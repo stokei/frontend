@@ -15,3 +15,76 @@ query GetAppInvoices(
     }
   }
 }
+
+fragment AppInvoice on Invoice {
+  id
+  customer {
+    __typename
+    ... on App {
+      id
+      name
+      accountEmail: email
+      logo {
+        file {
+          url
+        }
+      }
+    }
+    ... on Account {
+      id
+      firstname
+      fullname
+      appEmail: email
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
+  subscriptionContract {
+    items(page: { limit: 1 }) {
+      items {
+        product {
+          __typename
+          ...InvoiceProductCourse
+          ...InvoiceProductPlan
+        }
+      }
+    }
+  }
+  paymentMethod {
+    id
+    cardBrand
+    cardExpiryMonth
+    cardExpiryYear
+    lastFourCardNumber
+  }
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  status
+  totalAmount
+  subtotalAmount
+  url
+  paidAt
+  canceledAt
+  paymentErrorAt
+}
+
+fragment InvoiceProductCourse on Course {
+  courseId: id
+  courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment InvoiceProductPlan on Plan {
+  planId: id
+  planName: name
+}

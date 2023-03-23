@@ -5,7 +5,7 @@ import {
 
 export interface TableProps extends ChakraTableProps {}
 export const Table: React.FC<TableProps> = ({ children, ...props }) => (
-  <ChakraTable variant="striped" colorScheme="background" {...props}>
+  <ChakraTable variant="unstyled" {...props}>
     {children}
   </ChakraTable>
 );

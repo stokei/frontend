@@ -5,5 +5,17 @@ import {
 
 export interface TableCellProps extends ChakraTableCellProps {}
 export const TableCell: React.FC<TableCellProps> = ({ children, ...props }) => (
-  <ChakraTableCell {...props}>{children}</ChakraTableCell>
+  <ChakraTableCell
+    css={{
+      "&:first-child": {
+        paddingLeft: "0",
+      },
+      "&:last-child": {
+        paddingRight: "0",
+      },
+    }}
+    {...props}
+  >
+    {children}
+  </ChakraTableCell>
 );

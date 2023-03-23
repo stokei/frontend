@@ -135,6 +135,7 @@ export type App = {
   currentSubscriptionContract?: Maybe<SubscriptionContract>;
   deactivatedAt?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
   hero?: Maybe<Hero>;
   icon?: Maybe<Image>;
   id: Scalars['ID'];
@@ -502,6 +503,7 @@ export type CreateHeroInput = {
   subtitle?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   titleHighlight?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<HeroType>;
   video?: InputMaybe<Scalars['String']>;
 };
 
@@ -735,10 +737,18 @@ export type Hero = {
   subtitle?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   titleHighlight?: Maybe<Scalars['String']>;
+  type: HeroType;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Hero>;
   video?: Maybe<Video>;
 };
+
+export enum HeroType {
+  Default = 'DEFAULT',
+  WithImage = 'WITH_IMAGE',
+  WithImageBackground = 'WITH_IMAGE_BACKGROUND',
+  WithVideo = 'WITH_VIDEO'
+}
 
 export type Heros = {
   __typename?: 'Heros';
@@ -799,8 +809,7 @@ export type Invoice = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   currency: Currency;
-  customerAccount?: Maybe<Account>;
-  customerApp?: Maybe<App>;
+  customer?: Maybe<InvoiceCustomerUnion>;
   id: Scalars['ID'];
   paidAt?: Maybe<Scalars['String']>;
   paymentErrorAt?: Maybe<Scalars['String']>;
@@ -814,6 +823,8 @@ export type Invoice = {
   updatedBy?: Maybe<Account>;
   url?: Maybe<Scalars['String']>;
 };
+
+export type InvoiceCustomerUnion = Account | App;
 
 export enum InvoiceStatus {
   Canceled = 'CANCELED',
@@ -2722,6 +2733,7 @@ export type UpdateDataHeroInput = {
   subtitle?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   titleHighlight?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<HeroType>;
   video?: InputMaybe<Scalars['String']>;
 };
 

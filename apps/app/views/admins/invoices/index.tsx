@@ -6,8 +6,10 @@ import { Box, Container, Pagination } from "@stokei/ui";
 import { FC, useEffect, useState } from "react";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
-import { AppInvoiceFragment } from "./graphql/invoice.fragment.graphql.generated";
-import { useGetAppInvoicesQuery } from "./graphql/invoices.query.graphql.generated";
+import {
+  useGetAppInvoicesQuery,
+  AppInvoiceFragment,
+} from "./graphql/invoices.query.graphql.generated";
 import { Loading } from "./loading";
 
 interface InvoicesPageProps {}
@@ -18,10 +20,6 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();
-
-  /*
-    VERIFICAR PORQUE NÃO ESTA LISTANDO AS FATURAS
-  */
 
   const [{ data: dataGetInvoices, fetching: isLoading }] =
     useGetAppInvoicesQuery({

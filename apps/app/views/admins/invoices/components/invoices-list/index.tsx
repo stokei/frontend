@@ -1,7 +1,14 @@
 import { useTranslations } from "@/hooks";
-import { SimpleGrid, Stack, Title } from "@stokei/ui";
+import {
+  Card,
+  CardBody,
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderCell,
+} from "@stokei/ui";
 import { FC } from "react";
-import { AppInvoiceFragment } from "../../graphql/invoice.fragment.graphql.generated";
+import { AppInvoiceFragment } from "../../graphql/invoices.query.graphql.generated";
 import { InvoiceItem } from "../invoice-item";
 
 interface InvoicesListProps {
@@ -11,34 +18,36 @@ interface InvoicesListProps {
 export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
   const translate = useTranslations();
   return (
-    <Stack direction="column" spacing="3">
-      <SimpleGrid
-        paddingY="2"
-        paddingX="5"
-        columns={[1, 1, 6, 6]}
-        row={[6, 6, 1, 1]}
-        spacing="5"
-      >
-        <Title fontSize="sm">
-          {translate.formatMessage({ id: "student" })}
-        </Title>
-        <Title fontSize="sm">
-          {translate.formatMessage({ id: "product" })}
-        </Title>
-        <Title fontSize="sm">
-          {translate.formatMessage({ id: "subtotal" })}
-        </Title>
-        <Title fontSize="sm">{translate.formatMessage({ id: "total" })}</Title>
-        <Title fontSize="sm">{translate.formatMessage({ id: "status" })}</Title>
-        <Title fontSize="sm">
-          {translate.formatMessage({ id: "paymentMethod" })}
-        </Title>
-      </SimpleGrid>
-      <Stack direction="column" spacing="3">
-        {invoices?.map((invoice) => (
-          <InvoiceItem key={invoice?.id} invoice={invoice} />
-        ))}
-      </Stack>
-    </Stack>
+    <Card background="background.50">
+      <CardBody>
+        <Table>
+          <TableHeader>
+            <TableHeaderCell>
+              {translate.formatMessage({ id: "product" })}
+            </TableHeaderCell>
+            <TableHeaderCell>
+              {translate.formatMessage({ id: "student" })}
+            </TableHeaderCell>
+            <TableHeaderCell>
+              {translate.formatMessage({ id: "subtotal" })}
+            </TableHeaderCell>
+            <TableHeaderCell>
+              {translate.formatMessage({ id: "total" })}
+            </TableHeaderCell>
+            <TableHeaderCell>
+              {translate.formatMessage({ id: "status" })}
+            </TableHeaderCell>
+            <TableHeaderCell>
+              {translate.formatMessage({ id: "paymentMethod" })}
+            </TableHeaderCell>
+          </TableHeader>
+          <TableBody>
+            {invoices?.map((invoice) => (
+              <InvoiceItem key={invoice?.id} invoice={invoice} />
+            ))}
+          </TableBody>
+        </Table>
+      </CardBody>
+    </Card>
   );
 };

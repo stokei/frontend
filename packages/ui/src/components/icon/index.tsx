@@ -64,6 +64,7 @@ export const icons = {
   circleOutlined: IconComponent.CircleOutlinedIcon,
   ok: IconComponent.OkIcon,
   trash: IconComponent.TrashIcon,
+  file: IconComponent.FileIcon,
 };
 
 export type IconName = keyof typeof icons;

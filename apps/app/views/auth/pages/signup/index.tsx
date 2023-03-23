@@ -54,14 +54,15 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
           title: translate.formatMessage({ id: "signUpSuccessfully" }),
           status: "success",
         });
+        const isAdmin =
+          !!data.account?.isOwner ||
+          !!data.account?.roles?.items?.some(
+            (role) => role.name === RoleName.ADMIN
+          );
         window?.location?.assign(
           getDashboardHomePageURL({
             redirectTo: redirectToWhenSignUpSuccessfully || undefined,
-            isAdmin:
-              !!data.account?.isOwner ||
-              !!data.account?.roles?.items?.some(
-                (role) => role.name === RoleName.ADMIN
-              ),
+            isAdmin,
           })
         );
         return;

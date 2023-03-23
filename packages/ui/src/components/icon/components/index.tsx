@@ -1,4 +1,5 @@
 import {
+  AiFillFilePdf,
   AiOutlineArrowDown,
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
@@ -116,6 +117,7 @@ export const OkIcon = RiCheckboxCircleFill;
 export const ErrorIcon = RiErrorWarningFill;
 export const CircleOutlinedIcon = RiCheckboxBlankCircleLine;
 export const ReloadIcon = AiOutlineReload;
+export const FileIcon = AiFillFilePdf;
 export const VolumeMutedIcon = BsVolumeMute;
 export const VolumeUnmutedIcon = BsVolumeUp;
 export const FullScreenIcon = BsFullscreen;

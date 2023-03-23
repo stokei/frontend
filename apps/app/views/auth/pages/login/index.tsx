@@ -50,14 +50,15 @@ export const LoginPage: FC<LoginPageProps> = () => {
           title: translate.formatMessage({ id: "loginSuccessfully" }),
           status: "success",
         });
+        const isAdmin =
+          !!data.account?.isOwner ||
+          !!data.account?.roles?.items?.some(
+            (role) => role.name === RoleName.ADMIN
+          );
         window?.location?.assign(
           getDashboardHomePageURL({
             redirectTo: redirectToWhenLoginSuccessfully || undefined,
-            isAdmin:
-              !!data.account?.isOwner ||
-              !!data.account?.roles?.items?.some(
-                (role) => role.name === RoleName.ADMIN
-              ),
+            isAdmin,
           })
         );
         return;
