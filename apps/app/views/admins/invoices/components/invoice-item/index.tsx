@@ -110,21 +110,12 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
       <TableCell>
         <Stack direction="row" spacing="4" align="center">
           <Avatar size="sm" src={customer?.avatarURL} name={customer?.name} />
-          <Stack direction="column" spacing="4">
+          <Stack direction="column" spacing="0">
             <Text fontWeight="bold">{customer?.name}</Text>
+            <Text fontSize="xs" color="text.300">
+              {customer?.email}
+            </Text>
           </Stack>
-        </Stack>
-      </TableCell>
-      <TableCell>
-        <Stack direction="row" spacing="1">
-          <Text>{invoice?.currency.symbol}</Text>
-          <Text>
-            {translate.formatMoney({
-              amount: invoice?.totalAmount || 0,
-              currency: invoice?.currency.id || "",
-              minorUnit: invoice?.currency.minorUnit,
-            })}
-          </Text>
         </Stack>
       </TableCell>
       <TableCell>
@@ -151,22 +142,7 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
         </Box>
       </TableCell>
       <TableCell>
-        <Stack direction="row" spacing="3" align="center">
-          {invoice?.paymentMethod && (
-            <>
-              <Image
-                width="8"
-                height="fit-content"
-                src={getCardFlagURL(invoice?.paymentMethod?.cardBrand)}
-                fallbackSrc={getCardFlagURL()}
-                alt={invoice?.paymentMethod?.cardBrand || ""}
-              />
-              <Text fontSize="sm" fontWeight="semibold" color="primary.500">
-                **** {invoice?.paymentMethod?.lastFourCardNumber}
-              </Text>
-            </>
-          )}
-        </Stack>
+        <Text>{translate.formatDate(invoice?.createdAt || "")}</Text>
       </TableCell>
       <TableCell>
         <ButtonGroup spacing="1" variant="ghost">

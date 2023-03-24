@@ -7,10 +7,10 @@ export interface TableCellProps extends ChakraTableCellProps {}
 export const TableCell: React.FC<TableCellProps> = ({ children, ...props }) => (
   <ChakraTableCell
     css={{
-      "&:first-child": {
+      "&:first-of-type": {
         paddingLeft: "0",
       },
-      "&:last-child": {
+      "&:last-of-type": {
         paddingRight: "0",
       },
     }}

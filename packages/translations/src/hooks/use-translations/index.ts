@@ -42,7 +42,7 @@ export const useTranslations = <TKeys = string>() => {
 
   const formatDate = useCallback(
     (
-      date: Parameters<Intl.DateTimeFormat["format"]>[0],
+      date: Parameters<Intl.DateTimeFormat["format"]>[0] | string,
       options?: Intl.DateTimeFormatOptions & { format?: string }
     ) => {
       if (!date) {
@@ -59,7 +59,7 @@ export const useTranslations = <TKeys = string>() => {
 
   const formatDateTime = useCallback(
     (
-      time: Parameters<Intl.DateTimeFormat["format"]>[0],
+      time: Parameters<Intl.DateTimeFormat["format"]>[0] | string,
       options?: Intl.DateTimeFormatOptions & { format?: string }
     ) => {
       try {

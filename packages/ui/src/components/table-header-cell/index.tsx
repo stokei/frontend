@@ -11,10 +11,10 @@ export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   <ChakraTableHeaderCell
     paddingTop="0"
     css={{
-      "&:first-child": {
+      "&:first-of-type": {
         paddingLeft: "0",
       },
-      "&:last-child": {
+      "&:last-of-type": {
         paddingRight: "0",
       },
     }}

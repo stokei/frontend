@@ -18,10 +18,19 @@ export const Sidebar: FC<PropsWithChildren<SidebarProps>> = ({
   return (
     <Box
       width="280px"
+      minWidth="280px"
       flexDirection="column"
+      minHeight="100vh"
+      zIndex="1"
       display={["none", "none", "flex", "flex"]}
     >
-      <Box width="280px" height="full" position="fixed" overflowY="auto">
+      <Box
+        width="280px"
+        minWidth="280px"
+        height="full"
+        position="fixed"
+        overflowY="auto"
+      >
         <SidebarUI
           width="full"
           height="full"

@@ -1,9 +1,26 @@
-import { useCurrentApp, usePagination } from "@/hooks";
+import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
-import { Box, Container, Pagination } from "@stokei/ui";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Container,
+  Icon,
+  Pagination,
+  Select,
+  SelectList,
+  SelectSearchInput,
+  Stack,
+} from "@stokei/ui";
 import { FC, useEffect, useState } from "react";
+import {
+  CustomerInvoiceFilter,
+  InvoiceFilters,
+  StatusInvoiceFilter,
+} from "./components/invoice-filters";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
 import {
@@ -15,12 +32,22 @@ import { Loading } from "./loading";
 interface InvoicesPageProps {}
 
 export const InvoicesPage: FC<InvoicesPageProps> = () => {
+  const [currentCustomer, setCurrentCustomer] = useState<
+    CustomerInvoiceFilter | undefined
+  >();
+  const [currentStatus, setCurrentStatus] = useState<StatusInvoiceFilter>(
+    StatusInvoiceFilter.All
+  );
   const [invoices, setInvoices] = useState<AppInvoiceFragment[]>([]);
 
+  const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();
-
+  /*
+    Verificar porque o filtro por status não está funcionando
+  */
+  console.log({ currentStatus });
   const [{ data: dataGetInvoices, fetching: isLoading }] =
     useGetAppInvoicesQuery({
       pause: !currentApp,
@@ -37,6 +64,9 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
             app: {
               equals: currentApp?.id,
             },
+            ...(currentStatus !== StatusInvoiceFilter.All && {
+              status: currentStatus as any,
+            }),
           },
           NOT: {
             customer: {
@@ -56,11 +86,25 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
   return (
     <AdminLayout>
       <Navbar />
-      <Box width="full" flexDirection="row">
+      <Box width="full" flexDirection="column">
         {isLoading ? (
           <Loading />
         ) : (
           <Container paddingY="5">
+            <InvoiceFilters
+              currentCustomer={currentCustomer}
+              onChooseCurrentCustomer={setCurrentCustomer}
+              onRemoveChooseCurrentCustomer={() =>
+                setCurrentCustomer(undefined)
+              }
+              currentStatus={currentStatus}
+              onChooseCurrentStatus={(status) =>
+                setCurrentStatus(status || StatusInvoiceFilter.All)
+              }
+              onRemoveChooseCurrentStatus={() =>
+                setCurrentStatus(StatusInvoiceFilter.All)
+              }
+            />
             <InvoicesList invoices={invoices} />
             {dataGetInvoices?.invoices?.totalPages &&
               dataGetInvoices?.invoices?.totalPages > 1 && (
