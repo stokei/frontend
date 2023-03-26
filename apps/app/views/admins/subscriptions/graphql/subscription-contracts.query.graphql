@@ -1,0 +1,83 @@
+query GetAppSubscriptionContracts(
+  $where: WhereDataFindAllSubscriptionContractsInput
+  $orderBy: OrderByDataFindAllSubscriptionContractsInput
+  $page: PaginationInput
+) {
+  subscriptionContracts(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppSubscriptionContract
+    }
+  }
+}
+
+fragment AppSubscriptionContract on SubscriptionContract {
+  id
+  type
+  status
+  startAt
+  endAt
+  canceledAt
+  createdAt
+  parent {
+    __typename
+    ... on App {
+      id
+      name
+      accountEmail: email
+      logo {
+        file {
+          url
+        }
+      }
+    }
+    ... on Account {
+      id
+      firstname
+      fullname
+      appEmail: email
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
+  items {
+    totalCount
+    items {
+      product {
+        __typename
+        ...SubscriptionContractProductCourse
+        ...SubscriptionContractProductPlan
+      }
+    }
+  }
+  paymentMethod {
+    id
+    cardBrand
+    cardExpiryMonth
+    cardExpiryYear
+    lastFourCardNumber
+  }
+}
+
+fragment SubscriptionContractProductCourse on Course {
+  courseId: id
+  courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment SubscriptionContractProductPlan on Plan {
+  planId: id
+  planName: name
+}

@@ -74,7 +74,12 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
           </SidebarBody>
         </Sidebar>
-        <Box flex="1" flexDirection="column" minHeight="100vh">
+        <Box
+          minHeight="100vh"
+          overflowX="hidden"
+          flex="1"
+          flexDirection="column"
+        >
           <Box flex="1" flexDirection="column">
             {children}
           </Box>

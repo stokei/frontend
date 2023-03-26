@@ -86,6 +86,7 @@ export * from "./not-found-title";
 export * from "./palette";
 export * from "./pagination";
 export * from "./popover";
+export * from "./popover-anchor";
 export * from "./popover-body";
 export * from "./popover-close-button";
 export * from "./popover-content";

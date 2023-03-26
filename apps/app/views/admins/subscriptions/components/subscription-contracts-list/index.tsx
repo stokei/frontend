@@ -13,14 +13,21 @@ import {
   TableRow,
 } from "@stokei/ui";
 import { FC } from "react";
-import { AppInvoiceFragment } from "../../graphql/invoices.query.graphql.generated";
-import { InvoiceItem } from "../invoice-item";
+import { AppSubscriptionContractFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
+import { SubscriptionContractItem } from "../subscription-contract-item";
 
-interface InvoicesListProps {
-  invoices?: AppInvoiceFragment[];
+interface SubscriptionContractsListProps {
+  invoices?: AppSubscriptionContractFragment[];
 }
 
-export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
+/*
+  - ARRUMAR PAGINA DE LISTAGEM DE ASSINATURAS
+  - FAZER A PÁGINA DE UMA ASSINATURA PARA TER CANCELAMENTO
+*/
+
+export const SubscriptionContractsList: FC<SubscriptionContractsListProps> = ({
+  invoices,
+}) => {
   const translate = useTranslations();
   return (
     <Card width="full" background="background.50">
@@ -57,7 +64,10 @@ export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
                 </TableHeader>
                 <TableBody>
                   {invoices?.map((invoice) => (
-                    <InvoiceItem key={invoice?.id} invoice={invoice} />
+                    <SubscriptionContractItem
+                      key={invoice?.id}
+                      invoice={invoice}
+                    />
                   ))}
                 </TableBody>
               </Table>

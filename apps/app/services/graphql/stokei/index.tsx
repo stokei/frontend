@@ -2567,6 +2567,7 @@ export type SubscriptionContract = {
   id: Scalars['ID'];
   items?: Maybe<SubscriptionContractItems>;
   lastInvoice?: Maybe<Invoice>;
+  parent?: Maybe<SubscriptionContractParentUnion>;
   paymentMethod?: Maybe<PaymentMethod>;
   startAt?: Maybe<Scalars['String']>;
   status: SubscriptionContractStatus;
@@ -2611,6 +2612,8 @@ export type SubscriptionContractItems = {
   totalCount: Scalars['Int'];
   totalPages: Scalars['Int'];
 };
+
+export type SubscriptionContractParentUnion = Account | App;
 
 export enum SubscriptionContractStatus {
   Active = 'ACTIVE',
@@ -3288,6 +3291,7 @@ export type WhereDataFindAllSortedItemsInput = {
 
 export type WhereDataFindAllSubscriptionContractsDataInput = {
   active?: InputMaybe<WhereDataBooleanInput>;
+  app?: InputMaybe<WhereDataStringInput>;
   automaticRenew?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;

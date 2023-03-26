@@ -65,6 +65,7 @@ export const icons = {
   ok: IconComponent.OkIcon,
   trash: IconComponent.TrashIcon,
   file: IconComponent.FileIcon,
+  invoice: IconComponent.InvoiceIcon,
 };
 
 export type IconName = keyof typeof icons;

@@ -4,33 +4,36 @@ import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
 import { Container, Pagination, Stack } from "@stokei/ui";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { InvoiceFilters } from "./components/invoice-filters";
-import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
-import { StatusInvoiceFilter } from "./components/select-filter-status";
+import { StatusSubscriptionContractFilter } from "./components/select-filter-status";
 import { AppAccountFragment } from "./graphql/accounts.query.graphql.generated";
 import {
-  AppInvoiceFragment,
-  useGetAppInvoicesQuery,
+  AppSubscriptionContractFragment,
+  useGetAppSubscriptionContractsQuery,
 } from "./graphql/invoices.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface InvoicesPageProps {}
+interface SubscriptionContractsPageProps {}
 
-export const InvoicesPage: FC<InvoicesPageProps> = () => {
+export const SubscriptionContractsPage: FC<
+  SubscriptionContractsPageProps
+> = () => {
   const [currentCustomers, setCurrentCustomers] = useState<
     AppAccountFragment[]
   >([]);
-  const [currentStatus, setCurrentStatus] = useState<StatusInvoiceFilter>(
-    StatusInvoiceFilter.All
-  );
-  const [invoices, setInvoices] = useState<AppInvoiceFragment[]>([]);
+  const [currentStatus, setCurrentStatus] =
+    useState<StatusSubscriptionContractFilter>(
+      StatusSubscriptionContractFilter.All
+    );
+  const [subscriptionContracts, setSubscriptionContracts] = useState<
+    AppSubscriptionContractFragment[]
+  >([]);
 
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();
 
-  const dataGetInvoicesWhereOR = useMemo(() => {
+  const dataGetSubscriptionContractsWhereOR = useMemo(() => {
     if (!currentCustomers?.length) {
       return [];
     }
@@ -48,8 +51,8 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
     return operatorList;
   }, [currentCustomers]);
 
-  const [{ data: dataGetInvoices, fetching: isLoading }] =
-    useGetAppInvoicesQuery({
+  const [{ data: dataGetSubscriptionContracts, fetching: isLoading }] =
+    useGetAppSubscriptionContractsQuery({
       pause: !currentApp,
       variables: {
         page: {
@@ -64,23 +67,20 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
             app: {
               equals: currentApp?.id,
             },
-            ...(currentStatus !== StatusInvoiceFilter.All && {
+            ...(currentStatus !== StatusSubscriptionContractFilter.All && {
               status: currentStatus as any,
             }),
           },
-          OR: dataGetInvoicesWhereOR,
-          NOT: {
-            customer: {
-              equals: currentAccount?.id,
-            },
-          },
+          OR: dataGetSubscriptionContractsWhereOR,
         },
       },
     });
 
   useEffect(() => {
-    setInvoices(dataGetInvoices?.invoices?.items || []);
-  }, [dataGetInvoices]);
+    setSubscriptionContracts(
+      dataGetSubscriptionContracts?.subscriptionContracts?.items || []
+    );
+  }, [dataGetSubscriptionContracts]);
 
   const onChooseCurrentCustomer = useCallback(
     (customer?: AppAccountFragment) => {
@@ -106,16 +106,16 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
       <Navbar />
       <Stack direction="column" paddingY="5" spacing="5">
         <Container>
-          <InvoiceFilters
+          <SubscriptionContractFilters
             currentStatus={currentStatus}
             currentCustomers={currentCustomers}
             onChooseCurrentCustomer={onChooseCurrentCustomer}
             onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
             onChooseCurrentStatus={(status) =>
-              setCurrentStatus(status || StatusInvoiceFilter.All)
+              setCurrentStatus(status || StatusSubscriptionContractFilter.All)
             }
             onRemoveChooseCurrentStatus={() =>
-              setCurrentStatus(StatusInvoiceFilter.All)
+              setCurrentStatus(StatusSubscriptionContractFilter.All)
             }
           />
         </Container>
@@ -123,15 +123,27 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
           <Loading />
         ) : (
           <Container>
-            <InvoicesList invoices={invoices} />
-            {dataGetInvoices?.invoices?.totalPages &&
-              dataGetInvoices?.invoices?.totalPages > 1 && (
+            <SubscriptionContractsList
+              subscriptionContracts={subscriptionContracts}
+            />
+            {dataGetSubscriptionContracts?.subscriptionContracts?.totalPages &&
+              dataGetSubscriptionContracts?.subscriptionContracts?.totalPages >
+                1 && (
                 <Pagination
                   currentPage={currentPage}
                   onChangePage={onChangePage}
-                  hasNextPage={!!dataGetInvoices?.invoices?.hasNextPage}
-                  hasPreviousPage={!!dataGetInvoices?.invoices?.hasPreviousPage}
-                  totalPages={dataGetInvoices?.invoices?.totalPages || 1}
+                  hasNextPage={
+                    !!dataGetSubscriptionContracts?.subscriptionContracts
+                      ?.hasNextPage
+                  }
+                  hasPreviousPage={
+                    !!dataGetSubscriptionContracts?.subscriptionContracts
+                      ?.hasPreviousPage
+                  }
+                  totalPages={
+                    dataGetSubscriptionContracts?.subscriptionContracts
+                      ?.totalPages || 1
+                  }
                 />
               )}
           </Container>

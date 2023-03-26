@@ -1,23 +1,28 @@
-import { useTranslations } from "@/hooks";
 import { Card, CardBody, Stack } from "@stokei/ui";
 import { FC } from "react";
 import { AppAccountFragment } from "../../graphql/accounts.query.graphql.generated";
 import { SelectFilterCustomers } from "../select-filter-customers";
 import {
   SelectFilterStatus,
-  StatusInvoiceFilter,
+  StatusSubscriptionContractFilter,
 } from "../select-filter-status";
 
-interface InvoiceFiltersProps {
-  readonly currentStatus: StatusInvoiceFilter;
+interface SubscriptionContractFiltersProps {
+  readonly currentStatus: StatusSubscriptionContractFilter;
   readonly currentCustomers?: AppAccountFragment[];
   readonly onChooseCurrentCustomer: (value?: AppAccountFragment) => void;
   readonly onRemoveChooseCurrentCustomer: (value?: AppAccountFragment) => void;
-  readonly onChooseCurrentStatus: (value: StatusInvoiceFilter) => void;
-  readonly onRemoveChooseCurrentStatus: (value: StatusInvoiceFilter) => void;
+  readonly onChooseCurrentStatus: (
+    value: StatusSubscriptionContractFilter
+  ) => void;
+  readonly onRemoveChooseCurrentStatus: (
+    value: StatusSubscriptionContractFilter
+  ) => void;
 }
 
-export const InvoiceFilters: FC<InvoiceFiltersProps> = ({
+export const SubscriptionContractFilters: FC<
+  SubscriptionContractFiltersProps
+> = ({
   currentStatus,
   currentCustomers,
   onChooseCurrentCustomer,
@@ -25,8 +30,6 @@ export const InvoiceFilters: FC<InvoiceFiltersProps> = ({
   onChooseCurrentStatus,
   onRemoveChooseCurrentStatus,
 }) => {
-  const translate = useTranslations();
-
   return (
     <Card background="background.50">
       <CardBody>

@@ -19,7 +19,6 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
     const {
       value,
       onToggleList,
-      onCloseList,
       isDisabled,
       isLoading,
       isOpenList,
@@ -28,12 +27,11 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
     } = useSelect();
 
     const isBlocked = isLoading || isDisabled || props?.isDisabled;
-    const isAllowedToAddMultiStyles = isMultiple && hasValue && !!children;
 
     const onClickInput = useCallback(
       (e: any) => {
-        onToggleList();
         onClick?.(e);
+        onToggleList();
       },
       [onClick, onToggleList]
     );
@@ -56,7 +54,6 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
         cursor={isBlocked ? "not-allowed" : undefined}
         isDisabled={isBlocked}
         onClick={onClickInput}
-        onBlur={onCloseList}
         variant="unstyled"
       >
         <Box
@@ -65,7 +62,7 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
           align="center"
           justify="space-between"
         >
-          {hasValue && (
+          {hasValue && !!item && (
             <Box
               maxWidth="full"
               flex="1"

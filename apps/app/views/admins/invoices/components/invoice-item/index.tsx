@@ -1,9 +1,10 @@
+import { useTranslations } from "@/hooks";
+import { getProductURL } from "@/utils";
 import {
   Avatar,
   Badge,
   Box,
   ButtonGroup,
-  IColorName,
   IconButton,
   Image,
   Stack,
@@ -12,12 +13,9 @@ import {
   Text,
 } from "@stokei/ui";
 import { FC, memo, useMemo } from "react";
-import defaultNoImage from "@/assets/no-image.png";
-import { useTranslations } from "@/hooks";
-import { InvoiceStatus } from "@/services/graphql/stokei";
-import { getCardFlagURL } from "@/utils";
-import { useRouter } from "next/router";
 import { AppInvoiceFragment } from "../../graphql/invoices.query.graphql.generated";
+import { getStatusColor } from "../../mappers/get-status-color";
+import { StatusInvoiceFilter } from "../select-filter-status";
 
 export interface InvoiceItemProps {
   readonly invoice?: AppInvoiceFragment;
@@ -35,7 +33,6 @@ interface Product {
 }
 
 export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
-  const router = useRouter();
   const translate = useTranslations();
 
   const customer = useMemo<Customer | undefined>(() => {
@@ -75,20 +72,10 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
     return;
   }, [invoice]);
 
-  const statusColor = useMemo(() => {
-    const colors: Record<InvoiceStatus, IColorName> = {
-      [InvoiceStatus.Canceled]: "gray",
-      [InvoiceStatus.Paid]: "success",
-      [InvoiceStatus.PaymentError]: "error",
-      [InvoiceStatus.Pending]: "warning",
-    };
-
-    const defaultColor = colors[InvoiceStatus.Pending];
-    if (!invoice?.status) {
-      return defaultColor;
-    }
-    return colors[invoice.status] || defaultColor;
-  }, [invoice]);
+  const statusColor = useMemo(
+    () => getStatusColor(invoice?.status as any),
+    [invoice]
+  );
 
   return (
     <TableRow>
@@ -98,8 +85,7 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
             width="10"
             height="fit-content"
             rounded="sm"
-            src={product?.avatarURL || ""}
-            fallbackSrc={defaultNoImage.src}
+            src={getProductURL(product?.avatarURL)}
             alt={translate.formatMessage({ id: "product" })}
           />
           <Stack direction="column" spacing="4">
@@ -145,7 +131,12 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
         <Text>{translate.formatDate(invoice?.createdAt || "")}</Text>
       </TableCell>
       <TableCell>
-        <ButtonGroup spacing="1" variant="ghost">
+        <ButtonGroup
+          width="full"
+          spacing="1"
+          variant="ghost"
+          justifyContent="flex-end"
+        >
           <IconButton
             name="file"
             isDisabled={!invoice?.url}

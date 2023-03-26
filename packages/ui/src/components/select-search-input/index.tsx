@@ -1,5 +1,5 @@
 import { forwardRef, theme, useMultiStyleConfig } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import { useSelect } from "../../hooks";
 import { Box } from "../box";
 import { Icon, IconName } from "../icon";
@@ -7,20 +7,23 @@ import { Input, InputProps } from "../input";
 import { InputGroup } from "../input-group";
 import { InputRightElement } from "../input-right-element";
 import { Loading } from "../loading";
+import { SelectTagItem } from "../select-tag-item";
+import { SelectTagList } from "../select-tag-list";
 import { Stack } from "../stack";
 
 export interface SelectSearchInputProps extends InputProps {
   readonly rightIcon?: IconName;
+  readonly item?: (value: any) => ReactNode;
 }
 
 export const SelectSearchInput: React.FC<SelectSearchInputProps> = forwardRef(
-  ({ children, onFocus, size, rightIcon, ...props }, ref) => {
+  ({ children, onFocus, size, rightIcon, item, ...props }, ref) => {
     const {
+      value,
       onOpenList,
       onCloseList,
       isDisabled,
       isLoading,
-      isOpenList,
       isMultiple,
       hasValue,
     } = useSelect();
@@ -56,13 +59,23 @@ export const SelectSearchInput: React.FC<SelectSearchInputProps> = forwardRef(
         height="auto"
         cursor={isBlocked ? "not-allowed" : undefined}
       >
-        {hasValue && children && (
+        {hasValue && !!item && (
           <Box
             padding={isMultiple ? "3" : undefined}
             paddingBottom={0}
             cursor={isBlocked ? "not-allowed" : undefined}
           >
-            {children}
+            <SelectTagList>
+              {isMultiple ? (
+                value?.map((currentValue: any) => (
+                  <SelectTagItem key={currentValue?.id}>
+                    {item?.(currentValue)}
+                  </SelectTagItem>
+                ))
+              ) : (
+                <SelectTagItem>{item?.(value)}</SelectTagItem>
+              )}
+            </SelectTagList>
           </Box>
         )}
         <InputGroup padding={isAllowedToAddMultiStyles ? "3" : undefined}>

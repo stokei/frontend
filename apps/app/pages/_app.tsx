@@ -96,6 +96,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
     appId,
     cookies: ctx?.req?.cookies,
   });
+  const privateRoutesRegex = /\/app\/\[appId\]\/(admins|customers)/;
 
   const currentApp = await stokeiGraphQLClient.api
     .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {})
@@ -111,8 +112,9 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
 
   const currentAppData = currentApp?.data?.currentApp;
   const currentAccountData = currentAccount?.data?.me;
+  const isAuth = !!currentAccountData;
 
-  if (!!currentAccountData && !!currentAppData) {
+  if (isAuth && !!currentAppData) {
     const isAppOwner = currentAccountData?.isOwner;
     const isAppAdmin = currentAccountData?.roles?.items?.some(
       (role) => role.name === RoleName.ADMIN

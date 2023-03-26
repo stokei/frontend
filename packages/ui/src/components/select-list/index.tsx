@@ -1,5 +1,7 @@
 import { forwardRef } from "@chakra-ui/react";
-import { ForwardedRef } from "react";
+import { ForwardedRef, useEffect, useRef } from "react";
+import { useSelect } from "../../hooks";
+import { useOnClickOutside } from "../../hooks/use-on-click-outside";
 import { PopoverContent } from "../popover-content";
 import { Stack, StackProps } from "../stack";
 
@@ -9,6 +11,11 @@ export interface SelectListProps extends StackProps {
 
 export const SelectList: React.FC<SelectListProps> = forwardRef(
   ({ children, containerRef, ...props }, ref) => {
+    const { onCloseList } = useSelect();
+    const myRef = useRef<any>();
+
+    useOnClickOutside(myRef, () => onCloseList());
+
     return (
       <PopoverContent
         width="full"
@@ -24,6 +31,7 @@ export const SelectList: React.FC<SelectListProps> = forwardRef(
         _focus={{
           boxShadow: "none",
         }}
+        ref={myRef as any}
       >
         <Stack direction="column" spacing={0} {...props}>
           {children}

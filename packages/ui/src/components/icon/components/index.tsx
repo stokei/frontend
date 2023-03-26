@@ -50,6 +50,7 @@ import {
 } from "react-icons/bs";
 import {
   FaFileContract,
+  FaFileInvoiceDollar,
   FaGraduationCap,
   FaMoneyBill,
   FaStore,
@@ -124,3 +125,4 @@ export const FullScreenIcon = BsFullscreen;
 export const ExitFullScreenIcon = BsFullscreenExit;
 export const PictureInPictureIcon = RiPictureInPicture2Line;
 export const ExitPictureInPictureIcon = RiPictureInPictureExitLine;
+export const InvoiceIcon = FaFileInvoiceDollar;
