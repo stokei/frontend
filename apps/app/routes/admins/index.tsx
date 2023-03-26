@@ -1,12 +1,14 @@
 const baseURL = "/admins";
 
 export const routesAdmins = {
-  home: "/admins",
-  financial: "/financial",
+  home: baseURL,
+  financial: baseURL + "/financial",
   subscriptions: {
-    home: "/admins/subscriptions",
+    home: baseURL + "/subscriptions",
+    subscription: ({ subscription }: { subscription?: string }) =>
+      baseURL + "/subscriptions/" + subscription,
   },
-  courses: "/admins/courses",
+  courses: baseURL + "/courses",
   course: ({ course }: { course?: string }) => {
     const baseCourseURL = baseURL + "/course/" + (course || "");
     return {

@@ -1,4 +1,6 @@
 import { useTranslations } from "@/hooks";
+import { routes } from "@/routes";
+import { SubscriptionContractType } from "@/services/graphql/stokei";
 import { getProductURL } from "@/utils";
 import {
   Avatar,
@@ -10,6 +12,7 @@ import {
   TableRow,
   Text,
 } from "@stokei/ui";
+import { useRouter } from "next/router";
 import { FC, memo, useMemo } from "react";
 import { AppSubscriptionContractFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
 import { getStatusColor } from "../../mappers/get-status-color";
@@ -32,6 +35,7 @@ interface Product {
 export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
   ({ subscriptionContract }) => {
     const translate = useTranslations();
+    const router = useRouter();
 
     const customer = useMemo<Customer | undefined>(() => {
       if (subscriptionContract?.parent?.__typename === "Account") {
@@ -74,8 +78,32 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
       [subscriptionContract]
     );
 
+    const isRecurringSubscriptionContract = useMemo(
+      () => subscriptionContract?.type === SubscriptionContractType.Recurring,
+      [subscriptionContract]
+    );
+
     return (
-      <TableRow>
+      <TableRow
+        onClick={() =>
+          router.push(
+            routes.admins.subscriptions.subscription({
+              subscription: subscriptionContract?.id,
+            })
+          )
+        }
+      >
+        <TableCell>
+          <Stack direction="row" spacing="4" align="center">
+            <Avatar size="sm" src={customer?.avatarURL} name={customer?.name} />
+            <Stack direction="column" spacing="0">
+              <Text fontWeight="bold">{customer?.name}</Text>
+              <Text fontSize="xs" color="text.300">
+                {customer?.email}
+              </Text>
+            </Stack>
+          </Stack>
+        </TableCell>
         <TableCell>
           <Stack direction="row" spacing="4" align="center">
             <Image
@@ -91,22 +119,6 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
           </Stack>
         </TableCell>
         <TableCell>
-          <Stack direction="row" spacing="4" align="center">
-            <Avatar size="sm" src={customer?.avatarURL} name={customer?.name} />
-            <Stack direction="column" spacing="0">
-              <Text fontWeight="bold">{customer?.name}</Text>
-              <Text fontSize="xs" color="text.300">
-                {customer?.email}
-              </Text>
-            </Stack>
-          </Stack>
-        </TableCell>
-        <TableCell>
-          <Text>
-            {translate.formatDate(subscriptionContract?.startAt || "")}
-          </Text>
-        </TableCell>
-        <TableCell>
           <Box>
             <Badge colorScheme={statusColor}>
               {translate.formatMessage({
@@ -116,7 +128,23 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
           </Box>
         </TableCell>
         <TableCell>
+          <Text>
+            {translate.formatDate(subscriptionContract?.startAt || "")}
+          </Text>
+        </TableCell>
+        <TableCell>
           <Text>{translate.formatDate(subscriptionContract?.endAt || "")}</Text>
+        </TableCell>
+        <TableCell>
+          <Box>
+            <Badge
+              colorScheme={isRecurringSubscriptionContract ? "green" : "gray"}
+            >
+              {translate.formatMessage({
+                id: isRecurringSubscriptionContract ? "recurring" : "lifelong",
+              })}
+            </Badge>
+          </Box>
         </TableCell>
       </TableRow>
     );

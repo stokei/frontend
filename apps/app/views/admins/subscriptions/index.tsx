@@ -6,11 +6,13 @@ import { Container, Pagination, Stack } from "@stokei/ui";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Navbar } from "./components/navbar";
 import { StatusSubscriptionContractFilter } from "./components/select-filter-status";
+import { SubscriptionContractFilters } from "./components/subscription-contract-filters";
+import { SubscriptionContractsList } from "./components/subscription-contracts-list";
 import { AppAccountFragment } from "./graphql/accounts.query.graphql.generated";
 import {
   AppSubscriptionContractFragment,
   useGetAppSubscriptionContractsQuery,
-} from "./graphql/invoices.query.graphql.generated";
+} from "./graphql/subscription-contracts.query.graphql.generated";
 import { Loading } from "./loading";
 
 interface SubscriptionContractsPageProps {}
@@ -42,7 +44,7 @@ export const SubscriptionContractsPage: FC<
       operatorList = [
         ...operatorList,
         ...currentCustomers?.map((currentCustomer) => ({
-          customer: {
+          parent: {
             equals: currentCustomer?.id,
           },
         })),
@@ -56,7 +58,7 @@ export const SubscriptionContractsPage: FC<
       pause: !currentApp,
       variables: {
         page: {
-          limit: 10,
+          limit: 5,
           number: currentPage,
         },
         orderBy: {
@@ -72,6 +74,11 @@ export const SubscriptionContractsPage: FC<
             }),
           },
           OR: dataGetSubscriptionContractsWhereOR,
+          NOT: {
+            parent: {
+              equals: currentAccount?.id,
+            },
+          },
         },
       },
     });
@@ -123,29 +130,32 @@ export const SubscriptionContractsPage: FC<
           <Loading />
         ) : (
           <Container>
-            <SubscriptionContractsList
-              subscriptionContracts={subscriptionContracts}
-            />
-            {dataGetSubscriptionContracts?.subscriptionContracts?.totalPages &&
-              dataGetSubscriptionContracts?.subscriptionContracts?.totalPages >
-                1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  onChangePage={onChangePage}
-                  hasNextPage={
-                    !!dataGetSubscriptionContracts?.subscriptionContracts
-                      ?.hasNextPage
-                  }
-                  hasPreviousPage={
-                    !!dataGetSubscriptionContracts?.subscriptionContracts
-                      ?.hasPreviousPage
-                  }
-                  totalPages={
-                    dataGetSubscriptionContracts?.subscriptionContracts
-                      ?.totalPages || 1
-                  }
-                />
-              )}
+            <Stack direction="column" spacing="5">
+              <SubscriptionContractsList
+                subscriptionContracts={subscriptionContracts}
+              />
+              {dataGetSubscriptionContracts?.subscriptionContracts
+                ?.totalPages &&
+                dataGetSubscriptionContracts?.subscriptionContracts
+                  ?.totalPages > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    onChangePage={onChangePage}
+                    hasNextPage={
+                      !!dataGetSubscriptionContracts?.subscriptionContracts
+                        ?.hasNextPage
+                    }
+                    hasPreviousPage={
+                      !!dataGetSubscriptionContracts?.subscriptionContracts
+                        ?.hasPreviousPage
+                    }
+                    totalPages={
+                      dataGetSubscriptionContracts?.subscriptionContracts
+                        ?.totalPages || 1
+                    }
+                  />
+                )}
+            </Stack>
           </Container>
         )}
       </Stack>

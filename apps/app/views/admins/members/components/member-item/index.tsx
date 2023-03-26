@@ -81,6 +81,7 @@ export const MemberItem: FC<MemberItemProps> = memo(({ appMember }) => {
                 const tagData = getRoleTagData(role?.name);
                 return (
                   <Tag
+                    key={role.id}
                     colorScheme={tagData.colorSchema}
                     variant={tagData.variant}
                   >

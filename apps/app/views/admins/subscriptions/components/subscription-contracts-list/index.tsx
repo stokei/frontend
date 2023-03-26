@@ -17,7 +17,7 @@ import { AppSubscriptionContractFragment } from "../../graphql/subscription-cont
 import { SubscriptionContractItem } from "../subscription-contract-item";
 
 interface SubscriptionContractsListProps {
-  invoices?: AppSubscriptionContractFragment[];
+  subscriptionContracts?: AppSubscriptionContractFragment[];
 }
 
 /*
@@ -26,17 +26,17 @@ interface SubscriptionContractsListProps {
 */
 
 export const SubscriptionContractsList: FC<SubscriptionContractsListProps> = ({
-  invoices,
+  subscriptionContracts,
 }) => {
   const translate = useTranslations();
   return (
     <Card width="full" background="background.50">
       <CardBody overflow="hidden" alignItems="center">
-        {!invoices?.length ? (
+        {!subscriptionContracts?.length ? (
           <NotFound>
-            <NotFoundIcon name="invoice" />
+            <NotFoundIcon name="subscription" />
             <NotFoundSubtitle>
-              {translate.formatMessage({ id: "invoicesNotFound" })}
+              {translate.formatMessage({ id: "subscriptionContractsNotFound" })}
             </NotFoundSubtitle>
           </NotFound>
         ) : (
@@ -46,27 +46,30 @@ export const SubscriptionContractsList: FC<SubscriptionContractsListProps> = ({
                 <TableHeader>
                   <TableRow>
                     <TableHeaderCell>
-                      {translate.formatMessage({ id: "product" })}
-                    </TableHeaderCell>
-                    <TableHeaderCell>
                       {translate.formatMessage({ id: "student" })}
                     </TableHeaderCell>
                     <TableHeaderCell>
-                      {translate.formatMessage({ id: "total" })}
+                      {translate.formatMessage({ id: "product" })}
                     </TableHeaderCell>
                     <TableHeaderCell>
                       {translate.formatMessage({ id: "status" })}
                     </TableHeaderCell>
                     <TableHeaderCell>
-                      {translate.formatMessage({ id: "creationDate" })}
+                      {translate.formatMessage({ id: "startDate" })}
+                    </TableHeaderCell>
+                    <TableHeaderCell>
+                      {translate.formatMessage({ id: "endDate" })}
+                    </TableHeaderCell>
+                    <TableHeaderCell>
+                      {translate.formatMessage({ id: "type" })}
                     </TableHeaderCell>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {invoices?.map((invoice) => (
+                  {subscriptionContracts?.map((subscriptionContract) => (
                     <SubscriptionContractItem
-                      key={invoice?.id}
-                      invoice={invoice}
+                      key={subscriptionContract?.id}
+                      subscriptionContract={subscriptionContract}
                     />
                   ))}
                 </TableBody>

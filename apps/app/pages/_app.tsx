@@ -126,6 +126,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
         Location: routes.customers.home,
       });
       response?.end();
+      return {};
     }
   }
 
