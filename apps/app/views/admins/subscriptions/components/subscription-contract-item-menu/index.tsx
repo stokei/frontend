@@ -13,12 +13,12 @@ import {
 import { FC, memo } from "react";
 import { AppAccountFragment } from "../../graphql/accounts.query.graphql.generated";
 
-interface CustomerSelectItemProps {
+interface SubscriptionContractItemMenuProps {
   readonly customer?: AppAccountFragment;
 }
 
-export const CustomerSelectItem: FC<CustomerSelectItemProps> = memo(
-  ({ customer }) => {
+export const SubscriptionContractItemMenu: FC<SubscriptionContractItemMenuProps> =
+  memo(({ customer }) => {
     return (
       <Menu>
         <MenuButton
@@ -34,7 +34,6 @@ export const CustomerSelectItem: FC<CustomerSelectItemProps> = memo(
         </MenuList>
       </Menu>
     );
-  }
-);
+  });
 
-CustomerSelectItem.displayName = "CustomerSelectItem";
+SubscriptionContractItemMenu.displayName = "SubscriptionContractItemMenu";
