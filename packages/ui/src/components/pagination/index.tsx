@@ -28,13 +28,20 @@ export const Pagination: React.FC<PaginationProps> = ({
       colorScheme="gray"
       paddingRight="5"
       isDisabled={!hasPreviousPage}
+      background="background.50"
       onClick={
         hasPreviousPage ? () => onChangePage(currentPage - 1) : undefined
       }
     >
       <Icon name="arrowLeft" />
     </Button>
-    <Button h="10" colorScheme="gray" paddingX="5" paddingY="3">
+    <Button
+      h="10"
+      colorScheme="gray"
+      paddingX="5"
+      paddingY="3"
+      background="background.50"
+    >
       {currentPage}
     </Button>
     <Button
@@ -42,6 +49,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       colorScheme="gray"
       paddingRight="5"
       isDisabled={!hasNextPage}
+      background="background.50"
       onClick={hasNextPage ? () => onChangePage(currentPage + 1) : undefined}
     >
       <Icon name="arrowRight" />

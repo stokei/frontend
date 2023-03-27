@@ -128,12 +128,14 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
           </Box>
         </TableCell>
         <TableCell>
-          <Text>
-            {translate.formatDate(subscriptionContract?.startAt || "")}
-          </Text>
+          {subscriptionContract?.startAt && (
+            <Text>{translate.formatDate(subscriptionContract?.startAt)}</Text>
+          )}
         </TableCell>
         <TableCell>
-          <Text>{translate.formatDate(subscriptionContract?.endAt || "")}</Text>
+          {subscriptionContract?.endAt && (
+            <Text>{translate.formatDate(subscriptionContract?.endAt)}</Text>
+          )}
         </TableCell>
         <TableCell>
           <Box>

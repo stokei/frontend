@@ -1,8 +1,6 @@
 import { useTranslations } from "@/hooks";
 import {
   Box,
-  Card,
-  CardBody,
   NotFound,
   NotFoundIcon,
   NotFoundSubtitle,
@@ -30,54 +28,52 @@ export const SubscriptionContractsList: FC<SubscriptionContractsListProps> = ({
 }) => {
   const translate = useTranslations();
   return (
-    <Card width="full" background="background.50">
-      <CardBody overflow="hidden" alignItems="center">
-        {!subscriptionContracts?.length ? (
-          <NotFound>
-            <NotFoundIcon name="subscription" />
-            <NotFoundSubtitle>
-              {translate.formatMessage({ id: "subscriptionContractsNotFound" })}
-            </NotFoundSubtitle>
-          </NotFound>
-        ) : (
-          <Box width="full" flexDirection="column" overflow="hidden">
-            <Box width="full" flexDirection="column" overflowX="auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHeaderCell>
-                      {translate.formatMessage({ id: "student" })}
-                    </TableHeaderCell>
-                    <TableHeaderCell>
-                      {translate.formatMessage({ id: "product" })}
-                    </TableHeaderCell>
-                    <TableHeaderCell>
-                      {translate.formatMessage({ id: "status" })}
-                    </TableHeaderCell>
-                    <TableHeaderCell>
-                      {translate.formatMessage({ id: "startDate" })}
-                    </TableHeaderCell>
-                    <TableHeaderCell>
-                      {translate.formatMessage({ id: "endDate" })}
-                    </TableHeaderCell>
-                    <TableHeaderCell>
-                      {translate.formatMessage({ id: "type" })}
-                    </TableHeaderCell>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {subscriptionContracts?.map((subscriptionContract) => (
-                    <SubscriptionContractItem
-                      key={subscriptionContract?.id}
-                      subscriptionContract={subscriptionContract}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
+    <>
+      {!subscriptionContracts?.length ? (
+        <NotFound>
+          <NotFoundIcon name="subscription" />
+          <NotFoundSubtitle>
+            {translate.formatMessage({ id: "subscriptionContractsNotFound" })}
+          </NotFoundSubtitle>
+        </NotFound>
+      ) : (
+        <Box width="full" flexDirection="column" overflow="hidden">
+          <Box width="full" flexDirection="column" overflowX="auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHeaderCell>
+                    {translate.formatMessage({ id: "student" })}
+                  </TableHeaderCell>
+                  <TableHeaderCell>
+                    {translate.formatMessage({ id: "product" })}
+                  </TableHeaderCell>
+                  <TableHeaderCell>
+                    {translate.formatMessage({ id: "status" })}
+                  </TableHeaderCell>
+                  <TableHeaderCell>
+                    {translate.formatMessage({ id: "startDate" })}
+                  </TableHeaderCell>
+                  <TableHeaderCell>
+                    {translate.formatMessage({ id: "endDate" })}
+                  </TableHeaderCell>
+                  <TableHeaderCell>
+                    {translate.formatMessage({ id: "type" })}
+                  </TableHeaderCell>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {subscriptionContracts?.map((subscriptionContract) => (
+                  <SubscriptionContractItem
+                    key={subscriptionContract?.id}
+                    subscriptionContract={subscriptionContract}
+                  />
+                ))}
+              </TableBody>
+            </Table>
           </Box>
-        )}
-      </CardBody>
-    </Card>
+        </Box>
+      )}
+    </>
   );
 };

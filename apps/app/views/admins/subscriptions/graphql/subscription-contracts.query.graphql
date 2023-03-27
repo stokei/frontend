@@ -51,6 +51,12 @@ fragment AppSubscriptionContract on SubscriptionContract {
   items {
     totalCount
     items {
+      recurring {
+        id
+        usageType
+        intervalCount
+        interval
+      }
       product {
         __typename
         ...SubscriptionContractProductCourse

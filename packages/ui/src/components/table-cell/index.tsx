@@ -2,6 +2,7 @@ import {
   Td as ChakraTableCell,
   TableCellProps as ChakraTableCellProps,
 } from "@chakra-ui/react";
+import { Text } from "../text";
 
 export interface TableCellProps extends ChakraTableCellProps {}
 export const TableCell: React.FC<TableCellProps> = ({ children, ...props }) => (
@@ -16,6 +17,6 @@ export const TableCell: React.FC<TableCellProps> = ({ children, ...props }) => (
     }}
     {...props}
   >
-    {children}
+    {!!children ? children : <Text>-</Text>}
   </ChakraTableCell>
 );

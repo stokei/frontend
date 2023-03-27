@@ -2,7 +2,7 @@ import { useCurrentApp, usePagination } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
-import { Container, Pagination, Stack } from "@stokei/ui";
+import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { InvoiceFilters } from "./components/invoice-filters";
 import { InvoicesList } from "./components/invoices-list";
@@ -123,17 +123,25 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
           <Loading />
         ) : (
           <Container>
-            <InvoicesList invoices={invoices} />
-            {dataGetInvoices?.invoices?.totalPages &&
-              dataGetInvoices?.invoices?.totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  onChangePage={onChangePage}
-                  hasNextPage={!!dataGetInvoices?.invoices?.hasNextPage}
-                  hasPreviousPage={!!dataGetInvoices?.invoices?.hasPreviousPage}
-                  totalPages={dataGetInvoices?.invoices?.totalPages || 1}
-                />
-              )}
+            <Card width="full" background="background.50">
+              <CardBody overflow="hidden" alignItems="center">
+                <Stack direction="column" spacing="5">
+                  <InvoicesList invoices={invoices} />
+                  {dataGetInvoices?.invoices?.totalPages &&
+                    dataGetInvoices?.invoices?.totalPages > 1 && (
+                      <Pagination
+                        currentPage={currentPage}
+                        onChangePage={onChangePage}
+                        hasNextPage={!!dataGetInvoices?.invoices?.hasNextPage}
+                        hasPreviousPage={
+                          !!dataGetInvoices?.invoices?.hasPreviousPage
+                        }
+                        totalPages={dataGetInvoices?.invoices?.totalPages || 1}
+                      />
+                    )}
+                </Stack>
+              </CardBody>
+            </Card>
           </Container>
         )}
       </Stack>

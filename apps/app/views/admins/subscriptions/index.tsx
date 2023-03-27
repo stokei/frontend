@@ -2,7 +2,7 @@ import { useCurrentApp, usePagination } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
-import { Container, Pagination, Stack } from "@stokei/ui";
+import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Navbar } from "./components/navbar";
 import { StatusSubscriptionContractFilter } from "./components/select-filter-status";
@@ -58,7 +58,7 @@ export const SubscriptionContractsPage: FC<
       pause: !currentApp,
       variables: {
         page: {
-          limit: 5,
+          limit: 10,
           number: currentPage,
         },
         orderBy: {
@@ -130,32 +130,36 @@ export const SubscriptionContractsPage: FC<
           <Loading />
         ) : (
           <Container>
-            <Stack direction="column" spacing="5">
-              <SubscriptionContractsList
-                subscriptionContracts={subscriptionContracts}
-              />
-              {dataGetSubscriptionContracts?.subscriptionContracts
-                ?.totalPages &&
-                dataGetSubscriptionContracts?.subscriptionContracts
-                  ?.totalPages > 1 && (
-                  <Pagination
-                    currentPage={currentPage}
-                    onChangePage={onChangePage}
-                    hasNextPage={
-                      !!dataGetSubscriptionContracts?.subscriptionContracts
-                        ?.hasNextPage
-                    }
-                    hasPreviousPage={
-                      !!dataGetSubscriptionContracts?.subscriptionContracts
-                        ?.hasPreviousPage
-                    }
-                    totalPages={
-                      dataGetSubscriptionContracts?.subscriptionContracts
-                        ?.totalPages || 1
-                    }
+            <Card width="full" background="background.50">
+              <CardBody overflow="hidden" alignItems="center">
+                <Stack direction="column" spacing="5">
+                  <SubscriptionContractsList
+                    subscriptionContracts={subscriptionContracts}
                   />
-                )}
-            </Stack>
+                  {dataGetSubscriptionContracts?.subscriptionContracts
+                    ?.totalPages &&
+                    dataGetSubscriptionContracts?.subscriptionContracts
+                      ?.totalPages > 1 && (
+                      <Pagination
+                        currentPage={currentPage}
+                        onChangePage={onChangePage}
+                        hasNextPage={
+                          !!dataGetSubscriptionContracts?.subscriptionContracts
+                            ?.hasNextPage
+                        }
+                        hasPreviousPage={
+                          !!dataGetSubscriptionContracts?.subscriptionContracts
+                            ?.hasPreviousPage
+                        }
+                        totalPages={
+                          dataGetSubscriptionContracts?.subscriptionContracts
+                            ?.totalPages || 1
+                        }
+                      />
+                    )}
+                </Stack>
+              </CardBody>
+            </Card>
           </Container>
         )}
       </Stack>
