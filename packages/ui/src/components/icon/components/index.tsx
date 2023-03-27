@@ -9,6 +9,7 @@ import {
   AiOutlineCaretLeft,
   AiOutlineCaretRight,
   AiOutlineCaretUp,
+  AiOutlineEllipsis,
   AiOutlineEnvironment,
   AiOutlineEye,
   AiOutlineEyeInvisible,
@@ -76,8 +77,9 @@ export const SmileIcon = AiOutlineSmile;
 export const UserIcon = AiOutlineUser;
 export const BackIcon = AiOutlineArrowLeft;
 export const MenuIcon = AiOutlineMenu;
-export const AddressIcon = AiOutlineEnvironment;
 export const MenuEllipsisIcon = AiOutlineMore;
+export const MenuEllipsisHorizontalIcon = AiOutlineEllipsis;
+export const AddressIcon = AiOutlineEnvironment;
 export const SearchIcon = AiOutlineSearch;
 export const LogoutIcon = AiOutlineLogout;
 export const ArrowRightIcon = AiOutlineArrowRight;

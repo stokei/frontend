@@ -6,6 +6,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Icon,
   Image,
   Stack,
   TableCell,
@@ -13,7 +14,7 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, memo, useMemo } from "react";
+import { FC, memo, useCallback, useMemo } from "react";
 import { AppSubscriptionContractFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
 import { getStatusColor } from "../../mappers/get-status-color";
 
@@ -83,25 +84,27 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
       [subscriptionContract]
     );
 
+    const goToSubscriptionContractPage = useCallback(
+      () =>
+        router.push(
+          routes.admins.subscriptions.subscription({
+            subscription: subscriptionContract?.id,
+          })
+        ),
+      [router, subscriptionContract?.id]
+    );
+
     return (
-      <TableRow
-        onClick={() =>
-          router.push(
-            routes.admins.subscriptions.subscription({
-              subscription: subscriptionContract?.id,
-            })
-          )
-        }
-      >
+      <TableRow onClick={goToSubscriptionContractPage}>
         <TableCell>
           <Stack direction="row" spacing="4" align="center">
             <Avatar size="sm" src={customer?.avatarURL} name={customer?.name} />
-            <Stack direction="column" spacing="0">
+            <Box flexDirection="column">
               <Text fontWeight="bold">{customer?.name}</Text>
               <Text fontSize="xs" color="text.300">
                 {customer?.email}
               </Text>
-            </Stack>
+            </Box>
           </Stack>
         </TableCell>
         <TableCell>
@@ -128,25 +131,25 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
           </Box>
         </TableCell>
         <TableCell>
-          {subscriptionContract?.startAt && (
-            <Text>{translate.formatDate(subscriptionContract?.startAt)}</Text>
-          )}
-        </TableCell>
-        <TableCell>
-          {subscriptionContract?.endAt && (
-            <Text>{translate.formatDate(subscriptionContract?.endAt)}</Text>
-          )}
-        </TableCell>
-        <TableCell>
-          <Box>
-            <Badge
-              colorScheme={isRecurringSubscriptionContract ? "green" : "gray"}
-            >
-              {translate.formatMessage({
-                id: isRecurringSubscriptionContract ? "recurring" : "lifelong",
-              })}
-            </Badge>
-          </Box>
+          <Stack direction="row" spacing="2" align="center">
+            {subscriptionContract?.startAt && (
+              <Text>{translate.formatDate(subscriptionContract?.startAt)}</Text>
+            )}
+            {subscriptionContract?.startAt &&
+              (!isRecurringSubscriptionContract ||
+                subscriptionContract?.endAt) && <Icon name="arrowRight" />}
+            {!isRecurringSubscriptionContract ? (
+              <Badge colorScheme="purple">
+                {translate.formatMessage({
+                  id: "lifelong",
+                })}
+              </Badge>
+            ) : (
+              subscriptionContract?.endAt && (
+                <Text>{translate.formatDate(subscriptionContract?.endAt)}</Text>
+              )
+            )}
+          </Stack>
         </TableCell>
       </TableRow>
     );

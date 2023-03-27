@@ -8,8 +8,4 @@ export interface MenuButtonProps extends ChakraMenuButtonProps {}
 export const MenuButton: React.FC<MenuButtonProps> = ({
   children,
   ...props
-}) => (
-  <ChakraMenuButton colorScheme="primary" {...props}>
-    {children}
-  </ChakraMenuButton>
-);
+}) => <ChakraMenuButton {...props}>{children}</ChakraMenuButton>;

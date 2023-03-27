@@ -19,6 +19,7 @@ export const icons = {
   menu: IconComponent.MenuIcon,
   address: IconComponent.AddressIcon,
   menuEllipsis: IconComponent.MenuEllipsisIcon,
+  menuEllipsisHorizontal: IconComponent.MenuEllipsisHorizontalIcon,
   logout: IconComponent.LogoutIcon,
   arrowDown: IconComponent.ArrowDownIcon,
   arrowUp: IconComponent.ArrowUpIcon,
