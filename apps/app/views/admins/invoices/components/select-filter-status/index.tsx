@@ -1,4 +1,5 @@
 import { useTranslations } from "@/hooks";
+import { InvoiceStatusFilter } from "@/interfaces/invoice-status-filter";
 import { convertEnumValueToCamelCase } from "@/utils";
 import {
   FormControl,
@@ -11,18 +12,10 @@ import {
 import { FC } from "react";
 import { StatusSelectItemContent } from "../status-select-item-content";
 
-export enum StatusInvoiceFilter {
-  All = "ALL",
-  Canceled = "CANCELED",
-  Paid = "PAID",
-  PaymentError = "PAYMENT_ERROR",
-  Pending = "PENDING",
-}
-
 interface SelectFilterStatusProps {
-  readonly currentStatus: StatusInvoiceFilter;
-  readonly onChooseCurrentStatus: (value: StatusInvoiceFilter) => void;
-  readonly onRemoveChooseCurrentStatus: (value: StatusInvoiceFilter) => void;
+  readonly currentStatus: InvoiceStatusFilter;
+  readonly onChooseCurrentStatus: (value: InvoiceStatusFilter) => void;
+  readonly onRemoveChooseCurrentStatus: (value: InvoiceStatusFilter) => void;
 }
 
 export const SelectFilterStatus: FC<SelectFilterStatusProps> = ({
@@ -52,33 +45,33 @@ export const SelectFilterStatus: FC<SelectFilterStatusProps> = ({
           )}
         />
         <SelectList>
-          <SelectItem value={StatusInvoiceFilter.All}>
+          <SelectItem value={InvoiceStatusFilter.All}>
             <StatusSelectItemContent
-              status={StatusInvoiceFilter.All}
+              status={InvoiceStatusFilter.All}
               content={translate.formatMessage({ id: "all" })}
             />
           </SelectItem>
-          <SelectItem value={StatusInvoiceFilter.Paid}>
+          <SelectItem value={InvoiceStatusFilter.Paid}>
             <StatusSelectItemContent
-              status={StatusInvoiceFilter.Paid}
+              status={InvoiceStatusFilter.Paid}
               content={translate.formatMessage({ id: "paid" })}
             />
           </SelectItem>
-          <SelectItem value={StatusInvoiceFilter.Pending}>
+          <SelectItem value={InvoiceStatusFilter.Pending}>
             <StatusSelectItemContent
-              status={StatusInvoiceFilter.Pending}
+              status={InvoiceStatusFilter.Pending}
               content={translate.formatMessage({ id: "pending" })}
             />
           </SelectItem>
-          <SelectItem value={StatusInvoiceFilter.Canceled}>
+          <SelectItem value={InvoiceStatusFilter.Canceled}>
             <StatusSelectItemContent
-              status={StatusInvoiceFilter.Canceled}
+              status={InvoiceStatusFilter.Canceled}
               content={translate.formatMessage({ id: "canceled" })}
             />
           </SelectItem>
-          <SelectItem value={StatusInvoiceFilter.PaymentError}>
+          <SelectItem value={InvoiceStatusFilter.PaymentError}>
             <StatusSelectItemContent
-              status={StatusInvoiceFilter.PaymentError}
+              status={InvoiceStatusFilter.PaymentError}
               content={translate.formatMessage({ id: "paymentError" })}
             />
           </SelectItem>

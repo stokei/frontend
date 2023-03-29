@@ -1,22 +1,21 @@
 import { useTranslations } from "@/hooks";
-import { getProductURL, getInvoiceStatusColor } from "@/utils";
+import { getInvoiceStatusColor } from "@/utils";
 import {
   Avatar,
   Badge,
   Box,
   ButtonGroup,
   IconButton,
-  Image,
   Stack,
   TableCell,
   TableRow,
   Text,
 } from "@stokei/ui";
 import { FC, memo, useMemo } from "react";
-import { AppInvoiceFragment } from "../../graphql/invoices.query.graphql.generated";
+import { SubscriptionPageInvoiceFragment } from "../../graphql/invoices.query.graphql.generated";
 
 export interface InvoiceItemProps {
-  readonly invoice?: AppInvoiceFragment;
+  readonly invoice?: SubscriptionPageInvoiceFragment;
 }
 
 interface Customer {
@@ -24,12 +23,6 @@ interface Customer {
   avatarURL: string;
   email: string;
 }
-interface Product {
-  id: string;
-  name: string;
-  avatarURL?: string;
-}
-
 export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
   const translate = useTranslations();
 
@@ -51,25 +44,6 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
     return;
   }, [invoice]);
 
-  const product = useMemo<Product | undefined>(() => {
-    const currentProduct =
-      invoice?.subscriptionContract?.items?.items?.[0]?.product;
-    if (currentProduct?.__typename === "Course") {
-      return {
-        id: currentProduct?.courseId,
-        name: currentProduct?.courseName,
-        avatarURL: currentProduct?.avatar?.file?.url || "",
-      };
-    }
-    if (currentProduct?.__typename === "Plan") {
-      return {
-        id: currentProduct?.planId,
-        name: currentProduct?.planName,
-      };
-    }
-    return;
-  }, [invoice]);
-
   const statusColor = useMemo(
     () => getInvoiceStatusColor(invoice?.status as any),
     [invoice]
@@ -77,20 +51,6 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
 
   return (
     <TableRow>
-      <TableCell>
-        <Stack direction="row" spacing="4" align="center">
-          <Image
-            width="10"
-            height="fit-content"
-            rounded="sm"
-            src={getProductURL(product?.avatarURL)}
-            alt={translate.formatMessage({ id: "product" })}
-          />
-          <Stack direction="column" spacing="4">
-            <Text fontWeight="bold">{product?.name}</Text>
-          </Stack>
-        </Stack>
-      </TableCell>
       <TableCell>
         <Stack direction="row" spacing="4" align="center">
           <Avatar size="sm" src={customer?.avatarURL} name={customer?.name} />

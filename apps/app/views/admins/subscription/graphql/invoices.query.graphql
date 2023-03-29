@@ -1,0 +1,96 @@
+query SubscriptionPageInvoices(
+  $where: WhereDataFindAllInvoicesInput
+  $orderBy: OrderByDataFindAllInvoicesInput
+  $page: PaginationInput
+) {
+  invoices(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...SubscriptionPageInvoice
+    }
+  }
+}
+
+fragment SubscriptionPageInvoice on Invoice {
+  id
+  customer {
+    __typename
+    ... on App {
+      id
+      name
+      accountEmail: email
+      logo {
+        file {
+          url
+        }
+      }
+    }
+    ... on Account {
+      id
+      firstname
+      fullname
+      appEmail: email
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
+  subscriptionContract {
+    items(page: { limit: 1 }) {
+      items {
+        recurring {
+          usageType
+          intervalCount
+          interval
+        }
+        product {
+          __typename
+          ...SubscriptionPageInvoiceProductCourse
+          ...SubscriptionPageInvoiceProductPlan
+        }
+      }
+    }
+  }
+  paymentMethod {
+    id
+    cardBrand
+    cardExpiryMonth
+    cardExpiryYear
+    lastFourCardNumber
+  }
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  status
+  totalAmount
+  subtotalAmount
+  url
+  paidAt
+  canceledAt
+  paymentErrorAt
+  createdAt
+}
+
+fragment SubscriptionPageInvoiceProductCourse on Course {
+  courseId: id
+  courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment SubscriptionPageInvoiceProductPlan on Plan {
+  planId: id
+  planName: name
+}

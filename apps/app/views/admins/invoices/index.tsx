@@ -1,5 +1,6 @@
 import { useCurrentApp, usePagination } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
+import { InvoiceStatusFilter } from "@/interfaces/invoice-status-filter";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
@@ -7,7 +8,6 @@ import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { InvoiceFilters } from "./components/invoice-filters";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
-import { StatusInvoiceFilter } from "./components/select-filter-status";
 import { AppAccountFragment } from "./graphql/accounts.query.graphql.generated";
 import {
   AppInvoiceFragment,
@@ -21,10 +21,9 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
   const [currentCustomers, setCurrentCustomers] = useState<
     AppAccountFragment[]
   >([]);
-  const [currentStatus, setCurrentStatus] = useState<StatusInvoiceFilter>(
-    StatusInvoiceFilter.All
+  const [currentStatus, setCurrentStatus] = useState<InvoiceStatusFilter>(
+    InvoiceStatusFilter.All
   );
-  const [invoices, setInvoices] = useState<AppInvoiceFragment[]>([]);
 
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
@@ -64,7 +63,7 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
             app: {
               equals: currentApp?.id,
             },
-            ...(currentStatus !== StatusInvoiceFilter.All && {
+            ...(currentStatus !== InvoiceStatusFilter.All && {
               status: currentStatus as any,
             }),
           },
@@ -77,10 +76,6 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
         },
       },
     });
-
-  useEffect(() => {
-    setInvoices(dataGetInvoices?.invoices?.items || []);
-  }, [dataGetInvoices]);
 
   const onChooseCurrentCustomer = useCallback(
     (customer?: AppAccountFragment) => {
@@ -112,10 +107,10 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
             onChooseCurrentCustomer={onChooseCurrentCustomer}
             onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
             onChooseCurrentStatus={(status) =>
-              setCurrentStatus(status || StatusInvoiceFilter.All)
+              setCurrentStatus(status || InvoiceStatusFilter.All)
             }
             onRemoveChooseCurrentStatus={() =>
-              setCurrentStatus(StatusInvoiceFilter.All)
+              setCurrentStatus(InvoiceStatusFilter.All)
             }
           />
         </Container>
@@ -126,7 +121,9 @@ export const InvoicesPage: FC<InvoicesPageProps> = () => {
             <Card width="full" background="background.50">
               <CardBody overflow="hidden" alignItems="center">
                 <Stack direction="column" spacing="5">
-                  <InvoicesList invoices={invoices} />
+                  <InvoicesList
+                    invoices={dataGetInvoices?.invoices?.items || []}
+                  />
                   {dataGetInvoices?.invoices?.totalPages &&
                     dataGetInvoices?.invoices?.totalPages > 1 && (
                       <Pagination

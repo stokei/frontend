@@ -1,10 +1,10 @@
 import { Box, Stack, Text } from "@stokei/ui";
 import { FC, useMemo } from "react";
-import { getStatusColor } from "../../mappers/get-status-color";
-import { StatusInvoiceFilter } from "../select-filter-status";
+import { getInvoiceStatusColor } from "@/utils/get-invoice-status-color";
+import { InvoiceStatusFilter } from "@/interfaces/invoice-status-filter";
 
 interface StatusSelectItemContentProps {
-  readonly status?: StatusInvoiceFilter;
+  readonly status?: InvoiceStatusFilter;
   readonly content?: string;
 }
 
@@ -12,7 +12,7 @@ export const StatusSelectItemContent: FC<StatusSelectItemContentProps> = ({
   status,
   content,
 }) => {
-  const statusColor = useMemo(() => getStatusColor(status), [status]);
+  const statusColor = useMemo(() => getInvoiceStatusColor(status), [status]);
 
   return (
     <Stack align="center" direction="row" spacing="2">

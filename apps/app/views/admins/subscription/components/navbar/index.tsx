@@ -3,11 +3,9 @@ import { useTranslations } from "@/hooks";
 import { Navbar as NavbarUI, Title } from "@stokei/ui";
 import { FC } from "react";
 
-interface NavbarProps {
-  readonly productName?: string;
-}
+interface NavbarProps {}
 
-export const Navbar: FC<NavbarProps> = ({ productName }) => {
+export const Navbar: FC<NavbarProps> = () => {
   const translate = useTranslations();
   return (
     <NavbarUI
@@ -17,7 +15,7 @@ export const Navbar: FC<NavbarProps> = ({ productName }) => {
     >
       <SidebarOpenButton />
       <Title fontSize="md" lineHeight="shorter">
-        {productName || translate.formatMessage({ id: "subscription" })}
+        {translate.formatMessage({ id: "subscription" })}
       </Title>
       <NavbarUserInformation />
     </NavbarUI>

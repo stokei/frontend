@@ -52,6 +52,7 @@ export const ptBRMessages = {
   back: "Voltar",
   close: "Fechar",
   apply: "Aplicar",
+  subscriptionDetails: "Detalhes da assinatura",
   subscriptionCanceledSuccessfully: "Assinatura cancelada com sucesso!",
   accountAlreadyExists: "Usuário já existe!",
   allRightsReserved: "© {year} {company}. Todos direitos reservados.",
