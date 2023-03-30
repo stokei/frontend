@@ -122,7 +122,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
 
     const isAdminDashboard = router.pathname?.match(/\/app\/\[appId\]\/admins/);
     if (!isAppOwner && !isAppAdmin && isAdminDashboard) {
-      response?.writeHead(301, {
+      response?.writeHead(302, {
         Location: routes.customers.home,
       });
       response?.end();

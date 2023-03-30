@@ -7,7 +7,7 @@ export interface LabelProps extends ChakraFormLabelProps {}
 
 export const Label: React.FC<LabelProps> = ({ children, ...props }) => {
   return (
-    <ChakraFormLabel fontSize="sm" color="text.500" {...props}>
+    <ChakraFormLabel width="full" fontSize="sm" color="text.500" {...props}>
       {children}
     </ChakraFormLabel>
   );

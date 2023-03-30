@@ -1,5 +1,4 @@
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
-import { useCurrentAccount } from "@/hooks/use-current-account";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
 import {
@@ -12,10 +11,14 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
+import { Header } from "./components/header";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
 import { SubscriptionContractDetails } from "./components/subscription-contract-details";
 import { useSubscriptionPageInvoicesQuery } from "./graphql/invoices.query.graphql.generated";
+import { useGetSubscriptionPageSubscriptionContractQuery } from "./graphql/subscription-contract.query.graphql.generated";
+import { Customer } from "./interfaces/customer";
+import { Product } from "./interfaces/product";
 import { Loading } from "./loading";
 
 interface SubscriptionContractPageProps {}
@@ -26,7 +29,6 @@ export const SubscriptionContractPage: FC<
   const router = useRouter();
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
-  const { currentAccount } = useCurrentAccount();
   const translate = useTranslations();
 
   const subscriptionContractId = useMemo(
@@ -34,7 +36,19 @@ export const SubscriptionContractPage: FC<
     [router?.query?.subscriptionContractId]
   );
 
-  const [{ data: dataGetInvoices, fetching: isLoading }] =
+  const [
+    {
+      data: dataGetSubscriptionContracts,
+      fetching: isLoadingSubscriptionContract,
+    },
+  ] = useGetSubscriptionPageSubscriptionContractQuery({
+    pause: !subscriptionContractId,
+    variables: {
+      subscriptionContractId: subscriptionContractId || "",
+    },
+  });
+
+  const [{ data: dataGetInvoices, fetching: isLoadingInvoices }] =
     useSubscriptionPageInvoicesQuery({
       pause: !currentApp || !subscriptionContractId,
       variables: {
@@ -58,21 +72,73 @@ export const SubscriptionContractPage: FC<
       },
     });
 
+  const subscriptionContract = useMemo(
+    () => dataGetSubscriptionContracts?.subscriptionContract,
+    [dataGetSubscriptionContracts]
+  );
+
+  const customer = useMemo<Customer | undefined>(() => {
+    if (subscriptionContract?.parent?.__typename === "Account") {
+      return {
+        name: subscriptionContract?.parent?.fullname,
+        email: subscriptionContract?.parent?.appEmail || "",
+        avatarURL: subscriptionContract?.parent?.avatar?.file?.url || "",
+      };
+    }
+    if (subscriptionContract?.parent?.__typename === "App") {
+      return {
+        name: subscriptionContract?.parent?.name,
+        email: subscriptionContract?.parent?.accountEmail || "",
+        avatarURL: subscriptionContract?.parent?.logo?.file?.url || "",
+      };
+    }
+    return;
+  }, [subscriptionContract]);
+
+  const product = useMemo<Product | undefined>(() => {
+    const currentProduct = subscriptionContract?.items?.items?.[0]?.product;
+    if (currentProduct?.__typename === "Course") {
+      return {
+        id: currentProduct?.courseId,
+        name: currentProduct?.courseName,
+        avatarURL: currentProduct?.avatar?.file?.url || "",
+      };
+    }
+    if (currentProduct?.__typename === "Plan") {
+      return {
+        id: currentProduct?.planId,
+        name: currentProduct?.planName,
+      };
+    }
+    return;
+  }, [subscriptionContract]);
+
   return (
     <AdminLayout>
       <Navbar />
       <Stack direction="column" paddingY="5" spacing="5">
         <Container>
-          <SubscriptionContractDetails />
+          <Header
+            subscriptionContract={subscriptionContract}
+            product={product}
+            customer={customer}
+          />
         </Container>
-        {isLoading ? (
+        <Container>
+          <SubscriptionContractDetails
+            subscriptionContract={subscriptionContract}
+            product={product}
+            customer={customer}
+          />
+        </Container>
+        {isLoadingSubscriptionContract ? (
           <Loading />
         ) : (
           <Container>
             <Card width="full" background="background.50">
               <CardBody overflow="hidden" alignItems="center">
                 <Stack direction="column" spacing="5">
-                  <Title fontSize="lg">
+                  <Title fontSize="md">
                     {translate.formatMessage({ id: "invoices" })}
                   </Title>
                   <InvoicesList

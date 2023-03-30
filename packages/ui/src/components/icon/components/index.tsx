@@ -5,10 +5,6 @@ import {
   AiOutlineArrowRight,
   AiOutlineArrowUp,
   AiOutlineBank,
-  AiOutlineCaretDown,
-  AiOutlineCaretLeft,
-  AiOutlineCaretRight,
-  AiOutlineCaretUp,
   AiOutlineEllipsis,
   AiOutlineEnvironment,
   AiOutlineEye,
@@ -57,6 +53,12 @@ import {
   FaStore,
 } from "react-icons/fa";
 import { FiPlus, FiSettings } from "react-icons/fi";
+import {
+  RxCaretDown,
+  RxCaretLeft,
+  RxCaretRight,
+  RxCaretUp,
+} from "react-icons/rx";
 import { TbApps } from "react-icons/tb";
 
 import {
@@ -86,10 +88,10 @@ export const ArrowRightIcon = AiOutlineArrowRight;
 export const ArrowLeftIcon = AiOutlineArrowLeft;
 export const ArrowDownIcon = AiOutlineArrowDown;
 export const ArrowUpIcon = AiOutlineArrowUp;
-export const CaretRightIcon = AiOutlineCaretRight;
-export const CaretLeftIcon = AiOutlineCaretLeft;
-export const CaretDownIcon = AiOutlineCaretDown;
-export const CaretUpIcon = AiOutlineCaretUp;
+export const CaretRightIcon = RxCaretRight;
+export const CaretLeftIcon = RxCaretLeft;
+export const CaretDownIcon = RxCaretDown;
+export const CaretUpIcon = RxCaretUp;
 export const AboutIcon = AiOutlineInfoCircle;
 export const VideoIcon = BsPlayCircle;
 export const HomeIcon = AiOutlineHome;

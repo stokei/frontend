@@ -16,7 +16,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { FC } from "react";
-import { useCancelSubscriptionContractMutation } from "../../../subscriptions/graphql/cancel-subscription-contract.mutation.graphql.generated";
+import { useCancelSubscriptionContractMutation } from "../../graphql/cancel-subscription-contract.mutation.graphql.generated";
 
 export interface CancelSubscriptionContractModalCustomer {
   name: string;

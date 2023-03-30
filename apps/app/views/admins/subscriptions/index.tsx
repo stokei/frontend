@@ -1,11 +1,11 @@
 import { useCurrentApp, usePagination } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
+import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Navbar } from "./components/navbar";
-import { StatusSubscriptionContractFilter } from "./components/select-filter-status";
 import { SubscriptionContractFilters } from "./components/subscription-contract-filters";
 import { SubscriptionContractsList } from "./components/subscription-contracts-list";
 import { AppAccountFragment } from "./graphql/accounts.query.graphql.generated";

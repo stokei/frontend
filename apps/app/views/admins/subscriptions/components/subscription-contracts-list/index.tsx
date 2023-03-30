@@ -18,11 +18,6 @@ interface SubscriptionContractsListProps {
   subscriptionContracts?: AppSubscriptionContractFragment[];
 }
 
-/*
-  - ARRUMAR PAGINA DE LISTAGEM DE ASSINATURAS
-  - FAZER A PÁGINA DE UMA ASSINATURA PARA TER CANCELAMENTO
-*/
-
 export const SubscriptionContractsList: FC<SubscriptionContractsListProps> = ({
   subscriptionContracts,
 }) => {
@@ -52,7 +47,7 @@ export const SubscriptionContractsList: FC<SubscriptionContractsListProps> = ({
                     {translate.formatMessage({ id: "status" })}
                   </TableHeaderCell>
                   <TableHeaderCell>
-                    {translate.formatMessage({ id: "time" })}
+                    {translate.formatMessage({ id: "period" })}
                   </TableHeaderCell>
                 </TableRow>
               </TableHeader>

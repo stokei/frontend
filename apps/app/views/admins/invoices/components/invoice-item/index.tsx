@@ -138,6 +138,7 @@ export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
           <IconButton
             name="file"
             isDisabled={!invoice?.url}
+            colorScheme="red"
             onClick={() => window.open(invoice?.url || "", "_blank")}
           />
         </ButtonGroup>

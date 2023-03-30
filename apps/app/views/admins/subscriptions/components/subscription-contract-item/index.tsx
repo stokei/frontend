@@ -2,6 +2,7 @@ import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { SubscriptionContractType } from "@/services/graphql/stokei";
 import { getProductURL } from "@/utils";
+import { getSubscriptionContractStatusColor } from "@/utils/get-subscription-contract-status-color";
 import {
   Avatar,
   Badge,
@@ -16,7 +17,6 @@ import {
 import { useRouter } from "next/router";
 import { FC, memo, useCallback, useMemo } from "react";
 import { AppSubscriptionContractFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
-import { getStatusColor } from "../../mappers/get-status-color";
 
 export interface SubscriptionContractItemProps {
   readonly subscriptionContract?: AppSubscriptionContractFragment;
@@ -75,7 +75,8 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
     }, [subscriptionContract]);
 
     const statusColor = useMemo(
-      () => getStatusColor(subscriptionContract?.status as any),
+      () =>
+        getSubscriptionContractStatusColor(subscriptionContract?.status as any),
       [subscriptionContract]
     );
 

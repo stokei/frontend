@@ -1,4 +1,5 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
+import { AdminLayoutContent } from "@/components/admin-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
@@ -79,17 +80,12 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
           </SidebarBody>
         </Sidebar>
-        <Box
-          minHeight="100vh"
-          overflowX="hidden"
-          flex="1"
-          flexDirection="column"
-        >
+        <AdminLayoutContent>
           <Box flex="1" flexDirection="column">
             {children}
           </Box>
           <Footer />
-        </Box>
+        </AdminLayoutContent>
       </Box>
     </SidebarProvider>
   );

@@ -1,5 +1,5 @@
 mutation CancelSubscriptionContract($input: CancelSubscriptionContractInput!) {
   cancelSubscriptionContract(input: $input) {
-    ...AppSubscriptionContract
+    ...SubscriptionPageSubscriptionContract
   }
 }

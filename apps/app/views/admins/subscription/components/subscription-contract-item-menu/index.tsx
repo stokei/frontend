@@ -1,5 +1,7 @@
 import { useTranslations } from "@/hooks";
 import {
+  Button,
+  ButtonProps,
   Icon,
   Menu,
   MenuButton,
@@ -31,19 +33,16 @@ export const SubscriptionContractItemMenu: FC<
   } = useDisclosure();
   const translate = useTranslations();
 
+  const buttonProps: ButtonProps = {
+    size: "sm",
+    rightIcon: <Icon name="caretDown" />,
+  };
+
   return (
     <>
-      <Menu>
-        <MenuButton
-          padding="2"
-          rounded="md"
-          alignItems="center"
-          justifyContent="center"
-          _hover={{
-            background: "background.200",
-          }}
-        >
-          <Icon name="menuEllipsisHorizontal" />
+      <Menu variant="">
+        <MenuButton as={Button} {...buttonProps}>
+          {translate.formatMessage({ id: "actions" })}
         </MenuButton>
         <MenuList>
           <MenuItem onClick={onOpenCancelSubscriptionContractModal}>

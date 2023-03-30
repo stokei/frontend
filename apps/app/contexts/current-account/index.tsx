@@ -60,8 +60,11 @@ export const CurrentAccountProvider: FC<
   );
 
   const homePageURL = useMemo(
-    () => getDashboardHomePageURL({ isAdmin: !!hasSomeRole([RoleName.ADMIN]) }),
-    [hasSomeRole]
+    () =>
+      getDashboardHomePageURL({
+        isAdmin: !!currentAccount?.isOwner || !!hasSomeRole([RoleName.ADMIN]),
+      }),
+    [currentAccount, hasSomeRole]
   );
 
   useEffect(() => {

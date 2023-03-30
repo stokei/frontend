@@ -1,11 +1,9 @@
+import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
 import { Card, CardBody, Stack } from "@stokei/ui";
 import { FC } from "react";
 import { AppAccountFragment } from "../../graphql/accounts.query.graphql.generated";
 import { SelectFilterCustomers } from "../select-filter-customers";
-import {
-  SelectFilterStatus,
-  StatusSubscriptionContractFilter,
-} from "../select-filter-status";
+import { SelectFilterStatus } from "../select-filter-status";
 
 interface SubscriptionContractFiltersProps {
   readonly currentStatus: StatusSubscriptionContractFilter;

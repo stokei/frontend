@@ -1,7 +1,9 @@
+import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
 import { IColorName } from "@stokei/ui";
-import { StatusSubscriptionContractFilter } from "../../components/select-filter-status";
 
-export const getStatusColor = (status?: StatusSubscriptionContractFilter) => {
+export const getSubscriptionContractStatusColor = (
+  status?: StatusSubscriptionContractFilter
+) => {
   const colors: Record<StatusSubscriptionContractFilter, IColorName> = {
     [StatusSubscriptionContractFilter.All]: "teal",
     [StatusSubscriptionContractFilter.Active]: "success",

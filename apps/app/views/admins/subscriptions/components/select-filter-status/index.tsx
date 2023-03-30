@@ -1,4 +1,5 @@
 import { useTranslations } from "@/hooks";
+import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
 import { convertEnumValueToCamelCase } from "@/utils";
 import {
   FormControl,
@@ -10,13 +11,6 @@ import {
 } from "@stokei/ui";
 import { FC } from "react";
 import { StatusSelectItemContent } from "../status-select-item-content";
-
-export enum StatusSubscriptionContractFilter {
-  All = "ALL",
-  Active = "ACTIVE",
-  Canceled = "CANCELED",
-  Pending = "PENDING",
-}
 
 interface SelectFilterStatusProps {
   readonly currentStatus: StatusSubscriptionContractFilter;

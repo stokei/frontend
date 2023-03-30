@@ -1,7 +1,7 @@
 import * as Types from '../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
-import { AppSubscriptionContractFragmentDoc } from './subscription-contracts.query.graphql.generated';
+import { SubscriptionPageSubscriptionContractFragmentDoc } from './subscription-contract.query.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CancelSubscriptionContractMutationVariables = Types.Exact<{
@@ -15,10 +15,10 @@ export type CancelSubscriptionContractMutation = { __typename?: 'Mutation', canc
 export const CancelSubscriptionContractDocument = gql`
     mutation CancelSubscriptionContract($input: CancelSubscriptionContractInput!) {
   cancelSubscriptionContract(input: $input) {
-    ...AppSubscriptionContract
+    ...SubscriptionPageSubscriptionContract
   }
 }
-    ${AppSubscriptionContractFragmentDoc}`;
+    ${SubscriptionPageSubscriptionContractFragmentDoc}`;
 
 export function useCancelSubscriptionContractMutation() {
   return Urql.useMutation<CancelSubscriptionContractMutation, CancelSubscriptionContractMutationVariables>(CancelSubscriptionContractDocument);
