@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { gql } from "urql";
 
 const currentAppQuery = gql`
-  query CurrentAppSubDomain($domain: String!) {
+  query CurrentAppSubDomain {
     currentApp {
       id
       name
@@ -27,11 +27,7 @@ export const withSubDomain = async ({
 
   try {
     const stokeiClient = createAPIClient({ appId });
-    await stokeiClient.api
-      .query(currentAppQuery, {
-        domain,
-      })
-      .toPromise();
+    await stokeiClient.api.query(currentAppQuery, {}).toPromise();
     if (url.pathname.startsWith("/app/" + appId)) {
       url.href = url.href
         .replace("/app/" + appId, "/")

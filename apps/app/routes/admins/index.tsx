@@ -8,6 +8,14 @@ export const routesAdmins = {
     subscription: ({ subscription }: { subscription?: string }) =>
       baseURL + "/subscriptions/" + subscription,
   },
+  onboarding: {
+    home: baseURL + "/onboarding",
+    stripe: {
+      home: baseURL + "/onboarding/stripe",
+      refresh: baseURL + "/onboarding/stripe/refresh",
+      callback: baseURL + "/onboarding/stripe/callback",
+    },
+  },
   courses: baseURL + "/courses",
   course: ({ course }: { course?: string }) => {
     const baseCourseURL = baseURL + "/course/" + (course || "");

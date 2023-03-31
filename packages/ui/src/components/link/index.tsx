@@ -3,13 +3,15 @@ import {
   LinkProps as ChakraLinkProps,
 } from "@chakra-ui/react";
 import { forwardRef } from "react";
+import { Loading } from "../loading";
 
 export interface LinkProps extends ChakraLinkProps {
+  readonly isLoading?: boolean;
   readonly ref?: any;
 }
 
 export const Link: React.FC<LinkProps> = forwardRef(
-  ({ children, _hover, href, ...props }, ref) => (
+  ({ children, _hover, href, isLoading, onClick, ...props }, ref) => (
     <ChakraLink
       color="primary.500"
       colorScheme="primary"
@@ -19,10 +21,13 @@ export const Link: React.FC<LinkProps> = forwardRef(
         textDecoration: "none",
       }}
       href={href || ""}
+      onClick={!isLoading ? onClick : undefined}
       {...props}
       ref={ref as any}
     >
-      <>{children}</>
+      <>
+        {children} {isLoading && <Loading size="sm" marginRight="5" />}
+      </>
     </ChakraLink>
   )
 );

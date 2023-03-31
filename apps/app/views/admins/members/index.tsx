@@ -55,7 +55,7 @@ export const MembersPage: FC<MembersPageProps> = () => {
       pause: !currentApp,
       variables: {
         page: {
-          limit: 2,
+          limit: 9,
           number: currentPage,
         },
         where: {

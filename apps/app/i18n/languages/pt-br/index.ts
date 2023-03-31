@@ -53,6 +53,8 @@ export const ptBRMessages = {
   close: "Fechar",
   apply: "Aplicar",
   period: "Período",
+  onboarding: "Integração",
+  onboardings: "Integrações",
   in: "em",
   actions: "Ações",
   subscriptionDetails: "Detalhes da assinatura",

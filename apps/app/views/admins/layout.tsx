@@ -1,12 +1,13 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
 import { AdminLayoutContent } from "@/components/admin-layout-content";
 import { SidebarProvider } from "@/contexts";
-import { useTranslations } from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
+import { useCreateAppStripeDashboardLinkMutation } from "@/services/graphql/mutations/create-app-stripe-dashboard-link/create-app-stripe-dashboard-link.mutation.graphql.generated";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useCallback } from "react";
+import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
 
 export interface AdminLayoutProps {}
 
@@ -15,10 +16,38 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
 }) => {
   const router = useRouter();
   const translate = useTranslations();
+  const { onShowAPIError } = useAPIErrors();
+
+  const [
+    { fetching: isLoadingCreateAppStripeDashboardLink },
+    onCreateAppStripeDashboardLink,
+  ] = useCreateAppStripeDashboardLinkMutation();
 
   const isActiveRoute = useCallback(
     (route: string) => router.asPath?.startsWith(route),
     [router.asPath]
+  );
+
+  const goToStripeDasboard = useCallback(
+    async (e: any) => {
+      try {
+        e.preventDefault();
+        const response = await onCreateAppStripeDashboardLink({});
+
+        if (!!response?.data?.createAppStripeDashboardLink) {
+          window.location.assign(
+            response?.data?.createAppStripeDashboardLink?.url
+          );
+        }
+
+        if (!!response.error?.graphQLErrors?.length) {
+          response.error.graphQLErrors.map((error) =>
+            onShowAPIError({ message: error?.message })
+          );
+        }
+      } catch (error) {}
+    },
+    [onCreateAppStripeDashboardLink, onShowAPIError]
   );
 
   return (
@@ -38,10 +67,19 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.admins.financial}
+              // href={routes.admins.financial}
+              onClick={goToStripeDasboard}
               isActive={isActiveRoute(routes.admins.financial)}
+              isLoading={isLoadingCreateAppStripeDashboardLink}
             >
               {translate.formatMessage({ id: "financial" })}
+            </SidebarNavLink>
+            <SidebarNavLink
+              as={NextLink}
+              href={routes.admins.onboarding.home}
+              isActive={isActiveRoute(routes.admins.onboarding.home)}
+            >
+              {translate.formatMessage({ id: "onboardings" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}

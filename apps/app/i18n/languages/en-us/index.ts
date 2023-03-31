@@ -29,6 +29,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   actions: "Actions",
   in: "in",
   period: "Period",
+  onboarding: "Onboarding",
+  onboardings: "Onboarding",
   subscriptionDetails: "Subscription details",
   subscriptionCanceledSuccessfully: "Subscription canceled successfully!",
   plan: "Plan",

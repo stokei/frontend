@@ -9,6 +9,7 @@ const currentAppDomainQuery = gql`
     domain(name: $domain) {
       id
       name
+      parent
       app {
         id
         name
@@ -31,7 +32,7 @@ export const withCustomDomain = async ({
         domain,
       })
       .toPromise();
-    appId = currentDomain?.data?.domain?.app?.id;
+    appId = currentDomain?.data?.domain?.parent;
     if (!appId) {
       return NextResponse.redirect(new URL(STOKEI_APP_NOT_FOUND_URL));
     }
