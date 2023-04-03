@@ -31,6 +31,7 @@ import { Router } from "next/router";
 import { useMemo } from "react";
 import { RoleName } from "@/constants/role-names";
 import { routes } from "@/routes";
+import Head from "next/head";
 
 const messages: Messages = {
   "pt-BR": {
@@ -80,6 +81,9 @@ function MyApp({
               language={DEFAULT_LANGUAGE}
               messages={messages}
             >
+              <Head>
+                <title>{currentApp?.name}</title>
+              </Head>
               <Component {...pageProps} />
             </TranslationsProvider>
           </StokeiUIProvider>

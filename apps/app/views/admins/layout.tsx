@@ -76,8 +76,8 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.admins.onboarding.home}
-              isActive={isActiveRoute(routes.admins.onboarding.home)}
+              href={routes.admins.onboardings.home}
+              isActive={isActiveRoute(routes.admins.onboardings.home)}
             >
               {translate.formatMessage({ id: "onboardings" })}
             </SidebarNavLink>

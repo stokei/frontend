@@ -139,6 +139,7 @@ export type App = {
   hero?: Maybe<Hero>;
   icon?: Maybe<Image>;
   id: Scalars['ID'];
+  isIntegratedWithStripe: Scalars['Boolean'];
   isStokei: Scalars['Boolean'];
   logo?: Maybe<Image>;
   name: Scalars['String'];
@@ -644,6 +645,7 @@ export type Domain = {
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
   name: Scalars['String'];
+  parent: Scalars['String'];
   status: DomainStatus;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;

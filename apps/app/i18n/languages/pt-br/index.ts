@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  successfullyIntegrated: "Integrado com successo!",
   loginSuccessfully: "Login efetuado com successo!",
   signUpSuccessfully: "Cadastro efetuado com successo!",
   emailNotFound: "Email não encontrado!",
@@ -8,6 +9,7 @@ export const ptBRMessages = {
   sorryWeCouldntFindWhatYouNeeded: "Desculpe, não encontramos o que precisava.",
   sorryAnErrorOccurred: "Desculpe, algum erro ocorreu.",
   recommendedCourses: "Cursos recomendados",
+  loading: "Carregando",
   plan: "Plano",
   plans: "Planos",
   chooseYourPlan: "Escolha seu plano",
@@ -100,8 +102,13 @@ export const ptBRMessages = {
   total: "Total",
   subtotal: "Subtotal",
   paid: "Pago",
+  add: "Adicionar",
+  added: "Adicionado",
   paymentError: "Erro no pagamento",
   paymentMethod: "Meio de pagamento",
+  paymentMethods: "Meio de pagamentos",
+  integrateYourBusinessWithStripesPaymentsPlatform:
+    "Integre sua empresa na plataforma de pagamentos da Stripe.",
   financial: "Financeiro",
   member: "Membro",
   members: "Membros",
