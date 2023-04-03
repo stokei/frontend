@@ -40,7 +40,7 @@ export const Header: FC<HeaderProps> = () => {
   );
 
   return (
-    <SimpleGrid columns={[1, 1, 3, 3]} spacing="5">
+    <SimpleGrid columns={[1, 1, 2, 3]} spacing="5">
       <Card background="background.50">
         <CardBody>
           <Stat>

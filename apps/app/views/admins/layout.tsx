@@ -67,7 +67,6 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              // href={routes.admins.financial}
               onClick={goToStripeDasboard}
               isActive={isActiveRoute(routes.admins.financial)}
               isLoading={isLoadingCreateAppStripeDashboardLink}

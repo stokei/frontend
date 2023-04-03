@@ -1,4 +1,4 @@
-import { CoursePage } from "@/views/admins/course";
+import { CoursePage } from "@/views/admins/course/pages/home";
 import { NextPage } from "next";
 
 interface Props {}

@@ -1,23 +1,23 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
+import { AdminCourseLayoutContent } from "@/components/admin-course-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useMemo } from "react";
 
-export interface CourseLayoutProps {
-  readonly courseId?: string;
-}
+export interface CourseLayoutProps {}
 
 export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
-  courseId,
   children,
 }) => {
   const router = useRouter();
   const translate = useTranslations();
+  const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
   const baseRoute = routes.admins.course({ course: courseId });
+
   return (
     <SidebarProvider>
       <Box width="full" flexDirection="row">
@@ -28,10 +28,17 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
           <SidebarBody paddingX="0">
             <SidebarNavLink
               as={NextLink}
+              href={routes.admins.home}
+              isActive={router.asPath === routes.admins.home}
+            >
+              {translate.formatMessage({ id: "home" })}
+            </SidebarNavLink>
+            <SidebarNavLink
+              as={NextLink}
               href={baseRoute.home}
               isActive={router.asPath === baseRoute.home}
             >
-              {translate.formatMessage({ id: "home" })}
+              {translate.formatMessage({ id: "dashboard" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
@@ -63,12 +70,12 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
             </SidebarNavLink>
           </SidebarBody>
         </Sidebar>
-        <Box flex="1" flexDirection="column" minHeight="100vh">
+        <AdminCourseLayoutContent>
           <Box flex="1" flexDirection="column">
             {children}
           </Box>
           <Footer />
-        </Box>
+        </AdminCourseLayoutContent>
       </Box>
     </SidebarProvider>
   );
