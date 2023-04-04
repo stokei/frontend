@@ -1,4 +1,4 @@
-import { usePagination, useTranslations } from "@/hooks";
+import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
 import { AdminLayout } from "@/views/admins/layout";
 import {
   Box,
@@ -30,10 +30,18 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
   const [courses, setCourses] = useState<AppCourseFragment[]>([]);
 
   const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();
 
   const [{ data: dataGetCourses, fetching: isLoading }] = useGetCoursesQuery({
     variables: {
+      where: {
+        AND: {
+          parent: {
+            equals: currentApp?.id,
+          },
+        },
+      },
       page: {
         limit: 10,
         number: currentPage,
@@ -81,7 +89,9 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
                     id: "createYourCourseAndMakeADifferenceInTheLivesOfYourStudents",
                   })}
                 </NotFoundSubtitle>
-                <Button>{translate.formatMessage({ id: "addCourse" })}</Button>
+                <Button onClick={onOpenAddCourseDrawer}>
+                  {translate.formatMessage({ id: "addCourse" })}
+                </Button>
               </NotFound>
             )}
             <CoursesList courses={courses} />

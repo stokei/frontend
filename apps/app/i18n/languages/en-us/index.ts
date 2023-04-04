@@ -3,6 +3,7 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   successfullyIntegrated: "Successfully integrated!",
   loginSuccessfully: "Login successfully!",
+  courseCreatedSuccessfully: "Course created successfully!",
   signUpSuccessfully: "Sign up successfully!",
   firstnameNotFound: "Firstname not found!",
   lastnameNotFound: "Lastname not found!",
@@ -11,6 +12,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   sorryWeCouldntFindWhatYouNeeded: "Sorry, we couldn't find what you needed.",
   sorryAnErrorOccurred: "Sorry, an error occurred.",
   recommendedCourses: "Recommended courses",
+  descriptionNotFound: "Description not found.",
   loading: "Loading",
   next: "Next",
   previous: "Previous",

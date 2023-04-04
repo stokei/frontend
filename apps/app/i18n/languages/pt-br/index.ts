@@ -1,6 +1,7 @@
 export const ptBRMessages = {
   successfullyIntegrated: "Integrado com successo!",
   loginSuccessfully: "Login efetuado com successo!",
+  courseCreatedSuccessfully: "Curso criado com successo!",
   signUpSuccessfully: "Cadastro efetuado com successo!",
   emailNotFound: "Email não encontrado!",
   firstnameNotFound: "Nome não encontrado!",
@@ -9,6 +10,7 @@ export const ptBRMessages = {
   sorryWeCouldntFindWhatYouNeeded: "Desculpe, não encontramos o que precisava.",
   sorryAnErrorOccurred: "Desculpe, algum erro ocorreu.",
   recommendedCourses: "Cursos recomendados",
+  descriptionNotFound: "Nenhuma descrição encontrada.",
   loading: "Carregando",
   plan: "Plano",
   plans: "Planos",

@@ -68,13 +68,13 @@ export const AddCourseDrawer: FC<AddCourseDrawerProps> = ({
       });
       if (!!response?.data?.createCourse) {
         onShowToast({
-          title: translate.formatMessage({ id: "loginSuccessfully" }),
+          title: translate.formatMessage({ id: "courseCreatedSuccessfully" }),
           status: "success",
         });
         window?.location?.assign(
-          routes.admins.course.home({
+          routes.admins.course({
             course: response?.data?.createCourse?.id,
-          })
+          }).home
         );
         return;
       }

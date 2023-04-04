@@ -1,10 +1,10 @@
-import { CourseDashboardPage } from "@/views/admins/course/pages/dashboard";
+import { CourseStudentsPage } from "@/views/admins/course/pages/students";
 import { NextPage } from "next";
 
 interface Props {}
 
 const Page: NextPage<Props> = () => {
-  return <CourseDashboardPage />;
+  return <CourseStudentsPage />;
 };
 
 export default Page;
