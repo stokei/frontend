@@ -1,0 +1,7 @@
+mutation CreateCourseInstructor($input: CreateCourseInstructorInput!) {
+  createCourseInstructor(input: $input) {
+    instructor {
+      ...AdminCoursePageCourseInstructor
+    }
+  }
+}

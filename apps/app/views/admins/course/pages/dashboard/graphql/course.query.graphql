@@ -1,0 +1,32 @@
+query GetAdminCoursePageCourse($courseId: String!) {
+  course(id: $courseId) {
+    ...AdminCoursePageCourse
+  }
+}
+
+fragment AdminCoursePageCourse on Course {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  instructors {
+    totalCount
+    items {
+      id
+      instructor {
+        id
+        firstname
+        fullname
+        avatar {
+          file {
+            url
+          }
+        }
+      }
+    }
+  }
+}

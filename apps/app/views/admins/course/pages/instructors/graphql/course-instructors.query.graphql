@@ -1,0 +1,29 @@
+query GetAdminCoursePageCourseInstructors(
+  $where: WhereDataFindAllCourseInstructorsInput
+  $page: PaginationInput
+) {
+  courseInstructors(where: $where, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      instructor {
+        ...AdminCoursePageCourseInstructor
+      }
+    }
+  }
+}
+
+fragment AdminCoursePageCourseInstructor on Account {
+  id
+  fullname
+  email
+  avatar {
+    file {
+      url
+    }
+  }
+}

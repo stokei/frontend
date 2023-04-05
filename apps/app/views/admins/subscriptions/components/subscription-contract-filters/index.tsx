@@ -1,8 +1,8 @@
 import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
 import { Card, CardBody, Stack } from "@stokei/ui";
 import { FC } from "react";
-import { AppAccountFragment } from "../../graphql/accounts.query.graphql.generated";
-import { SelectFilterCustomers } from "../select-filter-customers";
+import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
+import { SelectMembers } from "@/components/select-members";
 import { SelectFilterStatus } from "../select-filter-status";
 
 interface SubscriptionContractFiltersProps {
@@ -32,10 +32,10 @@ export const SubscriptionContractFilters: FC<
     <Card background="background.50">
       <CardBody>
         <Stack direction={["column", "column", "row", "row"]} spacing="5">
-          <SelectFilterCustomers
-            currentCustomers={currentCustomers}
-            onChooseCurrentCustomer={onChooseCurrentCustomer}
-            onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
+          <SelectMembers
+            currentMembers={currentCustomers}
+            onChooseCurrentMember={onChooseCurrentCustomer}
+            onRemoveChooseCurrentMember={onRemoveChooseCurrentCustomer}
           />
           <SelectFilterStatus
             currentStatus={currentStatus}

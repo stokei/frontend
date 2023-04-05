@@ -2,6 +2,10 @@ export const ptBRMessages = {
   successfullyIntegrated: "Integrado com successo!",
   loginSuccessfully: "Login efetuado com successo!",
   courseCreatedSuccessfully: "Curso criado com successo!",
+  courseInstructorCreatedSuccessfully:
+    "Instrutor do curso criado com successo!",
+  courseInstructorRemoveedSuccessfully:
+    "Instrutor do curso removido com successo!",
   signUpSuccessfully: "Cadastro efetuado com successo!",
   emailNotFound: "Email não encontrado!",
   firstnameNotFound: "Nome não encontrado!",
@@ -25,6 +29,8 @@ export const ptBRMessages = {
   students: "Alunos",
   showDetails: "Ver detalhes",
   addCourse: "Adicionar curso",
+  addCourseInstructor: "Adicionar instrutor do curso",
+  removeCourseInstructor: "Remover instrutor do curso",
   course: "Curso",
   courses: "Cursos",
   app: "App",
@@ -52,6 +58,8 @@ export const ptBRMessages = {
   unsubscribe: "Cancelar assinatura",
   wouldYouReallyLikeToUnsubscribe:
     "Você realmente gostaria de cancelar a assinatura?",
+  wouldYouReallyLikeToRemoveCourseInstructor:
+    "Você realmente gostaria de remover o instrutor do curso?",
   filters: "Filtros",
   back: "Voltar",
   close: "Fechar",

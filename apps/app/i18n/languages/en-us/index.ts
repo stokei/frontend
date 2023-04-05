@@ -4,6 +4,10 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   successfullyIntegrated: "Successfully integrated!",
   loginSuccessfully: "Login successfully!",
   courseCreatedSuccessfully: "Course created successfully!",
+  courseInstructorCreatedSuccessfully:
+    "Course instructor created successfully!",
+  courseInstructorRemoveedSuccessfully:
+    "Course instructor removed successfully!",
   signUpSuccessfully: "Sign up successfully!",
   firstnameNotFound: "Firstname not found!",
   lastnameNotFound: "Lastname not found!",
@@ -26,6 +30,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   time: "Time",
   unsubscribe: "Unsubscribe",
   wouldYouReallyLikeToUnsubscribe: "Would you really like to unsubscribe?",
+  wouldYouReallyLikeToRemoveCourseInstructor:
+    "Would you really like to remove course instructor?",
   filters: "Filters",
   back: "Back",
   close: "Close",
@@ -46,6 +52,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   student: "Student",
   students: "Students",
   addCourse: "Add course",
+  addCourseInstructor: "Add course instructor",
+  removeCourseInstructor: "Remove course instructor",
   showDetails: "Show details",
   course: "Course",
   courses: "Courses",

@@ -1,18 +1,15 @@
+import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { useCurrentApp, usePagination } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { InvoiceStatusFilter } from "@/interfaces/invoice-status-filter";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { InvoiceFilters } from "./components/invoice-filters";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
-import { AppAccountFragment } from "./graphql/accounts.query.graphql.generated";
-import {
-  AppInvoiceFragment,
-  useGetAppInvoicesQuery,
-} from "./graphql/invoices.query.graphql.generated";
+import { useGetAppInvoicesQuery } from "./graphql/invoices.query.graphql.generated";
 import { Loading } from "./loading";
 
 interface InvoicesPageProps {}

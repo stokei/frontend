@@ -2,9 +2,9 @@ import { usePagination } from "@/hooks";
 import { Container, Pagination, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
-import { Navbar } from "../../components/navbar";
-import { StudentsList } from "../../components/students-list";
-import { useGetAdminCoursePageCourseStudentsQuery } from "../../graphql/course-students.query.graphql.generated";
+import { Navbar } from "./components/navbar";
+import { StudentsList } from "./components/students-list";
+import { useGetAdminCoursePageCourseStudentsQuery } from "./graphql/course-students.query.graphql.generated";
 import { CourseLayout } from "../../layout";
 import { Loading } from "../../loading";
 

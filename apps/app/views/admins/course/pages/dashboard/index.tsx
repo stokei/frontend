@@ -3,8 +3,8 @@ import { getProductURL } from "@/utils";
 import { Box, Container, Description, Image, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
-import { Navbar } from "../../components/navbar";
-import { useGetAdminCoursePageCourseQuery } from "../../graphql/course.query.graphql.generated";
+import { Navbar } from "./components/navbar";
+import { useGetAdminCoursePageCourseQuery } from "./graphql/course.query.graphql.generated";
 import { CourseLayout } from "../../layout";
 
 interface CourseDashboardPageProps {}

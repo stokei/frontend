@@ -1,0 +1,7 @@
+mutation RemoveCourseInstructor($input: RemoveCourseInstructorInput!) {
+  removeCourseInstructor(input: $input) {
+    instructor {
+      ...AdminCoursePageCourseInstructor
+    }
+  }
+}

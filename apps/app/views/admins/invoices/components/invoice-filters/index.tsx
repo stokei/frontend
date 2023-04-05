@@ -1,9 +1,8 @@
-import { useTranslations } from "@/hooks";
+import { SelectMembers } from "@/components/select-members";
 import { InvoiceStatusFilter } from "@/interfaces/invoice-status-filter";
 import { Card, CardBody, Stack } from "@stokei/ui";
 import { FC } from "react";
-import { AppAccountFragment } from "../../graphql/accounts.query.graphql.generated";
-import { SelectFilterCustomers } from "../select-filter-customers";
+import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { SelectFilterStatus } from "../select-filter-status";
 
 interface InvoiceFiltersProps {
@@ -23,16 +22,14 @@ export const InvoiceFilters: FC<InvoiceFiltersProps> = ({
   onChooseCurrentStatus,
   onRemoveChooseCurrentStatus,
 }) => {
-  const translate = useTranslations();
-
   return (
     <Card background="background.50">
       <CardBody>
         <Stack direction={["column", "column", "row", "row"]} spacing="5">
-          <SelectFilterCustomers
-            currentCustomers={currentCustomers}
-            onChooseCurrentCustomer={onChooseCurrentCustomer}
-            onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
+          <SelectMembers
+            currentMembers={currentCustomers}
+            onChooseCurrentMember={onChooseCurrentCustomer}
+            onRemoveChooseCurrentMember={onRemoveChooseCurrentCustomer}
           />
           <SelectFilterStatus
             currentStatus={currentStatus}
