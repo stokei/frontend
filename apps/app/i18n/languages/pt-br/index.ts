@@ -16,6 +16,7 @@ export const ptBRMessages = {
   recommendedCourses: "Cursos recomendados",
   descriptionNotFound: "Nenhuma descrição encontrada.",
   loading: "Carregando",
+  about: "Sobre",
   plan: "Plano",
   plans: "Planos",
   chooseYourPlan: "Escolha seu plano",

@@ -43,6 +43,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   onboardings: "Onboarding",
   subscriptionDetails: "Subscription details",
   subscriptionCanceledSuccessfully: "Subscription canceled successfully!",
+  about: "About",
   plan: "Plan",
   plans: "Plans",
   summary: "Summary",

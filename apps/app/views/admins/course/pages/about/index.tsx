@@ -1,15 +1,24 @@
 import { useTranslations } from "@/hooks";
 import { getProductURL } from "@/utils";
-import { Box, Container, Description, Image, Stack, Title } from "@stokei/ui";
+import {
+  Avatar,
+  Box,
+  Container,
+  Description,
+  Image,
+  Stack,
+  Text,
+  Title,
+} from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { Navbar } from "./components/navbar";
 import { useGetAdminCoursePageCourseQuery } from "./graphql/course.query.graphql.generated";
 import { CourseLayout } from "../../layout";
 
-interface CourseDashboardPageProps {}
+interface CourseAboutPageProps {}
 
-export const CourseDashboardPage: FC<CourseDashboardPageProps> = () => {
+export const CourseAboutPage: FC<CourseAboutPageProps> = () => {
   const router = useRouter();
   const translate = useTranslations();
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
@@ -52,6 +61,37 @@ export const CourseDashboardPage: FC<CourseDashboardPageProps> = () => {
                 translate.formatMessage({ id: "descriptionNotFound" })}
             </Description>
           </Box>
+
+          <Stack direction="column" spacing="5">
+            <Title fontSize="md">
+              {translate.formatMessage({ id: "instructors" })}
+            </Title>
+            <Stack direction="column" spacing="5">
+              {!course?.instructors?.totalCount ? (
+                <Description>
+                  {translate.formatMessage({ id: "courseInstructorsNotFound" })}
+                </Description>
+              ) : (
+                <>
+                  {course?.instructors?.items?.map(({ instructor }) => (
+                    <Stack direction="row" spacing="5">
+                      <Avatar
+                        size="lg"
+                        name={instructor?.fullname}
+                        src={instructor?.avatar?.file?.url || ""}
+                      />
+                      <Stack direction="column" spacing="1">
+                        <Title size="md" textAlign="center">
+                          {instructor?.fullname}
+                        </Title>
+                        <Text justifyContent="center">{instructor?.email}</Text>
+                      </Stack>
+                    </Stack>
+                  ))}
+                </>
+              )}
+            </Stack>
+          </Stack>
         </Stack>
       </Container>
     </CourseLayout>

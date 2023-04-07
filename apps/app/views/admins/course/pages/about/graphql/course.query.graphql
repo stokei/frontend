@@ -21,6 +21,7 @@ fragment AdminCoursePageCourse on Course {
         id
         firstname
         fullname
+        email
         avatar {
           file {
             url

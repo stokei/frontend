@@ -17,8 +17,6 @@ import {
   RefreshAccessMutationSchemaResponse,
 } from "../schemas";
 import {
-  getAccessToken,
-  getRefreshToken,
   removeAccessToken,
   removeRefreshToken,
   setAccessToken,
@@ -39,9 +37,9 @@ export const createGraphqlClient = (config: ClientConfig) => {
   const ssrCache = ssrExchange({ isClient: !config.isServerSide });
 
   const exchanges = [
-    ssrCache,
+    // ssrCache,
     dedupExchange,
-    cacheExchange,
+    // cacheExchange,
     authExchange({
       willAuthError({ operation, authState }) {
         const routesWithoutRefreshAccess: string[] = [
