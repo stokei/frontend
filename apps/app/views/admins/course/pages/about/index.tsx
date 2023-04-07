@@ -74,17 +74,15 @@ export const CourseAboutPage: FC<CourseAboutPageProps> = () => {
               ) : (
                 <>
                   {course?.instructors?.items?.map(({ instructor }) => (
-                    <Stack direction="row" spacing="5">
+                    <Stack direction="row" spacing="5" align="center">
                       <Avatar
-                        size="lg"
+                        size="md"
                         name={instructor?.fullname}
                         src={instructor?.avatar?.file?.url || ""}
                       />
-                      <Stack direction="column" spacing="1">
-                        <Title size="md" textAlign="center">
-                          {instructor?.fullname}
-                        </Title>
-                        <Text justifyContent="center">{instructor?.email}</Text>
+                      <Stack direction="column" spacing="0">
+                        <Title fontSize="sm">{instructor?.fullname}</Title>
+                        <Text fontSize="sm">{instructor?.email}</Text>
                       </Stack>
                     </Stack>
                   ))}
