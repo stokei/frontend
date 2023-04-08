@@ -1,0 +1,5 @@
+mutation RemoveModule($input: RemoveModuleInput!) {
+  removeModule(input: $input) {
+    ...AdminCoursePageModule
+  }
+}

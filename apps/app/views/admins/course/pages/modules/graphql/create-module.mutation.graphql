@@ -1,0 +1,5 @@
+mutation CreateModule($input: CreateModuleInput!) {
+  createModule(input: $input) {
+    ...AdminCoursePageModule
+  }
+}

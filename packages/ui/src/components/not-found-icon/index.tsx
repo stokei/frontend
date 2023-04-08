@@ -5,7 +5,7 @@ export const NotFoundIcon: React.FC<NotFoundIconProps> = ({
   children,
   ...props
 }) => (
-  <Icon fontSize="6xl" paddingBottom="2" {...props}>
+  <Icon fontSize="6xl" paddingBottom="2" color="primary.500" {...props}>
     {children}
   </Icon>
 );

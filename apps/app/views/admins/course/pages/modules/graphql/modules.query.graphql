@@ -1,0 +1,59 @@
+query GetAdminCoursePageModules(
+  $where: WhereDataFindAllModulesInput
+  $orderBy: OrderByDataFindAllModulesInput
+  $page: PaginationInput
+) {
+  modules(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AdminCoursePageModule
+    }
+  }
+}
+
+fragment AdminCoursePageModule on Module {
+  id
+  name
+  videos {
+    totalCount
+    items {
+      ...AdminCoursePageModuleVideo
+    }
+  }
+}
+
+fragment AdminCoursePageModuleVideo on Video {
+  id
+  name
+  private
+  active
+  authors {
+    totalCount
+    items {
+      author {
+        id
+        fullname
+        avatar {
+          file {
+            url
+          }
+        }
+      }
+    }
+  }
+  poster {
+    id
+    file {
+      url
+    }
+  }
+  file {
+    url
+    duration
+  }
+}

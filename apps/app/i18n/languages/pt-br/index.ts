@@ -6,7 +6,10 @@ export const ptBRMessages = {
     "Instrutor do curso criado com successo!",
   courseInstructorRemoveedSuccessfully:
     "Instrutor do curso removido com successo!",
+  moduleRemoveedSuccessfully: "Módulo removido com successo!",
+  videoRemoveedSuccessfully: "Video removido com successo!",
   signUpSuccessfully: "Cadastro efetuado com successo!",
+  moduleCreatedSuccessfully: "Módulo criado com successo!",
   emailNotFound: "Email não encontrado!",
   firstnameNotFound: "Nome não encontrado!",
   lastnameNotFound: "Sobrenome não encontrado!",
@@ -29,9 +32,12 @@ export const ptBRMessages = {
   student: "Aluno",
   students: "Alunos",
   showDetails: "Ver detalhes",
+  addModule: "Adicionar módulo",
   addCourse: "Adicionar curso",
   addCourseInstructor: "Adicionar instrutor do curso",
   removeCourseInstructor: "Remover instrutor do curso",
+  removeModule: "Remover módulo",
+  removeVideo: "Remover video",
   course: "Curso",
   courses: "Cursos",
   app: "App",
@@ -44,6 +50,9 @@ export const ptBRMessages = {
   courseName: "Nome do curso",
   courseNamePlaceholder: "Nome do curso",
   courseNameIsRequired: "Nome do curso é obrigatório",
+  moduleName: "Nome do módulo",
+  moduleNamePlaceholder: "Nome do módulo",
+  moduleNameIsRequired: "Nome do módulo é obrigatório",
   startTeachingNow: "Comece a ensinar agora",
   createYourCourseAndMakeADifferenceInTheLivesOfYourStudents:
     "Crie seu curso e faça a diferença na vida de seus alunos",
@@ -61,6 +70,10 @@ export const ptBRMessages = {
     "Você realmente gostaria de cancelar a assinatura?",
   wouldYouReallyLikeToRemoveCourseInstructor:
     "Você realmente gostaria de remover o instrutor do curso?",
+  wouldYouReallyLikeToRemoveModule:
+    "Você realmente gostaria de remover o módulo?",
+  wouldYouReallyLikeToRemoveVideo:
+    "Você realmente gostaria de remover o video?",
   filters: "Filtros",
   back: "Voltar",
   close: "Fechar",
