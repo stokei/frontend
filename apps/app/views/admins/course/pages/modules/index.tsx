@@ -135,11 +135,15 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
             onCloseModal={onCloseRemoveModuleModal}
             onSuccessRemoveModule={onRemoveModule}
           />
-          <Box width="full">
-            <Button onClick={onOpenCreateModule}>
-              {translate.formatMessage({ id: "addModule" })}
-            </Button>
-          </Box>
+
+          {modules?.length > 1 && (
+            <Box width="full">
+              <Button onClick={onOpenCreateModule}>
+                {translate.formatMessage({ id: "addModule" })}
+              </Button>
+            </Box>
+          )}
+
           {isLoading ? (
             <ModuleLoading />
           ) : (
@@ -167,6 +171,7 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
               )}
             </>
           )}
+
           {dataModules?.modules?.totalPages &&
             dataModules?.modules?.totalPages > 1 && (
               <Pagination

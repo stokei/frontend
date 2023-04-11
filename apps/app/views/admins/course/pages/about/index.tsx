@@ -74,7 +74,12 @@ export const CourseAboutPage: FC<CourseAboutPageProps> = () => {
               ) : (
                 <>
                   {course?.instructors?.items?.map(({ instructor }) => (
-                    <Stack direction="row" spacing="5" align="center">
+                    <Stack
+                      key={instructor.id}
+                      direction="row"
+                      spacing="5"
+                      align="center"
+                    >
                       <Avatar
                         size="md"
                         name={instructor?.fullname}

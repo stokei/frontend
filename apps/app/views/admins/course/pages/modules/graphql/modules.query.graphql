@@ -19,6 +19,7 @@ query GetAdminCoursePageModules(
 fragment AdminCoursePageModule on Module {
   id
   name
+  parent
   videos {
     totalCount
     items {

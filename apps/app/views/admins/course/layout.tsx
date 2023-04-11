@@ -56,15 +56,15 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={baseRoute.modules}
-              isActive={router.asPath === baseRoute.modules}
+              href={baseRoute.modules.home}
+              isActive={router.asPath === baseRoute.modules.home}
             >
               {translate.formatMessage({ id: "modules" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={baseRoute.products}
-              isActive={router.asPath === baseRoute.products}
+              href={baseRoute.products.home}
+              isActive={router.asPath === baseRoute.products.home}
             >
               {translate.formatMessage({ id: "products" })}
             </SidebarNavLink>

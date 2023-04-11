@@ -11,7 +11,7 @@ interface VideoItemProps {
 export const VideoItem: FC<VideoItemProps> = memo(
   ({ video, onOpenConfirmVideoPreviewModal }) => {
     const translate = useTranslations();
-
+    console.log(video);
     return (
       <Box width="full" align="center">
         <Stack flex="1" direction="row" spacing="2" align="center">

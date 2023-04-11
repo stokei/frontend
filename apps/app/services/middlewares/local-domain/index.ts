@@ -1,7 +1,6 @@
-import { STOKEI_APP_NOT_FOUND_URL } from "@/constants/stokei-urls";
+import { MiddlewareResponse } from "@/interfaces/middleware-response";
 import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
-import { NextResponse } from "next/server";
 import { gql } from "urql";
 
 const currentAppQuery = gql`
@@ -16,27 +15,27 @@ const currentAppQuery = gql`
 export const withLocalDomain = async ({
   nextUrl,
   domain,
-}: WithDomainProps): Promise<NextResponse> => {
+}: WithDomainProps): Promise<MiddlewareResponse> => {
   const url = nextUrl.clone();
   const { pathname } = nextUrl;
+  let isRedirect = false;
   let appId = pathname.split("/")[2];
-  if (!appId) {
-    return NextResponse.redirect(new URL(STOKEI_APP_NOT_FOUND_URL));
-  }
 
   try {
-    const stokeiClient = createAPIClient({ appId });
-    await stokeiClient.api
-      .query(currentAppQuery, {
-        domain,
-      })
-      .toPromise();
+    if (!!appId) {
+      const stokeiClient = createAPIClient({ appId });
+      await stokeiClient.api
+        .query(currentAppQuery, {
+          domain,
+        })
+        .toPromise();
+    }
   } catch (error) {
     appId = "";
   }
-
-  if (!appId) {
-    return NextResponse.redirect(new URL(STOKEI_APP_NOT_FOUND_URL));
-  }
-  return NextResponse.rewrite(url);
+  return {
+    appId,
+    isRedirect,
+    url,
+  };
 };

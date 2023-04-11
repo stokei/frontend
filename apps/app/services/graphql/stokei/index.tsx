@@ -942,6 +942,7 @@ export type Module = {
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
+  parent: Scalars['String'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
   videos?: Maybe<Videos>;

@@ -21,6 +21,8 @@ import {
   AdminCoursePageModuleVideoFragment,
 } from "../../graphql/modules.query.graphql.generated";
 import { VideosList } from "../videos-list";
+import { useRouter } from "next/router";
+import { routes } from "@/routes";
 
 export interface ModuleItemProps {
   readonly isFirstModule: boolean;
@@ -40,7 +42,16 @@ export const ModuleItem: FC<ModuleItemProps> = memo(
     onOpenConfirmVideoPreviewModal,
     onOpenConfirmRemoveModuleModal,
   }) => {
+    const router = useRouter();
     const translate = useTranslations();
+
+    const goToAddVideoPage = () => {
+      router.push(
+        routes.admins
+          .course({ course: module.parent })
+          .modules.addVideo({ module: module.id })
+      );
+    };
 
     return (
       <Accordion defaultIndex={!!isFirstModule ? [0] : undefined}>
@@ -62,7 +73,7 @@ export const ModuleItem: FC<ModuleItemProps> = memo(
                 <NotFoundSubtitle>
                   {translate.formatMessage({ id: "videosNotFound" })}
                 </NotFoundSubtitle>
-                <Button onClick={() => {}}>
+                <Button onClick={goToAddVideoPage}>
                   {translate.formatMessage({ id: "addVideo" })}
                 </Button>
               </NotFound>

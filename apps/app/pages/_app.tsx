@@ -94,20 +94,16 @@ function MyApp({
 }
 
 MyApp.getInitialProps = async ({ router, ctx }: any) => {
-  const response = ctx?.res;
   const appId = getAppIdFromNextRouter(router);
   const stokeiGraphQLClient = createAPIClient({
     appId,
     cookies: ctx?.req?.cookies,
   });
-  const privateRoutesRegex = /\/app\/\[appId\]\/(admins|customers)/;
-
   const currentApp = await stokeiGraphQLClient.api
     .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {})
     .toPromise();
 
   let currentAccount;
-
   try {
     currentAccount = await stokeiGraphQLClient.api
       .query<CurrentAccountQuery>(CurrentAccountDocument, {})
@@ -116,24 +112,6 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
 
   const currentAppData = currentApp?.data?.currentApp;
   const currentAccountData = currentAccount?.data?.me;
-  const isAuth = !!currentAccountData;
-
-  if (isAuth && !!currentAppData) {
-    const isAppOwner = currentAccountData?.isOwner;
-    const isAppAdmin = currentAccountData?.roles?.items?.some(
-      (role) => role.name === RoleName.ADMIN
-    );
-
-    const isAdminDashboard = router.pathname?.match(/\/app\/\[appId\]\/admins/);
-    if (!isAppOwner && !isAppAdmin && isAdminDashboard) {
-      response?.writeHead(302, {
-        Location: routes.customers.home,
-      });
-      response?.end();
-      return {};
-    }
-  }
-
   return {
     appId,
     currentApp: currentAppData,

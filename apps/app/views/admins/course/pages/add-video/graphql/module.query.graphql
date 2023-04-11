@@ -1,0 +1,17 @@
+query GetAdminCoursePageModule($moduleId: String!) {
+  module(id: $moduleId) {
+    ...AdminCoursePageModule
+  }
+}
+
+fragment AdminCoursePageModule on Module {
+  id
+  name
+  parent
+  videos {
+    totalCount
+    items {
+      ...AdminCoursePageModuleVideo
+    }
+  }
+}

@@ -7,6 +7,7 @@ import { MAX_IMAGE_SIZE } from "../../constants/file-sizes";
 import { useStokeiUI, useUppy } from "../../hooks";
 import { getUploaderLanguage } from "../../utils/get-uploader-language";
 import { Stack, StackProps } from "../stack";
+import { Box } from "../box";
 
 export interface ImageUploaderProps extends Omit<StackProps, "onError"> {
   readonly id: string;
@@ -61,20 +62,27 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             return bodyData;
           },
         })
-        .use(ImageEditor, { quality: 0.9, target: id }),
+        .use(ImageEditor, { id: "ImageEditor", quality: 0.9 }),
   });
+
+  const hasUploadURL = !!uploadURL;
 
   return (
     <Stack width="full" spacing="4" direction="column" {...props}>
-      <Dashboard
-        width="100%"
-        height="100%"
-        uppy={uppy}
-        target={id}
-        plugins={["ImageEditor"]}
-        doneButtonHandler={() => {}}
-        hideProgressAfterFinish
-      />
+      <Box
+        width="full"
+        flexDirection="column"
+        display={!hasUploadURL ? "none" : "flex"}
+      >
+        <Dashboard
+          width="100%"
+          height="100%"
+          uppy={uppy}
+          plugins={["ImageEditor"]}
+          doneButtonHandler={() => {}}
+          hideProgressAfterFinish
+        />
+      </Box>
     </Stack>
   );
 };

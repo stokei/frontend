@@ -1,0 +1,18 @@
+mutation CreateVideo($input: CreateVideoInput!) {
+  createVideo(input: $input) {
+    id
+    name
+    private
+    active
+    poster {
+      id
+      file {
+        url
+      }
+    }
+    file {
+      url
+      duration
+    }
+  }
+}

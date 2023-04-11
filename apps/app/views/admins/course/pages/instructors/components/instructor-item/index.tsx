@@ -61,7 +61,7 @@ export const InstructorItem: FC<InstructorItemProps> = memo(
               onCloseModal={onCloseRemoveCourseInstructorDrawer}
               onSuccessRemoveCourseInstructor={onRemoveCourseInstructor}
             />
-            <ButtonGroup variant="ghost">
+            <ButtonGroup width="full" variant="ghost">
               <Button onClick={onOpenRemoveCourseInstructorDrawer}>
                 {translate.formatMessage({ id: "removeCourseInstructor" })}
               </Button>
