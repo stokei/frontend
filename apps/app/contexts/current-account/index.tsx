@@ -38,7 +38,7 @@ export const CurrentAccountProvider: FC<
 > = ({ currentAccount: currentAccountProp, children }) => {
   const [currentAccount, setCurrentAccount] = useState<
     CurrentAccount | undefined
-  >(currentAccountProp);
+  >();
 
   const router = useRouter();
 
@@ -72,6 +72,10 @@ export const CurrentAccountProvider: FC<
       setCurrentAccount(data.me);
     }
   }, [data]);
+
+  useEffect(() => {
+    setCurrentAccount(currentAccountProp);
+  }, [currentAccountProp]);
 
   const values: CurrentAccountProviderValues = useMemo(
     () => ({

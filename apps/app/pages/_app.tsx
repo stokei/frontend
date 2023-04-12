@@ -2,6 +2,8 @@ import {
   StokeiGraphQLClientProvider,
   ptBRMessages as ptBRMessagesStokeiGraphQL,
   enUSMessages as enUSMessagesStokeiGraphQL,
+  ACCESS_TOKEN_HEADER_NAME,
+  REFRESH_TOKEN_HEADER_NAME,
 } from "@stokei/graphql";
 import { Messages, TranslationsProvider } from "@stokei/translations";
 import {
@@ -95,9 +97,18 @@ function MyApp({
 
 MyApp.getInitialProps = async ({ router, ctx }: any) => {
   const appId = getAppIdFromNextRouter(router);
+  if (!appId) {
+    return {};
+  }
+  const cookies: Record<string, string> = {
+    [ACCESS_TOKEN_HEADER_NAME]:
+      ctx?.req?.cookies[ACCESS_TOKEN_HEADER_NAME] || "",
+    [REFRESH_TOKEN_HEADER_NAME]:
+      ctx?.req?.cookies[REFRESH_TOKEN_HEADER_NAME] || "",
+  };
   const stokeiGraphQLClient = createAPIClient({
     appId,
-    cookies: ctx?.req?.cookies,
+    cookies,
   });
   const currentApp = await stokeiGraphQLClient.api
     .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {})

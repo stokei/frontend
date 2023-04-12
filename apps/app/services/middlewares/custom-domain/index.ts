@@ -18,6 +18,7 @@ const currentAppDomainQuery = gql`
 `;
 
 export const withCustomDomain = async ({
+  cookies,
   nextUrl,
   domain,
 }: WithDomainProps): Promise<MiddlewareResponse> => {
@@ -26,14 +27,15 @@ export const withCustomDomain = async ({
   let appId;
   let isRedirect = false;
   try {
-    const stokeiClient = createAPIClient();
+    const stokeiClient = createAPIClient({
+      cookies,
+    });
     const currentDomain = await stokeiClient.api
       .query(currentAppDomainQuery, {
         domain,
       })
       .toPromise();
     appId = currentDomain?.data?.domain?.parent;
-    console.log({ appId });
     if (!!appId) {
       if (pathname.startsWith("/app/" + appId)) {
         url.href = url.href

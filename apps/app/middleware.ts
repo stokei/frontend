@@ -1,51 +1,54 @@
+import {
+  ACCESS_TOKEN_HEADER_NAME,
+  REFRESH_TOKEN_HEADER_NAME,
+} from "@stokei/graphql";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { DOMAIN } from "./environments";
-import {
-  withCustomDomain,
-  withLocalDomain,
-  withSubDomain,
-} from "./services/middlewares";
-import { STOKEI_APP_NOT_FOUND_URL } from "./constants/stokei-urls";
 import { URL } from "url";
-import { NextURL } from "next/dist/server/web/next-url";
-import { StokeiAPIConfig, createAPIClient } from "./services/graphql/client";
+import { RoleName } from "./constants/role-names";
+import { STOKEI_APP_NOT_FOUND_URL } from "./constants/stokei-urls";
+import { DOMAIN } from "./environments";
+import { routes } from "./routes";
+import { createAPIClient } from "./services/graphql/client";
+import {
+  CurrentAccountDocument,
+  CurrentAccountQuery,
+} from "./services/graphql/queries/current-account/current-account.query.graphql.generated";
 import {
   CurrentGlobalAppDocument,
   CurrentGlobalAppQuery,
 } from "./services/graphql/queries/current-app/current-app.query.graphql.generated";
 import {
-  ACCESS_TOKEN_HEADER_NAME,
-  REFRESH_TOKEN_HEADER_NAME,
-} from "@stokei/graphql";
-import {
-  CurrentAccountQuery,
-  CurrentAccountDocument,
-} from "./services/graphql/queries/current-account/current-account.query.graphql.generated";
-import { routes } from "./routes";
-import { RoleName } from "./constants/role-names";
-import { Client } from "urql";
+  withCustomDomain,
+  withLocalDomain,
+  withSubDomain,
+} from "./services/middlewares";
 
 const getDomain = ({
   domain,
+  cookies,
   request,
 }: {
   request: NextRequest;
   domain: string;
+  cookies?: Record<string, string>;
 }) => {
   if (domain === "localhost" || !!domain?.match("vercel.app")) {
     return withLocalDomain({
       domain,
+      cookies,
       nextUrl: request.nextUrl,
     });
   } else if (!!domain?.match(DOMAIN)) {
     return withSubDomain({
       domain,
+      cookies,
       nextUrl: request.nextUrl,
     });
   }
   return withCustomDomain({
     domain,
+    cookies,
     nextUrl: request.nextUrl,
   });
 };
@@ -62,17 +65,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const { appId, isRedirect, url } = await getDomain({ domain, request });
+  const cookies: Record<string, string> = {
+    [ACCESS_TOKEN_HEADER_NAME]:
+      request.cookies.get(ACCESS_TOKEN_HEADER_NAME)?.value || "",
+    [REFRESH_TOKEN_HEADER_NAME]:
+      request.cookies.get(REFRESH_TOKEN_HEADER_NAME)?.value || "",
+  };
+
+  const { appId, isRedirect, url } = await getDomain({
+    domain,
+    request,
+    cookies,
+  });
   if (!appId) {
     return NextResponse.redirect(new URL(STOKEI_APP_NOT_FOUND_URL));
   }
-
-  const cookies = {
-    [ACCESS_TOKEN_HEADER_NAME]: request.cookies.get(ACCESS_TOKEN_HEADER_NAME)
-      ?.value,
-    [REFRESH_TOKEN_HEADER_NAME]: request.cookies.get(REFRESH_TOKEN_HEADER_NAME)
-      ?.value,
-  };
 
   try {
     const stokeiClient = createAPIClient({
@@ -98,15 +105,17 @@ export async function middleware(request: NextRequest) {
       const isPrivateRoute = !!url.pathname?.match(privateRoutesRegex);
       const isAdminDashboard = url.pathname?.match(adminDashboardRegex);
       if (isPrivateRoute) {
-        if (!isAuth) {
-          return NextResponse.redirect(authURL);
-        }
-        const isAppOwner = currentAccount?.isOwner;
-        const isAppAdmin = currentAccount?.roles?.items?.some(
-          (role) => role.name === RoleName.ADMIN
-        );
-        if (!isAppOwner && !isAppAdmin && isAdminDashboard) {
-          return NextResponse.redirect(customersDashboardURL);
+        // if (!isAuth) {
+        //   return NextResponse.redirect(authURL);
+        // }
+        if (isAuth) {
+          const isAppOwner = currentAccount?.isOwner;
+          const isAppAdmin = currentAccount?.roles?.items?.some(
+            (role) => role.name === RoleName.ADMIN
+          );
+          if (!isAppOwner && !isAppAdmin && isAdminDashboard) {
+            return NextResponse.redirect(customersDashboardURL);
+          }
         }
       }
     }

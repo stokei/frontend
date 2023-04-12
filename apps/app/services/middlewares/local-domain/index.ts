@@ -13,6 +13,7 @@ const currentAppQuery = gql`
 `;
 
 export const withLocalDomain = async ({
+  cookies,
   nextUrl,
   domain,
 }: WithDomainProps): Promise<MiddlewareResponse> => {
@@ -23,7 +24,7 @@ export const withLocalDomain = async ({
 
   try {
     if (!!appId) {
-      const stokeiClient = createAPIClient({ appId });
+      const stokeiClient = createAPIClient({ appId, cookies });
       await stokeiClient.api
         .query(currentAppQuery, {
           domain,

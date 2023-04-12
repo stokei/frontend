@@ -14,6 +14,7 @@ const currentAppQuery = gql`
 `;
 
 export const withSubDomain = async ({
+  cookies,
   nextUrl,
   domain,
 }: WithDomainProps): Promise<MiddlewareResponse> => {
@@ -23,7 +24,7 @@ export const withSubDomain = async ({
   let isRedirect = false;
 
   try {
-    const stokeiClient = createAPIClient({ appId });
+    const stokeiClient = createAPIClient({ appId, cookies });
     await stokeiClient.api.query(currentAppQuery, {}).toPromise();
     if (url.pathname.startsWith("/app/" + appId)) {
       url.href = url.href

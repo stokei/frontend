@@ -1784,7 +1784,8 @@ export enum PlanType {
   Course = 'COURSE',
   Domain = 'DOMAIN',
   Instructor = 'INSTRUCTOR',
-  Storage = 'STORAGE'
+  Storage = 'STORAGE',
+  Video = 'VIDEO'
 }
 
 export type Plans = {
