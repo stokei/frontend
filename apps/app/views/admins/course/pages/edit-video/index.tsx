@@ -4,6 +4,8 @@ import {
   useCreateVideoUploadURL,
   useTranslations,
 } from "@/hooks";
+import { routes } from "@/routes";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Button,
@@ -16,7 +18,6 @@ import {
   FormErrorMessage,
   Highlight,
   Icon,
-  Image,
   ImageUploader,
   Input,
   InputGroup,
@@ -25,28 +26,29 @@ import {
   Textarea,
   Title,
   VideoUploader,
+  useDisclosure,
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";
-import { Navbar } from "./components/navbar";
-import { useGetAdminCoursePageModuleQuery } from "./graphql/module.query.graphql.generated";
 import { Loading } from "../../loading";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useCreateVideoMutation } from "./graphql/create-video.mutation.graphql.generated";
-import { routes } from "@/routes";
+import { Navbar } from "./components/navbar";
 import { useCreateImageMutation } from "./graphql/create-image.mutation.graphql.generated";
+import { useUpdateVideoMutation } from "./graphql/update-video.mutation.graphql.generated";
+import { useGetAdminCoursePageModuleEditVideoQuery } from "./graphql/module.query.graphql.generated";
+import { useGetAdminCoursePageEditVideoQuery } from "./graphql/video.query.graphql.generated";
+import { RemoveVideoModal } from "./components/remove-video-modal";
 
-interface AddVideoPageProps {}
+interface EditVideoPageProps {}
 interface Poster {
   id: string;
   previewURL: string;
 }
 
-export const AddVideoPage: FC<AddVideoPageProps> = () => {
+export const EditVideoPage: FC<EditVideoPageProps> = () => {
   const [videoDuration, setVideoDuration] = useState<number>(0);
   const [poster, setPoster] = useState<Poster>();
 
@@ -54,9 +56,15 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
+  const {
+    isOpen: isOpenRemoveVideoModal,
+    onClose: onCloseRemoveVideoModal,
+    onOpen: onOpenRemoveVideoModal,
+  } = useDisclosure();
 
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
   const moduleId = useMemo(() => router?.query?.moduleId?.toString(), [router]);
+  const videoId = useMemo(() => router?.query?.videoId?.toString(), [router]);
 
   const validationSchema = z.object({
     name: z.string().min(1, {
@@ -65,24 +73,21 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
     description: z.string(),
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitSuccessful },
-  } = useForm<z.infer<typeof validationSchema>>({
-    resolver: zodResolver(validationSchema),
-  });
-
   const [{ fetching: isLoadingModule, data: dataModule }] =
-    useGetAdminCoursePageModuleQuery({
+    useGetAdminCoursePageModuleEditVideoQuery({
       variables: {
         moduleId: moduleId || "",
       },
     });
+  const [{ fetching: isLoadingCurrentVideo, data: dataCurrentVideo }] =
+    useGetAdminCoursePageEditVideoQuery({
+      variables: {
+        videoId: videoId || "",
+      },
+    });
 
   const [{ fetching: isLoadingCreateVideo }, createVideo] =
-    useCreateVideoMutation();
+    useUpdateVideoMutation();
 
   const [{ fetching: isLoadingCreateImage }, createImage] =
     useCreateImageMutation();
@@ -102,13 +107,36 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
   } = useCreateImageUploadURL();
 
   const courseModule = useMemo(() => dataModule?.module, [dataModule]);
+  const currentVideo = useMemo(
+    () => dataCurrentVideo?.video,
+    [dataCurrentVideo]
+  );
+
   const title = useMemo(
     () =>
-      translate.formatMessage({ id: "addNewVideoToModule" }) +
+      translate.formatMessage({ id: "editVideoOfTheModule" }) +
         " " +
         courseModule?.name || "",
     [courseModule?.name, translate]
   );
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitSuccessful },
+  } = useForm<z.infer<typeof validationSchema>>({
+    resolver: zodResolver(validationSchema),
+  });
+
+  useEffect(() => {
+    if (currentVideo) {
+      reset({
+        name: currentVideo?.name || "",
+        description: currentVideo?.description || "",
+      });
+    }
+  }, [currentVideo, reset]);
 
   const goToModulesPage = () => {
     router.push(routes.admins.course({ course: courseId }).modules.home);
@@ -140,17 +168,21 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
     try {
       const response = await createVideo({
         input: {
-          parent: moduleId || "",
-          file: videoFileId,
-          name,
-          description,
-          duration: videoDuration,
-          poster: poster?.id,
+          data: {
+            file: videoFileId,
+            name,
+            description,
+            duration: videoDuration,
+            poster: poster?.id,
+          },
+          where: {
+            video: videoId || "",
+          },
         },
       });
-      if (!!response?.data?.createVideo) {
+      if (!!response?.data?.updateVideo) {
         onShowToast({
-          title: translate.formatMessage({ id: "videoCreatedSuccessfully" }),
+          title: translate.formatMessage({ id: "videoUpdatedSuccessfully" }),
           status: "success",
         });
         goToModulesPage();
@@ -165,15 +197,26 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
     } catch (error) {}
   };
 
+  const onSuccessRemoveVideo = () => {
+    onCloseRemoveVideoModal();
+    goToModulesPage();
+  };
+
   return (
     <CourseLayout>
       <Navbar />
-      {isLoadingModule ? (
+      {isLoadingCurrentVideo ? (
         <Loading />
       ) : (
         <Container paddingY="5">
+          <RemoveVideoModal
+            videoId={currentVideo?.id}
+            isOpenModal={isOpenRemoveVideoModal}
+            onCloseModal={onCloseRemoveVideoModal}
+            onSuccessRemoveVideo={onSuccessRemoveVideo}
+          />
           <Stack direction="column" spacing="5">
-            <Box>
+            <Stack direction="row" spacing="5" justify="space-between">
               <Button
                 size="sm"
                 variant="link"
@@ -182,7 +225,15 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
               >
                 {translate.formatMessage({ id: "back" })}
               </Button>
-            </Box>
+              <Button
+                size="sm"
+                variant="link"
+                onClick={onOpenRemoveVideoModal}
+                colorScheme="red"
+              >
+                {translate.formatMessage({ id: "removeVideo" })}
+              </Button>
+            </Stack>
             <Card background="background.50">
               <CardBody>
                 <Form onSubmit={handleSubmit(onSubmit)}>
@@ -201,6 +252,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
                           variant="outline"
                           onClick={onStartPosterUpload}
                           isLoading={isLoadingCreatePosterUploadURL}
+                          marginBottom="5"
                         >
                           {translate.formatMessage({ id: "addPoster" })}
                         </Button>
@@ -208,6 +260,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
                       <ImageUploader
                         id="module-poster"
                         uploadURL={posterUploadURL}
+                        previewURL={currentVideo?.poster?.file?.url || ""}
                         onSuccess={onCreatePosterImage}
                         onError={() => {}}
                       />
@@ -222,6 +275,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
                           variant="outline"
                           onClick={onStartVideoUpload}
                           isLoading={isLoadingCreateVideoUploadURL}
+                          marginBottom="5"
                         >
                           {translate.formatMessage({ id: "addVideo" })}
                         </Button>
@@ -229,6 +283,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
                       <VideoUploader
                         id="module-video"
                         uploadURL={videoUploadURL}
+                        previewURL={currentVideo?.file?.url || ""}
                         onStartUpload={onStartVideoUpload}
                         onSuccess={({ duration }) =>
                           setVideoDuration(duration || 0)
@@ -272,7 +327,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
                     </FormControl>
                     <ButtonGroup>
                       <Button type="submit" isLoading={isLoadingCreateVideo}>
-                        {translate.formatMessage({ id: "add" })}
+                        {translate.formatMessage({ id: "save" })}
                       </Button>
                     </ButtonGroup>
                   </Stack>

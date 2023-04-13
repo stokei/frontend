@@ -33,6 +33,7 @@ fragment AdminCoursePageModuleVideo on Video {
   name
   private
   active
+  parent
   authors {
     totalCount
     items {

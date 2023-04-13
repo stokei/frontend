@@ -2,8 +2,8 @@ import { Uppy } from "@uppy/core";
 import { useEffect, useMemo } from "react";
 
 export interface UseUppyConfig {
-  onError: () => void;
-  onSuccess: () => void;
+  onError?: () => void;
+  onSuccess?: () => void;
   getUppy: () => Uppy;
 }
 export const useUppy = ({

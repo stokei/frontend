@@ -593,6 +593,7 @@ export type CreateVideoAuthorInput = {
 
 export type CreateVideoInput = {
   description?: InputMaybe<Scalars['String']>;
+  duration?: InputMaybe<Scalars['Float']>;
   file?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   parent: Scalars['String'];
@@ -2766,6 +2767,8 @@ export type UpdateDataSubscriptionContractInput = {
 
 export type UpdateDataVideoInput = {
   description?: InputMaybe<Scalars['String']>;
+  duration?: InputMaybe<Scalars['Float']>;
+  file?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   poster?: InputMaybe<Scalars['String']>;
   private?: InputMaybe<Scalars['Boolean']>;
@@ -2861,11 +2864,18 @@ export type Video = {
   file?: Maybe<File>;
   id: Scalars['ID'];
   name: Scalars['String'];
+  parent?: Maybe<Scalars['String']>;
   poster?: Maybe<Image>;
   private: Scalars['Boolean'];
   slug: Scalars['String'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+};
+
+
+export type VideoAuthorsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllVideoAuthorsInput>;
+  page?: InputMaybe<PaginationInput>;
 };
 
 export type VideoAuthor = {

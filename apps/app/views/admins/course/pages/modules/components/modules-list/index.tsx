@@ -8,9 +8,6 @@ import { ModuleItem } from "../module-item";
 
 interface ModulesListProps {
   readonly modules?: AdminCoursePageModuleFragment[];
-  readonly onOpenConfirmVideoPreviewModal: (
-    video?: AdminCoursePageModuleVideoFragment
-  ) => void;
   readonly onOpenConfirmRemoveModuleModal: (
     module?: AdminCoursePageModuleFragment
   ) => void;
@@ -18,7 +15,6 @@ interface ModulesListProps {
 
 export const ModulesList: FC<ModulesListProps> = ({
   modules,
-  onOpenConfirmVideoPreviewModal,
   onOpenConfirmRemoveModuleModal,
 }) => {
   return (
@@ -28,7 +24,6 @@ export const ModulesList: FC<ModulesListProps> = ({
           key={module?.id}
           module={module}
           isFirstModule={position === 0}
-          onOpenConfirmVideoPreviewModal={onOpenConfirmVideoPreviewModal}
           onOpenConfirmRemoveModuleModal={onOpenConfirmRemoveModuleModal}
         />
       ))}

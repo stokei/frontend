@@ -26,6 +26,8 @@ export const routesAdmins = {
         home: baseCourseURL + "/modules",
         addVideo: ({ module }: { module: string }) =>
           baseCourseURL + "/modules/" + module + "/videos/add",
+        editVideo: ({ module, video }: { module: string; video: string }) =>
+          baseCourseURL + "/modules/" + module + "/videos/" + video + "/edit",
       },
       products: {
         home: baseCourseURL + "/products",

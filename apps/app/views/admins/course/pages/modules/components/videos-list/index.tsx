@@ -4,26 +4,14 @@ import { AdminCoursePageModuleVideoFragment } from "../../graphql/modules.query.
 import { VideoItem } from "../video-item";
 
 interface VideosListProps {
-  readonly onOpenConfirmVideoPreviewModal: (
-    video?: AdminCoursePageModuleVideoFragment
-  ) => void;
   readonly videos?: AdminCoursePageModuleVideoFragment[];
 }
 
-export const VideosList: FC<VideosListProps> = ({
-  videos,
-  onOpenConfirmVideoPreviewModal,
-}) => {
+export const VideosList: FC<VideosListProps> = ({ videos }) => {
   return (
-    <Stack direction="column" spacing="2">
+    <Stack direction="column" spacing="5">
       {videos?.map((video) => (
-        <VideoItem
-          key={video.id}
-          video={video}
-          onOpenConfirmVideoPreviewModal={() =>
-            onOpenConfirmVideoPreviewModal(video)
-          }
-        />
+        <VideoItem key={video.id} video={video} />
       ))}
     </Stack>
   );

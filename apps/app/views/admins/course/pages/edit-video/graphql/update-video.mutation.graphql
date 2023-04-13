@@ -1,0 +1,5 @@
+mutation UpdateVideo($input: UpdateVideoInput!) {
+  updateVideo(input: $input) {
+    ...AdminCoursePageEditVideo
+  }
+}

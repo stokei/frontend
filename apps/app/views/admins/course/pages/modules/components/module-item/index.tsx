@@ -6,42 +6,33 @@ import {
   AccordionItem,
   AccordionLabel,
   AccordionPanel,
-  Box,
   Button,
   Icon,
   NotFound,
   NotFoundIcon,
   NotFoundSubtitle,
-  Text,
+  Stack,
 } from "@stokei/ui";
 import { FC, memo } from "react";
 
+import { routes } from "@/routes";
+import { useRouter } from "next/router";
 import {
   AdminCoursePageModuleFragment,
   AdminCoursePageModuleVideoFragment,
 } from "../../graphql/modules.query.graphql.generated";
 import { VideosList } from "../videos-list";
-import { useRouter } from "next/router";
-import { routes } from "@/routes";
 
 export interface ModuleItemProps {
   readonly isFirstModule: boolean;
   readonly module: AdminCoursePageModuleFragment;
-  readonly onOpenConfirmVideoPreviewModal: (
-    video?: AdminCoursePageModuleVideoFragment
-  ) => void;
   readonly onOpenConfirmRemoveModuleModal: (
     module?: AdminCoursePageModuleFragment
   ) => void;
 }
 
 export const ModuleItem: FC<ModuleItemProps> = memo(
-  ({
-    module,
-    isFirstModule,
-    onOpenConfirmVideoPreviewModal,
-    onOpenConfirmRemoveModuleModal,
-  }) => {
+  ({ module, isFirstModule, onOpenConfirmRemoveModuleModal }) => {
     const router = useRouter();
     const translate = useTranslations();
 
@@ -58,12 +49,18 @@ export const ModuleItem: FC<ModuleItemProps> = memo(
         <AccordionItem>
           <AccordionButton>
             <AccordionLabel>{module.name}</AccordionLabel>
-            <Box marginRight="5">
+            <Stack
+              width="fit-content"
+              direction="row"
+              spacing="5"
+              marginRight="5"
+            >
+              <Icon name="plus" onClick={goToAddVideoPage} />
               <Icon
                 name="trash"
                 onClick={() => onOpenConfirmRemoveModuleModal(module)}
               />
-            </Box>
+            </Stack>
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel>
@@ -78,10 +75,7 @@ export const ModuleItem: FC<ModuleItemProps> = memo(
                 </Button>
               </NotFound>
             ) : (
-              <VideosList
-                videos={module?.videos?.items || []}
-                onOpenConfirmVideoPreviewModal={onOpenConfirmVideoPreviewModal}
-              />
+              <VideosList videos={module?.videos?.items || []} />
             )}
           </AccordionPanel>
         </AccordionItem>

@@ -2,39 +2,63 @@ import Uppy from "@uppy/core";
 import ImageEditor from "@uppy/image-editor";
 import { Dashboard } from "@uppy/react";
 import XHRUpload from "@uppy/xhr-upload";
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAX_IMAGE_SIZE } from "../../constants/file-sizes";
-import { useStokeiUI, useUppy } from "../../hooks";
+import {
+  useDisclosure,
+  useStokeiUI,
+  useTranslations,
+  useUppy,
+} from "../../hooks";
 import { getUploaderLanguage } from "../../utils/get-uploader-language";
-import { Stack, StackProps } from "../stack";
 import { Box } from "../box";
+import { ButtonGroup } from "../button-group";
+import { IconButton } from "../icon-button";
+import { Image } from "../image";
+import { Stack, StackProps } from "../stack";
 
 export interface ImageUploaderProps extends Omit<StackProps, "onError"> {
   readonly id: string;
   readonly uploadURL: string;
+  readonly previewURL?: string;
   readonly accept?: string[];
   readonly onSuccess: () => void;
   readonly onError: () => void;
+  readonly onRemoveFile?: () => void;
 }
 
 export const ImageUploader: React.FC<ImageUploaderProps> = ({
   id,
   accept,
   uploadURL,
+  previewURL,
   onSuccess,
   onError,
+  onRemoveFile,
   ...props
 }) => {
+  const [file, setFile] = useState<any>();
   const { language } = useStokeiUI();
+  const translate = useTranslations();
+  const {
+    isOpen: isOpenDashboard,
+    onOpen: onOpenDashboard,
+    onClose: onCloseDashboard,
+  } = useDisclosure({
+    startOpen: true,
+  });
 
   const currentLanguage = useMemo(
     () => getUploaderLanguage(language),
     [language]
   );
 
+  const hasUploadURL = useMemo(() => !!uploadURL, [uploadURL]);
+
+  const fileURL = useMemo(() => file && URL.createObjectURL(file), [file]);
+
   const uppy = useUppy({
     onError,
-    onSuccess,
     getUppy: () =>
       new Uppy({
         locale: currentLanguage,
@@ -65,24 +89,57 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         .use(ImageEditor, { id: "ImageEditor", quality: 0.9 }),
   });
 
-  const hasUploadURL = !!uploadURL;
+  useEffect(() => {
+    uppy.on("upload-success", async (result) => {
+      const isSuccess = !!result?.data;
+      if (isSuccess) {
+        setFile(result.data);
+        onCloseDashboard();
+        onSuccess?.();
+      }
+    });
+  }, [uppy, onSuccess, onCloseDashboard]);
+
+  const onShowDashboard = useCallback(() => {
+    setFile(null);
+    onOpenDashboard();
+    onRemoveFile?.();
+  }, [onOpenDashboard, onRemoveFile]);
 
   return (
     <Stack width="full" spacing="4" direction="column" {...props}>
-      <Box
-        width="full"
-        flexDirection="column"
-        display={!hasUploadURL ? "none" : "flex"}
-      >
-        <Dashboard
-          width="100%"
-          height="100%"
-          uppy={uppy}
-          plugins={["ImageEditor"]}
-          doneButtonHandler={() => {}}
-          hideProgressAfterFinish
-        />
-      </Box>
+      {(previewURL || fileURL) && (
+        <Stack direction="column" spacing="5" width="full" maxWidth="40">
+          <Image
+            width="full"
+            height="fit-content"
+            src={fileURL || previewURL}
+            alt={translate.formatMessage({ id: "show" })}
+          />
+          {fileURL && (
+            <ButtonGroup variant="outline">
+              <IconButton name="trash" onClick={onShowDashboard} />
+              <IconButton name="reload" onClick={onShowDashboard} />
+            </ButtonGroup>
+          )}
+        </Stack>
+      )}
+      {isOpenDashboard && (
+        <Box
+          width="full"
+          flexDirection="column"
+          display={!hasUploadURL ? "none" : "flex"}
+        >
+          <Dashboard
+            width="100%"
+            height="100%"
+            uppy={uppy}
+            plugins={["ImageEditor"]}
+            doneButtonHandler={() => {}}
+            hideProgressAfterFinish
+          />
+        </Box>
+      )}
     </Stack>
   );
 };

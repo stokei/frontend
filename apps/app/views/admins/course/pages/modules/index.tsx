@@ -161,9 +161,6 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
               ) : (
                 <ModulesList
                   modules={modules}
-                  onOpenConfirmVideoPreviewModal={
-                    onOpenConfirmVideoPreviewModal
-                  }
                   onOpenConfirmRemoveModuleModal={
                     onOpenConfirmRemoveModuleModal
                   }
