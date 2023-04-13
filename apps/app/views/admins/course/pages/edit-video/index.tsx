@@ -49,6 +49,8 @@ interface Poster {
 }
 
 export const EditVideoPage: FC<EditVideoPageProps> = () => {
+  const [videoUploadIsCompleted, setVideoUploadIsCompleted] =
+    useState<boolean>(false);
   const [videoDuration, setVideoDuration] = useState<number>(0);
   const [poster, setPoster] = useState<Poster>();
 
@@ -169,7 +171,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
       const response = await createVideo({
         input: {
           data: {
-            file: videoFileId,
+            file: videoUploadIsCompleted ? videoFileId : null,
             name,
             description,
             duration: videoDuration,
@@ -200,6 +202,11 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
   const onSuccessRemoveVideo = () => {
     onCloseRemoveVideoModal();
     goToModulesPage();
+  };
+
+  const onUploadComplete = ({ duration }: { duration?: number }) => {
+    setVideoDuration(duration || 0);
+    setVideoUploadIsCompleted(true);
   };
 
   return (
@@ -254,7 +261,11 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
                           isLoading={isLoadingCreatePosterUploadURL}
                           marginBottom="5"
                         >
-                          {translate.formatMessage({ id: "addPoster" })}
+                          {translate.formatMessage({
+                            id: currentVideo?.poster?.file?.url
+                              ? "changeImage"
+                              : "addPoster",
+                          })}
                         </Button>
                       )}
                       <ImageUploader
@@ -277,7 +288,11 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
                           isLoading={isLoadingCreateVideoUploadURL}
                           marginBottom="5"
                         >
-                          {translate.formatMessage({ id: "addVideo" })}
+                          {translate.formatMessage({
+                            id: currentVideo?.file?.url
+                              ? "changeVideo"
+                              : "addVideo",
+                          })}
                         </Button>
                       )}
                       <VideoUploader
@@ -285,9 +300,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
                         uploadURL={videoUploadURL}
                         previewURL={currentVideo?.file?.url || ""}
                         onStartUpload={onStartVideoUpload}
-                        onSuccess={({ duration }) =>
-                          setVideoDuration(duration || 0)
-                        }
+                        onSuccess={onUploadComplete}
                         onError={() => {}}
                       />
                     </FormControl>

@@ -25,6 +25,7 @@ import {
 } from "./graphql/modules.query.graphql.generated";
 import { VideoPreviewModal } from "./components/video-preview-modal";
 import { RemoveModuleModal } from "./components/remove-module-modal";
+import { EditModuleDrawer } from "./components/edit-module";
 
 interface CourseModulesPageProps {}
 
@@ -34,6 +35,8 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
   const [modalVideoPreview, setModalVideoPreview] =
     useState<AdminCoursePageModuleVideoFragment>();
   const [modalModule, setModalModule] =
+    useState<AdminCoursePageModuleFragment>();
+  const [moduleEditDrawer, setModuleEditDrawer] =
     useState<AdminCoursePageModuleFragment>();
   const [modules, setModules] = useState<AdminCoursePageModuleFragment[]>([]);
   const { currentPage, onChangePage } = usePagination();
@@ -52,12 +55,15 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
     onClose: onCloseRemoveModuleModal,
     onOpen: onOpenRemoveModuleModal,
   } = useDisclosure();
+  const {
+    isOpen: isOpenEditModuleDrawer,
+    onClose: onCloseEditModuleDrawer,
+    onOpen: onOpenEditModuleDrawer,
+  } = useDisclosure();
 
-  const onOpenConfirmVideoPreviewModal = (
-    video?: AdminCoursePageModuleVideoFragment
-  ) => {
-    setModalVideoPreview(video);
-    onOpenVideoPreview();
+  const onOpenEditModule = (module?: AdminCoursePageModuleFragment) => {
+    setModuleEditDrawer(module);
+    onOpenEditModuleDrawer();
   };
   const onOpenConfirmRemoveModuleModal = (
     module?: AdminCoursePageModuleFragment
@@ -99,6 +105,20 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
     },
     [onCloseCreateModule]
   );
+  const onEditModule = useCallback(
+    (module: AdminCoursePageModuleFragment) => {
+      setModules((currentModules) => {
+        return currentModules.map((currentModule) => {
+          if (currentModule.id === module.id) {
+            return module;
+          }
+          return currentModule;
+        });
+      });
+      onCloseEditModuleDrawer();
+    },
+    [onCloseEditModuleDrawer]
+  );
   const onRemoveModule = useCallback(
     (module: AdminCoursePageModuleFragment) => {
       setModules((currentModules) =>
@@ -128,6 +148,12 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
             onCloseDrawer={onCloseCreateModule}
             courseId={courseId}
             onSuccess={onAddModule}
+          />
+          <EditModuleDrawer
+            isOpenDrawer={isOpenEditModuleDrawer}
+            onCloseDrawer={onCloseEditModuleDrawer}
+            module={moduleEditDrawer}
+            onSuccess={onEditModule}
           />
           <RemoveModuleModal
             moduleId={modalModule?.id}
@@ -161,6 +187,7 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
               ) : (
                 <ModulesList
                   modules={modules}
+                  onOpenEditModule={onOpenEditModule}
                   onOpenConfirmRemoveModuleModal={
                     onOpenConfirmRemoveModuleModal
                   }

@@ -26,13 +26,19 @@ import { VideosList } from "../videos-list";
 export interface ModuleItemProps {
   readonly isFirstModule: boolean;
   readonly module: AdminCoursePageModuleFragment;
+  readonly onOpenEditModule: (module?: AdminCoursePageModuleFragment) => void;
   readonly onOpenConfirmRemoveModuleModal: (
     module?: AdminCoursePageModuleFragment
   ) => void;
 }
 
 export const ModuleItem: FC<ModuleItemProps> = memo(
-  ({ module, isFirstModule, onOpenConfirmRemoveModuleModal }) => {
+  ({
+    module,
+    isFirstModule,
+    onOpenConfirmRemoveModuleModal,
+    onOpenEditModule,
+  }) => {
     const router = useRouter();
     const translate = useTranslations();
 
@@ -56,6 +62,7 @@ export const ModuleItem: FC<ModuleItemProps> = memo(
               marginRight="5"
             >
               <Icon name="plus" onClick={goToAddVideoPage} />
+              <Icon name="edit" onClick={() => onOpenEditModule(module)} />
               <Icon
                 name="trash"
                 onClick={() => onOpenConfirmRemoveModuleModal(module)}

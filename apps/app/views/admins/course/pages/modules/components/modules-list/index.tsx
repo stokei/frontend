@@ -11,10 +11,12 @@ interface ModulesListProps {
   readonly onOpenConfirmRemoveModuleModal: (
     module?: AdminCoursePageModuleFragment
   ) => void;
+  readonly onOpenEditModule: (module?: AdminCoursePageModuleFragment) => void;
 }
 
 export const ModulesList: FC<ModulesListProps> = ({
   modules,
+  onOpenEditModule,
   onOpenConfirmRemoveModuleModal,
 }) => {
   return (
@@ -24,6 +26,7 @@ export const ModulesList: FC<ModulesListProps> = ({
           key={module?.id}
           module={module}
           isFirstModule={position === 0}
+          onOpenEditModule={onOpenEditModule}
           onOpenConfirmRemoveModuleModal={onOpenConfirmRemoveModuleModal}
         />
       ))}

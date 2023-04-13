@@ -1,0 +1,5 @@
+mutation UpdateModule($input: UpdateModuleInput!) {
+  updateModule(input: $input) {
+    ...AdminCoursePageModule
+  }
+}

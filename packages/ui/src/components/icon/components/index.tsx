@@ -5,6 +5,7 @@ import {
   AiOutlineArrowRight,
   AiOutlineArrowUp,
   AiOutlineBank,
+  AiOutlineEdit,
   AiOutlineEllipsis,
   AiOutlineEnvironment,
   AiOutlineEye,
@@ -130,3 +131,4 @@ export const ExitFullScreenIcon = BsFullscreenExit;
 export const PictureInPictureIcon = RiPictureInPicture2Line;
 export const ExitPictureInPictureIcon = RiPictureInPictureExitLine;
 export const InvoiceIcon = FaFileInvoiceDollar;
+export const EditIcon = AiOutlineEdit;

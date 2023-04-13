@@ -47,6 +47,8 @@ interface Poster {
 }
 
 export const AddVideoPage: FC<AddVideoPageProps> = () => {
+  const [videoUploadIsCompleted, setVideoUploadIsCompleted] =
+    useState<boolean>(false);
   const [videoDuration, setVideoDuration] = useState<number>(0);
   const [poster, setPoster] = useState<Poster>();
 
@@ -68,8 +70,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
@@ -141,7 +142,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
       const response = await createVideo({
         input: {
           parent: moduleId || "",
-          file: videoFileId,
+          file: videoUploadIsCompleted ? videoFileId : null,
           name,
           description,
           duration: videoDuration,
@@ -163,6 +164,11 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
         );
       }
     } catch (error) {}
+  };
+
+  const onUploadComplete = ({ duration }: { duration?: number }) => {
+    setVideoDuration(duration || 0);
+    setVideoUploadIsCompleted(true);
   };
 
   return (
@@ -230,9 +236,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
                         id="module-video"
                         uploadURL={videoUploadURL}
                         onStartUpload={onStartVideoUpload}
-                        onSuccess={({ duration }) =>
-                          setVideoDuration(duration || 0)
-                        }
+                        onSuccess={onUploadComplete}
                         onError={() => {}}
                       />
                     </FormControl>

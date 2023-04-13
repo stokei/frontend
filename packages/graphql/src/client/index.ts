@@ -47,7 +47,7 @@ export const createGraphqlClient = (config: ClientConfig) => {
 
   const exchanges = [
     // ssrCache,
-    // cacheExchange,
+    cacheExchange,
     !!appId &&
       authExchange(async (utils) => {
         const accessToken = config?.getAccessToken();

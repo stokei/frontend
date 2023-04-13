@@ -17,18 +17,18 @@ import {
 import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCreateModuleMutation } from "../../graphql/create-module.mutation.graphql.generated";
+import { useUpdateModuleMutation } from "../../graphql/update-module.mutation.graphql.generated";
 import { AdminCoursePageModuleFragment } from "../../graphql/modules.query.graphql.generated";
 
-interface AddModuleDrawerProps {
-  courseId?: string;
+interface EditModuleDrawerProps {
+  module?: AdminCoursePageModuleFragment;
   isOpenDrawer?: boolean;
   onCloseDrawer: () => void;
   onSuccess?: (module: AdminCoursePageModuleFragment) => void;
 }
 
-export const AddModuleDrawer: FC<AddModuleDrawerProps> = ({
-  courseId,
+export const EditModuleDrawer: FC<EditModuleDrawerProps> = ({
+  module,
   onSuccess,
   isOpenDrawer,
   onCloseDrawer,
@@ -43,8 +43,8 @@ export const AddModuleDrawer: FC<AddModuleDrawerProps> = ({
     }),
   });
 
-  const [{ fetching: isLoadingCreateModule }, createModule] =
-    useCreateModuleMutation();
+  const [{ fetching: isLoadingUpdateModule }, updateModule] =
+    useUpdateModuleMutation();
 
   const {
     register,
@@ -56,23 +56,29 @@ export const AddModuleDrawer: FC<AddModuleDrawerProps> = ({
   });
 
   useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset({});
+    if (module) {
+      reset({
+        name: module?.name || "",
+      });
     }
-  }, [isSubmitSuccessful, reset]);
+  }, [module, reset]);
 
   const onSubmit = async ({ name }: z.infer<typeof validationSchema>) => {
     try {
-      const response = await createModule({
+      const response = await updateModule({
         input: {
-          parent: courseId || "",
-          name,
+          data: {
+            name,
+          },
+          where: {
+            module: module?.id || "",
+          },
         },
       });
-      if (!!response?.data?.createModule) {
-        onSuccess?.(response?.data?.createModule);
+      if (!!response?.data?.updateModule) {
+        onSuccess?.(response?.data?.updateModule);
         onShowToast({
-          title: translate.formatMessage({ id: "moduleCreatedSuccessfully" }),
+          title: translate.formatMessage({ id: "moduleUpdatedSuccessfully" }),
           status: "success",
         });
         return;
@@ -89,7 +95,7 @@ export const AddModuleDrawer: FC<AddModuleDrawerProps> = ({
   return (
     <Drawer isOpen={!!isOpenDrawer} onClose={onCloseDrawer}>
       <DrawerHeader>
-        {translate.formatMessage({ id: "addModule" })}
+        {translate.formatMessage({ id: "editModule" })}
       </DrawerHeader>
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -110,7 +116,7 @@ export const AddModuleDrawer: FC<AddModuleDrawerProps> = ({
               </InputGroup>
               <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
             </FormControl>
-            <Button type="submit" isLoading={isLoadingCreateModule}>
+            <Button type="submit" isLoading={isLoadingUpdateModule}>
               {translate.formatMessage({
                 id: "save",
               })}
