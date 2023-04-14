@@ -43,6 +43,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   filters: "Filters",
   toModule: "to module",
   addPoster: "Add poster",
+  addProduct: "Add product",
+  editProduct: "Edit product",
   poster: "Poster",
   video: "Video",
   back: "Back",

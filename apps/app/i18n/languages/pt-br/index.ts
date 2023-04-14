@@ -37,6 +37,8 @@ export const ptBRMessages = {
   showDetails: "Ver detalhes",
   addModule: "Adicionar módulo",
   addVideo: "Adicionar video",
+  addProduct: "Adicionar produto",
+  editProduct: "Editar produto",
   editModule: "Editar módulo",
   editVideo: "Editar video",
   changeVideo: "Alterar video",

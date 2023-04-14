@@ -162,7 +162,7 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
             onSuccessRemoveModule={onRemoveModule}
           />
 
-          {modules?.length > 1 && (
+          {modules?.length >= 1 && (
             <Box width="full">
               <Button onClick={onOpenCreateModule}>
                 {translate.formatMessage({ id: "addModule" })}

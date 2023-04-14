@@ -31,6 +31,9 @@ export const routesAdmins = {
       },
       products: {
         home: baseCourseURL + "/products",
+        add: baseCourseURL + "/products/add",
+        edit: ({ product }: { product: string }) =>
+          baseCourseURL + "/products/" + product + "/edit",
       },
       students: baseCourseURL + "/students",
     };
