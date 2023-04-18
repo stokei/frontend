@@ -20,6 +20,7 @@ export const RadioCard: React.FC<RadioCardProps> = forwardRef(
         borderWidth="2px"
         paddingX={5}
         paddingY={3}
+        role="radio"
         borderColor={props?.isChecked ? "primary.500" : undefined}
       >
         <Stack width="full" direction="row" spacing="5">

@@ -61,13 +61,6 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
             >
               {translate.formatMessage({ id: "modules" })}
             </SidebarNavLink>
-            <SidebarNavLink
-              as={NextLink}
-              href={baseRoute.products.home}
-              isActive={router.asPath === baseRoute.products.home}
-            >
-              {translate.formatMessage({ id: "products" })}
-            </SidebarNavLink>
           </SidebarBody>
         </Sidebar>
         <AdminCourseLayoutContent>

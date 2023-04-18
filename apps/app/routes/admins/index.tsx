@@ -8,6 +8,11 @@ export const routesAdmins = {
     subscription: ({ subscription }: { subscription?: string }) =>
       baseURL + "/subscriptions/" + subscription,
   },
+  catalogs: {
+    home: baseURL + "/catalogs",
+    catalog: ({ catalog }: { catalog?: string }) =>
+      baseURL + "/catalogs/" + catalog,
+  },
   onboardings: {
     home: baseURL + "/onboardings",
     stripe: {
@@ -29,17 +34,21 @@ export const routesAdmins = {
         editVideo: ({ module, video }: { module: string; video: string }) =>
           baseCourseURL + "/modules/" + module + "/videos/" + video + "/edit",
       },
-      products: {
-        home: baseCourseURL + "/products",
-        add: baseCourseURL + "/products/add",
-        edit: ({ product }: { product: string }) =>
-          baseCourseURL + "/products/" + product + "/edit",
-      },
       students: baseCourseURL + "/students",
     };
   },
   invoices: "/admins/invoices",
   members: "/admins/members",
+  product: ({ product }: { product: string }) => {
+    const baseProductURL = baseURL + "/products/" + product;
+    return {
+      home: baseProductURL,
+    };
+  },
+  products: {
+    home: baseURL + "/products",
+    add: baseURL + "/products/add",
+  },
   settings: {
     home: "/admins/settings",
   },

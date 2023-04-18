@@ -75,6 +75,27 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
+              href={routes.admins.courses}
+              isActive={isActiveRoute(routes.admins.courses)}
+            >
+              {translate.formatMessage({ id: "courses" })}
+            </SidebarNavLink>
+            <SidebarNavLink
+              as={NextLink}
+              href={routes.admins.products.home}
+              isActive={isActiveRoute(routes.admins.products.home)}
+            >
+              {translate.formatMessage({ id: "products" })}
+            </SidebarNavLink>
+            <SidebarNavLink
+              as={NextLink}
+              href={routes.admins.catalogs.home}
+              isActive={isActiveRoute(routes.admins.catalogs.home)}
+            >
+              {translate.formatMessage({ id: "catalogs" })}
+            </SidebarNavLink>
+            <SidebarNavLink
+              as={NextLink}
               href={routes.admins.onboardings.home}
               isActive={isActiveRoute(routes.admins.onboardings.home)}
             >
@@ -100,13 +121,6 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
               isActive={isActiveRoute(routes.admins.members)}
             >
               {translate.formatMessage({ id: "members" })}
-            </SidebarNavLink>
-            <SidebarNavLink
-              as={NextLink}
-              href={routes.admins.courses}
-              isActive={isActiveRoute(routes.admins.courses)}
-            >
-              {translate.formatMessage({ id: "courses" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}

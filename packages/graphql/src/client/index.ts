@@ -55,6 +55,11 @@ export const createGraphqlClient = (config: ClientConfig) => {
 
         return {
           willAuthError(operation) {
+            const hasTokens = !!accessToken && !!refreshToken;
+            if (!hasTokens) {
+              return false;
+            }
+
             const routesWithoutRefreshAccess: string[] = [
               "login",
               "signUp",

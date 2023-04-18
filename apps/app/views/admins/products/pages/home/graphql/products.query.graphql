@@ -1,0 +1,31 @@
+query GetAdminProductPageProducts(
+  $where: WhereDataFindAllProductsInput
+  $orderBy: OrderByDataFindAllProductsInput
+  $page: PaginationInput
+) {
+  products(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AdminProductPageProduct
+    }
+  }
+}
+
+fragment AdminProductPageProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  defaultPrice {
+    ...PriceComponent
+  }
+}

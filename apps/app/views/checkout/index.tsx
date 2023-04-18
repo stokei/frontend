@@ -87,7 +87,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
             currentStep={currentStep}
             onChangeStep={(step) => setCurrentStep(step)}
           >
-            <StepList marginBottom="5" justify="center" align="center">
+            <StepList justify="center" align="center">
               <StepItem
                 title={translate.formatMessage({ id: "subscription" })}
                 stepIndex={CheckoutStep.SUBSCRIPTION}
