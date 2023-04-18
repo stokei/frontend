@@ -136,7 +136,6 @@ export type App = {
   deactivatedAt?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  hero?: Maybe<Hero>;
   icon?: Maybe<Image>;
   id: Scalars['ID'];
   isIntegratedWithStripe: Scalars['Boolean'];
@@ -569,7 +568,6 @@ export type CreatePriceTierInput = {
 };
 
 export type CreateProductInput = {
-  checkoutVisible: Scalars['Boolean'];
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   parent: Scalars['String'];
@@ -1041,6 +1039,7 @@ export type Mutation = {
   updateLanguage: Language;
   updateModule: Module;
   updatePrice: Price;
+  updateProduct: Product;
   updateSubscriptionContract: SubscriptionContract;
   updateVideo: Video;
 };
@@ -1366,6 +1365,11 @@ export type MutationUpdatePriceArgs = {
 };
 
 
+export type MutationUpdateProductArgs = {
+  input: UpdateProductInput;
+};
+
+
 export type MutationUpdateSubscriptionContractArgs = {
   input: UpdateSubscriptionContractInput;
 };
@@ -1621,7 +1625,6 @@ export type OrderByDataFindAllProductsInput = {
   active?: InputMaybe<OrderBy>;
   app?: InputMaybe<OrderBy>;
   avatar?: InputMaybe<OrderBy>;
-  checkoutVisible?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
   deactivatedAt?: InputMaybe<OrderBy>;
@@ -1887,7 +1890,6 @@ export type Product = {
   active: Scalars['Boolean'];
   app?: Maybe<App>;
   avatar?: Maybe<Image>;
-  checkoutVisible: Scalars['Boolean'];
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   deactivatedAt?: Maybe<Scalars['String']>;
@@ -2760,6 +2762,13 @@ export type UpdateDataPriceInput = {
   quantity?: InputMaybe<Scalars['Int']>;
 };
 
+export type UpdateDataProductInput = {
+  avatar?: InputMaybe<Scalars['String']>;
+  defaultPrice?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type UpdateDataSubscriptionContractInput = {
   automaticRenew?: InputMaybe<Scalars['Boolean']>;
   defaultStripePaymentMethod?: InputMaybe<Scalars['String']>;
@@ -2792,6 +2801,11 @@ export type UpdateModuleInput = {
 export type UpdatePriceInput = {
   data: UpdateDataPriceInput;
   where: UpdateWherePriceInput;
+};
+
+export type UpdateProductInput = {
+  data: UpdateDataProductInput;
+  where: UpdateWhereProductInput;
 };
 
 export type UpdateSubscriptionContractInput = {
@@ -2838,6 +2852,10 @@ export type UpdateWhereModuleInput = {
 
 export type UpdateWherePriceInput = {
   price: Scalars['String'];
+};
+
+export type UpdateWhereProductInput = {
+  product: Scalars['String'];
 };
 
 export type UpdateWhereSubscriptionContractInput = {
@@ -3274,7 +3292,6 @@ export type WhereDataFindAllPricesInput = {
 
 export type WhereDataFindAllProductsDataInput = {
   app?: InputMaybe<WhereDataStringInput>;
-  checkoutVisible?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   description?: InputMaybe<WhereDataSearchInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;

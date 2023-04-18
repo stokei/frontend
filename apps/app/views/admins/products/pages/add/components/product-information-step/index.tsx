@@ -73,7 +73,6 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
       const response = await onCreateProduct({
         input: {
           parent: parent || "",
-          checkoutVisible: false,
           name,
           description,
         },

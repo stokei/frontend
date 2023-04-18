@@ -89,13 +89,6 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.admins.catalogs.home}
-              isActive={isActiveRoute(routes.admins.catalogs.home)}
-            >
-              {translate.formatMessage({ id: "catalogs" })}
-            </SidebarNavLink>
-            <SidebarNavLink
-              as={NextLink}
               href={routes.admins.onboardings.home}
               isActive={isActiveRoute(routes.admins.onboardings.home)}
             >
