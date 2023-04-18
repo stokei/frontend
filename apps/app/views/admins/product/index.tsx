@@ -24,6 +24,8 @@ export const ProductPage: FC<ProductPageProps> = () => {
     router.push(routes.admins.products.home);
   };
 
+  const currentProduct = useMemo(() => {}, []);
+
   return (
     <AdminLayout>
       <Navbar />
