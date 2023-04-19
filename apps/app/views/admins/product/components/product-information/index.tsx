@@ -1,4 +1,8 @@
-import { useAPIErrors, useTranslations } from "@/hooks";
+import {
+  useAPIErrors,
+  useCreateImageUploadURL,
+  useTranslations,
+} from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -6,6 +10,7 @@ import {
   Form,
   FormControl,
   FormErrorMessage,
+  ImageUploader,
   Input,
   InputGroup,
   Label,
@@ -15,7 +20,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
@@ -23,6 +28,7 @@ import { useUpdateProductMutation } from "../../graphql/update-product.mutation.
 import { Section } from "../section";
 import { SectionContent } from "../section-content";
 import { SectionInformation } from "../section-information";
+import { useCreateImageMutation } from "@/services/graphql/mutations/create-image/create-image.mutation.graphql.generated";
 
 interface ProductInformationProps {
   currentProduct?: ProductPageProductFragment;
@@ -31,6 +37,7 @@ interface ProductInformationProps {
 export const ProductInformation: FC<ProductInformationProps> = ({
   currentProduct,
 }) => {
+  const [imageId, setImageId] = useState<string>();
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
@@ -51,6 +58,16 @@ export const ProductInformation: FC<ProductInformationProps> = ({
     resolver: zodResolver(validationSchema),
   });
 
+  const {
+    fileId: imageFileId,
+    isLoading: isLoadingCreateImageUploadURL,
+    onStartUpload: onStartImageUpload,
+    uploadURL: imageUploadURL,
+  } = useCreateImageUploadURL();
+
+  const [{ fetching: isLoadingCreateImage }, createImage] =
+    useCreateImageMutation();
+
   const [{ fetching: isLoadingUpdateProduct }, onUpdateProduct] =
     useUpdateProductMutation();
 
@@ -63,6 +80,23 @@ export const ProductInformation: FC<ProductInformationProps> = ({
     }
   }, [currentProduct, reset]);
 
+  const onCreateImageImage = useCallback(async () => {
+    try {
+      const response = await createImage({
+        input: { file: imageFileId || "" },
+      });
+      if (!!response.data?.createImage?.id) {
+        setImageId(response.data?.createImage.id);
+        return;
+      }
+      if (!!response.error?.graphQLErrors?.length) {
+        response.error.graphQLErrors.map((error) =>
+          onShowAPIError({ message: error?.message })
+        );
+      }
+    } catch (error) {}
+  }, [createImage, onShowAPIError, imageFileId]);
+
   const onSubmit = async ({
     name,
     description,
@@ -73,6 +107,7 @@ export const ProductInformation: FC<ProductInformationProps> = ({
           data: {
             name,
             description,
+            avatar: imageId,
           },
           where: {
             product: currentProduct?.id || "",
@@ -98,10 +133,16 @@ export const ProductInformation: FC<ProductInformationProps> = ({
   return (
     <Section>
       <SectionInformation>
-        <Title fontSize="md">
-          {translate.formatMessage({ id: "product" })}
-        </Title>
-        <Text fontSize="sm">{translate.formatMessage({ id: "product" })}</Text>
+        <Stack direction="column" spacing="1">
+          <Title fontSize="lg">
+            {translate.formatMessage({ id: "product" })}
+          </Title>
+          <Text fontSize="md">
+            {translate.formatMessage({
+              id: "fillInYourProductInformationAndStartSellingRightAway",
+            })}
+          </Text>
+        </Stack>
       </SectionInformation>
       <SectionContent>
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -137,6 +178,28 @@ export const ProductInformation: FC<ProductInformationProps> = ({
               <FormErrorMessage>
                 {errors?.description?.message}
               </FormErrorMessage>
+            </FormControl>
+            <FormControl>
+              <Label htmlFor="product-image">
+                {translate.formatMessage({ id: "image" })}
+              </Label>
+              {!imageUploadURL && (
+                <Button
+                  variant="outline"
+                  onClick={onStartImageUpload}
+                  isLoading={isLoadingCreateImageUploadURL}
+                  marginBottom="5"
+                >
+                  {translate.formatMessage({ id: "addImage" })}
+                </Button>
+              )}
+              <ImageUploader
+                id="product-image"
+                uploadURL={imageUploadURL}
+                previewURL={currentProduct?.avatar?.file?.url || ""}
+                onSuccess={onCreateImageImage}
+                onError={() => {}}
+              />
             </FormControl>
             <ButtonGroup width="full" justifyContent="flex-end">
               <Button

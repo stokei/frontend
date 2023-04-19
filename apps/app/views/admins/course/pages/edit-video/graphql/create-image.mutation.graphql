@@ -1,9 +1,0 @@
-mutation CreateImage($input: CreateImageInput!) {
-  createImage(input: $input) {
-    id
-    file {
-      url
-      duration
-    }
-  }
-}

@@ -5,9 +5,9 @@ import {
   useTranslations,
 } from "@/hooks";
 import { routes } from "@/routes";
+import { useCreateImageMutation } from "@/services/graphql/mutations/create-image/create-image.mutation.graphql.generated";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Box,
   Button,
   ButtonGroup,
   Card,
@@ -36,11 +36,10 @@ import { z } from "zod";
 import { CourseLayout } from "../../layout";
 import { Loading } from "../../loading";
 import { Navbar } from "./components/navbar";
-import { useCreateImageMutation } from "./graphql/create-image.mutation.graphql.generated";
-import { useUpdateVideoMutation } from "./graphql/update-video.mutation.graphql.generated";
-import { useGetAdminCoursePageModuleEditVideoQuery } from "./graphql/module.query.graphql.generated";
-import { useGetAdminCoursePageEditVideoQuery } from "./graphql/video.query.graphql.generated";
 import { RemoveVideoModal } from "./components/remove-video-modal";
+import { useGetAdminCoursePageModuleEditVideoQuery } from "./graphql/module.query.graphql.generated";
+import { useUpdateVideoMutation } from "./graphql/update-video.mutation.graphql.generated";
+import { useGetAdminCoursePageEditVideoQuery } from "./graphql/video.query.graphql.generated";
 
 interface EditVideoPageProps {}
 interface Poster {

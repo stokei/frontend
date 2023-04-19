@@ -1,0 +1,18 @@
+query GetProductPagePrices(
+  $where: WhereDataFindAllPricesInput
+  $orderBy: OrderByDataFindAllPricesInput
+  $page: PaginationInput
+) {
+  prices(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    totalCount
+    items {
+      ...PriceComponent
+    }
+  }
+}

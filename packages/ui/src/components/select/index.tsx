@@ -63,7 +63,7 @@ export const Select: React.FC<SelectProps> = forwardRef(
             w="full"
             ref={ref}
             direction="column"
-            spacing="1"
+            spacing="0"
             {...props}
           >
             {children}

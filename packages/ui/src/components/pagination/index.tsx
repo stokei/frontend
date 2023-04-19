@@ -41,6 +41,10 @@ export const Pagination: React.FC<PaginationProps> = ({
       paddingX="5"
       paddingY="3"
       background="background.50"
+      cursor="default"
+      _hover={{
+        background: "background.50",
+      }}
     >
       {currentPage}
     </Button>

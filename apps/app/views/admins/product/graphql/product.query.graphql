@@ -16,10 +16,4 @@ fragment ProductPageProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
-  prices {
-    totalCount
-    items {
-      ...PriceComponent
-    }
-  }
 }

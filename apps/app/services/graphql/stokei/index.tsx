@@ -1605,6 +1605,7 @@ export type OrderByDataFindAllPriceTiersInput = {
 };
 
 export type OrderByDataFindAllPricesInput = {
+  active?: InputMaybe<OrderBy>;
   amount?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
@@ -3273,6 +3274,7 @@ export type WhereDataFindAllPlansInput = {
 };
 
 export type WhereDataFindAllPricesDataInput = {
+  active?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
   inventoryType?: InputMaybe<InventoryType>;

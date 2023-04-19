@@ -5,6 +5,7 @@ import {
   AiOutlineArrowRight,
   AiOutlineArrowUp,
   AiOutlineBank,
+  AiOutlineDollar,
   AiOutlineEdit,
   AiOutlineEllipsis,
   AiOutlineEnvironment,
@@ -132,3 +133,4 @@ export const PictureInPictureIcon = RiPictureInPicture2Line;
 export const ExitPictureInPictureIcon = RiPictureInPictureExitLine;
 export const InvoiceIcon = FaFileInvoiceDollar;
 export const EditIcon = AiOutlineEdit;
+export const PriceIcon = AiOutlineDollar;

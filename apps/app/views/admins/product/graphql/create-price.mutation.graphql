@@ -1,0 +1,5 @@
+mutation CreatePrice($input: CreatePriceInput!) {
+  createPrice(input: $input) {
+    ...PriceComponent
+  }
+}

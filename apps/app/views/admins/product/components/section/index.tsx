@@ -5,7 +5,7 @@ interface SectionProps {}
 
 export const Section: FC<PropsWithChildren<SectionProps>> = ({ children }) => {
   return (
-    <Stack direction={["column", "column", "row", "row"]} spacing="5">
+    <Stack direction="column" spacing="5">
       {children}
     </Stack>
   );

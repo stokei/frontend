@@ -4,6 +4,10 @@ import {
   useCreateVideoUploadURL,
   useTranslations,
 } from "@/hooks";
+import { routes } from "@/routes";
+import { useCreateImageMutation } from "@/services/graphql/mutations/create-image/create-image.mutation.graphql.generated";
+import { useCreateVideoMutation } from "@/services/graphql/mutations/create-video/create-video.mutation.graphql.generated";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Button,
@@ -16,7 +20,6 @@ import {
   FormErrorMessage,
   Highlight,
   Icon,
-  Image,
   ImageUploader,
   Input,
   InputGroup,
@@ -29,16 +32,12 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useCallback, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";
+import { Loading } from "../../loading";
 import { Navbar } from "./components/navbar";
 import { useGetAdminCoursePageModuleQuery } from "./graphql/module.query.graphql.generated";
-import { Loading } from "../../loading";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useCreateVideoMutation } from "./graphql/create-video.mutation.graphql.generated";
-import { routes } from "@/routes";
-import { useCreateImageMutation } from "./graphql/create-image.mutation.graphql.generated";
 
 interface AddVideoPageProps {}
 interface Poster {
