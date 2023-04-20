@@ -21,24 +21,36 @@ export const useTranslations = <TKeys = string>() => {
       currency,
       amount,
       minorUnit,
+      showSymbol,
     }: {
       currency: string;
       amount: number;
       minorUnit?: number;
+      showSymbol?: boolean;
     }) => {
-      if (!amount || !minorUnit || minorUnit < 0) {
-        return;
+      if (!amount) {
+        return 0;
       }
       try {
         return new Intl.NumberFormat(intl.locale, {
+          ...(showSymbol && { style: "currency" }),
           currency,
-        }).format(amount / Math.pow(10, minorUnit));
+          minimumFractionDigits: minorUnit,
+        }).format(amount / Math.pow(10, minorUnit || 0));
       } catch (error) {
-        return undefined;
+        return 0;
       }
     },
     []
   );
+
+  const formatMoneyToNumber = useCallback((money: string) => {
+    if (!money) {
+      return 0;
+    }
+    const justNumbers = money?.trim()?.replace(/\D/g, "");
+    return justNumbers ? parseFloat(justNumbers) : 0;
+  }, []);
 
   const formatDate = useCallback(
     (
@@ -91,5 +103,6 @@ export const useTranslations = <TKeys = string>() => {
     formatDate,
     formatTime,
     formatDateTime,
+    formatMoneyToNumber,
   };
 };

@@ -47,7 +47,16 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
 
   const [{ fetching: isLoadingPrices, data: dataPrices }] =
     useGetProductPagePricesQuery({
+      pause: !productId,
+      requestPolicy: "network-only",
       variables: {
+        where: {
+          AND: {
+            parent: {
+              equals: productId,
+            },
+          },
+        },
         page: {
           limit: 5,
           number: currentPage,
@@ -62,11 +71,53 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
     setPrices(dataPrices?.prices?.items || []);
   }, [dataPrices]);
 
-  const onSuccessPriceAdded = useCallback((price?: PriceComponentFragment) => {
-    if (price) {
-      setPrices((currentPrices) => [...currentPrices, price]);
-    }
-  }, []);
+  const onSuccessPriceAdded = useCallback(
+    (price?: PriceComponentFragment) => {
+      if (price) {
+        setPrices((currentPrices) => [...currentPrices, price]);
+        onCloseAddPriceDrawer();
+      }
+    },
+    [onCloseAddPriceDrawer]
+  );
+
+  const onSuccessPriceActivated = useCallback(
+    (price?: PriceComponentFragment) => {
+      if (price) {
+        setPrices((currentPrices) =>
+          currentPrices?.map((currentPrice) => {
+            if (currentPrice?.id === price?.id) {
+              return {
+                ...currentPrice,
+                active: true,
+              };
+            }
+            return currentPrice;
+          })
+        );
+      }
+    },
+    []
+  );
+
+  const onSuccessPriceDeactivated = useCallback(
+    (price?: PriceComponentFragment) => {
+      if (price) {
+        setPrices((currentPrices) =>
+          currentPrices?.map((currentPrice) => {
+            if (currentPrice?.id === price?.id) {
+              return {
+                ...currentPrice,
+                active: true,
+              };
+            }
+            return currentPrice;
+          })
+        );
+      }
+    },
+    []
+  );
 
   return (
     <Section>
@@ -96,7 +147,7 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
           onSuccess={onSuccessPriceAdded}
           productId={productId}
         />
-        {!!prices?.length ? (
+        {!prices?.length ? (
           <NotFound>
             <NotFoundIcon name="price" />
             <NotFoundSubtitle>
@@ -123,7 +174,11 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
                   </TableHeader>
                   <TableBody>
                     {prices?.map((price) => (
-                      <PriceItem price={price} />
+                      <PriceItem
+                        price={price}
+                        onSuccessPriceActivated={onSuccessPriceActivated}
+                        onSuccessPriceDeactivated={onSuccessPriceDeactivated}
+                      />
                     ))}
                   </TableBody>
                 </Table>

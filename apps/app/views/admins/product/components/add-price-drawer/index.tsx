@@ -17,8 +17,11 @@ import {
   Form,
   FormControl,
   FormErrorMessage,
+  Icon,
   Input,
   InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
   Label,
   Select,
   SelectInput,
@@ -48,8 +51,8 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
 }) => {
   const [interval, setInterval] = useState<IntervalType>(IntervalType.Month);
   const translate = useTranslations();
-  const { onShowToast } = useToast();
   const { currentApp } = useCurrentApp();
+  const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
 
   const validationSchema = z.object({
@@ -70,6 +73,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
@@ -83,33 +87,20 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     return valueWithoutNumbers ? parseInt(valueWithoutNumbers) : 0;
   }, []);
 
-  const convertMoneyToNumbers = useCallback(
-    (value: string) => {
-      return justNumbers(value);
-    },
-    [justNumbers]
-  );
-
   const convertAmountToMoney = useCallback(
     (value: string) => {
-      // CONVERTER MOEDA EM NUMBER
-      // VERIFICAR SE O INTL TEM FUNÇÃO REVERSA PARA TRANSFORMAR MOEDA EM NUMBER
-
-      if (isNaN(parseInt(value)) && parseInt(value) !== 0) {
-        return "";
-      }
-      const amount = convertMoneyToNumbers(value);
+      const amount = translate.formatMoneyToNumber(value);
       if (isNaN(amount) && amount !== 0) {
         return "";
       }
       const moneyValue = translate.formatMoney({
-        currency: currentApp?.currency?.id || "",
         amount,
+        currency: currentApp?.currency?.id || "",
         minorUnit: currentApp?.currency?.minorUnit,
       });
-      return moneyValue || "";
+      return moneyValue;
     },
-    [convertMoneyToNumbers, currentApp, translate]
+    [currentApp, translate]
   );
 
   const onSubmit = async ({
@@ -122,7 +113,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
         input: {
           parent: productId || "",
           nickname: name,
-          amount: convertMoneyToNumbers(amount),
+          amount: translate.formatMoneyToNumber(amount),
           recurring: {
             interval,
             intervalCount: parseInt(intervalCount),
@@ -151,8 +142,19 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     } catch (error) {}
   };
 
+  useEffect(() => {
+    if (!isOpenDrawer) {
+      reset();
+    }
+  }, [isOpenDrawer, reset]);
+
+  const onClose = () => {
+    reset();
+    onCloseDrawer();
+  };
+
   return (
-    <Drawer isOpen={!!isOpenDrawer} onClose={onCloseDrawer}>
+    <Drawer isOpen={!!isOpenDrawer} onClose={onClose}>
       <DrawerHeader>{translate.formatMessage({ id: "addPrice" })}</DrawerHeader>
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -178,10 +180,13 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
                 {translate.formatMessage({ id: "price" })}
               </Label>
               <InputGroup>
+                <InputLeftAddon paddingX="5">
+                  <Text>{currentApp?.currency?.symbol}</Text>
+                </InputLeftAddon>
                 <Input
                   id="amount"
-                  type="tel"
                   placeholder="0.00"
+                  roundedLeft="none"
                   {...register("amount", {
                     onChange(event) {
                       event.target.value = convertAmountToMoney(

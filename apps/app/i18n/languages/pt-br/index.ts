@@ -3,6 +3,10 @@ export const ptBRMessages = {
   loginSuccessfully: "Login efetuado com successo!",
   courseCreatedSuccessfully: "Curso criado com successo!",
   priceCreatedSuccessfully: "Preço criado com successo!",
+  priceActivatedSuccessfully: "Preço ativado com successo!",
+  priceDeactivatedSuccessfully: "Preço desativado com successo!",
+  activate: "Ativar",
+  deactivate: "Desativar",
   courseInstructorCreatedSuccessfully:
     "Instrutor do curso criado com successo!",
   courseInstructorRemoveedSuccessfully:

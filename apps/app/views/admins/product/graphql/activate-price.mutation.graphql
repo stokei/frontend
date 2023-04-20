@@ -1,0 +1,5 @@
+mutation ActivatePrice($input: ActivatePriceInput!) {
+  activatePrice(input: $input) {
+    ...PriceComponent
+  }
+}

@@ -5,6 +5,10 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   loginSuccessfully: "Login successfully!",
   courseCreatedSuccessfully: "Course created successfully!",
   priceCreatedSuccessfully: "Price created successfully!",
+  priceActivatedSuccessfully: "Price activated successfully!",
+  priceDeactivatedSuccessfully: "Price deactivated successfully!",
+  activate: "Activate",
+  deactivate: "Deactivate",
   courseInstructorCreatedSuccessfully:
     "Course instructor created successfully!",
   courseInstructorRemoveedSuccessfully:

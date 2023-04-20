@@ -5,6 +5,7 @@ fragment PriceComponent on Price {
   amount
   discountPercent
   unit
+  active
   currency {
     id
     symbol

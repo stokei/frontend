@@ -7,6 +7,7 @@ import { Icon } from "../icon";
 import { Input, InputProps } from "../input";
 import { InputGroup } from "../input-group";
 import { InputRightElement } from "../input-right-element";
+import { InputRightAddon } from "../input-right-addon";
 
 export interface InputPasswordProps extends InputProps {}
 
@@ -30,8 +31,20 @@ export const InputPassword: React.FC<InputPasswordProps> = forwardRef(
     return (
       <>
         <InputGroup>
-          <Input {...props} onChange={onChange} type="password" ref={ref} />
-          <InputRightElement width="auto" paddingX="2">
+          <Input
+            {...props}
+            onChange={onChange}
+            type="password"
+            borderRight="none"
+            roundedRight="none"
+            ref={ref}
+          />
+          <InputRightAddon
+            width="auto"
+            paddingX="2"
+            background="transparent"
+            borderLeft="none"
+          >
             <Button
               size="xs"
               onClick={onToggleShowPasswordClicked}
@@ -39,7 +52,7 @@ export const InputPassword: React.FC<InputPasswordProps> = forwardRef(
             >
               {translate.formatMessage({ id: isShow ? "hide" : "show" })}
             </Button>
-          </InputRightElement>
+          </InputRightAddon>
         </InputGroup>
         {isShow && <FormHelperText>{showPasswordValue}</FormHelperText>}
       </>

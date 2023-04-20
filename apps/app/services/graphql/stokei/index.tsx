@@ -90,6 +90,10 @@ export type Accounts = {
   totalPages: Scalars['Int'];
 };
 
+export type ActivatePriceInput = {
+  price: Scalars['String'];
+};
+
 export type Address = {
   __typename?: 'Address';
   app?: Maybe<App>;
@@ -635,6 +639,10 @@ export type CustomerPortalSession = {
   url: Scalars['String'];
 };
 
+export type DeactivatePriceInput = {
+  price: Scalars['String'];
+};
+
 export type Domain = {
   __typename?: 'Domain';
   activatedAt?: Maybe<Scalars['String']>;
@@ -969,6 +977,7 @@ export type Modules = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  activatePrice: Price;
   cancelSubscriptionContract: SubscriptionContract;
   changeFromSortedItemToSortedItem: ChangeFromSortedItemToSortedItemResponse;
   changePassword: Scalars['Boolean'];
@@ -1002,6 +1011,7 @@ export type Mutation = {
   createVideo: Video;
   createVideoAuthor: VideoAuthor;
   createVideoUploadURL: CreateFileUploadUrlResponse;
+  deactivatePrice: Price;
   forgotPassword: Scalars['Boolean'];
   login: AuthResponse;
   refreshAccess: AuthResponse;
@@ -1042,6 +1052,11 @@ export type Mutation = {
   updateProduct: Product;
   updateSubscriptionContract: SubscriptionContract;
   updateVideo: Video;
+};
+
+
+export type MutationActivatePriceArgs = {
+  input: ActivatePriceInput;
 };
 
 
@@ -1187,6 +1202,11 @@ export type MutationCreateVideoArgs = {
 
 export type MutationCreateVideoAuthorArgs = {
   input: CreateVideoAuthorInput;
+};
+
+
+export type MutationDeactivatePriceArgs = {
+  input: DeactivatePriceInput;
 };
 
 
