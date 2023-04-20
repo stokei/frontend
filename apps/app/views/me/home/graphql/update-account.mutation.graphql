@@ -1,0 +1,18 @@
+mutation UpdateAccount($input: UpdateAccountInput!) {
+  updateAccount(input: $input) {
+    id
+    fullname
+    isOwner
+    roles {
+      totalCount
+      items {
+        name
+      }
+    }
+    app {
+      id
+      name
+    }
+    email
+  }
+}

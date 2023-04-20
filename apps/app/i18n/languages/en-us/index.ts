@@ -1,6 +1,7 @@
 import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
+  me: "Me",
   successfullyIntegrated: "Successfully integrated!",
   loginSuccessfully: "Login successfully!",
   courseCreatedSuccessfully: "Course created successfully!",
@@ -8,6 +9,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   priceActivatedSuccessfully: "Price activated successfully!",
   priceDeactivatedSuccessfully: "Price deactivated successfully!",
   priceUpdatedSuccessfully: "Price updated successfully!",
+  accountUpdatedSuccessfully: "Account updated successfully!",
   activate: "Activate",
   deactivate: "Deactivate",
   courseInstructorCreatedSuccessfully:

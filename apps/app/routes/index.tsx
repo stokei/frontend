@@ -3,6 +3,7 @@ import { routesAuth } from "./auth";
 import { routesCheckout } from "./checkout";
 import { routesCourse } from "./course";
 import { routesCustomers } from "./customers";
+import { routesMe } from "./me";
 
 export const routes = {
   home: "/",
@@ -12,4 +13,5 @@ export const routes = {
   admins: routesAdmins,
   customers: routesCustomers,
   auth: routesAuth,
+  me: routesMe,
 };

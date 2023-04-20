@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  me: "Eu",
   successfullyIntegrated: "Integrado com successo!",
   loginSuccessfully: "Login efetuado com successo!",
   courseCreatedSuccessfully: "Curso criado com successo!",
@@ -6,6 +7,7 @@ export const ptBRMessages = {
   priceActivatedSuccessfully: "Preço ativado com successo!",
   priceDeactivatedSuccessfully: "Preço desativado com successo!",
   priceUpdatedSuccessfully: "Preço atualizado com successo!",
+  accountUpdatedSuccessfully: "Conta atualizada com successo!",
   activate: "Ativar",
   deactivate: "Desativar",
   courseInstructorCreatedSuccessfully:

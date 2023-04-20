@@ -13,6 +13,7 @@ import {
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { NavbarUserInformationDrawerButton } from "../user-information-drawer-button";
+import { routes } from "@/routes";
 
 export interface NavbarUserInformationDrawerProps {
   isOpen?: boolean;
@@ -38,11 +39,10 @@ export const NavbarUserInformationDrawer: FC<
       </DrawerHeader>
       <DrawerBody>
         <Stack direction="column" spacing="2">
-          <NavbarUserInformationDrawerButton>
+          <NavbarUserInformationDrawerButton
+            onClick={() => router.push(routes.me.home)}
+          >
             {translate.formatMessage({ id: "profile" })}
-          </NavbarUserInformationDrawerButton>
-          <NavbarUserInformationDrawerButton>
-            {translate.formatMessage({ id: "settings" })}
           </NavbarUserInformationDrawerButton>
         </Stack>
       </DrawerBody>
