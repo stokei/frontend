@@ -73,6 +73,16 @@ export const enUSMessages: Record<I18nKey, string> = {
   priceTierNotFound: "Price tier not found",
   priceTiersNotFound: "Price tiers not found",
   pricesNotFound: "Prices not found",
+  recurringPeriodForDailyPricingCannotBeLongerThan365:
+    "The recurring period for daily prices cannot exceed 365",
+  recurringPeriodForWeeklyPricingCannotBeLongerThan52:
+    "The recurring period for weekly prices cannot exceed 52",
+  recurringPeriodForMonthlyPricingCannotBeLongerThan12:
+    "The recurring period for monthly prices cannot exceed 12",
+  recurringPeriodForYearlyPricingCannotBeLongerThan1:
+    "The recurring period for yearly prices cannot exceed 1",
+  priceCannotBeDisabledBecauseItIsTheDefault:
+    "Price cannot be disabled because it is the default.",
   productNotFound: "Product not found",
   productsNotFound: "Products not found",
   recurringNotFound: "Recurring not found",

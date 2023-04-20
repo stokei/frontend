@@ -7,6 +7,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   priceCreatedSuccessfully: "Price created successfully!",
   priceActivatedSuccessfully: "Price activated successfully!",
   priceDeactivatedSuccessfully: "Price deactivated successfully!",
+  priceUpdatedSuccessfully: "Price updated successfully!",
   activate: "Activate",
   deactivate: "Deactivate",
   courseInstructorCreatedSuccessfully:
@@ -30,6 +31,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   descriptionNotFound: "Description not found.",
   loading: "Loading",
   next: "Next",
+  default: "Default",
+  makeDefault: "Make default",
   previous: "Previous",
   chooseYourPlan: "Choose your plan",
   creationDate: "Creation date",

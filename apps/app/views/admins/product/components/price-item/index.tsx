@@ -3,20 +3,41 @@ import { PriceComponentFragment } from "@/components/price/price.fragment.graphq
 import { useTranslations } from "@/hooks";
 import { BillingScheme } from "@/services/graphql/stokei";
 import { getI18nKeyFromRecurringInterval } from "@/utils";
-import { Stack, TableCell, TableRow, Text } from "@stokei/ui";
+import {
+  Badge,
+  ButtonGroup,
+  Stack,
+  TableCell,
+  TableRow,
+  Text,
+} from "@stokei/ui";
 import { FC, memo, useMemo } from "react";
 import { DeactivatePriceButton } from "../deactivate-price-button";
 import { ActivatePriceButton } from "../activate-price-button";
+import { MakeDefaultPriceButton } from "../make-default-price-button";
 
 interface PriceItemProps {
   price?: PriceComponentFragment;
+  isFirstPrice?: boolean;
+  onSuccessPriceUpdated: () => void;
   onSuccessPriceActivated: (price?: PriceComponentFragment) => void;
   onSuccessPriceDeactivated: (price?: PriceComponentFragment) => void;
 }
 
 export const PriceItem: FC<PriceItemProps> = memo(
-  ({ price, onSuccessPriceActivated, onSuccessPriceDeactivated }) => {
+  ({
+    price,
+    isFirstPrice,
+    onSuccessPriceUpdated,
+    onSuccessPriceActivated,
+    onSuccessPriceDeactivated,
+  }) => {
     const translate = useTranslations();
+
+    const isDefaultPrice = useMemo(
+      () => !!price?.isDefault || !!isFirstPrice,
+      [price, isFirstPrice]
+    );
 
     const priceAmount = useMemo(() => {
       return translate.formatMoney({
@@ -44,7 +65,20 @@ export const PriceItem: FC<PriceItemProps> = memo(
 
     return (
       <TableRow key={price?.id}>
-        <TableCell>{price?.nickname}</TableCell>
+        <TableCell>
+          <Stack direction="row" align="center">
+            <Text fontSize="md" lineHeight="shorter" fontWeight="600">
+              {price?.nickname}
+            </Text>
+            {isDefaultPrice && (
+              <Badge colorScheme="gray">
+                {translate.formatMessage({
+                  id: "default",
+                })}
+              </Badge>
+            )}
+          </Stack>
+        </TableCell>
         <TableCell>
           <Stack width="full" direction="row" align="center">
             <Text fontSize="md" lineHeight="shorter" fontWeight="600">
@@ -69,16 +103,27 @@ export const PriceItem: FC<PriceItemProps> = memo(
             ?.toLowerCase()}
         </TableCell>
         <TableCell display="flex" justifyContent="flex-end">
-          {price?.active ? (
-            <DeactivatePriceButton
-              priceId={price?.id}
-              onSuccess={onSuccessPriceDeactivated}
-            />
-          ) : (
-            <ActivatePriceButton
-              priceId={price?.id}
-              onSuccess={onSuccessPriceActivated}
-            />
+          {!isDefaultPrice && (
+            <ButtonGroup alignItems="center" spacing="5">
+              {price?.active ? (
+                <>
+                  <MakeDefaultPriceButton
+                    priceId={price?.id || ""}
+                    productId={price?.parent || ""}
+                    onSuccess={onSuccessPriceUpdated}
+                  />
+                  <DeactivatePriceButton
+                    priceId={price?.id}
+                    onSuccess={onSuccessPriceDeactivated}
+                  />
+                </>
+              ) : (
+                <ActivatePriceButton
+                  priceId={price?.id}
+                  onSuccess={onSuccessPriceActivated}
+                />
+              )}
+            </ButtonGroup>
           )}
         </TableCell>
       </TableRow>

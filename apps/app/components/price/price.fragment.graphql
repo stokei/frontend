@@ -1,11 +1,13 @@
 fragment PriceComponent on Price {
   id
+  parent
   nickname
   fromAmount
   amount
   discountPercent
   unit
   active
+  isDefault
   currency {
     id
     symbol

@@ -48,7 +48,7 @@ export const DeactivatePriceButton: FC<DeactivatePriceButtonProps> = ({
 
   return (
     <Button
-      variant="link"
+      variant="outline"
       isLoading={isLoading}
       onClick={onDeactivatePrice}
       colorScheme="red"

@@ -1841,7 +1841,9 @@ export type Price = {
   fromAmount?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   inventoryType?: Maybe<InventoryType>;
+  isDefault: Scalars['Boolean'];
   nickname?: Maybe<Scalars['String']>;
+  parent: Scalars['String'];
   quantity: Scalars['Float'];
   recurring?: Maybe<Recurring>;
   tiers?: Maybe<PriceTiers>;

@@ -105,9 +105,9 @@ export async function middleware(request: NextRequest) {
       const isPrivateRoute = !!url.pathname?.match(privateRoutesRegex);
       const isAdminDashboard = url.pathname?.match(adminDashboardRegex);
       if (isPrivateRoute) {
-        // if (!isAuth) {
-        //   return NextResponse.redirect(authURL);
-        // }
+        if (!isAuth) {
+          return NextResponse.redirect(authURL);
+        }
         if (isAuth) {
           const isAppOwner = currentAccount?.isOwner;
           const isAppAdmin = currentAccount?.roles?.items?.some(

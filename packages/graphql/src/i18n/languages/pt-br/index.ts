@@ -73,6 +73,16 @@ export const ptBRMessages = {
   priceTierNotFound: "Nível de preço não encontrado",
   priceTiersNotFound: "Níveis de preço não encontrados",
   pricesNotFound: "Preços não encontrados",
+  recurringPeriodForDailyPricingCannotBeLongerThan365:
+    "O período recorrente para preços diários não pode exceder 365",
+  recurringPeriodForWeeklyPricingCannotBeLongerThan52:
+    "O período recorrente para preços semanais não pode exceder 52",
+  recurringPeriodForMonthlyPricingCannotBeLongerThan12:
+    "O período recorrente para preços mensais não pode exceder 12",
+  recurringPeriodForYearlyPricingCannotBeLongerThan1:
+    "O período recorrente para preços anuais não pode exceder 1",
+  priceCannotBeDisabledBecauseItIsTheDefault:
+    "O preço não pode ser desativado porque ele é o padrão",
   productNotFound: "Produto não encontrado",
   productsNotFound: "Produtos não encontrados",
   recurringNotFound: "Recorrente não encontrado",

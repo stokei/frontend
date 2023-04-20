@@ -6,6 +6,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Loading,
   NotFound,
   NotFoundIcon,
   NotFoundSubtitle,
@@ -36,6 +37,7 @@ interface PricesProps {
 }
 
 export const Prices: FC<PricesProps> = ({ productId }) => {
+  const [isFirstPrice, setIsFirstPrice] = useState<boolean>(false);
   const [prices, setPrices] = useState<PriceComponentFragment[]>([]);
   const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();
@@ -45,7 +47,7 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
     onOpen: onOpenAddPriceDrawer,
   } = useDisclosure();
 
-  const [{ fetching: isLoadingPrices, data: dataPrices }] =
+  const [{ fetching: isLoadingPrices, data: dataPrices }, onReloadPrices] =
     useGetProductPagePricesQuery({
       pause: !productId,
       requestPolicy: "network-only",
@@ -69,12 +71,16 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
 
   useEffect(() => {
     setPrices(dataPrices?.prices?.items || []);
+    setIsFirstPrice(dataPrices?.prices?.totalCount === 1);
   }, [dataPrices]);
 
   const onSuccessPriceAdded = useCallback(
     (price?: PriceComponentFragment) => {
       if (price) {
-        setPrices((currentPrices) => [...currentPrices, price]);
+        setPrices((currentPrices) => {
+          setIsFirstPrice(currentPrices?.length === 0);
+          return [...currentPrices, price];
+        });
         onCloseAddPriceDrawer();
       }
     },
@@ -134,7 +140,7 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
             </Text>
           </Stack>
           <ButtonGroup width="full" justifyContent="flex-end">
-            <Button onClick={onOpenAddPriceDrawer}>
+            <Button onClick={onOpenAddPriceDrawer} isDisabled={isLoadingPrices}>
               {translate.formatMessage({ id: "add" })}
             </Button>
           </ButtonGroup>
@@ -147,54 +153,66 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
           onSuccess={onSuccessPriceAdded}
           productId={productId}
         />
-        {!prices?.length ? (
-          <NotFound>
-            <NotFoundIcon name="price" />
-            <NotFoundSubtitle>
-              {translate.formatMessage({ id: "pricesNotFound" })}
-            </NotFoundSubtitle>
-          </NotFound>
+        {isLoadingPrices ? (
+          <Loading />
         ) : (
-          <Stack direction="column" spacing="5">
-            <Box width="full" flexDirection="column" overflow="hidden">
-              <Box width="full" flexDirection="column" overflowX="auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHeaderCell>
-                        {translate.formatMessage({ id: "name" })}
-                      </TableHeaderCell>
-                      <TableHeaderCell>
-                        {translate.formatMessage({ id: "value" })}
-                      </TableHeaderCell>
-                      <TableHeaderCell>
-                        {translate.formatMessage({ id: "period" })}
-                      </TableHeaderCell>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {prices?.map((price) => (
-                      <PriceItem
-                        price={price}
-                        onSuccessPriceActivated={onSuccessPriceActivated}
-                        onSuccessPriceDeactivated={onSuccessPriceDeactivated}
-                      />
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </Box>
-            {dataPrices?.prices?.totalPages &&
-              dataPrices?.prices?.totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  onChangePage={onChangePage}
-                  hasNextPage={!!dataPrices?.prices?.hasNextPage}
-                  hasPreviousPage={!!dataPrices?.prices?.hasPreviousPage}
-                  totalPages={dataPrices?.prices?.totalPages || 1}
-                />
-              )}
-          </Stack>
+          <>
+            {!prices?.length ? (
+              <NotFound>
+                <NotFoundIcon name="price" />
+                <NotFoundSubtitle>
+                  {translate.formatMessage({ id: "pricesNotFound" })}
+                </NotFoundSubtitle>
+              </NotFound>
+            ) : (
+              <Stack direction="column" spacing="5">
+                <Box width="full" flexDirection="column" overflow="hidden">
+                  <Box width="full" flexDirection="column" overflowX="auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHeaderCell>
+                            {translate.formatMessage({ id: "name" })}
+                          </TableHeaderCell>
+                          <TableHeaderCell>
+                            {translate.formatMessage({ id: "value" })}
+                          </TableHeaderCell>
+                          <TableHeaderCell>
+                            {translate.formatMessage({ id: "period" })}
+                          </TableHeaderCell>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {prices?.map((price) => (
+                          <PriceItem
+                            isFirstPrice={isFirstPrice}
+                            price={price}
+                            onSuccessPriceUpdated={() =>
+                              onReloadPrices({ requestPolicy: "network-only" })
+                            }
+                            onSuccessPriceActivated={onSuccessPriceActivated}
+                            onSuccessPriceDeactivated={
+                              onSuccessPriceDeactivated
+                            }
+                          />
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </Box>
+                </Box>
+                {dataPrices?.prices?.totalPages &&
+                  dataPrices?.prices?.totalPages > 1 && (
+                    <Pagination
+                      currentPage={currentPage}
+                      onChangePage={onChangePage}
+                      hasNextPage={!!dataPrices?.prices?.hasNextPage}
+                      hasPreviousPage={!!dataPrices?.prices?.hasPreviousPage}
+                      totalPages={dataPrices?.prices?.totalPages || 1}
+                    />
+                  )}
+              </Stack>
+            )}
+          </>
         )}
       </SectionContent>
     </Section>

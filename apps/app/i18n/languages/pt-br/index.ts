@@ -5,6 +5,7 @@ export const ptBRMessages = {
   priceCreatedSuccessfully: "Preço criado com successo!",
   priceActivatedSuccessfully: "Preço ativado com successo!",
   priceDeactivatedSuccessfully: "Preço desativado com successo!",
+  priceUpdatedSuccessfully: "Preço atualizado com successo!",
   activate: "Ativar",
   deactivate: "Desativar",
   courseInstructorCreatedSuccessfully:
@@ -28,6 +29,8 @@ export const ptBRMessages = {
   descriptionNotFound: "Nenhuma descrição encontrada.",
   loading: "Carregando",
   about: "Sobre",
+  default: "Padrão",
+  makeDefault: "Tornar padrão",
   plan: "Plano",
   plans: "Planos",
   chooseYourPlan: "Escolha seu plano",

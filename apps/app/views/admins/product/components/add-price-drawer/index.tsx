@@ -31,7 +31,7 @@ import {
   Text,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreatePriceMutation } from "../../graphql/create-price.mutation.graphql.generated";
@@ -74,10 +74,17 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
+
+  const intervalCountValue = watch("intervalCount");
+  const isPluralIntervalCount = useMemo(
+    () => intervalCountValue && intervalCountValue !== "1",
+    [intervalCountValue]
+  );
 
   const justNumbers = useCallback((value: string) => {
     if (!value) {
@@ -153,6 +160,12 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     onCloseDrawer();
   };
 
+  const onChangeIntervalCount = (event: any) => {
+    const value = justNumbers(event.target.value);
+    event.target.value = value || "";
+    return event;
+  };
+
   return (
     <Drawer isOpen={!!isOpenDrawer} onClose={onClose}>
       <DrawerHeader>{translate.formatMessage({ id: "addPrice" })}</DrawerHeader>
@@ -210,12 +223,9 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
                     <Input
                       id="intervalCount"
                       type="tel"
-                      placeholder="1"
+                      placeholder={translate.formatMessage({ id: "period" })}
                       {...register("intervalCount", {
-                        onChange(event) {
-                          event.target.value = justNumbers(event.target.value);
-                          return event;
-                        },
+                        onChange: onChangeIntervalCount,
                       })}
                     />
                   </InputGroup>
@@ -230,23 +240,42 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
                     item={(currentInterval) => (
                       <Text>
                         {translate.formatMessage({
-                          id: currentInterval?.toLowerCase() as any,
+                          id: (isPluralIntervalCount
+                            ? `${currentInterval}s`
+                            : currentInterval
+                          )?.toLowerCase() as any,
                         })}
                       </Text>
                     )}
                   />
                   <SelectList>
                     <SelectItem value={IntervalType.Day}>
-                      <Text>{translate.formatMessage({ id: "day" })}</Text>
+                      <Text>
+                        {translate.formatMessage({
+                          id: isPluralIntervalCount ? "days" : "day",
+                        })}
+                      </Text>
                     </SelectItem>
                     <SelectItem value={IntervalType.Week}>
-                      <Text>{translate.formatMessage({ id: "week" })}</Text>
+                      <Text>
+                        {translate.formatMessage({
+                          id: isPluralIntervalCount ? "weeks" : "week",
+                        })}
+                      </Text>
                     </SelectItem>
                     <SelectItem value={IntervalType.Month}>
-                      <Text>{translate.formatMessage({ id: "month" })}</Text>
+                      <Text>
+                        {translate.formatMessage({
+                          id: isPluralIntervalCount ? "months" : "month",
+                        })}
+                      </Text>
                     </SelectItem>
                     <SelectItem value={IntervalType.Year}>
-                      <Text>{translate.formatMessage({ id: "year" })}</Text>
+                      <Text>
+                        {translate.formatMessage({
+                          id: isPluralIntervalCount ? "years" : "year",
+                        })}
+                      </Text>
                     </SelectItem>
                   </SelectList>
                 </Select>
