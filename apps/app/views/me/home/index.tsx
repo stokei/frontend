@@ -140,6 +140,9 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
           <CardBody>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Stack direction="column" spacing="5">
+                <Title fontSize="lg">
+                  {translate.formatMessage({ id: "profile" })}
+                </Title>
                 <FormControl isInvalid={!!errors?.firstname}>
                   <Label htmlFor="firstname">
                     {translate.formatMessage({ id: "firstname" })}

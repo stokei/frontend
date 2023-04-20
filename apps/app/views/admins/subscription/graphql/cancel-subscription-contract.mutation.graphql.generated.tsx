@@ -1,7 +1,7 @@
 import * as Types from '../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
-import { SubscriptionPageSubscriptionContractFragmentDoc } from './subscription-contract.query.graphql.generated';
+import { SubscriptionPageSubscriptionContractFragmentDoc } from '../../../customers/subscription/graphql/subscription-contract.query.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CancelSubscriptionContractMutationVariables = Types.Exact<{

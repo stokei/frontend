@@ -55,6 +55,7 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
         isDisabled={isBlocked}
         onClick={onClickInput}
         variant="unstyled"
+        {...props}
       >
         <Box
           width="full"

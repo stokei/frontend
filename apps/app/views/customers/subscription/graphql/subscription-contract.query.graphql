@@ -1,0 +1,79 @@
+query GetSubscriptionPageSubscriptionContract(
+  $subscriptionContractId: String!
+) {
+  subscriptionContract(id: $subscriptionContractId) {
+    ...SubscriptionPageSubscriptionContract
+  }
+}
+
+fragment SubscriptionPageSubscriptionContract on SubscriptionContract {
+  id
+  type
+  status
+  startAt
+  endAt
+  canceledAt
+  createdAt
+  parent {
+    __typename
+    ... on App {
+      id
+      name
+      accountEmail: email
+      logo {
+        file {
+          url
+        }
+      }
+    }
+    ... on Account {
+      id
+      firstname
+      fullname
+      appEmail: email
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
+  items {
+    totalCount
+    items {
+      recurring {
+        id
+        usageType
+        intervalCount
+        interval
+      }
+      product {
+        __typename
+        ...SubscriptionContractProductCourse
+        ...SubscriptionContractProductPlan
+      }
+    }
+  }
+  paymentMethod {
+    id
+    cardBrand
+    cardExpiryMonth
+    cardExpiryYear
+    lastFourCardNumber
+  }
+}
+
+fragment SubscriptionPageSubscriptionContractProductCourse on Course {
+  courseId: id
+  courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment SubscriptionPageSubscriptionContractProductPlan on Plan {
+  planId: id
+  planName: name
+}

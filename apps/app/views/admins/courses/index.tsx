@@ -73,11 +73,14 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
         ) : (
           <Container paddingY="5">
             {courses?.length > 0 ? (
-              <Box width="full" marginBottom="5">
-                <Button onClick={onOpenAddCourseDrawer}>
-                  {translate.formatMessage({ id: "addCourse" })}
-                </Button>
-              </Box>
+              <>
+                <Box width="full" marginBottom="5">
+                  <Button onClick={onOpenAddCourseDrawer}>
+                    {translate.formatMessage({ id: "addCourse" })}
+                  </Button>
+                </Box>
+                <CoursesList courses={courses} />
+              </>
             ) : (
               <NotFound>
                 <NotFoundIcon name="course" />
@@ -94,7 +97,6 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
                 </Button>
               </NotFound>
             )}
-            <CoursesList courses={courses} />
             {dataGetCourses?.courses?.totalPages &&
               dataGetCourses?.courses?.totalPages > 1 && (
                 <Pagination

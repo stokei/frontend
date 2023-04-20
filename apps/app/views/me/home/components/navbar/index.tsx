@@ -20,12 +20,7 @@ export const Navbar: FC<NavbarProps> = () => {
       background="background.50"
       borderBottomWidth="thin"
     >
-      <Stack width="fit-content" direction="row" spacing="5">
-        <NavbarLogo href={homePageURL} />
-        <Title fontSize="md" lineHeight="shorter">
-          {translate.formatMessage({ id: "me" })}
-        </Title>
-      </Stack>
+      <NavbarLogo href={homePageURL} />
       <NavbarUserInformation />
     </NavbarUI>
   );

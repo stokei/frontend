@@ -1,0 +1,49 @@
+query GetCustomersCoursePageCourse(
+  $where: WhereDataFindAllCourseStudentsInput
+  $page: PaginationInput
+) {
+  courseStudents(where: $where, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...CustomersCoursePageCourseStudent
+    }
+  }
+}
+
+fragment CustomersCoursePageCourseStudent on CourseStudent {
+  id
+  course {
+    ...CustomersCoursePageCourse
+  }
+}
+
+fragment CustomersCoursePageCourse on Course {
+  id
+  name
+  avatar {
+    file {
+      url
+    }
+  }
+  instructors {
+    totalCount
+    items {
+      id
+      instructor {
+        id
+        firstname
+        fullname
+        avatar {
+          file {
+            url
+          }
+        }
+      }
+    }
+  }
+}

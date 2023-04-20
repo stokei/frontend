@@ -6,5 +6,7 @@ import {
 export interface AvatarProps extends ChakraAvatarProps {}
 
 export const Avatar: React.FC<AvatarProps> = ({ children, ...props }) => (
-  <ChakraAvatar {...props}>{children}</ChakraAvatar>
+  <ChakraAvatar borderWidth="thin" borderColor="gray.200" {...props}>
+    {children}
+  </ChakraAvatar>
 );

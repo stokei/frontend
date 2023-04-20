@@ -1,0 +1,5 @@
+mutation CancelSubscriptionContract($input: CancelSubscriptionContractInput!) {
+  cancelSubscriptionContract(input: $input) {
+    ...SubscriptionPageSubscriptionContract
+  }
+}

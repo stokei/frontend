@@ -3076,6 +3076,7 @@ export type WhereDataFindAllColorsInput = {
 };
 
 export type WhereDataFindAllCourseInstructorsDataInput = {
+  app?: InputMaybe<WhereDataStringInput>;
   course?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
@@ -3090,6 +3091,7 @@ export type WhereDataFindAllCourseInstructorsInput = {
 };
 
 export type WhereDataFindAllCourseStudentsDataInput = {
+  app?: InputMaybe<WhereDataStringInput>;
   course?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
