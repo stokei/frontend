@@ -13,7 +13,7 @@ import {
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { Navbar } from "./components/navbar";
-import { useGetAdminCoursePageCourseQuery } from "./graphql/course.query.graphql.generated";
+import { useGetCustomerCoursePageCourseQuery } from "./graphql/course.query.graphql.generated";
 import { CourseLayout } from "../../layout";
 
 interface CourseAboutPageProps {}
@@ -24,7 +24,7 @@ export const CourseAboutPage: FC<CourseAboutPageProps> = () => {
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
 
   const [{ data: dataGetCourse, fetching: isLoadingCourse }] =
-    useGetAdminCoursePageCourseQuery({
+    useGetCustomerCoursePageCourseQuery({
       pause: !courseId,
       variables: {
         courseId: courseId || "",

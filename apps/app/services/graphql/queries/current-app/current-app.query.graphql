@@ -4,6 +4,7 @@ query CurrentGlobalApp {
     name
     isStokei
     isIntegratedWithStripe
+    stripeAccount
     currency {
       id
       symbol

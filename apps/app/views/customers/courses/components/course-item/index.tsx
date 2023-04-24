@@ -59,7 +59,9 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
               <Button
                 width="full"
                 onClick={() =>
-                  router.push(routes.admins.course({ course: course?.id }).home)
+                  router.push(
+                    routes.customers.course({ course: course?.id }).home
+                  )
                 }
               >
                 {translate.formatMessage({ id: "showDetails" })}

@@ -24,7 +24,7 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
   ] = useCreateAppStripeDashboardLinkMutation();
 
   const isActiveRoute = useCallback(
-    (route: string) => router.asPath?.startsWith(route),
+    (route: string) => !!router.asPath?.match(route),
     [router.asPath]
   );
 

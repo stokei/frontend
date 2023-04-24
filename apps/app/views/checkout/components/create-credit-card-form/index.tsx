@@ -25,7 +25,6 @@ export const CreateCreditCardForm: FC<CreateCreditCardFormProps> = ({
   const stripe = useStripe();
   const elements = useElements();
   const { onShowAPIError } = useAPIErrors();
-
   const [{}, onCreatePaymentMethod] = useCreatePaymentMethodMutation();
 
   const onCreateCreditCardPaymentMethod = async () => {

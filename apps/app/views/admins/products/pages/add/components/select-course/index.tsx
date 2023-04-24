@@ -30,7 +30,6 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
   productParent,
   onChangeProductParent,
 }) => {
-  const [course, setCourse] = useState<AddProductCourseSelectFragment>();
   const [courseQuery, setCourseQuery] = useState<string>("");
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -55,17 +54,22 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
 
   const courses = useMemo(() => dataCourses?.courses?.items, [dataCourses]);
 
-  const onChooseProductTypeItem = (
+  const mapCourseToProductParent = (
     currentCourse?: AddProductCourseSelectFragment
   ) => {
-    setCourse(currentCourse);
-    onChangeProductParent(
+    return (
       currentCourse && {
         id: currentCourse?.id || "",
         name: currentCourse?.name,
         avatarURL: currentCourse?.avatar?.file?.url || "",
       }
     );
+  };
+
+  const onChooseProductTypeItem = (
+    currentCourse?: AddProductCourseSelectFragment
+  ) => {
+    onChangeProductParent(mapCourseToProductParent(currentCourse));
   };
 
   return (
@@ -76,7 +80,7 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
         </Label>
         <Select
           isLoading={isLoading}
-          value={course}
+          value={productParent}
           onChooseItem={onChooseProductTypeItem}
           onRemoveChooseItem={onChooseProductTypeItem}
         >
@@ -102,7 +106,10 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
 
           <SelectList>
             {courses?.map((course) => (
-              <SelectItem key={course?.id} value={course}>
+              <SelectItem
+                key={course?.id}
+                value={mapCourseToProductParent(course)}
+              >
                 <Stack direction="row" spacing="4" align="center">
                   <Avatar
                     size="sm"

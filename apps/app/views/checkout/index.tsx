@@ -1,5 +1,4 @@
-import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components";
+import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { CheckoutStep } from "@/constants/checkout-steps";
 import { STRIPE_PUBLISHABLE_KEY } from "@/environments";
 import { useTranslations } from "@/hooks";
@@ -8,28 +7,53 @@ import {
   Card,
   CardBody,
   Container,
-  Image,
-  Stack,
   StepItem,
   StepList,
   StepPanel,
   StepPanels,
   Steps,
-  Title,
 } from "@stokei/ui";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { NextRouter, useRouter } from "next/router";
 import { FC, useEffect, useMemo, useState } from "react";
 import { CheckoutPayment } from "./components/checkout-payment";
-import { CheckoutSummary } from "./components/checkout-summary";
 import { CheckoutResult } from "./components/checkout-result";
+import { CheckoutSummary } from "./components/checkout-summary";
 import { SubscriptionForm } from "./components/subscription-form";
+import { CheckoutPaymentMethodFragment } from "./graphql/payment-methods.query.graphql.generated";
 import { useGetCheckoutProductQuery } from "./graphql/product.query.graphql.generated";
 import { CheckoutLayout } from "./layout";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { CheckoutPaymentMethodFragment } from "./graphql/payment-methods.query.graphql.generated";
+import { createAPIClient } from "@/services/graphql/client";
+import {
+  CurrentGlobalAppDocument,
+  CurrentGlobalAppQuery,
+} from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 
-const stripeLoadElements = loadStripe(STRIPE_PUBLISHABLE_KEY);
+const stripeLoadElementsWithApp = async (router: NextRouter) => {
+  const { appId } = router.query || {};
+  const stokeiClient = createAPIClient({
+    appId: appId ? appId + "" : undefined,
+  });
+  let stripeAccount: string = "";
+  try {
+    const currentAppResponse = await stokeiClient.api
+      .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {})
+      .toPromise();
+
+    if (!!currentAppResponse?.data?.currentApp) {
+      stripeAccount = currentAppResponse?.data?.currentApp?.stripeAccount || "";
+    }
+  } catch (e) {}
+  return loadStripe(
+    STRIPE_PUBLISHABLE_KEY,
+    stripeAccount
+      ? {
+          stripeAccount,
+        }
+      : {}
+  );
+};
 
 interface CheckoutPageProps {
   readonly productId: string;
@@ -48,6 +72,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     CheckoutPaymentMethodFragment | undefined | null
   >();
   const translate = useTranslations();
+  const router = useRouter();
 
   const [{ fetching: isLoadingProduct, data: dataProduct }] =
     useGetCheckoutProductQuery({
@@ -61,6 +86,11 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
   const summaryIsEnabled = useMemo(
     () => !!product && !!paymentIsEnabled && !!currentPaymentMethod,
     [product, paymentIsEnabled, currentPaymentMethod]
+  );
+
+  const stripeLoadElements = useMemo(
+    () => stripeLoadElementsWithApp(router),
+    [router]
   );
 
   useEffect(() => {

@@ -39,7 +39,7 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
   );
 
   return (
-    <Card background="background.50" overflow="hidden" minW="280px">
+    <Card background="background.50" overflow="hidden">
       <CardHeader position="relative" padding="0">
         <Image
           width="full"

@@ -1,10 +1,10 @@
-query GetAdminCoursePageCourse($courseId: String!) {
+query GetCustomerCoursePageCourse($courseId: String!) {
   course(id: $courseId) {
-    ...AdminCoursePageCourse
+    ...CustomerCoursePageCourse
   }
 }
 
-fragment AdminCoursePageCourse on Course {
+fragment CustomerCoursePageCourse on Course {
   id
   name
   description

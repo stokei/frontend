@@ -149,6 +149,7 @@ export type App = {
   phones?: Maybe<Phones>;
   slug: Scalars['String'];
   status: AppStatus;
+  stripeAccount?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };

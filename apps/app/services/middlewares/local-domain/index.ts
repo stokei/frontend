@@ -1,10 +1,11 @@
+import { APP_ID_HEADER_NAME } from "@stokei/graphql";
 import { MiddlewareResponse } from "@/interfaces/middleware-response";
 import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
 import { gql } from "urql";
 
 const currentAppQuery = gql`
-  query CurrentAppLocalDomain($domain: String!) {
+  query CurrentAppLocalDomain {
     currentApp {
       id
       name
@@ -23,13 +24,26 @@ export const withLocalDomain = async ({
   let appId = pathname.split("/")[2];
 
   try {
+    if (!appId?.startsWith("app_")) {
+      if (cookies?.[APP_ID_HEADER_NAME]?.startsWith("app_")) {
+        appId = cookies?.[APP_ID_HEADER_NAME];
+      } else {
+        appId = "";
+      }
+    }
     if (!!appId) {
       const stokeiClient = createAPIClient({ appId, cookies });
-      await stokeiClient.api
-        .query(currentAppQuery, {
-          domain,
-        })
+      const currentAppResponse = await stokeiClient.api
+        .query<{ currentApp: any }>(currentAppQuery, {})
         .toPromise();
+      if (!!currentAppResponse?.data?.currentApp) {
+        if (!url.pathname.startsWith("/app/" + appId)) {
+          url.pathname = url.pathname.replace("/", "/app/" + appId + "/");
+          isRedirect = true;
+        }
+      } else {
+        appId = "";
+      }
     }
   } catch (error) {
     appId = "";

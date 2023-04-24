@@ -77,14 +77,11 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
   const onSuccessPriceAdded = useCallback(
     (price?: PriceComponentFragment) => {
       if (price) {
-        setPrices((currentPrices) => {
-          setIsFirstPrice(currentPrices?.length === 0);
-          return [...currentPrices, price];
-        });
+        onReloadPrices({ requestPolicy: "network-only" });
         onCloseAddPriceDrawer();
       }
     },
-    [onCloseAddPriceDrawer]
+    [onCloseAddPriceDrawer, onReloadPrices]
   );
 
   const onSuccessPriceActivated = useCallback(

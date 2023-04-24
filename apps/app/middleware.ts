@@ -1,5 +1,6 @@
 import {
   ACCESS_TOKEN_HEADER_NAME,
+  APP_ID_HEADER_NAME,
   REFRESH_TOKEN_HEADER_NAME,
 } from "@stokei/graphql";
 import type { NextRequest } from "next/server";
@@ -66,6 +67,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const cookies: Record<string, string> = {
+    [APP_ID_HEADER_NAME]: request.cookies.get(APP_ID_HEADER_NAME)?.value || "",
     [ACCESS_TOKEN_HEADER_NAME]:
       request.cookies.get(ACCESS_TOKEN_HEADER_NAME)?.value || "",
     [REFRESH_TOKEN_HEADER_NAME]:
@@ -78,7 +80,7 @@ export async function middleware(request: NextRequest) {
     cookies,
   });
   if (!appId) {
-    return NextResponse.redirect(new URL(STOKEI_APP_NOT_FOUND_URL));
+    return NextResponse.redirect(STOKEI_APP_NOT_FOUND_URL);
   }
 
   try {
@@ -106,7 +108,9 @@ export async function middleware(request: NextRequest) {
       const isAdminDashboard = url.pathname?.match(adminDashboardRegex);
       if (isPrivateRoute) {
         if (!isAuth) {
-          return NextResponse.redirect(authURL);
+          const response = NextResponse.redirect(authURL);
+          response.cookies.set(APP_ID_HEADER_NAME, appId);
+          return response;
         }
         if (isAuth) {
           const isAppOwner = currentAccount?.isOwner;
@@ -122,9 +126,13 @@ export async function middleware(request: NextRequest) {
   } catch (e) {}
 
   if (isRedirect) {
-    return NextResponse.redirect(url);
+    const response = NextResponse.redirect(url);
+    response.cookies.set(APP_ID_HEADER_NAME, appId);
+    return response;
   }
-  return NextResponse.rewrite(url);
+  const response = NextResponse.rewrite(url);
+  response.cookies.set(APP_ID_HEADER_NAME, appId);
+  return response;
 }
 
 // See "Matching Paths" below to learn more

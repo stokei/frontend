@@ -3,7 +3,7 @@ const baseURL = "/customers";
 export const routesCustomers = {
   home: baseURL,
   courses: baseURL + "/courses",
-  course: ({ course }: { course: string }) => {
+  course: ({ course }: { course?: string }) => {
     const baseCourseURL = baseURL + "/courses/" + course;
 
     return {

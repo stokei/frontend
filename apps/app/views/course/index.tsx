@@ -23,7 +23,7 @@ export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
   const product = useMemo(() => dataGetProduct?.product, [dataGetProduct]);
   const course = useMemo(
     () => (product?.parent?.__typename === "Course" ? product?.parent : null),
-    [dataGetProduct]
+    [product]
   );
 
   return (

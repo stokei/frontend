@@ -6,7 +6,7 @@ import { routes } from "@/routes";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useMemo } from "react";
+import { FC, PropsWithChildren, useCallback, useMemo } from "react";
 
 export interface CourseLayoutProps {}
 
@@ -17,6 +17,11 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
   const translate = useTranslations();
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
   const baseRoute = routes.admins.course({ course: courseId });
+
+  const isActiveRoute = useCallback(
+    (route: string) => !!router.asPath?.match(route),
+    [router.asPath]
+  );
 
   return (
     <SidebarProvider>
@@ -43,21 +48,21 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
             <SidebarNavLink
               as={NextLink}
               href={baseRoute.students}
-              isActive={router.asPath === baseRoute.students}
+              isActive={isActiveRoute(baseRoute.students)}
             >
               {translate.formatMessage({ id: "students" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
               href={baseRoute.instructors}
-              isActive={router.asPath === baseRoute.instructors}
+              isActive={isActiveRoute(baseRoute.instructors)}
             >
               {translate.formatMessage({ id: "instructors" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
               href={baseRoute.modules.home}
-              isActive={router.asPath === baseRoute.modules.home}
+              isActive={isActiveRoute(baseRoute.modules.home)}
             >
               {translate.formatMessage({ id: "modules" })}
             </SidebarNavLink>
