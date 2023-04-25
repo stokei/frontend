@@ -1,12 +1,12 @@
 import { NavbarUserInformation, SidebarOpenButton } from "@/components";
-import { useTranslations } from "@/hooks";
+import { useCustomersCourse } from "@/hooks";
 import { Navbar as NavbarUI, Title } from "@stokei/ui";
 import { FC } from "react";
 
 interface NavbarProps {}
 
 export const Navbar: FC<NavbarProps> = () => {
-  const translate = useTranslations();
+  const { course } = useCustomersCourse();
   return (
     <NavbarUI
       align="center"
@@ -15,7 +15,7 @@ export const Navbar: FC<NavbarProps> = () => {
     >
       <SidebarOpenButton />
       <Title fontSize="md" lineHeight="shorter">
-        {translate.formatMessage({ id: "course" })}
+        {course?.name}
       </Title>
       <NavbarUserInformation />
     </NavbarUI>

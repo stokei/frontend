@@ -10,6 +10,9 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   priceDeactivatedSuccessfully: "Price deactivated successfully!",
   priceUpdatedSuccessfully: "Price updated successfully!",
   accountUpdatedSuccessfully: "Account updated successfully!",
+  stripeOnboarding: "Stripe onboarding",
+  integrateWithStripeAndStartBuildingYourCourses:
+    "Integrate with Stripe and start building your courses.",
   activate: "Activate",
   deactivate: "Deactivate",
   courseInstructorCreatedSuccessfully:

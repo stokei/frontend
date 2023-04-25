@@ -8,6 +8,7 @@ export const routesCustomers = {
 
     return {
       home: baseCourseURL,
+      modules: baseCourseURL + "/modules",
       video: ({ video }: { video: string }) =>
         baseCourseURL + "/videos/" + video,
     };

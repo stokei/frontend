@@ -1807,7 +1807,6 @@ export type PlanFeaturesArgs = {
 
 export enum PlanType {
   Admin = 'ADMIN',
-  Course = 'COURSE',
   Domain = 'DOMAIN',
   Instructor = 'INSTRUCTOR',
   Storage = 'STORAGE',

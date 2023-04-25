@@ -10,16 +10,16 @@ export type GetAppAccountsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAppAccountsQuery = { __typename?: 'Query', accounts: { __typename?: 'Accounts', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }> | null } };
+export type GetAppAccountsQuery = { __typename?: 'Query', accounts: { __typename?: 'Accounts', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Account', id: string, firstname: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }> | null } };
 
-export type AppAccountFragment = { __typename?: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+export type AppAccountFragment = { __typename?: 'Account', id: string, firstname: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
 export const AppAccountFragmentDoc = gql`
     fragment AppAccount on Account {
   id
   firstname
   fullname
-  appEmail: email
+  email
   avatar {
     file {
       url

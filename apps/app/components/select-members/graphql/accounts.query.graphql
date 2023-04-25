@@ -20,7 +20,7 @@ fragment AppAccount on Account {
   id
   firstname
   fullname
-  appEmail: email
+  email
   avatar {
     file {
       url

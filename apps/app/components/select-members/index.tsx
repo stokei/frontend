@@ -25,6 +25,7 @@ import {
   useGetAppAccountsQuery,
 } from "./graphql/accounts.query.graphql.generated";
 import { MemberSelectItem } from "./member-select-item";
+import { useCurrentAccount } from "@/hooks/use-current-account";
 
 interface SelectMembersProps {
   readonly label?: string;
@@ -41,6 +42,7 @@ export const SelectMembers: FC<SelectMembersProps> = ({
 }) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
+  const { currentAccount } = useCurrentAccount();
 
   const validationSchema = z.object({
     searchMember: z.string(),
@@ -86,10 +88,21 @@ export const SelectMembers: FC<SelectMembersProps> = ({
       },
     });
 
-  const members = useMemo(
-    () => dataGetMembers?.accounts?.items || [],
-    [dataGetMembers]
-  );
+  const members = useMemo(() => {
+    const currentAccountMember: AppAccountFragment | undefined = currentAccount
+      ? {
+          id: currentAccount.id,
+          firstname: currentAccount.firstname,
+          fullname: currentAccount.fullname,
+          email: currentAccount.email,
+          avatar: currentAccount.avatar,
+        }
+      : undefined;
+    const membersList = dataGetMembers?.accounts?.items || [];
+    return [currentAccountMember, ...membersList].filter(
+      Boolean
+    ) as AppAccountFragment[];
+  }, [currentAccount, dataGetMembers]);
 
   return (
     <FormControl flex="3">

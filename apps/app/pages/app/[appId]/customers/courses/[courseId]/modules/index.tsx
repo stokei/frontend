@@ -1,10 +1,10 @@
-import { CourseAboutPage } from "@/views/customers/course/pages/about";
+import { CourseModulesPage } from "@/views/customers/course/pages/modules";
 import { NextPage } from "next";
 
 interface Props {}
 
 const Page: NextPage<Props> = () => {
-  return <CourseAboutPage />;
+  return <CourseModulesPage />;
 };
 
 export default Page;

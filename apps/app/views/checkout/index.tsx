@@ -29,6 +29,8 @@ import {
   CurrentGlobalAppDocument,
   CurrentGlobalAppQuery,
 } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
+import { useCurrentAccount } from "@/hooks/use-current-account";
+import { routes } from "@/routes";
 
 const stripeLoadElementsWithApp = async (router: NextRouter) => {
   const { appId } = router.query || {};
@@ -73,6 +75,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
   >();
   const translate = useTranslations();
   const router = useRouter();
+  const { isAuthenticated } = useCurrentAccount();
 
   const [{ fetching: isLoadingProduct, data: dataProduct }] =
     useGetCheckoutProductQuery({
@@ -103,6 +106,22 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     setPaymentSuccessfully(true);
     setResultIsEnabled(true);
     setCurrentStep(CheckoutStep.RESULT);
+  };
+
+  const onSubscriptionFormNextStep = () => {
+    if (!isAuthenticated) {
+      const checkoutURL = routes.checkout.home({
+        product: productId || "",
+      });
+      router.push({
+        pathname: routes.auth.login,
+        query: {
+          redirectTo: checkoutURL,
+        },
+      });
+      return;
+    }
+    setCurrentStep(CheckoutStep.PAYMENT);
   };
 
   return (
@@ -157,7 +176,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                         prices={product?.prices?.items || []}
                         currentPrice={currentPrice}
                         onChoosePrice={setCurrentPrice}
-                        onNextStep={() => setCurrentStep(CheckoutStep.PAYMENT)}
+                        onNextStep={onSubscriptionFormNextStep}
                       />
                     </StepPanel>
                     <StepPanel stepIndex={CheckoutStep.PAYMENT}>

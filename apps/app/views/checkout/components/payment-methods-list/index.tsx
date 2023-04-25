@@ -45,6 +45,7 @@ export const PaymentMethodsList: FC<PaymentMethodsListProps> = ({
 
   const [{ fetching: isLoadingPaymentMethods, data: dataPaymentMethods }] =
     useGetPaymentMethodsQuery({
+      pause: !currentAccount,
       variables: {
         where: {
           AND: {

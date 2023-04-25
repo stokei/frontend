@@ -8,6 +8,9 @@ export const ptBRMessages = {
   priceDeactivatedSuccessfully: "Preço desativado com successo!",
   priceUpdatedSuccessfully: "Preço atualizado com successo!",
   accountUpdatedSuccessfully: "Conta atualizada com successo!",
+  stripeOnboarding: "Integração com a Stripe",
+  integrateWithStripeAndStartBuildingYourCourses:
+    "Faça a integração com a Stripe e comece a criar seus cursos.",
   activate: "Ativar",
   deactivate: "Desativar",
   courseInstructorCreatedSuccessfully:

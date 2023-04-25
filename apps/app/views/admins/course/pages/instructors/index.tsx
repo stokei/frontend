@@ -27,6 +27,7 @@ export const CourseInstructorsPage: FC<CourseInstructorsPageProps> = () => {
     { data: dataGetCourseInstructors, fetching: isLoadingCourseInstructors },
   ] = useGetAdminCoursePageCourseInstructorsQuery({
     pause: !courseId,
+    requestPolicy: "network-only",
     variables: {
       page: {
         limit: 10,
