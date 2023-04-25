@@ -1,3 +1,4 @@
+import { routes } from "@/routes";
 import {
   CustomerCoursePageCourseFragment,
   useGetCustomerCoursePageCourseQuery,
@@ -35,13 +36,23 @@ export const CustomersCourseProvider: FC<
   const router = useRouter();
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
 
-  const [{ data: dataGetCourse, fetching: isLoadingCourse }] =
-    useGetCustomerCoursePageCourseQuery({
-      pause: !courseId,
-      variables: {
-        courseId: courseId || "",
-      },
-    });
+  const [
+    { data: dataGetCourse, fetching: isLoadingCourse, error: errorGetCourse },
+  ] = useGetCustomerCoursePageCourseQuery({
+    pause: !courseId,
+    variables: {
+      courseId: courseId || "",
+    },
+  });
+
+  useEffect(() => {
+    const studentisUnauthorized = errorGetCourse?.graphQLErrors?.some(
+      (e) => (e.extensions?.response as any)?.statusCode === 403
+    );
+    if (!!studentisUnauthorized) {
+      router.push(routes.notFound);
+    }
+  }, [errorGetCourse, router]);
 
   useEffect(() => {
     setCourse(dataGetCourse?.course);

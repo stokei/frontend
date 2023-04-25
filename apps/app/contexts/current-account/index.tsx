@@ -41,8 +41,7 @@ export const CurrentAccountProvider: FC<
   >();
 
   const router = useRouter();
-
-  const [{ fetching: isLoading, data }] = useCurrentAccountQuery({
+  const [{ fetching: isLoading, data, error }] = useCurrentAccountQuery({
     pause: !!currentAccountProp,
   });
 

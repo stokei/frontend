@@ -1,29 +1,16 @@
 import posterImage from "@/assets/no-image.png";
-import NextLink from "next/link";
 import { useCustomersCourse, useTranslations } from "@/hooks";
-import {
-  Badge,
-  Box,
-  ButtonGroup,
-  Icon,
-  IconButton,
-  Image,
-  Link,
-  Stack,
-  Text,
-  Title,
-} from "@stokei/ui";
-import { FC, memo, useCallback, useMemo } from "react";
-import { CustomersCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
-import { useRouter } from "next/router";
 import { routes } from "@/routes";
+import { Badge, Box, Image, Link, Stack, Text, Title } from "@stokei/ui";
+import NextLink from "next/link";
+import { FC, memo, useMemo } from "react";
+import { CustomersCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
 
 interface VideoItemProps {
   readonly video?: CustomersCoursePageModuleVideoFragment;
 }
 
 export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
-  const router = useRouter();
   const translate = useTranslations();
 
   const { course } = useCustomersCourse();
