@@ -21,7 +21,7 @@ export const Alerts: FC<AlertsProps> = () => {
   const { currentApp } = useCurrentApp();
 
   const hasIntegrations = useMemo(
-    () => !currentApp?.isIntegratedWithStripe,
+    () => !currentApp?.isIntegratedWithStripe && !currentApp?.isStokei,
     [currentApp]
   );
 
