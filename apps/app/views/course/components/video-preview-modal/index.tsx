@@ -24,11 +24,7 @@ export const VideoPreviewModal: FC<VideoPreviewModalProps> = ({
         <Title size="md">{videoName}</Title>
       </ModalHeader>
       <ModalBody>
-        <VideoPlayer
-          id={"my-preview-player" + videoId}
-          poster=""
-          src={videoURL || ""}
-        />
+        <VideoPlayer id={"my-preview-player" + videoId} src={videoURL || ""} />
       </ModalBody>
     </Modal>
   );

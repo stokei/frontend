@@ -1,4 +1,6 @@
+// @ts-ignore
 import enUS from "@uppy/locales/lib/en_US";
+// @ts-ignore
 import ptBR from "@uppy/locales/lib/pt_BR";
 
 import { Language } from "../../interfaces";

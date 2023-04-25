@@ -1,10 +1,10 @@
 import { Stack } from "@stokei/ui";
 import { FC } from "react";
-import { AdminCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
+import { CustomersCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
 import { VideoItem } from "../video-item";
 
 interface VideosListProps {
-  readonly videos?: AdminCoursePageModuleVideoFragment[];
+  readonly videos?: CustomersCoursePageModuleVideoFragment[];
 }
 
 export const VideosList: FC<VideosListProps> = ({ videos }) => {

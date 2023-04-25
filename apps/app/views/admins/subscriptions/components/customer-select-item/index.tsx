@@ -1,6 +1,6 @@
+import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { Avatar, SelectItem, Stack, Text } from "@stokei/ui";
 import { FC, memo } from "react";
-import { AppAccountFragment } from "../../graphql/accounts.query.graphql.generated";
 
 interface CustomerSelectItemProps {
   readonly customer?: AppAccountFragment;
