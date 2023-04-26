@@ -56,6 +56,7 @@ function MyApp({
   Component,
   pageProps,
   appId,
+  cookies,
   currentApp,
   currentAccount,
   themeColors,
@@ -65,8 +66,9 @@ function MyApp({
     () =>
       createAPIClient({
         appId,
+        cookies,
       }),
-    [appId]
+    [appId, cookies]
   );
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
@@ -100,31 +102,37 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
   if (!appId) {
     return {};
   }
-  const cookies: Record<string, string> = {
-    [ACCESS_TOKEN_HEADER_NAME]:
-      ctx?.req?.cookies[ACCESS_TOKEN_HEADER_NAME] || "",
-    [REFRESH_TOKEN_HEADER_NAME]:
-      ctx?.req?.cookies[REFRESH_TOKEN_HEADER_NAME] || "",
-  };
+  const cookies: Record<string, string> = ctx?.req?.cookies;
   const stokeiGraphQLClient = createAPIClient({
     appId,
     cookies,
   });
   const currentApp = await stokeiGraphQLClient.api
-    .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {})
+    .query<CurrentGlobalAppQuery>(
+      CurrentGlobalAppDocument,
+      {},
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   let currentAccount;
   try {
     currentAccount = await stokeiGraphQLClient.api
-      .query<CurrentAccountQuery>(CurrentAccountDocument, {})
+      .query<CurrentAccountQuery>(
+        CurrentAccountDocument,
+        {},
+        { requestPolicy: "network-only" }
+      )
       .toPromise();
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
   const currentAppData = currentApp?.data?.currentApp;
   const currentAccountData = currentAccount?.data?.me;
   return {
     appId,
+    cookies,
     currentApp: currentAppData,
     currentAccount: currentAccountData,
     themeColors: formatAppColorsToThemeColors(

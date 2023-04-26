@@ -1,0 +1,38 @@
+query GetCustomersCoursePageVideo($videoId: String!) {
+  video(id: $videoId) {
+    ...CustomersCoursePageVideo
+  }
+}
+
+fragment CustomersCoursePageVideo on Video {
+  id
+  name
+  description
+  private
+  active
+  parent
+  authors {
+    totalCount
+    items {
+      author {
+        id
+        fullname
+        avatar {
+          file {
+            url
+          }
+        }
+      }
+    }
+  }
+  poster {
+    id
+    file {
+      url
+    }
+  }
+  file {
+    url
+    duration
+  }
+}

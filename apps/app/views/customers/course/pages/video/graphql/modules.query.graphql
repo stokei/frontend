@@ -1,0 +1,29 @@
+query GetCustomersCoursePageVideoModules(
+  $where: WhereDataFindAllModulesInput
+  $orderBy: OrderByDataFindAllModulesInput
+  $page: PaginationInput
+) {
+  modules(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...CustomersCoursePageVideoModule
+    }
+  }
+}
+
+fragment CustomersCoursePageVideoModule on Module {
+  id
+  name
+  parent
+  videos {
+    totalCount
+    items {
+      ...CustomersCoursePageVideo
+    }
+  }
+}

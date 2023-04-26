@@ -1,86 +1,160 @@
-import { useCustomersCourse, useTranslations } from "@/hooks";
-import { getProductURL } from "@/utils";
+import { useCustomersCourse, usePagination, useTranslations } from "@/hooks";
+import noImage from "@/assets/no-image.png";
+import { OrderBy } from "@/services/graphql/stokei";
 import {
-  Avatar,
   Box,
+  Card,
+  CardBody,
+  CardHeader,
   Container,
   Description,
   Image,
+  NotFound,
+  NotFoundIcon,
+  NotFoundSubtitle,
+  Pagination,
   Stack,
-  Text,
   Title,
+  VideoPlayer,
 } from "@stokei/ui";
-import { FC } from "react";
-import { CourseLayout } from "../../layout";
+import { useRouter } from "next/router";
+import { FC, useMemo } from "react";
 import { Navbar } from "../../components/navbar";
+import { CourseLayout } from "../../layout";
+import { ModuleLoading } from "./components/module-loading";
+import { ModulesList } from "./components/modules-list";
+import { useGetCustomersCoursePageVideoModulesQuery } from "./graphql/modules.query.graphql.generated";
+import { useGetCustomersCoursePageVideoQuery } from "./graphql/video.query.graphql.generated";
 
 interface CourseVideoPageProps {}
 
 const CourseVideoPage: FC<CourseVideoPageProps> = () => {
+  const router = useRouter();
   const translate = useTranslations();
-
   const { course } = useCustomersCourse();
+  const { currentPage, onChangePage } = usePagination();
+
+  const videoId = useMemo(() => router?.query?.videoId?.toString(), [router]);
+  const [{ fetching: isLoadingGetVideo, data: dataGetVideo }] =
+    useGetCustomersCoursePageVideoQuery({
+      pause: !videoId,
+      variables: {
+        videoId: videoId || "",
+      },
+    });
+
+  const [{ fetching: isLoadingModules, data: dataModules }] =
+    useGetCustomersCoursePageVideoModulesQuery({
+      pause: !course,
+      variables: {
+        page: {
+          limit: 10,
+          number: currentPage,
+        },
+        where: {
+          AND: {
+            parent: {
+              equals: course?.id,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: OrderBy.Asc,
+        },
+      },
+    });
+
+  const modules = useMemo(
+    () => dataModules?.modules?.items || [],
+    [dataModules]
+  );
+
+  const video = useMemo(() => dataGetVideo?.video, [dataGetVideo]);
+
+  const activeModuleIndex = useMemo(() => {
+    const moduleActiveIndex = modules?.findIndex(
+      (module) =>
+        !!module.videos?.items?.find(
+          (moduleVideo) => moduleVideo?.id === video?.id
+        )
+    );
+    return moduleActiveIndex || 0;
+  }, [modules, video]);
 
   return (
     <Container paddingY="5">
-      <Stack direction="column" spacing="5">
-        <Stack
-          direction={["column", "column", "row", "row"]}
-          spacing="5"
-          align="center"
-        >
-          <Image
-            width="24"
-            height="fit-content"
-            rounded="sm"
-            src={getProductURL(course?.avatar?.file?.url)}
-            alt={translate.formatMessage({ id: "product" })}
-          />
-          <Stack direction="column" spacing="4">
-            <Title fontSize="lg">{course?.name}</Title>
-          </Stack>
-        </Stack>
-
-        <Box width="full" flexDirection="row">
-          <Description>
-            {course?.description ||
-              translate.formatMessage({ id: "descriptionNotFound" })}
-          </Description>
+      <Stack direction={["column", "column", "row", "row"]} spacing="5">
+        <Box flex="2">
+          <Card background="background.50" overflow="hidden">
+            <CardHeader padding="0">
+              {video?.file ? (
+                <VideoPlayer
+                  id="video"
+                  src={video?.file?.url || ""}
+                  roundedBottom="none"
+                />
+              ) : (
+                <Image
+                  width="full"
+                  src={video?.poster?.file?.url || ""}
+                  fallbackSrc={noImage.src}
+                  alt={video?.name}
+                />
+              )}
+            </CardHeader>
+            <CardBody>
+              <Stack direction="column" spacing="2">
+                <Title fontSize="lg">{video?.name}</Title>
+                <Box>
+                  {!!course?.instructors?.items?.length && (
+                    <Description>
+                      {course?.instructors?.items
+                        ?.map((instructor) => instructor.instructor?.fullname)
+                        .join(", ")}
+                    </Description>
+                  )}
+                </Box>
+                {video?.description && (
+                  <Description>{video?.description}</Description>
+                )}
+              </Stack>
+            </CardBody>
+          </Card>
         </Box>
-
-        <Stack direction="column" spacing="5">
-          <Title fontSize="md">
-            {translate.formatMessage({ id: "instructors" })}
-          </Title>
+        <Box flex="1">
           <Stack direction="column" spacing="5">
-            {!course?.instructors?.totalCount ? (
-              <Description>
-                {translate.formatMessage({ id: "courseInstructorsNotFound" })}
-              </Description>
+            {isLoadingModules ? (
+              <ModuleLoading />
             ) : (
               <>
-                {course?.instructors?.items?.map(({ instructor }) => (
-                  <Stack
-                    key={instructor.id}
-                    direction="row"
-                    spacing="5"
-                    align="center"
-                  >
-                    <Avatar
-                      size="md"
-                      name={instructor?.fullname}
-                      src={instructor?.avatar?.file?.url || ""}
-                    />
-                    <Stack direction="column" spacing="0">
-                      <Title fontSize="sm">{instructor?.fullname}</Title>
-                      <Text fontSize="sm">{instructor?.email}</Text>
-                    </Stack>
-                  </Stack>
-                ))}
+                {!modules?.length ? (
+                  <NotFound>
+                    <NotFoundIcon name="video" />
+                    <NotFoundSubtitle>
+                      {translate.formatMessage({ id: "modulesNotFound" })}
+                    </NotFoundSubtitle>
+                  </NotFound>
+                ) : (
+                  <ModulesList
+                    activeModuleIndex={activeModuleIndex}
+                    modules={modules}
+                  />
+                )}
               </>
             )}
+
+            {dataModules?.modules?.totalPages &&
+              dataModules?.modules?.totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  onChangePage={onChangePage}
+                  hasNextPage={!!dataModules?.modules?.hasNextPage}
+                  hasPreviousPage={!!dataModules?.modules?.hasPreviousPage}
+                  totalPages={dataModules?.modules?.totalPages || 1}
+                />
+              )}
           </Stack>
-        </Stack>
+        </Box>
       </Stack>
     </Container>
   );

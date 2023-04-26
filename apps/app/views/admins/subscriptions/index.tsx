@@ -66,6 +66,9 @@ export const SubscriptionContractsPage: FC<
         },
         where: {
           AND: {
+            parent: {
+              startsWith: "acc_",
+            },
             app: {
               equals: currentApp?.id,
             },

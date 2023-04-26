@@ -2,6 +2,7 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  informations: "Informations",
   successfullyIntegrated: "Successfully integrated!",
   loginSuccessfully: "Login successfully!",
   courseCreatedSuccessfully: "Course created successfully!",
@@ -10,6 +11,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   priceDeactivatedSuccessfully: "Price deactivated successfully!",
   priceUpdatedSuccessfully: "Price updated successfully!",
   accountUpdatedSuccessfully: "Account updated successfully!",
+  appUpdatedSuccessfully: "App updated successfully!",
   stripeOnboarding: "Stripe onboarding",
   integrateWithStripeAndStartBuildingYourCourses:
     "Integrate with Stripe and start building your courses.",
@@ -60,10 +62,12 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   wouldYouReallyLikeToRemoveVideo: "Would you really like to remove video?",
   filters: "Filters",
   toModule: "to module",
-  addPoster: "Add poster",
   addProduct: "Add product",
   editProduct: "Edit product",
+  addPoster: "Add poster",
   poster: "Poster",
+  addLogo: "Add logo",
+  logo: "Logo",
   video: "Video",
   back: "Back",
   close: "Close",

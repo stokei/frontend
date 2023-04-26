@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   me: "Eu",
+  informations: "Informações",
   successfullyIntegrated: "Integrado com successo!",
   loginSuccessfully: "Login efetuado com successo!",
   courseCreatedSuccessfully: "Curso criado com successo!",
@@ -8,6 +9,7 @@ export const ptBRMessages = {
   priceDeactivatedSuccessfully: "Preço desativado com successo!",
   priceUpdatedSuccessfully: "Preço atualizado com successo!",
   accountUpdatedSuccessfully: "Conta atualizada com successo!",
+  appUpdatedSuccessfully: "Aplicação atualizada com successo!",
   stripeOnboarding: "Integração com a Stripe",
   integrateWithStripeAndStartBuildingYourCourses:
     "Faça a integração com a Stripe e comece a criar seus cursos.",
@@ -128,6 +130,8 @@ export const ptBRMessages = {
   toModule: "ao módulo",
   addPoster: "Adicionar poster",
   poster: "Poster",
+  addLogo: "Adicionar logo",
+  logo: "Logo",
   video: "Video",
   back: "Voltar",
   close: "Fechar",

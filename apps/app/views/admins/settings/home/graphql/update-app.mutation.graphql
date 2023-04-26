@@ -1,0 +1,31 @@
+mutation UpdateApp($input: UpdateAppInput!) {
+  updateApp(input: $input) {
+    id
+    name
+    isStokei
+    isIntegratedWithStripe
+    stripeAccount
+    currency {
+      id
+      symbol
+      minorUnit
+    }
+    icon {
+      file {
+        url
+      }
+    }
+    logo {
+      file {
+        url
+      }
+    }
+    colors {
+      items {
+        color
+        themeMode
+        type
+      }
+    }
+  }
+}

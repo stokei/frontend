@@ -89,10 +89,18 @@ export async function middleware(request: NextRequest) {
       cookies,
     });
     const currentAppResponse = await stokeiClient.api
-      .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {})
+      .query<CurrentGlobalAppQuery>(
+        CurrentGlobalAppDocument,
+        {},
+        { requestPolicy: "network-only" }
+      )
       .toPromise();
     const currentAccountResponse = await stokeiClient.api
-      .query<CurrentAccountQuery>(CurrentAccountDocument, {})
+      .query<CurrentAccountQuery>(
+        CurrentAccountDocument,
+        {},
+        { requestPolicy: "network-only" }
+      )
       .toPromise();
 
     const currentApp = currentAppResponse?.data?.currentApp;

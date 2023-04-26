@@ -3352,7 +3352,7 @@ export type WhereDataFindAllSubscriptionContractsDataInput = {
   automaticRenew?: InputMaybe<WhereDataBooleanInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
   product?: InputMaybe<WhereDataStringInput>;
   status?: InputMaybe<SubscriptionContractStatus>;
   type?: InputMaybe<SubscriptionContractType>;

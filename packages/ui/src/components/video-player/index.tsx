@@ -20,13 +20,14 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const videoContainerID = id + "-video-container";
 
   return (
-    <Box width="full" flexDirection="column" {...props}>
-      <AspectRatio
-        maxWidth="full"
-        ratio={16 / 9}
-        overflow="hidden"
-        rounded="md"
-      >
+    <Box
+      width="full"
+      flexDirection="column"
+      overflow="hidden"
+      rounded="md"
+      {...props}
+    >
+      <AspectRatio maxWidth="full" ratio={16 / 9}>
         <ReactPlayer
           controls
           width="100%"
