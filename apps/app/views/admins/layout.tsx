@@ -7,7 +7,7 @@ import { useCreateAppStripeDashboardLinkMutation } from "@/services/graphql/muta
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
+import { FC, PropsWithChildren, useCallback } from "react";
 
 export interface AdminLayoutProps {}
 

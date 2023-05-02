@@ -13,6 +13,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  NotFound,
+  NotFoundIcon,
+  NotFoundSubtitle,
   Pagination,
   Stack,
   useDebounce,
@@ -84,9 +87,7 @@ export const MembersPage: FC<MembersPageProps> = () => {
   );
 
   useEffect(() => {
-    if (!!dataGetMembers?.accounts?.items?.length) {
-      setMembers(dataGetMembers?.accounts?.items);
-    }
+    setMembers(dataGetMembers?.accounts?.items || []);
   }, [dataGetMembers]);
 
   const onSearch = async () => {};
@@ -121,7 +122,22 @@ export const MembersPage: FC<MembersPageProps> = () => {
                 </Form>
               </CardBody>
             </Card>
-            {isLoading ? <Loading /> : <MembersList appMembers={members} />}
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <>
+                {!members?.length ? (
+                  <NotFound>
+                    <NotFoundIcon name="user" />
+                    <NotFoundSubtitle>
+                      {translate.formatMessage({ id: "accountsNotFound" })}
+                    </NotFoundSubtitle>
+                  </NotFound>
+                ) : (
+                  <MembersList appMembers={members} />
+                )}
+              </>
+            )}
 
             {dataGetMembers?.accounts?.totalPages &&
               dataGetMembers?.accounts?.totalPages > 1 && (

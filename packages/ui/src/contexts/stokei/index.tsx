@@ -1,7 +1,14 @@
 export { ColorModeScript } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
-import React, { PropsWithChildren, useMemo } from "react";
-import { Language, StokeiConfig } from "../../interfaces";
+import React, { PropsWithChildren, useCallback, useMemo } from "react";
+import {
+  IColor,
+  IColorHue,
+  IColorName,
+  IColorsObject,
+  Language,
+  StokeiConfig,
+} from "../../interfaces";
 import { theme } from "../../styles/themes";
 
 export interface StokeiUIContextValues {
@@ -9,6 +16,10 @@ export interface StokeiUIContextValues {
   readonly accountId?: string;
   readonly language?: Language;
   readonly cloudflareAPIToken?: string;
+  readonly getHexdecimalColor: (
+    colorName: IColorName,
+    colorHue: IColorHue
+  ) => string;
 }
 
 export interface StokeiUIContextProps {
@@ -25,10 +36,25 @@ export const StokeiUIProvider: React.FC<
   PropsWithChildren<StokeiUIContextProps>
 > = ({ children, config, appId, accountId, cloudflareAPIToken, language }) => {
   const themeData = useMemo(() => theme(config), [config]);
-  const stokeiConfig = useMemo(
-    () => ({ appId, accountId, cloudflareAPIToken, language }),
-    [appId, accountId, cloudflareAPIToken, language]
+
+  const getHexdecimalColor = useCallback(
+    (colorName: IColorName, colorHue: IColorHue) => {
+      return themeData?.colors?.[colorName]?.[colorHue];
+    },
+    [themeData]
   );
+
+  const stokeiConfig = useMemo(
+    () => ({
+      appId,
+      accountId,
+      cloudflareAPIToken,
+      language,
+      getHexdecimalColor,
+    }),
+    [appId, accountId, cloudflareAPIToken, language, getHexdecimalColor]
+  );
+
   return (
     <ChakraProvider theme={themeData}>
       <StokeiUIContext.Provider value={stokeiConfig}>

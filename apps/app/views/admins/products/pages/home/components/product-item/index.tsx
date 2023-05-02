@@ -1,9 +1,21 @@
-import noImage from "@/assets/no-image.png";
+import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
-import { Card, CardBody, Image, Link, Stack, Text } from "@stokei/ui";
+import {
+  Badge,
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Description,
+  Image,
+  Link,
+  Stack,
+  Title,
+} from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo } from "react";
+import { FC, memo, useMemo } from "react";
 
+import { Price } from "@/components";
 import { routes } from "@/routes";
 import { AdminProductPageProductFragment } from "../../graphql/products.query.graphql.generated";
 
@@ -13,22 +25,58 @@ export interface ProductItemProps {
 
 export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
   const translate = useTranslations();
+
   const editProductURL = routes.admins.product({ product: product?.id }).home;
+
+  const course = useMemo(
+    () => (product?.parent?.__typename === "Course" ? product?.parent : null),
+    [product]
+  );
 
   return (
     <Link as={NextLink} href={editProductURL}>
-      <Card background="background.50">
+      <Card background="background.50" overflow="hidden">
+        <CardHeader position="relative" padding="0">
+          <Image
+            width="full"
+            height="fit-content"
+            src={product?.avatar?.file?.url || ""}
+            fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "course" })}
+          />
+          {product?.defaultPrice?.discountPercent && (
+            <Box
+              position="absolute"
+              transform="rotate(45deg)"
+              right="-7"
+              top="3"
+            >
+              <Badge variant="solid" width="24">
+                {product?.defaultPrice?.discountPercent}% OFF
+              </Badge>
+            </Box>
+          )}
+        </CardHeader>
         <CardBody>
-          <Stack direction="row" spacing="4" align="center">
-            <Image
-              width="20"
-              height="fit-content"
-              src={product?.avatar?.file?.url || ""}
-              fallbackSrc={noImage.src}
-              alt={translate.formatMessage({ id: "product" })}
-            />
-            <Text fontWeight="bold">{product?.name}</Text>
-          </Stack>
+          <Box width="full" flexDirection="column" height="full">
+            <Title size="md" marginBottom="5">
+              {product?.name}
+            </Title>
+            <Box width="full" flexDirection="column" flex="1">
+              <Stack spacing="3" flex="1">
+                {!!course?.instructors?.items?.length && (
+                  <Description>
+                    {course?.instructors?.items
+                      ?.map((instructor) => instructor.instructor?.fullname)
+                      .join(", ")}
+                  </Description>
+                )}
+                {product?.defaultPrice && (
+                  <Price price={product?.defaultPrice} />
+                )}
+              </Stack>
+            </Box>
+          </Box>
         </CardBody>
       </Card>
     </Link>

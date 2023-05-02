@@ -9,6 +9,8 @@ import {
 import { FC } from "react";
 import { AuthLayout } from "../../layout";
 import { useChangePasswordMutation } from "./graphql/change-password.mutation.graphql.generated";
+import { useRouter } from "next/router";
+import { routes } from "@/routes";
 
 interface ChangePasswordPageProps {
   readonly code: string;
@@ -16,6 +18,7 @@ interface ChangePasswordPageProps {
 
 export const ChangePasswordPage: FC<ChangePasswordPageProps> = ({ code }) => {
   const translate = useTranslations();
+  const router = useRouter();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
 
@@ -39,6 +42,8 @@ export const ChangePasswordPage: FC<ChangePasswordPageProps> = ({ code }) => {
           title: translate.formatMessage({ id: "updateSuccessfully" }),
           status: "success",
         });
+        router.push(routes.home);
+        return;
       }
 
       if (!!response.error?.graphQLErrors?.length) {

@@ -28,4 +28,21 @@ fragment AdminProductPageProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
+  parent {
+    __typename
+    ...AdminProductPageProductCourse
+  }
+}
+
+fragment AdminProductPageProductCourse on Course {
+  courseId: id
+  courseName: name
+  instructors {
+    items {
+      id
+      instructor {
+        fullname
+      }
+    }
+  }
 }

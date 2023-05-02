@@ -29,6 +29,7 @@ import { useCurrentAccount } from "@/hooks/use-current-account";
 
 interface SelectMembersProps {
   readonly label?: string;
+  readonly hasCurrentAccount?: boolean;
   readonly currentMembers?: AppAccountFragment[];
   readonly onChooseCurrentMember: (value?: AppAccountFragment) => void;
   readonly onRemoveChooseCurrentMember: (value?: AppAccountFragment) => void;
@@ -37,6 +38,7 @@ interface SelectMembersProps {
 export const SelectMembers: FC<SelectMembersProps> = ({
   label,
   currentMembers,
+  hasCurrentAccount = true,
   onChooseCurrentMember,
   onRemoveChooseCurrentMember,
 }) => {
@@ -84,11 +86,20 @@ export const SelectMembers: FC<SelectMembersProps> = ({
               },
             },
           ],
+          ...(!hasCurrentAccount &&
+            currentAccount?.id && {
+              NOT: {
+                ids: [currentAccount?.id],
+              },
+            }),
         },
       },
     });
 
   const members = useMemo(() => {
+    if (!hasCurrentAccount) {
+      return dataGetMembers?.accounts?.items || [];
+    }
     const currentAccountMember: AppAccountFragment | undefined = currentAccount
       ? {
           id: currentAccount.id,
@@ -102,7 +113,7 @@ export const SelectMembers: FC<SelectMembersProps> = ({
     return [currentAccountMember, ...membersList].filter(
       Boolean
     ) as AppAccountFragment[];
-  }, [currentAccount, dataGetMembers]);
+  }, [currentAccount, dataGetMembers, hasCurrentAccount]);
 
   return (
     <FormControl flex="3">

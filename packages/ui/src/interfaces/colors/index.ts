@@ -46,3 +46,5 @@ export type IColorHue = keyof IColorHues;
 export type IColor = `${IColorName}.${IColorHue}`;
 
 export type IColors = { [K in IColor]?: string };
+
+export type IColorsObject = { [K in IColorName]?: IColorHues };

@@ -4,30 +4,35 @@ import {
   forwardRef,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
+import { useStokeiUI } from "../../hooks";
 import { IColorName } from "../../interfaces";
+import { getAccessibleColor } from "../../utils/get-accessible-color";
 
 export interface ButtonProps extends ChakraButtonProps {}
 export const Button: React.FC<ButtonProps> = forwardRef(
   ({ children, ...props }, ref) => {
+    const { getHexdecimalColor } = useStokeiUI();
     const buttonTextColor = useMemo(() => {
-      if (props.variant && props.variant !== "solid") {
+      if (props?.variant && props?.variant !== "solid") {
         return props.textColor;
       }
-      const [color, range] = (props.textColor as string)?.split(".") || [];
-      const textColors: { [K in IColorName]?: string } = {
-        white: `black.${range}`,
-        cyan: `white.${range}`,
-      };
-      const type = color || props.colorScheme;
-      switch (type) {
-        case "white":
-          return textColors.white;
-        case "cyan":
-          return textColors.cyan;
-        default:
-          return props.textColor;
+      if (props?.textColor) {
+        return props?.textColor;
       }
-    }, [props]);
+
+      if (props?.colorScheme) {
+        return getAccessibleColor({
+          darkColor: "black.500",
+          lightColor: "white.500",
+          hex: getHexdecimalColor(props?.colorScheme as IColorName, 500),
+        });
+      }
+    }, [
+      getHexdecimalColor,
+      props?.colorScheme,
+      props.textColor,
+      props?.variant,
+    ]);
 
     const noPadding = useMemo(() => props.variant === "link", [props.variant]);
     const padding = useMemo(() => {

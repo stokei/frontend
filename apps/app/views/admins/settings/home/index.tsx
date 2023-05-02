@@ -130,7 +130,7 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Stack direction="column" spacing="5">
                 <Title fontSize="lg">
-                  {translate.formatMessage({ id: "profile" })}
+                  {translate.formatMessage({ id: "informations" })}
                 </Title>
                 <FormControl isInvalid={!!errors?.name}>
                   <Label htmlFor="name">

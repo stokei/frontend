@@ -1,4 +1,4 @@
-import noImage from "@/assets/no-image.png";
+import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
 import {
   Badge,
@@ -9,19 +9,15 @@ import {
   CardHeader,
   Description,
   Image,
-  Link,
   Stack,
-  Text,
   Title,
 } from "@stokei/ui";
-import NextLink from "next/link";
 import { FC, memo, useMemo } from "react";
-import defaultNoImage from "@/assets/no-image.png";
 
-import { routes } from "@/routes";
-import { CustomersProductsPageProductFragment } from "../../graphql/products.query.graphql.generated";
 import { Price } from "@/components";
+import { routes } from "@/routes";
 import { useRouter } from "next/router";
+import { CustomersProductsPageProductFragment } from "../../graphql/products.query.graphql.generated";
 
 export interface ProductItemProps {
   readonly product: CustomersProductsPageProductFragment;

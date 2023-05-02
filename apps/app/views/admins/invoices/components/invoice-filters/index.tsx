@@ -27,6 +27,7 @@ export const InvoiceFilters: FC<InvoiceFiltersProps> = ({
       <CardBody>
         <Stack direction={["column", "column", "row", "row"]} spacing="5">
           <SelectMembers
+            hasCurrentAccount={false}
             currentMembers={currentCustomers}
             onChooseCurrentMember={onChooseCurrentCustomer}
             onRemoveChooseCurrentMember={onRemoveChooseCurrentCustomer}

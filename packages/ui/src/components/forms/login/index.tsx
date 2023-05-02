@@ -101,25 +101,10 @@ export const FormLogin: FC<FormLoginProps> = ({
                 <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
               </FormControl>
 
-              <Box
-                width="full"
-                justifyContent="space-between"
-                paddingBottom="3"
-              >
-                <Stack direction="row" spacing="2">
-                  <Text>{translate.formatMessage({ id: "noAccount" })}</Text>
-                  <Button variant="link" onClick={onRedirectToSignUpURL}>
-                    {translate.formatMessage({ id: "signUp" })}
-                  </Button>
-                </Stack>
-                <Box>
-                  <Button
-                    variant="link"
-                    onClick={onRedirectToForgotPasswordURL}
-                  >
-                    {translate.formatMessage({ id: "forgotPassword" })}
-                  </Button>
-                </Box>
+              <Box width="full">
+                <Button variant="link" onClick={onRedirectToForgotPasswordURL}>
+                  {translate.formatMessage({ id: "forgotPassword" })}
+                </Button>
               </Box>
 
               <Box width="full">
@@ -129,6 +114,18 @@ export const FormLogin: FC<FormLoginProps> = ({
               </Box>
             </Stack>
           </Form>
+          <Stack
+            direction="row"
+            spacing="2"
+            align="center"
+            justify="center"
+            marginTop="8"
+          >
+            <Text>{translate.formatMessage({ id: "noAccount" })}</Text>
+            <Button variant="link" onClick={onRedirectToSignUpURL}>
+              {translate.formatMessage({ id: "signUp" })}
+            </Button>
+          </Stack>
         </CardBody>
       </Card>
     </Stack>

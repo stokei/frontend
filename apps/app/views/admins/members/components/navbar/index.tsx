@@ -15,7 +15,7 @@ export const Navbar: FC<NavbarProps> = () => {
     >
       <SidebarOpenButton />
       <Title fontSize="md" lineHeight="shorter">
-        {translate.formatMessage({ id: "allMembers" })}
+        {translate.formatMessage({ id: "members" })}
       </Title>
       <NavbarUserInformation />
     </NavbarUI>
