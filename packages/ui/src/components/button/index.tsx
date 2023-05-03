@@ -21,14 +21,30 @@ export const Button: React.FC<ButtonProps> = forwardRef(
       }
 
       if (props?.colorScheme) {
+        const lightColors: IColorName[] = ["gray", "yellow", "yellow"];
+        if (!!lightColors.includes(props.colorScheme as any)) {
+          return "black.500";
+        }
         return getAccessibleColor({
           darkColor: "black.500",
           lightColor: "white.500",
           hex: getHexdecimalColor(props?.colorScheme as IColorName, 500),
         });
       }
+      if (props?.backgroundColor || props?.background) {
+        const [colorName, colorHue] =
+          ((props?.backgroundColor || props?.background) + "")?.split(".") ||
+          [];
+        return getAccessibleColor({
+          darkColor: "black.500",
+          lightColor: "white.500",
+          hex: getHexdecimalColor(colorName as any, colorHue as any),
+        });
+      }
     }, [
       getHexdecimalColor,
+      props?.background,
+      props?.backgroundColor,
       props?.colorScheme,
       props.textColor,
       props?.variant,

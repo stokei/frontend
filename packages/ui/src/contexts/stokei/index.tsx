@@ -2,10 +2,8 @@ export { ColorModeScript } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
 import React, { PropsWithChildren, useCallback, useMemo } from "react";
 import {
-  IColor,
   IColorHue,
   IColorName,
-  IColorsObject,
   Language,
   StokeiConfig,
 } from "../../interfaces";
