@@ -16,7 +16,6 @@ export const PaymentMethodItem: FC<PaymentMethodItemProps> = ({
     <Stack direction="row" spacing="4" align="center">
       <Image
         width="12"
-        height="fit-content"
         src={getCardFlagURL(paymentMethod?.cardBrand)}
         fallbackSrc={getCardFlagURL()}
         alt={paymentMethod?.cardBrand || ""}

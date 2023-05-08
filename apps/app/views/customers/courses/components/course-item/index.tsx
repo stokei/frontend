@@ -31,7 +31,6 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
       <CardHeader position="relative" padding="0">
         <Image
           width="full"
-          height="fit-content"
           src={course?.avatar?.file?.url || ""}
           fallbackSrc={defaultNoImage.src}
           alt={translate.formatMessage({ id: "course" })}

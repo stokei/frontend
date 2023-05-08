@@ -112,7 +112,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         <Stack direction="column" spacing="5" width="full" maxWidth="40">
           <Image
             width="full"
-            height="fit-content"
             src={fileURL || previewURL}
             alt={translate.formatMessage({ id: "show" })}
           />

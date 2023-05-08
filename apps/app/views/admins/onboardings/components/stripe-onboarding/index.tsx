@@ -59,7 +59,6 @@ export const StripeOnboarding: FC<StripeOnboardingProps> = () => {
           <Link href="https://stripe.com/" target="_blank">
             <Image
               width="24"
-              height="fit-content"
               src={stripeImage.src}
               fallbackSrc={stripeImage.blurDataURL}
               alt={translate.formatMessage({ id: "paymentMethod" })}

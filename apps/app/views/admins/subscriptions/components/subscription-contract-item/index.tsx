@@ -112,7 +112,6 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
           <Stack direction="row" spacing="4" align="center">
             <Image
               width="10"
-              height="fit-content"
               rounded="sm"
               src={getProductURL(product?.avatarURL)}
               alt={translate.formatMessage({ id: "product" })}

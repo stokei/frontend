@@ -32,9 +32,9 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
       <CardHeader position="relative" padding="0">
         <Image
           width="full"
-          height="fit-content"
           src={course?.avatar?.file?.url || ""}
           fallbackSrc={defaultNoImage.src}
+          alt={translate.formatMessage({ id: "course" })}
         />
       </CardHeader>
       <CardBody>
@@ -71,3 +71,4 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
     </Card>
   );
 });
+CourseItem.displayName = "CourseItem";

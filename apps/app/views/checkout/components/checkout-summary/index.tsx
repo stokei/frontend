@@ -80,7 +80,6 @@ export const CheckoutSummary: FC<CheckoutSummaryProps> = ({
         <Stack direction="row" spacing="5" align="center" marginBottom="5">
           <Image
             width="24"
-            height="fit-content"
             rounded="md"
             src={avatarURL || ""}
             fallbackSrc={defaultNoImage.src}

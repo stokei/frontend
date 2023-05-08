@@ -45,7 +45,6 @@ export const CourseAboutPage: FC<CourseAboutPageProps> = () => {
           >
             <Image
               width="24"
-              height="fit-content"
               rounded="sm"
               src={getProductURL(course?.avatar?.file?.url)}
               alt={translate.formatMessage({ id: "product" })}

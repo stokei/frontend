@@ -65,7 +65,6 @@ export const SubscriptionContractDetails: FC<
             <Stack direction="row" spacing="4" align="center">
               <Image
                 width="10"
-                height="fit-content"
                 rounded="sm"
                 src={getProductURL(product?.avatarURL)}
                 alt={translate.formatMessage({ id: "product" })}
@@ -108,7 +107,6 @@ export const SubscriptionContractDetails: FC<
                 <Stack width="auto" direction="row" spacing="4" align="center">
                   <Image
                     width="10"
-                    height="fit-content"
                     src={getCardFlagURL(
                       subscriptionContract?.paymentMethod?.cardBrand
                     )}

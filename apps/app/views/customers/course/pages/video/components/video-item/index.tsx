@@ -28,7 +28,6 @@ export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
       <Stack flex="1" direction="row" spacing="5">
         <Image
           width="20"
-          height="fit-content"
           src={video?.poster?.file?.url || ""}
           fallbackSrc={posterImage.src}
           alt={video?.name}

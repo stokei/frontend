@@ -6,5 +6,11 @@ import {
 export interface ImageProps extends ChakraImageProps {}
 
 export const Image: React.FC<ImageProps> = ({ ...props }) => (
-  <ChakraImage {...props} />
+  <ChakraImage
+    width="full"
+    height="auto"
+    objectFit="contain"
+    objectPosition="center"
+    {...props}
+  />
 );

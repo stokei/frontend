@@ -57,7 +57,6 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
         <CardHeader position="relative" padding="0">
           <Image
             width="full"
-            height="fit-content"
             src={avatar}
             fallbackSrc={defaultNoImage.src}
             alt={translate.formatMessage({ id: "course" })}

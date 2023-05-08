@@ -39,7 +39,6 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
         <CardHeader position="relative" padding="0">
           <Image
             width="full"
-            height="fit-content"
             src={product?.avatar?.file?.url || ""}
             fallbackSrc={defaultNoImage.src}
             alt={translate.formatMessage({ id: "course" })}

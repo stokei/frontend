@@ -11,7 +11,6 @@ export const AppLogo: FC<AppLogoProps> = ({ ...props }) => {
   return (
     <Image
       width={["16", "16", "20", "20"]}
-      height="fit-content"
       src={currentApp?.logo?.file?.url || ""}
       fallbackSrc={defaultLogoURL.src}
       alt={translate.formatMessage({ id: "home" })}

@@ -59,10 +59,10 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
           <Stack direction="column" spacing="4">
             <Image
               width="full"
-              height="fit-content"
               rounded="md"
               src={avatarURL || ""}
               fallbackSrc={defaultNoImage.src}
+              alt={translate.formatMessage({ id: "product" })}
             />
             <Price size="lg" price={defaultPrice} />
             <Button width="full" onClick={onRedirectToCheckout}>
