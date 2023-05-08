@@ -1,39 +1,55 @@
-import { secondsToTime } from "../../utils/seconds-to-time";
-import { Box, BoxProps } from "../box";
+import { useTranslations } from "../../hooks";
+import { AspectRatio, AspectRatioProps } from "../aspect-ratio";
+import { Box } from "../box";
 import { Image } from "../image";
-import { VideoPlayerTime } from "../video-player/time";
+import { Text } from "../text";
 
-export interface VideoPlayerPosterProps extends BoxProps {
+export interface VideoPlayerPosterProps extends AspectRatioProps {
   readonly src: string;
-  readonly duration: number;
+  readonly fallbackSrc?: string;
+  readonly duration?: number;
 }
 export const VideoPlayerPoster: React.FC<VideoPlayerPosterProps> = ({
   src,
+  fallbackSrc,
   duration,
   ...props
-}) => (
-  <Box flex="1" position="relative" {...props}>
-    {src ? <Image width="full" alt="VideoPoster" src={src} /> : undefined}
-
+}) => {
+  const translate = useTranslations();
+  return (
     <Box
       width="full"
-      justifyContent="flex-end"
-      paddingY="3"
-      paddingX="4"
-      position="absolute"
-      bottom={0}
-      left={0}
+      height="fit-content"
+      position="relative"
+      flexDirection="column"
+      rounded="md"
+      {...props}
     >
-      <Box
-        rounded="md"
-        paddingX="2"
-        paddingY="1"
-        background="rgba(0,0,0,.7)"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <VideoPlayerTime>{secondsToTime(duration)}</VideoPlayerTime>
-      </Box>
+      <AspectRatio width="full" ratio={16 / 9}>
+        <Image
+          width="full"
+          alt="VideoPoster"
+          src={src}
+          fallbackSrc={fallbackSrc}
+        />
+      </AspectRatio>
+      {duration && duration > 0 && (
+        <Box
+          rounded="md"
+          paddingX="2"
+          paddingY="1"
+          background="rgba(0,0,0,.7)"
+          alignItems="center"
+          justifyContent="center"
+          position="absolute"
+          bottom="2"
+          right="2"
+        >
+          <Text fontSize={["xs", "xs", "md", "md"]} color="white.500">
+            {translate.formatTime(duration || 0)}
+          </Text>
+        </Box>
+      )}
     </Box>
-  </Box>
-);
+  );
+};

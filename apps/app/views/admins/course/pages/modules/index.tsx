@@ -76,6 +76,7 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
 
   const [{ fetching: isLoading, data: dataModules }] =
     useGetAdminCoursePageModulesQuery({
+      requestPolicy: "network-only",
       variables: {
         page: {
           limit: 10,

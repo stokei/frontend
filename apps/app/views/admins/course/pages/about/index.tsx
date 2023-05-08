@@ -41,7 +41,7 @@ export const CourseAboutPage: FC<CourseAboutPageProps> = () => {
           <Stack
             direction={["column", "column", "row", "row"]}
             spacing="5"
-            align="center"
+            align={["flex-start", "flex-start", "center", "center"]}
           >
             <Image
               width="24"

@@ -164,6 +164,7 @@ export * from "./form-error-message";
 export * from "./form-helper-text";
 export * from "./tooltip";
 export * from "./video-player";
+export * from "./video-player-poster";
 export * from "./video-uploader";
 export * from "./wrap";
 export * from "./wrap-item";

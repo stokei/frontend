@@ -1,7 +1,15 @@
 import posterImage from "@/assets/no-image.png";
 import { useCustomersCourse, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import { Badge, Box, Image, Link, Stack, Text, Title } from "@stokei/ui";
+import {
+  Badge,
+  Box,
+  Link,
+  Stack,
+  Text,
+  Title,
+  VideoPlayerPoster,
+} from "@stokei/ui";
 import NextLink from "next/link";
 import { FC, memo, useMemo } from "react";
 import { CustomersCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
@@ -26,12 +34,11 @@ export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
   return (
     <Link as={NextLink} href={viewVideoURL}>
       <Stack flex="1" direction="row" spacing="5">
-        <Image
-          width="32"
+        <VideoPlayerPoster
+          width={["28", "20", "40", "40"]}
+          duration={video?.file?.duration || 0}
           src={video?.poster?.file?.url || ""}
           fallbackSrc={posterImage.src}
-          alt={video?.name}
-          rounded="md"
         />
 
         <Stack width="auto" flex="1" direction="column" spacing="2">

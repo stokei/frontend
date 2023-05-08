@@ -12,6 +12,7 @@ import {
   Stack,
   Text,
   Title,
+  VideoPlayerPoster,
 } from "@stokei/ui";
 import { FC, memo, useCallback, useMemo } from "react";
 import { AdminCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
@@ -40,12 +41,11 @@ export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
   return (
     <Link as={NextLink} href={editVideoURL}>
       <Stack flex="1" direction="row" spacing="5">
-        <Image
-          width="32"
+        <VideoPlayerPoster
+          width={["28", "20", "40", "40"]}
+          duration={video?.file?.duration || 0}
           src={video?.poster?.file?.url || ""}
           fallbackSrc={posterImage.src}
-          alt={video?.name}
-          rounded="md"
         />
 
         <Stack width="auto" flex="1" direction="column" spacing="2">
