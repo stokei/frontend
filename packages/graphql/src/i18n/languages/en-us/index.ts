@@ -59,6 +59,8 @@ export const enUSMessages: Record<I18nKey, string> = {
   languagesNotFound: "Languages not found",
   moduleNotFound: "Module not found",
   modulesNotFound: "Modules not found",
+  paymentMethodHasSubscriptionContract:
+    "Payment method has subscription contract",
   paymentMethodAlreadyExists: "Payment method already exists",
   paymentMethodIsUnique: "Payment method is unique",
   paymentMethodNotFound: "Payment method not found",

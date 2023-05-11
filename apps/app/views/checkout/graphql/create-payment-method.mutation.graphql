@@ -1,5 +1,0 @@
-mutation CreatePaymentMethod($input: CreatePaymentMethodInput!) {
-  createPaymentMethod(input: $input) {
-    ...CheckoutPaymentMethod
-  }
-}

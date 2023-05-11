@@ -59,6 +59,8 @@ export const ptBRMessages = {
   languagesNotFound: "Idiomas não encontrados",
   moduleNotFound: "Módulo não encontrado",
   modulesNotFound: "Módulos não encontrados",
+  paymentMethodHasSubscriptionContract:
+    "A forma de pagamento tem um contrato de assinatura vinculado",
   paymentMethodAlreadyExists: "A forma de pagamento já existe",
   paymentMethodIsUnique: "A forma de pagamento é única",
   paymentMethodNotFound: "Forma de pagamento não encontrada",

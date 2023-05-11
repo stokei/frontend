@@ -35,6 +35,13 @@ export const SubscriptionContractDetails: FC<
     [subscriptionContract]
   );
 
+  const showPeriod = useMemo(() => {
+    if (!isRecurringSubscriptionContract) {
+      return true;
+    }
+    return !!subscriptionContract?.startAt || !!subscriptionContract?.endAt;
+  }, [isRecurringSubscriptionContract, subscriptionContract]);
+
   return (
     <Card width="full" background="background.50">
       <CardBody overflow="hidden" alignItems="center">
@@ -74,32 +81,35 @@ export const SubscriptionContractDetails: FC<
               </Stack>
             </Stack>
           </Box>
-          <Box flexDirection="column">
-            <Label>{translate.formatMessage({ id: "period" })}</Label>
-            <Stack direction="row" spacing="2" align="center">
-              {subscriptionContract?.startAt && (
-                <Text>
-                  {translate.formatDate(subscriptionContract?.startAt)}
-                </Text>
-              )}
-              {subscriptionContract?.startAt &&
-                (!isRecurringSubscriptionContract ||
-                  subscriptionContract?.endAt) && <Icon name="arrowRight" />}
-              {!isRecurringSubscriptionContract ? (
-                <Badge colorScheme="purple">
-                  {translate.formatMessage({
-                    id: "lifelong",
-                  })}
-                </Badge>
-              ) : (
-                subscriptionContract?.endAt && (
+
+          {showPeriod && (
+            <Box flexDirection="column">
+              <Label>{translate.formatMessage({ id: "period" })}</Label>
+              <Stack direction="row" spacing="2" align="center">
+                {subscriptionContract?.startAt && (
                   <Text>
-                    {translate.formatDate(subscriptionContract?.endAt)}
+                    {translate.formatDate(subscriptionContract?.startAt)}
                   </Text>
-                )
-              )}
-            </Stack>
-          </Box>
+                )}
+                {subscriptionContract?.startAt &&
+                  (!isRecurringSubscriptionContract ||
+                    subscriptionContract?.endAt) && <Icon name="arrowRight" />}
+                {!isRecurringSubscriptionContract ? (
+                  <Badge colorScheme="purple">
+                    {translate.formatMessage({
+                      id: "lifelong",
+                    })}
+                  </Badge>
+                ) : (
+                  subscriptionContract?.endAt && (
+                    <Text>
+                      {translate.formatDate(subscriptionContract?.endAt)}
+                    </Text>
+                  )
+                )}
+              </Stack>
+            </Box>
+          )}
           {subscriptionContract?.paymentMethod && (
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "paymentMethod" })}</Label>

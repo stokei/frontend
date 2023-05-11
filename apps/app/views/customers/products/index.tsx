@@ -45,7 +45,7 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
           },
         },
         orderBy: {
-          createdAt: OrderBy.Asc,
+          createdAt: OrderBy.Desc,
         },
       },
     });

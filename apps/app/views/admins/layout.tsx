@@ -1,9 +1,9 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
 import { AdminLayoutContent } from "@/components/admin-layout-content";
+import { STRIPE_DASHBOARD_URL } from "@/constants/stripe-links";
 import { SidebarProvider } from "@/contexts";
-import { useAPIErrors, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import { useCreateAppStripeDashboardLinkMutation } from "@/services/graphql/mutations/create-app-stripe-dashboard-link/create-app-stripe-dashboard-link.mutation.graphql.generated";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -16,39 +16,15 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
 }) => {
   const router = useRouter();
   const translate = useTranslations();
-  const { onShowAPIError } = useAPIErrors();
-
-  const [
-    { fetching: isLoadingCreateAppStripeDashboardLink },
-    onCreateAppStripeDashboardLink,
-  ] = useCreateAppStripeDashboardLinkMutation();
 
   const isActiveRoute = useCallback(
     (route: string) => !!router.asPath?.match(route),
     [router.asPath]
   );
 
-  const goToStripeDasboard = useCallback(
-    async (e: any) => {
-      try {
-        e.preventDefault();
-        const response = await onCreateAppStripeDashboardLink({});
-
-        if (!!response?.data?.createAppStripeDashboardLink) {
-          window.location.assign(
-            response?.data?.createAppStripeDashboardLink?.url
-          );
-        }
-
-        if (!!response.error?.graphQLErrors?.length) {
-          response.error.graphQLErrors.map((error) =>
-            onShowAPIError({ message: error?.message })
-          );
-        }
-      } catch (error) {}
-    },
-    [onCreateAppStripeDashboardLink, onShowAPIError]
-  );
+  const goToStripeDasboard = useCallback(async () => {
+    router.push(STRIPE_DASHBOARD_URL);
+  }, [router]);
 
   return (
     <SidebarProvider>
@@ -65,12 +41,7 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             >
               {translate.formatMessage({ id: "dashboard" })}
             </SidebarNavLink>
-            <SidebarNavLink
-              as={NextLink}
-              onClick={goToStripeDasboard}
-              isActive={isActiveRoute(routes.admins.financial)}
-              isLoading={isLoadingCreateAppStripeDashboardLink}
-            >
+            <SidebarNavLink as={NextLink} onClick={goToStripeDasboard}>
               {translate.formatMessage({ id: "financial" })}
             </SidebarNavLink>
             <SidebarNavLink

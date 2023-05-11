@@ -1,4 +1,4 @@
-import { CheckoutPage } from "@/views/checkout";
+import { CheckoutPage } from "@/views/checkout/pages/home";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 
 interface Props {

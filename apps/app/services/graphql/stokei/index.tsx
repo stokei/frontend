@@ -281,8 +281,7 @@ export type ChangePasswordInput = {
 
 export type Checkout = {
   __typename?: 'Checkout';
-  clientSecret: Scalars['String'];
-  subscriptionContract: SubscriptionContract;
+  url: Scalars['String'];
 };
 
 export type Color = {
@@ -448,8 +447,6 @@ export type CreateCatalogItemInput = {
 };
 
 export type CreateCheckoutInput = {
-  customer?: InputMaybe<Scalars['String']>;
-  paymentMethod: Scalars['String'];
   price: Scalars['String'];
 };
 
