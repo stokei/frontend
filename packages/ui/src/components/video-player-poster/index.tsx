@@ -33,7 +33,7 @@ export const VideoPlayerPoster: React.FC<VideoPlayerPosterProps> = ({
           fallbackSrc={fallbackSrc}
         />
       </AspectRatio>
-      {duration && duration > 0 && (
+      {!!duration && (
         <Box
           rounded="md"
           paddingX="2"

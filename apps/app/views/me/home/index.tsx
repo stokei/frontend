@@ -1,3 +1,7 @@
+import { useAPIErrors, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
+import { useUploadImage } from "@/hooks/use-upload-image";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
   ButtonGroup,
@@ -13,29 +17,19 @@ import {
   Label,
   Stack,
   Title,
-  VideoUploader,
   useToast,
 } from "@stokei/ui";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { MeLayout } from "../layout";
 import { Navbar } from "./components/navbar";
-import {
-  useAPIErrors,
-  useCreateImageUploadURL,
-  useTranslations,
-} from "@/hooks";
 import { useUpdateAccountMutation } from "./graphql/update-account.mutation.graphql.generated";
-import { useRouter } from "next/router";
-import { useCurrentAccount } from "@/hooks/use-current-account";
-import { useCreateImageMutation } from "@/services/graphql/mutations/create-image/create-image.mutation.graphql.generated";
 
 interface MeHomePageProps {}
 
 export const MeHomePage: FC<MeHomePageProps> = () => {
-  const [imageId, setImageId] = useState<string>();
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -44,8 +38,6 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
 
   const [{ fetching: isLoadingUpdateAccount }, onUpdateAccount] =
     useUpdateAccountMutation();
-  const [{ fetching: isLoadingCreateImage }, createImage] =
-    useCreateImageMutation();
 
   const validationSchema = z.object({
     firstname: z.string().min(1, {
@@ -57,11 +49,12 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
   });
 
   const {
-    fileId: imageFileId,
-    isLoading: isLoadingCreateImageUploadURL,
+    imageId,
+    isLoadingStartUpload: isLoadingCreateImageUploadURL,
     onStartUpload: onStartImageUpload,
+    onCompleteUpload: onCompleteImageUpload,
     uploadURL: imageUploadURL,
-  } = useCreateImageUploadURL();
+  } = useUploadImage();
 
   const {
     register,
@@ -80,23 +73,6 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
       });
     }
   }, [currentAccount, reset]);
-
-  const onCreateImageImage = useCallback(async () => {
-    try {
-      const response = await createImage({
-        input: { file: imageFileId || "" },
-      });
-      if (!!response.data?.createImage?.id) {
-        setImageId(response.data?.createImage.id);
-        return;
-      }
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {}
-  }, [createImage, onShowAPIError, imageFileId]);
 
   const onSubmit = async ({
     firstname,
@@ -195,7 +171,7 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
                     id="account-image"
                     uploadURL={imageUploadURL}
                     previewURL={currentAccount?.avatar?.file?.url || ""}
-                    onSuccess={onCreateImageImage}
+                    onSuccess={onCompleteImageUpload}
                     onError={() => {}}
                   />
                 </FormControl>

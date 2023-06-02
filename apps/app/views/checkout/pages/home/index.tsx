@@ -1,7 +1,7 @@
 import defaultNoImage from "@/assets/no-image.png";
+import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { useCurrentAccount } from "@/hooks/use-current-account";
 import {
   Box,
   Button,
@@ -9,25 +9,17 @@ import {
   Card,
   CardBody,
   Container,
-  FormControl,
   Image,
-  Label,
   RadioCard,
   RadioGroup,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
   Stack,
-  Text,
   Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCreateCheckoutMutation } from "../../graphql/create-checkout.mutation.graphql.generated";
 import { useGetCheckoutProductQuery } from "../../graphql/product.query.graphql.generated";
 import { CheckoutLayout } from "../../layout";
-import { useCreateCheckoutMutation } from "../../graphql/create-checkout.mutation.graphql.generated";
-import { Price } from "@/components";
 
 interface CheckoutPageProps {
   readonly productId: string;
@@ -51,10 +43,6 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
       },
     });
 
-  const successCallback = useMemo(
-    () => router?.query.success?.toString(),
-    [router]
-  );
   const product = useMemo(() => dataProduct?.product, [dataProduct]);
 
   useEffect(() => {

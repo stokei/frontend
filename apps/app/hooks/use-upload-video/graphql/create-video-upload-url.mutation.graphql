@@ -1,0 +1,14 @@
+mutation UseUploadVideoCreateVideoUploadURL {
+  createVideoUploadURL {
+    uploadURL
+    file {
+      ...UseUploadVideoFile
+    }
+  }
+}
+
+fragment UseUploadVideoFile on File {
+  id
+  filename
+  url
+}

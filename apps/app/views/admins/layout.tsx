@@ -22,10 +22,6 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
     [router.asPath]
   );
 
-  const goToStripeDasboard = useCallback(async () => {
-    router.push(STRIPE_DASHBOARD_URL);
-  }, [router]);
-
   return (
     <SidebarProvider>
       <Box width="full" flexDirection="row">
@@ -41,7 +37,11 @@ export const AdminLayout: FC<PropsWithChildren<AdminLayoutProps>> = ({
             >
               {translate.formatMessage({ id: "dashboard" })}
             </SidebarNavLink>
-            <SidebarNavLink as={NextLink} onClick={goToStripeDasboard}>
+            <SidebarNavLink
+              as={NextLink}
+              href={STRIPE_DASHBOARD_URL}
+              target="_blank"
+            >
               {translate.formatMessage({ id: "financial" })}
             </SidebarNavLink>
             <SidebarNavLink

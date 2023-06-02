@@ -97,21 +97,19 @@ export const SelectMembers: FC<SelectMembersProps> = ({
     });
 
   const members = useMemo(() => {
-    if (!hasCurrentAccount) {
+    if (!hasCurrentAccount || !currentAccount) {
       return dataGetMembers?.accounts?.items || [];
     }
-    const currentAccountMember: AppAccountFragment | undefined = currentAccount
-      ? {
-          id: currentAccount.id,
-          firstname: currentAccount.firstname,
-          fullname: currentAccount.fullname,
-          email: currentAccount.email,
-          avatar: currentAccount.avatar,
-        }
-      : undefined;
+    const currentAccountMember: AppAccountFragment = {
+      id: currentAccount.id,
+      firstname: currentAccount.firstname,
+      fullname: currentAccount.fullname,
+      email: currentAccount.email,
+      avatar: currentAccount.avatar,
+    };
     const membersList = dataGetMembers?.accounts?.items || [];
     return [currentAccountMember, ...membersList].filter(
-      Boolean
+      (member) => member.id !== currentAccount.id
     ) as AppAccountFragment[];
   }, [currentAccount, dataGetMembers, hasCurrentAccount]);
 

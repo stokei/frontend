@@ -1,11 +1,7 @@
-import {
-  useAPIErrors,
-  useCreateImageUploadURL,
-  useCreateVideoUploadURL,
-  useTranslations,
-} from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
+import { useUploadImage } from "@/hooks/use-upload-image";
+import { useUploadVideo } from "@/hooks/use-upload-video";
 import { routes } from "@/routes";
-import { useCreateImageMutation } from "@/services/graphql/mutations/create-image/create-image.mutation.graphql.generated";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -26,11 +22,12 @@ import {
   Textarea,
   Title,
   VideoUploader,
+  VideoUploaderOnSuccessData,
   useDisclosure,
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";
@@ -51,7 +48,6 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
   const [videoUploadIsCompleted, setVideoUploadIsCompleted] =
     useState<boolean>(false);
   const [videoDuration, setVideoDuration] = useState<number>(0);
-  const [poster, setPoster] = useState<Poster>();
 
   const router = useRouter();
   const translate = useTranslations();
@@ -74,12 +70,11 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
     description: z.string(),
   });
 
-  const [{ fetching: isLoadingModule, data: dataModule }] =
-    useGetAdminCoursePageModuleEditVideoQuery({
-      variables: {
-        moduleId: moduleId || "",
-      },
-    });
+  const [{ data: dataModule }] = useGetAdminCoursePageModuleEditVideoQuery({
+    variables: {
+      moduleId: moduleId || "",
+    },
+  });
   const [{ fetching: isLoadingCurrentVideo, data: dataCurrentVideo }] =
     useGetAdminCoursePageEditVideoQuery({
       variables: {
@@ -90,22 +85,21 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
   const [{ fetching: isLoadingCreateVideo }, createVideo] =
     useUpdateVideoMutation();
 
-  const [{ fetching: isLoadingCreateImage }, createImage] =
-    useCreateImageMutation();
-
   const {
     fileId: videoFileId,
-    isLoading: isLoadingCreateVideoUploadURL,
+    isLoadingStartUpload: isLoadingStartVideoUpload,
     onStartUpload: onStartVideoUpload,
+    onCompleteUpload: onCompleteVideoUpload,
     uploadURL: videoUploadURL,
-  } = useCreateVideoUploadURL();
+  } = useUploadVideo();
 
   const {
-    fileId: posterFileId,
-    isLoading: isLoadingCreatePosterUploadURL,
+    imageId: posterId,
+    isLoadingStartUpload: isLoadingStartPosterUpload,
     onStartUpload: onStartPosterUpload,
+    onCompleteUpload: onCompletePosterUpload,
     uploadURL: posterUploadURL,
-  } = useCreateImageUploadURL();
+  } = useUploadImage();
 
   const courseModule = useMemo(() => dataModule?.module, [dataModule]);
   const currentVideo = useMemo(
@@ -125,7 +119,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
@@ -136,31 +130,13 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
         name: currentVideo?.name || "",
         description: currentVideo?.description || "",
       });
+      setVideoDuration(currentVideo?.file?.duration || 0);
     }
   }, [currentVideo, reset]);
 
   const goToModulesPage = () => {
     router.push(routes.admins.course({ course: courseId }).modules.home);
   };
-  const onCreatePosterImage = useCallback(async () => {
-    try {
-      const response = await createImage({
-        input: { file: posterFileId || "" },
-      });
-      if (!!response.data?.createImage?.id) {
-        setPoster({
-          id: response.data?.createImage.id,
-          previewURL: response.data?.createImage?.file?.url || "",
-        });
-        return;
-      }
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {}
-  }, [createImage, onShowAPIError, posterFileId]);
 
   const onSubmit = async ({
     name,
@@ -174,7 +150,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
             name,
             description,
             duration: videoDuration,
-            poster: poster?.id,
+            ...(posterId && { poster: posterId }),
           },
           where: {
             video: videoId || "",
@@ -203,9 +179,10 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
     goToModulesPage();
   };
 
-  const onUploadComplete = ({ duration }: { duration?: number }) => {
-    setVideoDuration(duration || 0);
+  const onUploadComplete = (data: VideoUploaderOnSuccessData) => {
+    setVideoDuration(data?.duration || 0);
     setVideoUploadIsCompleted(true);
+    onCompleteVideoUpload(data);
   };
 
   return (
@@ -257,7 +234,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
                         <Button
                           variant="outline"
                           onClick={onStartPosterUpload}
-                          isLoading={isLoadingCreatePosterUploadURL}
+                          isLoading={isLoadingStartPosterUpload}
                           marginBottom="5"
                         >
                           {translate.formatMessage({
@@ -271,7 +248,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
                         id="module-poster"
                         uploadURL={posterUploadURL}
                         previewURL={currentVideo?.poster?.file?.url || ""}
-                        onSuccess={onCreatePosterImage}
+                        onSuccess={onCompletePosterUpload}
                         onError={() => {}}
                       />
                     </FormControl>
@@ -284,7 +261,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
                         <Button
                           variant="outline"
                           onClick={onStartVideoUpload}
-                          isLoading={isLoadingCreateVideoUploadURL}
+                          isLoading={isLoadingStartVideoUpload}
                           marginBottom="5"
                         >
                           {translate.formatMessage({

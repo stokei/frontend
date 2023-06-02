@@ -1,3 +1,7 @@
+import { useAPIErrors, useTranslations } from "@/hooks";
+import { useCurrentApp } from "@/hooks/use-current-app";
+import { useUploadImage } from "@/hooks/use-upload-image";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
   ButtonGroup,
@@ -13,29 +17,19 @@ import {
   Label,
   Stack,
   Title,
-  VideoUploader,
   useToast,
 } from "@stokei/ui";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { SettingsLayout } from "../layout";
 import { Navbar } from "./components/navbar";
-import {
-  useAPIErrors,
-  useCreateImageUploadURL,
-  useTranslations,
-} from "@/hooks";
 import { useUpdateAppMutation } from "./graphql/update-app.mutation.graphql.generated";
-import { useRouter } from "next/router";
-import { useCurrentApp } from "@/hooks/use-current-app";
-import { useCreateImageMutation } from "@/services/graphql/mutations/create-image/create-image.mutation.graphql.generated";
 
 interface SettingsHomePageProps {}
 
 export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
-  const [logoId, setLogoId] = useState<string>();
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -44,8 +38,6 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
 
   const [{ fetching: isLoadingUpdateApp }, onUpdateApp] =
     useUpdateAppMutation();
-  const [{ fetching: isLoadingCreateImage }, createImage] =
-    useCreateImageMutation();
 
   const validationSchema = z.object({
     name: z.string().min(1, {
@@ -54,11 +46,12 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
   });
 
   const {
-    fileId: logoFileId,
-    isLoading: isLoadingCreateLogoUploadURL,
+    imageId: logoId,
+    isLoadingStartUpload: isLoadingStartLogoUpload,
     onStartUpload: onStartLogoUpload,
+    onCompleteUpload: onCompleteLogoUpload,
     uploadURL: logoUploadURL,
-  } = useCreateImageUploadURL();
+  } = useUploadImage();
 
   const {
     register,
@@ -76,23 +69,6 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
       });
     }
   }, [currentApp, reset]);
-
-  const onCreateImageImage = useCallback(async () => {
-    try {
-      const response = await createImage({
-        input: { file: logoFileId || "" },
-      });
-      if (!!response.data?.createImage?.id) {
-        setLogoId(response.data?.createImage.id);
-        return;
-      }
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {}
-  }, [createImage, onShowAPIError, logoFileId]);
 
   const onSubmit = async ({ name }: z.infer<typeof validationSchema>) => {
     try {
@@ -155,7 +131,7 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
                     <Button
                       variant="outline"
                       onClick={onStartLogoUpload}
-                      isLoading={isLoadingCreateLogoUploadURL}
+                      isLoading={isLoadingStartLogoUpload}
                       marginBottom="5"
                     >
                       {translate.formatMessage({ id: "addLogo" })}
@@ -165,7 +141,7 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
                     id="app-logo"
                     uploadURL={logoUploadURL}
                     previewURL={currentApp?.logo?.file?.url || ""}
-                    onSuccess={onCreateImageImage}
+                    onSuccess={onCompleteLogoUpload}
                     onError={() => {}}
                   />
                 </FormControl>

@@ -11,13 +11,20 @@ import { IconButton } from "../icon-button";
 import { Stack, StackProps } from "../stack";
 import { VideoPlayer } from "../video-player";
 
+export interface VideoUploaderOnSuccessData {
+  extension?: string;
+  mimetype?: string;
+  size?: number;
+  duration?: number;
+}
+
 export interface VideoUploaderProps extends Omit<StackProps, "onError"> {
   readonly id: string;
   readonly uploadURL: string;
   readonly previewURL?: string;
   readonly accept?: string[];
   readonly onStartUpload: () => void;
-  readonly onSuccess: (fileInfo: { duration?: number }) => void;
+  readonly onSuccess: (data: VideoUploaderOnSuccessData) => void;
   readonly onError: () => void;
   readonly onRemoveFile?: () => void;
 }
@@ -106,7 +113,12 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
         if (isSuccess) {
           setFile(result.data);
           onCloseDashboard();
-          onSuccess?.({ duration: await getVideoDuration() });
+          onSuccess?.({
+            size: result.size,
+            mimetype: result.type,
+            extension: result.extension,
+            duration: await getVideoDuration(),
+          });
         }
       });
     }, [uppy, onSuccess, onCloseDashboard]);

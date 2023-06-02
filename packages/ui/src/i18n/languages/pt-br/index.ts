@@ -8,6 +8,7 @@ export const ptBRMessages = {
   save: "Salvar",
   enter: "Entrar",
   noAccount: "Sem conta?",
+  itemsNotFound: "Nenhum item encontrado",
   login: "Faça login",
   hide: "Esconder",
   show: "Mostrar",

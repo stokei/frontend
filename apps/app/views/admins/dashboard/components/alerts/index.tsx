@@ -46,12 +46,9 @@ export const Alerts: FC<AlertsProps> = () => {
             align={["space-between", "space-between", "center", "center"]}
           >
             <Box flexDirection="column">
-              <AlertTitle>
-                {translate.formatMessage({ id: "stripeOnboarding" })}
-              </AlertTitle>
               <AlertDescription>
                 {translate.formatMessage({
-                  id: "integrateWithStripeAndStartBuildingYourCourses",
+                  id: "youStillDonTHaveAnyMeansOfPayment",
                 })}
               </AlertDescription>
             </Box>
@@ -62,7 +59,7 @@ export const Alerts: FC<AlertsProps> = () => {
                 onClick={goToStripeOnboarding}
               >
                 {translate.formatMessage({
-                  id: "add",
+                  id: "clickHereToConfigure",
                 })}
               </Button>
             </Box>

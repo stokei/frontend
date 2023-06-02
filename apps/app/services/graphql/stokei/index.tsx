@@ -138,6 +138,7 @@ export type App = {
   currency: Currency;
   currentSubscriptionContract?: Maybe<SubscriptionContract>;
   deactivatedAt?: Maybe<Scalars['String']>;
+  defaultDomain?: Maybe<Domain>;
   description?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   icon?: Maybe<Image>;
@@ -1065,6 +1066,7 @@ export type Mutation = {
   updateColor: Color;
   updateCourse: Course;
   updateCurrency: Currency;
+  updateFile: File;
   updateHero: Hero;
   updateLanguage: Language;
   updateModule: Module;
@@ -1387,6 +1389,11 @@ export type MutationUpdateCourseArgs = {
 
 export type MutationUpdateCurrencyArgs = {
   input: UpdateCurrencyInput;
+};
+
+
+export type MutationUpdateFileArgs = {
+  input: UpdateFileInput;
 };
 
 
@@ -2776,6 +2783,13 @@ export type UpdateDataCurrencyInput = {
   symbol?: InputMaybe<Scalars['String']>;
 };
 
+export type UpdateDataFileInput = {
+  duration?: InputMaybe<Scalars['Float']>;
+  extension?: InputMaybe<Scalars['String']>;
+  mimetype?: InputMaybe<Scalars['String']>;
+  size?: InputMaybe<Scalars['Float']>;
+};
+
 export type UpdateDataHeroInput = {
   backgroundImage?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
@@ -2820,6 +2834,11 @@ export type UpdateDataVideoInput = {
   name?: InputMaybe<Scalars['String']>;
   poster?: InputMaybe<Scalars['String']>;
   private?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type UpdateFileInput = {
+  data: UpdateDataFileInput;
+  where: UpdateWhereFileInput;
 };
 
 export type UpdateHeroInput = {
@@ -2875,6 +2894,10 @@ export type UpdateWhereCourseInput = {
 
 export type UpdateWhereCurrencyInput = {
   currency: Scalars['String'];
+};
+
+export type UpdateWhereFileInput = {
+  file: Scalars['String'];
 };
 
 export type UpdateWhereHeroInput = {

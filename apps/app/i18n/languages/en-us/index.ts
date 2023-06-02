@@ -13,8 +13,9 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   accountUpdatedSuccessfully: "Account updated successfully!",
   appUpdatedSuccessfully: "App updated successfully!",
   stripeOnboarding: "Stripe onboarding",
-  integrateWithStripeAndStartBuildingYourCourses:
-    "Integrate with Stripe and start building your courses.",
+  youStillDonTHaveAnyMeansOfPayment:
+    "You still don't have any means of payment.",
+  clickHereToConfigure: "Click here to configure",
   activate: "Activate",
   deactivate: "Deactivate",
   courseInstructorCreatedSuccessfully:

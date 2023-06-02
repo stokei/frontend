@@ -13,6 +13,7 @@ export const enUSMessages: Record<I18nKey, string> = {
   addVideo: "Add video",
   addImage: "Add image",
   noAccount: "No account?",
+  itemsNotFound: "Nenhum item encontrado",
   signUp: "Sign up",
   hide: "Hide",
   show: "Show",

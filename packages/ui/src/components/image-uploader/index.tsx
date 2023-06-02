@@ -17,12 +17,19 @@ import { IconButton } from "../icon-button";
 import { Image } from "../image";
 import { Stack, StackProps } from "../stack";
 
+export interface ImageUploaderOnSuccessData {
+  extension?: string;
+  mimetype?: string;
+  size?: number;
+  duration?: number;
+}
+
 export interface ImageUploaderProps extends Omit<StackProps, "onError"> {
   readonly id: string;
   readonly uploadURL: string;
   readonly previewURL?: string;
   readonly accept?: string[];
-  readonly onSuccess: () => void;
+  readonly onSuccess: (data: ImageUploaderOnSuccessData) => void;
   readonly onError: () => void;
   readonly onRemoveFile?: () => void;
 }
@@ -95,7 +102,11 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       if (isSuccess) {
         setFile(result.data);
         onCloseDashboard();
-        onSuccess?.();
+        onSuccess?.({
+          size: result.size,
+          mimetype: result.type,
+          extension: result.extension,
+        });
       }
     });
   }, [uppy, onSuccess, onCloseDashboard]);

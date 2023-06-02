@@ -11,8 +11,9 @@ export const ptBRMessages = {
   accountUpdatedSuccessfully: "Conta atualizada com successo!",
   appUpdatedSuccessfully: "Aplicação atualizada com successo!",
   stripeOnboarding: "Integração com a Stripe",
-  integrateWithStripeAndStartBuildingYourCourses:
-    "Faça a integração com a Stripe e comece a criar seus cursos.",
+  youStillDonTHaveAnyMeansOfPayment:
+    "Você ainda não possui nenhum meio de pagamento.",
+  clickHereToConfigure: "Clique aqui para configurar",
   activate: "Ativar",
   deactivate: "Desativar",
   courseInstructorCreatedSuccessfully:

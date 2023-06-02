@@ -1,8 +1,5 @@
-import {
-  useAPIErrors,
-  useCreateImageUploadURL,
-  useTranslations,
-} from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
+import { useUploadImage } from "@/hooks/use-upload-image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -20,7 +17,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
@@ -28,7 +25,6 @@ import { useUpdateProductMutation } from "../../graphql/update-product.mutation.
 import { Section } from "../section";
 import { SectionContent } from "../section-content";
 import { SectionInformation } from "../section-information";
-import { useCreateImageMutation } from "@/services/graphql/mutations/create-image/create-image.mutation.graphql.generated";
 
 interface ProductInformationProps {
   currentProduct?: ProductPageProductFragment;
@@ -37,7 +33,6 @@ interface ProductInformationProps {
 export const ProductInformation: FC<ProductInformationProps> = ({
   currentProduct,
 }) => {
-  const [imageId, setImageId] = useState<string>();
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
@@ -59,14 +54,12 @@ export const ProductInformation: FC<ProductInformationProps> = ({
   });
 
   const {
-    fileId: imageFileId,
-    isLoading: isLoadingCreateImageUploadURL,
+    imageId,
+    isLoadingStartUpload: isLoadingStartImageUpload,
     onStartUpload: onStartImageUpload,
+    onCompleteUpload: onCompleteImageUpload,
     uploadURL: imageUploadURL,
-  } = useCreateImageUploadURL();
-
-  const [{ fetching: isLoadingCreateImage }, createImage] =
-    useCreateImageMutation();
+  } = useUploadImage();
 
   const [{ fetching: isLoadingUpdateProduct }, onUpdateProduct] =
     useUpdateProductMutation();
@@ -79,23 +72,6 @@ export const ProductInformation: FC<ProductInformationProps> = ({
       });
     }
   }, [currentProduct, reset]);
-
-  const onCreateImageImage = useCallback(async () => {
-    try {
-      const response = await createImage({
-        input: { file: imageFileId || "" },
-      });
-      if (!!response.data?.createImage?.id) {
-        setImageId(response.data?.createImage.id);
-        return;
-      }
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {}
-  }, [createImage, onShowAPIError, imageFileId]);
 
   const onSubmit = async ({
     name,
@@ -187,7 +163,7 @@ export const ProductInformation: FC<ProductInformationProps> = ({
                 <Button
                   variant="outline"
                   onClick={onStartImageUpload}
-                  isLoading={isLoadingCreateImageUploadURL}
+                  isLoading={isLoadingStartImageUpload}
                   marginBottom="5"
                 >
                   {translate.formatMessage({ id: "addImage" })}
@@ -197,7 +173,7 @@ export const ProductInformation: FC<ProductInformationProps> = ({
                 id="product-image"
                 uploadURL={imageUploadURL}
                 previewURL={currentProduct?.avatar?.file?.url || ""}
-                onSuccess={onCreateImageImage}
+                onSuccess={onCompleteImageUpload}
                 onError={() => {}}
               />
             </FormControl>
