@@ -37,8 +37,14 @@ export const routesAdmins = {
       students: baseCourseURL + "/students",
     };
   },
-  invoices: "/admins/invoices",
-  members: "/admins/members",
+  invoices: baseURL + "/invoices",
+  member: ({ member }: { member?: string }) => {
+    const baseMemberURL = baseURL + "/members/" + (member || "");
+    return {
+      home: baseMemberURL,
+    };
+  },
+  members: baseURL + "/members",
   product: ({ product }: { product: string }) => {
     const baseProductURL = baseURL + "/products/" + product;
     return {
@@ -50,6 +56,6 @@ export const routesAdmins = {
     add: baseURL + "/products/add",
   },
   settings: {
-    home: "/admins/settings",
+    home: baseURL + "/settings",
   },
 };

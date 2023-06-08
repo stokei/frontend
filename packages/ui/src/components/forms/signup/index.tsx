@@ -84,6 +84,7 @@ export const FormSignUp: FC<FormSignUpProps> = ({
                 <InputGroup>
                   <Input
                     id="firstname"
+                    textTransform="capitalize"
                     placeholder={translate.formatMessage({
                       id: "firstnamePlaceholder",
                     })}
@@ -101,6 +102,7 @@ export const FormSignUp: FC<FormSignUpProps> = ({
                 <InputGroup>
                   <Input
                     id="lastname"
+                    textTransform="capitalize"
                     placeholder={translate.formatMessage({
                       id: "lastnamePlaceholder",
                     })}

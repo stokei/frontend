@@ -1,0 +1,29 @@
+query MemberPageGetMember($id: String!) {
+  account(id: $id) {
+    ...MemberPageMember
+  }
+}
+
+fragment MemberPageMember on Account {
+  id
+  firstname
+  lastname
+  fullname
+  avatar {
+    file {
+      url
+    }
+  }
+  isOwner
+  roles {
+    totalCount
+    items {
+      name
+    }
+  }
+  app {
+    id
+    name
+  }
+  email
+}

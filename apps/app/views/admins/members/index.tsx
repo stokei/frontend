@@ -3,6 +3,7 @@ import { AdminLayout } from "@/views/admins/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
+  Button,
   Card,
   CardBody,
   Container,
@@ -19,6 +20,7 @@ import {
   Pagination,
   Stack,
   useDebounce,
+  useDisclosure,
 } from "@stokei/ui";
 import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,6 +30,7 @@ import { Navbar } from "./components/navbar";
 import { AppMemberFragment } from "./graphql/member.fragment.graphql.generated";
 import { useGetAppMembersQuery } from "./graphql/members.query.graphql.generated";
 import { Loading } from "./loading";
+import { AddMemberDrawer } from "./components/add-member-drawer";
 
 interface MembersPageProps {}
 
@@ -37,6 +40,11 @@ export const MembersPage: FC<MembersPageProps> = () => {
 
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
+  const {
+    isOpen: isOpenAddMemberDrawer,
+    onClose: onCloseAddMemberDrawer,
+    onOpen: onOpenAddMemberDrawer,
+  } = useDisclosure();
 
   const validationSchema = z.object({
     search: z.string(),
@@ -90,38 +98,52 @@ export const MembersPage: FC<MembersPageProps> = () => {
     setMembers(dataGetMembers?.accounts?.items || []);
   }, [dataGetMembers]);
 
-  const onSearch = async () => {};
+  const onSuccessMemberAdded = async (member: AppMemberFragment) => {
+    setMembers((currentMembers) => [member, ...currentMembers]);
+    onCloseAddMemberDrawer();
+  };
 
   return (
     <AdminLayout>
       <Navbar />
       <Box width="full" flexDirection="row">
         <Container paddingY="5">
+          <AddMemberDrawer
+            isOpenDrawer={isOpenAddMemberDrawer}
+            onCloseDrawer={onCloseAddMemberDrawer}
+            onSuccess={onSuccessMemberAdded}
+          />
           <Stack direction="column" spacing="5">
-            <Card>
-              <CardBody>
-                <Form onSubmit={handleSubmit(onSearch)}>
-                  <FormControl isInvalid={!!errors?.search}>
-                    <InputGroup>
-                      <Input
-                        id="search"
-                        placeholder={translate.formatMessage({
-                          id: "search",
-                        })}
-                        autoComplete="off"
-                        {...register("search")}
-                      />
-                      <InputRightElement>
-                        <Icon name="search" />
-                      </InputRightElement>
-                    </InputGroup>
-                    <FormErrorMessage>
-                      {errors?.search?.message}
-                    </FormErrorMessage>
-                  </FormControl>
-                </Form>
-              </CardBody>
-            </Card>
+            <Stack
+              direction={["column", "column", "row", "row"]}
+              spacing="5"
+              justify="space-between"
+            >
+              <FormControl
+                width={["full", "full", "32%", "32%"]}
+                isInvalid={!!errors?.search}
+              >
+                <InputGroup>
+                  <Input
+                    id="search"
+                    placeholder={translate.formatMessage({
+                      id: "search",
+                    })}
+                    background="background.50"
+                    autoComplete="off"
+                    {...register("search")}
+                  />
+                  <InputRightElement>
+                    <Icon name="search" />
+                  </InputRightElement>
+                </InputGroup>
+                <FormErrorMessage>{errors?.search?.message}</FormErrorMessage>
+              </FormControl>
+
+              <Button onClick={onOpenAddMemberDrawer}>
+                {translate.formatMessage({ id: "addMember" })}
+              </Button>
+            </Stack>
             {isLoading ? (
               <Loading />
             ) : (

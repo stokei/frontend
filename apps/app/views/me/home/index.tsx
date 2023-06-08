@@ -126,6 +126,7 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
                   <InputGroup>
                     <Input
                       id="firstname"
+                      textTransform="capitalize"
                       placeholder={translate.formatMessage({
                         id: "firstnamePlaceholder",
                       })}
@@ -143,6 +144,7 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
                   <InputGroup>
                     <Input
                       id="lastname"
+                      textTransform="capitalize"
                       placeholder={translate.formatMessage({
                         id: "lastnamePlaceholder",
                       })}

@@ -1,5 +1,7 @@
-mutation Login($input: LoginInput!) {
-  login(input: $input) {
+mutation CompleteAccountConfiguration(
+  $input: CompleteAccountConfigurationInput!
+) {
+  completeAccountConfiguration(input: $input) {
     accessToken
     refreshToken
     prefixToken
@@ -7,7 +9,6 @@ mutation Login($input: LoginInput!) {
       id
       fullname
       isOwner
-      status
       roles {
         totalCount
         items {

@@ -73,6 +73,7 @@ export enum AccountStatus {
   Active = 'ACTIVE',
   Blocked = 'BLOCKED',
   Canceled = 'CANCELED',
+  ConfigurationPending = 'CONFIGURATION_PENDING',
   Inactive = 'INACTIVE'
 }
 
@@ -321,6 +322,11 @@ export type Colors = {
   previousPage: Scalars['Int'];
   totalCount: Scalars['Int'];
   totalPages: Scalars['Int'];
+};
+
+export type CompleteAccountConfigurationInput = {
+  account: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Course = {
@@ -1001,7 +1007,8 @@ export type Mutation = {
   cancelSubscriptionContract: SubscriptionContract;
   changeFromSortedItemToSortedItem: ChangeFromSortedItemToSortedItemResponse;
   changePassword: Scalars['Boolean'];
-  createAccount: AuthResponse;
+  completeAccountConfiguration: AuthResponse;
+  createAccount: Account;
   createAddress: Address;
   createApp: App;
   createAppStripeDashboardLink: Link;
@@ -1094,6 +1101,11 @@ export type MutationChangeFromSortedItemToSortedItemArgs = {
 
 export type MutationChangePasswordArgs = {
   input: ChangePasswordInput;
+};
+
+
+export type MutationCompleteAccountConfigurationArgs = {
+  input: CompleteAccountConfigurationInput;
 };
 
 
@@ -1991,6 +2003,7 @@ export type Query = {
   access: Access;
   accesses: Accesses;
   account: Account;
+  accountByEmail: Account;
   accounts: Accounts;
   address: Address;
   addresses: Addresses;
@@ -2061,6 +2074,11 @@ export type QueryAccessesArgs = {
 
 export type QueryAccountArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryAccountByEmailArgs = {
+  email?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -2704,6 +2722,7 @@ export enum TiersMode {
 
 export type UpdateAccountInput = {
   data: UpdateDataAccountInput;
+  where?: InputMaybe<UpdateWhereAccountInput>;
 };
 
 export type UpdateAddressInput = {
@@ -2874,6 +2893,10 @@ export type UpdateSubscriptionContractInput = {
 export type UpdateVideoInput = {
   data: UpdateDataVideoInput;
   where: UpdateWhereVideoInput;
+};
+
+export type UpdateWhereAccountInput = {
+  account?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateWhereAddressInput = {

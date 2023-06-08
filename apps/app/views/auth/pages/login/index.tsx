@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
 import { AuthLayout } from "../../layout";
+import { AccountStatus } from "@/services/graphql/stokei";
 
 interface LoginPageProps {
   readonly redirectTo?: string;
@@ -43,6 +44,14 @@ export const LoginPage: FC<LoginPageProps> = () => {
       });
       if (!!response?.data?.login?.accessToken) {
         const data = response.data.login;
+        if (data.account.status === AccountStatus.ConfigurationPending) {
+          router.push(
+            routes.auth.completeAccountConfiguration({
+              account: data.account.id,
+            })
+          );
+          return;
+        }
         setAccessToken(data.accessToken, data.prefixToken);
         setRefreshToken(data.refreshToken);
 
