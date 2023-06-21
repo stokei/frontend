@@ -1,17 +1,17 @@
-import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
+import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-contract-status-filter";
 import { IColorName } from "@stokei/ui";
 
 export const getSubscriptionContractStatusColor = (
-  status?: StatusSubscriptionContractFilter
+  status?: SubscriptionContractStatusFilter
 ) => {
-  const colors: Record<StatusSubscriptionContractFilter, IColorName> = {
-    [StatusSubscriptionContractFilter.All]: "teal",
-    [StatusSubscriptionContractFilter.Active]: "success",
-    [StatusSubscriptionContractFilter.Canceled]: "gray",
-    [StatusSubscriptionContractFilter.Pending]: "warning",
+  const colors: Record<SubscriptionContractStatusFilter, IColorName> = {
+    [SubscriptionContractStatusFilter.All]: "teal",
+    [SubscriptionContractStatusFilter.Active]: "success",
+    [SubscriptionContractStatusFilter.Canceled]: "gray",
+    [SubscriptionContractStatusFilter.Pending]: "warning",
   };
 
-  const defaultColor = colors[StatusSubscriptionContractFilter.Pending];
+  const defaultColor = colors[SubscriptionContractStatusFilter.Pending];
   if (!status) {
     return defaultColor;
   }

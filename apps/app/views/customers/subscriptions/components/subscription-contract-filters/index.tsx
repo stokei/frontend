@@ -1,15 +1,15 @@
-import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
+import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-contract-status-filter";
 import { Box, Card, CardBody, Stack } from "@stokei/ui";
 import { FC } from "react";
 import { SelectFilterStatus } from "../select-filter-status";
 
 interface SubscriptionContractFiltersProps {
-  readonly currentStatus: StatusSubscriptionContractFilter;
+  readonly currentStatus: SubscriptionContractStatusFilter;
   readonly onChooseCurrentStatus: (
-    value: StatusSubscriptionContractFilter
+    value: SubscriptionContractStatusFilter
   ) => void;
   readonly onRemoveChooseCurrentStatus: (
-    value: StatusSubscriptionContractFilter
+    value: SubscriptionContractStatusFilter
   ) => void;
 }
 

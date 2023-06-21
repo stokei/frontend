@@ -53,6 +53,8 @@ export const ptBRMessages = {
   students: "Alunos",
   inactive: "Inativo",
   blocked: "Bloqueado",
+  copiedLink: "Link copiado",
+  copyPaymentLink: "Copiar link de pagamento",
   configurationPending: "Configuração pendente",
   showDetails: "Ver detalhes",
   addMember: "Adicionar membro",

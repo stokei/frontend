@@ -24,6 +24,7 @@ import {
   withLocalDomain,
   withSubDomain,
 } from "./services/middlewares";
+import { BASE_URL_HEADER_NAME } from "./constants/base-url-header-name";
 
 const getDomain = ({
   domain,
@@ -56,7 +57,6 @@ const getDomain = ({
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
   const [domain] = request.headers.get("host")?.split(":") || [];
   if (
     pathname.startsWith("/_next") ||
@@ -82,7 +82,10 @@ export async function middleware(request: NextRequest) {
   if (!appId) {
     return NextResponse.redirect(STOKEI_APP_NOT_FOUND_URL);
   }
-
+  let baseURL = url.origin.replace(url.hostname, domain);
+  if (!!domain?.match("localhost") || !!domain?.match("vercel.app")) {
+    baseURL = `${baseURL}/app/${appId}`;
+  }
   try {
     const stokeiClient = createAPIClient({
       appId,
@@ -106,7 +109,6 @@ export async function middleware(request: NextRequest) {
     const currentApp = currentAppResponse?.data?.currentApp;
     const currentAccount = currentAccountResponse?.data?.me;
     const isAuth = !!currentAccount;
-    const baseURL = url.origin.replace(url.hostname, domain);
     const authURL = baseURL + routes.auth.login;
     const customersDashboardURL = baseURL + routes.customers.home;
     if (!!currentApp) {
@@ -136,10 +138,12 @@ export async function middleware(request: NextRequest) {
   if (isRedirect) {
     const response = NextResponse.redirect(url);
     response.cookies.set(APP_ID_HEADER_NAME, appId);
+    response.headers.append(BASE_URL_HEADER_NAME, baseURL);
     return response;
   }
   const response = NextResponse.rewrite(url);
   response.cookies.set(APP_ID_HEADER_NAME, appId);
+  response.headers.append(BASE_URL_HEADER_NAME, baseURL);
   return response;
 }
 

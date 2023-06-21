@@ -15,6 +15,7 @@ import {
   Text,
   Textarea,
   Title,
+  useClipboard,
   useToast,
 } from "@stokei/ui";
 import { FC, useEffect } from "react";
@@ -25,17 +26,24 @@ import { useUpdateProductMutation } from "../../graphql/update-product.mutation.
 import { Section } from "../section";
 import { SectionContent } from "../section-content";
 import { SectionInformation } from "../section-information";
+import { routes } from "@/routes";
+import { useRouter } from "next/router";
 
 interface ProductInformationProps {
+  readonly baseURL: string;
   currentProduct?: ProductPageProductFragment;
 }
 
 export const ProductInformation: FC<ProductInformationProps> = ({
+  baseURL,
   currentProduct,
 }) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
+  const { onCopy, hasCopied } = useClipboard(
+    baseURL + routes.checkout.home({ product: currentProduct?.id || "" })
+  );
 
   const validationSchema = z.object({
     name: z.string().min(1, {
@@ -109,15 +117,28 @@ export const ProductInformation: FC<ProductInformationProps> = ({
   return (
     <Section>
       <SectionInformation>
-        <Stack direction="column" spacing="1">
-          <Title fontSize="lg">
-            {translate.formatMessage({ id: "product" })}
-          </Title>
-          <Text fontSize="md">
-            {translate.formatMessage({
-              id: "fillInYourProductInformationAndStartSellingRightAway",
-            })}
-          </Text>
+        <Stack
+          direction={["column", "column", "row", "row"]}
+          spacing="5"
+          align={["flex-start", "flex-start", "center", "center"]}
+        >
+          <Stack direction="column" spacing="1">
+            <Title fontSize="lg">
+              {translate.formatMessage({ id: "product" })}
+            </Title>
+            <Text fontSize="md">
+              {translate.formatMessage({
+                id: "fillInYourProductInformationAndStartSellingRightAway",
+              })}
+            </Text>
+          </Stack>
+          <ButtonGroup variant="link">
+            <Button onClick={onCopy} isDisabled={hasCopied}>
+              {translate.formatMessage({
+                id: hasCopied ? "copiedLink" : "copyPaymentLink",
+              })}
+            </Button>
+          </ButtonGroup>
         </Stack>
       </SectionInformation>
       <SectionContent>

@@ -68,6 +68,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   addProduct: "Add product",
   inactive: "Inactive",
   blocked: "Blocked",
+  copiedLink: "Copied link",
+  copyPaymentLink: "Copy payment link",
   configurationPending: "Configuration pending",
   editProduct: "Edit product",
   addPoster: "Add poster",

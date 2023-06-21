@@ -46,7 +46,7 @@ export const ProductTypeStep: FC<ProductTypeStepProps> = ({
                   {translate.formatMessage({ id: "course" })}
                 </Title>
               </RadioCard>
-              <RadioCard
+              {/* <RadioCard
                 id={"product-type-" + productType}
                 value={ProductType.OTHER}
                 isChecked={productType === ProductType.OTHER}
@@ -54,7 +54,7 @@ export const ProductTypeStep: FC<ProductTypeStepProps> = ({
                 <Title fontSize="md">
                   {translate.formatMessage({ id: "other" })}
                 </Title>
-              </RadioCard>
+              </RadioCard> */}
             </Stack>
           </RadioGroup>
         </FormControl>

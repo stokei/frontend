@@ -1,6 +1,6 @@
 import { useCurrentApp, usePagination } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
+import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-contract-status-filter";
 import { OrderBy } from "@/services/graphql/stokei";
 import { CustomerLayout } from "@/views/customers/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
@@ -20,8 +20,8 @@ export const SubscriptionContractsPage: FC<
   SubscriptionContractsPageProps
 > = () => {
   const [currentStatus, setCurrentStatus] =
-    useState<StatusSubscriptionContractFilter>(
-      StatusSubscriptionContractFilter.All
+    useState<SubscriptionContractStatusFilter>(
+      SubscriptionContractStatusFilter.All
     );
   const [subscriptionContracts, setSubscriptionContracts] = useState<
     AppSubscriptionContractFragment[]
@@ -51,7 +51,7 @@ export const SubscriptionContractsPage: FC<
             app: {
               equals: currentApp?.id,
             },
-            ...(currentStatus !== StatusSubscriptionContractFilter.All && {
+            ...(currentStatus !== SubscriptionContractStatusFilter.All && {
               status: currentStatus as any,
             }),
           },
@@ -73,10 +73,10 @@ export const SubscriptionContractsPage: FC<
           <SubscriptionContractFilters
             currentStatus={currentStatus}
             onChooseCurrentStatus={(status) =>
-              setCurrentStatus(status || StatusSubscriptionContractFilter.All)
+              setCurrentStatus(status || SubscriptionContractStatusFilter.All)
             }
             onRemoveChooseCurrentStatus={() =>
-              setCurrentStatus(StatusSubscriptionContractFilter.All)
+              setCurrentStatus(SubscriptionContractStatusFilter.All)
             }
           />
         </Container>

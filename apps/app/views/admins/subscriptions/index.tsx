@@ -1,6 +1,6 @@
 import { useCurrentApp, usePagination } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
+import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-contract-status-filter";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AdminLayout } from "@/views/admins/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
@@ -14,6 +14,7 @@ import {
   useGetAppSubscriptionContractsQuery,
 } from "./graphql/subscription-contracts.query.graphql.generated";
 import { Loading } from "./loading";
+import { SubscriptionContractTypeFilter } from "@/interfaces/subscription-contract-type-filter";
 
 interface SubscriptionContractsPageProps {}
 
@@ -24,8 +25,12 @@ export const SubscriptionContractsPage: FC<
     AppAccountFragment[]
   >([]);
   const [currentStatus, setCurrentStatus] =
-    useState<StatusSubscriptionContractFilter>(
-      StatusSubscriptionContractFilter.All
+    useState<SubscriptionContractStatusFilter>(
+      SubscriptionContractStatusFilter.All
+    );
+  const [currentSubscriptionType, setCurrentSubscriptionType] =
+    useState<SubscriptionContractTypeFilter>(
+      SubscriptionContractTypeFilter.All
     );
   const [subscriptionContracts, setSubscriptionContracts] = useState<
     AppSubscriptionContractFragment[]
@@ -72,8 +77,12 @@ export const SubscriptionContractsPage: FC<
             app: {
               equals: currentApp?.id,
             },
-            ...(currentStatus !== StatusSubscriptionContractFilter.All && {
+            ...(currentStatus !== SubscriptionContractStatusFilter.All && {
               status: currentStatus as any,
+            }),
+            ...(currentSubscriptionType !==
+              SubscriptionContractTypeFilter.All && {
+              type: currentSubscriptionType as any,
             }),
           },
           OR: dataGetSubscriptionContractsWhereOR,
@@ -118,14 +127,23 @@ export const SubscriptionContractsPage: FC<
         <Container>
           <SubscriptionContractFilters
             currentStatus={currentStatus}
+            currentSubscriptionType={currentSubscriptionType}
             currentCustomers={currentCustomers}
             onChooseCurrentCustomer={onChooseCurrentCustomer}
             onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
             onChooseCurrentStatus={(status) =>
-              setCurrentStatus(status || StatusSubscriptionContractFilter.All)
+              setCurrentStatus(status || SubscriptionContractStatusFilter.All)
             }
             onRemoveChooseCurrentStatus={() =>
-              setCurrentStatus(StatusSubscriptionContractFilter.All)
+              setCurrentStatus(SubscriptionContractStatusFilter.All)
+            }
+            onChooseCurrentSubscriptionType={(type) =>
+              setCurrentSubscriptionType(
+                type || SubscriptionContractTypeFilter.All
+              )
+            }
+            onRemoveChooseCurrentSubscriptionType={() =>
+              setCurrentSubscriptionType(SubscriptionContractTypeFilter.All)
             }
           />
         </Container>

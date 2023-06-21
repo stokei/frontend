@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
+import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-contract-status-filter";
 import { convertEnumValueToCamelCase } from "@/utils";
 import {
   FormControl,
@@ -13,12 +13,12 @@ import { FC } from "react";
 import { StatusSelectItemContent } from "../status-select-item-content";
 
 interface SelectFilterStatusProps {
-  readonly currentStatus: StatusSubscriptionContractFilter;
+  readonly currentStatus: SubscriptionContractStatusFilter;
   readonly onChooseCurrentStatus: (
-    value: StatusSubscriptionContractFilter
+    value: SubscriptionContractStatusFilter
   ) => void;
   readonly onRemoveChooseCurrentStatus: (
-    value: StatusSubscriptionContractFilter
+    value: SubscriptionContractStatusFilter
   ) => void;
 }
 
@@ -49,27 +49,27 @@ export const SelectFilterStatus: FC<SelectFilterStatusProps> = ({
           )}
         />
         <SelectList>
-          <SelectItem value={StatusSubscriptionContractFilter.All}>
+          <SelectItem value={SubscriptionContractStatusFilter.All}>
             <StatusSelectItemContent
-              status={StatusSubscriptionContractFilter.All}
+              status={SubscriptionContractStatusFilter.All}
               content={translate.formatMessage({ id: "all" })}
             />
           </SelectItem>
-          <SelectItem value={StatusSubscriptionContractFilter.Active}>
+          <SelectItem value={SubscriptionContractStatusFilter.Active}>
             <StatusSelectItemContent
-              status={StatusSubscriptionContractFilter.Active}
+              status={SubscriptionContractStatusFilter.Active}
               content={translate.formatMessage({ id: "active" })}
             />
           </SelectItem>
-          <SelectItem value={StatusSubscriptionContractFilter.Pending}>
+          <SelectItem value={SubscriptionContractStatusFilter.Pending}>
             <StatusSelectItemContent
-              status={StatusSubscriptionContractFilter.Pending}
+              status={SubscriptionContractStatusFilter.Pending}
               content={translate.formatMessage({ id: "pending" })}
             />
           </SelectItem>
-          <SelectItem value={StatusSubscriptionContractFilter.Canceled}>
+          <SelectItem value={SubscriptionContractStatusFilter.Canceled}>
             <StatusSelectItemContent
-              status={StatusSubscriptionContractFilter.Canceled}
+              status={SubscriptionContractStatusFilter.Canceled}
               content={translate.formatMessage({ id: "canceled" })}
             />
           </SelectItem>

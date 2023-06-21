@@ -112,19 +112,21 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                 </Stack>
 
                 <RadioGroup value={currentPrice?.id} onChange={onChoosePrice}>
-                  {product?.prices?.items?.map((price) => (
-                    <RadioCard
-                      key={price?.id}
-                      id={price?.id}
-                      value={price?.id}
-                      isChecked={price?.id === currentPrice?.id}
-                    >
-                      <Stack direction="column" spacing="3">
-                        <Title fontSize="md">{price?.nickname}</Title>
-                        <Price price={currentPrice} />
-                      </Stack>
-                    </RadioCard>
-                  ))}
+                  <Stack spacing="5" direction="column">
+                    {product?.prices?.items?.map((price) => (
+                      <RadioCard
+                        key={price?.id}
+                        id={price?.id}
+                        value={price?.id}
+                        isChecked={price?.id === currentPrice?.id}
+                      >
+                        <Stack direction="column" spacing="3">
+                          <Title fontSize="md">{price?.nickname}</Title>
+                          <Price price={price} />
+                        </Stack>
+                      </RadioCard>
+                    ))}
+                  </Stack>
                 </RadioGroup>
 
                 <ButtonGroup width="full" justifyContent="flex-end">

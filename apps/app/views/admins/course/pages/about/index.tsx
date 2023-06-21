@@ -6,6 +6,7 @@ import {
   Container,
   Description,
   Image,
+  Markdown,
   Stack,
   Text,
   Title,
@@ -55,10 +56,12 @@ export const CourseAboutPage: FC<CourseAboutPageProps> = () => {
           </Stack>
 
           <Box width="full" flexDirection="row">
-            <Description>
-              {course?.description ||
-                translate.formatMessage({ id: "descriptionNotFound" })}
-            </Description>
+            <Markdown
+              text={
+                course?.description ||
+                translate.formatMessage({ id: "descriptionNotFound" })
+              }
+            />
           </Box>
 
           <Stack direction="column" spacing="5">

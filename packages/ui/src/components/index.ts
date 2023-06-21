@@ -74,6 +74,7 @@ export * from "./link";
 export * from "./loading";
 export * from "./loading-transition";
 export * from "./menu";
+export * from "./markdown";
 export * from "./menu-button";
 export * from "./menu-divider";
 export * from "./menu-group";

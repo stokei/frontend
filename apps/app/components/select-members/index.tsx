@@ -72,17 +72,16 @@ export const SelectMembers: FC<SelectMembersProps> = ({
             app: {
               equals: currentApp?.id,
             },
-            firstname: {
-              search: searchMemberQueryText,
-            },
-            lastname: {
-              search: searchMemberQueryText,
-            },
           },
           OR: [
             {
+              firstname: {
+                startsWith: searchMemberQueryText,
+              },
+            },
+            {
               lastname: {
-                search: searchMemberQueryText,
+                startsWith: searchMemberQueryText,
               },
             },
           ],

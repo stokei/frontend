@@ -1,10 +1,10 @@
-import { StatusSubscriptionContractFilter } from "@/interfaces/subscription-contract-status-filter";
+import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-contract-status-filter";
 import { getSubscriptionContractStatusColor } from "@/utils/get-subscription-contract-status-color";
 import { Box, Stack, Text } from "@stokei/ui";
 import { FC, useMemo } from "react";
 
 interface StatusSelectItemContentProps {
-  readonly status?: StatusSubscriptionContractFilter;
+  readonly status?: SubscriptionContractStatusFilter;
   readonly content?: string;
 }
 

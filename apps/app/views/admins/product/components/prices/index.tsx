@@ -125,7 +125,11 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
   return (
     <Section>
       <SectionInformation>
-        <Stack direction="row" spacing="5" align="center">
+        <Stack
+          direction={["column", "column", "row", "row"]}
+          spacing="5"
+          align={["flex-start", "flex-start", "center", "center"]}
+        >
           <Stack direction="column" spacing="1">
             <Title fontSize="lg">
               {translate.formatMessage({ id: "prices" })}
@@ -136,7 +140,7 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
               })}
             </Text>
           </Stack>
-          <ButtonGroup width="full" justifyContent="flex-end">
+          <ButtonGroup>
             <Button onClick={onOpenAddPriceDrawer} isDisabled={isLoadingPrices}>
               {translate.formatMessage({ id: "add" })}
             </Button>
@@ -182,6 +186,7 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
                       <TableBody>
                         {prices?.map((price) => (
                           <PriceItem
+                            key={price?.id}
                             isFirstPrice={isFirstPrice}
                             price={price}
                             onSuccessPriceUpdated={() =>

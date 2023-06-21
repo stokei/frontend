@@ -6,13 +6,14 @@ import {
   Container,
   Description,
   Image,
+  Markdown,
   Stack,
   Text,
   Title,
 } from "@stokei/ui";
 import { FC } from "react";
-import { CourseLayout } from "../../layout";
 import { Navbar } from "../../components/navbar";
+import { CourseLayout } from "../../layout";
 
 interface CourseAboutPageProps {}
 
@@ -41,10 +42,12 @@ const CourseAboutPage: FC<CourseAboutPageProps> = () => {
         </Stack>
 
         <Box width="full" flexDirection="row">
-          <Description>
-            {course?.description ||
-              translate.formatMessage({ id: "descriptionNotFound" })}
-          </Description>
+          <Markdown
+            text={
+              course?.description ||
+              translate.formatMessage({ id: "descriptionNotFound" })
+            }
+          />
         </Box>
 
         <Stack direction="column" spacing="5">
