@@ -1,4 +1,4 @@
-import { useAPIErrors, useTranslations } from "@/hooks";
+import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -27,20 +27,18 @@ import { Section } from "../section";
 import { SectionContent } from "../section-content";
 import { SectionInformation } from "../section-information";
 import { routes } from "@/routes";
-import { useRouter } from "next/router";
 
 interface ProductInformationProps {
-  readonly baseURL: string;
   currentProduct?: ProductPageProductFragment;
 }
 
 export const ProductInformation: FC<ProductInformationProps> = ({
-  baseURL,
   currentProduct,
 }) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
+  const { baseURL } = useCurrentApp();
   const { onCopy, hasCopied } = useClipboard(
     baseURL + routes.checkout.home({ product: currentProduct?.id || "" })
   );

@@ -34,6 +34,7 @@ import { useMemo } from "react";
 import { RoleName } from "@/constants/role-names";
 import { routes } from "@/routes";
 import Head from "next/head";
+import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 
 const messages: Messages = {
   "pt-BR": {
@@ -57,6 +58,7 @@ function MyApp({
   pageProps,
   appId,
   cookies,
+  baseURL,
   currentApp,
   currentAccount,
   themeColors,
@@ -72,7 +74,7 @@ function MyApp({
   );
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
-      <CurrentAppProvider currentApp={currentApp}>
+      <CurrentAppProvider baseURL={baseURL} currentApp={currentApp}>
         <CurrentAccountProvider currentAccount={currentAccount}>
           <StokeiUIProvider
             config={{
@@ -132,8 +134,10 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
 
   const currentAppData = currentApp?.data?.currentApp;
   const currentAccountData = currentAccount?.data?.me;
+  let baseURL = cookies?.[BASE_URL_HEADER_NAME];
   return {
     appId,
+    baseURL,
     cookies,
     currentApp: currentAppData,
     currentAccount: currentAccountData,

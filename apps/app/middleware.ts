@@ -120,6 +120,7 @@ export async function middleware(request: NextRequest) {
         if (!isAuth) {
           const response = NextResponse.redirect(authURL);
           response.cookies.set(APP_ID_HEADER_NAME, appId);
+          response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
           return response;
         }
         if (isAuth) {
@@ -138,12 +139,12 @@ export async function middleware(request: NextRequest) {
   if (isRedirect) {
     const response = NextResponse.redirect(url);
     response.cookies.set(APP_ID_HEADER_NAME, appId);
-    response.headers.append(BASE_URL_HEADER_NAME, baseURL);
+    response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
     return response;
   }
   const response = NextResponse.rewrite(url);
   response.cookies.set(APP_ID_HEADER_NAME, appId);
-  response.headers.append(BASE_URL_HEADER_NAME, baseURL);
+  response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
   return response;
 }
 

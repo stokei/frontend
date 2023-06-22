@@ -9,11 +9,9 @@ import { ProductInformation } from "./components/product-information";
 import { useGetProductPageProductQuery } from "./graphql/product.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface ProductPageProps {
-  readonly baseURL: string;
-}
+interface ProductPageProps {}
 
-export const ProductPage: FC<ProductPageProps> = ({ baseURL }) => {
+export const ProductPage: FC<ProductPageProps> = () => {
   const router = useRouter();
   const translate = useTranslations();
 
@@ -40,10 +38,7 @@ export const ProductPage: FC<ProductPageProps> = ({ baseURL }) => {
       ) : (
         <Container paddingY="5">
           <Stack direction="column" spacing="5">
-            <ProductInformation
-              baseURL={baseURL}
-              currentProduct={currentProduct}
-            />
+            <ProductInformation currentProduct={currentProduct} />
             <Prices productId={productId} />
           </Stack>
         </Container>
