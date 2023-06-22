@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { Box, Description, Stack, Title } from "@stokei/ui";
+import { Box, Description, Markdown, Stack, Title } from "@stokei/ui";
 import { FC } from "react";
 import { GetProductCourseQuery } from "../../graphql/course.query.graphql.generated";
 
@@ -14,7 +14,7 @@ export const CourseDescription: FC<CourseDescriptionProps> = ({
   return (
     <Stack direction="column" spacing="4">
       <Title size="md">{translate.formatMessage({ id: "description" })}</Title>
-      <Description>{description}</Description>
+      <Markdown text={description || ""} />
     </Stack>
   );
 };
