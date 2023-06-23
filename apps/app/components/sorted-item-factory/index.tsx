@@ -5,7 +5,9 @@ import { CatalogItem } from "../catalog-item";
 import { HeroWithImage } from "../hero-with-image";
 import { HeroWithTitle } from "../hero-with-title";
 import { HeroWithVideo } from "../hero-with-video";
-import { SortedItemComponentFragment } from "./sorted-item.fragment.graphql.generated";
+import { SortedItemComponentFragment } from "./graphql/sorted-item.fragment.graphql.generated";
+import { HeroType } from "@/services/graphql/stokei";
+import { HeroWithBackgroundImage } from "../hero-with-background-image";
 
 export interface SortedItemFactoryProps {
   readonly sortedItem?: SortedItemComponentFragment | null;
@@ -40,8 +42,8 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
     }
 
     if (type === "Hero") {
-      if (sortedItem?.item?.image) {
-        return (
+      const heros = {
+        [HeroType.WithImage]: (
           <HeroWithImage
             title={sortedItem?.item?.heroTitle}
             subtitle={sortedItem?.item?.heroSubtitle}
@@ -49,10 +51,17 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
             imageURL={sortedItem?.item?.image?.file?.url || ""}
             {...props}
           />
-        );
-      }
-      if (sortedItem?.item?.video) {
-        return (
+        ),
+        [HeroType.WithImageBackground]: (
+          <HeroWithBackgroundImage
+            title={sortedItem?.item?.heroTitle}
+            subtitle={sortedItem?.item?.heroSubtitle}
+            titleHighlight={sortedItem?.item?.titleHighlight}
+            imageURL={sortedItem?.item?.backgroundImage?.file?.url || ""}
+            {...props}
+          />
+        ),
+        [HeroType.WithVideo]: (
           <HeroWithVideo
             title={sortedItem?.item?.heroTitle}
             subtitle={sortedItem?.item?.heroSubtitle}
@@ -60,18 +69,17 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
             videoURL={sortedItem?.item?.video?.file?.url || ""}
             {...props}
           />
-        );
-      }
-      if (sortedItem?.item?.heroTitle || sortedItem?.item?.heroSubtitle) {
-        return (
+        ),
+        [HeroType.Default]: (
           <HeroWithTitle
             title={sortedItem?.item?.heroTitle}
             subtitle={sortedItem?.item?.heroSubtitle}
             titleHighlight={sortedItem?.item?.titleHighlight}
             {...props}
           />
-        );
-      }
+        ),
+      };
+      return heros[sortedItem?.item?.heroType || HeroType.Default];
     }
 
     return <></>;

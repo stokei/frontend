@@ -13,6 +13,7 @@ fragment SortedItemComponent on SortedItem {
 fragment SortedItemComponentHero on Hero {
   heroId: id
   heroTitle: title
+  heroType: type
   titleHighlight
   heroSubtitle: subtitle
   video {

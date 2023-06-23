@@ -1,9 +1,18 @@
-import { Box, Container, Text, Title } from "@stokei/ui";
+import {
+  Box,
+  Container,
+  NotFound,
+  NotFoundIcon,
+  NotFoundSubtitle,
+  Text,
+  Title,
+} from "@stokei/ui";
 import { FC, memo, useMemo } from "react";
-import { useCatalogItemsQuery } from "../../views/landing-page/graphql/catalog-items.query.graphql.generated";
 
 import { CatalogItem } from "../catalog-item";
-import { useSortedItemsQuery } from "./sorted-items.query.graphql.generated";
+
+import { useTranslations } from "@/hooks";
+import { useSortedItemsQuery } from "./graphql/sorted-items.query.graphql.generated";
 
 export interface CatalogProps {
   readonly catalogId?: string;
@@ -13,6 +22,7 @@ export interface CatalogProps {
 
 export const Catalog: FC<CatalogProps> = memo(
   ({ catalogId, title, subtitle }) => {
+    const translate = useTranslations();
     const [{ fetching: isLoading, data: dataSortedItems }] =
       useSortedItemsQuery({
         pause: !catalogId,
@@ -34,15 +44,22 @@ export const Catalog: FC<CatalogProps> = memo(
 
     return (
       <Box flexDirection="column" as="section" paddingY="5">
-        <Container>
-          <Title fontSize="lg">{title}</Title>
+        <Container marginBottom="5">
+          <Title fontSize="xl">{title}</Title>
           {subtitle && (
             <Text fontSize="sm" marginBottom="5" color="text.300">
               {subtitle}
             </Text>
           )}
         </Container>
-        {!!catalogItems?.length && (
+        {!catalogItems?.length ? (
+          <NotFound>
+            <NotFoundIcon name="course" />
+            <NotFoundSubtitle>
+              {translate.formatMessage({ id: "productsNotFound" })}
+            </NotFoundSubtitle>
+          </NotFound>
+        ) : (
           <Box flexDirection="row" overflowY="hidden">
             <Container
               flexDirection="row"

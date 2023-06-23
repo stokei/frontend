@@ -1,7 +1,7 @@
 import * as Types from '../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
-import { SortedItemComponentFragmentDoc } from '../../../components/sorted-item-factory/graphql/sorted-item.fragment.graphql.generated';
+import { SortedItemComponentFragmentDoc } from '../../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type SortedItemsQueryVariables = Types.Exact<{

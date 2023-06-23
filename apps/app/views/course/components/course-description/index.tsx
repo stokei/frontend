@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { Box, Description, Markdown, Stack, Title } from "@stokei/ui";
+import { Markdown, Stack, Title } from "@stokei/ui";
 import { FC } from "react";
 import { GetProductCourseQuery } from "../../graphql/course.query.graphql.generated";
 

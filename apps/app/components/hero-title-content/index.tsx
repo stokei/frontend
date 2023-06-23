@@ -12,12 +12,14 @@ import router from "next/router";
 import { FC } from "react";
 
 export interface HeroTitleContentProps {
+  readonly textTheme?: "light" | "dark";
   readonly title?: string | null;
   readonly subtitle?: string | null;
   readonly titleHighlight?: string | null;
 }
 
 export const HeroTitleContent: FC<HeroTitleContentProps> = ({
+  textTheme = "light",
   title,
   titleHighlight,
   subtitle,
@@ -27,7 +29,7 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
   return (
     <HeroContent>
       {title && (
-        <HeroTitle>
+        <HeroTitle color={textTheme === "dark" ? "white.500" : undefined}>
           {titleHighlight ? (
             <Highlight query={titleHighlight}>{title}</Highlight>
           ) : (
@@ -35,7 +37,11 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
           )}
         </HeroTitle>
       )}
-      {subtitle && <HeroSubtitle>{subtitle}</HeroSubtitle>}
+      {subtitle && (
+        <HeroSubtitle color={textTheme === "dark" ? "white.500" : undefined}>
+          {subtitle}
+        </HeroSubtitle>
+      )}
       <Stack direction={["column", "column", "row", "row"]}>
         <Button onClick={() => router.push(routes.auth.signUp)}>
           {translate.formatMessage({ id: "signUp" })}
