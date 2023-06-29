@@ -1,0 +1,28 @@
+query GetAdminAppPageApps(
+  $where: WhereDataFindAllAppsInput
+  $orderBy: OrderByDataFindAllAppsInput
+  $page: PaginationInput
+) {
+  apps(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AdminAppPageApp
+    }
+  }
+}
+
+fragment AdminAppPageApp on App {
+  id
+  name
+  status
+  logo {
+    file {
+      url
+    }
+  }
+}

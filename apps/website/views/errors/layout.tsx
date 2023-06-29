@@ -1,4 +1,4 @@
-import { Footer, NavbarAuthMenu, NavbarLogo } from "@/components";
+import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
 import { routes } from "@/routes";
 import { Navbar } from "@stokei/ui";
 import { FC, PropsWithChildren } from "react";
@@ -12,7 +12,7 @@ export const ErrorLayout: FC<PropsWithChildren<ErrorLayoutProps>> = ({
     <>
       <Navbar>
         <NavbarLogo href={routes.home} />
-        <NavbarAuthMenu />
+        <NavbarUserInformation />
       </Navbar>
       {children}
       <Footer />

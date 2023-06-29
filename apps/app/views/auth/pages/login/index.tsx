@@ -1,8 +1,6 @@
-import { RoleName } from "@/constants/role-names";
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
-import { getDashboardHomePageURL } from "@/utils";
+import { AccountStatus } from "@/services/graphql/stokei";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
   Box,
@@ -13,9 +11,8 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
-import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
 import { AuthLayout } from "../../layout";
-import { AccountStatus } from "@/services/graphql/stokei";
+import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
 
 interface LoginPageProps {
   readonly redirectTo?: string;
@@ -59,18 +56,10 @@ export const LoginPage: FC<LoginPageProps> = () => {
           title: translate.formatMessage({ id: "loginSuccessfully" }),
           status: "success",
         });
-        const isAdmin =
-          !!data.account?.isOwner ||
-          !!data.account?.roles?.items?.some(
-            (role) => role.name === RoleName.ADMIN
-          );
-        window?.location?.assign(
-          getDashboardHomePageURL({
-            redirectTo: redirectToWhenLoginSuccessfully || undefined,
-            isAdmin,
-          })
+
+        return router.push(
+          redirectToWhenLoginSuccessfully || routes.customers.home
         );
-        return;
       }
 
       if (!!response.error?.graphQLErrors?.length) {

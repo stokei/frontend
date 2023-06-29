@@ -1,0 +1,21 @@
+query GetAddProductCoursesSelect(
+  $where: WhereDataFindAllCoursesInput
+  $page: PaginationInput
+) {
+  courses(where: $where, page: $page) {
+    totalCount
+    items {
+      ...AddProductCourseSelect
+    }
+  }
+}
+
+fragment AddProductCourseSelect on Course {
+  id
+  name
+  avatar {
+    file {
+      url
+    }
+  }
+}

@@ -18,7 +18,7 @@ import { PriceComponentFragment } from "@/components/price/price.fragment.graphq
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
-import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/sorted-item.fragment.graphql.generated";
+import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
 
 export interface CatalogItemProps {
   readonly productId?: string;

@@ -13,10 +13,13 @@ import {
 
 export interface StokeiAPIConfig {
   readonly cookies?: Record<string, string | undefined>;
+  readonly appId?: string;
 }
 
 export const createAPIClient = (config?: StokeiAPIConfig) =>
   createGraphqlClient({
+    ...config,
+    appId: config?.appId || DEFAULT_APP_ID,
     onLogout,
     getAccessToken: () => {
       if (config?.cookies) {
@@ -32,6 +35,4 @@ export const createAPIClient = (config?: StokeiAPIConfig) =>
     },
     url: STOKEI_API_GRAPHQL_URL,
     isServerSide: typeof window === "undefined",
-    appId: DEFAULT_APP_ID,
-    ...config,
   });

@@ -73,6 +73,7 @@ export enum AccountStatus {
   Active = 'ACTIVE',
   Blocked = 'BLOCKED',
   Canceled = 'CANCELED',
+  ConfigurationPending = 'CONFIGURATION_PENDING',
   Inactive = 'INACTIVE'
 }
 
@@ -138,6 +139,7 @@ export type App = {
   currency: Currency;
   currentSubscriptionContract?: Maybe<SubscriptionContract>;
   deactivatedAt?: Maybe<Scalars['String']>;
+  defaultDomain?: Maybe<Domain>;
   description?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   icon?: Maybe<Image>;
@@ -281,8 +283,7 @@ export type ChangePasswordInput = {
 
 export type Checkout = {
   __typename?: 'Checkout';
-  clientSecret: Scalars['String'];
-  subscriptionContract: SubscriptionContract;
+  url: Scalars['String'];
 };
 
 export type Color = {
@@ -321,6 +322,11 @@ export type Colors = {
   previousPage: Scalars['Int'];
   totalCount: Scalars['Int'];
   totalPages: Scalars['Int'];
+};
+
+export type CompleteAccountConfigurationInput = {
+  account: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Course = {
@@ -448,8 +454,6 @@ export type CreateCatalogItemInput = {
 };
 
 export type CreateCheckoutInput = {
-  customer?: InputMaybe<Scalars['String']>;
-  paymentMethod: Scalars['String'];
   price: Scalars['String'];
 };
 
@@ -1003,7 +1007,8 @@ export type Mutation = {
   cancelSubscriptionContract: SubscriptionContract;
   changeFromSortedItemToSortedItem: ChangeFromSortedItemToSortedItemResponse;
   changePassword: Scalars['Boolean'];
-  createAccount: AuthResponse;
+  completeAccountConfiguration: AuthResponse;
+  createAccount: Account;
   createAddress: Address;
   createApp: App;
   createAppStripeDashboardLink: Link;
@@ -1068,6 +1073,7 @@ export type Mutation = {
   updateColor: Color;
   updateCourse: Course;
   updateCurrency: Currency;
+  updateFile: File;
   updateHero: Hero;
   updateLanguage: Language;
   updateModule: Module;
@@ -1095,6 +1101,11 @@ export type MutationChangeFromSortedItemToSortedItemArgs = {
 
 export type MutationChangePasswordArgs = {
   input: ChangePasswordInput;
+};
+
+
+export type MutationCompleteAccountConfigurationArgs = {
+  input: CompleteAccountConfigurationInput;
 };
 
 
@@ -1390,6 +1401,11 @@ export type MutationUpdateCourseArgs = {
 
 export type MutationUpdateCurrencyArgs = {
   input: UpdateCurrencyInput;
+};
+
+
+export type MutationUpdateFileArgs = {
+  input: UpdateFileInput;
 };
 
 
@@ -1837,7 +1853,8 @@ export enum PlanType {
   Domain = 'DOMAIN',
   Instructor = 'INSTRUCTOR',
   Storage = 'STORAGE',
-  Video = 'VIDEO'
+  Video = 'VIDEO',
+  VideoView = 'VIDEO_VIEW'
 }
 
 export type Plans = {
@@ -1987,6 +2004,7 @@ export type Query = {
   access: Access;
   accesses: Accesses;
   account: Account;
+  accountByEmail: Account;
   accounts: Accounts;
   address: Address;
   addresses: Addresses;
@@ -2057,6 +2075,11 @@ export type QueryAccessesArgs = {
 
 export type QueryAccountArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryAccountByEmailArgs = {
+  email?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -2700,6 +2723,7 @@ export enum TiersMode {
 
 export type UpdateAccountInput = {
   data: UpdateDataAccountInput;
+  where?: InputMaybe<UpdateWhereAccountInput>;
 };
 
 export type UpdateAddressInput = {
@@ -2779,6 +2803,13 @@ export type UpdateDataCurrencyInput = {
   symbol?: InputMaybe<Scalars['String']>;
 };
 
+export type UpdateDataFileInput = {
+  duration?: InputMaybe<Scalars['Float']>;
+  extension?: InputMaybe<Scalars['String']>;
+  mimetype?: InputMaybe<Scalars['String']>;
+  size?: InputMaybe<Scalars['Float']>;
+};
+
 export type UpdateDataHeroInput = {
   backgroundImage?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
@@ -2825,6 +2856,11 @@ export type UpdateDataVideoInput = {
   private?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type UpdateFileInput = {
+  data: UpdateDataFileInput;
+  where: UpdateWhereFileInput;
+};
+
 export type UpdateHeroInput = {
   data: UpdateDataHeroInput;
   where: UpdateWhereHeroInput;
@@ -2860,6 +2896,10 @@ export type UpdateVideoInput = {
   where: UpdateWhereVideoInput;
 };
 
+export type UpdateWhereAccountInput = {
+  account?: InputMaybe<Scalars['String']>;
+};
+
 export type UpdateWhereAddressInput = {
   address: Scalars['String'];
 };
@@ -2878,6 +2918,10 @@ export type UpdateWhereCourseInput = {
 
 export type UpdateWhereCurrencyInput = {
   currency: Scalars['String'];
+};
+
+export type UpdateWhereFileInput = {
+  file: Scalars['String'];
 };
 
 export type UpdateWhereHeroInput = {

@@ -1,0 +1,24 @@
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    accessToken
+    refreshToken
+    prefixToken
+    account {
+      id
+      fullname
+      isOwner
+      status
+      roles {
+        totalCount
+        items {
+          name
+        }
+      }
+      app {
+        id
+        name
+      }
+      email
+    }
+  }
+}

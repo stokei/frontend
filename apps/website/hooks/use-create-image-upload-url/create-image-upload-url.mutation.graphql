@@ -1,0 +1,9 @@
+mutation CreateImageUploadURL {
+  response: createImageUploadURL {
+    uploadURL
+    file {
+      id
+      filename
+    }
+  }
+}

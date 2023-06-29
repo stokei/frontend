@@ -1853,7 +1853,8 @@ export enum PlanType {
   Domain = 'DOMAIN',
   Instructor = 'INSTRUCTOR',
   Storage = 'STORAGE',
-  Video = 'VIDEO'
+  Video = 'VIDEO',
+  VideoView = 'VIDEO_VIEW'
 }
 
 export type Plans = {

@@ -4,8 +4,6 @@ export const IS_PRODUCTION: boolean = process.env.NODE_ENV === "production";
 export const CLOUDFLARE_TOKEN: string | undefined =
   process.env.NEXT_PUBLIC_CLOUDFLARE_TOKEN;
 
-export const DOMAIN: string = process.env.NEXT_PUBLIC_DOMAIN || "stokei.app";
-
 export const STOKEI_API_BASE_URL: string =
   process.env.NEXT_PUBLIC_STOKEI_API_BASE_URL || "http://localhost:4000";
 

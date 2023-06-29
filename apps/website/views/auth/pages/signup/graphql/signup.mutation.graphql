@@ -1,0 +1,23 @@
+mutation SignUp($input: SignUpInput!) {
+  signUp(input: $input) {
+    accessToken
+    prefixToken
+    refreshToken
+    account {
+      id
+      fullname
+      isOwner
+      roles {
+        totalCount
+        items {
+          name
+        }
+      }
+      app {
+        id
+        name
+      }
+      email
+    }
+  }
+}

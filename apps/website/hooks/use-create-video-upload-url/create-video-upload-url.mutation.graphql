@@ -1,0 +1,9 @@
+mutation CreateVideoUploadURL {
+  response: createVideoUploadURL {
+    uploadURL
+    file {
+      id
+      filename
+    }
+  }
+}

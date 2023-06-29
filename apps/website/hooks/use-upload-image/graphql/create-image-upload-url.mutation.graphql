@@ -1,0 +1,8 @@
+mutation UseUploadImageCreateImageUploadURL {
+  createImageUploadURL {
+    uploadURL
+    file {
+      ...UseUploadImageFile
+    }
+  }
+}

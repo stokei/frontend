@@ -5,6 +5,11 @@ query CurrentGlobalApp {
     isStokei
     isIntegratedWithStripe
     stripeAccount
+    status
+    defaultDomain {
+      name
+      active
+    }
     currency {
       id
       symbol

@@ -1,5 +1,5 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
-import { AdminCourseLayoutContent } from "@/components/admin-course-layout-content";
+import { CustomerCourseLayoutContent } from "@/components/customer-course-layout-content";
 import { CustomersCourseProvider, SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
@@ -60,12 +60,12 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               </SidebarNavLink>
             </SidebarBody>
           </Sidebar>
-          <AdminCourseLayoutContent>
+          <CustomerCourseLayoutContent>
             <Box flex="1" flexDirection="column">
               {children}
             </Box>
             <Footer />
-          </AdminCourseLayoutContent>
+          </CustomerCourseLayoutContent>
         </Box>
       </SidebarProvider>
     </CustomersCourseProvider>

@@ -1,7 +1,5 @@
-import { RoleName } from "@/constants/role-names";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import { getDashboardHomePageURL } from "@/utils";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
   Box,
@@ -12,8 +10,8 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
-import { useSignUpMutation } from "./graphql/signup.mutation.graphql.generated";
 import { AuthLayout } from "../../layout";
+import { useSignUpMutation } from "./graphql/signup.mutation.graphql.generated";
 
 interface SignUpPageProps {}
 
@@ -54,18 +52,9 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
           title: translate.formatMessage({ id: "signUpSuccessfully" }),
           status: "success",
         });
-        const isAdmin =
-          !!data.account?.isOwner ||
-          !!data.account?.roles?.items?.some(
-            (role) => role.name === RoleName.ADMIN
-          );
-        window?.location?.assign(
-          getDashboardHomePageURL({
-            redirectTo: redirectToWhenSignUpSuccessfully || undefined,
-            isAdmin,
-          })
+        return router.push(
+          redirectToWhenSignUpSuccessfully || routes.customers.home
         );
-        return;
       }
 
       if (!!response.error?.graphQLErrors?.length) {
