@@ -1,23 +1,19 @@
 import posterImage from "@/assets/no-image.png";
-import NextLink from "next/link";
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
+import { routes } from "@/routes";
 import {
   Badge,
   Box,
-  ButtonGroup,
-  Icon,
-  IconButton,
-  Image,
   Link,
   Stack,
   Text,
   Title,
   VideoPlayerPoster,
 } from "@stokei/ui";
-import { FC, memo, useCallback, useMemo } from "react";
-import { AdminCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { routes } from "@/routes";
+import { FC, memo, useMemo } from "react";
+import { AdminCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
 
 interface VideoItemProps {
   readonly video?: AdminCoursePageModuleVideoFragment;
@@ -26,19 +22,20 @@ interface VideoItemProps {
 export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
   const router = useRouter();
   const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
 
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
 
   const editVideoURL = useMemo(
     () =>
       routes
-        .app()
+        .app({ appId: currentApp?.id })
         .course({ course: courseId })
         .modules.editVideo({
           module: video?.parent || "",
           video: video?.id || "",
         }),
-    [courseId, video]
+    [courseId, currentApp?.id, video?.id, video?.parent]
   );
 
   return (

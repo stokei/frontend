@@ -1,10 +1,11 @@
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
+import { routes } from "@/routes";
 import { OrderBy } from "@/services/graphql/stokei";
+import { AppLayout } from "@/views/app/layout";
 import {
   Box,
   Button,
   Container,
-  Link,
   NotFound,
   NotFoundIcon,
   NotFoundSubtitle,
@@ -12,8 +13,7 @@ import {
   Stack,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useState } from "react";
-import { AppLayout } from "@/views/app/layout";
+import { FC, useEffect, useState } from "react";
 import { Navbar } from "./components/navbar";
 import { ProductsList } from "./components/products-list";
 import {
@@ -21,7 +21,6 @@ import {
   useGetAdminProductPageProductsQuery,
 } from "./graphql/products.query.graphql.generated";
 import { Loading } from "./loading";
-import { routes } from "@/routes";
 
 interface ProductsPageProps {}
 
@@ -61,7 +60,7 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
   }, [dataProducts]);
 
   const goToAddProduct = () => {
-    router.push(routes.app().products.add);
+    router.push(routes.app({ appId: currentApp?.id }).products.add);
   };
 
   return (

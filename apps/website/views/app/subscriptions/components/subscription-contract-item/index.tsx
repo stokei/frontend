@@ -1,4 +1,4 @@
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { SubscriptionContractType } from "@/services/graphql/stokei";
 import { getProductURL } from "@/utils";
@@ -37,6 +37,7 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
   ({ subscriptionContract }) => {
     const translate = useTranslations();
     const router = useRouter();
+    const { currentApp } = useCurrentApp();
 
     const customer = useMemo<Customer | undefined>(() => {
       if (subscriptionContract?.parent?.__typename === "Account") {
@@ -88,11 +89,11 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
     const goToSubscriptionContractPage = useCallback(
       () =>
         router.push(
-          routes.app().subscriptions.subscription({
+          routes.app({ appId: currentApp?.id }).subscriptions.subscription({
             subscription: subscriptionContract?.id,
           })
         ),
-      [router, subscriptionContract?.id]
+      [currentApp?.id, router, subscriptionContract?.id]
     );
 
     return (

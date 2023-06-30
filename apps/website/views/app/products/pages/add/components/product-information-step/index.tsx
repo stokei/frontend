@@ -1,5 +1,5 @@
-import { ProductType } from "@/constants/product-type";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
+import { routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -18,9 +18,8 @@ import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCreateProductMutation } from "../../graphql/create-product.mutation.graphql.generated";
 import { ProductParent } from "../../@types/product-parent";
-import { routes } from "@/routes";
+import { useCreateProductMutation } from "../../graphql/create-product.mutation.graphql.generated";
 
 interface ProductInformationStepProps {
   productParent?: ProductParent;
@@ -83,7 +82,9 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
           status: "success",
         });
         router.push(
-          routes.app().product({ product: response.data.createProduct.id }).home
+          routes
+            .app({ appId: currentApp?.id })
+            .product({ product: response.data.createProduct.id }).home
         );
         return;
       }

@@ -1,4 +1,4 @@
-import { useAPIErrors, useTranslations } from "@/hooks";
+import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
 import { useUploadVideo } from "@/hooks/use-upload-video";
 import { routes } from "@/routes";
@@ -51,6 +51,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
 
   const router = useRouter();
   const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
   const {
@@ -135,7 +136,10 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
   }, [currentVideo, reset]);
 
   const goToModulesPage = () => {
-    router.push(routes.app().course({ course: courseId }).modules.home);
+    router.push(
+      routes.app({ appId: currentApp?.id }).course({ course: courseId }).modules
+        .home
+    );
   };
 
   const onSubmit = async ({

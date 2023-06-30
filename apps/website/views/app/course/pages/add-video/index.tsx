@@ -1,9 +1,6 @@
-import {
-  useAPIErrors,
-  useCreateVideoUploadURL,
-  useTranslations,
-} from "@/hooks";
+import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
+import { useUploadVideo } from "@/hooks/use-upload-video";
 import { routes } from "@/routes";
 import { useCreateVideoMutation } from "@/services/graphql/mutations/create-video/create-video.mutation.graphql.generated";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,14 +28,13 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";
 import { Loading } from "../../loading";
 import { Navbar } from "./components/navbar";
 import { useGetAdminCoursePageModuleQuery } from "./graphql/module.query.graphql.generated";
-import { useUploadVideo } from "@/hooks/use-upload-video";
 
 interface AddVideoPageProps {}
 interface Poster {
@@ -53,6 +49,7 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
 
   const router = useRouter();
   const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
 
@@ -110,7 +107,10 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
   );
 
   const goToModulesPage = () => {
-    router.push(routes.app().course({ course: courseId }).modules.home);
+    router.push(
+      routes.app({ appId: currentApp?.id }).course({ course: courseId }).modules
+        .home
+    );
   };
 
   const onSubmit = async ({

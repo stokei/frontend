@@ -1,4 +1,4 @@
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import {
   Accordion,
   AccordionButton,
@@ -41,11 +41,12 @@ export const ModuleItem: FC<ModuleItemProps> = memo(
   }) => {
     const router = useRouter();
     const translate = useTranslations();
+    const { currentApp } = useCurrentApp();
 
     const goToAddVideoPage = () => {
       router.push(
         routes
-          .app()
+          .app({ appId: currentApp?.id })
           .course({ course: module.parent })
           .modules.addVideo({ module: module.id })
       );

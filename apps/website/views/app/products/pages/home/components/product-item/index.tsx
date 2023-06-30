@@ -1,5 +1,5 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import {
   Badge,
   Box,
@@ -25,8 +25,11 @@ export interface ProductItemProps {
 
 export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
   const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
 
-  const editProductURL = routes.app().product({ product: product?.id }).home;
+  const editProductURL = routes
+    .app({ appId: currentApp?.id })
+    .product({ product: product?.id }).home;
 
   const course = useMemo(
     () => (product?.parent?.__typename === "Course" ? product?.parent : null),

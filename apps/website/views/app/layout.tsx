@@ -2,7 +2,7 @@ import { AppLogo, Footer, Sidebar } from "@/components";
 import { AppLayoutContent } from "@/components/app-layout-content";
 import { STRIPE_DASHBOARD_URL } from "@/constants/stripe-links";
 import { SidebarProvider } from "@/contexts";
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
@@ -16,6 +16,8 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
 }) => {
   const router = useRouter();
   const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
+  const baseRoutes = routes.app({ appId: currentApp?.id });
 
   const isActiveRoute = useCallback(
     (route: string) => !!router.asPath?.match(route),
@@ -32,8 +34,8 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
           <SidebarBody paddingX="0">
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().home}
-              isActive={router.asPath === routes.app().home}
+              href={baseRoutes.home}
+              isActive={router.asPath === baseRoutes.home}
             >
               {translate.formatMessage({ id: "dashboard" })}
             </SidebarNavLink>
@@ -46,50 +48,50 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().courses}
-              isActive={isActiveRoute(routes.app().courses)}
+              href={baseRoutes.courses}
+              isActive={isActiveRoute(baseRoutes.courses)}
             >
               {translate.formatMessage({ id: "courses" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().products.home}
-              isActive={isActiveRoute(routes.app().products.home)}
+              href={baseRoutes.products.home}
+              isActive={isActiveRoute(baseRoutes.products.home)}
             >
               {translate.formatMessage({ id: "products" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().onboardings.home}
-              isActive={isActiveRoute(routes.app().onboardings.home)}
+              href={baseRoutes.onboardings.home}
+              isActive={isActiveRoute(baseRoutes.onboardings.home)}
             >
               {translate.formatMessage({ id: "onboardings" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().subscriptions.home}
-              isActive={isActiveRoute(routes.app().subscriptions.home)}
+              href={baseRoutes.subscriptions.home}
+              isActive={isActiveRoute(baseRoutes.subscriptions.home)}
             >
               {translate.formatMessage({ id: "subscriptions" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().invoices}
-              isActive={isActiveRoute(routes.app().invoices)}
+              href={baseRoutes.invoices}
+              isActive={isActiveRoute(baseRoutes.invoices)}
             >
               {translate.formatMessage({ id: "invoices" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().members}
-              isActive={isActiveRoute(routes.app().members)}
+              href={baseRoutes.members}
+              isActive={isActiveRoute(baseRoutes.members)}
             >
               {translate.formatMessage({ id: "members" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().settings.home}
-              isActive={isActiveRoute(routes.app().settings.home)}
+              href={baseRoutes.settings.home}
+              isActive={isActiveRoute(baseRoutes.settings.home)}
             >
               {translate.formatMessage({ id: "settings" })}
             </SidebarNavLink>

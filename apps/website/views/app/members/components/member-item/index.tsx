@@ -14,14 +14,14 @@ import {
 } from "@stokei/ui";
 import { FC, memo, useCallback, useMemo } from "react";
 
-import { useTranslations } from "@/hooks";
-import { useRouter } from "next/router";
-import { AppMemberFragment } from "../../graphql/member.fragment.graphql.generated";
 import { RoleName } from "@/constants/role-names";
+import { useCurrentApp, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
+import { routes } from "@/routes";
 import { AccountStatus } from "@/services/graphql/stokei";
 import { getAccountStatusColor } from "@/utils/get-account-status-color";
-import { routes } from "@/routes";
-import { useCurrentAccount } from "@/hooks/use-current-account";
+import { useRouter } from "next/router";
+import { AppMemberFragment } from "../../graphql/member.fragment.graphql.generated";
 
 export interface MemberItemProps {
   readonly appMember?: AppMemberFragment;
@@ -31,6 +31,7 @@ export const MemberItem: FC<MemberItemProps> = memo(({ appMember }) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentAccount } = useCurrentAccount();
+  const { currentApp } = useCurrentApp();
 
   const memeberStatus = useMemo(() => {
     const labels = {
@@ -83,7 +84,10 @@ export const MemberItem: FC<MemberItemProps> = memo(({ appMember }) => {
     if (currentAccount?.id === appMember?.id) {
       return router.push(routes.me.home);
     }
-    return router.push(routes.app().member({ member: appMember?.id }).home);
+    return router.push(
+      routes.app({ appId: currentApp?.id }).member({ member: appMember?.id })
+        .home
+    );
   };
 
   return (

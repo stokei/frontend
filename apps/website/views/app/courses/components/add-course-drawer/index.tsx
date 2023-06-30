@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AppCourseFragment } from "../../graphql/course.fragment.graphql.generated";
 import { useCreateCourseMutation } from "../../graphql/create-course.mutation.graphql.generated";
+import { useRouter } from "next/router";
 
 export interface FormAddCourseOnSubmitData {
   name: string;
@@ -36,6 +37,7 @@ export const AddCourseDrawer: FC<AddCourseDrawerProps> = ({
   isOpenDrawer,
   onCloseDrawer,
 }) => {
+  const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -71,8 +73,8 @@ export const AddCourseDrawer: FC<AddCourseDrawerProps> = ({
           title: translate.formatMessage({ id: "courseCreatedSuccessfully" }),
           status: "success",
         });
-        window?.location?.assign(
-          routes.app().course({
+        router.push(
+          routes.app({ appId: currentApp?.id }).course({
             course: response?.data?.createCourse?.id,
           }).home
         );

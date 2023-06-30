@@ -6,6 +6,5 @@ export const getAppIdFromNextRouter = (router: any): string | undefined => {
   if (appIdFromQueryParams) {
     return appIdFromQueryParams;
   }
-  const appId = router?.asPath?.split("/")?.[2];
-  return appId;
+  return;
 };

@@ -6,7 +6,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Description,
   Image,
   Stack,
   Title,
@@ -14,10 +13,10 @@ import {
 import { FC, memo } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
+import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { AppCourseFragment } from "../../graphql/course.fragment.graphql.generated";
-import { routes } from "@/routes";
 
 export interface CourseItemProps {
   readonly course?: AppCourseFragment;
@@ -26,6 +25,7 @@ export interface CourseItemProps {
 export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
   const router = useRouter();
   const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
 
   return (
     <Card background="background.50" overflow="hidden">
@@ -59,7 +59,11 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
               <Button
                 width="full"
                 onClick={() =>
-                  router.push(routes.app().course({ course: course?.id }).home)
+                  router.push(
+                    routes
+                      .app({ appId: currentApp?.id })
+                      .course({ course: course?.id }).home
+                  )
                 }
               >
                 {translate.formatMessage({ id: "showDetails" })}

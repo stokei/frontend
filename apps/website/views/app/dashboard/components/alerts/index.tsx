@@ -4,7 +4,6 @@ import {
   Alert,
   AlertDescription,
   AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Container,
@@ -26,8 +25,8 @@ export const Alerts: FC<AlertsProps> = () => {
   );
 
   const goToStripeOnboarding = useCallback(
-    () => router.push(routes.app().onboardings.home),
-    [router]
+    () => router.push(routes.app({ appId: currentApp?.id }).onboardings.home),
+    [currentApp?.id, router]
   );
 
   if (!hasIntegrations) {

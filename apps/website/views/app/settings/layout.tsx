@@ -1,7 +1,7 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
 import { AppSettingsLayoutContent } from "@/components/app-settings-layout-content";
 import { SidebarProvider } from "@/contexts";
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
@@ -15,7 +15,9 @@ export const SettingsLayout: FC<PropsWithChildren<SettingsLayoutProps>> = ({
 }) => {
   const router = useRouter();
   const translate = useTranslations();
-  const baseRoute = routes.app().settings;
+  const { currentApp } = useCurrentApp();
+  const baseAppRoutes = routes.app({ appId: currentApp?.id });
+  const baseRoute = baseAppRoutes.settings;
 
   return (
     <SidebarProvider>
@@ -27,8 +29,8 @@ export const SettingsLayout: FC<PropsWithChildren<SettingsLayoutProps>> = ({
           <SidebarBody paddingX="0">
             <SidebarNavLink
               as={NextLink}
-              href={routes.app().home}
-              isActive={router.asPath === routes.app().home}
+              href={baseAppRoutes.home}
+              isActive={router.asPath === baseAppRoutes.home}
             >
               {translate.formatMessage({ id: "home" })}
             </SidebarNavLink>

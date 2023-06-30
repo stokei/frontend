@@ -1,9 +1,5 @@
-interface RoutesAppData {
-  readonly appId: string;
-}
-
-export const routesApp = (data: RoutesAppData) => {
-  const baseURL = `/app/${data?.appId}`;
+export const routesApp = (data: { appId?: string }) => {
+  const baseURL = `/apps/${data?.appId}`;
   return {
     home: baseURL,
     financial: baseURL + "/financial",

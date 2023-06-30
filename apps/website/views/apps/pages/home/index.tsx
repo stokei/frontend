@@ -64,7 +64,7 @@ export const AppsPage: FC<AppsPageProps> = () => {
   };
 
   return (
-    <AppLayout>
+    <>
       <Navbar />
       <Container paddingY="5">
         <Stack direction="column" spacing="5">
@@ -107,6 +107,6 @@ export const AppsPage: FC<AppsPageProps> = () => {
           )}
         </Stack>
       </Container>
-    </AppLayout>
+    </>
   );
 };

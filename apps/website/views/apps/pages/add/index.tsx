@@ -7,9 +7,9 @@ interface AddAppPageProps {}
 
 export const AddAppPage: FC<AddAppPageProps> = () => {
   return (
-    <AppLayout>
+    <>
       <Navbar />
       <Container paddingY="5">Add app</Container>
-    </AppLayout>
+    </>
   );
 };

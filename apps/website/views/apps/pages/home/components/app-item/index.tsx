@@ -36,34 +36,37 @@ export const AppItem: FC<AppItemProps> = memo(({ app }) => {
     };
   }, [app?.status, translate]);
 
-  const editAppURL = routes.app({ appId: app?.id }).home;
+  const goToEditAppURL = () =>
+    window?.location?.assign(routes.app({ appId: app?.id }).home);
 
   return (
-    <Link as={NextLink} href={editAppURL}>
-      <Card background="background.50" overflow="hidden">
-        <CardHeader>
-          <Stack direction="row" spacing="5" align="center">
-            <Avatar
-              size="lg"
-              name={app?.name}
-              src={app?.logo?.file?.url || ""}
-            />
-            <Stack direction="column" spacing="1">
-              <Title size="sm">{app?.name}</Title>
-              <Box>
-                <Badge
-                  size="sm"
-                  colorScheme={appStatus.colorSchema}
-                  variant="subtle"
-                >
-                  {appStatus.label}
-                </Badge>
-              </Box>
-            </Stack>
+    <Card
+      background="background.50"
+      overflow="hidden"
+      onClick={goToEditAppURL}
+      _hover={{
+        boxShadow: "base",
+        cursor: "pointer",
+      }}
+    >
+      <CardHeader>
+        <Stack direction="row" spacing="5" align="center">
+          <Avatar size="lg" name={app?.name} src={app?.logo?.file?.url || ""} />
+          <Stack direction="column" spacing="1">
+            <Title size="sm">{app?.name}</Title>
+            <Box>
+              <Badge
+                size="sm"
+                colorScheme={appStatus.colorSchema}
+                variant="subtle"
+              >
+                {appStatus.label}
+              </Badge>
+            </Box>
           </Stack>
-        </CardHeader>
-      </Card>
-    </Link>
+        </Stack>
+      </CardHeader>
+    </Card>
   );
 });
 
