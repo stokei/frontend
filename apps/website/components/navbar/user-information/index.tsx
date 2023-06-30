@@ -21,7 +21,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
   const { isOpen: isOpenDrawer, onToggle: onToggleDrawer } = useDisclosure();
 
   const router = useRouter();
-  const { currentAccount, homePageURL } = useCurrentAccount();
+  const { currentAccount } = useCurrentAccount();
   const translate = useTranslations();
   const redirectTo = useMemo(
     () => router.query?.redirectTo?.toString() || "",
@@ -44,7 +44,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
             onClose={onToggleDrawer}
           />
           <Stack spacing="4" direction="row" justify="flex-end" align="center">
-            <NavbarNavLink href={homePageURL}>
+            <NavbarNavLink href={routes.home}>
               <Icon fontSize="lg" name="home" />
             </NavbarNavLink>
             <Avatar

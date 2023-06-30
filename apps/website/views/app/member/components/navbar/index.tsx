@@ -1,26 +1,18 @@
-import {
-  AppLogo,
-  NavbarLogo,
-  NavbarUserInformation,
-  SidebarOpenButton,
-} from "@/components";
-import { useTranslations } from "@/hooks";
-import { useCurrentAccount } from "@/hooks/use-current-account";
-import { Navbar as NavbarUI, Stack, Title } from "@stokei/ui";
+import { NavbarLogo, NavbarUserInformation } from "@/components";
+import { routes } from "@/routes";
+import { Navbar as NavbarUI } from "@stokei/ui";
 import { FC } from "react";
 
 interface NavbarProps {}
 
 export const Navbar: FC<NavbarProps> = () => {
-  const translate = useTranslations();
-  const { homePageURL } = useCurrentAccount();
   return (
     <NavbarUI
       align="center"
       background="background.50"
       borderBottomWidth="thin"
     >
-      <NavbarLogo href={homePageURL} />
+      <NavbarLogo href={routes.home} />
       <NavbarUserInformation />
     </NavbarUI>
   );

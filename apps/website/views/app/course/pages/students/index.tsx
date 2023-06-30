@@ -1,5 +1,5 @@
-import { usePagination } from "@/hooks";
-import { Container, Pagination, Stack } from "@stokei/ui";
+import { usePagination, useTranslations } from "@/hooks";
+import { Container, Pagination, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { Navbar } from "./components/navbar";
@@ -12,6 +12,7 @@ interface CourseStudentsPageProps {}
 
 export const CourseStudentsPage: FC<CourseStudentsPageProps> = () => {
   const router = useRouter();
+  const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();
 
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
@@ -21,7 +22,7 @@ export const CourseStudentsPage: FC<CourseStudentsPageProps> = () => {
       pause: !courseId,
       variables: {
         page: {
-          limit: 10,
+          limit: 12,
           number: currentPage,
         },
         where: {
@@ -51,6 +52,12 @@ export const CourseStudentsPage: FC<CourseStudentsPageProps> = () => {
       <Navbar />
       <Container paddingY="5">
         <Stack direction="column" spacing="5">
+          {courseStudents?.totalCount && courseStudents?.totalCount > 0 && (
+            <Title fontSize="sm">
+              {translate.formatMessage({ id: "total" })}:{" "}
+              {courseStudents?.totalCount}
+            </Title>
+          )}
           {isLoadingCourseStudents ? (
             <Loading />
           ) : (

@@ -1,5 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
+import { routes } from "@/routes";
 import { onLogout } from "@/utils";
 import {
   Avatar,
@@ -13,7 +14,6 @@ import {
 import { useRouter } from "next/router";
 import { FC, useCallback } from "react";
 import { NavbarUserInformationDrawerButton } from "../user-information-drawer-button";
-import { routes } from "@/routes";
 
 export interface NavbarUserInformationDrawerProps {
   isOpen?: boolean;
@@ -23,7 +23,7 @@ export const NavbarUserInformationDrawer: FC<
   NavbarUserInformationDrawerProps
 > = ({ isOpen, onClose }) => {
   const router = useRouter();
-  const { currentAccount, homePageURL } = useCurrentAccount();
+  const { currentAccount } = useCurrentAccount();
   const translate = useTranslations();
 
   const onRedirectToURLAndCloseModal = useCallback(
@@ -48,7 +48,7 @@ export const NavbarUserInformationDrawer: FC<
       <DrawerBody>
         <Stack direction="column" spacing="2">
           <NavbarUserInformationDrawerButton
-            onClick={() => onRedirectToURLAndCloseModal(homePageURL || "")}
+            onClick={() => onRedirectToURLAndCloseModal(routes.home)}
           >
             {translate.formatMessage({ id: "home" })}
           </NavbarUserInformationDrawerButton>

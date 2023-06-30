@@ -21,7 +21,6 @@ export interface CurrentAccountProviderProps {
 }
 
 export interface CurrentAccountProviderValues {
-  readonly homePageURL?: string;
   readonly isAuthenticated?: boolean;
   readonly isLoading?: boolean;
   readonly currentAccount?: CurrentAccount;

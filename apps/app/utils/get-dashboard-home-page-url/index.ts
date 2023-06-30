@@ -6,14 +6,10 @@ export interface GetDashboardHomePageURLData {
 }
 
 export const getDashboardHomePageURL = ({
-  isAdmin,
   redirectTo,
 }: GetDashboardHomePageURLData) => {
   if (!!redirectTo) {
     return redirectTo;
   }
-  if (!isAdmin) {
-    return routes.customers.home;
-  }
-  return routes.admins.home;
+  return routes.customers.home;
 };
