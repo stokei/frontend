@@ -44,7 +44,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
             onClose={onToggleDrawer}
           />
           <Stack spacing="4" direction="row" justify="flex-end" align="center">
-            <NavbarNavLink href={routes.home}>
+            <NavbarNavLink href={routes.apps.home}>
               <Icon fontSize="lg" name="home" />
             </NavbarNavLink>
             <Avatar

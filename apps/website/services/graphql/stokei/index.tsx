@@ -384,7 +384,7 @@ export type CourseStudent = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
-  student: Account;
+  student?: Maybe<Account>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };
@@ -504,6 +504,15 @@ export type CreateFeatureInput = {
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   parent: Scalars['String'];
+};
+
+export type CreateFileByAdminInput = {
+  duration?: InputMaybe<Scalars['Float']>;
+  extension?: InputMaybe<Scalars['String']>;
+  mimetype?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  size?: InputMaybe<Scalars['Float']>;
+  url?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateFileUploadUrlResponse = {
@@ -1024,6 +1033,7 @@ export type Mutation = {
   createCustomerPortalSession: CustomerPortalSession;
   createDomain: Domain;
   createFeature: Feature;
+  createFileByAdmin: File;
   createHero: Hero;
   createImage: Image;
   createImageUploadURL: CreateFileUploadUrlResponse;
@@ -1176,6 +1186,11 @@ export type MutationCreateDomainArgs = {
 
 export type MutationCreateFeatureArgs = {
   input: CreateFeatureInput;
+};
+
+
+export type MutationCreateFileByAdminArgs = {
+  input: CreateFileByAdminInput;
 };
 
 

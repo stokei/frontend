@@ -4,7 +4,10 @@ import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { Navbar } from "./components/navbar";
 import { StudentsList } from "./components/students-list";
-import { useGetAdminCoursePageCourseStudentsQuery } from "./graphql/course-students.query.graphql.generated";
+import {
+  AdminCoursePageCourseStudentFragment,
+  useGetAdminCoursePageCourseStudentsQuery,
+} from "./graphql/course-students.query.graphql.generated";
 import { CourseLayout } from "../../layout";
 import { Loading } from "../../loading";
 
@@ -41,9 +44,9 @@ export const CourseStudentsPage: FC<CourseStudentsPageProps> = () => {
   );
   const courseStudentAccounts = useMemo(
     () =>
-      dataGetCourseStudents?.courseStudents?.items?.map(
-        ({ student }) => student
-      ),
+      dataGetCourseStudents?.courseStudents?.items
+        ?.map(({ student }) => student)
+        .filter(Boolean) as AdminCoursePageCourseStudentFragment[],
     [dataGetCourseStudents]
   );
 

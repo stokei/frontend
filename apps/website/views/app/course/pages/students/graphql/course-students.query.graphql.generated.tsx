@@ -9,7 +9,7 @@ export type GetAdminCoursePageCourseStudentsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAdminCoursePageCourseStudentsQuery = { __typename?: 'Query', courseStudents: { __typename?: 'CourseStudents', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'CourseStudent', student: { __typename?: 'Account', id: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } }> | null } };
+export type GetAdminCoursePageCourseStudentsQuery = { __typename?: 'Query', courseStudents: { __typename?: 'CourseStudents', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'CourseStudent', student?: { __typename?: 'Account', id: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null }> | null } };
 
 export type AdminCoursePageCourseStudentFragment = { __typename?: 'Account', id: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
