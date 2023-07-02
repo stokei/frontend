@@ -74,13 +74,10 @@ export const StripeOnboarding: FC<StripeOnboardingProps> = () => {
           <ButtonGroup>
             <Button
               isLoading={isLoadingCreateAppStripeOnboarding}
-              isDisabled={isIntegratedWithStripe}
-              onClick={
-                !isIntegratedWithStripe ? goToStripeOnboarding : undefined
-              }
+              onClick={goToStripeOnboarding}
             >
               {translate.formatMessage({
-                id: isIntegratedWithStripe ? "added" : "add",
+                id: isIntegratedWithStripe ? "update" : "add",
               })}
             </Button>
           </ButtonGroup>

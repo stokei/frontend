@@ -1,0 +1,19 @@
+query PaymentMethodManagementPaymentMethods(
+  $where: WhereDataFindAllPaymentMethodsInput
+) {
+  paymentMethods(where: $where) {
+    items {
+      ...PaymentMethodManagementPaymentMethod
+    }
+  }
+}
+
+fragment PaymentMethodManagementPaymentMethod on PaymentMethod {
+  id
+  parent
+  cardBrand
+  cardExpiryMonth
+  cardExpiryYear
+  lastFourCardNumber
+  stripePaymentMethod
+}

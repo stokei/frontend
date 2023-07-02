@@ -63,6 +63,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
       onError,
       getUppy: () =>
         new Uppy({
+          autoProceed: true,
           locale: currentLanguage,
           allowMultipleUploadBatches: false,
           restrictions: {

@@ -3,6 +3,8 @@ export const ptBRMessages = {
   app: "Aplicação",
   apps: "Aplicações",
   addApp: "Adicionar aplicação",
+  update: "Atualizar",
+  appCreatedSuccessfully: "Aplicação criada com sucesso!",
   informations: "Informações",
   successfullyIntegrated: "Integrado com successo!",
   loginSuccessfully: "Login efetuado com successo!",
@@ -15,8 +17,8 @@ export const ptBRMessages = {
   accountUpdatedSuccessfully: "Conta atualizada com successo!",
   appUpdatedSuccessfully: "Aplicação atualizada com successo!",
   stripeOnboarding: "Integração com a Stripe",
-  youStillDonTHaveAnyMeansOfPayment:
-    "Você ainda não possui nenhum meio de pagamento.",
+  youDontHaveAnyPaymentGatewayYet:
+    "Você ainda não possui nenhum gateway de pagamento.",
   clickHereToConfigure: "Clique aqui para configurar",
   activate: "Ativar",
   deactivate: "Desativar",

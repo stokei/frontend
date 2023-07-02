@@ -47,7 +47,7 @@ export const Alerts: FC<AlertsProps> = () => {
             <Box flexDirection="column">
               <AlertDescription>
                 {translate.formatMessage({
-                  id: "youStillDonTHaveAnyMeansOfPayment",
+                  id: "youDontHaveAnyPaymentGatewayYet",
                 })}
               </AlertDescription>
             </Box>
