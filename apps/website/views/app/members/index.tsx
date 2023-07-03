@@ -114,36 +114,38 @@ export const MembersPage: FC<MembersPageProps> = () => {
             onSuccess={onSuccessMemberAdded}
           />
           <Stack direction="column" spacing="5">
-            <Stack
-              direction={["column", "column", "row", "row"]}
-              spacing="5"
-              justify="space-between"
-            >
-              <FormControl
-                width={["full", "full", "32%", "32%"]}
-                isInvalid={!!errors?.search}
+            {(dataGetMembers?.accounts?.totalCount || 0) >= 1 && (
+              <Stack
+                direction={["column", "column", "row", "row"]}
+                spacing="5"
+                justify="space-between"
               >
-                <InputGroup>
-                  <Input
-                    id="search"
-                    placeholder={translate.formatMessage({
-                      id: "search",
-                    })}
-                    background="background.50"
-                    autoComplete="off"
-                    {...register("search")}
-                  />
-                  <InputRightElement>
-                    <Icon name="search" />
-                  </InputRightElement>
-                </InputGroup>
-                <FormErrorMessage>{errors?.search?.message}</FormErrorMessage>
-              </FormControl>
+                <FormControl
+                  width={["full", "full", "32%", "32%"]}
+                  isInvalid={!!errors?.search}
+                >
+                  <InputGroup>
+                    <Input
+                      id="search"
+                      placeholder={translate.formatMessage({
+                        id: "search",
+                      })}
+                      background="background.50"
+                      autoComplete="off"
+                      {...register("search")}
+                    />
+                    <InputRightElement>
+                      <Icon name="search" />
+                    </InputRightElement>
+                  </InputGroup>
+                  <FormErrorMessage>{errors?.search?.message}</FormErrorMessage>
+                </FormControl>
 
-              <Button onClick={onOpenAddMemberDrawer}>
-                {translate.formatMessage({ id: "addMember" })}
-              </Button>
-            </Stack>
+                <Button onClick={onOpenAddMemberDrawer}>
+                  {translate.formatMessage({ id: "addMember" })}
+                </Button>
+              </Stack>
+            )}
             {isLoading ? (
               <Loading />
             ) : (
@@ -154,6 +156,9 @@ export const MembersPage: FC<MembersPageProps> = () => {
                     <NotFoundSubtitle>
                       {translate.formatMessage({ id: "accountsNotFound" })}
                     </NotFoundSubtitle>
+                    <Button onClick={onOpenAddMemberDrawer}>
+                      {translate.formatMessage({ id: "addMember" })}
+                    </Button>
                   </NotFound>
                 ) : (
                   <MembersList appMembers={members} />
