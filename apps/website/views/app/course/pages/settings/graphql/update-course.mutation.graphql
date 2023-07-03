@@ -1,0 +1,5 @@
+mutation AdminSettingsCoursePageUpdateCourse($input: UpdateCourseInput!) {
+  updateCourse(input: $input) {
+    ...AdminSettingsCoursePageCourse
+  }
+}

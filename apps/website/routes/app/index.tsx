@@ -35,6 +35,9 @@ export const routesApp = (data: { appId?: string }) => {
             baseCourseURL + "/modules/" + module + "/videos/" + video + "/edit",
         },
         students: baseCourseURL + "/students",
+        settings: {
+          home: baseCourseURL + "/settings",
+        },
       };
     },
     invoices: baseURL + "/invoices",

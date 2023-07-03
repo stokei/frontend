@@ -1,0 +1,16 @@
+query GetAdminSettingsCoursePageCourse($courseId: String!) {
+  course(id: $courseId) {
+    ...AdminSettingsCoursePageCourse
+  }
+}
+
+fragment AdminSettingsCoursePageCourse on Course {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+}

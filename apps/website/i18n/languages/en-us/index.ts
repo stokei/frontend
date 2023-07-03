@@ -14,6 +14,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   priceActivatedSuccessfully: "Price activated successfully!",
   priceDeactivatedSuccessfully: "Price deactivated successfully!",
   priceUpdatedSuccessfully: "Price updated successfully!",
+  courseUpdatedSuccessfully: "Course updated successfully!",
   accountUpdatedSuccessfully: "Account updated successfully!",
   appUpdatedSuccessfully: "App updated successfully!",
   stripeOnboarding: "Stripe onboarding",

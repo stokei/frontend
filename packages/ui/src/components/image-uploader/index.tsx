@@ -68,6 +68,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     onError,
     getUppy: () =>
       new Uppy({
+        autoProceed: true,
         locale: currentLanguage,
         allowMultipleUploadBatches: false,
         restrictions: {
