@@ -2,6 +2,7 @@ import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
   title: "Title",
+  optional: "Optional",
   firstname: "Firstname",
   lastname: "Lastname",
   email: "Email",

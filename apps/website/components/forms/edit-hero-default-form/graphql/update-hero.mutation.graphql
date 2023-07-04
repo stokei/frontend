@@ -1,0 +1,7 @@
+mutation EditHeroDefaultFormUpdateHero($input: UpdateHeroInput!) {
+  updateHero(input: $input) {
+    id
+    title
+    subtitle
+  }
+}

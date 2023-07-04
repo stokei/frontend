@@ -1,21 +1,18 @@
-import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
-import {
-  Button,
-  HeroContent,
-  HeroSubtitle,
-  HeroTitle,
-  Highlight,
-  Stack,
-} from "@stokei/ui";
-import router from "next/router";
 import { FC } from "react";
+import { useTranslations } from "../../../hooks";
+import { Box } from "../../box";
+import { HeroContent } from "../../hero-content";
+import { HeroSubtitle } from "../../hero-subtitle";
+import { HeroTitle } from "../../hero-title";
+import { Highlight } from "../../highlight";
+import { Button } from "../../button";
 
 export interface HeroTitleContentProps {
   readonly textTheme?: "light" | "dark";
   readonly title?: string | null;
   readonly subtitle?: string | null;
   readonly titleHighlight?: string | null;
+  readonly onSignUp: () => void;
 }
 
 export const HeroTitleContent: FC<HeroTitleContentProps> = ({
@@ -23,6 +20,7 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
   title,
   titleHighlight,
   subtitle,
+  onSignUp,
 }) => {
   const translate = useTranslations();
 
@@ -42,11 +40,11 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
           {subtitle}
         </HeroSubtitle>
       )}
-      <Stack direction={["column", "column", "row", "row"]}>
-        <Button onClick={() => router.push(routes.auth.signUp)}>
+      <Box>
+        <Button onClick={onSignUp}>
           {translate.formatMessage({ id: "signUp" })}
         </Button>
-      </Stack>
+      </Box>
     </HeroContent>
   );
 };

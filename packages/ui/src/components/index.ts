@@ -53,6 +53,7 @@ export * from "./form";
 export * from "./form-control";
 export * from "./forms";
 export * from "./label";
+export * from "./landing-page";
 export * from "./grid";
 export * from "./grid-item";
 export * from "./hero";

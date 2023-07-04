@@ -25,6 +25,10 @@ export const ModulesList: FC<ModulesListProps> = ({ courseId }) => {
     },
   });
 
+  if (!dataModules?.modules?.totalCount) {
+    return <></>;
+  }
+
   return (
     <Box width="full" flex="1" flexDirection="column">
       {isLoading ? (

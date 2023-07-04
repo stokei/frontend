@@ -1,6 +1,7 @@
-import { Container, Hero, HeroImage, HeroMedia } from "@stokei/ui";
 import { FC } from "react";
 import { HeroTitleContent, HeroTitleContentProps } from "../hero-title-content";
+import { Container } from "../../container";
+import { Hero } from "../../hero";
 
 interface HeroWithBackgroundImageProps extends HeroTitleContentProps {
   readonly imageURL?: string;
@@ -11,6 +12,7 @@ export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
   title,
   subtitle,
   titleHighlight,
+  onSignUp,
 }) => {
   return (
     <Hero
@@ -26,6 +28,7 @@ export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
           title={title}
           subtitle={subtitle}
           titleHighlight={titleHighlight}
+          onSignUp={onSignUp}
         />
       </Container>
     </Hero>

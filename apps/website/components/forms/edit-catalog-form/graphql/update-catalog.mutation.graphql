@@ -1,0 +1,7 @@
+mutation EditCatalogFormUpdateCatalog($input: UpdateCatalogInput!) {
+  updateCatalog(input: $input) {
+    id
+    title
+    subtitle
+  }
+}

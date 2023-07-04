@@ -37,21 +37,13 @@ import { Navbar } from "./components/navbar";
 import { useGetAdminCoursePageModuleQuery } from "./graphql/module.query.graphql.generated";
 
 interface AddVideoPageProps {}
-interface Poster {
-  id: string;
-  previewURL: string;
-}
 
 export const AddVideoPage: FC<AddVideoPageProps> = () => {
-  const [videoUploadIsCompleted, setVideoUploadIsCompleted] =
-    useState<boolean>(false);
   const [videoDuration, setVideoDuration] = useState<number>(0);
 
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
-  const { onShowToast } = useToast();
-  const { onShowAPIError } = useAPIErrors();
 
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
   const moduleId = useMemo(() => router?.query?.moduleId?.toString(), [router]);
@@ -78,11 +70,9 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
       },
     });
 
-  const [{ fetching: isLoadingCreateVideo }, createVideo] =
-    useCreateVideoMutation();
-
   const {
-    fileId: videoFileId,
+    onCreateVideo,
+    isLoadingCreateVideo,
     isLoadingStartUpload: isLoadingStartVideoUpload,
     onStartUpload: onStartVideoUpload,
     onCompleteUpload: onCompleteVideoUpload,
@@ -117,37 +107,20 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
     name,
     description,
   }: z.infer<typeof validationSchema>) => {
-    try {
-      const response = await createVideo({
-        input: {
-          parent: moduleId || "",
-          file: videoUploadIsCompleted ? videoFileId : null,
-          name,
-          description,
-          duration: videoDuration,
-          poster: posterId,
-        },
-      });
-      if (!!response?.data?.createVideo) {
-        onShowToast({
-          title: translate.formatMessage({ id: "videoCreatedSuccessfully" }),
-          status: "success",
-        });
-        goToModulesPage();
-        return;
-      }
-
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {}
+    const video = await onCreateVideo({
+      parent: moduleId || "",
+      name,
+      description,
+      duration: videoDuration,
+      poster: posterId,
+    });
+    if (video) {
+      goToModulesPage();
+    }
   };
 
   const onUploadComplete = (data: VideoUploaderOnSuccessData) => {
     setVideoDuration(data?.duration || 0);
-    setVideoUploadIsCompleted(true);
     onCompleteVideoUpload(data);
   };
 

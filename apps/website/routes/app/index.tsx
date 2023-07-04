@@ -60,6 +60,7 @@ export const routesApp = (data: { appId?: string }) => {
     },
     settings: {
       home: baseURL + "/settings",
+      landingPageBuilder: baseURL + "/settings/builder",
     },
   };
 };

@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   title: "Título",
+  optional: "Opcional",
   firstname: "Nome",
   lastname: "Sobrenome",
   email: "Email",

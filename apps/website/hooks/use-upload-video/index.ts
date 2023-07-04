@@ -1,3 +1,5 @@
+import { useCreateVideoMutation } from "@/services/graphql/mutations/create-video/create-video.mutation.graphql.generated";
+import { CreateVideoInput } from "@/services/graphql/stokei";
 import { useCallback, useState } from "react";
 import { useAPIErrors } from "../use-api-errors";
 import { useTranslations } from "../use-translations";
@@ -12,6 +14,8 @@ export interface UpdateFileParams {
 }
 
 export const useUploadVideo = () => {
+  const [videoDuration, setVideoDuration] = useState<number>(0);
+  const [videoId, setVideoId] = useState<string>("");
   const [fileId, setFileId] = useState<string>();
   const [isLoadingCompleteUpload, setIsLoadingCompleteUpload] = useState(false);
   const [uploadURL, setUploadURL] = useState("");
@@ -20,6 +24,8 @@ export const useUploadVideo = () => {
     onExecuteCreateVideoUploadURLMutation,
   ] = useUseUploadVideoCreateVideoUploadUrlMutation();
   const [, onExecuteUpdateFile] = useUseUploadVideoUpdateFileMutation();
+  const [{ fetching: isLoadingCreateVideo }, onExecuteCreateVideo] =
+    useCreateVideoMutation();
 
   const translate = useTranslations();
   const { onShowAPIError } = useAPIErrors();
@@ -78,12 +84,46 @@ export const useUploadVideo = () => {
     [fileId, onExecuteUpdateFile, onShowAPIError, translate]
   );
 
+  const onCreateVideo = useCallback(
+    async (data: CreateVideoInput) => {
+      try {
+        const response = await onExecuteCreateVideo({
+          input: {
+            ...data,
+            file: fileId,
+          },
+        });
+        if (!!response?.data?.createVideo) {
+          setVideoId(response?.data?.createVideo?.id);
+          return response?.data?.createVideo;
+        }
+        if (!!response.error?.graphQLErrors?.length) {
+          response.error.graphQLErrors.map((error) =>
+            onShowAPIError({ message: error?.message })
+          );
+        }
+      } catch (error) {
+        onShowAPIError({
+          message: translate.formatMessage({ id: "somethingWentWrong" }),
+        });
+      }
+      return;
+    },
+    [fileId, onExecuteCreateVideo, onShowAPIError, translate]
+  );
+
   return {
     fileId,
+    videoId,
     uploadURL,
     isLoadingCompleteUpload,
     isLoadingStartUpload,
+    isLoadingCreateVideo,
+    videoDuration,
+    setVideoDuration,
     onStartUpload,
+    onCreateVideo,
     onCompleteUpload,
+    onExecuteCreateVideo,
   };
 };

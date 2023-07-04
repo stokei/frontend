@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { SettingsLayout } from "../layout";
+import { AppLayout } from "@/views/app/layout";
 import { Navbar } from "./components/navbar";
 import { useUpdateAppMutation } from "./graphql/update-app.mutation.graphql.generated";
 
@@ -98,7 +98,7 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
   };
 
   return (
-    <SettingsLayout>
+    <AppLayout>
       <Navbar />
       <Container paddingY="5">
         <Card background="background.50">
@@ -155,6 +155,6 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
           </CardBody>
         </Card>
       </Container>
-    </SettingsLayout>
+    </AppLayout>
   );
 };

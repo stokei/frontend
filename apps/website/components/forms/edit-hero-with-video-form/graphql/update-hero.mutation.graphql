@@ -1,0 +1,12 @@
+mutation EditHeroWithVideoFormUpdateHero($input: UpdateHeroInput!) {
+  updateHero(input: $input) {
+    id
+    title
+    subtitle
+    video {
+      file {
+        url
+      }
+    }
+  }
+}

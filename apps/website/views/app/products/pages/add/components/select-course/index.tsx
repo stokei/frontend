@@ -38,6 +38,7 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
   const [{ fetching: isLoading, data: dataCourses }] =
     useGetAddProductCoursesSelectQuery({
       pause: !!courseQueryValue,
+      requestPolicy: "network-only",
       variables: {
         where: {
           AND: {

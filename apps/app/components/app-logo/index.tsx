@@ -9,7 +9,18 @@ export const AppLogo: FC<AppLogoProps> = ({ ...props }) => {
   const { currentApp } = useCurrentApp();
 
   return (
-    <AspectRatio width={["16", "16", "20", "20"]} ratio={16 / 9}>
+    <AspectRatio
+      width={["16", "16", "20", "20"]}
+      ratio={16 / 9}
+      alignItems="flex-start"
+      justifyContent="flex-start"
+      css={{
+        "&>img": {
+          objectFit: "contain",
+          objectPosition: "left",
+        },
+      }}
+    >
       <Image
         src={currentApp?.logo?.file?.url || ""}
         fallbackSrc={defaultLogoURL.src}

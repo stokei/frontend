@@ -83,7 +83,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
       },
     });
 
-  const [{ fetching: isLoadingCreateVideo }, createVideo] =
+  const [{ fetching: isLoadingCreateVideo }, onExecuteUpdateVideo] =
     useUpdateVideoMutation();
 
   const {
@@ -147,7 +147,7 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
     description,
   }: z.infer<typeof validationSchema>) => {
     try {
-      const response = await createVideo({
+      const response = await onExecuteUpdateVideo({
         input: {
           data: {
             file: videoUploadIsCompleted ? videoFileId : null,

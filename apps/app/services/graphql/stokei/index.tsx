@@ -384,7 +384,7 @@ export type CourseStudent = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
-  student: Account;
+  student?: Maybe<Account>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };
@@ -504,6 +504,15 @@ export type CreateFeatureInput = {
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   parent: Scalars['String'];
+};
+
+export type CreateFileByAdminInput = {
+  duration?: InputMaybe<Scalars['Float']>;
+  extension?: InputMaybe<Scalars['String']>;
+  mimetype?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  size?: InputMaybe<Scalars['Float']>;
+  url?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateFileUploadUrlResponse = {
@@ -627,6 +636,10 @@ export type CreateVideoInput = {
   parent: Scalars['String'];
   poster?: InputMaybe<Scalars['String']>;
   private?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type CreateVideoViewInput = {
+  video: Scalars['String'];
 };
 
 export type Currencies = {
@@ -822,6 +835,10 @@ export type Images = {
   previousPage: Scalars['Int'];
   totalCount: Scalars['Int'];
   totalPages: Scalars['Int'];
+};
+
+export type IncrementVideoViewInput = {
+  videoView: Scalars['String'];
 };
 
 export enum IntervalType {
@@ -1024,6 +1041,7 @@ export type Mutation = {
   createCustomerPortalSession: CustomerPortalSession;
   createDomain: Domain;
   createFeature: Feature;
+  createFileByAdmin: File;
   createHero: Hero;
   createImage: Image;
   createImageUploadURL: CreateFileUploadUrlResponse;
@@ -1040,8 +1058,10 @@ export type Mutation = {
   createVideo: Video;
   createVideoAuthor: VideoAuthor;
   createVideoUploadURL: CreateFileUploadUrlResponse;
+  createVideoView: VideoView;
   deactivatePrice: Price;
   forgotPassword: Scalars['Boolean'];
+  incrementVideoView: Scalars['Boolean'];
   login: AuthResponse;
   refreshAccess: AuthResponse;
   removeAccess: Access;
@@ -1179,6 +1199,11 @@ export type MutationCreateFeatureArgs = {
 };
 
 
+export type MutationCreateFileByAdminArgs = {
+  input: CreateFileByAdminInput;
+};
+
+
 export type MutationCreateHeroArgs = {
   input: CreateHeroInput;
 };
@@ -1249,6 +1274,11 @@ export type MutationCreateVideoAuthorArgs = {
 };
 
 
+export type MutationCreateVideoViewArgs = {
+  input: CreateVideoViewInput;
+};
+
+
 export type MutationDeactivatePriceArgs = {
   input: DeactivatePriceInput;
 };
@@ -1256,6 +1286,11 @@ export type MutationDeactivatePriceArgs = {
 
 export type MutationForgotPasswordArgs = {
   input: ForgotPasswordInput;
+};
+
+
+export type MutationIncrementVideoViewArgs = {
+  input: IncrementVideoViewInput;
 };
 
 
@@ -3005,6 +3040,17 @@ export type VideoAuthors = {
   previousPage: Scalars['Int'];
   totalCount: Scalars['Int'];
   totalPages: Scalars['Int'];
+};
+
+export type VideoView = {
+  __typename?: 'VideoView';
+  app?: Maybe<App>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+  viewer?: Maybe<Account>;
 };
 
 export type Videos = {

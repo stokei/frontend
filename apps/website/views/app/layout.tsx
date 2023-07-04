@@ -4,7 +4,15 @@ import { STRIPE_DASHBOARD_URL } from "@/constants/stripe-links";
 import { SidebarProvider } from "@/contexts";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
+import {
+  Box,
+  SidebarBody,
+  SidebarGroup,
+  SidebarGroupButton,
+  SidebarGroupPanel,
+  SidebarHeader,
+  SidebarNavLink,
+} from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { FC, PropsWithChildren, useCallback } from "react";
@@ -88,13 +96,29 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
             >
               {translate.formatMessage({ id: "members" })}
             </SidebarNavLink>
-            <SidebarNavLink
-              as={NextLink}
-              href={baseRoutes.settings.home}
-              isActive={isActiveRoute(baseRoutes.settings.home)}
-            >
-              {translate.formatMessage({ id: "settings" })}
-            </SidebarNavLink>
+            <SidebarGroup isActive={isActiveRoute(baseRoutes.settings.home)}>
+              <SidebarGroupButton>
+                {translate.formatMessage({ id: "settings" })}
+              </SidebarGroupButton>
+              <SidebarGroupPanel>
+                <SidebarNavLink
+                  as={NextLink}
+                  href={baseRoutes.settings.home}
+                  isActive={router.asPath === baseRoutes.settings.home}
+                >
+                  {translate.formatMessage({ id: "informations" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  as={NextLink}
+                  href={baseRoutes.settings.landingPageBuilder}
+                  isActive={
+                    router.asPath === baseRoutes.settings.landingPageBuilder
+                  }
+                >
+                  {translate.formatMessage({ id: "landingPageBuilder" })}
+                </SidebarNavLink>
+              </SidebarGroupPanel>
+            </SidebarGroup>
           </SidebarBody>
         </Sidebar>
         <AppLayoutContent>

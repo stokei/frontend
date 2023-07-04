@@ -1,16 +1,20 @@
-import { Container, Hero, HeroMedia, HeroVideoPlayer } from "@stokei/ui";
 import { FC } from "react";
 import { HeroTitleContent, HeroTitleContentProps } from "../hero-title-content";
+import { Container } from "../../container";
+import { Hero } from "../../hero";
+import { HeroMedia } from "../../hero-media";
+import { HeroImage } from "../../hero-image";
 
-interface HeroWithVideoProps extends HeroTitleContentProps {
-  readonly videoURL?: string;
+interface HeroWithImageProps extends HeroTitleContentProps {
+  readonly imageURL?: string;
 }
 
-export const HeroWithVideo: FC<HeroWithVideoProps> = ({
-  videoURL,
+export const HeroWithImage: FC<HeroWithImageProps> = ({
+  imageURL,
   title,
   subtitle,
   titleHighlight,
+  onSignUp,
 }) => {
   return (
     <Container>
@@ -19,13 +23,11 @@ export const HeroWithVideo: FC<HeroWithVideoProps> = ({
           title={title}
           subtitle={subtitle}
           titleHighlight={titleHighlight}
+          onSignUp={onSignUp}
         />
-        {videoURL && (
+        {imageURL && (
           <HeroMedia width={["full", "full", "40%", "40%"]}>
-            <HeroVideoPlayer
-              id={"hero-video-player" + title}
-              src={videoURL || ""}
-            />
+            <HeroImage src={imageURL || ""} />
           </HeroMedia>
         )}
       </Hero>

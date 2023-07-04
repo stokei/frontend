@@ -13,6 +13,9 @@ export const Button: React.FC<ButtonProps> = forwardRef(
   ({ children, ...props }, ref) => {
     const { getHexdecimalColor } = useStokeiUI();
     const buttonTextColor = useMemo(() => {
+      if (props?.color) {
+        return props.color;
+      }
       if (props?.variant && props?.variant !== "solid") {
         return props.textColor;
       }
@@ -45,7 +48,8 @@ export const Button: React.FC<ButtonProps> = forwardRef(
       getHexdecimalColor,
       props?.background,
       props?.backgroundColor,
-      props?.colorScheme,
+      props.color,
+      props.colorScheme,
       props.textColor,
       props?.variant,
     ]);
