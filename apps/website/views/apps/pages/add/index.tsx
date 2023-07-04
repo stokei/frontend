@@ -35,8 +35,6 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
-  const { currentAccount } = useCurrentAccount();
-  const { paymentMethod, onChangePaymentMethod } = usePaymentMethodManagement();
 
   const [{ fetching: isLoadingCreateApp }, onExecuteCreateAppMutation] =
     useCreateAppMutation();
@@ -70,7 +68,6 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
         input: {
           name,
           email,
-          paymentMethod: paymentMethod?.id || "",
           currency: "BRL",
           language: "pt-BR",
         },
@@ -154,17 +151,11 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
                     </FormErrorMessage>
                   </FormControl>
 
-                  <PaymentMethodManagement
-                    paymentMethodParent={currentAccount?.id || ""}
-                    onChoosePaymentMethod={onChangePaymentMethod}
-                    selectedPaymentMethod={paymentMethod}
-                  />
-
                   <Box width="full" paddingBottom="4">
                     <Button
                       width="full"
                       isLoading={isLoadingCreateApp}
-                      isDisabled={!paymentMethod || !isValid}
+                      isDisabled={!isValid}
                       type="submit"
                     >
                       {translate.formatMessage({ id: "addApp" })}

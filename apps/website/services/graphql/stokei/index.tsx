@@ -440,7 +440,6 @@ export type CreateAppInput = {
   email: Scalars['String'];
   language: Scalars['String'];
   name: Scalars['String'];
-  paymentMethod: Scalars['String'];
 };
 
 export type CreateCatalogInput = {

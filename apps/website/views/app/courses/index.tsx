@@ -34,6 +34,7 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
   const { currentPage, onChangePage } = usePagination();
 
   const [{ data: dataGetCourses, fetching: isLoading }] = useGetCoursesQuery({
+    requestPolicy: "network-only",
     variables: {
       where: {
         AND: {

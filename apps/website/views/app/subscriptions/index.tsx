@@ -61,6 +61,7 @@ export const SubscriptionContractsPage: FC<
   const [{ data: dataGetSubscriptionContracts, fetching: isLoading }] =
     useGetAppSubscriptionContractsQuery({
       pause: !currentApp,
+      requestPolicy: "network-only",
       variables: {
         page: {
           limit: 10,
