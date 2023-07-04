@@ -15,10 +15,11 @@ import { FC, memo, useCallback, useMemo } from "react";
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
+import { getCheckoutURL } from "@/utils";
 
 export interface CatalogItemProps {
   readonly productId?: string;
@@ -35,6 +36,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
   ({ productId, name, avatar, defaultPrice, parent }) => {
     const router = useRouter();
     const translate = useTranslations();
+    const { currentApp } = useCurrentApp();
 
     const course = useMemo(
       () => (parent?.__typename === "Course" ? parent : null),
@@ -43,10 +45,13 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
 
     const productURL = useMemo(() => {
       if (!!course) {
-        return routes.course.home({ product: productId || "" });
+        return getCheckoutURL({
+          domain: currentApp?.defaultDomain?.name || "",
+          product: productId || "",
+        });
       }
       return "";
-    }, [productId, course]);
+    }, [course, currentApp?.defaultDomain?.name, productId]);
 
     const goToCheckout = useCallback(() => {
       router.push(productURL);
