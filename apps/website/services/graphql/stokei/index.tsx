@@ -566,6 +566,7 @@ export type CreatePhoneInput = {
 };
 
 export type CreatePlanInput = {
+  icon?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   type: PlanType;
 };
@@ -1870,6 +1871,7 @@ export type Plan = {
   createdBy?: Maybe<Account>;
   description?: Maybe<Scalars['String']>;
   features?: Maybe<Features>;
+  icon?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
   type: PlanType;

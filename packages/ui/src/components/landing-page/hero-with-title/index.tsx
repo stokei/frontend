@@ -9,6 +9,7 @@ export const HeroWithTitle: FC<HeroWithTitleProps> = ({
   title,
   subtitle,
   titleHighlight,
+  subtitleHighlight,
   onSignUp,
 }) => {
   return (
@@ -18,6 +19,7 @@ export const HeroWithTitle: FC<HeroWithTitleProps> = ({
           title={title}
           subtitle={subtitle}
           titleHighlight={titleHighlight}
+          subtitleHighlight={subtitleHighlight}
           onSignUp={onSignUp}
         />
       </Hero>

@@ -1,5 +1,23 @@
 export const ptBRMessages = {
   me: "Eu",
+  withOurPlansYouOnlyPayForWhatYouUse:
+    "Com os nossos planos você paga apenas pelo que usar.",
+  receiveByCardIn30DaysAnd2WorkingDaysForPaymentsByBoleto:
+    "Receba por cartão em 30 dias e 2 dias úteis para pagamentos por boleto.",
+  doYouHaveALargeVolumeOfData: "Você tem um grande volume de dados?",
+  getInTouchWithUsViaEmail: "Entre em contato conosco pelo email",
+  stripeTax: "taxa da Stripe",
+  kb: "kbyte",
+  min: "minuto",
+  un: "unidade",
+  each: "a cada",
+  per: "por",
+  theRightPlansForYourBusiness: "Os planos certos para o seu negócio",
+  theRightPlansForYourBusinessHighlight: "seu negócio",
+  turnYourKnowledgeIntoAProduct: "Torne seu conhecimento em produto",
+  turnYourKnowledgeIntoAProductHighlight: "conhecimento",
+  withStokeiYouCanTransformYourKnowledgeIntoOnlineCoursesStartTeachingNow:
+    "Com a Stokei você transforma o seu conhecimento em cursos online. Comece agora a ensinar.",
   landingPageBuilder: "Editar landing page",
   app: "Aplicação",
   apps: "Aplicações",

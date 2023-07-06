@@ -69,6 +69,10 @@ export const icons = {
   invoice: IconComponent.InvoiceIcon,
   edit: IconComponent.EditIcon,
   price: IconComponent.PriceIcon,
+  admin: IconComponent.AdminIcon,
+  instructor: IconComponent.InstructorIcon,
+  domain: IconComponent.DomainIcon,
+  storage: IconComponent.StorageIcon,
 };
 
 export type IconName = keyof typeof icons;

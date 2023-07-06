@@ -1,8 +1,9 @@
-import { Footer, NavbarUserInformation, NavbarLogo } from "@/components";
+import { NavbarUserInformation, NavbarLogo } from "@/components";
 import { routes } from "@/routes";
 import { Navbar } from "@stokei/ui";
 import { FC, PropsWithChildren } from "react";
 import { Loading } from "./loading";
+import { Footer } from "./components/footer";
 
 export interface LandingPageLayoutProps {
   isLoading?: boolean;

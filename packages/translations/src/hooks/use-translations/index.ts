@@ -21,7 +21,7 @@ export const useTranslations = <TKeys = string>() => {
       currency,
       amount,
       minorUnit,
-      showSymbol,
+      showSymbol = false,
     }: {
       currency: string;
       amount: number;
@@ -36,6 +36,7 @@ export const useTranslations = <TKeys = string>() => {
           ...(showSymbol && { style: "currency" }),
           currency,
           minimumFractionDigits: minorUnit,
+          maximumFractionDigits: 10,
         }).format(amount / Math.pow(10, minorUnit || 0));
       } catch (error) {
         return 0;

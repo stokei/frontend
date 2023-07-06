@@ -8,12 +8,20 @@ import { PriceComponentFragment } from "./price.fragment.graphql.generated";
 export interface PriceProps extends StackProps {
   price?: PriceComponentFragment | null;
   size?: "md" | "lg";
+  readonly withUnitDescription?: boolean;
 }
-export const Price: FC<PriceProps> = ({ price, size, justify, ...props }) => {
+export const Price: FC<PriceProps> = ({
+  price,
+  size,
+  justify,
+  withUnitDescription,
+  ...props
+}) => {
   const translate = useTranslations();
 
   const priceAmount = useMemo(() => {
     return translate.formatMoney({
+      showSymbol: false,
       amount: price?.amount || 0,
       currency: price?.currency?.id || "",
       minorUnit: price?.currency?.minorUnit,
@@ -46,6 +54,25 @@ export const Price: FC<PriceProps> = ({ price, size, justify, ...props }) => {
     return key.singular;
   }, [price]);
 
+  const perUnitDescription = useMemo(
+    () => (withUnitDescription ? translate.formatMessage({ id: "per" }) : "/"),
+    [translate, withUnitDescription]
+  );
+  const eachUnitDescription = useMemo(
+    () => (withUnitDescription ? translate.formatMessage({ id: "each" }) : "/"),
+    [translate, withUnitDescription]
+  );
+
+  const unitDescription = useMemo(
+    () =>
+      price?.unit && withUnitDescription
+        ? translate.formatMessage({ id: price?.unit?.toLowerCase() as any })
+        : price?.unit,
+    [price?.unit, translate, withUnitDescription]
+  );
+
+  const unitFontSize = size === "lg" ? "lg" : "md";
+
   return (
     <Stack width="full" direction="column" spacing="1" {...props}>
       {fromPriceAmount && (
@@ -74,18 +101,34 @@ export const Price: FC<PriceProps> = ({ price, size, justify, ...props }) => {
           {priceAmount}
         </Text>
         {priceRecurringIntervalTypeKey && (
-          <Text fontSize={size === "lg" ? "lg" : "md"} color="text.200">
-            {price?.unit ? "/" + price?.unit : ""}/
+          <Stack direction="row" spacing="1">
+            {unitDescription && (
+              <>
+                <Text fontSize={unitFontSize} color="text.200">
+                  {eachUnitDescription}
+                </Text>
+                <Text fontSize={unitFontSize} color="text.200">
+                  {unitDescription}
+                </Text>
+              </>
+            )}
+            <Text fontSize={unitFontSize} color="text.200">
+              {perUnitDescription}
+            </Text>
             {price?.recurring?.intervalCount &&
-            price?.recurring?.intervalCount > 1
-              ? price?.recurring?.intervalCount + " "
-              : ""}
-            {translate
-              .formatMessage({
-                id: priceRecurringIntervalTypeKey as any,
-              })
-              ?.toLowerCase()}
-          </Text>
+              price?.recurring?.intervalCount > 1 && (
+                <Text fontSize={unitFontSize} color="text.200">
+                  {price?.recurring?.intervalCount}
+                </Text>
+              )}
+            <Text fontSize={unitFontSize} color="text.200">
+              {translate
+                .formatMessage({
+                  id: priceRecurringIntervalTypeKey as any,
+                })
+                ?.toLowerCase()}
+            </Text>
+          </Stack>
         )}
       </Stack>
     </Stack>

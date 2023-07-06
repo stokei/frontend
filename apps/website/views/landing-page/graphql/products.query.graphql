@@ -1,0 +1,52 @@
+query GetLandingPageProducts(
+  $where: WhereDataFindAllProductsInput
+  $orderBy: OrderByDataFindAllProductsInput
+  $page: PaginationInput
+) {
+  products(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...LandingPageProduct
+    }
+  }
+}
+
+fragment LandingPageProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  defaultPrice {
+    ...PriceComponent
+  }
+  parent {
+    __typename
+    ...LandingPageProductPlan
+  }
+}
+
+fragment LandingPageProductPlan on Plan {
+  id
+  name
+  icon
+  features {
+    items {
+      ...LandingPageProductPlanFeature
+    }
+  }
+}
+
+fragment LandingPageProductPlanFeature on Feature {
+  id
+  name
+  description
+}

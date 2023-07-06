@@ -4,7 +4,7 @@ import { Container } from "../../container";
 import { Hero } from "../../hero";
 
 interface HeroWithBackgroundImageProps extends HeroTitleContentProps {
-  readonly imageURL?: string;
+  readonly imageURL: string;
 }
 
 export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
@@ -12,6 +12,7 @@ export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
   title,
   subtitle,
   titleHighlight,
+  subtitleHighlight,
   onSignUp,
 }) => {
   return (
@@ -28,6 +29,7 @@ export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
           title={title}
           subtitle={subtitle}
           titleHighlight={titleHighlight}
+          subtitleHighlight={subtitleHighlight}
           onSignUp={onSignUp}
         />
       </Container>

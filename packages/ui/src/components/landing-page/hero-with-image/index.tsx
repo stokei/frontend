@@ -14,6 +14,7 @@ export const HeroWithImage: FC<HeroWithImageProps> = ({
   title,
   subtitle,
   titleHighlight,
+  subtitleHighlight,
   onSignUp,
 }) => {
   return (
@@ -23,6 +24,7 @@ export const HeroWithImage: FC<HeroWithImageProps> = ({
           title={title}
           subtitle={subtitle}
           titleHighlight={titleHighlight}
+          subtitleHighlight={subtitleHighlight}
           onSignUp={onSignUp}
         />
         {imageURL && (

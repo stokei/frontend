@@ -141,6 +141,12 @@ export const FormSignUp: FC<FormSignUpProps> = ({
                 <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
               </FormControl>
 
+              <Text fontSize="xs" color="text.300">
+                {translate.formatMessage({
+                  id: "byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies",
+                })}
+              </Text>
+
               <Box width="full" paddingBottom="4">
                 <Button width="full" isLoading={isLoading} type="submit">
                   {translate.formatMessage({ id: "save" })}

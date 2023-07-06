@@ -6,12 +6,14 @@ import { HeroSubtitle } from "../../hero-subtitle";
 import { HeroTitle } from "../../hero-title";
 import { Highlight } from "../../highlight";
 import { Button } from "../../button";
+import { ButtonGroup } from "../../button-group";
 
 export interface HeroTitleContentProps {
   readonly textTheme?: "light" | "dark";
   readonly title?: string | null;
   readonly subtitle?: string | null;
   readonly titleHighlight?: string | null;
+  readonly subtitleHighlight?: string | null;
   readonly onSignUp: () => void;
 }
 
@@ -20,6 +22,7 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
   title,
   titleHighlight,
   subtitle,
+  subtitleHighlight,
   onSignUp,
 }) => {
   const translate = useTranslations();
@@ -37,14 +40,18 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
       )}
       {subtitle && (
         <HeroSubtitle color={textTheme === "dark" ? "white.500" : undefined}>
-          {subtitle}
+          {subtitleHighlight ? (
+            <Highlight query={subtitleHighlight}>{subtitle}</Highlight>
+          ) : (
+            <>{subtitle}</>
+          )}
         </HeroSubtitle>
       )}
-      <Box>
+      <ButtonGroup>
         <Button onClick={onSignUp}>
           {translate.formatMessage({ id: "signUp" })}
         </Button>
-      </Box>
+      </ButtonGroup>
     </HeroContent>
   );
 };

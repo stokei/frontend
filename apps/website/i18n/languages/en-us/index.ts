@@ -2,6 +2,24 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  withOurPlansYouOnlyPayForWhatYouUse:
+    "With our plans you only pay for what you use.",
+  receiveByCardIn30DaysAnd2WorkingDaysForPaymentsByBoleto:
+    "Receive by card in 30 days and 2 working days for payments by boleto.",
+  doYouHaveALargeVolumeOfData: "Do you have a large volume of data?",
+  getInTouchWithUsViaEmail: "Get in touch with us via email",
+  stripeTax: "Stripe tax",
+  kb: "kbyte",
+  min: "minute",
+  un: "unit",
+  each: "each",
+  per: "per",
+  theRightPlansForYourBusiness: "The right plans for your business",
+  theRightPlansForYourBusinessHighlight: "your business",
+  turnYourKnowledgeIntoAProduct: "Turn your knowledge into a product",
+  turnYourKnowledgeIntoAProductHighlight: "knowledge",
+  withStokeiYouCanTransformYourKnowledgeIntoOnlineCoursesStartTeachingNow:
+    "With Stokei you can transform your knowledge into online courses. Start teaching now.",
   landingPageBuilder: "Landing page builder",
   addApp: "Add app",
   informations: "Informations",

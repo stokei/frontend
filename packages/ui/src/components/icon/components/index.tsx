@@ -53,6 +53,8 @@ import {
   FaGraduationCap,
   FaMoneyBill,
   FaStore,
+  FaUserShield,
+  FaUserTie,
 } from "react-icons/fa";
 import { FiPlus, FiSettings } from "react-icons/fi";
 import {
@@ -62,6 +64,7 @@ import {
   RxCaretUp,
 } from "react-icons/rx";
 import { TbApps } from "react-icons/tb";
+import { MdOutlineDomainVerification, MdOutlineStorage } from "react-icons/md";
 
 import {
   RiCheckboxBlankCircleLine,
@@ -134,3 +137,7 @@ export const ExitPictureInPictureIcon = RiPictureInPictureExitLine;
 export const InvoiceIcon = FaFileInvoiceDollar;
 export const EditIcon = AiOutlineEdit;
 export const PriceIcon = AiOutlineDollar;
+export const AdminIcon = FaUserShield;
+export const InstructorIcon = FaUserTie;
+export const DomainIcon = MdOutlineDomainVerification;
+export const StorageIcon = MdOutlineStorage;
