@@ -1,6 +1,7 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
   Box,
+  Container,
   Divider,
   Highlight,
   SimpleGrid,
@@ -51,65 +52,67 @@ export const Plans: FC<PlansProps> = () => {
   );
   return (
     <Box width="full" py={6} px={5} minH="100vh">
-      <Stack spacing={4} direction="column">
-        <Stack
-          p={5}
-          alignItems="center"
-          justifyContent={{
-            base: "flex-start",
-            md: "space-around",
-          }}
-          direction={{
-            base: "column",
-            md: "row",
-          }}
-        >
+      <Container>
+        <Stack spacing={4} direction="column">
           <Stack
-            width={{
-              base: "100%",
-              md: "40%",
+            p={5}
+            alignItems="center"
+            justifyContent={{
+              base: "flex-start",
+              md: "space-around",
             }}
-            justify="center"
-            align="center"
+            direction={{
+              base: "column",
+              md: "row",
+            }}
           >
-            <Title size="lg" textAlign="center">
-              <Highlight
-                query={translate.formatMessage({
-                  id: "theRightPlansForYourBusinessHighlight",
-                })}
-              >
+            <Stack
+              width={{
+                base: "100%",
+                md: "40%",
+              }}
+              justify="center"
+              align="center"
+            >
+              <Title size="lg" textAlign="center">
+                <Highlight
+                  query={translate.formatMessage({
+                    id: "theRightPlansForYourBusinessHighlight",
+                  })}
+                >
+                  {translate.formatMessage({
+                    id: "theRightPlansForYourBusiness",
+                  })}
+                </Highlight>
+              </Title>
+              <Text textAlign="center">
                 {translate.formatMessage({
-                  id: "theRightPlansForYourBusiness",
+                  id: "withOurPlansYouOnlyPayForWhatYouUse",
                 })}
-              </Highlight>
-            </Title>
-            <Text textAlign="center">
-              {translate.formatMessage({
-                id: "withOurPlansYouOnlyPayForWhatYouUse",
-              })}
-            </Text>
+              </Text>
+            </Stack>
           </Stack>
+          <SimpleGrid columns={[1, 1, 2, 3]} spacing="5">
+            {products?.map((product) => {
+              const icon =
+                product?.parent?.__typename === "Plan" && product?.parent?.icon;
+              const features =
+                product?.parent?.__typename === "Plan" &&
+                product?.parent?.features?.items;
+              return (
+                <PlanItem
+                  key={product?.id}
+                  icon={icon ? (icon as any) : "app"}
+                  title={product?.name}
+                  features={features || []}
+                  price={product?.defaultPrice}
+                />
+              );
+            })}
+            <PaymentGatewayItem />
+          </SimpleGrid>
         </Stack>
-        <SimpleGrid columns={[1, 1, 2, 3]} spacing="5">
-          {products?.map((product) => {
-            const icon =
-              product?.parent?.__typename === "Plan" && product?.parent?.icon;
-            const features =
-              product?.parent?.__typename === "Plan" &&
-              product?.parent?.features?.items;
-            return (
-              <PlanItem
-                key={product?.id}
-                icon={icon ? (icon as any) : "app"}
-                title={product?.name}
-                features={features || []}
-                price={product?.defaultPrice}
-              />
-            );
-          })}
-          <PaymentGatewayItem />
-        </SimpleGrid>
-      </Stack>
+      </Container>
     </Box>
   );
 };
