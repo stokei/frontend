@@ -1,12 +1,11 @@
 import { FC } from "react";
 import { useTranslations } from "../../../hooks";
-import { Box } from "../../box";
+import { Button } from "../../button";
+import { ButtonGroup } from "../../button-group";
 import { HeroContent } from "../../hero-content";
 import { HeroSubtitle } from "../../hero-subtitle";
 import { HeroTitle } from "../../hero-title";
 import { Highlight } from "../../highlight";
-import { Button } from "../../button";
-import { ButtonGroup } from "../../button-group";
 
 export interface HeroTitleContentProps {
   readonly textTheme?: "light" | "dark";

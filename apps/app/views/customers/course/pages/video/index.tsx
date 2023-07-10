@@ -9,6 +9,7 @@ import {
   Container,
   Description,
   Image,
+  Markdown,
   NotFound,
   NotFoundIcon,
   NotFoundSubtitle,
@@ -114,9 +115,7 @@ const CourseVideoPage: FC<CourseVideoPageProps> = () => {
                     </Description>
                   )}
                 </Box>
-                {video?.description && (
-                  <Description>{video?.description}</Description>
-                )}
+                {video?.description && <Markdown text={video?.description} />}
               </Stack>
             </CardBody>
           </Card>

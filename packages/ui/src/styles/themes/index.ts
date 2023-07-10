@@ -44,6 +44,24 @@ export const theme = (config?: StokeiConfig) => {
         "h1, h2, h3, h4, h5, h6": {
           color: "heading.500",
         },
+        h1: {
+          fontSize: "2xl",
+        },
+        h2: {
+          fontSize: "xl",
+        },
+        h3: {
+          fontSize: "lg",
+        },
+        h4: {
+          fontSize: "md",
+        },
+        h5: {
+          fontSize: "sm",
+        },
+        h6: {
+          fontSize: "xs",
+        },
       },
     },
     colors: {

@@ -35,22 +35,16 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
   ({ productId, name, avatar, defaultPrice, parent }) => {
     const router = useRouter();
     const translate = useTranslations();
+    const isAvailable = !!defaultPrice;
 
     const course = useMemo(
       () => (parent?.__typename === "Course" ? parent : null),
       [parent]
     );
 
-    const productURL = useMemo(() => {
-      if (!!course) {
-        return routes.course.home({ product: productId || "" });
-      }
-      return "";
-    }, [productId, course]);
-
     const goToCheckout = useCallback(() => {
-      router.push(productURL);
-    }, [productURL, router]);
+      router.push(routes.course.home({ product: productId || "" }));
+    }, [productId, router]);
 
     return (
       <Card background="background.50" overflow="hidden" minW="280px">
@@ -92,8 +86,14 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
               <Box marginBottom="5">
                 {defaultPrice && <Price price={defaultPrice} />}
               </Box>
-              <Button width="full" onClick={goToCheckout}>
-                {translate.formatMessage({ id: "buyNow" })}
+              <Button
+                width="full"
+                onClick={goToCheckout}
+                isDisabled={!isAvailable}
+              >
+                {translate.formatMessage({
+                  id: isAvailable ? "buyNow" : "unavailable",
+                })}
               </Button>
             </Box>
           </Box>

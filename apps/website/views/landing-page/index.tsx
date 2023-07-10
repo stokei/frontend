@@ -8,6 +8,7 @@ import { LandingPageLayout } from "./layout";
 import { Plans } from "./components/plans";
 import { Contact } from "./components/contact";
 import { Footer } from "./components/footer";
+import { CommonQuestions } from "./components/common-questions";
 
 interface LandingPageProps {}
 
@@ -36,6 +37,7 @@ export const LandingPage: FC<LandingPageProps> = () => {
         onSignUp={goToSignUp}
       />
       <Plans />
+      <CommonQuestions />
       <Contact />
     </LandingPageLayout>
   );

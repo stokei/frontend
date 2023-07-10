@@ -2,6 +2,17 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  unavailable: "Unavailable",
+  commonQuestions: "Common questions",
+  doINeedToHaveACreditCard: "Do I need to have a credit card?",
+  doINeedToHaveACreditCardAnswer:
+    "You don't need to have a credit card, as we have payment options by Boleto and card.",
+  whenAreMyPlansBilled: "When are my plans billed?",
+  whenAreMyPlansBilledAnswer:
+    "Every 1st of each month an invoice is generated and sent to the email of each application containing all information regarding its use.",
+  whenIsMyApplicationInvoiceDue: "When is my application invoice due?",
+  whenIsMyApplicationInvoiceDueAnswer:
+    "After generating your invoice, you have 10 days to pay it. If the payment does not occur, your application will remain in the INACTIVE state, and it will not be possible to access it.",
   withOurPlansYouOnlyPayForWhatYouUse:
     "With our plans you only pay for what you use.",
   receiveByCardIn30DaysAnd2WorkingDaysForPaymentsByBoleto:

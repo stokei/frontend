@@ -4,7 +4,7 @@ export interface HeroProps extends StackProps {}
 export const Hero: React.FC<HeroProps> = ({ children, ...props }) => (
   <Stack
     width="full"
-    minHeight={["50vh", "50vh", "65vh", "65vh"]}
+    minHeight={["60vh", "60vh", "70vh", "70vh"]}
     direction={["column", "column", "row", "row"]}
     spacing="10"
     align="center"

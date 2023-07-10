@@ -25,39 +25,37 @@ export const Footer: FC<FooterProps> = () => {
   const translate = useTranslations();
   return (
     <FooterUI paddingY="10">
-      <Container>
-        <Stack
-          direction={["column", "column", "row", "row"]}
-          justify="space-between"
-          marginBottom={[5, 5, 0, 0]}
-        >
-          <Stack direction="column" spacing="5">
-            <AppLogo />
-            <Stack direction="column" spacing="0">
-              <Text>{DEFAULT_APP_SOCIAL_NAME}</Text>
-              <Text>{DEFAULT_APP_CNPJ}</Text>
-              <Text>{STOKEI_CONTACT_EMAIL}</Text>
-            </Stack>
-            <Text>
-              {translate.formatMessage(
-                { id: "allRightsReserved" },
-                { year: "2023", company: DEFAULT_APP_NAME }
-              )}
-            </Text>
+      <Stack
+        direction={["column", "column", "row", "row"]}
+        justify="space-between"
+        spacing="5"
+      >
+        <Stack direction="column" spacing="5">
+          <AppLogo />
+          <Stack direction="column" spacing="0">
+            <Text>{DEFAULT_APP_SOCIAL_NAME}</Text>
+            <Text>{DEFAULT_APP_CNPJ}</Text>
+            <Text>{STOKEI_CONTACT_EMAIL}</Text>
           </Stack>
-          <ButtonGroup>
-            <Button
-              variant="ghost"
-              onClick={() => router.push(routes.auth.login)}
-            >
-              {translate.formatMessage({ id: "login" })}
-            </Button>
-            <Button onClick={() => router.push(routes.auth.signUp)}>
-              {translate.formatMessage({ id: "signUp" })}
-            </Button>
-          </ButtonGroup>
+          <Text>
+            {translate.formatMessage(
+              { id: "allRightsReserved" },
+              { year: "2023", company: DEFAULT_APP_NAME }
+            )}
+          </Text>
         </Stack>
-      </Container>
+        <ButtonGroup>
+          <Button
+            variant="ghost"
+            onClick={() => router.push(routes.auth.login)}
+          >
+            {translate.formatMessage({ id: "login" })}
+          </Button>
+          <Button onClick={() => router.push(routes.auth.signUp)}>
+            {translate.formatMessage({ id: "signUp" })}
+          </Button>
+        </ButtonGroup>
+      </Stack>
     </FooterUI>
   );
 };

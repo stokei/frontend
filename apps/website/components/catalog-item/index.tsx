@@ -37,6 +37,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
     const router = useRouter();
     const translate = useTranslations();
     const { currentApp } = useCurrentApp();
+    const isAvailable = !!defaultPrice;
 
     const course = useMemo(
       () => (parent?.__typename === "Course" ? parent : null),
@@ -97,8 +98,14 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
               <Box marginBottom="5">
                 {defaultPrice && <Price price={defaultPrice} />}
               </Box>
-              <Button width="full" onClick={goToCheckout}>
-                {translate.formatMessage({ id: "buyNow" })}
+              <Button
+                width="full"
+                onClick={goToCheckout}
+                isDisabled={!isAvailable}
+              >
+                {translate.formatMessage({
+                  id: isAvailable ? "buyNow" : "unavailable",
+                })}
               </Button>
             </Box>
           </Box>

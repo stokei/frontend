@@ -37,13 +37,12 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
 
   const [{ fetching: isLoading, data: dataCourses }] =
     useGetAddProductCoursesSelectQuery({
-      pause: !!courseQueryValue,
       requestPolicy: "network-only",
       variables: {
         where: {
           AND: {
             name: {
-              search: courseQueryValue,
+              startsWith: courseQueryValue,
             },
             parent: {
               equals: currentApp?.id,
@@ -87,6 +86,7 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
         >
           <SelectSearchInput
             id="select-couse"
+            onChange={(e) => setCourseQuery(e.target.value || "")}
             item={(courseItem) => (
               <Tag>
                 <TagLabel>
@@ -102,7 +102,6 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
                 <TagCloseButton onClick={() => onChooseProductTypeItem()} />
               </Tag>
             )}
-            onChange={(e) => setCourseQuery(e.target.value || "")}
           />
 
           <SelectList>

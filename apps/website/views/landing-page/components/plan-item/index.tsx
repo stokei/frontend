@@ -5,6 +5,7 @@ import {
   Box,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
   Icon,
   IconName,
@@ -33,7 +34,7 @@ export const PlanItem: FC<PlanItemProps> = ({
   price,
 }) => {
   return (
-    <Card background="background.50">
+    <Card background="background.50" justify="space-between">
       <CardHeader>
         <Stack spacing="2" justify="center" align="center">
           <Avatar
@@ -44,28 +45,29 @@ export const PlanItem: FC<PlanItemProps> = ({
           <Title size={"md"}>{title}</Title>
         </Stack>
       </CardHeader>
-      <CardBody background="background.200">
-        <Stack spacing="5">
-          {features?.length && (
-            <List>
-              {features?.map((feature) => (
-                <ListItem key={feature.id}>
-                  <ListIcon name="check" color="green.500" />
-                  {feature.name}
-                </ListItem>
-              ))}
-            </List>
-          )}
-          <Box width="full" justify="center" align="center">
-            <Price
-              width="fit-content"
-              withUnitDescription
-              price={price}
-              justify="center"
-            />
-          </Box>
-        </Stack>
-      </CardBody>
+      {features?.length ? (
+        <CardBody paddingTop={0}>
+          <List>
+            {features?.map((feature) => (
+              <ListItem key={feature.id}>
+                <ListIcon name="check" color="green.500" />
+                {feature.name}
+              </ListItem>
+            ))}
+          </List>
+        </CardBody>
+      ) : undefined}
+      <CardFooter background="background.200">
+        <Box width="full" justify="center" align="center">
+          <Price
+            width="fit-content"
+            price={price}
+            justify="center"
+            withUnitDescription
+            withPriceAndUnitDirectionColumn
+          />
+        </Box>
+      </CardFooter>
     </Card>
   );
 };

@@ -14,6 +14,7 @@ import { PlanItem } from "../plan-item";
 import { useGetLandingPageProductsQuery } from "../../graphql/products.query.graphql.generated";
 import { OrderBy } from "@/services/graphql/stokei";
 import { PaymentGatewayItem } from "../payment-gateway-item";
+import { PlanItemSkeleton } from "../plan-item-skeleton";
 
 const features = [
   { id: "1", description: "1 lorem ipsum" },
@@ -51,68 +52,77 @@ export const Plans: FC<PlansProps> = () => {
     [dataPlans?.products?.items]
   );
   return (
-    <Box width="full" py={6} px={5} minH="100vh">
-      <Container>
-        <Stack spacing={4} direction="column">
+    <Container width="full" paddingY="6" minH="100vh">
+      <Stack spacing={4} direction="column">
+        <Stack
+          p={5}
+          alignItems="center"
+          justifyContent={{
+            base: "flex-start",
+            md: "space-around",
+          }}
+          direction={{
+            base: "column",
+            md: "row",
+          }}
+        >
           <Stack
-            p={5}
-            alignItems="center"
-            justifyContent={{
-              base: "flex-start",
-              md: "space-around",
+            width={{
+              base: "100%",
+              md: "40%",
             }}
-            direction={{
-              base: "column",
-              md: "row",
-            }}
+            justify="center"
+            align="center"
           >
-            <Stack
-              width={{
-                base: "100%",
-                md: "40%",
-              }}
-              justify="center"
-              align="center"
-            >
-              <Title size="lg" textAlign="center">
-                <Highlight
-                  query={translate.formatMessage({
-                    id: "theRightPlansForYourBusinessHighlight",
-                  })}
-                >
-                  {translate.formatMessage({
-                    id: "theRightPlansForYourBusiness",
-                  })}
-                </Highlight>
-              </Title>
-              <Text textAlign="center">
-                {translate.formatMessage({
-                  id: "withOurPlansYouOnlyPayForWhatYouUse",
+            <Title size="lg" textAlign="center">
+              <Highlight
+                query={translate.formatMessage({
+                  id: "theRightPlansForYourBusinessHighlight",
                 })}
-              </Text>
-            </Stack>
+              >
+                {translate.formatMessage({
+                  id: "theRightPlansForYourBusiness",
+                })}
+              </Highlight>
+            </Title>
+            <Text textAlign="center">
+              {translate.formatMessage({
+                id: "withOurPlansYouOnlyPayForWhatYouUse",
+              })}
+            </Text>
           </Stack>
-          <SimpleGrid columns={[1, 1, 2, 3]} spacing="5">
-            {products?.map((product) => {
-              const icon =
-                product?.parent?.__typename === "Plan" && product?.parent?.icon;
-              const features =
-                product?.parent?.__typename === "Plan" &&
-                product?.parent?.features?.items;
-              return (
-                <PlanItem
-                  key={product?.id}
-                  icon={icon ? (icon as any) : "app"}
-                  title={product?.name}
-                  features={features || []}
-                  price={product?.defaultPrice}
-                />
-              );
-            })}
-            <PaymentGatewayItem />
-          </SimpleGrid>
         </Stack>
-      </Container>
-    </Box>
+        <SimpleGrid columns={[1, 1, 2, 3]} spacing="5">
+          {isLoading ? (
+            <>
+              {Array.from({ length: 3 }).map((_, key) => (
+                <PlanItemSkeleton key={key} />
+              ))}
+            </>
+          ) : (
+            <>
+              {products?.map((product) => {
+                const icon =
+                  product?.parent?.__typename === "Plan" &&
+                  product?.parent?.icon;
+                const features =
+                  product?.parent?.__typename === "Plan" &&
+                  product?.parent?.features?.items;
+                return (
+                  <PlanItem
+                    key={product?.id}
+                    icon={icon ? (icon as any) : "app"}
+                    title={product?.name}
+                    features={features || []}
+                    price={product?.defaultPrice}
+                  />
+                );
+              })}
+              <PaymentGatewayItem />
+            </>
+          )}
+        </SimpleGrid>
+      </Stack>
+    </Container>
   );
 };

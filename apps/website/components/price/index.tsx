@@ -8,6 +8,7 @@ import { PriceComponentFragment } from "./price.fragment.graphql.generated";
 export interface PriceProps extends StackProps {
   price?: PriceComponentFragment | null;
   size?: "md" | "lg";
+  readonly withPriceAndUnitDirectionColumn?: boolean;
   readonly withUnitDescription?: boolean;
 }
 export const Price: FC<PriceProps> = ({
@@ -15,6 +16,7 @@ export const Price: FC<PriceProps> = ({
   size,
   justify,
   withUnitDescription,
+  withPriceAndUnitDirectionColumn,
   ...props
 }) => {
   const translate = useTranslations();
@@ -88,18 +90,30 @@ export const Price: FC<PriceProps> = ({
         </Stack>
       )}
 
-      <Stack width="full" direction="row" align="center" justify={justify}>
-        <Text fontSize="md" fontWeight="600">
-          {price?.currency?.symbol}
-        </Text>
-        <Text
-          fontSize={size === "lg" ? "3xl" : "2xl"}
-          color="primary.500"
-          fontWeight="900"
-          lineHeight="shorter"
+      <Stack
+        width="full"
+        direction={withPriceAndUnitDirectionColumn ? "column" : "row"}
+        align="center"
+        justify={justify}
+      >
+        <Stack
+          width="fit-content"
+          direction="row"
+          align="center"
+          justify="center"
         >
-          {priceAmount}
-        </Text>
+          <Text fontSize="md" fontWeight="600">
+            {price?.currency?.symbol}
+          </Text>
+          <Text
+            fontSize={size === "lg" ? "3xl" : "2xl"}
+            color="primary.500"
+            fontWeight="900"
+            lineHeight="shorter"
+          >
+            {priceAmount}
+          </Text>
+        </Stack>
         {priceRecurringIntervalTypeKey && (
           <Stack direction="row" spacing="1">
             {unitDescription && (

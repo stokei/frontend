@@ -25,7 +25,6 @@ export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
     >
       <Container>
         <HeroTitleContent
-          textTheme="dark"
           title={title}
           subtitle={subtitle}
           titleHighlight={titleHighlight}

@@ -1,5 +1,17 @@
 export const ptBRMessages = {
   me: "Eu",
+  unavailable: "Indisponível",
+  commonQuestions: "Perguntas frequêntes",
+  doINeedToHaveACreditCard: "Preciso ter cartão de crédito?",
+  doINeedToHaveACreditCardAnswer:
+    "Não precisa ter cartão de crédito, pois temos as opções de pagamento por Boleto e cartão.",
+  whenAreMyPlansBilled: "Quando é feita a cobrança dos meus planos?",
+  whenAreMyPlansBilledAnswer:
+    "Todo dia 01 de cada mês é gerado uma fatura e enviada para o email de cada aplicação contendo toda informação referente ao uso dela.",
+  whenIsMyApplicationInvoiceDue:
+    "Qual é o vencimento da fatura da minha aplicação?",
+  whenIsMyApplicationInvoiceDueAnswer:
+    "Após a geração da sua fatura você tem 10 dias de vencimento para pagar ela. Caso não ocorra o pagamento a sua aplicação fica no estado de INATIVO, não sendo possível ser acessada.",
   withOurPlansYouOnlyPayForWhatYouUse:
     "Com os nossos planos você paga apenas pelo que usar.",
   receiveByCardIn30DaysAnd2WorkingDaysForPaymentsByBoleto:
