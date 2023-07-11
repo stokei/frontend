@@ -6,9 +6,9 @@ import { FC, useMemo } from "react";
 import { Navbar } from "./components/navbar";
 import { useSortedItemsQuery } from "./graphql/sorted-items.query.graphql.generated";
 
-interface LandingPageBuilderPageProps {}
+interface WebsitePageProps {}
 
-export const LandingPageBuilderPage: FC<LandingPageBuilderPageProps> = () => {
+export const WebsitePage: FC<WebsitePageProps> = () => {
   const { currentApp } = useCurrentApp();
   const [{ fetching: isLoading, data: dataSortedItems }] = useSortedItemsQuery({
     pause: !currentApp?.id,

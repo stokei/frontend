@@ -31,7 +31,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   turnYourKnowledgeIntoAProductHighlight: "knowledge",
   withStokeiYouCanTransformYourKnowledgeIntoOnlineCoursesStartTeachingNow:
     "With Stokei you can transform your knowledge into online courses. Start teaching now.",
-  landingPageBuilder: "Landing page builder",
+  website: "Website",
   addApp: "Add app",
   informations: "Informations",
   update: "Update",

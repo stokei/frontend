@@ -114,7 +114,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   href={baseRoutes.settings.home}
                   isActive={router.asPath === baseRoutes.settings.home}
                 >
-                  {translate.formatMessage({ id: "informations" })}
+                  {translate.formatMessage({ id: "app" })}
                 </SidebarNavLink>
                 <SidebarNavLink
                   as={NextLink}
@@ -125,12 +125,10 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                 </SidebarNavLink>
                 <SidebarNavLink
                   as={NextLink}
-                  href={baseRoutes.settings.landingPageBuilder}
-                  isActive={
-                    router.asPath === baseRoutes.settings.landingPageBuilder
-                  }
+                  href={baseRoutes.settings.website}
+                  isActive={router.asPath === baseRoutes.settings.website}
                 >
-                  {translate.formatMessage({ id: "landingPageBuilder" })}
+                  {translate.formatMessage({ id: "website" })}
                 </SidebarNavLink>
               </SidebarGroupPanel>
             </SidebarGroup>

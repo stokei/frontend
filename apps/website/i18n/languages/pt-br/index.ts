@@ -30,7 +30,7 @@ export const ptBRMessages = {
   turnYourKnowledgeIntoAProductHighlight: "conhecimento",
   withStokeiYouCanTransformYourKnowledgeIntoOnlineCoursesStartTeachingNow:
     "Com a Stokei você transforma o seu conhecimento em cursos online. Comece agora a ensinar.",
-  landingPageBuilder: "Editar landing page",
+  website: "Website",
   app: "Aplicação",
   apps: "Aplicações",
   addApp: "Adicionar aplicação",
