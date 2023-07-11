@@ -73,6 +73,7 @@ export const icons = {
   instructor: IconComponent.InstructorIcon,
   domain: IconComponent.DomainIcon,
   storage: IconComponent.StorageIcon,
+  product: IconComponent.ProductIcon,
 };
 
 export type IconName = keyof typeof icons;

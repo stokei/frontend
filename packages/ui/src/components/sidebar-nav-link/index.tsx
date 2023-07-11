@@ -1,13 +1,18 @@
 import { forwardRef, useEffect, useMemo, useState } from "react";
+import { Box } from "../box";
+import { Icon, IconName } from "../icon";
 import { Link, LinkProps } from "../link";
+import { Stack } from "../stack";
+import { Text } from "../text";
 
 export interface SidebarNavLinkProps extends LinkProps {
+  readonly leftIcon?: IconName;
   readonly isActive?: boolean;
 }
 
 export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
-  ({ children, isActive, ...props }, ref) => {
-    const [activeStyle, setActiveStyle] = useState({});
+  ({ children, isActive, leftIcon, ...props }, ref) => {
+    const [activeStyle, setActiveStyle] = useState<any>({});
 
     const hoverStyle = useMemo(
       () => ({
@@ -42,14 +47,16 @@ export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
         ref={ref}
         display="flex"
         flexDirection="row"
-        justifyContent="space-between"
         _focus={hoverStyle}
         _hover={hoverStyle}
         _active={activeStyle}
         {...activeStyle}
         {...props}
       >
-        {children}
+        {leftIcon && <Icon name={leftIcon} marginRight="4" />}
+        <Stack as="span" direction="row" spacing="5" justify="space-between">
+          <Text color={activeStyle?.color}>{children}</Text>
+        </Stack>
       </Link>
     );
   }

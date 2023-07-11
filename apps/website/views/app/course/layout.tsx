@@ -34,6 +34,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
           </SidebarHeader>
           <SidebarBody paddingX="0">
             <SidebarNavLink
+              leftIcon="home"
               as={NextLink}
               href={baseAppRoutes.home}
               isActive={router.asPath === baseAppRoutes.home}
@@ -41,6 +42,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               {translate.formatMessage({ id: "home" })}
             </SidebarNavLink>
             <SidebarNavLink
+              leftIcon="about"
               as={NextLink}
               href={baseRoute.home}
               isActive={router.asPath === baseRoute.home}
@@ -48,6 +50,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               {translate.formatMessage({ id: "about" })}
             </SidebarNavLink>
             <SidebarNavLink
+              leftIcon="user"
               as={NextLink}
               href={baseRoute.students}
               isActive={isActiveRoute(baseRoute.students)}
@@ -55,6 +58,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               {translate.formatMessage({ id: "students" })}
             </SidebarNavLink>
             <SidebarNavLink
+              leftIcon="instructor"
               as={NextLink}
               href={baseRoute.instructors}
               isActive={isActiveRoute(baseRoute.instructors)}
@@ -62,6 +66,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               {translate.formatMessage({ id: "instructors" })}
             </SidebarNavLink>
             <SidebarNavLink
+              leftIcon="video"
               as={NextLink}
               href={baseRoute.modules.home}
               isActive={isActiveRoute(baseRoute.modules.home)}
@@ -69,6 +74,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               {translate.formatMessage({ id: "modules" })}
             </SidebarNavLink>
             <SidebarNavLink
+              leftIcon="setting"
               as={NextLink}
               href={baseRoute.settings.home}
               isActive={isActiveRoute(baseRoute.settings.home)}

@@ -1,15 +1,20 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { useSidebarGroup } from "../../hooks";
 import { Button, ButtonProps } from "../button";
-import { Icon } from "../icon";
+import { Icon, IconName } from "../icon";
+import { Stack } from "../stack";
+import { Text } from "../text";
 
-export interface SidebarGroupButtonProps extends ButtonProps {}
+export interface SidebarGroupButtonProps extends Omit<ButtonProps, "leftIcon"> {
+  readonly leftIcon?: IconName;
+}
 
 export const SidebarGroupButton: React.FC<SidebarGroupButtonProps> = ({
+  leftIcon,
   children,
   ...props
 }) => {
-  const [activeStyle, setActiveStyle] = useState({});
+  const [activeStyle, setActiveStyle] = useState<any>({});
 
   const { isOpen, onToggle, isActive } = useSidebarGroup();
 
@@ -62,7 +67,10 @@ export const SidebarGroupButton: React.FC<SidebarGroupButtonProps> = ({
       onClick={onClick}
       rightIcon={<Icon fontSize="xs" name={isOpen ? "caretUp" : "caretDown"} />}
     >
-      {children}
+      {leftIcon && <Icon name={leftIcon} marginRight="4" />}
+      <Stack as="span" direction="row" spacing="5" justify="space-between">
+        <Text color={activeStyle?.color}>{children}</Text>
+      </Stack>
     </Button>
   );
 };

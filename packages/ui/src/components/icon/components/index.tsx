@@ -22,6 +22,7 @@ import {
   AiOutlinePhone,
   AiOutlineReload,
   AiOutlineSearch,
+  AiOutlineShoppingCart,
   AiOutlineSmile,
   AiOutlineUser,
 } from "react-icons/ai";
@@ -141,3 +142,4 @@ export const AdminIcon = FaUserShield;
 export const InstructorIcon = FaUserTie;
 export const DomainIcon = MdOutlineDomainVerification;
 export const StorageIcon = MdOutlineStorage;
+export const ProductIcon = AiOutlineShoppingCart;
