@@ -25,6 +25,7 @@ const CourseModulesPage: FC<CourseModulesPageProps> = () => {
   const [{ fetching: isLoading, data: dataModules }] =
     useGetCustomersCoursePageModulesQuery({
       pause: !course,
+      requestPolicy: "network-only",
       variables: {
         page: {
           limit: 10,

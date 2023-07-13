@@ -40,6 +40,7 @@ export const CustomersCourseProvider: FC<
     { data: dataGetCourse, fetching: isLoadingCourse, error: errorGetCourse },
   ] = useGetCustomerCoursePageCourseQuery({
     pause: !courseId,
+    requestPolicy: "network-only",
     variables: {
       courseId: courseId || "",
     },

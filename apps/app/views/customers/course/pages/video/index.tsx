@@ -47,6 +47,7 @@ const CourseVideoPage: FC<CourseVideoPageProps> = () => {
   const [{ fetching: isLoadingModules, data: dataModules }] =
     useGetCustomersCoursePageVideoModulesQuery({
       pause: !course,
+      requestPolicy: "network-only",
       variables: {
         page: {
           limit: 10,
