@@ -6,9 +6,23 @@ query CurrentGlobalApp {
     isIntegratedWithStripe
     stripeAccount
     status
-    defaultDomain {
+    stokeiDomain {
+      id
       name
+      url
       active
+      status
+      createdAt
+      activatedAt
+    }
+    defaultDomain {
+      id
+      name
+      url
+      active
+      status
+      createdAt
+      activatedAt
     }
     currency {
       id

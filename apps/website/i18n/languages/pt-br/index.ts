@@ -1,5 +1,10 @@
 export const ptBRMessages = {
   me: "Eu",
+  addDomain: "Adicionar domínio",
+  domain: "Domínio",
+  domains: "Domínios",
+  createdSuccessfully: "Criado com successo!",
+  removedSuccessfully: "Removido com successo!",
   unavailable: "Indisponível",
   commonQuestions: "Perguntas frequêntes",
   doINeedToHaveACreditCard: "Preciso ter cartão de crédito?",

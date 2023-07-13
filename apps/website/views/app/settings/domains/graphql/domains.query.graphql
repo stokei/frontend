@@ -1,0 +1,27 @@
+query GetAppDomains(
+  $where: WhereDataFindAllDomainsInput
+  $orderBy: OrderByDataFindAllDomainsInput
+  $page: PaginationInput
+) {
+  domains(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppDomain
+    }
+  }
+}
+
+fragment AppDomain on Domain {
+  id
+  name
+  url
+  active
+  status
+  createdAt
+  activatedAt
+}

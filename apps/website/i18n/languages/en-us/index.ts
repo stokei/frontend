@@ -2,6 +2,11 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  addDomain: "Add domain",
+  domain: "Domain",
+  domains: "Domains",
+  createdSuccessfully: "Created successfully!",
+  removedSuccessfully: "Removed successfully!",
   unavailable: "Unavailable",
   commonQuestions: "Common questions",
   doINeedToHaveACreditCard: "Do I need to have a credit card?",

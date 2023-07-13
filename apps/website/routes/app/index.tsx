@@ -61,6 +61,7 @@ export const routesApp = (data: { appId?: string }) => {
     settings: {
       home: baseURL + "/settings",
       website: baseURL + "/settings/website",
+      domains: baseURL + "/settings/domains",
     },
   };
 };

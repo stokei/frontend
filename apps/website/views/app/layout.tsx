@@ -118,6 +118,13 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                 </SidebarNavLink>
                 <SidebarNavLink
                   as={NextLink}
+                  href={baseRoutes.settings.website}
+                  isActive={router.asPath === baseRoutes.settings.website}
+                >
+                  {translate.formatMessage({ id: "website" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  as={NextLink}
                   href={baseRoutes.onboardings.home}
                   isActive={isActiveRoute(baseRoutes.onboardings.home)}
                 >
@@ -125,10 +132,10 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                 </SidebarNavLink>
                 <SidebarNavLink
                   as={NextLink}
-                  href={baseRoutes.settings.website}
-                  isActive={router.asPath === baseRoutes.settings.website}
+                  href={baseRoutes.settings.domains}
+                  isActive={router.asPath === baseRoutes.settings.domains}
                 >
-                  {translate.formatMessage({ id: "website" })}
+                  {translate.formatMessage({ id: "domains" })}
                 </SidebarNavLink>
               </SidebarGroupPanel>
             </SidebarGroup>
