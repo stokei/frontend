@@ -1,0 +1,5 @@
+mutation RemoveDomain($input: RemoveDomainInput!) {
+  removeDomain(input: $input) {
+    ...AppDomain
+  }
+}

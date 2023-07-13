@@ -695,6 +695,7 @@ export type Domain = {
   app?: Maybe<App>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
+  free: Scalars['Boolean'];
   id: Scalars['ID'];
   name: Scalars['String'];
   parent: Scalars['String'];

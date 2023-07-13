@@ -1,6 +1,17 @@
 export const ptBRMessages = {
   me: "Eu",
+  free: "Grátis",
+  howConfigureADomain: "Como configurar um domínio?",
+  toAddTheDomainToYourApplicationYouNeedToAddTheFollowingDataToTheDomainsDns:
+    "Para adicionar o domínio na sua aplicação, você precisa adicionar os seguintes dados no DNS do domínio:",
   addDomain: "Adicionar domínio",
+  dontKnowHowToDoThisContactSupportViaEmail:
+    "Não sabe fazer isso? Contate o suporte pelo email {email}.",
+  wouldYouReallyLikeToRemoveDomain:
+    "Você realmente gostaria de remover o domínio {domain}?",
+  removeDomain: "Remover domínio",
+  subdomain: "Subdomínio",
+  subdomains: "Subdomínios",
   domain: "Domínio",
   domains: "Domínios",
   createdSuccessfully: "Criado com successo!",

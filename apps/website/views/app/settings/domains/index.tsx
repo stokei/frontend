@@ -3,21 +3,19 @@ import { useCurrentApp } from "@/hooks/use-current-app";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import {
-  Badge,
   Box,
   Button,
-  Card,
-  CardBody,
   Container,
-  Link,
+  Pagination,
   Stack,
-  Text,
   useDisclosure,
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
 import { AddDomainDrawer } from "./components/add-domain-drawer";
+import { DomainItem } from "./components/domain-item";
+import { HowConfigureDomainModal } from "./components/how-configure-domain-modal";
 import { Navbar } from "./components/navbar";
 import {
   AppDomainFragment,
@@ -38,6 +36,11 @@ export const SettingsDomainsPage: FC<SettingsDomainsPageProps> = () => {
     isOpen: isOpenAddDomainDrawer,
     onClose: onCloseAddDomainDrawer,
     onOpen: onOpenAddDomainDrawer,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenHowConfigureDomainModal,
+    onClose: onCloseHowConfigureDomainModal,
+    onOpen: onOpenHowConfigureDomainModal,
   } = useDisclosure();
 
   const [{ data: dataGetDomains, fetching: isLoadingDomains }] =
@@ -76,6 +79,13 @@ export const SettingsDomainsPage: FC<SettingsDomainsPageProps> = () => {
     },
     [onCloseAddDomainDrawer]
   );
+  const onDomainRemoved = (domain: AppDomainFragment) => {
+    setDomains((currentDomains) =>
+      currentDomains?.filter(
+        (currentDomain) => currentDomain?.id !== domain?.id
+      )
+    );
+  };
 
   return (
     <AppLayout>
@@ -86,36 +96,37 @@ export const SettingsDomainsPage: FC<SettingsDomainsPageProps> = () => {
           onCloseDrawer={onCloseAddDomainDrawer}
           onSuccess={onDomainCreated}
         />
+        <HowConfigureDomainModal
+          isOpenModal={isOpenHowConfigureDomainModal}
+          onCloseModal={onCloseHowConfigureDomainModal}
+        />
         <Stack direction="column" spacing="5">
-          <Box width="full">
+          <Stack
+            direction={["column", "column", "row", "row"]}
+            spacing="5"
+            justify="space-between"
+            align={["flex-start", "flex-start", "center", "center"]}
+          >
             <Button onClick={onOpenAddDomainDrawer}>
               {translate.formatMessage({ id: "addDomain" })}
             </Button>
-          </Box>
+            <Button variant="link" onClick={onOpenHowConfigureDomainModal}>
+              {translate.formatMessage({ id: "howConfigureADomain" })}
+            </Button>
+          </Stack>
           {domains?.map((domain) => (
-            <Card background="background.50">
-              <CardBody>
-                <Stack
-                  direction={["column", "column", "row", "row"]}
-                  spacing="5"
-                  justify="space-between"
-                >
-                  <Link
-                    href={domain.url || ""}
-                    fontWeight="bold"
-                    target="_blank"
-                  >
-                    {domain.name}
-                  </Link>
-                  <Badge colorScheme={domain.active ? "success" : "gray"}>
-                    {translate.formatMessage({
-                      id: domain.active ? "active" : "inactive",
-                    })}
-                  </Badge>
-                </Stack>
-              </CardBody>
-            </Card>
+            <DomainItem domain={domain} onDomainRemoved={onDomainRemoved} />
           ))}
+          {dataGetDomains?.domains?.totalPages &&
+            dataGetDomains?.domains?.totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                onChangePage={onChangePage}
+                hasNextPage={!!dataGetDomains?.domains?.hasNextPage}
+                hasPreviousPage={!!dataGetDomains?.domains?.hasPreviousPage}
+                totalPages={dataGetDomains?.domains?.totalPages || 1}
+              />
+            )}
         </Stack>
       </Container>
     </AppLayout>

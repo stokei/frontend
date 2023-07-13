@@ -2,7 +2,18 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  free: "Free",
+  howConfigureADomain: "How configure a domain?",
+  toAddTheDomainToYourApplicationYouNeedToAddTheFollowingDataToTheDomainsDns:
+    "To add the domain to your application, you need to add the following data to the domain's DNS:",
   addDomain: "Add domain",
+  wouldYouReallyLikeToRemoveDomain:
+    "Would you really like to remove domain {domain}?",
+  dontKnowHowToDoThisContactSupportViaEmail:
+    "Don't know how to do this? Contact support via email {email}.",
+  removeDomain: "Remove domain",
+  subdomain: "Subdomain",
+  subdomains: "Subdomains",
   domain: "Domain",
   domains: "Domains",
   createdSuccessfully: "Created successfully!",

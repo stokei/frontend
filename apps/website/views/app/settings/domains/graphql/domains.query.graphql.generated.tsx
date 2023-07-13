@@ -10,15 +10,16 @@ export type GetAppDomainsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAppDomainsQuery = { __typename?: 'Query', domains: { __typename?: 'Domains', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Domain', id: string, name: string, url?: string | null, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null }> | null } };
+export type GetAppDomainsQuery = { __typename?: 'Query', domains: { __typename?: 'Domains', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null }> | null } };
 
-export type AppDomainFragment = { __typename?: 'Domain', id: string, name: string, url?: string | null, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null };
+export type AppDomainFragment = { __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null };
 
 export const AppDomainFragmentDoc = gql`
     fragment AppDomain on Domain {
   id
   name
   url
+  free
   active
   status
   createdAt

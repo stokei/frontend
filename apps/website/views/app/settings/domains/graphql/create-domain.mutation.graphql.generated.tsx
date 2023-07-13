@@ -9,7 +9,7 @@ export type CreateDomainMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateDomainMutation = { __typename?: 'Mutation', createDomain: { __typename?: 'Domain', id: string, name: string, url?: string | null, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } };
+export type CreateDomainMutation = { __typename?: 'Mutation', createDomain: { __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } };
 
 
 export const CreateDomainDocument = gql`

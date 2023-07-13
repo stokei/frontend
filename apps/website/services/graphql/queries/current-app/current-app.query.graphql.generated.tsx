@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CurrentGlobalAppQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type CurrentGlobalAppQuery = { __typename?: 'Query', currentApp: { __typename?: 'App', id: string, name: string, isStokei: boolean, isIntegratedWithStripe: boolean, stripeAccount?: string | null, status: Types.AppStatus, stokeiDomain?: { __typename?: 'Domain', id: string, name: string, url?: string | null, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } | null, defaultDomain?: { __typename?: 'Domain', id: string, name: string, url?: string | null, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, icon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } };
+export type CurrentGlobalAppQuery = { __typename?: 'Query', currentApp: { __typename?: 'App', id: string, name: string, isStokei: boolean, isIntegratedWithStripe: boolean, stripeAccount?: string | null, status: Types.AppStatus, stokeiDomain?: { __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } | null, defaultDomain?: { __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, icon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } };
 
 
 export const CurrentGlobalAppDocument = gql`
@@ -22,6 +22,7 @@ export const CurrentGlobalAppDocument = gql`
       id
       name
       url
+      free
       active
       status
       createdAt
@@ -31,6 +32,7 @@ export const CurrentGlobalAppDocument = gql`
       id
       name
       url
+      free
       active
       status
       createdAt

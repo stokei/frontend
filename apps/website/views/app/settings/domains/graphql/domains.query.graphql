@@ -20,6 +20,7 @@ fragment AppDomain on Domain {
   id
   name
   url
+  free
   active
   status
   createdAt
