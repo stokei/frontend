@@ -17,7 +17,7 @@ import {
   Text,
   useDebounce,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -84,6 +84,11 @@ export const SelectMembers: FC<SelectMembersProps> = ({
                 startsWith: searchMemberQueryText,
               },
             },
+            {
+              email: {
+                equals: searchMemberQueryText,
+              },
+            },
           ],
           ...(!hasCurrentAccount &&
             currentAccount?.id && {
@@ -112,6 +117,19 @@ export const SelectMembers: FC<SelectMembersProps> = ({
     ) as AppAccountFragment[];
   }, [currentAccount, dataGetMembers, hasCurrentAccount]);
 
+  const onChooseItem = useCallback(
+    (value?: AppAccountFragment) => {
+      onChooseCurrentMember?.(value);
+    },
+    [onChooseCurrentMember]
+  );
+  const onRemoveChooseItem = useCallback(
+    (value?: AppAccountFragment) => {
+      onRemoveChooseCurrentMember?.(value);
+    },
+    [onRemoveChooseCurrentMember]
+  );
+
   return (
     <FormControl flex="3">
       <Label htmlFor="member-invoice-filters-select-search-input">
@@ -120,8 +138,8 @@ export const SelectMembers: FC<SelectMembersProps> = ({
       <Select
         isLoading={isLoadingGetMembers}
         value={currentMembers}
-        onChooseItem={onChooseCurrentMember}
-        onRemoveChooseItem={onRemoveChooseCurrentMember}
+        onChooseItem={onChooseItem}
+        onRemoveChooseItem={onRemoveChooseItem}
         marginBottom="2"
       >
         <SelectSearchInput

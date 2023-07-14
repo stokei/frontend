@@ -5,6 +5,14 @@ import { Stack, StackProps } from "../stack";
 import { Icon } from "../icon";
 import { Box } from "../box";
 
+const isActiveGenericValue = (firstValue: any, secondValue: any) => {
+  return (
+    firstValue === secondValue ||
+    firstValue?.id === secondValue?.id ||
+    firstValue?.value === secondValue?.value
+  );
+};
+
 export interface SelectItemProps extends StackProps {
   readonly value: any;
 }
@@ -25,9 +33,11 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
 
     const isActive = useMemo(() => {
       if (Array.isArray(currentItem)) {
-        return !!currentItem.includes(value);
+        return !!currentItem.find((currentItemValue) =>
+          isActiveGenericValue(currentItemValue, value)
+        );
       }
-      return currentItem === value;
+      return isActiveGenericValue(currentItem, value);
     }, [value, currentItem]);
 
     const onChooseItemValue = useCallback(() => {
@@ -40,7 +50,14 @@ export const SelectItem: React.FC<SelectItemProps> = forwardRef(
       } else {
         onRemoveChooseItem?.(value);
       }
-    }, [value, isBlocked, isActive, onCloseList, onChooseItem, onRemoveChooseItem]);
+    }, [
+      value,
+      isBlocked,
+      isActive,
+      onCloseList,
+      onChooseItem,
+      onRemoveChooseItem,
+    ]);
 
     return (
       <Stack
