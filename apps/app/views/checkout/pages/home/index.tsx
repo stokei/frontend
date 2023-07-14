@@ -2,6 +2,8 @@ import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
+import { routes } from "@/routes";
 import {
   Box,
   Button,
@@ -31,6 +33,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
   >();
   const translate = useTranslations();
   const router = useRouter();
+  const { currentAccount } = useCurrentAccount();
   const { onShowAPIError } = useAPIErrors();
 
   const [{ fetching: isLoadingCheckout }, onExecuteCheckout] =
@@ -53,6 +56,13 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
 
   const onBuy = async () => {
     try {
+      if (!currentAccount) {
+        router.push({
+          pathname: routes.auth.login,
+          query: { redirectTo: router.asPath },
+        });
+        return;
+      }
       const response = await onExecuteCheckout({
         input: {
           price: currentPrice?.id || "",
