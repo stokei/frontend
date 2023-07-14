@@ -57,7 +57,7 @@ export const LoginPage: FC<LoginPageProps> = () => {
           status: "success",
         });
 
-        return router.push(
+        return window.location.assign(
           redirectToWhenLoginSuccessfully || routes.customers.home
         );
       }

@@ -58,7 +58,7 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
               <Button
                 width="full"
                 onClick={() =>
-                  router.push(
+                  window.location.assign(
                     routes.customers.course({ course: course?.id }).home
                   )
                 }

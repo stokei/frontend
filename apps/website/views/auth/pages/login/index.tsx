@@ -47,7 +47,9 @@ export const LoginPage: FC<LoginPageProps> = () => {
           title: translate.formatMessage({ id: "loginSuccessfully" }),
           status: "success",
         });
-        return router.push(redirectToWhenLoginSuccessfully || routes.apps.home);
+        return window.location.assign(
+          redirectToWhenLoginSuccessfully || routes.apps.home
+        );
       }
 
       if (!!response.error?.graphQLErrors?.length) {

@@ -129,7 +129,10 @@ export async function middleware(request: NextRequest) {
             (role) => role.name === RoleName.ADMIN
           );
           if (!isAppOwner && !isAppAdmin && isAdminDashboard) {
-            return NextResponse.redirect(customersDashboardURL);
+            const response = NextResponse.redirect(customersDashboardURL);
+            response.cookies.set(APP_ID_HEADER_NAME, appId);
+            response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
+            return response;
           }
         }
       }

@@ -95,6 +95,10 @@ export type ActivatePriceInput = {
   price: Scalars['String'];
 };
 
+export type ActivateSubscriptionContractInput = {
+  subscriptionContract: Scalars['String'];
+};
+
 export type Address = {
   __typename?: 'Address';
   app?: Maybe<App>;
@@ -151,6 +155,7 @@ export type App = {
   phones?: Maybe<Phones>;
   slug: Scalars['String'];
   status: AppStatus;
+  stokeiDomain?: Maybe<Domain>;
   stripeAccount?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
@@ -690,12 +695,14 @@ export type Domain = {
   app?: Maybe<App>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
+  free: Scalars['Boolean'];
   id: Scalars['ID'];
   name: Scalars['String'];
   parent: Scalars['String'];
   status: DomainStatus;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export enum DomainStatus {
@@ -1022,6 +1029,7 @@ export type Modules = {
 export type Mutation = {
   __typename?: 'Mutation';
   activatePrice: Price;
+  activateSubscriptionContract: SubscriptionContract;
   cancelSubscriptionContract: SubscriptionContract;
   changeFromSortedItemToSortedItem: ChangeFromSortedItemToSortedItemResponse;
   changePassword: Scalars['Boolean'];
@@ -1107,6 +1115,11 @@ export type Mutation = {
 
 export type MutationActivatePriceArgs = {
   input: ActivatePriceInput;
+};
+
+
+export type MutationActivateSubscriptionContractArgs = {
+  input: ActivateSubscriptionContractInput;
 };
 
 

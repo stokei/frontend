@@ -52,7 +52,7 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
           title: translate.formatMessage({ id: "signUpSuccessfully" }),
           status: "success",
         });
-        return router.push(
+        return window.location.assign(
           redirectToWhenSignUpSuccessfully || routes.customers.home
         );
       }

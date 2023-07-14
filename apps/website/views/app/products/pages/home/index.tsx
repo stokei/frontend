@@ -1,3 +1,4 @@
+import { OnboardingAlerts } from "@/components/onboarding-alerts";
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { OrderBy } from "@/services/graphql/stokei";
@@ -13,7 +14,7 @@ import {
   Stack,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Navbar } from "./components/navbar";
 import { ProductsList } from "./components/products-list";
 import {
@@ -32,6 +33,10 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
   );
   const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();
+  const isCompleteIntegrations = useMemo(
+    () => !!currentApp?.isIntegratedWithStripe || !!currentApp?.isStokei,
+    [currentApp]
+  );
 
   const [{ fetching: isLoading, data: dataProducts }] =
     useGetAdminProductPageProductsQuery({
@@ -68,9 +73,14 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
       <Navbar />
       <Container paddingY="5">
         <Stack direction="column" spacing="5">
+          <OnboardingAlerts />
+
           {products?.length >= 1 && (
             <Box width="full">
-              <Button onClick={goToAddProduct}>
+              <Button
+                onClick={goToAddProduct}
+                isDisabled={!isCompleteIntegrations}
+              >
                 {translate.formatMessage({ id: "addProduct" })}
               </Button>
             </Box>
@@ -86,7 +96,10 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
                   <NotFoundSubtitle>
                     {translate.formatMessage({ id: "productsNotFound" })}
                   </NotFoundSubtitle>
-                  <Button onClick={goToAddProduct}>
+                  <Button
+                    onClick={goToAddProduct}
+                    isDisabled={!isCompleteIntegrations}
+                  >
                     {translate.formatMessage({ id: "addProduct" })}
                   </Button>
                 </NotFound>
