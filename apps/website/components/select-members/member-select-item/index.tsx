@@ -1,4 +1,4 @@
-import { Avatar, SelectItem, Stack, Text } from "@stokei/ui";
+import { Avatar, Box, SelectItem, Stack, Text } from "@stokei/ui";
 import { FC, memo } from "react";
 import { AppAccountFragment } from "../graphql/accounts.query.graphql.generated";
 
@@ -16,7 +16,10 @@ export const MemberSelectItem: FC<MemberSelectItemProps> = memo(
             src={member?.avatar?.file?.url || ""}
             name={member?.fullname}
           />
-          <Text fontWeight="bold">{member?.fullname}</Text>
+          <Box flexDirection="column">
+            <Text fontWeight="bold">{member?.fullname}</Text>
+            <Text fontSize="xs">{member?.email}</Text>
+          </Box>
         </Stack>
       </SelectItem>
     );
