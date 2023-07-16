@@ -4,6 +4,8 @@ export const enUSMessages: Record<I18nKey, string> = {
   byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies:
     "By clicking register you accept our terms of use and privacy policies.",
   title: "Title",
+  text: "Text",
+  paragraph: "Paragraph",
   optional: "Optional",
   firstname: "Firstname",
   lastname: "Lastname",

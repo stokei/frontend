@@ -5,6 +5,7 @@ import {
   AiOutlineArrowRight,
   AiOutlineArrowUp,
   AiOutlineBank,
+  AiOutlineBold,
   AiOutlineDollar,
   AiOutlineEdit,
   AiOutlineEllipsis,
@@ -14,6 +15,7 @@ import {
   AiOutlineHome,
   AiOutlineInfo,
   AiOutlineInfoCircle,
+  AiOutlineItalic,
   AiOutlineLoading,
   AiOutlineLogout,
   AiOutlineMail,
@@ -26,7 +28,7 @@ import {
   AiOutlineSmile,
   AiOutlineUser,
 } from "react-icons/ai";
-import { BiLineChart } from "react-icons/bi";
+import { BiLineChart, BiRedo, BiUndo } from "react-icons/bi";
 import {
   BsBell,
   BsCart,
@@ -65,6 +67,14 @@ import {
   RxCaretUp,
 } from "react-icons/rx";
 import { TbApps } from "react-icons/tb";
+import {
+  LuHeading1,
+  LuHeading2,
+  LuHeading3,
+  LuHeading4,
+  LuHeading5,
+  LuHeading6,
+} from "react-icons/lu";
 import { MdOutlineDomainVerification, MdOutlineStorage } from "react-icons/md";
 
 import {
@@ -143,3 +153,13 @@ export const InstructorIcon = FaUserTie;
 export const DomainIcon = MdOutlineDomainVerification;
 export const StorageIcon = MdOutlineStorage;
 export const ProductIcon = AiOutlineShoppingCart;
+export const BoldIcon = AiOutlineBold;
+export const ItalicIcon = AiOutlineItalic;
+export const UndoIcon = BiUndo;
+export const RedoIcon = BiRedo;
+export const Heading1Icon = LuHeading1;
+export const Heading2Icon = LuHeading2;
+export const Heading3Icon = LuHeading3;
+export const Heading4Icon = LuHeading4;
+export const Heading5Icon = LuHeading5;
+export const Heading6Icon = LuHeading6;

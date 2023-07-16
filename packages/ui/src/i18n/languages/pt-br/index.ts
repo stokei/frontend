@@ -2,6 +2,8 @@ export const ptBRMessages = {
   byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies:
     "Ao clicar em cadastre-se você aceita nossos termos de uso e políticas de privacidade.",
   title: "Título",
+  text: "Texto",
+  paragraph: "Parágrafo",
   optional: "Opcional",
   firstname: "Nome",
   lastname: "Sobrenome",

@@ -1,4 +1,6 @@
-import { useAPIErrors, usePagination, useTranslations } from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
+import { useUploadImage } from "@/hooks/use-upload-image";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
   ButtonGroup,
@@ -8,29 +10,24 @@ import {
   Form,
   FormControl,
   FormErrorMessage,
-  Highlight,
   ImageUploader,
   Input,
   InputGroup,
   Label,
-  Pagination,
+  RichTextEditor,
   Stack,
-  Textarea,
   Title,
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useEffect, useMemo } from "react";
-import { Navbar } from "./components/navbar";
-import { CourseLayout } from "../../layout";
-import { Loading } from "../../loading";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useUploadImage } from "@/hooks/use-upload-image";
+import { CourseLayout } from "../../layout";
+import { Navbar } from "./components/navbar";
 import { useGetAdminSettingsCoursePageCourseQuery } from "./graphql/course.query.graphql.generated";
-import { title } from "process";
 import { useAdminSettingsCoursePageUpdateCourseMutation } from "./graphql/update-course.mutation.graphql.generated";
+import { Loading } from "./loading";
 
 interface CourseSettingsPageProps {}
 
@@ -81,6 +78,7 @@ export const CourseSettingsPage: FC<CourseSettingsPageProps> = () => {
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
@@ -89,10 +87,13 @@ export const CourseSettingsPage: FC<CourseSettingsPageProps> = () => {
   const currentCourseName = watch("name");
 
   useEffect(() => {
+    register("description", { value: "" });
+  }, [register]);
+
+  useEffect(() => {
     if (currentCourse) {
       reset({
         name: currentCourse?.name,
-        description: currentCourse?.description || "",
       });
     }
   }, [currentCourse, reset]);
@@ -134,78 +135,80 @@ export const CourseSettingsPage: FC<CourseSettingsPageProps> = () => {
     <CourseLayout>
       <Navbar />
       <Container paddingY="5">
-        <Card background="background.50">
-          <CardBody>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Stack direction="column" spacing="5">
-                <Title fontSize="xl">{currentCourseName}</Title>
-                <FormControl>
-                  <Label htmlFor="course-avatar">
-                    {translate.formatMessage({ id: "image" })}
-                  </Label>
-                  {!avatarUploadURL && (
-                    <Button
-                      variant="outline"
-                      onClick={onStartPosterUpload}
-                      isLoading={isLoadingStartPosterUpload}
-                      marginBottom="5"
-                    >
-                      {translate.formatMessage({
-                        id: currentCourse?.avatar?.file?.url
-                          ? "changeImage"
-                          : "addImage",
-                      })}
+        {isLoadingCurrentCourse ? (
+          <Loading />
+        ) : (
+          <Card background="background.50">
+            <CardBody>
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <Stack direction="column" spacing="5">
+                  <Title fontSize="xl">{currentCourseName}</Title>
+                  <FormControl>
+                    <Label htmlFor="course-avatar">
+                      {translate.formatMessage({ id: "image" })}
+                    </Label>
+                    {!avatarUploadURL && (
+                      <Button
+                        variant="outline"
+                        onClick={onStartPosterUpload}
+                        isLoading={isLoadingStartPosterUpload}
+                        marginBottom="5"
+                      >
+                        {translate.formatMessage({
+                          id: currentCourse?.avatar?.file?.url
+                            ? "changeImage"
+                            : "addImage",
+                        })}
+                      </Button>
+                    )}
+                    <ImageUploader
+                      id="course-avatar"
+                      uploadURL={avatarUploadURL}
+                      previewURL={currentCourse?.avatar?.file?.url || ""}
+                      onSuccess={onCompletePosterUpload}
+                      onError={() => {}}
+                    />
+                  </FormControl>
+                  <FormControl isInvalid={!!errors?.name}>
+                    <Label htmlFor="name">
+                      {translate.formatMessage({ id: "name" })}
+                    </Label>
+                    <InputGroup>
+                      <Input
+                        id="name"
+                        placeholder={translate.formatMessage({
+                          id: "namePlaceholder",
+                        })}
+                        {...register("name")}
+                      />
+                    </InputGroup>
+                    <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+                  </FormControl>
+                  <FormControl isInvalid={!!errors?.description}>
+                    <Label htmlFor="description">
+                      {translate.formatMessage({ id: "description" })}
+                    </Label>
+                    <InputGroup>
+                      <RichTextEditor
+                        id="description"
+                        defaultValue={currentCourse?.description || ""}
+                        onChange={(value) => setValue("description", value)}
+                      />
+                    </InputGroup>
+                    <FormErrorMessage>
+                      {errors?.description?.message}
+                    </FormErrorMessage>
+                  </FormControl>
+                  <ButtonGroup>
+                    <Button type="submit" isLoading={isLoadingUpdateCourse}>
+                      {translate.formatMessage({ id: "save" })}
                     </Button>
-                  )}
-                  <ImageUploader
-                    id="course-avatar"
-                    uploadURL={avatarUploadURL}
-                    previewURL={currentCourse?.avatar?.file?.url || ""}
-                    onSuccess={onCompletePosterUpload}
-                    onError={() => {}}
-                  />
-                </FormControl>
-                <FormControl isInvalid={!!errors?.name}>
-                  <Label htmlFor="name">
-                    {translate.formatMessage({ id: "name" })}
-                  </Label>
-                  <InputGroup>
-                    <Input
-                      id="name"
-                      placeholder={translate.formatMessage({
-                        id: "namePlaceholder",
-                      })}
-                      {...register("name")}
-                    />
-                  </InputGroup>
-                  <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors?.description}>
-                  <Label htmlFor="description">
-                    {translate.formatMessage({ id: "description" })}
-                  </Label>
-                  <InputGroup>
-                    <Textarea
-                      id="description"
-                      placeholder={translate.formatMessage({
-                        id: "descriptionPlaceholder",
-                      })}
-                      {...register("description")}
-                    />
-                  </InputGroup>
-                  <FormErrorMessage>
-                    {errors?.description?.message}
-                  </FormErrorMessage>
-                </FormControl>
-                <ButtonGroup>
-                  <Button type="submit" isLoading={isLoadingUpdateCourse}>
-                    {translate.formatMessage({ id: "save" })}
-                  </Button>
-                </ButtonGroup>
-              </Stack>
-            </Form>
-          </CardBody>
-        </Card>
+                  </ButtonGroup>
+                </Stack>
+              </Form>
+            </CardBody>
+          </Card>
+        )}
       </Container>
     </CourseLayout>
   );

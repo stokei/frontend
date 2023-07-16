@@ -5,12 +5,14 @@ import { Stack, StackProps } from "../stack";
 import { Icon } from "../icon";
 import { Box } from "../box";
 
+const getValue = (value: any) => value || value?.id || value?.value;
 const isActiveGenericValue = (firstValue: any, secondValue: any) => {
-  return (
-    firstValue === secondValue ||
-    firstValue?.id === secondValue?.id ||
-    firstValue?.value === secondValue?.value
-  );
+  const first = getValue(firstValue);
+  const second = getValue(secondValue);
+  if (!first || !second) {
+    return false;
+  }
+  return first === second;
 };
 
 export interface SelectItemProps extends StackProps {

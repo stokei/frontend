@@ -1,8 +1,7 @@
-import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
 import { useUploadVideo } from "@/hooks/use-upload-video";
 import { routes } from "@/routes";
-import { useCreateVideoMutation } from "@/services/graphql/mutations/create-video/create-video.mutation.graphql.generated";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -20,15 +19,14 @@ import {
   Input,
   InputGroup,
   Label,
+  RichTextEditor,
   Stack,
-  Textarea,
   Title,
   VideoUploader,
   VideoUploaderOnSuccessData,
-  useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";
@@ -58,7 +56,8 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    setValue,
+    formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
@@ -95,6 +94,10 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
         courseModule?.name || "",
     [courseModule?.name, translate]
   );
+
+  useEffect(() => {
+    register("description", { value: "" });
+  }, [register]);
 
   const goToModulesPage = () => {
     router.push(
@@ -215,12 +218,9 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
                         {translate.formatMessage({ id: "description" })}
                       </Label>
                       <InputGroup>
-                        <Textarea
+                        <RichTextEditor
                           id="description"
-                          placeholder={translate.formatMessage({
-                            id: "descriptionPlaceholder",
-                          })}
-                          {...register("description")}
+                          onChange={(value) => setValue("description", value)}
                         />
                       </InputGroup>
                       <FormErrorMessage>
@@ -228,7 +228,11 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
                       </FormErrorMessage>
                     </FormControl>
                     <ButtonGroup>
-                      <Button type="submit" isLoading={isLoadingCreateVideo}>
+                      <Button
+                        type="submit"
+                        isLoading={isLoadingCreateVideo}
+                        isDisabled={!isValid}
+                      >
                         {translate.formatMessage({ id: "add" })}
                       </Button>
                     </ButtonGroup>

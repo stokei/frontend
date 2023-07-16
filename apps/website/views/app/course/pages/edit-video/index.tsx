@@ -18,13 +18,13 @@ import {
   Input,
   InputGroup,
   Label,
+  RichTextEditor,
   Stack,
-  Textarea,
   Title,
-  VideoUploader,
-  VideoUploaderOnSuccessData,
   useDisclosure,
   useToast,
+  VideoUploader,
+  VideoUploaderOnSuccessData,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -120,10 +120,15 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
+
+  useEffect(() => {
+    register("description", { value: "" });
+  }, [register]);
 
   useEffect(() => {
     if (currentVideo) {
@@ -306,12 +311,10 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
                         {translate.formatMessage({ id: "description" })}
                       </Label>
                       <InputGroup>
-                        <Textarea
+                        <RichTextEditor
                           id="description"
-                          placeholder={translate.formatMessage({
-                            id: "descriptionPlaceholder",
-                          })}
-                          {...register("description")}
+                          defaultValue={currentVideo?.description || ""}
+                          onChange={(value) => setValue("description", value)}
                         />
                       </InputGroup>
                       <FormErrorMessage>
