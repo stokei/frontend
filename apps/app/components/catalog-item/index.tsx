@@ -43,7 +43,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
     );
 
     const goToCheckout = useCallback(() => {
-      router.push(routes.course.home({ product: productId || "" }));
+      router.push(routes.product.home({ product: productId || "" }));
     }, [productId, router]);
 
     return (
@@ -53,7 +53,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
             width="full"
             src={avatar}
             fallbackSrc={defaultNoImage.src}
-            alt={translate.formatMessage({ id: "course" })}
+            alt={translate.formatMessage({ id: "product" })}
           />
           {defaultPrice?.discountPercent && (
             <Box

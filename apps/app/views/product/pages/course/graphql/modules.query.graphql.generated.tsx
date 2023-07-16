@@ -1,4 +1,4 @@
-import * as Types from '../../../services/graphql/stokei/index';
+import * as Types from '../../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
 import { CoursePageModuleFragmentDoc } from './module.fragment.graphql.generated';

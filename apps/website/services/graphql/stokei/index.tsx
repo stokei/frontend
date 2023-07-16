@@ -2016,6 +2016,7 @@ export type Product = {
   id: Scalars['ID'];
   name: Scalars['String'];
   parent?: Maybe<ProductParentUnion>;
+  parentId?: Maybe<Scalars['String']>;
   prices?: Maybe<Prices>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;

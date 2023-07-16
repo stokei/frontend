@@ -12,9 +12,9 @@ import {
   Input,
   InputGroup,
   Label,
+  RichTextEditor,
   Stack,
   Text,
-  Textarea,
   Title,
   useClipboard,
   useToast,
@@ -57,10 +57,15 @@ export const ProductInformation: FC<ProductInformationProps> = ({
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
+
+  useEffect(() => {
+    register("description", { value: "" });
+  }, [register]);
 
   const {
     imageId,
@@ -145,38 +150,6 @@ export const ProductInformation: FC<ProductInformationProps> = ({
       <SectionContent>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing="5">
-            <FormControl isInvalid={!!errors?.name}>
-              <Label htmlFor="name">
-                {translate.formatMessage({ id: "name" })}
-              </Label>
-              <InputGroup>
-                <Input
-                  id="name"
-                  placeholder={translate.formatMessage({
-                    id: "namePlaceholder",
-                  })}
-                  {...register("name")}
-                />
-              </InputGroup>
-              <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={!!errors?.description}>
-              <Label htmlFor="description">
-                {translate.formatMessage({ id: "description" })}
-              </Label>
-              <InputGroup>
-                <Textarea
-                  id="description"
-                  placeholder={translate.formatMessage({
-                    id: "descriptionPlaceholder",
-                  })}
-                  {...register("description")}
-                />
-              </InputGroup>
-              <FormErrorMessage>
-                {errors?.description?.message}
-              </FormErrorMessage>
-            </FormControl>
             <FormControl>
               <Label htmlFor="product-image">
                 {translate.formatMessage({ id: "image" })}
@@ -198,6 +171,36 @@ export const ProductInformation: FC<ProductInformationProps> = ({
                 onSuccess={onCompleteImageUpload}
                 onError={() => {}}
               />
+            </FormControl>
+            <FormControl isInvalid={!!errors?.name}>
+              <Label htmlFor="name">
+                {translate.formatMessage({ id: "name" })}
+              </Label>
+              <InputGroup>
+                <Input
+                  id="name"
+                  placeholder={translate.formatMessage({
+                    id: "namePlaceholder",
+                  })}
+                  {...register("name")}
+                />
+              </InputGroup>
+              <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={!!errors?.description}>
+              <Label htmlFor="description">
+                {translate.formatMessage({ id: "description" })}
+              </Label>
+              <InputGroup>
+                <RichTextEditor
+                  id="description"
+                  defaultValue={currentProduct?.description || ""}
+                  onChange={(value) => setValue("description", value)}
+                />
+              </InputGroup>
+              <FormErrorMessage>
+                {errors?.description?.message}
+              </FormErrorMessage>
             </FormControl>
             <ButtonGroup width="full" justifyContent="flex-end">
               <Button

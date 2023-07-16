@@ -1,33 +1,34 @@
 import { Container, Stack } from "@stokei/ui";
 import { FC, useMemo } from "react";
+import {
+  GetProductPageProductQuery,
+  ProductPageProductFragment,
+} from "../graphql/product.query.graphql.generated";
 import { CheckoutInfo } from "./components/checkout-info";
 import { CourseDescription } from "./components/course-description";
 import { Features } from "./components/features";
 import { Header } from "./components/header";
 import { ModulesList } from "./components/modules-list";
-import { useGetProductCourseQuery } from "./graphql/course.query.graphql.generated";
+import { useGetProductPageCourseQuery } from "./graphql/course.query.graphql.generated";
 import { CourseLayout } from "./layout";
 
 interface CoursePageProps {
-  readonly productId: string;
+  readonly product: ProductPageProductFragment;
 }
 
-export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
-  const [{ data: dataGetProduct, fetching: isLoadingGetProduct }] =
-    useGetProductCourseQuery({
+export const CoursePage: FC<CoursePageProps> = ({ product }) => {
+  const [{ data: dataGetCourse, fetching: isLoadingGetCourse }] =
+    useGetProductPageCourseQuery({
+      pause: !product?.parentId,
       variables: {
-        product: productId,
+        course: product?.parentId || "",
       },
     });
 
-  const product = useMemo(() => dataGetProduct?.product, [dataGetProduct]);
-  const course = useMemo(
-    () => (product?.parent?.__typename === "Course" ? product?.parent : null),
-    [product]
-  );
+  const course = useMemo(() => dataGetCourse?.course, [dataGetCourse]);
 
   return (
-    <CourseLayout isLoading={isLoadingGetProduct}>
+    <CourseLayout isLoading={isLoadingGetCourse}>
       <Container paddingY="10" background="black.500">
         <Header
           instructors={course?.instructors?.items || []}
@@ -40,7 +41,7 @@ export const CoursePage: FC<CoursePageProps> = ({ productId }) => {
           direction={["column-reverse", "column-reverse", "row", "row"]}
         >
           <Stack spacing="10" direction="column" width="auto" flex="1">
-            <ModulesList courseId={course?.courseId} />
+            <ModulesList courseId={course?.id} />
 
             {!!product?.features?.totalCount && (
               <Features features={product?.features} />

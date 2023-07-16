@@ -64,7 +64,8 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
           number: currentPage,
         },
         orderBy: {
-          createdAt: OrderBy.Desc,
+          active: OrderBy.Asc,
+          createdBy: OrderBy.Desc,
         },
       },
     });
@@ -121,6 +122,14 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
     },
     []
   );
+
+  const pricesSorted = useMemo(() => {
+    const defaultPrice = prices?.find((price) => !!price?.isDefault);
+    const pricesWithoutDefaultPrice = prices?.filter(
+      (price) => !price?.isDefault
+    );
+    return [defaultPrice, ...pricesWithoutDefaultPrice];
+  }, [prices]);
 
   return (
     <Section>
@@ -184,7 +193,7 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {prices?.map((price) => (
+                        {pricesSorted?.map((price) => (
                           <PriceItem
                             key={price?.id}
                             isFirstPrice={isFirstPrice}

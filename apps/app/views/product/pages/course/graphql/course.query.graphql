@@ -1,0 +1,19 @@
+query GetProductPageCourse($course: String!) {
+  course(id: $course) {
+    id
+    description
+    instructors {
+      totalCount
+      items {
+        ...ProductPageCourseInstructor
+      }
+    }
+  }
+}
+
+fragment ProductPageCourseInstructor on CourseInstructor {
+  id
+  instructor {
+    fullname
+  }
+}

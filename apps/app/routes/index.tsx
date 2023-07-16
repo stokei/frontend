@@ -1,7 +1,7 @@
 import { routesAdmins } from "./admins";
 import { routesAuth } from "./auth";
 import { routesCheckout } from "./checkout";
-import { routesCourse } from "./course";
+import { routesProduct } from "./product";
 import { routesCustomers } from "./customers";
 import { routesMe } from "./me";
 
@@ -9,7 +9,7 @@ export const routes = {
   home: "/",
   notFound: "/404",
   checkout: routesCheckout,
-  course: routesCourse,
+  product: routesProduct,
   admins: routesAdmins,
   customers: routesCustomers,
   auth: routesAuth,

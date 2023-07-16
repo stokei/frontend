@@ -1,10 +1,10 @@
 import { Stack, Text, Title } from "@stokei/ui";
 import { FC } from "react";
-import { CoursePageParentCourseInstructorFragment } from "../../graphql/course.query.graphql.generated";
+import { ProductPageCourseInstructorFragment } from "../../graphql/course.query.graphql.generated";
 
 export interface HeaderProps {
   readonly productName?: string;
-  readonly instructors?: CoursePageParentCourseInstructorFragment[];
+  readonly instructors?: ProductPageCourseInstructorFragment[];
 }
 
 export const Header: FC<HeaderProps> = ({ instructors, productName }) => {

@@ -1,13 +1,12 @@
 import { useTranslations } from "@/hooks";
 import { Markdown, Stack, Title } from "@stokei/ui";
 import { FC } from "react";
-import { GetProductCourseQuery } from "../../graphql/course.query.graphql.generated";
 
-export interface CourseDescriptionProps {
-  readonly description?: GetProductCourseQuery["product"]["description"] | null;
+export interface GenericProductDescriptionProps {
+  readonly description?: string;
 }
 
-export const CourseDescription: FC<CourseDescriptionProps> = ({
+export const GenericProductDescription: FC<GenericProductDescriptionProps> = ({
   description,
 }) => {
   const translate = useTranslations();

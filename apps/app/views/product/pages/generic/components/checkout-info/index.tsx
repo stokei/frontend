@@ -7,14 +7,14 @@ import { routes } from "@/routes";
 import { Box, Button, Card, CardBody, Image, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { GetProductCourseQuery } from "../../graphql/course.query.graphql.generated";
+import { ProductPageProductFragment } from "../../../graphql/product.query.graphql.generated";
 import { Features } from "../features";
 
 export interface CheckoutInfoProps {
   readonly productId?: string;
   readonly avatarURL?: string;
   readonly defaultPrice?: PriceComponentFragment | null;
-  readonly features?: GetProductCourseQuery["product"]["features"] | null;
+  readonly features?: ProductPageProductFragment["features"];
 }
 
 export const CheckoutInfo: FC<CheckoutInfoProps> = ({

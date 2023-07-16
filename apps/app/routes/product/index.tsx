@@ -1,5 +1,5 @@
-const baseURL = "/courses";
+const baseURL = "/products";
 
-export const routesCourse = {
+export const routesProduct = {
   home: ({ product }: { product: string }) => baseURL + "/" + (product || ""),
 };

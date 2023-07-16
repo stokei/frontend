@@ -10,8 +10,8 @@ import {
   Input,
   InputGroup,
   Label,
+  RichTextEditor,
   Stack,
-  Textarea,
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
@@ -47,6 +47,7 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
@@ -54,6 +55,10 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
 
   const [{ fetching: isLoadingCreateProduct }, onCreateProduct] =
     useCreateProductMutation();
+
+  useEffect(() => {
+    register("description", { value: "" });
+  }, [register]);
 
   useEffect(() => {
     if (productParent) {
@@ -120,12 +125,9 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
             {translate.formatMessage({ id: "description" })}
           </Label>
           <InputGroup>
-            <Textarea
+            <RichTextEditor
               id="description"
-              placeholder={translate.formatMessage({
-                id: "descriptionPlaceholder",
-              })}
-              {...register("description")}
+              onChange={(value) => setValue("description", value)}
             />
           </InputGroup>
           <FormErrorMessage>{errors?.description?.message}</FormErrorMessage>

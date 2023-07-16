@@ -1,6 +1,6 @@
 import { AddProductStep } from "@/constants/add-product-steps";
 import { ProductType } from "@/constants/product-type";
-import { useCurrentApp, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import { AppLayout } from "@/views/app/layout";
 import {
   Card,
@@ -13,13 +13,12 @@ import {
   StepPanels,
   Steps,
 } from "@stokei/ui";
-import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
+import { ProductParent } from "./@types/product-parent";
 import { Navbar } from "./components/navbar";
 import { ProductChooseTypeStep } from "./components/product-choose-type-step";
 import { ProductInformationStep } from "./components/product-information-step";
 import { ProductTypeStep } from "./components/product-type-step";
-import { ProductParent } from "./@types/product-parent";
 
 interface AddProductPageProps {}
 

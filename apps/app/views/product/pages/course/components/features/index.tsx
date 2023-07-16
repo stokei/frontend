@@ -1,10 +1,10 @@
 import { useTranslations } from "@/hooks";
 import { List, ListIcon, ListItem, Stack, Text } from "@stokei/ui";
 import { FC } from "react";
-import { GetProductCourseQuery } from "../../graphql/course.query.graphql.generated";
+import { ProductPageProductFragment } from "../../../graphql/product.query.graphql.generated";
 
 export interface FeaturesProps {
-  readonly features?: GetProductCourseQuery["product"]["features"] | null;
+  readonly features?: ProductPageProductFragment["features"];
 }
 
 export const Features: FC<FeaturesProps> = ({ features }) => {
