@@ -176,7 +176,7 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
                 </FormControl>
                 <ButtonGroup>
                   <Button
-                    width="full"
+                    width={["full", "full", "fit-content", "fit-content"]}
                     type="submit"
                     isLoading={isLoadingUpdateAccount}
                   >

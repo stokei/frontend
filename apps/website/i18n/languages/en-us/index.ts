@@ -2,6 +2,8 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  account: "Account",
+  new: "New",
   free: "Free",
   howConfigureADomain: "How configure a domain?",
   toAddTheDomainToYourApplicationYouNeedToAddTheFollowingDataToTheDomainsDns:

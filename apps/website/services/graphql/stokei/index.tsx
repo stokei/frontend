@@ -1107,6 +1107,7 @@ export type Mutation = {
   updateHero: Hero;
   updateLanguage: Language;
   updateModule: Module;
+  updateOwnPassword: Scalars['Boolean'];
   updatePrice: Price;
   updateProduct: Product;
   updateSubscriptionContract: SubscriptionContract;

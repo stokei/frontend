@@ -1,5 +1,7 @@
 export const ptBRMessages = {
   me: "Eu",
+  account: "Conta",
+  new: "Novo",
   free: "Grátis",
   howConfigureADomain: "Como configurar um domínio?",
   toAddTheDomainToYourApplicationYouNeedToAddTheFollowingDataToTheDomainsDns:

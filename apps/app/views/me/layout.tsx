@@ -1,5 +1,4 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
-import { BadgeNew } from "@/components/badge-new";
 import { MeLayoutContent } from "@/components/me-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
@@ -47,7 +46,7 @@ export const MeLayout: FC<PropsWithChildren<MeLayoutProps>> = ({
               leftIcon="password"
               as={NextLink}
               href={routes.me.password}
-              isActive={isActiveHome(routes.me.password)}
+              isActive={isActiveRoute(routes.me.password)}
             >
               {translate.formatMessage({ id: "password" })}
             </SidebarNavLink>
