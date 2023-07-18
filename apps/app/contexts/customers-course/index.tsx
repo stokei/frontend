@@ -19,7 +19,7 @@ export interface CustomersCourseProviderProps {
 
 export interface CustomersCourseProviderValues {
   readonly course?: CustomerCoursePageCourseFragment;
-  readonly isLoading?: boolean;
+  readonly isLoadingCourse?: boolean;
 }
 
 export const CustomersCourseContext = createContext(
@@ -29,10 +29,6 @@ export const CustomersCourseContext = createContext(
 export const CustomersCourseProvider: FC<
   PropsWithChildren<CustomersCourseProviderProps>
 > = ({ children }) => {
-  const [course, setCourse] = useState<
-    CustomerCoursePageCourseFragment | undefined
-  >();
-
   const router = useRouter();
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
 
@@ -47,24 +43,20 @@ export const CustomersCourseProvider: FC<
   });
 
   useEffect(() => {
-    const studentisUnauthorized = errorGetCourse?.graphQLErrors?.some(
+    const studentIsUnauthorized = errorGetCourse?.graphQLErrors?.some(
       (e) => (e.extensions?.response as any)?.statusCode === 403
     );
-    if (!!studentisUnauthorized) {
+    if (!!studentIsUnauthorized) {
       router.push(routes.notFound);
     }
   }, [errorGetCourse, router]);
 
-  useEffect(() => {
-    setCourse(dataGetCourse?.course);
-  }, [dataGetCourse]);
-
   const values: CustomersCourseProviderValues = useMemo(
     () => ({
-      course,
+      course: dataGetCourse?.course,
       isLoadingCourse,
     }),
-    [course, isLoadingCourse]
+    [dataGetCourse?.course, isLoadingCourse]
   );
 
   return (

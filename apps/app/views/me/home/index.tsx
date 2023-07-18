@@ -109,10 +109,7 @@ export const MeHomePage: FC<MeHomePageProps> = () => {
     <MeLayout>
       <Navbar />
       <Container display="flex" padding="5" align="center" justify="center">
-        <Card
-          width={["full", "full", "500px", "500px"]}
-          background="background.50"
-        >
+        <Card background="background.50">
           <CardBody>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Stack direction="column" spacing="5">

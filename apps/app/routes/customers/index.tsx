@@ -1,7 +1,8 @@
 const baseURL = "/customers";
 
 export const routesCustomers = {
-  home: baseURL,
+  home: baseURL + "/courses",
+  products: baseURL + "/products",
   courses: baseURL + "/courses",
   course: ({ course }: { course?: string }) => {
     const baseCourseURL = baseURL + "/courses/" + course;

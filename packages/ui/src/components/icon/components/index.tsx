@@ -16,6 +16,7 @@ import {
   AiOutlineInfo,
   AiOutlineInfoCircle,
   AiOutlineItalic,
+  AiOutlineLock,
   AiOutlineLoading,
   AiOutlineLogout,
   AiOutlineMail,
@@ -163,3 +164,4 @@ export const Heading3Icon = LuHeading3;
 export const Heading4Icon = LuHeading4;
 export const Heading5Icon = LuHeading5;
 export const Heading6Icon = LuHeading6;
+export const PasswordIcon = AiOutlineLock;

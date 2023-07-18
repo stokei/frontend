@@ -84,6 +84,7 @@ export const icons = {
   heading4: IconComponent.Heading4Icon,
   heading5: IconComponent.Heading5Icon,
   heading6: IconComponent.Heading6Icon,
+  password: IconComponent.PasswordIcon,
 };
 
 export type IconName = keyof typeof icons;

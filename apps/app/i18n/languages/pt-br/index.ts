@@ -1,5 +1,7 @@
 export const ptBRMessages = {
   me: "Eu",
+  account: "Conta",
+  new: "Novo",
   unavailable: "Indisponível",
   informations: "Informações",
   successfullyIntegrated: "Integrado com successo!",

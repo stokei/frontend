@@ -578,6 +578,7 @@ export type CreatePlanInput = {
 
 export type CreatePriceInput = {
   amount?: InputMaybe<Scalars['Int']>;
+  automaticRenew?: InputMaybe<Scalars['Boolean']>;
   billingScheme: BillingScheme;
   defaultPrice?: InputMaybe<Scalars['Boolean']>;
   fromAmount?: InputMaybe<Scalars['Int']>;
@@ -1926,6 +1927,7 @@ export type Price = {
   active: Scalars['Boolean'];
   amount?: Maybe<Scalars['Float']>;
   app?: Maybe<App>;
+  automaticRenew: Scalars['Boolean'];
   billingScheme?: Maybe<BillingScheme>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
@@ -2882,6 +2884,7 @@ export type UpdateDataModuleInput = {
 };
 
 export type UpdateDataPriceInput = {
+  automaticRenew?: InputMaybe<Scalars['Boolean']>;
   fromAmount?: InputMaybe<Scalars['Int']>;
   quantity?: InputMaybe<Scalars['Int']>;
 };

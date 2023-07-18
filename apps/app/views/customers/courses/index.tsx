@@ -26,6 +26,7 @@ export const CoursesPage: FC<CoursesPageProps> = () => {
 
   const [{ data: dataGetCourses, fetching: isLoading }] =
     useGetCustomersCoursePageCourseQuery({
+      requestPolicy: "network-only",
       variables: {
         where: {
           AND: {

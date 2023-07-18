@@ -3,6 +3,7 @@ import { I18nKey } from "../../../interfaces/i18n-key";
 export const enUSMessages: Record<I18nKey, string> = {
   byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies:
     "By clicking register you accept our terms of use and privacy policies.",
+  updatePassword: "Update password",
   title: "Title",
   text: "Text",
   paragraph: "Paragraph",

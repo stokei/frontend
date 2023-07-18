@@ -39,6 +39,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
             <SidebarBody paddingX="0">
               <SidebarNavLink
                 as={NextLink}
+                leftIcon="home"
                 href={routes.customers.home}
                 isActive={router.asPath === routes.customers.home}
               >
@@ -46,6 +47,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               </SidebarNavLink>
               <SidebarNavLink
                 as={NextLink}
+                leftIcon="about"
                 href={baseRoute.home}
                 isActive={router.asPath === baseRoute.home}
               >
@@ -53,6 +55,7 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               </SidebarNavLink>
               <SidebarNavLink
                 as={NextLink}
+                leftIcon="video"
                 href={baseRoute.modules}
                 isActive={modulesIsActive}
               >

@@ -1,4 +1,5 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
+import { BadgeNew } from "@/components/badge-new";
 import { CustomerLayoutContent } from "@/components/customer-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
@@ -16,9 +17,14 @@ export const CustomerLayout: FC<PropsWithChildren<CustomerLayoutProps>> = ({
   const router = useRouter();
   const translate = useTranslations();
 
+  const isActiveHome = useCallback(
+    (route: string) => router.route?.replace("/app/[appId]", "") === route,
+    [router.route]
+  );
   const isActiveRoute = useCallback(
-    (route: string) => router.asPath?.startsWith(route),
-    [router.asPath]
+    (route: string) =>
+      router.route?.replace("/app/[appId]", "")?.startsWith(route),
+    [router.route]
   );
 
   return (
@@ -31,13 +37,16 @@ export const CustomerLayout: FC<PropsWithChildren<CustomerLayoutProps>> = ({
           <SidebarBody paddingX="0">
             <SidebarNavLink
               as={NextLink}
-              href={routes.customers.home}
-              isActive={router.asPath === routes.customers.home}
+              leftIcon="product"
+              href={routes.customers.products}
+              isActive={isActiveHome(routes.customers.products)}
+              badge={<BadgeNew />}
             >
-              {translate.formatMessage({ id: "home" })}
+              {translate.formatMessage({ id: "products" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
+              leftIcon="course"
               href={routes.customers.courses}
               isActive={isActiveRoute(routes.customers.courses)}
             >
@@ -45,6 +54,7 @@ export const CustomerLayout: FC<PropsWithChildren<CustomerLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
+              leftIcon="subscription"
               href={routes.customers.subscriptions.home}
               isActive={isActiveRoute(routes.customers.subscriptions.home)}
             >
