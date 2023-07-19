@@ -34,6 +34,7 @@ import {
   BsBell,
   BsCart,
   BsCheck,
+  BsFilter,
   BsFullscreen,
   BsFullscreenExit,
   BsListUl,
@@ -165,3 +166,4 @@ export const Heading4Icon = LuHeading4;
 export const Heading5Icon = LuHeading5;
 export const Heading6Icon = LuHeading6;
 export const PasswordIcon = AiOutlineLock;
+export const FiltersIcon = BsFilter;

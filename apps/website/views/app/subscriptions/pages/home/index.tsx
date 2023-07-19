@@ -5,8 +5,16 @@ import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-cont
 import { SubscriptionContractTypeFilter } from "@/interfaces/subscription-contract-type-filter";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
-import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
+import {
+  Card,
+  CardBody,
+  Container,
+  Pagination,
+  Stack,
+  useDisclosure,
+} from "@stokei/ui";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
 import { SubscriptionContractFilters } from "./components/subscription-contract-filters";
 import { SubscriptionContractsList } from "./components/subscription-contracts-list";
@@ -39,6 +47,8 @@ export const SubscriptionContractsPage: FC<
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();
+  const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
+    useDisclosure();
 
   const dataGetSubscriptionContractsWhereOR = useMemo(() => {
     if (!currentCustomers?.length) {
@@ -121,30 +131,45 @@ export const SubscriptionContractsPage: FC<
     []
   );
 
+  const onResetCurrentCustomer = () => {
+    setCurrentCustomers([]);
+    onToggleFiltersDrawer();
+  };
+
   return (
     <AppLayout>
       <Navbar />
       <Stack direction="column" paddingY="5" spacing="5">
+        <SubscriptionContractFilters
+          isOpen={isOpenFiltersDrawer}
+          onClose={onToggleFiltersDrawer}
+          currentStatus={currentStatus}
+          currentSubscriptionType={currentSubscriptionType}
+          currentCustomers={currentCustomers}
+          onResetCurrentCustomer={onResetCurrentCustomer}
+          onChooseCurrentCustomer={onChooseCurrentCustomer}
+          onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
+          onChooseCurrentStatus={(status) =>
+            setCurrentStatus(status || SubscriptionContractStatusFilter.All)
+          }
+          onRemoveChooseCurrentStatus={() =>
+            setCurrentStatus(SubscriptionContractStatusFilter.All)
+          }
+          onChooseCurrentSubscriptionType={(type) =>
+            setCurrentSubscriptionType(
+              type || SubscriptionContractTypeFilter.All
+            )
+          }
+          onRemoveChooseCurrentSubscriptionType={() =>
+            setCurrentSubscriptionType(SubscriptionContractTypeFilter.All)
+          }
+        />
         <Container>
-          <SubscriptionContractFilters
-            currentStatus={currentStatus}
-            currentSubscriptionType={currentSubscriptionType}
-            currentCustomers={currentCustomers}
-            onChooseCurrentCustomer={onChooseCurrentCustomer}
-            onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
-            onChooseCurrentStatus={(status) =>
-              setCurrentStatus(status || SubscriptionContractStatusFilter.All)
-            }
-            onRemoveChooseCurrentStatus={() =>
-              setCurrentStatus(SubscriptionContractStatusFilter.All)
-            }
-            onChooseCurrentSubscriptionType={(type) =>
-              setCurrentSubscriptionType(
-                type || SubscriptionContractTypeFilter.All
-              )
-            }
-            onRemoveChooseCurrentSubscriptionType={() =>
-              setCurrentSubscriptionType(SubscriptionContractTypeFilter.All)
+          <Header
+            onOpenFilters={onToggleFiltersDrawer}
+            subscriptionContractTotalCount={
+              dataGetSubscriptionContracts?.subscriptionContracts?.totalCount ||
+              0
             }
           />
         </Container>

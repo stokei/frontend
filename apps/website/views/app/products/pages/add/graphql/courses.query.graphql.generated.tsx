@@ -9,14 +9,15 @@ export type GetAddProductCoursesSelectQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAddProductCoursesSelectQuery = { __typename?: 'Query', courses: { __typename?: 'Courses', totalCount: number, items?: Array<{ __typename?: 'Course', id: string, name: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }> | null } };
+export type GetAddProductCoursesSelectQuery = { __typename?: 'Query', courses: { __typename?: 'Courses', totalCount: number, items?: Array<{ __typename?: 'Course', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }> | null } };
 
-export type AddProductCourseSelectFragment = { __typename?: 'Course', id: string, name: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+export type AddProductCourseSelectFragment = { __typename?: 'Course', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
 export const AddProductCourseSelectFragmentDoc = gql`
     fragment AddProductCourseSelect on Course {
   id
   name
+  description
   avatar {
     file {
       url

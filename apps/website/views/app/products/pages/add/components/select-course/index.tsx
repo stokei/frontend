@@ -60,7 +60,8 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
     return (
       currentCourse && {
         id: currentCourse?.id || "",
-        name: currentCourse?.name,
+        name: currentCourse?.name || "",
+        description: currentCourse?.description || "",
         avatarURL: currentCourse?.avatar?.file?.url || "",
       }
     );

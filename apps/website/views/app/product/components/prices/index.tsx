@@ -128,7 +128,9 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
     const pricesWithoutDefaultPrice = prices?.filter(
       (price) => !price?.isDefault
     );
-    return [defaultPrice, ...pricesWithoutDefaultPrice];
+    return defaultPrice
+      ? [defaultPrice, ...pricesWithoutDefaultPrice]
+      : [...pricesWithoutDefaultPrice];
   }, [prices]);
 
   return (

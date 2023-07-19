@@ -1,5 +1,11 @@
 export const ptBRMessages = {
   me: "Eu",
+  review: "Revisão",
+  clear: "Limpar",
+  yes: "Sim",
+  no: "Não",
+  automaticRenew: "Renovação automática?",
+  addSubscription: "Adicionar assinatura",
   account: "Conta",
   new: "Novo",
   free: "Grátis",

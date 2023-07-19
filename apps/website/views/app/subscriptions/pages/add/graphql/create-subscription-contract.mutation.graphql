@@ -1,0 +1,9 @@
+mutation CreateSubscriptionContract($input: CreateSubscriptionContractInput!) {
+  createSubscriptionContract(input: $input) {
+    id
+    active
+    app {
+      name
+    }
+  }
+}

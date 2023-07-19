@@ -57,13 +57,14 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
     useCreateProductMutation();
 
   useEffect(() => {
-    register("description", { value: "" });
-  }, [register]);
+    register("description", { value: productParent?.description });
+  }, [productParent?.description, register]);
 
   useEffect(() => {
     if (productParent) {
       reset({
         name: productParent?.name || "",
+        description: productParent?.description || "",
       });
     }
   }, [productParent, reset]);
@@ -127,6 +128,7 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
           <InputGroup>
             <RichTextEditor
               id="description"
+              defaultValue={productParent?.description}
               onChange={(value) => setValue("description", value)}
             />
           </InputGroup>

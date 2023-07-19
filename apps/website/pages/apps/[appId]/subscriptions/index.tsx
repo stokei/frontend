@@ -1,4 +1,4 @@
-import { SubscriptionContractsPage } from "@/views/app/subscriptions";
+import { SubscriptionContractsPage } from "@/views/app/subscriptions/pages/home";
 import { NextPage } from "next";
 
 interface Props {}

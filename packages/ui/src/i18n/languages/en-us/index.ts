@@ -1,6 +1,7 @@
 import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
+  dateFormat: "yyyy-mm-dd",
   byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies:
     "By clicking register you accept our terms of use and privacy policies.",
   updatePassword: "Update password",

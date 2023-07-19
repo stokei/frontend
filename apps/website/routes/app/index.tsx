@@ -5,8 +5,9 @@ export const routesApp = (data: { appId?: string }) => {
     financial: baseURL + "/financial",
     subscriptions: {
       home: baseURL + "/subscriptions",
+      add: baseURL + "/subscriptions/add",
       subscription: ({ subscription }: { subscription?: string }) =>
-        baseURL + "/subscriptions/" + subscription,
+        baseURL + "/subscriptions/view/" + subscription,
     },
     catalogs: {
       home: baseURL + "/catalogs",

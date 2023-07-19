@@ -13,6 +13,7 @@ query GetAddProductCoursesSelect(
 fragment AddProductCourseSelect on Course {
   id
   name
+  description
   avatar {
     file {
       url

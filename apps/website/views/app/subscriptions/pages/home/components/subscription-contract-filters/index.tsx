@@ -1,13 +1,24 @@
-import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-contract-status-filter";
-import { Card, CardBody, Stack } from "@stokei/ui";
-import { FC } from "react";
-import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { SelectMembers } from "@/components/select-members";
-import { SelectFilterStatus } from "../select-filter-status";
+import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
+import { useTranslations } from "@/hooks";
+import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-contract-status-filter";
 import { SubscriptionContractTypeFilter } from "@/interfaces/subscription-contract-type-filter";
+import {
+  Button,
+  ButtonGroup,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  Stack,
+} from "@stokei/ui";
+import { FC } from "react";
+import { SelectFilterStatus } from "../select-filter-status";
 import { SelectFilterSubscriptionType } from "../select-filter-subscription-type";
 
 interface SubscriptionContractFiltersProps {
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
   readonly currentStatus: SubscriptionContractStatusFilter;
   readonly currentSubscriptionType: SubscriptionContractTypeFilter;
   readonly currentCustomers?: AppAccountFragment[];
@@ -22,17 +33,19 @@ interface SubscriptionContractFiltersProps {
   readonly onChooseCurrentStatus: (
     value: SubscriptionContractStatusFilter
   ) => void;
-  readonly onRemoveChooseCurrentStatus: (
-    value: SubscriptionContractStatusFilter
-  ) => void;
+  readonly onRemoveChooseCurrentStatus: () => void;
+  readonly onResetCurrentCustomer: () => void;
 }
 
 export const SubscriptionContractFilters: FC<
   SubscriptionContractFiltersProps
 > = ({
+  isOpen,
+  onClose,
   currentStatus,
   currentSubscriptionType,
   currentCustomers,
+  onResetCurrentCustomer,
   onChooseCurrentCustomer,
   onRemoveChooseCurrentCustomer,
   onChooseCurrentStatus,
@@ -40,10 +53,21 @@ export const SubscriptionContractFilters: FC<
   onChooseCurrentSubscriptionType,
   onRemoveChooseCurrentSubscriptionType,
 }) => {
+  const translate = useTranslations();
+
+  const onClean = () => {
+    onRemoveChooseCurrentStatus();
+    onRemoveChooseCurrentSubscriptionType();
+    onResetCurrentCustomer();
+  };
+
   return (
-    <Card background="background.50">
-      <CardBody>
-        <Stack direction={["column", "column", "row", "row"]} spacing="5">
+    <Drawer isOpen={isOpen} onClose={onClose}>
+      <DrawerHeader>
+        {translate.formatMessage({ id: "addSubscription" })}
+      </DrawerHeader>
+      <DrawerBody>
+        <Stack direction="column" spacing="5">
           <SelectMembers
             hasCurrentAccount={false}
             currentMembers={currentCustomers}
@@ -63,7 +87,14 @@ export const SubscriptionContractFilters: FC<
             onRemoveChooseCurrentStatus={onRemoveChooseCurrentStatus}
           />
         </Stack>
-      </CardBody>
-    </Card>
+      </DrawerBody>
+      <DrawerFooter>
+        <ButtonGroup>
+          <Button variant="ghost" onClick={onClean}>
+            {translate.formatMessage({ id: "clear" })}
+          </Button>
+        </ButtonGroup>
+      </DrawerFooter>
+    </Drawer>
   );
 };

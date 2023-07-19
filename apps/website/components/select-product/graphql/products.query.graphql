@@ -1,0 +1,32 @@
+query GetAppProducts(
+  $where: WhereDataFindAllProductsInput
+  $orderBy: OrderByDataFindAllProductsInput
+  $page: PaginationInput
+) {
+  products(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppProduct
+    }
+  }
+}
+
+fragment AppProduct on Product {
+  id
+  parentId
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  defaultPrice {
+    ...PriceComponent
+  }
+}

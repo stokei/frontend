@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  dateFormat: "dd/mm/yyyy",
   byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies:
     "Ao clicar em cadastre-se você aceita nossos termos de uso e políticas de privacidade.",
   updatePassword: "Alterar senha",

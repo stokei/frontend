@@ -1,4 +1,5 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { RecurringIntervalInput } from "@/components/recurring-interval-input";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import {
   BillingScheme,
@@ -17,21 +18,16 @@ import {
   Form,
   FormControl,
   FormErrorMessage,
-  Icon,
   Input,
   InputGroup,
   InputLeftAddon,
-  InputLeftElement,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
   Stack,
+  Switch,
   Text,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreatePriceMutation } from "../../graphql/create-price.mutation.graphql.generated";
@@ -50,6 +46,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
   onCloseDrawer,
 }) => {
   const [interval, setInterval] = useState<IntervalType>(IntervalType.Month);
+  const [intervalCount, setIntervalCount] = useState<string>("");
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { onShowToast } = useToast();
@@ -62,9 +59,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     amount: z.string().min(1, {
       message: translate.formatMessage({ id: "amountIsRequired" }),
     }),
-    intervalCount: z.string().min(1, {
-      message: translate.formatMessage({ id: "intervalCountIsRequired" }),
-    }),
+    automaticRenew: z.boolean().default(false),
   });
 
   const [{ fetching: isLoadingCreatePrice }, createPrice] =
@@ -75,24 +70,10 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     handleSubmit,
     reset,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
-
-  const intervalCountValue = watch("intervalCount");
-  const isPluralIntervalCount = useMemo(
-    () => intervalCountValue && intervalCountValue !== "1",
-    [intervalCountValue]
-  );
-
-  const justNumbers = useCallback((value: string) => {
-    if (!value) {
-      return 0;
-    }
-    const valueWithoutNumbers = (value + "")?.trim()?.replace(/\D/g, "");
-    return valueWithoutNumbers ? parseInt(valueWithoutNumbers) : 0;
-  }, []);
 
   const convertAmountToMoney = useCallback(
     (value: string) => {
@@ -113,7 +94,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
   const onSubmit = async ({
     name,
     amount,
-    intervalCount,
+    automaticRenew,
   }: z.infer<typeof validationSchema>) => {
     try {
       const response = await createPrice({
@@ -130,6 +111,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
           inventoryType: InventoryType.Infinite,
           tiersMode: TiersMode.Volume,
           type: PriceType.Recurring,
+          automaticRenew,
         },
       });
       if (!!response?.data?.createPrice) {
@@ -158,12 +140,6 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
   const onClose = () => {
     reset();
     onCloseDrawer();
-  };
-
-  const onChangeIntervalCount = (event: any) => {
-    const value = justNumbers(event.target.value);
-    event.target.value = value || "";
-    return event;
   };
 
   return (
@@ -213,79 +189,30 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
               <FormErrorMessage>{errors?.amount?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors?.intervalCount}>
-              <Stack direction="row" spacing="5" align="flex-end">
-                <Stack direction="column" spacing="0">
-                  <Label htmlFor="intervalCount">
-                    {translate.formatMessage({ id: "period" })}
-                  </Label>
-                  <InputGroup>
-                    <Input
-                      id="intervalCount"
-                      type="tel"
-                      placeholder={translate.formatMessage({ id: "period" })}
-                      {...register("intervalCount", {
-                        onChange: onChangeIntervalCount,
-                      })}
-                    />
-                  </InputGroup>
-                </Stack>
-                <Select
-                  value={interval}
-                  onChooseItem={setInterval}
-                  onRemoveChooseItem={setInterval}
-                >
-                  <SelectInput
-                    id="price-interval"
-                    item={(currentInterval) => (
-                      <Text>
-                        {translate.formatMessage({
-                          id: (isPluralIntervalCount
-                            ? `${currentInterval}s`
-                            : currentInterval
-                          )?.toLowerCase() as any,
-                        })}
-                      </Text>
-                    )}
-                  />
-                  <SelectList>
-                    <SelectItem value={IntervalType.Day}>
-                      <Text>
-                        {translate.formatMessage({
-                          id: isPluralIntervalCount ? "days" : "day",
-                        })}
-                      </Text>
-                    </SelectItem>
-                    <SelectItem value={IntervalType.Week}>
-                      <Text>
-                        {translate.formatMessage({
-                          id: isPluralIntervalCount ? "weeks" : "week",
-                        })}
-                      </Text>
-                    </SelectItem>
-                    <SelectItem value={IntervalType.Month}>
-                      <Text>
-                        {translate.formatMessage({
-                          id: isPluralIntervalCount ? "months" : "month",
-                        })}
-                      </Text>
-                    </SelectItem>
-                    <SelectItem value={IntervalType.Year}>
-                      <Text>
-                        {translate.formatMessage({
-                          id: isPluralIntervalCount ? "years" : "year",
-                        })}
-                      </Text>
-                    </SelectItem>
-                  </SelectList>
-                </Select>
+            <RecurringIntervalInput
+              interval={interval}
+              intervalCount={intervalCount}
+              onChangeInterval={setInterval}
+              onChangeIntervalCount={setIntervalCount}
+            />
+
+            <FormControl isInvalid={!!errors?.automaticRenew}>
+              <Stack direction="row" align="center" spacing="5">
+                <Label width="fit-content" margin="0" htmlFor="automaticRenew">
+                  {translate.formatMessage({ id: "automaticRenew" })}
+                </Label>
+                <Switch id="automaticRenew" {...register("automaticRenew")} />
               </Stack>
               <FormErrorMessage>
-                {errors?.intervalCount?.message}
+                {errors?.automaticRenew?.message}
               </FormErrorMessage>
             </FormControl>
 
-            <Button type="submit" isLoading={isLoadingCreatePrice}>
+            <Button
+              type="submit"
+              isLoading={isLoadingCreatePrice}
+              isDisabled={!isValid}
+            >
               {translate.formatMessage({
                 id: "save",
               })}
