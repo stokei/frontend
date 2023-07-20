@@ -1,5 +1,7 @@
 import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
+import { MemberSelectItemContent } from "@/components/select-members/member-select-item-content";
 import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
+import { ProductSelectItemContent } from "@/components/select-product/product-select-item-content";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
@@ -7,12 +9,19 @@ import {
   SubscriptionContractType,
   UsageType,
 } from "@/services/graphql/stokei";
-import { Button, ButtonGroup, Stack, Title, useToast } from "@stokei/ui";
+import { getI18nKeyFromRecurringInterval } from "@/utils";
+import {
+  Button,
+  ButtonGroup,
+  DatePickerGroup,
+  Label,
+  Stack,
+  Text,
+  useToast,
+} from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
-import { ProductSelectItemContent } from "@/components/select-product/product-select-item-content";
+import { FC, useMemo } from "react";
 import { useCreateSubscriptionContractMutation } from "../../graphql/create-subscription-contract.mutation.graphql.generated";
-import { MemberSelectItemContent } from "@/components/select-members/member-select-item-content";
 
 interface ReviewStepProps {
   product?: AppProductFragment;
@@ -42,6 +51,17 @@ export const ReviewStep: FC<ReviewStepProps> = ({
     { fetching: isLoadingCreateSubscriptionContract },
     onExecuteCreateSubscriptionContract,
   ] = useCreateSubscriptionContractMutation();
+
+  const recurringIntervalTypeKey = useMemo(() => {
+    if (!recurringInterval) {
+      return undefined;
+    }
+    const key = getI18nKeyFromRecurringInterval(recurringInterval);
+    if (parseInt(recurringIntervalCount) > 1) {
+      return key.plural;
+    }
+    return key.singular;
+  }, [recurringInterval, recurringIntervalCount]);
 
   const onCreateSubscriptionContract = async () => {
     try {
@@ -88,21 +108,50 @@ export const ReviewStep: FC<ReviewStepProps> = ({
   return (
     <Stack direction="column" spacing="5">
       <Stack direction="column" spacing="2">
-        <Title fontSize="lg">
+        <Label>
           {translate.formatMessage({
             id: "student",
           })}
-        </Title>
+        </Label>
         <MemberSelectItemContent member={student} />
       </Stack>
 
       <Stack direction="column" spacing="2">
-        <Title fontSize="lg">
+        <Label>
           {translate.formatMessage({
             id: "product",
           })}
-        </Title>
+        </Label>
         <ProductSelectItemContent product={product} />
+      </Stack>
+
+      <Stack direction="column" spacing="2">
+        <Label>
+          {translate.formatMessage({
+            id: "period",
+          })}
+        </Label>
+
+        <Stack direction="row" spacing="2">
+          <Text>{recurringIntervalCount}</Text>
+          <Text>
+            {translate.formatMessage({
+              id: recurringIntervalTypeKey as any,
+            })}
+          </Text>
+        </Stack>
+      </Stack>
+
+      <Stack direction="column" spacing="2">
+        <Label>
+          {translate.formatMessage({
+            id: "intervalCount",
+          })}
+        </Label>
+        <DatePickerGroup>
+          <Text>{translate.formatDate(startAt)}</Text>
+          <Text>{translate.formatDate(endAt)}</Text>
+        </DatePickerGroup>
       </Stack>
 
       <ButtonGroup width="full" justifyContent="space-between">

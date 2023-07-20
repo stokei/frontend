@@ -50,7 +50,7 @@ export const PeriodStep: FC<PeriodStepProps> = ({
 
       <Box flexDirection="column">
         <Label htmlFor="datepicker">
-          {translate.formatMessage({ id: "startDate" })}
+          {translate.formatMessage({ id: "intervalCount" })}
         </Label>
         <DatePickerGroup>
           <DatePicker
@@ -70,7 +70,7 @@ export const PeriodStep: FC<PeriodStepProps> = ({
         <Button onClick={onPreviousStep} variant="ghost">
           {translate.formatMessage({ id: "previous" })}
         </Button>
-        <Button onClick={onNextStep}>
+        <Button onClick={onNextStep} isDisabled={!intervalCount || !interval}>
           {translate.formatMessage({ id: "next" })}
         </Button>
       </ButtonGroup>

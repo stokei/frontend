@@ -1,6 +1,8 @@
 export const ptBRMessages = {
   me: "Eu",
   review: "Revisão",
+  chooseProduct: "Escolha o produto",
+  chooseStudent: "Escolha o aluno",
   clear: "Limpar",
   yes: "Sim",
   no: "Não",

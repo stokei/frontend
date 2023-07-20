@@ -21,7 +21,7 @@ export const StudentStep: FC<StudentStepProps> = ({
     <Stack direction="column" spacing="5">
       <Title fontSize="lg">
         {translate.formatMessage({
-          id: "chooseType",
+          id: "chooseStudent",
         })}
       </Title>
 

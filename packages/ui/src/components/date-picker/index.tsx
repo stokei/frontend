@@ -22,31 +22,32 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       id={`${id}-date-picker`}
       onDateChange={onChange}
       date={value}
+      usePortal
       configs={{
         dateFormat: translate.formatMessage({ id: "dateFormat" }),
       }}
       propsConfigs={{
         dateNavBtnProps: {
           colorScheme: "primary",
-          variant: "outline",
+          variant: "ghost",
         },
         dayOfMonthBtnProps: {
           defaultBtnProps: {
-            borderColor: "primary.300",
+            borderColor: "primary.900",
             _hover: {
-              background: "primary.400",
+              background: "primary.500",
             },
           },
           isInRangeBtnProps: {
-            background: "primary.200",
+            background: "primary.500",
             color: "primary.900",
           },
           selectedBtnProps: {
-            background: "primary.200",
+            background: "primary.500",
             color: "primary.900",
           },
           todayBtnProps: {
-            background: "primary.200",
+            background: "primary.100",
             color: "primary.900",
           },
         },
@@ -55,8 +56,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         },
         popoverCompProps: {
           popoverContentProps: {
-            background: "gray.200",
-            color: "primary.500",
+            padding: 0,
+            background: "background.50",
+            color: "text.500",
           },
         },
       }}

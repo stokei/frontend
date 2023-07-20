@@ -3,6 +3,7 @@ import { AppProductFragment } from "@/components/select-product/graphql/products
 import { AddSubscriptionContractStep } from "@/constants/add-subscription-contract-steps";
 import { useTranslations } from "@/hooks";
 import { IntervalType } from "@/services/graphql/stokei";
+import { getEndDate } from "@/utils/get-end-date";
 import { AppLayout } from "@/views/app/layout";
 import {
   Card,
@@ -15,7 +16,7 @@ import {
   StepPanels,
   Steps,
 } from "@stokei/ui";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Navbar } from "./components/navbar";
 import { PeriodStep } from "./steps/period";
 import { ProductStep } from "./steps/product";
@@ -32,14 +33,26 @@ export const AddSubscriptionContractPage: FC<
   );
   const [student, setStudent] = useState<AppAccountFragment>();
   const [product, setProduct] = useState<AppProductFragment>();
-  const [startAt, setStartAt] = useState<Date>();
+  const [startAt, setStartAt] = useState<Date>(new Date());
   const [endAt, setEndAt] = useState<Date>();
   const [recurringInterval, setRecurringInterval] = useState<IntervalType>(
     IntervalType.Month
   );
   const [recurringIntervalCount, setRecurringIntervalCount] =
-    useState<string>("");
+    useState<string>("1");
   const translate = useTranslations();
+
+  useEffect(() => {
+    if (startAt) {
+      setEndAt(
+        getEndDate({
+          startAt,
+          interval: recurringInterval,
+          intervalCount: parseInt(recurringIntervalCount),
+        })
+      );
+    }
+  }, [recurringInterval, recurringIntervalCount, startAt]);
 
   const onGoToStudent = () => {
     setCurrentStep(AddSubscriptionContractStep.STUDENT);

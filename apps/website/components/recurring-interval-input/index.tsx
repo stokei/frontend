@@ -78,6 +78,7 @@ export const RecurringIntervalInput: FC<RecurringIntervalInputProps> = ({
             <Input
               id="intervalCount"
               type="tel"
+              defaultValue={intervalCount}
               placeholder={translate.formatMessage({ id: "period" })}
               {...register("intervalCount", {
                 onChange: onChangeIntervalCount,

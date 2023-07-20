@@ -23,7 +23,7 @@ export const ProductStep: FC<ProductStepProps> = ({
     <Stack direction="column" spacing="5">
       <Title fontSize="lg">
         {translate.formatMessage({
-          id: "chooseType",
+          id: "chooseProduct",
         })}
       </Title>
 
