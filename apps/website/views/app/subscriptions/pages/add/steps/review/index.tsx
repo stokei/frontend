@@ -74,7 +74,7 @@ export const ReviewStep: FC<ReviewStepProps> = ({
           items: [
             {
               quantity: 1,
-              product: product?.id || "",
+              product: product?.parentId || "",
               recurring: {
                 interval: recurringInterval,
                 intervalCount: parseInt(recurringIntervalCount),
