@@ -4,6 +4,9 @@ export const routesCustomers = {
   home: baseURL + "/courses",
   products: baseURL + "/products",
   courses: baseURL + "/courses",
+  materials: baseURL + "/materials",
+  material: ({ material }: { material: string }) =>
+    baseURL + "/materials/" + material,
   course: ({ course }: { course?: string }) => {
     const baseCourseURL = baseURL + "/courses/" + course;
 

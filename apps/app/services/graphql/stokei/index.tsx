@@ -2113,7 +2113,7 @@ export type ProductPricesArgs = {
   page?: InputMaybe<PaginationInput>;
 };
 
-export type ProductParentUnion = Course | Plan;
+export type ProductParentUnion = App | Course | Material | Plan;
 
 export type Products = {
   __typename?: 'Products';
@@ -2185,6 +2185,8 @@ export type Query = {
   sortedItem: SortedItem;
   sortedItems: SortedItems;
   subscriptionContract: SubscriptionContract;
+  subscriptionContractItem: SubscriptionContractItem;
+  subscriptionContractItems: SubscriptionContractItems;
   subscriptionContracts: SubscriptionContracts;
   video: Video;
   videoAuthor: VideoAuthor;
@@ -2501,6 +2503,18 @@ export type QuerySortedItemsArgs = {
 
 export type QuerySubscriptionContractArgs = {
   id: Scalars['String'];
+};
+
+
+export type QuerySubscriptionContractItemArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QuerySubscriptionContractItemsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllSubscriptionContractItemsInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllSubscriptionContractItemsInput>;
 };
 
 
@@ -2821,7 +2835,7 @@ export type SubscriptionContractItem = {
   updatedBy?: Maybe<Account>;
 };
 
-export type SubscriptionContractItemProductUnion = Course | Plan;
+export type SubscriptionContractItemProductUnion = Course | Material | Plan | Product;
 
 export type SubscriptionContractItems = {
   __typename?: 'SubscriptionContractItems';
@@ -3605,6 +3619,22 @@ export type WhereDataFindAllSortedItemsInput = {
   AND?: InputMaybe<WhereDataFindAllSortedItemsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllSortedItemsDataInput>;
   OR?: InputMaybe<Array<WhereDataFindAllSortedItemsDataInput>>;
+};
+
+export type WhereDataFindAllSubscriptionContractItemsDataInput = {
+  app?: InputMaybe<WhereDataStringInput>;
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  price?: InputMaybe<WhereDataStringInput>;
+  product?: InputMaybe<WhereDataSearchInput>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllSubscriptionContractItemsInput = {
+  AND?: InputMaybe<WhereDataFindAllSubscriptionContractItemsDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllSubscriptionContractItemsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllSubscriptionContractItemsDataInput>>;
 };
 
 export type WhereDataFindAllSubscriptionContractsDataInput = {

@@ -54,6 +54,14 @@ export const CustomerLayout: FC<PropsWithChildren<CustomerLayoutProps>> = ({
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
+              leftIcon="material"
+              href={routes.customers.materials}
+              isActive={isActiveRoute(routes.customers.materials)}
+            >
+              {translate.formatMessage({ id: "materials" })}
+            </SidebarNavLink>
+            <SidebarNavLink
+              as={NextLink}
               leftIcon="subscription"
               href={routes.customers.subscriptions.home}
               isActive={isActiveRoute(routes.customers.subscriptions.home)}
