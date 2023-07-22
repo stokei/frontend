@@ -4,6 +4,7 @@ import {
   NotFound,
   NotFoundIcon,
   NotFoundSubtitle,
+  SimpleGrid,
   Text,
   Title,
 } from "@stokei/ui";
@@ -37,10 +38,22 @@ export const Catalog: FC<CatalogProps> = memo(
         },
       });
 
-    const catalogItems = useMemo(
-      () => dataSortedItems?.sortedItems?.items,
-      [dataSortedItems]
-    );
+    const catalogItems = useMemo(() => {
+      const items = dataSortedItems?.sortedItems?.items;
+      const sortedItems = items?.sort((itemA, itemB) => {
+        if (
+          itemA.item?.__typename === "CatalogItem" &&
+          itemB.item?.__typename === "CatalogItem"
+        ) {
+          if (!itemB.item?.product.defaultPrice) {
+            return -1;
+          }
+          return 1;
+        }
+        return 1;
+      });
+      return sortedItems;
+    }, [dataSortedItems]);
 
     return (
       <Box flexDirection="column" as="section" paddingY="5">
@@ -61,34 +74,22 @@ export const Catalog: FC<CatalogProps> = memo(
           </NotFound>
         ) : (
           <Box flexDirection="row" overflowY="hidden">
-            <Container
-              flexDirection="row"
-              overflowY="auto"
-              css={{
-                "&::-webkit-scrollbar": {
-                  display: "none",
-                },
-              }}
-              paddingLeft="0"
-            >
-              {catalogItems?.map(
-                ({ item }) =>
-                  item?.__typename === "CatalogItem" && (
-                    <Box
-                      key={item?.product?.id}
-                      flexDirection="column"
-                      paddingLeft="5"
-                    >
+            <Container>
+              <SimpleGrid columns={[1, 1, 2, 4]} spacing="5">
+                {catalogItems?.map(
+                  ({ item }) =>
+                    item?.__typename === "CatalogItem" && (
                       <CatalogItem
+                        key={item?.product?.id}
                         productId={item?.product?.id}
                         name={item?.product?.name}
                         avatar={item?.product?.avatar?.file?.url || ""}
                         defaultPrice={item?.product?.defaultPrice}
                         parent={item?.product?.parent}
                       />
-                    </Box>
-                  )
-              )}
+                    )
+                )}
+              </SimpleGrid>
             </Container>
           </Box>
         )}

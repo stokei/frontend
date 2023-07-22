@@ -47,7 +47,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
     }, [productId, router]);
 
     return (
-      <Card background="background.50" overflow="hidden" minW="280px">
+      <Card background="background.50" overflow="hidden">
         <CardHeader position="relative" padding="0">
           <Image
             width="full"
