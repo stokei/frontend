@@ -86,6 +86,7 @@ export const icons = {
   heading6: IconComponent.Heading6Icon,
   password: IconComponent.PasswordIcon,
   filters: IconComponent.FiltersIcon,
+  material: IconComponent.MaterialIcon,
 };
 
 export type IconName = keyof typeof icons;

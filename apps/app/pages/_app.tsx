@@ -81,6 +81,9 @@ function MyApp({
               colors: themeColors,
             }}
             appId={appId}
+            accountId={currentAccount?.id}
+            accountAccessToken={stokeiGraphQLClient?.accessToken}
+            accountRefreshToken={stokeiGraphQLClient?.refreshToken}
             cloudflareAPIToken={CLOUDFLARE_TOKEN}
           >
             <TranslationsProvider

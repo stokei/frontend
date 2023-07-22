@@ -115,4 +115,7 @@ export const enUSMessages: Record<I18nKey, string> = {
   videoAuthorsNotFound: "Video authors not found",
   videoNotFound: "Video not found",
   videosNotFound: "Videos not found",
+  materialNotFound: "Material not found",
+  materialsNotFound: "Materials not found",
+  materialUnauthorizedRemove: "Material unauthorized remove",
 };

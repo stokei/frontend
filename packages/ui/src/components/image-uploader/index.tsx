@@ -110,6 +110,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         });
       }
     });
+    return () => {
+      uppy.off("upload-success", () => {});
+    };
   }, [uppy, onSuccess, onCloseDashboard]);
 
   const onShowDashboard = useCallback(() => {

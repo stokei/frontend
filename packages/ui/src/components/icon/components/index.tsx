@@ -12,12 +12,13 @@ import {
   AiOutlineEnvironment,
   AiOutlineEye,
   AiOutlineEyeInvisible,
+  AiOutlineFileText,
   AiOutlineHome,
   AiOutlineInfo,
   AiOutlineInfoCircle,
   AiOutlineItalic,
-  AiOutlineLock,
   AiOutlineLoading,
+  AiOutlineLock,
   AiOutlineLogout,
   AiOutlineMail,
   AiOutlineMenu,
@@ -52,24 +53,12 @@ import {
   BsVolumeUp,
   BsWallet2,
 } from "react-icons/bs";
-import {
-  FaFileContract,
-  FaFileInvoiceDollar,
-  FaGraduationCap,
-  FaMoneyBill,
-  FaStore,
-  FaUserShield,
-  FaUserTie,
-} from "react-icons/fa";
+import { FaMoneyBill, FaStore, FaUserShield, FaUserTie } from "react-icons/fa";
 import { FiPlus, FiSettings } from "react-icons/fi";
+import { HiOutlineAcademicCap } from "react-icons/hi";
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import {
-  RxCaretDown,
-  RxCaretLeft,
-  RxCaretRight,
-  RxCaretUp,
-} from "react-icons/rx";
-import { TbApps } from "react-icons/tb";
-import {
+  LuFileSignature,
   LuHeading1,
   LuHeading2,
   LuHeading3,
@@ -78,6 +67,13 @@ import {
   LuHeading6,
 } from "react-icons/lu";
 import { MdOutlineDomainVerification, MdOutlineStorage } from "react-icons/md";
+import {
+  RxCaretDown,
+  RxCaretLeft,
+  RxCaretRight,
+  RxCaretUp,
+} from "react-icons/rx";
+import { TbApps } from "react-icons/tb";
 
 import {
   RiCheckboxBlankCircleLine,
@@ -121,9 +117,9 @@ export const OrderIcon = BsListUl;
 export const CartIcon = BsCart;
 export const CheckIcon = BsCheck;
 export const StoreIcon = FaStore;
-export const SubscriptionIcon = FaFileContract;
+export const SubscriptionIcon = LuFileSignature;
 export const AppIcon = TbApps;
-export const CourseIcon = FaGraduationCap;
+export const CourseIcon = HiOutlineAcademicCap;
 export const NotificationIcon = BsBell;
 export const WalletIcon = BsWallet2;
 export const LoadingIcon = AiOutlineLoading;
@@ -147,7 +143,7 @@ export const FullScreenIcon = BsFullscreen;
 export const ExitFullScreenIcon = BsFullscreenExit;
 export const PictureInPictureIcon = RiPictureInPicture2Line;
 export const ExitPictureInPictureIcon = RiPictureInPictureExitLine;
-export const InvoiceIcon = FaFileInvoiceDollar;
+export const InvoiceIcon = LiaFileInvoiceDollarSolid;
 export const EditIcon = AiOutlineEdit;
 export const PriceIcon = AiOutlineDollar;
 export const AdminIcon = FaUserShield;
@@ -167,3 +163,4 @@ export const Heading5Icon = LuHeading5;
 export const Heading6Icon = LuHeading6;
 export const PasswordIcon = AiOutlineLock;
 export const FiltersIcon = BsFilter;
+export const MaterialIcon = AiOutlineFileText;

@@ -117,4 +117,7 @@ export const ptBRMessages = {
   videoAuthorsNotFound: "Autores do vídeo não encontrados",
   videoNotFound: "Vídeo não encontrado",
   videosNotFound: "Vídeos não encontrados",
+  materialNotFound: "Material não encontrado",
+  materialsNotFound: "Materiais não encontrados",
+  materialUnauthorizedRemove: "Remoção não autorizada do material",
 };

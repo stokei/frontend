@@ -59,6 +59,16 @@ export const routesApp = (data: { appId?: string }) => {
       home: baseURL + "/products",
       add: baseURL + "/products/add",
     },
+    material: ({ material }: { material: string }) => {
+      const baseMaterialURL = baseURL + "/materials/view/" + material;
+      return {
+        home: baseMaterialURL,
+      };
+    },
+    materials: {
+      home: baseURL + "/materials",
+      add: baseURL + "/materials/add",
+    },
     settings: {
       home: baseURL + "/settings",
       website: baseURL + "/settings/website",

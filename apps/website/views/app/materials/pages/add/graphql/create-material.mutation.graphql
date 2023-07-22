@@ -1,0 +1,5 @@
+mutation CreateMaterial($input: CreateMaterialInput!) {
+  createMaterial(input: $input) {
+    ...AppMaterial
+  }
+}

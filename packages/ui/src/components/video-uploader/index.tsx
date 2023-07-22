@@ -122,6 +122,9 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
           });
         }
       });
+      return () => {
+        uppy.off("upload-success", () => {});
+      };
     }, [uppy, onSuccess, onCloseDashboard]);
 
     const onShowDashboard = useCallback(() => {

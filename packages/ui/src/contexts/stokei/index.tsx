@@ -12,6 +12,8 @@ import { theme } from "../../styles/themes";
 export interface StokeiUIContextValues {
   readonly appId?: string;
   readonly accountId?: string;
+  readonly accountAccessToken?: string;
+  readonly accountRefreshToken?: string;
   readonly language?: Language;
   readonly cloudflareAPIToken?: string;
   readonly getHexdecimalColor: (
@@ -23,6 +25,8 @@ export interface StokeiUIContextValues {
 export interface StokeiUIContextProps {
   readonly appId?: string;
   readonly accountId?: string;
+  readonly accountAccessToken?: string;
+  readonly accountRefreshToken?: string;
   readonly cloudflareAPIToken?: string;
   readonly language?: Language;
   readonly config?: StokeiConfig;
@@ -32,7 +36,16 @@ export const StokeiUIContext = React.createContext({} as StokeiUIContextValues);
 
 export const StokeiUIProvider: React.FC<
   PropsWithChildren<StokeiUIContextProps>
-> = ({ children, config, appId, accountId, cloudflareAPIToken, language }) => {
+> = ({
+  children,
+  config,
+  appId,
+  accountId,
+  cloudflareAPIToken,
+  language,
+  accountAccessToken,
+  accountRefreshToken,
+}) => {
   const themeData = useMemo(() => theme(config), [config]);
 
   const getHexdecimalColor = useCallback(
@@ -48,9 +61,19 @@ export const StokeiUIProvider: React.FC<
       accountId,
       cloudflareAPIToken,
       language,
+      accountAccessToken,
+      accountRefreshToken,
       getHexdecimalColor,
     }),
-    [appId, accountId, cloudflareAPIToken, language, getHexdecimalColor]
+    [
+      appId,
+      accountId,
+      cloudflareAPIToken,
+      language,
+      accountAccessToken,
+      accountRefreshToken,
+      getHexdecimalColor,
+    ]
   );
 
   return (

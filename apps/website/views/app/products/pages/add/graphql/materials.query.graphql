@@ -1,0 +1,22 @@
+query GetAddProductMaterialsSelect(
+  $where: WhereDataFindAllMaterialsInput
+  $page: PaginationInput
+) {
+  materials(where: $where, page: $page) {
+    totalCount
+    items {
+      ...AddProductMaterialSelect
+    }
+  }
+}
+
+fragment AddProductMaterialSelect on Material {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+}

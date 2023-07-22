@@ -1,6 +1,12 @@
 export const ptBRMessages = {
   me: "Eu",
+  file: "Arquivo",
+  files: "Arquivos",
   review: "Revisão",
+  addMaterial: "Adicionar material",
+  removeMaterial: "Remover material",
+  material: "Material",
+  materials: "Materiais",
   chooseProduct: "Escolha o produto",
   chooseStudent: "Escolha o aluno",
   clear: "Limpar",

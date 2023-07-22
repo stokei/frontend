@@ -38,12 +38,21 @@ export const ProductTypeStep: FC<ProductTypeStepProps> = ({
           <RadioGroup onChange={onChangeProductType} value={productType}>
             <Stack direction="column" spacing="4">
               <RadioCard
-                id={"product-type-" + productType}
+                id="product-type-course"
                 value={ProductType.COURSE}
                 isChecked={productType === ProductType.COURSE}
               >
                 <Title fontSize="md">
                   {translate.formatMessage({ id: "course" })}
+                </Title>
+              </RadioCard>
+              <RadioCard
+                id="product-type-material"
+                value={ProductType.MATERIAL}
+                isChecked={productType === ProductType.MATERIAL}
+              >
+                <Title fontSize="md">
+                  {translate.formatMessage({ id: "material" })}
                 </Title>
               </RadioCard>
               {/* <RadioCard

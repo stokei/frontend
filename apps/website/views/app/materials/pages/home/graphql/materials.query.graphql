@@ -1,0 +1,28 @@
+query GetAppMaterials(
+  $where: WhereDataFindAllMaterialsInput
+  $orderBy: OrderByDataFindAllMaterialsInput
+  $page: PaginationInput
+) {
+  materials(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppMaterial
+    }
+  }
+}
+
+fragment AppMaterial on Material {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+}

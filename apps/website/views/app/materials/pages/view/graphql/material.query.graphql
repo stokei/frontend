@@ -1,0 +1,5 @@
+query GetAppMaterial($material: String!) {
+  material(id: $material) {
+    ...AppMaterial
+  }
+}

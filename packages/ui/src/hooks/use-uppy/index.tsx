@@ -14,16 +14,15 @@ export const useUppy = ({
   const uppy = useMemo(() => getUppy(), [getUppy]);
 
   useEffect(() => {
-    return () => uppy?.close({ reason: "unmount" });
-  }, [uppy]);
-
-  useEffect(() => {
     uppy.on("upload-success", (result) => {
       const isSuccess = !!result?.data;
       if (isSuccess) {
         onSuccess?.();
       }
     });
+    return () => {
+      uppy.off("upload-success", () => {});
+    };
   }, [uppy, onSuccess]);
 
   useEffect(() => {
@@ -33,6 +32,9 @@ export const useUppy = ({
         onError?.();
       }
     });
+    return () => {
+      uppy.off("upload-error", () => {});
+    };
   }, [uppy, onError]);
 
   return uppy;

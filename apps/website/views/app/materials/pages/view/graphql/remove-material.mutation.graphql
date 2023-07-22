@@ -1,0 +1,5 @@
+mutation RemoveMaterial($input: RemoveMaterialInput!) {
+  removeMaterial(input: $input) {
+    ...AppMaterial
+  }
+}

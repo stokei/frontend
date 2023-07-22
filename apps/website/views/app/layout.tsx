@@ -81,6 +81,14 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               {translate.formatMessage({ id: "products" })}
             </SidebarNavLink>
             <SidebarNavLink
+              leftIcon="material"
+              as={NextLink}
+              href={baseRoutes.materials.home}
+              isActive={isActiveRoute(baseRoutes.materials.home)}
+            >
+              {translate.formatMessage({ id: "materials" })}
+            </SidebarNavLink>
+            <SidebarNavLink
               leftIcon="subscription"
               as={NextLink}
               href={baseRoutes.subscriptions.home}

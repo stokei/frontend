@@ -2,8 +2,9 @@ import { ProductType } from "@/constants/product-type";
 import { useTranslations } from "@/hooks";
 import { Button, ButtonGroup, Form, Stack, Title } from "@stokei/ui";
 import { FC } from "react";
-import { SelectCurse } from "../select-course";
 import { ProductParent } from "../../@types/product-parent";
+import { SelectCurse } from "../select-course";
+import { SelectMaterial } from "../select-material";
 
 interface ProductChooseTypeStepProps {
   productType: ProductType;
@@ -34,6 +35,12 @@ export const ProductChooseTypeStep: FC<ProductChooseTypeStepProps> = ({
 
           {productType === ProductType.COURSE && (
             <SelectCurse
+              productParent={productParent}
+              onChangeProductParent={onChangeProductParent}
+            />
+          )}
+          {productType === ProductType.MATERIAL && (
+            <SelectMaterial
               productParent={productParent}
               onChangeProductParent={onChangeProductParent}
             />

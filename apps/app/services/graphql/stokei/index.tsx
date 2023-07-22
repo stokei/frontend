@@ -520,6 +520,10 @@ export type CreateFileByAdminInput = {
   url?: InputMaybe<Scalars['String']>;
 };
 
+export type CreateFileDownloadUrlInput = {
+  file: Scalars['String'];
+};
+
 export type CreateFileUploadUrlResponse = {
   __typename?: 'CreateFileUploadURLResponse';
   file: File;
@@ -545,6 +549,15 @@ export type CreateLanguageInput = {
   icon?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
   name: Scalars['String'];
+};
+
+export type CreateMaterialInput = {
+  avatar?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  file: Scalars['String'];
+  free?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  parent: Scalars['String'];
 };
 
 export type CreateModuleInput = {
@@ -947,6 +960,36 @@ export type LoginInput = {
   password: Scalars['String'];
 };
 
+export type Material = {
+  __typename?: 'Material';
+  app?: Maybe<App>;
+  avatar?: Maybe<Image>;
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  description?: Maybe<Scalars['String']>;
+  file?: Maybe<File>;
+  free: Scalars['Boolean'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  parent?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export type Materials = {
+  __typename?: 'Materials';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<Material>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
 export type MeAccount = {
   __typename?: 'MeAccount';
   accesses?: Maybe<Accesses>;
@@ -1052,10 +1095,12 @@ export type Mutation = {
   createDomain: Domain;
   createFeature: Feature;
   createFileByAdmin: File;
+  createFileDownloadURL: Scalars['String'];
   createHero: Hero;
   createImage: Image;
   createImageUploadURL: CreateFileUploadUrlResponse;
   createLanguage: Language;
+  createMaterial: Material;
   createModule: Module;
   createOrUpdateColor: Color;
   createPaymentMethod: PaymentMethod;
@@ -1088,6 +1133,7 @@ export type Mutation = {
   removeHero: Hero;
   removeImage: Image;
   removeLanguage: Language;
+  removeMaterial: Material;
   removeModule: Module;
   removePaymentMethod: PaymentMethod;
   removePhone: Phone;
@@ -1106,6 +1152,7 @@ export type Mutation = {
   updateFile: File;
   updateHero: Hero;
   updateLanguage: Language;
+  updateMaterial: Material;
   updateModule: Module;
   updateOwnPassword: Scalars['Boolean'];
   updatePrice: Price;
@@ -1220,6 +1267,11 @@ export type MutationCreateFileByAdminArgs = {
 };
 
 
+export type MutationCreateFileDownloadUrlArgs = {
+  input: CreateFileDownloadUrlInput;
+};
+
+
 export type MutationCreateHeroArgs = {
   input: CreateHeroInput;
 };
@@ -1232,6 +1284,11 @@ export type MutationCreateImageArgs = {
 
 export type MutationCreateLanguageArgs = {
   input: CreateLanguageInput;
+};
+
+
+export type MutationCreateMaterialArgs = {
+  input: CreateMaterialInput;
 };
 
 
@@ -1380,6 +1437,11 @@ export type MutationRemoveLanguageArgs = {
 };
 
 
+export type MutationRemoveMaterialArgs = {
+  input: RemoveMaterialInput;
+};
+
+
 export type MutationRemoveModuleArgs = {
   input: RemoveModuleInput;
 };
@@ -1467,6 +1529,11 @@ export type MutationUpdateHeroArgs = {
 
 export type MutationUpdateLanguageArgs = {
   input: UpdateLanguageInput;
+};
+
+
+export type MutationUpdateMaterialArgs = {
+  input: UpdateMaterialInput;
 };
 
 
@@ -1657,6 +1724,15 @@ export type OrderByDataFindAllLanguagesInput = {
   active?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
+export type OrderByDataFindAllMaterialsInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  free?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
@@ -2091,6 +2167,8 @@ export type Query = {
   invoices: Invoices;
   language: Language;
   languages: Languages;
+  material: Material;
+  materials: Materials;
   me: MeAccount;
   module: Module;
   modules: Modules;
@@ -2325,6 +2403,18 @@ export type QueryLanguagesArgs = {
 };
 
 
+export type QueryMaterialArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryMaterialsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllMaterialsInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllMaterialsInput>;
+};
+
+
 export type QueryModuleArgs = {
   id: Scalars['String'];
 };
@@ -2509,6 +2599,10 @@ export type RemoveLanguageInput = {
   where: RemoveWhereLanguageInput;
 };
 
+export type RemoveMaterialInput = {
+  where: RemoveWhereMaterialInput;
+};
+
 export type RemoveModuleInput = {
   where: RemoveWhereModuleInput;
 };
@@ -2587,6 +2681,10 @@ export type RemoveWhereImageInput = {
 
 export type RemoveWhereLanguageInput = {
   language: Scalars['String'];
+};
+
+export type RemoveWhereMaterialInput = {
+  material: Scalars['String'];
 };
 
 export type RemoveWhereModuleInput = {
@@ -2879,6 +2977,14 @@ export type UpdateDataLanguageInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type UpdateDataMaterialInput = {
+  avatar?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  file?: InputMaybe<Scalars['String']>;
+  free?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type UpdateDataModuleInput = {
   description?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2924,6 +3030,11 @@ export type UpdateHeroInput = {
 export type UpdateLanguageInput = {
   data: UpdateDataLanguageInput;
   where: UpdateWhereLanguageInput;
+};
+
+export type UpdateMaterialInput = {
+  data: UpdateDataMaterialInput;
+  where: UpdateWhereMaterialInput;
 };
 
 export type UpdateModuleInput = {
@@ -2985,6 +3096,10 @@ export type UpdateWhereHeroInput = {
 
 export type UpdateWhereLanguageInput = {
   language: Scalars['String'];
+};
+
+export type UpdateWhereMaterialInput = {
+  material: Scalars['String'];
 };
 
 export type UpdateWhereModuleInput = {
@@ -3352,6 +3467,23 @@ export type WhereDataFindAllLanguagesInput = {
   AND?: InputMaybe<WhereDataFindAllLanguagesDataInput>;
   NOT?: InputMaybe<WhereDataFindAllLanguagesDataInput>;
   OR?: InputMaybe<Array<WhereDataFindAllLanguagesDataInput>>;
+};
+
+export type WhereDataFindAllMaterialsDataInput = {
+  app?: InputMaybe<WhereDataStringInput>;
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  description?: InputMaybe<WhereDataSearchInput>;
+  free?: InputMaybe<WhereDataBooleanInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  name?: InputMaybe<WhereDataSearchInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllMaterialsInput = {
+  AND?: InputMaybe<WhereDataFindAllMaterialsDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllMaterialsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllMaterialsDataInput>>;
 };
 
 export type WhereDataFindAllModulesDataInput = {

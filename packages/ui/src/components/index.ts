@@ -43,6 +43,7 @@ export * from "./drawer-body";
 export * from "./drawer-footer";
 export * from "./footer";
 export * from "./footer-link";
+export * from "./file-uploader";
 export * from "./description";
 export * from "./input";
 export * from "./input-left-addon";

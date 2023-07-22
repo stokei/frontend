@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useDisclosure as useDisclosureChakra } from "@chakra-ui/react";
 
 export interface UseDisclosureProps {
   readonly startOpen?: boolean;
@@ -13,14 +13,7 @@ export interface UseDisclosureResponse {
 export const useDisclosure = (
   data?: UseDisclosureProps
 ): UseDisclosureResponse => {
-  const [isOpen, setIsOpen] = useState(() => data?.startOpen === true);
-  const onOpen = useCallback(() => setIsOpen(true), []);
-  const onClose = useCallback(() => setIsOpen(false), []);
-  const onToggle = useCallback(() => setIsOpen((oldIsOpen) => !oldIsOpen), []);
-  return {
-    isOpen,
-    onOpen,
-    onClose,
-    onToggle,
-  };
+  return useDisclosureChakra({
+    defaultIsOpen: !!data?.startOpen,
+  });
 };

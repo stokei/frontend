@@ -1,0 +1,5 @@
+mutation UpdateMaterial($input: UpdateMaterialInput!) {
+  updateMaterial(input: $input) {
+    ...AppMaterial
+  }
+}
