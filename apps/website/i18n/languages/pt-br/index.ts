@@ -25,6 +25,8 @@ export const ptBRMessages = {
     "Não sabe fazer isso? Contate o suporte pelo email {email}.",
   wouldYouReallyLikeToRemoveDomain:
     "Você realmente gostaria de remover o domínio {domain}?",
+  wouldYouReallyLikeToRemoveMaterial:
+    "Você realmente gostaria de remover o material?",
   removeDomain: "Remover domínio",
   subdomain: "Subdomínio",
   subdomains: "Subdomínios",

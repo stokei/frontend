@@ -40,7 +40,7 @@ export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
       ) : (
         <Stack direction="column" paddingY="5" spacing="5">
           <Container>
-            <Header materialId={materialId} />
+            <Header material={material} />
           </Container>
           <Container>
             <EditMaterialForm material={material} />

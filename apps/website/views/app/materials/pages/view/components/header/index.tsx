@@ -1,63 +1,30 @@
-import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import { Box, Button, Icon, Stack, useToast } from "@stokei/ui";
+import { Box, Button, Icon, Stack, useDisclosure } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useCallback } from "react";
-import { useRemoveMaterialMutation } from "../../graphql/remove-material.mutation.graphql.generated";
+import { AppMaterialFragment } from "../../../home/graphql/materials.query.graphql.generated";
+import { RemoveMaterialModal } from "../remove-material-modal";
 
 interface HeaderProps {
-  materialId: string;
+  material?: AppMaterialFragment;
 }
 
-export const Header: FC<HeaderProps> = ({ materialId }) => {
+export const Header: FC<HeaderProps> = ({ material }) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
-  const { onShowToast } = useToast();
-  const { onShowAPIError } = useAPIErrors();
-
-  const [{ fetching: isLoadingRemoveMaterial }, onExecuteRemoveMaterial] =
-    useRemoveMaterialMutation();
+  const {
+    isOpen: isOpenRemoveMaterialModal,
+    onOpen: onOpenRemoveMaterialModal,
+    onClose: onCloseRemoveMaterialModal,
+  } = useDisclosure();
 
   const onGoToMaterialsPage = useCallback(() => {
     return router.push(
       routes.app({ appId: currentApp?.id || "" }).materials.home
     );
   }, [currentApp?.id, router]);
-
-  const onRemoveMaterial = useCallback(async () => {
-    try {
-      const response = await onExecuteRemoveMaterial({
-        input: {
-          where: {
-            material: materialId,
-          },
-        },
-      });
-      if (!!response?.data?.removeMaterial) {
-        onShowToast({
-          title: translate.formatMessage({ id: "removedSuccessfully" }),
-          status: "success",
-        });
-
-        onGoToMaterialsPage();
-        return;
-      }
-
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {}
-  }, [
-    materialId,
-    onExecuteRemoveMaterial,
-    onGoToMaterialsPage,
-    onShowAPIError,
-    onShowToast,
-    translate,
-  ]);
 
   return (
     <Stack
@@ -66,6 +33,11 @@ export const Header: FC<HeaderProps> = ({ materialId }) => {
       direction={["column", "column", "row", "row"]}
       spacing="2"
     >
+      <RemoveMaterialModal
+        material={material}
+        isOpenModal={isOpenRemoveMaterialModal}
+        onCloseModal={onCloseRemoveMaterialModal}
+      />
       <Box>
         <Button
           size="sm"
@@ -79,8 +51,7 @@ export const Header: FC<HeaderProps> = ({ materialId }) => {
       <Button
         variant="link"
         colorScheme="red"
-        onClick={onRemoveMaterial}
-        isLoading={isLoadingRemoveMaterial}
+        onClick={onOpenRemoveMaterialModal}
       >
         {translate.formatMessage({ id: "removeMaterial" })}
       </Button>

@@ -25,6 +25,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   addDomain: "Add domain",
   wouldYouReallyLikeToRemoveDomain:
     "Would you really like to remove domain {domain}?",
+  wouldYouReallyLikeToRemoveMaterial:
+    "Would you really like to remove material?",
   dontKnowHowToDoThisContactSupportViaEmail:
     "Don't know how to do this? Contact support via email {email}.",
   removeDomain: "Remove domain",
