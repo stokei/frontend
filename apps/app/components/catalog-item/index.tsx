@@ -32,7 +32,7 @@ export interface CatalogItemProps {
 }
 
 export const CatalogItem: FC<CatalogItemProps> = memo(
-  ({ productId, name, avatar, defaultPrice, parent }) => {
+  ({ productId, avatar, name, defaultPrice, parent }) => {
     const router = useRouter();
     const translate = useTranslations();
     const isAvailable = !!defaultPrice;
@@ -41,6 +41,19 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
       () => (parent?.__typename === "Course" ? parent : null),
       [parent]
     );
+
+    const currentAvatar = useMemo(() => {
+      if (avatar) {
+        return avatar;
+      }
+      if (parent?.__typename === "Course") {
+        return parent?.avatar?.file?.url || "";
+      }
+      if (parent?.__typename === "Material") {
+        return parent?.avatar?.file?.url || "";
+      }
+      return;
+    }, [avatar, parent]);
 
     const goToCheckout = useCallback(() => {
       router.push(routes.product.home({ product: productId || "" }));
@@ -51,7 +64,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
         <CardHeader position="relative" padding="0">
           <Image
             width="full"
-            src={avatar}
+            src={currentAvatar}
             fallbackSrc={defaultNoImage.src}
             alt={translate.formatMessage({ id: "product" })}
           />

@@ -2,7 +2,7 @@ import Uppy from "@uppy/core";
 import { Dashboard } from "@uppy/react";
 import XHRUpload from "@uppy/xhr-upload";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { MAX_IMAGE_SIZE } from "../../constants/file-sizes";
+import { MAX_FILE_SIZE } from "../../constants/file-sizes";
 import { useDisclosure, useStokeiUI, useUppy } from "../../hooks";
 import { getUploaderLanguage } from "../../utils/get-uploader-language";
 import { Box } from "../box";
@@ -70,7 +70,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
         allowMultipleUploadBatches: false,
         restrictions: {
           allowedFileTypes: accept || defaultMimetypes,
-          maxFileSize: MAX_IMAGE_SIZE,
+          maxFileSize: MAX_FILE_SIZE,
           maxNumberOfFiles: 1,
           minNumberOfFiles: 1,
         },

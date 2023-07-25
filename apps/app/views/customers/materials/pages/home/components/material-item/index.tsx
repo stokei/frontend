@@ -1,37 +1,30 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { useCurrentApp, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Image,
-  Link,
   Stack,
   Title,
 } from "@stokei/ui";
-import NextLink from "next/link";
 import { FC, memo } from "react";
 
 import { routes } from "@/routes";
-import { AppMaterialFragment } from "../../graphql/materials.query.graphql.generated";
 import { useRouter } from "next/router";
+import { AppSubscriptionContractsByItemMaterialProductMaterialFragment } from "../../../../graphql/subscription-contracts.query.graphql.generated";
 
 export interface MaterialItemProps {
-  readonly material: AppMaterialFragment;
+  readonly material: AppSubscriptionContractsByItemMaterialProductMaterialFragment;
 }
 
 export const MaterialItem: FC<MaterialItemProps> = memo(({ material }) => {
   const router = useRouter();
   const translate = useTranslations();
-  const { currentApp } = useCurrentApp();
 
   const goToEditMaterial = () =>
-    router.push(
-      routes.app({ appId: currentApp?.id }).material({ material: material?.id })
-        .home
-    );
+    router.push(routes.customers.material({ material: material?.id }));
 
   return (
     <Card background="background.50" overflow="hidden">

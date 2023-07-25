@@ -61,6 +61,8 @@ fragment AppSubscriptionContract on SubscriptionContract {
         __typename
         ...SubscriptionContractProductCourse
         ...SubscriptionContractProductPlan
+        ...SubscriptionContractProductMaterial
+        ...SubscriptionContractProductProduct
       }
     }
   }
@@ -86,4 +88,24 @@ fragment SubscriptionContractProductCourse on Course {
 fragment SubscriptionContractProductPlan on Plan {
   planId: id
   planName: name
+}
+
+fragment SubscriptionContractProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment SubscriptionContractProductProduct on Product {
+  productId: id
+  productName: name
+  avatar {
+    file {
+      url
+    }
+  }
 }

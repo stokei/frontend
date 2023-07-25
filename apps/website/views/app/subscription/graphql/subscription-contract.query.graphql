@@ -49,8 +49,10 @@ fragment SubscriptionPageSubscriptionContract on SubscriptionContract {
       }
       product {
         __typename
-        ...SubscriptionContractProductCourse
-        ...SubscriptionContractProductPlan
+        ...SubscriptionPageSubscriptionContractProductCourse
+        ...SubscriptionPageSubscriptionContractProductPlan
+        ...SubscriptionPageSubscriptionContractProductProduct
+        ...SubscriptionPageSubscriptionContractProductMaterial
       }
     }
   }
@@ -76,4 +78,24 @@ fragment SubscriptionPageSubscriptionContractProductCourse on Course {
 fragment SubscriptionPageSubscriptionContractProductPlan on Plan {
   planId: id
   planName: name
+}
+
+fragment SubscriptionPageSubscriptionContractProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment SubscriptionPageSubscriptionContractProductProduct on Product {
+  productId: id
+  productName: name
+  avatar {
+    file {
+      url
+    }
+  }
 }

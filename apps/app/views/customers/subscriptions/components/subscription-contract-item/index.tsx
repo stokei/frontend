@@ -71,6 +71,20 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
           name: currentProduct?.planName,
         };
       }
+      if (currentProduct?.__typename === "Material") {
+        return {
+          id: currentProduct?.materialId,
+          name: currentProduct?.materialName,
+          avatarURL: currentProduct?.avatar?.file?.url || "",
+        };
+      }
+      if (currentProduct?.__typename === "Product") {
+        return {
+          id: currentProduct?.productId,
+          name: currentProduct?.productName,
+          avatarURL: currentProduct?.avatar?.file?.url || "",
+        };
+      }
       return;
     }, [subscriptionContract]);
 

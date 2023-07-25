@@ -1,0 +1,3 @@
+mutation CreateFileDownloadURL($input: CreateFileDownloadURLInput!) {
+  url: createFileDownloadURL(input: $input)
+}

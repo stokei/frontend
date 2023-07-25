@@ -6,6 +6,8 @@ import {
   AiOutlineArrowUp,
   AiOutlineBank,
   AiOutlineBold,
+  AiOutlineCloudDownload,
+  AiOutlineCloudUpload,
   AiOutlineDollar,
   AiOutlineEdit,
   AiOutlineEllipsis,
@@ -164,3 +166,5 @@ export const Heading6Icon = LuHeading6;
 export const PasswordIcon = AiOutlineLock;
 export const FiltersIcon = BsFilter;
 export const MaterialIcon = AiOutlineFileText;
+export const DownloadIcon = AiOutlineCloudDownload;
+export const UploadIcon = AiOutlineCloudUpload;

@@ -1847,6 +1847,13 @@ export type OrderByDataFindAllSubscriptionContractItemsInput = {
   updatedBy?: InputMaybe<OrderBy>;
 };
 
+export type OrderByDataFindAllSubscriptionContractsByItemInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
 export type OrderByDataFindAllSubscriptionContractsInput = {
   active?: InputMaybe<OrderBy>;
   automaticRenew?: InputMaybe<OrderBy>;
@@ -2188,6 +2195,7 @@ export type Query = {
   subscriptionContractItem: SubscriptionContractItem;
   subscriptionContractItems: SubscriptionContractItems;
   subscriptionContracts: SubscriptionContracts;
+  subscriptionContractsByItem: SubscriptionContracts;
   video: Video;
   videoAuthor: VideoAuthor;
   videoAuthors: VideoAuthors;
@@ -2522,6 +2530,13 @@ export type QuerySubscriptionContractsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllSubscriptionContractsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllSubscriptionContractsInput>;
+};
+
+
+export type QuerySubscriptionContractsByItemArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllSubscriptionContractsByItemInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllSubscriptionContractsByItemInput>;
 };
 
 
@@ -3635,6 +3650,12 @@ export type WhereDataFindAllSubscriptionContractItemsInput = {
   AND?: InputMaybe<WhereDataFindAllSubscriptionContractItemsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllSubscriptionContractItemsDataInput>;
   OR?: InputMaybe<Array<WhereDataFindAllSubscriptionContractItemsDataInput>>;
+};
+
+export type WhereDataFindAllSubscriptionContractsByItemInput = {
+  app?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  product?: InputMaybe<WhereDataSearchInput>;
 };
 
 export type WhereDataFindAllSubscriptionContractsDataInput = {

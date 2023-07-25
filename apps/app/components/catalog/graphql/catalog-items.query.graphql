@@ -34,6 +34,7 @@ fragment LandingPageCatalogItemProduct on Product {
     __typename
     ...LandingPageCatalogItemProductCourse
     ...LandingPageCatalogItemProductPlan
+    ...LandingPageCatalogItemProductMaterial
   }
 }
 
@@ -52,12 +53,27 @@ fragment LandingPageCatalogItemProductPlan on Plan {
 fragment LandingPageCatalogItemProductCourse on Course {
   courseId: id
   courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
   instructors {
     items {
       id
       instructor {
         fullname
       }
+    }
+  }
+}
+
+fragment LandingPageCatalogItemProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
     }
   }
 }
