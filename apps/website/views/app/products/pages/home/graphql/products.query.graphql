@@ -31,18 +31,34 @@ fragment AdminProductPageProduct on Product {
   parent {
     __typename
     ...AdminProductPageProductCourse
+    ...AdminProductPageProductMaterial
   }
 }
 
 fragment AdminProductPageProductCourse on Course {
   courseId: id
   courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
   instructors {
     items {
       id
       instructor {
         fullname
       }
+    }
+  }
+}
+
+fragment AdminProductPageProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
     }
   }
 }

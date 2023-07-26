@@ -87,7 +87,7 @@ export const EditMaterialForm: FC<EditMaterialFormProps> = ({ material }) => {
           data: {
             name,
             description,
-            ...(imageId && { image: imageId }),
+            ...(imageId && { avatar: imageId }),
           },
           where: {
             material: material?.id || "",
