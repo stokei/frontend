@@ -1,4 +1,4 @@
-import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
+import { usePagination, useTranslations } from "@/hooks";
 import { OrderBy } from "@/services/graphql/stokei";
 import {
   Container,
@@ -21,7 +21,6 @@ interface MaterialsHomePageProps {}
 
 export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
   const router = useRouter();
-  const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();
   const translate = useTranslations();
 
@@ -66,23 +65,23 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
           </Container>
         )}
 
-        <Container>
-          {isLoadingGetMaterials ? (
-            <Loading />
-          ) : (
-            <>
-              <>
-                {!materials?.length ? (
-                  <NotFound>
-                    <NotFoundIcon name="material" />
-                    <NotFoundSubtitle>
-                      {translate.formatMessage({ id: "materialsNotFound" })}
-                    </NotFoundSubtitle>
-                  </NotFound>
-                ) : (
-                  <MaterialsList materials={materials} />
-                )}
-              </>
+        {isLoadingGetMaterials ? (
+          <Loading />
+        ) : (
+          <>
+            <Container>
+              {!materials?.length ? (
+                <NotFound>
+                  <NotFoundIcon name="material" />
+                  <NotFoundSubtitle>
+                    {translate.formatMessage({ id: "materialsNotFound" })}
+                  </NotFoundSubtitle>
+                </NotFound>
+              ) : (
+                <MaterialsList materials={materials} />
+              )}
+            </Container>
+            <Container>
               {dataGetMaterials?.materials?.totalPages &&
                 dataGetMaterials?.materials?.totalPages > 1 && (
                   <Pagination
@@ -95,9 +94,9 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
                     totalPages={dataGetMaterials?.materials?.totalPages || 1}
                   />
                 )}
-            </>
-          )}
-        </Container>
+            </Container>
+          </>
+        )}
       </Stack>
     </CourseLayout>
   );

@@ -1,7 +1,6 @@
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { OrderBy } from "@/services/graphql/stokei";
-import { CourseLayout } from "../../layout";
 import {
   Button,
   Container,
@@ -13,6 +12,7 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
+import { CourseLayout } from "../../layout";
 import { Header } from "./components/header";
 import { MaterialsList } from "./components/materials-list";
 import { Navbar } from "./components/navbar";
@@ -74,26 +74,26 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
           </Container>
         )}
 
-        <Container>
-          {isLoadingGetMaterials ? (
-            <Loading />
-          ) : (
-            <>
-              <>
-                {!materials?.length ? (
-                  <NotFound>
-                    <NotFoundIcon name="material" />
-                    <NotFoundSubtitle>
-                      {translate.formatMessage({ id: "materialsNotFound" })}
-                    </NotFoundSubtitle>
-                    <Button onClick={goToAddMaterial}>
-                      {translate.formatMessage({ id: "addMaterial" })}
-                    </Button>
-                  </NotFound>
-                ) : (
-                  <MaterialsList materials={materials} />
-                )}
-              </>
+        {isLoadingGetMaterials ? (
+          <Loading />
+        ) : (
+          <>
+            <Container>
+              {!materials?.length ? (
+                <NotFound>
+                  <NotFoundIcon name="material" />
+                  <NotFoundSubtitle>
+                    {translate.formatMessage({ id: "materialsNotFound" })}
+                  </NotFoundSubtitle>
+                  <Button onClick={goToAddMaterial}>
+                    {translate.formatMessage({ id: "addMaterial" })}
+                  </Button>
+                </NotFound>
+              ) : (
+                <MaterialsList materials={materials} />
+              )}
+            </Container>
+            <Container>
               {dataGetMaterials?.materials?.totalPages &&
                 dataGetMaterials?.materials?.totalPages > 1 && (
                   <Pagination
@@ -106,9 +106,9 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
                     totalPages={dataGetMaterials?.materials?.totalPages || 1}
                   />
                 )}
-            </>
-          )}
-        </Container>
+            </Container>
+          </>
+        )}
       </Stack>
     </CourseLayout>
   );

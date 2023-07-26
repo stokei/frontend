@@ -72,8 +72,8 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
         {isLoadingGetMaterials ? (
           <Loading />
         ) : (
-          <Container>
-            <>
+          <>
+            <Container>
               {!materials?.length ? (
                 <NotFound>
                   <NotFoundIcon name="material" />
@@ -87,20 +87,22 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
               ) : (
                 <MaterialsList materials={materials} />
               )}
-            </>
-            {dataGetMaterials?.materials?.totalPages &&
-              dataGetMaterials?.materials?.totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  onChangePage={onChangePage}
-                  hasNextPage={!!dataGetMaterials?.materials?.hasNextPage}
-                  hasPreviousPage={
-                    !!dataGetMaterials?.materials?.hasPreviousPage
-                  }
-                  totalPages={dataGetMaterials?.materials?.totalPages || 1}
-                />
-              )}
-          </Container>
+            </Container>
+            <Container>
+              {dataGetMaterials?.materials?.totalPages &&
+                dataGetMaterials?.materials?.totalPages > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    onChangePage={onChangePage}
+                    hasNextPage={!!dataGetMaterials?.materials?.hasNextPage}
+                    hasPreviousPage={
+                      !!dataGetMaterials?.materials?.hasPreviousPage
+                    }
+                    totalPages={dataGetMaterials?.materials?.totalPages || 1}
+                  />
+                )}
+            </Container>
+          </>
         )}
       </Stack>
     </AppLayout>

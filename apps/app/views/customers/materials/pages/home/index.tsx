@@ -80,8 +80,8 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
         {isLoadingGetMaterials ? (
           <Loading />
         ) : (
-          <Container>
-            <>
+          <>
+            <Container>
               {!materials?.length ? (
                 <NotFound>
                   <NotFoundIcon name="material" />
@@ -92,26 +92,30 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
               ) : (
                 <MaterialsList materials={materials} />
               )}
-            </>
-            {dataGetMaterials?.subscriptionContractsByItem?.totalPages &&
-              dataGetMaterials?.subscriptionContractsByItem?.totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  onChangePage={onChangePage}
-                  hasNextPage={
-                    !!dataGetMaterials?.subscriptionContractsByItem?.hasNextPage
-                  }
-                  hasPreviousPage={
-                    !!dataGetMaterials?.subscriptionContractsByItem
-                      ?.hasPreviousPage
-                  }
-                  totalPages={
-                    dataGetMaterials?.subscriptionContractsByItem?.totalPages ||
-                    1
-                  }
-                />
-              )}
-          </Container>
+            </Container>
+            <Container>
+              {dataGetMaterials?.subscriptionContractsByItem?.totalPages &&
+                dataGetMaterials?.subscriptionContractsByItem?.totalPages >
+                  1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    onChangePage={onChangePage}
+                    hasNextPage={
+                      !!dataGetMaterials?.subscriptionContractsByItem
+                        ?.hasNextPage
+                    }
+                    hasPreviousPage={
+                      !!dataGetMaterials?.subscriptionContractsByItem
+                        ?.hasPreviousPage
+                    }
+                    totalPages={
+                      dataGetMaterials?.subscriptionContractsByItem
+                        ?.totalPages || 1
+                    }
+                  />
+                )}
+            </Container>
+          </>
         )}
       </Stack>
     </CustomerLayout>
