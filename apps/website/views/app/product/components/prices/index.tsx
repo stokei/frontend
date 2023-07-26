@@ -125,9 +125,14 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
 
   const pricesSorted = useMemo(() => {
     const defaultPrice = prices?.find((price) => !!price?.isDefault);
-    const pricesWithoutDefaultPrice = prices?.filter(
-      (price) => !price?.isDefault
-    );
+    const pricesWithoutDefaultPrice = prices
+      ?.filter((price) => !price?.isDefault)
+      ?.sort((priceA) => {
+        if (!priceA.active) {
+          return 1;
+        }
+        return -1;
+      });
     return defaultPrice
       ? [defaultPrice, ...pricesWithoutDefaultPrice]
       : [...pricesWithoutDefaultPrice];
@@ -190,7 +195,7 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
                             {translate.formatMessage({ id: "value" })}
                           </TableHeaderCell>
                           <TableHeaderCell>
-                            {translate.formatMessage({ id: "period" })}
+                            {translate.formatMessage({ id: "duration" })}
                           </TableHeaderCell>
                         </TableRow>
                       </TableHeader>

@@ -7,7 +7,7 @@ import {
   Box,
   Card,
   CardBody,
-  Icon,
+  DatePickerGroup,
   Image,
   Label,
   Stack,
@@ -75,16 +75,13 @@ export const SubscriptionContractDetails: FC<
             </Stack>
           </Box>
           <Box flexDirection="column">
-            <Label>{translate.formatMessage({ id: "period" })}</Label>
-            <Stack direction="row" spacing="2" align="center">
+            <Label>{translate.formatMessage({ id: "duration" })}</Label>
+            <DatePickerGroup>
               {subscriptionContract?.startAt && (
                 <Text>
                   {translate.formatDate(subscriptionContract?.startAt)}
                 </Text>
               )}
-              {subscriptionContract?.startAt &&
-                (!isRecurringSubscriptionContract ||
-                  subscriptionContract?.endAt) && <Icon name="arrowRight" />}
               {!isRecurringSubscriptionContract ? (
                 <Badge colorScheme="purple">
                   {translate.formatMessage({
@@ -98,7 +95,7 @@ export const SubscriptionContractDetails: FC<
                   </Text>
                 )
               )}
-            </Stack>
+            </DatePickerGroup>
           </Box>
           {subscriptionContract?.paymentMethod && (
             <Box flexDirection="column">

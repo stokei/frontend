@@ -7,7 +7,7 @@ import {
   Avatar,
   Badge,
   Box,
-  Icon,
+  DatePickerGroup,
   Image,
   Stack,
   TableCell,
@@ -145,13 +145,10 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
           </Box>
         </TableCell>
         <TableCell>
-          <Stack direction="row" spacing="2" align="center">
+          <DatePickerGroup>
             {subscriptionContract?.startAt && (
               <Text>{translate.formatDate(subscriptionContract?.startAt)}</Text>
             )}
-            {subscriptionContract?.startAt &&
-              (!isRecurringSubscriptionContract ||
-                subscriptionContract?.endAt) && <Icon name="arrowRight" />}
             {!isRecurringSubscriptionContract ? (
               <Badge colorScheme="purple">
                 {translate.formatMessage({
@@ -163,7 +160,7 @@ export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
                 <Text>{translate.formatDate(subscriptionContract?.endAt)}</Text>
               )
             )}
-          </Stack>
+          </DatePickerGroup>
         </TableCell>
       </TableRow>
     );

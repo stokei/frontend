@@ -19,6 +19,7 @@ import {
   AiOutlineInfo,
   AiOutlineInfoCircle,
   AiOutlineItalic,
+  AiOutlineLink,
   AiOutlineLoading,
   AiOutlineLock,
   AiOutlineLogout,
@@ -68,7 +69,11 @@ import {
   LuHeading5,
   LuHeading6,
 } from "react-icons/lu";
-import { MdOutlineDomainVerification, MdOutlineStorage } from "react-icons/md";
+import {
+  MdOutlineBuild,
+  MdOutlineDomainVerification,
+  MdOutlineStorage,
+} from "react-icons/md";
 import {
   RxCaretDown,
   RxCaretLeft,
@@ -168,3 +173,5 @@ export const FiltersIcon = BsFilter;
 export const MaterialIcon = AiOutlineFileText;
 export const DownloadIcon = AiOutlineCloudDownload;
 export const UploadIcon = AiOutlineCloudUpload;
+export const OnboardingIcon = AiOutlineLink;
+export const WebsiteIcon = MdOutlineBuild;

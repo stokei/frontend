@@ -9,6 +9,7 @@ import {
   TiersMode,
   UsageType,
 } from "@/services/graphql/stokei";
+import { convertEnumValueToCamelCase } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -22,6 +23,10 @@ import {
   InputGroup,
   InputLeftAddon,
   Label,
+  Select,
+  SelectInput,
+  SelectItem,
+  SelectList,
   Stack,
   Switch,
   Text,
@@ -45,6 +50,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
   onSuccess,
   onCloseDrawer,
 }) => {
+  const [type, setType] = useState<PriceType>(PriceType.OneTime);
   const [interval, setInterval] = useState<IntervalType>(IntervalType.Month);
   const [intervalCount, setIntervalCount] = useState<string>("");
   const translate = useTranslations();
@@ -69,7 +75,6 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
@@ -102,16 +107,18 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
           parent: productId || "",
           nickname: name,
           amount: translate.formatMoneyToNumber(amount),
-          recurring: {
-            interval,
-            intervalCount: parseInt(intervalCount),
-            usageType: UsageType.Licensed,
-          },
           billingScheme: BillingScheme.PerUnit,
           inventoryType: InventoryType.Infinite,
           tiersMode: TiersMode.Volume,
-          type: PriceType.Recurring,
           automaticRenew,
+          type,
+          ...(type === PriceType.Recurring && {
+            recurring: {
+              interval,
+              intervalCount: parseInt(intervalCount),
+              usageType: UsageType.Licensed,
+            },
+          }),
         },
       });
       if (!!response?.data?.createPrice) {
@@ -189,12 +196,47 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
               <FormErrorMessage>{errors?.amount?.message}</FormErrorMessage>
             </FormControl>
 
-            <RecurringIntervalInput
-              interval={interval}
-              intervalCount={intervalCount}
-              onChangeInterval={setInterval}
-              onChangeIntervalCount={setIntervalCount}
-            />
+            <FormControl isInvalid={!!errors?.automaticRenew}>
+              <Label htmlFor="price-type">
+                {translate.formatMessage({ id: "type" })}
+              </Label>
+              <Select
+                value={type}
+                onChooseItem={setType}
+                onRemoveChooseItem={setType}
+              >
+                <SelectInput
+                  id="price-type"
+                  item={(item) => (
+                    <Text>
+                      {translate.formatMessage({
+                        id:
+                          item === PriceType.OneTime
+                            ? "lifelong"
+                            : (convertEnumValueToCamelCase(item) as any),
+                      })}
+                    </Text>
+                  )}
+                />
+                <SelectList>
+                  <SelectItem value={PriceType.OneTime}>
+                    <Text>{translate.formatMessage({ id: "lifelong" })}</Text>
+                  </SelectItem>
+                  <SelectItem value={PriceType.Recurring}>
+                    <Text>{translate.formatMessage({ id: "recurring" })}</Text>
+                  </SelectItem>
+                </SelectList>
+              </Select>
+            </FormControl>
+
+            {type === PriceType.Recurring && (
+              <RecurringIntervalInput
+                interval={interval}
+                intervalCount={intervalCount}
+                onChangeInterval={setInterval}
+                onChangeIntervalCount={setIntervalCount}
+              />
+            )}
 
             <FormControl isInvalid={!!errors?.automaticRenew}>
               <Stack direction="row" align="center" spacing="5">

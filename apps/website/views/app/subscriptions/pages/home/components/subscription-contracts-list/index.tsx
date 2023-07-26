@@ -47,7 +47,7 @@ export const SubscriptionContractsList: FC<SubscriptionContractsListProps> = ({
                     {translate.formatMessage({ id: "status" })}
                   </TableHeaderCell>
                   <TableHeaderCell>
-                    {translate.formatMessage({ id: "period" })}
+                    {translate.formatMessage({ id: "duration" })}
                   </TableHeaderCell>
                 </TableRow>
               </TableHeader>

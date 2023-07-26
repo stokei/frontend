@@ -118,6 +118,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               </SidebarGroupButton>
               <SidebarGroupPanel>
                 <SidebarNavLink
+                  leftIcon="app"
                   as={NextLink}
                   href={baseRoutes.settings.home}
                   isActive={router.asPath === baseRoutes.settings.home}
@@ -125,6 +126,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   {translate.formatMessage({ id: "app" })}
                 </SidebarNavLink>
                 <SidebarNavLink
+                  leftIcon="website"
                   as={NextLink}
                   href={baseRoutes.settings.website}
                   isActive={router.asPath === baseRoutes.settings.website}
@@ -132,6 +134,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   {translate.formatMessage({ id: "website" })}
                 </SidebarNavLink>
                 <SidebarNavLink
+                  leftIcon="onboarding"
                   as={NextLink}
                   href={baseRoutes.onboardings.home}
                   isActive={isActiveRoute(baseRoutes.onboardings.home)}
@@ -139,6 +142,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   {translate.formatMessage({ id: "onboardings" })}
                 </SidebarNavLink>
                 <SidebarNavLink
+                  leftIcon="domain"
                   as={NextLink}
                   href={baseRoutes.settings.domains}
                   isActive={router.asPath === baseRoutes.settings.domains}

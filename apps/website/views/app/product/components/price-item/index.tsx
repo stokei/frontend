@@ -1,7 +1,7 @@
 import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
-import { BillingScheme } from "@/services/graphql/stokei";
+import { BillingScheme, PriceType } from "@/services/graphql/stokei";
 import { getI18nKeyFromRecurringInterval } from "@/utils";
 import {
   Badge,
@@ -37,6 +37,10 @@ export const PriceItem: FC<PriceItemProps> = memo(
     const isDefaultPrice = useMemo(
       () => !!price?.isDefault || !!isFirstPrice,
       [price, isFirstPrice]
+    );
+    const isRecurring = useMemo(
+      () => price?.type === PriceType.Recurring,
+      [price?.type]
     );
 
     const priceAmount = useMemo(() => {
@@ -95,12 +99,23 @@ export const PriceItem: FC<PriceItemProps> = memo(
           </Stack>
         </TableCell>
         <TableCell>
-          {`${price?.recurring?.intervalCount} `}
-          {translate
-            .formatMessage({
-              id: priceRecurringIntervalTypeKey as any,
-            })
-            ?.toLowerCase()}
+          {isRecurring ? (
+            <>
+              {price?.recurring?.intervalCount &&
+                `${price?.recurring?.intervalCount} `}
+              {translate
+                .formatMessage({
+                  id: priceRecurringIntervalTypeKey as any,
+                })
+                ?.toLowerCase()}
+            </>
+          ) : (
+            <Badge colorScheme="purple">
+              {translate.formatMessage({
+                id: "lifelong",
+              })}
+            </Badge>
+          )}
         </TableCell>
         <TableCell display="flex" justifyContent="flex-end">
           {!isDefaultPrice && (

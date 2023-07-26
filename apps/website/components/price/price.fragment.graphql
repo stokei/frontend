@@ -1,6 +1,7 @@
 fragment PriceComponent on Price {
   id
   parent
+  type
   nickname
   fromAmount
   amount

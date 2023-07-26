@@ -72,7 +72,7 @@ export const RecurringIntervalInput: FC<RecurringIntervalInputProps> = ({
       <Stack direction="row" spacing="5" align="flex-end">
         <Stack direction="column" spacing="0">
           <Label htmlFor="intervalCount">
-            {label || translate.formatMessage({ id: "period" })}
+            {label || translate.formatMessage({ id: "duration" })}
           </Label>
           <InputGroup>
             <Input
