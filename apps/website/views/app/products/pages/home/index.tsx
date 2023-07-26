@@ -12,10 +12,13 @@ import {
   NotFoundSubtitle,
   Pagination,
   Stack,
+  useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
+import { ProductFilters } from "./components/product-filters";
 import { ProductsList } from "./components/products-list";
 import {
   AdminProductPageProductFragment,
@@ -28,14 +31,23 @@ interface ProductsPageProps {}
 export const ProductsPage: FC<ProductsPageProps> = () => {
   const router = useRouter();
   const translate = useTranslations();
+  const [filteredProducts, setFilteredProducts] = useState<
+    AdminProductPageProductFragment[]
+  >([]);
   const [products, setProducts] = useState<AdminProductPageProductFragment[]>(
     []
   );
   const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();
+  const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
+    useDisclosure();
   const isCompleteIntegrations = useMemo(
     () => !!currentApp?.isIntegratedWithStripe || !!currentApp?.isStokei,
     [currentApp]
+  );
+  const filteredProductsIds = useMemo(
+    () => filteredProducts?.map((product) => product?.id),
+    [filteredProducts]
   );
 
   const [{ fetching: isLoading, data: dataProducts }] =
@@ -52,6 +64,9 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
             app: {
               equals: currentApp?.id,
             },
+            ...(filteredProductsIds?.length > 0 && {
+              ids: filteredProductsIds,
+            }),
           },
         },
         orderBy: {
@@ -68,23 +83,53 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
     router.push(routes.app({ appId: currentApp?.id }).products.add);
   };
 
+  const onChooseFilteredProduct = useCallback(
+    (filteredProduct?: AdminProductPageProductFragment) => {
+      if (filteredProduct) {
+        setFilteredProducts((filteredProducts) => [
+          ...filteredProducts,
+          filteredProduct,
+        ]);
+      }
+    },
+    []
+  );
+  const onRemoveFilteredProduct = useCallback(
+    (filteredProductRemoved?: AdminProductPageProductFragment) => {
+      if (filteredProductRemoved) {
+        setFilteredProducts((filteredProducts) =>
+          filteredProducts?.filter(
+            (filteredProduct) =>
+              filteredProduct?.id !== filteredProductRemoved?.id
+          )
+        );
+      }
+    },
+    []
+  );
+
   return (
     <AppLayout>
       <Navbar />
+      <ProductFilters
+        isOpen={isOpenFiltersDrawer}
+        onClose={onToggleFiltersDrawer}
+        currentProducts={filteredProducts}
+        onChooseCurrentProduct={onChooseFilteredProduct}
+        onRemoveChooseCurrentProduct={onRemoveFilteredProduct}
+        onResetCurrentProducts={() => setFilteredProducts([])}
+      />
+      {dataProducts?.products?.totalCount && (
+        <Container paddingTop="5">
+          <Header
+            productsTotalCount={dataProducts?.products?.totalCount || 0}
+            onOpenFilters={onToggleFiltersDrawer}
+          />
+        </Container>
+      )}
       <Container paddingY="5">
         <Stack direction="column" spacing="5">
           <OnboardingAlerts />
-
-          {products?.length >= 1 && (
-            <Box width="full">
-              <Button
-                onClick={goToAddProduct}
-                isDisabled={!isCompleteIntegrations}
-              >
-                {translate.formatMessage({ id: "addProduct" })}
-              </Button>
-            </Box>
-          )}
 
           {isLoading ? (
             <Loading />

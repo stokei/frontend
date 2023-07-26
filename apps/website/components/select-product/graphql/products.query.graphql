@@ -29,4 +29,38 @@ fragment AppProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
+
+  parent {
+    __typename
+    ...AppProductCourse
+    ...AppProductMaterial
+  }
+}
+
+fragment AppProductCourse on Course {
+  courseId: id
+  courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
+  instructors {
+    items {
+      id
+      instructor {
+        fullname
+      }
+    }
+  }
+}
+
+fragment AppProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
+    }
+  }
 }
