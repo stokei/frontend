@@ -1,23 +1,12 @@
+import { DownloadFileButton } from "@/components";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { getProductURL } from "@/utils";
 import { CustomerLayout } from "@/views/customers/layout";
-import {
-  Box,
-  Container,
-  Image,
-  Markdown,
-  Stack,
-  Text,
-  Title,
-} from "@stokei/ui";
+import { Box, Container, Image, Markdown, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
-import {
-  useGetAppSubscriptionContractsByItemMaterialsQuery,
-  AppSubscriptionContractsByItemMaterialProductMaterialFragment,
-} from "../../graphql/subscription-contracts.query.graphql.generated";
-import { DownloadButton } from "./components/download-button";
+import { useGetAppSubscriptionContractsByItemMaterialsQuery } from "../../graphql/subscription-contracts.query.graphql.generated";
 import { Navbar } from "./components/navbar";
 
 interface MaterialViewPageProps {}
@@ -88,7 +77,7 @@ export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
             </Stack>
           </Stack>
 
-          {material && <DownloadButton material={material} />}
+          {material && <DownloadFileButton fileId={material?.file?.id || ""} />}
 
           {material?.description && (
             <Box width="full" flexDirection="row">

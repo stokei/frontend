@@ -1,3 +1,4 @@
+import { DownloadFileButton } from "@/components";
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { getProductURL } from "@/utils";
@@ -5,7 +6,6 @@ import { Box, Container, Image, Markdown, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { CourseLayout } from "../../layout";
-import { DownloadButton } from "./components/download-button";
 import { Navbar } from "./components/navbar";
 import { useGetCustomersCoursePageMaterialQuery } from "./graphql/material.query.graphql.generated";
 
@@ -55,7 +55,7 @@ export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
             </Stack>
           </Stack>
 
-          {material && <DownloadButton material={material} />}
+          {material && <DownloadFileButton fileId={material?.file?.id || ""} />}
 
           {material?.description && (
             <Box width="full" flexDirection="row">

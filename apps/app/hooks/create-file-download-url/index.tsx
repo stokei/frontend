@@ -20,7 +20,7 @@ export const useCreateFileDownloadURL = () => {
         });
         if (!!response?.data?.url) {
           setURL(response?.data?.url);
-          return;
+          return response?.data?.url;
         }
         if (!!response.error?.graphQLErrors?.length) {
           response.error.graphQLErrors.map((error) =>
@@ -32,13 +32,25 @@ export const useCreateFileDownloadURL = () => {
           message: translate.formatMessage({ id: "somethingWentWrong" }),
         });
       }
+      return;
     },
     [onGenerate, onShowAPIError, translate]
   );
 
+  const onGenerateFileDownloadURLAndRedirectToURL = useCallback(
+    async (fileId: string) => {
+      const currentURL = await onGenerateFileDownloadURL(fileId);
+      if (currentURL) {
+        window.open(currentURL, "_blank");
+      }
+    },
+    [onGenerateFileDownloadURL]
+  );
+
   return {
     url,
-    onGenerateFileDownloadURL,
     isLoadingCreateFileDownloadURL,
+    onGenerateFileDownloadURL,
+    onGenerateFileDownloadURLAndRedirectToURL,
   };
 };
