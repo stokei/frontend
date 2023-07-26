@@ -74,6 +74,14 @@ export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
               {translate.formatMessage({ id: "modules" })}
             </SidebarNavLink>
             <SidebarNavLink
+              leftIcon="material"
+              as={NextLink}
+              href={baseRoute.materials.home}
+              isActive={isActiveRoute(baseRoute.materials.home)}
+            >
+              {translate.formatMessage({ id: "materials" })}
+            </SidebarNavLink>
+            <SidebarNavLink
               leftIcon="setting"
               as={NextLink}
               href={baseRoute.settings.home}

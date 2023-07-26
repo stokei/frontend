@@ -1,0 +1,28 @@
+query GetCourseMaterials(
+  $where: WhereDataFindAllMaterialsInput
+  $orderBy: OrderByDataFindAllMaterialsInput
+  $page: PaginationInput
+) {
+  materials(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...CourseMaterial
+    }
+  }
+}
+
+fragment CourseMaterial on Material {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+}

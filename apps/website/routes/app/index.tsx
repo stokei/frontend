@@ -39,6 +39,16 @@ export const routesApp = (data: { appId?: string }) => {
         settings: {
           home: baseCourseURL + "/settings",
         },
+        material: ({ material }: { material: string }) => {
+          const baseMaterialURL = baseCourseURL + "/materials/view/" + material;
+          return {
+            home: baseMaterialURL,
+          };
+        },
+        materials: {
+          home: baseCourseURL + "/materials",
+          add: baseCourseURL + "/materials/add",
+        },
       };
     },
     invoices: baseURL + "/invoices",

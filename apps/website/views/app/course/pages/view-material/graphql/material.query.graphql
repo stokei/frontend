@@ -1,0 +1,5 @@
+query GetCourseMaterial($material: String!) {
+  material(id: $material) {
+    ...CourseMaterial
+  }
+}

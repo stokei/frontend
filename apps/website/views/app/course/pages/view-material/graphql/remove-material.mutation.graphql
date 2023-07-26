@@ -1,0 +1,5 @@
+mutation RemoveCourseMaterial($input: RemoveMaterialInput!) {
+  removeMaterial(input: $input) {
+    ...CourseMaterial
+  }
+}

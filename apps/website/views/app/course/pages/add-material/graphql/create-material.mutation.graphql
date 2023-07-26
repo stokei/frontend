@@ -1,0 +1,5 @@
+mutation CreateCourseMaterial($input: CreateMaterialInput!) {
+  createMaterial(input: $input) {
+    ...CourseMaterial
+  }
+}

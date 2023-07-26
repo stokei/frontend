@@ -1,0 +1,20 @@
+query GetCustomersCoursePageMaterial($materialId: String!) {
+  material(id: $materialId) {
+    ...CustomersCoursePageMaterial
+  }
+}
+
+fragment CustomersCoursePageMaterial on Material {
+  id
+  name
+  description
+  file {
+    id
+    url
+  }
+  avatar {
+    file {
+      url
+    }
+  }
+}

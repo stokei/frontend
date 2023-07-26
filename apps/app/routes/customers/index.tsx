@@ -16,6 +16,15 @@ export const routesCustomers = {
       videos: baseCourseURL + "/videos",
       video: ({ video }: { video: string }) =>
         baseCourseURL + "/videos/" + video,
+      materials: {
+        home: baseCourseURL + "/materials",
+        view: ({ material }: { material: string }) => {
+          const baseMaterialURL = baseCourseURL + "/materials/" + material;
+          return {
+            home: baseMaterialURL,
+          };
+        },
+      },
     };
   },
   subscriptions: {
