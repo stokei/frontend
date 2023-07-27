@@ -7,7 +7,7 @@ export const Description: React.FC<DescriptionProps> = ({
   ...props
 }) => {
   return (
-    <Text wordBreak="break-word" fontSize="xs" color="text.400" {...props}>
+    <Text wordBreak="break-word" fontSize="sm" color="text.400" {...props}>
       {children}
     </Text>
   );

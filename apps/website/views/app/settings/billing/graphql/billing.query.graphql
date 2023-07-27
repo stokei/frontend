@@ -1,0 +1,31 @@
+query GetAppBilling {
+  billing {
+    ...AppBilling
+  }
+}
+
+fragment AppBilling on Billing {
+  total
+  currency {
+    id
+    minorUnit
+    symbol
+  }
+  items {
+    ...AppBillingItem
+  }
+}
+
+fragment AppBillingItem on BillingItem {
+  unitAmount
+  quantity
+  total
+  price {
+    nickname
+    currency {
+      id
+      minorUnit
+      symbol
+    }
+  }
+}

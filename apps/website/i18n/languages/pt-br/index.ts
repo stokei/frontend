@@ -1,5 +1,13 @@
 export const ptBRMessages = {
   me: "Eu",
+  billing: "Cobrança",
+  estimatedCost: "Custo estimado",
+  costsRelatedToTheUse: "Custos referente ao uso",
+  costsRelatedToTheUseDescription:
+    "Esta é uma estimativa do valor que você deve com base no seu uso atual no mês.",
+  currentCost: "Custo atual",
+  currentCostDescription:
+    "Este é o valor referente ao seu uso desde o dia 01 desse mês até o dia de hoje.",
   duration: "Duração",
   file: "Arquivo",
   files: "Arquivos",

@@ -12,7 +12,7 @@ export const DatePickerGroup: React.FC<
     [children]
   );
   return (
-    <Stack direction="row" spacing="2" align="center">
+    <Stack width="fit-content" direction="row" spacing="2" align="center">
       {Children?.map(cleanChildren, (child, index) => (
         <>
           {index > 0 && <Icon name="arrowRight" />}

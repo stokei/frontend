@@ -1,0 +1,65 @@
+query AppBillingPageInvoices(
+  $where: WhereDataFindAllInvoicesInput
+  $orderBy: OrderByDataFindAllInvoicesInput
+  $page: PaginationInput
+) {
+  invoices(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppBillingPageInvoice
+    }
+  }
+}
+
+fragment AppBillingPageInvoice on Invoice {
+  id
+  customer {
+    __typename
+    ... on App {
+      id
+      name
+      email
+      logo {
+        file {
+          url
+        }
+      }
+    }
+  }
+  subscriptionContract {
+    items(page: { limit: 1 }) {
+      items {
+        recurring {
+          usageType
+          intervalCount
+          interval
+        }
+      }
+    }
+  }
+  paymentMethod {
+    id
+    cardBrand
+    cardExpiryMonth
+    cardExpiryYear
+    lastFourCardNumber
+  }
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  status
+  totalAmount
+  subtotalAmount
+  url
+  paidAt
+  canceledAt
+  paymentErrorAt
+  createdAt
+}

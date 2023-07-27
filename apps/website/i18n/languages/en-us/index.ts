@@ -2,6 +2,14 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  billing: "Billing",
+  costsRelatedToTheUse: "Costs related to the use",
+  costsRelatedToTheUseDescription:
+    "This is an estimate of the amount you owe based on your current month-to-date usage.",
+  estimatedCost: "Estimated cost",
+  currentCost: "Current cost",
+  currentCostDescription:
+    "This is the value referring to its use from the 1st of that month until today",
   duration: "Duration",
   file: "File",
   files: "Files",

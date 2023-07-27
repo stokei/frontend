@@ -6,6 +6,9 @@ query CurrentGlobalApp {
     isIntegratedWithStripe
     stripeAccount
     status
+    currentSubscriptionContract {
+      id
+    }
     stokeiDomain {
       id
       name
