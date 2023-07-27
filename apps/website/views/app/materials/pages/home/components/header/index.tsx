@@ -5,10 +5,14 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 
 interface HeaderProps {
+  readonly onOpenFilters: () => void;
   readonly materialsTotalCount: number;
 }
 
-export const Header: FC<HeaderProps> = ({ materialsTotalCount }) => {
+export const Header: FC<HeaderProps> = ({
+  materialsTotalCount,
+  onOpenFilters,
+}) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -27,6 +31,13 @@ export const Header: FC<HeaderProps> = ({ materialsTotalCount }) => {
         {translate.formatMessage({ id: "total" })}: {materialsTotalCount || 0}
       </Title>
       <Spacer />
+      <Button
+        variant="ghost"
+        leftIcon={<Icon name="filters" />}
+        onClick={onOpenFilters}
+      >
+        {translate.formatMessage({ id: "filters" })}
+      </Button>
       <Button leftIcon={<Icon name="plus" />} onClick={onGoToAddMaterialsPage}>
         {translate.formatMessage({ id: "add" })}
       </Button>

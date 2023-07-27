@@ -19,18 +19,18 @@ import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-interface ProductFiltersProps {
+interface MaterialFiltersProps {
   readonly isOpen: boolean;
   readonly onClose: () => void;
-  readonly filteredProductQuery?: string;
-  readonly onChangeFilteredProductQuery: (value?: string) => void;
+  readonly filteredMaterialQuery?: string;
+  readonly onChangeFilteredMaterialQuery: (value?: string) => void;
 }
 
-export const ProductFilters: FC<ProductFiltersProps> = ({
+export const MaterialFilters: FC<MaterialFiltersProps> = ({
   isOpen,
   onClose,
-  filteredProductQuery,
-  onChangeFilteredProductQuery,
+  filteredMaterialQuery,
+  onChangeFilteredMaterialQuery,
 }) => {
   const translate = useTranslations();
 
@@ -51,12 +51,12 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
 
   useEffect(() => {
     reset({
-      name: filteredProductQuery || "",
+      name: filteredMaterialQuery || "",
     });
-  }, [filteredProductQuery, reset]);
+  }, [filteredMaterialQuery, reset]);
 
   const onSubmit = async ({ name }: z.infer<typeof validationSchema>) => {
-    onChangeFilteredProductQuery(name);
+    onChangeFilteredMaterialQuery(name);
     onClose?.();
   };
 
@@ -64,7 +64,7 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
     reset({
       name: "",
     });
-    onChangeFilteredProductQuery("");
+    onChangeFilteredMaterialQuery("");
     onClose?.();
   };
 

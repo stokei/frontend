@@ -1,7 +1,7 @@
-import React, { FormEvent, HTMLAttributes } from "react";
-import { chakra } from "@chakra-ui/react";
+import { chakra, PropsOf, HTMLChakraProps } from "@chakra-ui/react";
+import React, { FormEvent } from "react";
 
-export interface FormProps extends HTMLAttributes<HTMLFormElement> {}
+export type FormProps = HTMLChakraProps<"form">;
 export const Form: React.FC<FormProps> = ({ children, ...props }) => {
   const FormComponent = chakra.form;
   const onSubmitForm = (e: FormEvent<HTMLFormElement>) => {

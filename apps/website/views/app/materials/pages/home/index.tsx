@@ -10,10 +10,12 @@ import {
   NotFoundSubtitle,
   Pagination,
   Stack,
+  useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import { Header } from "./components/header";
+import { MaterialFilters } from "./components/material-filters";
 import { MaterialsList } from "./components/materials-list";
 import { Navbar } from "./components/navbar";
 import { useGetAppMaterialsQuery } from "./graphql/materials.query.graphql.generated";
@@ -22,10 +24,13 @@ import { Loading } from "./loading";
 interface MaterialsHomePageProps {}
 
 export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
+  const [filteredMaterialQuery, setFilteredMaterialQuery] = useState<string>();
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();
   const translate = useTranslations();
+  const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
+    useDisclosure();
 
   const [{ data: dataGetMaterials, fetching: isLoadingGetMaterials }] =
     useGetAppMaterialsQuery({
@@ -44,6 +49,11 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
             parent: {
               equals: currentApp?.id,
             },
+            ...(filteredMaterialQuery && {
+              name: {
+                startsWith: filteredMaterialQuery,
+              },
+            }),
           },
         },
       },
@@ -61,13 +71,18 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
     <AppLayout>
       <Navbar />
       <Stack direction="column" paddingY="5" spacing="5">
-        {dataGetMaterials?.materials?.totalCount && (
-          <Container>
-            <Header
-              materialsTotalCount={dataGetMaterials?.materials?.totalCount || 0}
-            />
-          </Container>
-        )}
+        <MaterialFilters
+          isOpen={isOpenFiltersDrawer}
+          onClose={onToggleFiltersDrawer}
+          filteredMaterialQuery={filteredMaterialQuery}
+          onChangeFilteredMaterialQuery={setFilteredMaterialQuery}
+        />
+        <Container>
+          <Header
+            materialsTotalCount={dataGetMaterials?.materials?.totalCount || 0}
+            onOpenFilters={onToggleFiltersDrawer}
+          />
+        </Container>
 
         {isLoadingGetMaterials ? (
           <Loading />

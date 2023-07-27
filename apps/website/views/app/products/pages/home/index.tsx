@@ -29,11 +29,8 @@ import { Loading } from "./loading";
 interface ProductsPageProps {}
 
 export const ProductsPage: FC<ProductsPageProps> = () => {
-  const router = useRouter();
   const translate = useTranslations();
-  const [filteredProducts, setFilteredProducts] = useState<
-    AdminProductPageProductFragment[]
-  >([]);
+  const [filteredProductQuery, setFilteredProductQuery] = useState<string>();
   const [products, setProducts] = useState<AdminProductPageProductFragment[]>(
     []
   );
@@ -41,14 +38,6 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
   const { currentPage, onChangePage } = usePagination();
   const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
     useDisclosure();
-  const isCompleteIntegrations = useMemo(
-    () => !!currentApp?.isIntegratedWithStripe || !!currentApp?.isStokei,
-    [currentApp]
-  );
-  const filteredProductsIds = useMemo(
-    () => filteredProducts?.map((product) => product?.id),
-    [filteredProducts]
-  );
 
   const [{ fetching: isLoading, data: dataProducts }] =
     useGetAdminProductPageProductsQuery({
@@ -64,8 +53,10 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
             app: {
               equals: currentApp?.id,
             },
-            ...(filteredProductsIds?.length > 0 && {
-              ids: filteredProductsIds,
+            ...(filteredProductQuery && {
+              name: {
+                startsWith: filteredProductQuery,
+              },
             }),
           },
         },
@@ -79,54 +70,22 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
     setProducts(dataProducts?.products?.items || []);
   }, [dataProducts]);
 
-  const goToAddProduct = () => {
-    router.push(routes.app({ appId: currentApp?.id }).products.add);
-  };
-
-  const onChooseFilteredProduct = useCallback(
-    (filteredProduct?: AdminProductPageProductFragment) => {
-      if (filteredProduct) {
-        setFilteredProducts((filteredProducts) => [
-          ...filteredProducts,
-          filteredProduct,
-        ]);
-      }
-    },
-    []
-  );
-  const onRemoveFilteredProduct = useCallback(
-    (filteredProductRemoved?: AdminProductPageProductFragment) => {
-      if (filteredProductRemoved) {
-        setFilteredProducts((filteredProducts) =>
-          filteredProducts?.filter(
-            (filteredProduct) =>
-              filteredProduct?.id !== filteredProductRemoved?.id
-          )
-        );
-      }
-    },
-    []
-  );
-
   return (
     <AppLayout>
       <Navbar />
       <ProductFilters
         isOpen={isOpenFiltersDrawer}
         onClose={onToggleFiltersDrawer}
-        currentProducts={filteredProducts}
-        onChooseCurrentProduct={onChooseFilteredProduct}
-        onRemoveChooseCurrentProduct={onRemoveFilteredProduct}
-        onResetCurrentProducts={() => setFilteredProducts([])}
+        filteredProductQuery={filteredProductQuery}
+        onChangeFilteredProductQuery={setFilteredProductQuery}
       />
-      {dataProducts?.products?.totalCount && (
-        <Container paddingTop="5">
-          <Header
-            productsTotalCount={dataProducts?.products?.totalCount || 0}
-            onOpenFilters={onToggleFiltersDrawer}
-          />
-        </Container>
-      )}
+      <Container paddingTop="5">
+        <Header
+          productsTotalCount={dataProducts?.products?.totalCount || 0}
+          onOpenFilters={onToggleFiltersDrawer}
+        />
+      </Container>
+
       <Container paddingY="5">
         <Stack direction="column" spacing="5">
           <OnboardingAlerts />
@@ -141,12 +100,6 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
                   <NotFoundSubtitle>
                     {translate.formatMessage({ id: "productsNotFound" })}
                   </NotFoundSubtitle>
-                  <Button
-                    onClick={goToAddProduct}
-                    isDisabled={!isCompleteIntegrations}
-                  >
-                    {translate.formatMessage({ id: "addProduct" })}
-                  </Button>
                 </NotFound>
               ) : (
                 <ProductsList products={products} />
