@@ -2844,8 +2844,9 @@ export type SubscriptionContractItem = {
   parent: Scalars['String'];
   price?: Maybe<Price>;
   product?: Maybe<SubscriptionContractItemProductUnion>;
-  quantity: Scalars['Int'];
+  quantity: Scalars['Float'];
   recurring?: Maybe<Recurring>;
+  total?: Maybe<Scalars['Float']>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };

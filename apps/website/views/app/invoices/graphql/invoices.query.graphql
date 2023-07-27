@@ -49,6 +49,8 @@ fragment AppInvoice on Invoice {
           __typename
           ...InvoiceProductCourse
           ...InvoiceProductPlan
+          ...InvoiceProductMaterial
+          ...InvoiceProductProduct
         }
       }
     }
@@ -88,4 +90,24 @@ fragment InvoiceProductCourse on Course {
 fragment InvoiceProductPlan on Plan {
   planId: id
   planName: name
+}
+
+fragment InvoiceProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment InvoiceProductProduct on Product {
+  productId: id
+  productName: name
+  avatar {
+    file {
+      url
+    }
+  }
 }

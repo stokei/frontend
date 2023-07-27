@@ -10,13 +10,17 @@ export type GetAppInvoicesQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAppInvoicesQuery = { __typename?: 'Query', invoices: { __typename?: 'Invoices', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Invoice', id: string, status: Types.InvoiceStatus, totalAmount: number, subtotalAmount: number, url?: string | null, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, customer?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, subscriptionContract?: { __typename?: 'SubscriptionContract', items?: { __typename?: 'SubscriptionContractItems', items?: Array<{ __typename?: 'SubscriptionContractItem', product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material' } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product' } | null }> | null } | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } }> | null } };
+export type GetAppInvoicesQuery = { __typename?: 'Query', invoices: { __typename?: 'Invoices', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Invoice', id: string, status: Types.InvoiceStatus, totalAmount: number, subtotalAmount: number, url?: string | null, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, customer?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, subscriptionContract?: { __typename?: 'SubscriptionContract', items?: { __typename?: 'SubscriptionContractItems', items?: Array<{ __typename?: 'SubscriptionContractItem', product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null }> | null } | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } }> | null } };
 
-export type AppInvoiceFragment = { __typename?: 'Invoice', id: string, status: Types.InvoiceStatus, totalAmount: number, subtotalAmount: number, url?: string | null, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, customer?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, subscriptionContract?: { __typename?: 'SubscriptionContract', items?: { __typename?: 'SubscriptionContractItems', items?: Array<{ __typename?: 'SubscriptionContractItem', product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material' } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product' } | null }> | null } | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } };
+export type AppInvoiceFragment = { __typename?: 'Invoice', id: string, status: Types.InvoiceStatus, totalAmount: number, subtotalAmount: number, url?: string | null, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, customer?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, subscriptionContract?: { __typename?: 'SubscriptionContract', items?: { __typename?: 'SubscriptionContractItems', items?: Array<{ __typename?: 'SubscriptionContractItem', product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null }> | null } | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } };
 
 export type InvoiceProductCourseFragment = { __typename?: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
 export type InvoiceProductPlanFragment = { __typename?: 'Plan', planId: string, planName: string };
+
+export type InvoiceProductMaterialFragment = { __typename?: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+
+export type InvoiceProductProductFragment = { __typename?: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
 export const InvoiceProductCourseFragmentDoc = gql`
     fragment InvoiceProductCourse on Course {
@@ -33,6 +37,28 @@ export const InvoiceProductPlanFragmentDoc = gql`
     fragment InvoiceProductPlan on Plan {
   planId: id
   planName: name
+}
+    `;
+export const InvoiceProductMaterialFragmentDoc = gql`
+    fragment InvoiceProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+    `;
+export const InvoiceProductProductFragmentDoc = gql`
+    fragment InvoiceProductProduct on Product {
+  productId: id
+  productName: name
+  avatar {
+    file {
+      url
+    }
+  }
 }
     `;
 export const AppInvoiceFragmentDoc = gql`
@@ -69,6 +95,8 @@ export const AppInvoiceFragmentDoc = gql`
           __typename
           ...InvoiceProductCourse
           ...InvoiceProductPlan
+          ...InvoiceProductMaterial
+          ...InvoiceProductProduct
         }
       }
     }
@@ -95,7 +123,9 @@ export const AppInvoiceFragmentDoc = gql`
   createdAt
 }
     ${InvoiceProductCourseFragmentDoc}
-${InvoiceProductPlanFragmentDoc}`;
+${InvoiceProductPlanFragmentDoc}
+${InvoiceProductMaterialFragmentDoc}
+${InvoiceProductProductFragmentDoc}`;
 export const GetAppInvoicesDocument = gql`
     query GetAppInvoices($where: WhereDataFindAllInvoicesInput, $orderBy: OrderByDataFindAllInvoicesInput, $page: PaginationInput) {
   invoices(where: $where, orderBy: $orderBy, page: $page) {
