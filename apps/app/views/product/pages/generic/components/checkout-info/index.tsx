@@ -49,12 +49,7 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
       height="fit-content"
       flexDirection="column"
     >
-      <Card
-        width="full"
-        background="background.50"
-        flex="auto"
-        marginTop={["0", "0", "-100px", "-100px"]}
-      >
+      <Card width="full" background="background.50" flex="auto">
         <CardBody>
           <Stack direction="column" spacing="4">
             <Image
