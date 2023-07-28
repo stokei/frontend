@@ -39,7 +39,7 @@ export const CoursePage: FC<CoursePageProps> = ({ product }) => {
           direction={["column-reverse", "column-reverse", "row", "row"]}
         >
           <Stack spacing="10" direction="column" width="auto" flex="1">
-            <ModulesList courseId={course?.id} />
+            <ModulesList courseId={product?.parentId || ""} />
 
             {!!product?.features?.totalCount && (
               <Features features={product?.features} />

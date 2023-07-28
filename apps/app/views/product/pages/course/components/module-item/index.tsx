@@ -57,3 +57,5 @@ export const ModuleItem: FC<ModuleItemProps> = memo(({ module }) => {
     </>
   );
 });
+
+ModuleItem.displayName = "ModuleItem";
