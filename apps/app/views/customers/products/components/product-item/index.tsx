@@ -27,7 +27,7 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
   const router = useRouter();
   const translate = useTranslations();
   const goToCheckout = () =>
-    router.push(routes.checkout.home({ product: product?.id }));
+    router.push(routes.product.home({ product: product?.id }));
 
   const course = useMemo(
     () => (product?.parent?.__typename === "Course" ? product?.parent : null),
