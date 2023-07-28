@@ -1,0 +1,24 @@
+query GetProductPageFeatures(
+  $where: WhereDataFindAllFeaturesInput
+  $orderBy: OrderByDataFindAllFeaturesInput
+  $page: PaginationInput
+) {
+  features(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    totalCount
+    items {
+      ...ProductPageFeature
+    }
+  }
+}
+
+fragment ProductPageFeature on Feature {
+  id
+  name
+  description
+}

@@ -22,11 +22,11 @@ import {
 import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
-import { useUpdateProductMutation } from "../../graphql/update-product.mutation.graphql.generated";
-import { Section } from "../section";
-import { SectionContent } from "../section-content";
-import { SectionInformation } from "../section-information";
+import { ProductPageProductFragment } from "../../../../graphql/product.query.graphql.generated";
+import { useUpdateProductMutation } from "../../../../graphql/update-product.mutation.graphql.generated";
+import { Section } from "../../../../components/section";
+import { SectionContent } from "../../../../components/section-content";
+import { SectionInformation } from "../../../../components/section-information";
 
 interface ProductInformationProps {
   currentProduct?: ProductPageProductFragment;

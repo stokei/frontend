@@ -1,5 +1,9 @@
 export const ptBRMessages = {
   me: "Eu",
+  descriptionIsRequired: "Descrição é obrigatório",
+  addFeature: "Adicionar característica",
+  feature: "Característica",
+  features: "Características",
   quantity: "Quantidade",
   billing: "Cobrança",
   estimatedCost: "Custo estimado",
@@ -37,6 +41,9 @@ export const ptBRMessages = {
     "Você realmente gostaria de remover o domínio {domain}?",
   wouldYouReallyLikeToRemoveMaterial:
     "Você realmente gostaria de remover o material?",
+  wouldYouReallyLikeToRemoveFeature:
+    "Você realmente gostaria de remover a característica?",
+  removeFeature: "Remover característica",
   removeDomain: "Remover domínio",
   subdomain: "Subdomínio",
   subdomains: "Subdomínios",

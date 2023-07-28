@@ -1,0 +1,5 @@
+mutation ProductPageRemoveFeature($input: RemoveFeatureInput!) {
+  removeFeature(input: $input) {
+    ...ProductPageFeature
+  }
+}

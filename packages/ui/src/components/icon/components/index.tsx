@@ -72,6 +72,7 @@ import {
 import {
   MdOutlineBuild,
   MdOutlineDomainVerification,
+  MdOutlineFeaturedPlayList,
   MdOutlineStorage,
 } from "react-icons/md";
 import {
@@ -175,3 +176,4 @@ export const DownloadIcon = AiOutlineCloudDownload;
 export const UploadIcon = AiOutlineCloudUpload;
 export const OnboardingIcon = AiOutlineLink;
 export const WebsiteIcon = MdOutlineBuild;
+export const FeatureIcon = MdOutlineFeaturedPlayList;

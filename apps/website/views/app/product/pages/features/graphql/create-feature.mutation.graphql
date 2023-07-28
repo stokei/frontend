@@ -1,0 +1,5 @@
+mutation ProductPageCreateFeature($input: CreateFeatureInput!) {
+  createFeature(input: $input) {
+    ...ProductPageFeature
+  }
+}

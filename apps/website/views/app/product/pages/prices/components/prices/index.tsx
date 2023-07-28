@@ -1,11 +1,10 @@
+import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { usePagination, useTranslations } from "@/hooks";
+import { OrderBy } from "@/services/graphql/stokei";
 import {
   Box,
   Button,
   ButtonGroup,
-  Card,
-  CardBody,
-  CardHeader,
   Loading,
   NotFound,
   NotFoundIcon,
@@ -22,15 +21,12 @@ import {
   useDisclosure,
 } from "@stokei/ui";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { Section } from "../../../../components/section";
+import { SectionContent } from "../../../../components/section-content";
+import { SectionInformation } from "../../../../components/section-information";
 import { useGetProductPagePricesQuery } from "../../graphql/prices.query.graphql.generated";
-import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
-import { PriceItem } from "../price-item";
-import { OrderBy, Price } from "@/services/graphql/stokei";
-import { SectionContent } from "../section-content";
-import { Section } from "../section";
-import { SectionInformation } from "../section-information";
 import { AddPriceDrawer } from "../add-price-drawer";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { PriceItem } from "../price-item";
 
 interface PricesProps {
   productId?: string;
@@ -60,7 +56,7 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
           },
         },
         page: {
-          limit: 5,
+          limit: 10,
           number: currentPage,
         },
         orderBy: {

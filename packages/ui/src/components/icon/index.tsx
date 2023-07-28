@@ -91,6 +91,7 @@ export const icons = {
   upload: IconComponent.UploadIcon,
   onboarding: IconComponent.OnboardingIcon,
   website: IconComponent.WebsiteIcon,
+  feature: IconComponent.FeatureIcon,
 };
 
 export type IconName = keyof typeof icons;

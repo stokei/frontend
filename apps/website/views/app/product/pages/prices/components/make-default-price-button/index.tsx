@@ -1,9 +1,7 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { Button, useToast } from "@stokei/ui";
 import { FC } from "react";
-import { useActivatePriceMutation } from "../../graphql/activate-price.mutation.graphql.generated";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useUpdateProductMutation } from "../../graphql/update-product.mutation.graphql.generated";
+import { useUpdateProductMutation } from "../../../../graphql/update-product.mutation.graphql.generated";
 
 interface MakeDefaultPriceButtonProps {
   priceId: string;

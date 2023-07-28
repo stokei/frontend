@@ -63,6 +63,8 @@ export const routesApp = (data: { appId?: string }) => {
       const baseProductURL = baseURL + "/products/" + product;
       return {
         home: baseProductURL,
+        prices: baseProductURL + "/prices",
+        features: baseProductURL + "/features",
       };
     },
     products: {

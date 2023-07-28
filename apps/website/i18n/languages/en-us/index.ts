@@ -2,6 +2,10 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  descriptionIsRequired: "Description is required",
+  addFeature: "Add feature",
+  feature: "Feature",
+  features: "Features",
   quantity: "Quantity",
   billing: "Billing",
   costsRelatedToTheUse: "Costs related to the use",
@@ -39,6 +43,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
     "Would you really like to remove material?",
   dontKnowHowToDoThisContactSupportViaEmail:
     "Don't know how to do this? Contact support via email {email}.",
+  wouldYouReallyLikeToRemoveFeature: "Would you really like to remove feature?",
+  removeFeature: "Remove feature",
   removeDomain: "Remove domain",
   subdomain: "Subdomain",
   subdomains: "Subdomains",
