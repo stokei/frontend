@@ -92,6 +92,7 @@ export const icons = {
   onboarding: IconComponent.OnboardingIcon,
   website: IconComponent.WebsiteIcon,
   feature: IconComponent.FeatureIcon,
+  catalog: IconComponent.CatalogIcon,
 };
 
 export type IconName = keyof typeof icons;

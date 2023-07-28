@@ -9,10 +9,15 @@ export const routesApp = (data: { appId?: string }) => {
       subscription: ({ subscription }: { subscription?: string }) =>
         baseURL + "/subscriptions/view/" + subscription,
     },
+    catalog: ({ catalog }: { catalog?: string }) => {
+      const baseCatalogURL = baseURL + "/catalogs/" + catalog;
+      return {
+        home: baseCatalogURL,
+      };
+    },
     catalogs: {
       home: baseURL + "/catalogs",
-      catalog: ({ catalog }: { catalog?: string }) =>
-        baseURL + "/catalogs/" + catalog,
+      add: baseURL + "/catalogs/add",
     },
     onboardings: {
       home: baseURL + "/onboardings",

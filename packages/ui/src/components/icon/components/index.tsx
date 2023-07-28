@@ -82,6 +82,7 @@ import {
   RxCaretUp,
 } from "react-icons/rx";
 import { TbApps } from "react-icons/tb";
+import { GrCatalog } from "react-icons/gr";
 
 import {
   RiCheckboxBlankCircleLine,
@@ -177,3 +178,4 @@ export const UploadIcon = AiOutlineCloudUpload;
 export const OnboardingIcon = AiOutlineLink;
 export const WebsiteIcon = MdOutlineBuild;
 export const FeatureIcon = MdOutlineFeaturedPlayList;
+export const CatalogIcon = GrCatalog;

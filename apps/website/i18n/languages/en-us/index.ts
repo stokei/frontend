@@ -311,6 +311,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   subscriptions: "Subscriptions",
   product: "Product",
   products: "Products",
+  allProducts: "All products",
   chooseYourCard: "Choose your card",
   creditCard: "Credit Card",
   validUntil: "Valid until",

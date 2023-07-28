@@ -11,33 +11,26 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useEffect, useState } from "react";
+import { FC, useMemo, useState } from "react";
+import { CatalogFilters } from "./components/catalog-filters";
+import { CatalogsList } from "./components/catalogs-list";
 import { Header } from "./components/header";
-import { ProductFilters } from "./components/product-filters";
-import { ProductsList } from "./components/products-list";
 import { Navbar } from "./components/navbar";
-import {
-  AdminProductPageProductFragment,
-  useGetAdminProductPageProductsQuery,
-} from "./graphql/products.query.graphql.generated";
+import { useGetAdminCatalogsPageCatalogsQuery } from "./graphql/catalogs.query.graphql.generated";
 import { Loading } from "./loading";
-import { StokeiApiIdPrefix } from "@/constants/stokei-api-id-prefix";
 
-interface ProductsPageProps {}
+interface CatalogsPageProps {}
 
-export const ProductsPage: FC<ProductsPageProps> = () => {
+export const CatalogsPage: FC<CatalogsPageProps> = () => {
+  const [filteredCatalogQuery, setFilteredCatalogQuery] = useState<string>();
   const translate = useTranslations();
-  const [filteredProductQuery, setFilteredProductQuery] = useState<string>();
-  const [products, setProducts] = useState<AdminProductPageProductFragment[]>(
-    []
-  );
   const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();
   const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
     useDisclosure();
 
-  const [{ fetching: isLoading, data: dataProducts }] =
-    useGetAdminProductPageProductsQuery({
+  const [{ fetching: isLoading, data: dataCatalogs }] =
+    useGetAdminCatalogsPageCatalogsQuery({
       pause: !currentApp,
       requestPolicy: "network-only",
       variables: {
@@ -47,17 +40,9 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
         },
         where: {
           AND: {
-            app: {
+            parent: {
               equals: currentApp?.id,
             },
-            parent: {
-              startsWith: StokeiApiIdPrefix.MATERIALS,
-            },
-            ...(filteredProductQuery && {
-              name: {
-                startsWith: filteredProductQuery,
-              },
-            }),
           },
         },
         orderBy: {
@@ -66,23 +51,24 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
       },
     });
 
-  useEffect(() => {
-    setProducts(dataProducts?.products?.items || []);
-  }, [dataProducts]);
+  const catalogs = useMemo(
+    () => dataCatalogs?.catalogs?.items || [],
+    [dataCatalogs]
+  );
 
   return (
     <AppLayout>
       <Navbar />
-      <ProductFilters
+      <CatalogFilters
         isOpen={isOpenFiltersDrawer}
         onClose={onToggleFiltersDrawer}
-        filteredProductQuery={filteredProductQuery}
-        onChangeFilteredProductQuery={setFilteredProductQuery}
+        filteredCatalogQuery={filteredCatalogQuery}
+        onChangeFilteredCatalogQuery={setFilteredCatalogQuery}
       />
       <Container paddingTop="5">
         <Header
-          productsTotalCount={dataProducts?.products?.totalCount || 0}
           onOpenFilters={onToggleFiltersDrawer}
+          catalogsTotalCount={dataCatalogs?.catalogs?.totalCount || 0}
         />
       </Container>
 
@@ -94,27 +80,27 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
             <Loading />
           ) : (
             <>
-              {!products?.length ? (
+              {!catalogs?.length ? (
                 <NotFound>
                   <NotFoundIcon name="product" />
                   <NotFoundSubtitle>
-                    {translate.formatMessage({ id: "productsNotFound" })}
+                    {translate.formatMessage({ id: "catalogsNotFound" })}
                   </NotFoundSubtitle>
                 </NotFound>
               ) : (
-                <ProductsList products={products} />
+                <CatalogsList catalogs={catalogs} />
               )}
             </>
           )}
 
-          {dataProducts?.products?.totalPages &&
-            dataProducts?.products?.totalPages > 1 && (
+          {dataCatalogs?.catalogs?.totalPages &&
+            dataCatalogs?.catalogs?.totalPages > 1 && (
               <Pagination
                 currentPage={currentPage}
                 onChangePage={onChangePage}
-                hasNextPage={!!dataProducts?.products?.hasNextPage}
-                hasPreviousPage={!!dataProducts?.products?.hasPreviousPage}
-                totalPages={dataProducts?.products?.totalPages || 1}
+                hasNextPage={!!dataCatalogs?.catalogs?.hasNextPage}
+                hasPreviousPage={!!dataCatalogs?.catalogs?.hasPreviousPage}
+                totalPages={dataCatalogs?.catalogs?.totalPages || 1}
               />
             )}
         </Stack>

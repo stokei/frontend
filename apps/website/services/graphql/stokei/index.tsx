@@ -3672,6 +3672,7 @@ export type WhereDataFindAllSubscriptionContractsByItemInput = {
   app?: InputMaybe<WhereDataStringInput>;
   parent?: InputMaybe<WhereDataSearchInput>;
   product?: InputMaybe<WhereDataSearchInput>;
+  status?: InputMaybe<SubscriptionContractStatus>;
 };
 
 export type WhereDataFindAllSubscriptionContractsDataInput = {

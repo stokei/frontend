@@ -314,6 +314,7 @@ export const ptBRMessages = {
   subscriptions: "Assinaturas",
   product: "Produto",
   products: "Produtos",
+  allProducts: "Todos produtos",
   cancel: "Cancelar",
   chooseYourCard: "Escolha seu cartão",
   creditCard: "Cartão de Credito",
