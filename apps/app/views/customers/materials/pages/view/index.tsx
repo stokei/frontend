@@ -1,6 +1,7 @@
 import { DownloadFileButton } from "@/components";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
+import { SubscriptionContractStatus } from "@/services/graphql/stokei";
 import { getProductURL } from "@/utils";
 import { CustomerLayout } from "@/views/customers/layout";
 import { Box, Container, Image, Markdown, Stack, Title } from "@stokei/ui";
@@ -40,6 +41,7 @@ export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
           product: {
             startsWith: materialId,
           },
+          status: SubscriptionContractStatus.Active,
         },
       },
     });

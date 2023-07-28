@@ -1,5 +1,6 @@
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
+import { SubscriptionContractStatus } from "@/services/graphql/stokei";
 import { CustomerLayout } from "@/views/customers/layout";
 import {
   Container,
@@ -10,13 +11,13 @@ import {
   Stack,
 } from "@stokei/ui";
 import { FC, useMemo } from "react";
-import { Header } from "./components/header";
-import { MaterialsList } from "./components/materials-list";
-import { Navbar } from "./components/navbar";
 import {
   AppSubscriptionContractsByItemMaterialProductMaterialFragment,
   useGetAppSubscriptionContractsByItemMaterialsQuery,
 } from "../../graphql/subscription-contracts.query.graphql.generated";
+import { Header } from "./components/header";
+import { MaterialsList } from "./components/materials-list";
+import { Navbar } from "./components/navbar";
 import { Loading } from "./loading";
 
 interface MaterialsHomePageProps {}
@@ -46,6 +47,7 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
           product: {
             startsWith: "material_",
           },
+          status: SubscriptionContractStatus.Active,
         },
       },
     });
