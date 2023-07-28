@@ -7,20 +7,16 @@ import { routes } from "@/routes";
 import { Box, Button, Card, CardBody, Image, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { ProductPageProductFragment } from "../../../graphql/product.query.graphql.generated";
-import { Features } from "../features";
 
 export interface CheckoutInfoProps {
   readonly productId?: string;
   readonly avatarURL?: string;
   readonly defaultPrice?: PriceComponentFragment | null;
-  readonly features?: ProductPageProductFragment["features"] | null;
 }
 
 export const CheckoutInfo: FC<CheckoutInfoProps> = ({
   productId,
   avatarURL,
-  features,
   defaultPrice,
 }) => {
   const router = useRouter();
@@ -68,7 +64,6 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
             <Button width="full" onClick={onRedirectToCheckout}>
               {translate.formatMessage({ id: "buyNow" })}
             </Button>
-            {!!features?.totalCount && <Features features={features} />}
           </Stack>
         </CardBody>
       </Card>

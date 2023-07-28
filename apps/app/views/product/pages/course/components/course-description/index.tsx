@@ -12,7 +12,9 @@ export const CourseDescription: FC<CourseDescriptionProps> = ({
   const translate = useTranslations();
   return (
     <Stack direction="column" spacing="4">
-      <Title size="md">{translate.formatMessage({ id: "description" })}</Title>
+      <Title size="md" color="primary.500">
+        {translate.formatMessage({ id: "description" })}
+      </Title>
       <Markdown text={description || ""} />
     </Stack>
   );

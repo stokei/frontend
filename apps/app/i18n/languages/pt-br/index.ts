@@ -1,5 +1,7 @@
 export const ptBRMessages = {
   me: "Eu",
+  feature: "Característica",
+  features: "Características",
   duration: "Duração",
   download: "Download",
   file: "Arquivo",

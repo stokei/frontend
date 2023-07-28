@@ -8,15 +8,21 @@ export type GetProductPageCourseQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetProductPageCourseQuery = { __typename?: 'Query', course: { __typename?: 'Course', id: string, description?: string | null, instructors?: { __typename?: 'CourseInstructors', totalCount: number, items?: Array<{ __typename?: 'CourseInstructor', id: string, instructor: { __typename?: 'Account', fullname: string } }> | null } | null } };
+export type GetProductPageCourseQuery = { __typename?: 'Query', course: { __typename?: 'Course', id: string, description?: string | null, instructors?: { __typename?: 'CourseInstructors', totalCount: number, items?: Array<{ __typename?: 'CourseInstructor', id: string, instructor: { __typename?: 'Account', id: string, fullname: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } }> | null } | null } };
 
-export type ProductPageCourseInstructorFragment = { __typename?: 'CourseInstructor', id: string, instructor: { __typename?: 'Account', fullname: string } };
+export type ProductPageCourseInstructorFragment = { __typename?: 'CourseInstructor', id: string, instructor: { __typename?: 'Account', id: string, fullname: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } };
 
 export const ProductPageCourseInstructorFragmentDoc = gql`
     fragment ProductPageCourseInstructor on CourseInstructor {
   id
   instructor {
+    id
     fullname
+    avatar {
+      file {
+        url
+      }
+    }
   }
 }
     `;

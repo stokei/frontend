@@ -1,13 +1,11 @@
 import { Container, Stack } from "@stokei/ui";
 import { FC, useMemo } from "react";
-import {
-  GetProductPageProductQuery,
-  ProductPageProductFragment,
-} from "../graphql/product.query.graphql.generated";
+import { ProductPageProductFragment } from "../graphql/product.query.graphql.generated";
 import { CheckoutInfo } from "./components/checkout-info";
 import { CourseDescription } from "./components/course-description";
 import { Features } from "./components/features";
 import { Header } from "./components/header";
+import { Instructors } from "./components/instructors";
 import { ModulesList } from "./components/modules-list";
 import { useGetProductPageCourseQuery } from "./graphql/course.query.graphql.generated";
 import { CourseLayout } from "./layout";
@@ -50,13 +48,16 @@ export const CoursePage: FC<CoursePageProps> = ({ product }) => {
             {product?.description && (
               <CourseDescription description={product?.description} />
             )}
+
+            {!!course?.instructors?.items?.length && (
+              <Instructors instructors={course?.instructors?.items} />
+            )}
           </Stack>
 
           <CheckoutInfo
             avatarURL={product?.avatar?.file?.url || ""}
             productId={product?.id}
             defaultPrice={product?.defaultPrice}
-            features={product?.features}
           />
         </Stack>
       </Container>

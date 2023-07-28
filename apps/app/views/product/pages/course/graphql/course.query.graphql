@@ -14,6 +14,12 @@ query GetProductPageCourse($course: String!) {
 fragment ProductPageCourseInstructor on CourseInstructor {
   id
   instructor {
+    id
     fullname
+    avatar {
+      file {
+        url
+      }
+    }
   }
 }

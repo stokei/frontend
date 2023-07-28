@@ -201,6 +201,21 @@ export type AuthResponse = {
   refreshToken: Scalars['String'];
 };
 
+export type Billing = {
+  __typename?: 'Billing';
+  currency?: Maybe<Currency>;
+  items?: Maybe<Array<BillingItem>>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+export type BillingItem = {
+  __typename?: 'BillingItem';
+  price?: Maybe<Price>;
+  quantity?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+  unitAmount?: Maybe<Scalars['Float']>;
+};
+
 export enum BillingScheme {
   PerUnit = 'PER_UNIT',
   Tiered = 'TIERED'
@@ -2147,6 +2162,7 @@ export type Query = {
   addresses: Addresses;
   app: App;
   apps: Apps;
+  billing: Billing;
   catalog: Catalog;
   catalogItem: CatalogItem;
   catalogItems: CatalogItems;
@@ -2844,7 +2860,7 @@ export type SubscriptionContractItem = {
   parent: Scalars['String'];
   price?: Maybe<Price>;
   product?: Maybe<SubscriptionContractItemProductUnion>;
-  quantity: Scalars['Int'];
+  quantity: Scalars['Float'];
   recurring?: Maybe<Recurring>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;

@@ -18,6 +18,7 @@ fragment ProductPageProduct on Product {
     items {
       id
       name
+      description
     }
   }
   defaultPrice {
