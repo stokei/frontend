@@ -1,18 +1,25 @@
 import { DownloadFileButton } from "@/components";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
+import { routes } from "@/routes";
 import { SubscriptionContractStatus } from "@/services/graphql/stokei";
 import { getProductURL } from "@/utils";
 import { CustomerLayout } from "@/views/customers/layout";
 import { Box, Container, Image, Markdown, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
-import { useGetAppSubscriptionContractsByItemMaterialsQuery } from "../../graphql/subscription-contracts.query.graphql.generated";
+import { FC, useEffect, useMemo, useState } from "react";
+import {
+  AppSubscriptionContractsByItemMaterialFragment,
+  AppSubscriptionContractsByItemMaterialProductMaterialFragment,
+  useGetAppSubscriptionContractsByItemMaterialsQuery,
+} from "../../graphql/subscription-contracts.query.graphql.generated";
 import { Navbar } from "./components/navbar";
 
 interface MaterialViewPageProps {}
 
 export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
+  const [material, setMaterial] =
+    useState<AppSubscriptionContractsByItemMaterialProductMaterialFragment>();
   const { currentAccount } = useCurrentAccount();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -23,30 +30,35 @@ export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
     [router.query?.materialId]
   );
 
-  const [{ data: dataGetMaterials, fetching: isLoadingGetMaterials }] =
-    useGetAppSubscriptionContractsByItemMaterialsQuery({
-      pause: !currentAccount || !materialId,
-      requestPolicy: "network-only",
-      variables: {
-        page: {
-          limit: 1,
-        },
-        where: {
-          app: {
-            equals: currentApp?.id,
-          },
-          parent: {
-            equals: currentAccount?.id,
-          },
-          product: {
-            startsWith: materialId,
-          },
-          status: SubscriptionContractStatus.Active,
-        },
+  const [
+    {
+      data: dataGetMaterials,
+      error: errorGetMaterials,
+      fetching: isLoadingGetMaterials,
+    },
+  ] = useGetAppSubscriptionContractsByItemMaterialsQuery({
+    pause: !currentAccount || !materialId,
+    requestPolicy: "network-only",
+    variables: {
+      page: {
+        limit: 1,
       },
-    });
+      where: {
+        app: {
+          equals: currentApp?.id,
+        },
+        parent: {
+          equals: currentAccount?.id,
+        },
+        product: {
+          startsWith: materialId,
+        },
+        status: SubscriptionContractStatus.Active,
+      },
+    },
+  });
 
-  const material = useMemo(() => {
+  useEffect(() => {
     const items = dataGetMaterials?.subscriptionContractsByItem?.items
       ?.map((item) => {
         const subscriptionContractItem = item?.items?.items?.[0];
@@ -55,8 +67,16 @@ export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
           : undefined;
       })
       .filter(Boolean);
-    return items?.[0];
-  }, [dataGetMaterials?.subscriptionContractsByItem?.items]);
+    const currentMaterial = items?.[0];
+    if (!!currentMaterial) {
+      setMaterial(currentMaterial);
+      return;
+    } else {
+      if (dataGetMaterials?.subscriptionContractsByItem?.totalCount === 0) {
+        router.push(routes.notFound);
+      }
+    }
+  }, [dataGetMaterials, errorGetMaterials, router]);
 
   return (
     <CustomerLayout>
