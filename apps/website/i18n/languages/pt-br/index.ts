@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   me: "Eu",
+  quantity: "Quantidade",
   billing: "Cobrança",
   estimatedCost: "Custo estimado",
   costsRelatedToTheUse: "Custos referente ao uso",

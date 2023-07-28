@@ -53,6 +53,15 @@ export const useTranslations = <TKeys = string>() => {
     return justNumbers ? parseFloat(justNumbers) : 0;
   }, []);
 
+  const formatNumber = useCallback((value: number) => {
+    if (!value) {
+      return 0;
+    }
+    return intl.formatNumber(value, {
+      unitDisplay: "long",
+    });
+  }, []);
+
   const formatDate = useCallback(
     (
       date: Parameters<Intl.DateTimeFormat["format"]>[0] | string,
@@ -99,6 +108,7 @@ export const useTranslations = <TKeys = string>() => {
 
   return {
     locale: intl.locale,
+    formatNumber,
     formatMessage,
     formatMoney,
     formatDate,

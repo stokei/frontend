@@ -21,11 +21,6 @@ fragment AppBillingItem on BillingItem {
   quantity
   total
   price {
-    nickname
-    currency {
-      id
-      minorUnit
-      symbol
-    }
+    ...PriceComponent
   }
 }
