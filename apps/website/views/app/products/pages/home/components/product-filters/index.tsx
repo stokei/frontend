@@ -1,3 +1,5 @@
+import { ProductType } from "@/constants/product-type";
+import { StokeiApiIdPrefix } from "@/constants/stokei-api-id-prefix";
 import { useTranslations } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -10,12 +12,19 @@ import {
   Form,
   FormControl,
   FormErrorMessage,
+  Icon,
+  IconName,
   Input,
   InputGroup,
   Label,
+  Select,
+  SelectInput,
+  SelectItem,
+  SelectList,
   Stack,
+  Text,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,6 +33,8 @@ interface ProductFiltersProps {
   readonly onClose: () => void;
   readonly filteredProductQuery?: string;
   readonly onChangeFilteredProductQuery: (value?: string) => void;
+  readonly currentProductType: ProductType;
+  readonly onChangeCurrentProductType: (value: ProductType) => void;
 }
 
 export const ProductFilters: FC<ProductFiltersProps> = ({
@@ -31,13 +42,14 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
   onClose,
   filteredProductQuery,
   onChangeFilteredProductQuery,
+  currentProductType,
+  onChangeCurrentProductType,
 }) => {
+  const [productType, setProductType] = useState<ProductType>(ProductType.ALL);
   const translate = useTranslations();
 
   const validationSchema = z.object({
-    name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
-    }),
+    name: z.string(),
   });
 
   const {
@@ -55,7 +67,12 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
     });
   }, [filteredProductQuery, reset]);
 
+  useEffect(() => {
+    setProductType(currentProductType);
+  }, [currentProductType]);
+
   const onSubmit = async ({ name }: z.infer<typeof validationSchema>) => {
+    onChangeCurrentProductType(productType);
     onChangeFilteredProductQuery(name);
     onClose?.();
   };
@@ -65,7 +82,33 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
       name: "",
     });
     onChangeFilteredProductQuery("");
+    onChangeCurrentProductType(ProductType.ALL);
     onClose?.();
+  };
+
+  const getProductTypeText = (item: ProductType) => {
+    const items: Record<ProductType, { text: string; iconName: IconName }> = {
+      [ProductType.ALL]: {
+        text: translate.formatMessage({ id: "all" }),
+        iconName: "product",
+      },
+      [ProductType.OTHER]: {
+        text: translate.formatMessage({ id: "other" }),
+        iconName: "product",
+      },
+      [ProductType.COURSE]: {
+        text: translate.formatMessage({ id: "courses" }),
+        iconName: "course",
+      },
+      [ProductType.MATERIAL]: {
+        text: translate.formatMessage({
+          id: "materials",
+        }),
+        iconName: "material",
+      },
+    };
+
+    return items[item];
   };
 
   return (
@@ -95,6 +138,51 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
                 />
               </InputGroup>
               <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+            </FormControl>
+            <FormControl>
+              <Label htmlFor="product-type">
+                {translate.formatMessage({ id: "productType" })}
+              </Label>
+              <Select
+                value={productType}
+                onChooseItem={setProductType}
+                onRemoveChooseItem={setProductType}
+              >
+                <SelectInput
+                  id="product-type"
+                  item={(item) => {
+                    const itemData = getProductTypeText(item);
+                    return (
+                      <Stack direction="row" spacing="5" align="center">
+                        <Icon name={itemData.iconName} color="primary.500" />
+                        <Text>{itemData.text}</Text>
+                      </Stack>
+                    );
+                  }}
+                />
+                <SelectList>
+                  <SelectItem value={ProductType.ALL}>
+                    <Stack direction="row" spacing="5" align="center">
+                      <Icon name="product" color="primary.500" />
+                      <Text>{translate.formatMessage({ id: "all" })}</Text>
+                    </Stack>
+                  </SelectItem>
+                  <SelectItem value={ProductType.COURSE}>
+                    <Stack direction="row" spacing="5" align="center">
+                      <Icon name="course" color="primary.500" />
+                      <Text>{translate.formatMessage({ id: "courses" })}</Text>
+                    </Stack>
+                  </SelectItem>
+                  <SelectItem value={ProductType.MATERIAL}>
+                    <Stack direction="row" spacing="5" align="center">
+                      <Icon name="material" color="primary.500" />
+                      <Text>
+                        {translate.formatMessage({ id: "materials" })}
+                      </Text>
+                    </Stack>
+                  </SelectItem>
+                </SelectList>
+              </Select>
             </FormControl>
           </Stack>
         </DrawerBody>

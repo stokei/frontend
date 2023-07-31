@@ -1,10 +1,10 @@
-import { CatalogsPage } from "@/views/app/catalogs";
+import { ProductsPage } from "@/views/app/catalog/pages/products";
 import { NextPage } from "next";
 
 interface Props {}
 
 const Page: NextPage<Props> = () => {
-  return <CatalogsPage />;
+  return <ProductsPage />;
 };
 
 export default Page;

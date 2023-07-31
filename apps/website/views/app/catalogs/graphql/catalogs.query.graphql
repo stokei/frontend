@@ -1,0 +1,28 @@
+query GetAdminCatalogsPageCatalogs(
+  $where: WhereDataFindAllCatalogsInput
+  $orderBy: OrderByDataFindAllCatalogsInput
+  $page: PaginationInput
+) {
+  catalogs(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AdminCatalogsPageCatalog
+    }
+  }
+}
+
+fragment AdminCatalogsPageCatalog on Catalog {
+  id
+  title
+  subtitle
+  items(page: { limit: 5 }) {
+    items {
+      ...SortedItemComponentCatalogItem
+    }
+  }
+}

@@ -1,0 +1,11 @@
+query GetCatalogPageCatalog($catalog: String!) {
+  catalog(id: $catalog) {
+    ...CatalogPageCatalog
+  }
+}
+
+fragment CatalogPageCatalog on Catalog {
+  id
+  title
+  subtitle
+}

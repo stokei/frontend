@@ -1,0 +1,60 @@
+query GetAdminCatalogPageCatalogItems(
+  $where: WhereDataFindAllCatalogItemsInput!
+  $orderBy: OrderByDataFindAllCatalogItemsInput
+  $page: PaginationInput
+) {
+  catalogItems(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    items {
+      ...AdminCatalogPageItem
+    }
+  }
+}
+
+fragment AdminCatalogPageItem on CatalogItem {
+  id
+  product {
+    ...AdminCatalogPageItemProduct
+  }
+}
+
+fragment AdminCatalogPageItemProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  parent {
+    __typename
+    ...AdminCatalogPageItemProductCourse
+    ...AdminCatalogPageItemProductMaterial
+    ...AdminCatalogPageItemProductApp
+  }
+}
+
+fragment AdminCatalogPageItemProductApp on App {
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment AdminCatalogPageItemProductCourse on Course {
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment AdminCatalogPageItemProductMaterial on Material {
+  avatar {
+    file {
+      url
+    }
+  }
+}

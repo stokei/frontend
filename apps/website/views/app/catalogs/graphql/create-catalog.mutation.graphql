@@ -1,0 +1,5 @@
+mutation AdminCatalogsPageCreateCatalog($input: CreateCatalogInput!) {
+  createCatalog(input: $input) {
+    ...AdminCatalogsPageCatalog
+  }
+}

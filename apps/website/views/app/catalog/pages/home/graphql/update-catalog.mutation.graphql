@@ -1,0 +1,5 @@
+mutation AdminCatalogPageUpdateCatalog($input: UpdateCatalogInput!) {
+  updateCatalog(input: $input) {
+    ...CatalogPageCatalog
+  }
+}

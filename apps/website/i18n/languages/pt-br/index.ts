@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   me: "Eu",
+  addCatalog: "Adicionar catálogo",
   descriptionIsRequired: "Descrição é obrigatório",
   addFeature: "Adicionar característica",
   feature: "Característica",

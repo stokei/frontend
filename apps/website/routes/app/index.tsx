@@ -13,6 +13,7 @@ export const routesApp = (data: { appId?: string }) => {
       const baseCatalogURL = baseURL + "/catalogs/" + catalog;
       return {
         home: baseCatalogURL,
+        products: baseCatalogURL + "/products",
       };
     },
     catalogs: {

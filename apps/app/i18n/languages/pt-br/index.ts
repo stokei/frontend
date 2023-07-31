@@ -1,5 +1,10 @@
 export const ptBRMessages = {
   me: "Eu",
+  kb: "kbyte",
+  min: "minuto",
+  un: "unidade",
+  each: "a cada",
+  per: "por",
   feature: "Característica",
   features: "Características",
   duration: "Duração",

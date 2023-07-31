@@ -22,11 +22,15 @@ import {
 } from "./graphql/products.query.graphql.generated";
 import { Loading } from "./loading";
 import { StokeiApiIdPrefix } from "@/constants/stokei-api-id-prefix";
+import { ProductType } from "@/constants/product-type";
 
 interface ProductsPageProps {}
 
 export const ProductsPage: FC<ProductsPageProps> = () => {
   const translate = useTranslations();
+  const [currentProductType, setCurrentProductType] = useState<ProductType>(
+    ProductType.ALL
+  );
   const [filteredProductQuery, setFilteredProductQuery] = useState<string>();
   const [products, setProducts] = useState<AdminProductPageProductFragment[]>(
     []
@@ -50,9 +54,11 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
             app: {
               equals: currentApp?.id,
             },
-            parent: {
-              startsWith: StokeiApiIdPrefix.MATERIALS,
-            },
+            ...(currentProductType !== ProductType.ALL && {
+              parent: {
+                startsWith: currentProductType,
+              },
+            }),
             ...(filteredProductQuery && {
               name: {
                 startsWith: filteredProductQuery,
@@ -76,6 +82,8 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
       <ProductFilters
         isOpen={isOpenFiltersDrawer}
         onClose={onToggleFiltersDrawer}
+        currentProductType={currentProductType}
+        onChangeCurrentProductType={setCurrentProductType}
         filteredProductQuery={filteredProductQuery}
         onChangeFilteredProductQuery={setFilteredProductQuery}
       />
