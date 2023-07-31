@@ -6,6 +6,7 @@ export * from "./download-file-button";
 export * from "./footer";
 export * from "./navbar";
 export * from "./price";
+export * from "./select-price";
 export * from "./sidebar";
 export * from "./sidebar-open-button";
 export * from "./sorted-item-factory";

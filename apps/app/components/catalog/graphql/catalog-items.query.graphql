@@ -6,74 +6,7 @@ query CatalogItems(
   catalogItems(where: $where, orderBy: $orderBy, page: $page) {
     totalCount
     items {
-      ...LandingPageCatalogItem
-    }
-  }
-}
-
-fragment LandingPageCatalogItem on CatalogItem {
-  id
-  product {
-    ...LandingPageCatalogItemProduct
-  }
-}
-
-fragment LandingPageCatalogItemProduct on Product {
-  id
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  defaultPrice {
-    ...PriceComponent
-  }
-  parent {
-    __typename
-    ...LandingPageCatalogItemProductCourse
-    ...LandingPageCatalogItemProductPlan
-    ...LandingPageCatalogItemProductMaterial
-  }
-}
-
-fragment LandingPageCatalogItemProductPlan on Plan {
-  planId: id
-  planName: name
-  features {
-    items {
-      id
-      name
-      description
-    }
-  }
-}
-
-fragment LandingPageCatalogItemProductCourse on Course {
-  courseId: id
-  courseName: name
-  avatar {
-    file {
-      url
-    }
-  }
-  instructors {
-    items {
-      id
-      instructor {
-        fullname
-      }
-    }
-  }
-}
-
-fragment LandingPageCatalogItemProductMaterial on Material {
-  materialId: id
-  materialName: name
-  avatar {
-    file {
-      url
+      ...SortedItemComponentCatalogItem
     }
   }
 }

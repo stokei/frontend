@@ -47,12 +47,25 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     });
 
   const product = useMemo(() => dataProduct?.product, [dataProduct]);
+  const priceURLParamId = useMemo(
+    () => router.query?.price?.toString() || "",
+    [router.query?.price]
+  );
 
   useEffect(() => {
-    if (product) {
-      setCurrentPrice(product.defaultPrice || undefined);
+    let priceSelected = product?.defaultPrice;
+    if (priceURLParamId) {
+      priceSelected = product?.prices?.items?.find(
+        (currentPriceItem) => priceURLParamId === currentPriceItem?.id
+      );
+      if (!priceSelected) {
+        priceSelected = product?.defaultPrice;
+      }
     }
-  }, [product]);
+    if (priceSelected) {
+      setCurrentPrice(priceSelected || undefined);
+    }
+  }, [priceURLParamId, product]);
 
   const onBuy = async () => {
     try {
@@ -131,7 +144,9 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                         isChecked={price?.id === currentPrice?.id}
                       >
                         <Stack direction="column" spacing="3">
-                          <Title fontSize="md">{price?.nickname}</Title>
+                          {price?.nickname && (
+                            <Title fontSize="md">{price?.nickname}</Title>
+                          )}
                           <Price price={price} />
                         </Stack>
                       </RadioCard>

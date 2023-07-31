@@ -85,6 +85,7 @@ export const Catalog: FC<CatalogProps> = memo(
                         name={item?.product?.name}
                         avatar={item?.product?.avatar?.file?.url || ""}
                         defaultPrice={item?.product?.defaultPrice}
+                        prices={item?.product?.prices}
                         parent={item?.product?.parent}
                       />
                     )

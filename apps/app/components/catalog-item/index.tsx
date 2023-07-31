@@ -10,7 +10,7 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, memo, useCallback, useMemo } from "react";
+import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
@@ -19,6 +19,7 @@ import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
+import { SelectPrice } from "../select-price";
 
 export interface CatalogItemProps {
   readonly productId?: string;
@@ -29,10 +30,15 @@ export interface CatalogItemProps {
     | SortedItemComponentCatalogItemProductFragment["parent"]
     | null;
   readonly defaultPrice?: PriceComponentFragment | null;
+  readonly prices?: SortedItemComponentCatalogItemProductFragment["prices"];
 }
 
 export const CatalogItem: FC<CatalogItemProps> = memo(
-  ({ productId, avatar, name, defaultPrice, parent }) => {
+  ({ productId, avatar, name, defaultPrice, parent, prices }) => {
+    const [currentPrice, setCurrentPrice] = useState<
+      PriceComponentFragment | undefined | null
+    >();
+
     const router = useRouter();
     const translate = useTranslations();
     const isAvailable = !!defaultPrice;
@@ -55,13 +61,28 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
       return;
     }, [avatar, parent]);
 
-    const goToCheckout = useCallback(() => {
-      router.push(routes.product.home({ product: productId || "" }));
-    }, [productId, router]);
+    useEffect(() => {
+      if (defaultPrice) {
+        setCurrentPrice(defaultPrice || undefined);
+      }
+    }, [defaultPrice]);
+
+    const goToProductDetails = useCallback(() => {
+      router.push({
+        pathname: routes.product.home({ product: productId || "" }),
+        query: {
+          price: currentPrice?.id,
+        },
+      });
+    }, [currentPrice?.id, productId, router]);
+
+    const onChoosePrice = useCallback((price?: PriceComponentFragment) => {
+      setCurrentPrice(price || null);
+    }, []);
 
     return (
-      <Card background="background.50" overflow="hidden">
-        <CardHeader position="relative" padding="0">
+      <Card background="background.50">
+        <CardHeader position="relative" padding="0" overflow="hidden">
           <Image
             width="full"
             src={currentAvatar}
@@ -86,7 +107,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
             <Title size="md" marginBottom="5">
               {name}
             </Title>
-            <Box width="full" flexDirection="column" flex="1">
+            <Stack spacing="3" direction="column">
               <Stack spacing="3" flex="1">
                 {!!course?.instructors?.items?.length && (
                   <Description>
@@ -97,18 +118,27 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
                 )}
               </Stack>
               <Box marginBottom="5">
-                {defaultPrice && <Price price={defaultPrice} />}
+                {!!prices?.items?.length && (
+                  <SelectPrice
+                    size="lg"
+                    showLabel={false}
+                    onChooseCurrentPrice={onChoosePrice}
+                    onRemoveChooseCurrentPrice={onChoosePrice}
+                    prices={prices?.items}
+                    currentPrice={currentPrice}
+                  />
+                )}
               </Box>
               <Button
                 width="full"
-                onClick={goToCheckout}
+                onClick={goToProductDetails}
                 isDisabled={!isAvailable}
               >
                 {translate.formatMessage({
                   id: isAvailable ? "buyNow" : "unavailable",
                 })}
               </Button>
-            </Box>
+            </Stack>
           </Box>
         </CardBody>
       </Card>

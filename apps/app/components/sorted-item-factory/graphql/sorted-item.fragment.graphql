@@ -58,6 +58,12 @@ fragment SortedItemComponentCatalogItemProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
+  prices {
+    totalCount
+    items {
+      ...PriceComponent
+    }
+  }
   parent {
     __typename
     ...SortedItemComponentCatalogItemProductCourse

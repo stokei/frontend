@@ -1,5 +1,5 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components";
+import { Price } from "@/components/price";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
@@ -16,7 +16,7 @@ import {
   Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
 import { Features } from "../../pages/generic/components/features";
 
@@ -42,26 +42,48 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
   const translate = useTranslations();
   const { isAuthenticated } = useCurrentAccount();
 
+  const priceURLParamId = useMemo(
+    () => router.query?.price?.toString() || "",
+    [router.query?.price]
+  );
+
   useEffect(() => {
-    if (defaultPrice) {
-      setCurrentPrice(defaultPrice || undefined);
+    let priceSelected = defaultPrice;
+    if (priceURLParamId) {
+      priceSelected = prices?.items?.find(
+        (currentPriceItem) => priceURLParamId === currentPriceItem?.id
+      );
+      if (!priceSelected) {
+        priceSelected = defaultPrice;
+      }
     }
-  }, [defaultPrice]);
+    if (priceSelected) {
+      setCurrentPrice(priceSelected || undefined);
+    }
+  }, [defaultPrice, priceURLParamId, prices?.items]);
 
   const onRedirectToCheckout = async () => {
     const checkoutURL = routes.checkout.home({
       product: productId || "",
     });
+    const urlParams = new URLSearchParams();
+    if (currentPrice?.id) {
+      urlParams.set("price", currentPrice?.id);
+    }
+    const urlParamsString = urlParams.toString()
+      ? "?" + urlParams.toString()
+      : "";
+
     if (!isAuthenticated) {
       router.push({
         pathname: routes.auth.login,
         query: {
-          redirectTo: checkoutURL,
+          redirectTo: checkoutURL + urlParamsString,
         },
       });
       return;
     }
-    router.push(checkoutURL);
+    router.push(checkoutURL + urlParamsString);
   };
 
   const onChoosePrice = useCallback(
@@ -101,7 +123,9 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
                     isChecked={price?.id === currentPrice?.id}
                   >
                     <Stack direction="column" spacing="3">
-                      <Title fontSize="md">{price?.nickname}</Title>
+                      {price?.nickname && (
+                        <Title fontSize="md">{price?.nickname}</Title>
+                      )}
                       <Price price={price} />
                     </Stack>
                   </RadioCard>
