@@ -1,7 +1,7 @@
 import { useTranslations } from "@/hooks";
 import { Description, Stack, Title } from "@stokei/ui";
 import { FC } from "react";
-import { ProductPageProductFragment } from "../../../graphql/product.query.graphql.generated";
+import { ProductPageProductFragment } from "../../../../graphql/product.query.graphql.generated";
 
 export interface FeaturesProps {
   readonly features?: ProductPageProductFragment["features"];

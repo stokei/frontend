@@ -4,17 +4,28 @@ import { PriceComponentFragment } from "@/components/price/price.fragment.graphq
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
-import { Box, Button, Card, CardBody, Image, Stack } from "@stokei/ui";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Image,
+  RadioCard,
+  RadioGroup,
+  Stack,
+  Title,
+} from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
-import { ProductPageProductFragment } from "../../../graphql/product.query.graphql.generated";
-import { Features } from "../features";
+import { FC, useCallback, useEffect, useState } from "react";
+import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
+import { Features } from "../../pages/generic/components/features";
 
 export interface CheckoutInfoProps {
   readonly productId?: string;
   readonly avatarURL?: string;
   readonly defaultPrice?: PriceComponentFragment | null;
   readonly features?: ProductPageProductFragment["features"];
+  readonly prices?: ProductPageProductFragment["prices"];
 }
 
 export const CheckoutInfo: FC<CheckoutInfoProps> = ({
@@ -22,10 +33,20 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
   avatarURL,
   features,
   defaultPrice,
+  prices,
 }) => {
+  const [currentPrice, setCurrentPrice] =
+    useState<PriceComponentFragment | null>();
+
   const router = useRouter();
   const translate = useTranslations();
   const { isAuthenticated } = useCurrentAccount();
+
+  useEffect(() => {
+    if (defaultPrice) {
+      setCurrentPrice(defaultPrice || undefined);
+    }
+  }, [defaultPrice]);
 
   const onRedirectToCheckout = async () => {
     const checkoutURL = routes.checkout.home({
@@ -43,6 +64,16 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
     router.push(checkoutURL);
   };
 
+  const onChoosePrice = useCallback(
+    (priceId: string) => {
+      const price = prices?.items?.find(
+        (productPrice) => productPrice?.id === priceId
+      );
+      setCurrentPrice(price || null);
+    },
+    [prices]
+  );
+
   return (
     <Box
       width={["full", "full", "350px", "350px"]}
@@ -59,8 +90,30 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
               fallbackSrc={defaultNoImage.src}
               alt={translate.formatMessage({ id: "product" })}
             />
-            <Price size="lg" price={defaultPrice} />
-            <Button width="full" onClick={onRedirectToCheckout}>
+
+            <RadioGroup value={currentPrice?.id} onChange={onChoosePrice}>
+              <Stack spacing="5" direction="column">
+                {prices?.items?.map((price) => (
+                  <RadioCard
+                    key={price?.id}
+                    id={price?.id}
+                    value={price?.id}
+                    isChecked={price?.id === currentPrice?.id}
+                  >
+                    <Stack direction="column" spacing="3">
+                      <Title fontSize="md">{price?.nickname}</Title>
+                      <Price price={price} />
+                    </Stack>
+                  </RadioCard>
+                ))}
+              </Stack>
+            </RadioGroup>
+
+            <Button
+              width="full"
+              onClick={onRedirectToCheckout}
+              isDisabled={!currentPrice}
+            >
               {translate.formatMessage({ id: "buyNow" })}
             </Button>
             {!!features?.totalCount && <Features features={features} />}

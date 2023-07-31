@@ -5,7 +5,7 @@ import {
   GetProductPageProductDocument,
   GetProductPageProductQuery,
   ProductPageProductFragment,
-} from "@/views/product/pages/graphql/product.query.graphql.generated";
+} from "@/views/product/graphql/product.query.graphql.generated";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 
 interface Props {

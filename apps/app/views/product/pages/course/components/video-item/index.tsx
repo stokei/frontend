@@ -39,3 +39,5 @@ export const VideoItem: FC<VideoItemProps> = memo(
     );
   }
 );
+
+VideoItem.displayName = "VideoItem";

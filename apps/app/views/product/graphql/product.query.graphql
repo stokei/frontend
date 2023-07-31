@@ -24,6 +24,11 @@ fragment ProductPageProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
+  prices {
+    items {
+      ...PriceComponent
+    }
+  }
   parentId
   parent {
     __typename

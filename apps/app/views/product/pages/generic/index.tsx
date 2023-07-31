@@ -1,7 +1,7 @@
 import { Container, Stack } from "@stokei/ui";
 import { FC } from "react";
-import { ProductPageProductFragment } from "../graphql/product.query.graphql.generated";
-import { CheckoutInfo } from "./components/checkout-info";
+import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
+import { CheckoutInfo } from "../../components/checkout-info";
 import { Features } from "./components/features";
 import { GenericProductDescription } from "./components/generic-product-description";
 import { Header } from "./components/header";
@@ -39,6 +39,7 @@ export const GenericProductPage: FC<GenericProductPageProps> = ({
             productId={product?.id}
             defaultPrice={product?.defaultPrice}
             features={product?.features}
+            prices={product?.prices}
           />
         </Stack>
       </Container>

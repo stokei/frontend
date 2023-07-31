@@ -1,7 +1,7 @@
 import { Container, Stack } from "@stokei/ui";
 import { FC, useMemo } from "react";
-import { ProductPageProductFragment } from "../graphql/product.query.graphql.generated";
-import { CheckoutInfo } from "./components/checkout-info";
+import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
+import { CheckoutInfo } from "../../components/checkout-info";
 import { CourseDescription } from "./components/course-description";
 import { Features } from "./components/features";
 import { Header } from "./components/header";
@@ -58,6 +58,7 @@ export const CoursePage: FC<CoursePageProps> = ({ product }) => {
             avatarURL={product?.avatar?.file?.url || ""}
             productId={product?.id}
             defaultPrice={product?.defaultPrice}
+            prices={product?.prices}
           />
         </Stack>
       </Container>
