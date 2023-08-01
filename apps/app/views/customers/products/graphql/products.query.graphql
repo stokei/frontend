@@ -28,6 +28,12 @@ fragment CustomersProductsPageProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
+  prices {
+    totalCount
+    items {
+      ...PriceComponent
+    }
+  }
   parent {
     __typename
     ...CustomersProductsPageProductCourse

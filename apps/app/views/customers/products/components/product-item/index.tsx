@@ -12,31 +12,57 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, memo, useMemo } from "react";
+import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
-import { Price } from "@/components";
+import { Price, SelectPrice } from "@/components";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { CustomersProductsPageProductFragment } from "../../graphql/products.query.graphql.generated";
+import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 
 export interface ProductItemProps {
   readonly product: CustomersProductsPageProductFragment;
 }
 
 export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
+  const [currentPrice, setCurrentPrice] =
+    useState<PriceComponentFragment | null>();
+
   const router = useRouter();
   const translate = useTranslations();
-  const goToCheckout = () =>
-    router.push(routes.product.home({ product: product?.id }));
+
+  const goToProductDetails = useCallback(() => {
+    router.push({
+      pathname: routes.product.home({ product: product?.id || "" }),
+      query: {
+        price: currentPrice?.id,
+      },
+    });
+  }, [currentPrice?.id, product?.id, router]);
 
   const course = useMemo(
     () => (product?.parent?.__typename === "Course" ? product?.parent : null),
     [product]
   );
 
+  useEffect(() => {
+    if (product?.defaultPrice) {
+      setCurrentPrice(product?.defaultPrice || undefined);
+    }
+  }, [product?.defaultPrice]);
+
+  const onChoosePrice = useCallback((price?: PriceComponentFragment) => {
+    setCurrentPrice(price || null);
+  }, []);
+
   return (
-    <Card background="background.50" overflow="hidden">
-      <CardHeader position="relative" padding="0">
+    <Card background="background.50">
+      <CardHeader
+        position="relative"
+        padding="0"
+        borderTopRadius="md"
+        overflow="hidden"
+      >
         <Image
           width="full"
           src={product?.avatar?.file?.url || ""}
@@ -67,9 +93,18 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
               )}
             </Stack>
             <Box marginBottom="5">
-              {product?.defaultPrice && <Price price={product?.defaultPrice} />}
+              {!!product?.prices?.items?.length && (
+                <SelectPrice
+                  size="lg"
+                  showLabel={false}
+                  onChooseCurrentPrice={onChoosePrice}
+                  onRemoveChooseCurrentPrice={onChoosePrice}
+                  prices={product?.prices?.items}
+                  currentPrice={currentPrice}
+                />
+              )}
             </Box>
-            <Button width="full" onClick={goToCheckout}>
+            <Button width="full" onClick={goToProductDetails}>
               {translate.formatMessage({ id: "buyNow" })}
             </Button>
           </Box>

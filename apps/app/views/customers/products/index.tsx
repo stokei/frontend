@@ -1,3 +1,4 @@
+import { ProductType } from "@/constants/product-type";
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
 import { OrderBy } from "@/services/graphql/stokei";
 import {
@@ -7,10 +8,13 @@ import {
   NotFoundSubtitle,
   Pagination,
   Stack,
+  useDisclosure,
 } from "@stokei/ui";
 import { FC, useEffect, useState } from "react";
 import { CustomerLayout } from "../layout";
+import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
+import { ProductFilters } from "./components/product-filters";
 import { ProductsList } from "./components/products-list";
 import {
   CustomersProductsPageProductFragment,
@@ -22,11 +26,17 @@ interface ProductsPageProps {}
 
 export const ProductsPage: FC<ProductsPageProps> = () => {
   const translate = useTranslations();
+  const [currentProductType, setCurrentProductType] = useState<ProductType>(
+    ProductType.ALL
+  );
+  const [filteredProductQuery, setFilteredProductQuery] = useState<string>();
   const [products, setProducts] = useState<
     CustomersProductsPageProductFragment[]
   >([]);
   const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();
+  const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
+    useDisclosure();
 
   const [{ fetching: isLoading, data: dataProducts }] =
     useGetCustomersProductsPageProductsQuery({
@@ -42,6 +52,16 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
             app: {
               equals: currentApp?.id,
             },
+            ...(currentProductType !== ProductType.ALL && {
+              parent: {
+                startsWith: currentProductType,
+              },
+            }),
+            ...(filteredProductQuery && {
+              name: {
+                startsWith: filteredProductQuery,
+              },
+            }),
           },
         },
         orderBy: {
@@ -57,8 +77,20 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
   return (
     <CustomerLayout>
       <Navbar />
+      <ProductFilters
+        isOpen={isOpenFiltersDrawer}
+        onClose={onToggleFiltersDrawer}
+        currentProductType={currentProductType}
+        onChangeCurrentProductType={setCurrentProductType}
+        filteredProductQuery={filteredProductQuery}
+        onChangeFilteredProductQuery={setFilteredProductQuery}
+      />
       <Container paddingY="5">
         <Stack direction="column" spacing="5">
+          <Header
+            productsTotalCount={dataProducts?.products?.totalCount || 0}
+            onOpenFilters={onToggleFiltersDrawer}
+          />
           {isLoading ? (
             <Loading />
           ) : (

@@ -82,7 +82,12 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
 
     return (
       <Card background="background.50">
-        <CardHeader position="relative" padding="0" overflow="hidden">
+        <CardHeader
+          position="relative"
+          padding="0"
+          borderTopRadius="md"
+          overflow="hidden"
+        >
           <Image
             width="full"
             src={currentAvatar}

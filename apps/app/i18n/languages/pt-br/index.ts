@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   me: "Eu",
+  clear: "Limpar",
   kb: "kbyte",
   min: "minuto",
   un: "unidade",
