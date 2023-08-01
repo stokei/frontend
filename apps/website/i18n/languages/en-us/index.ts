@@ -3,6 +3,7 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
   addCatalog: "Add catalog",
+  addCatalogItem: "Add catalog item",
   descriptionIsRequired: "Description is required",
   addFeature: "Add feature",
   feature: "Feature",
@@ -42,9 +43,13 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
     "Would you really like to remove domain {domain}?",
   wouldYouReallyLikeToRemoveMaterial:
     "Would you really like to remove material?",
+  wouldYouReallyLikeToRemoveCatalogItem:
+    "Would you really like to remove catalog item?",
   dontKnowHowToDoThisContactSupportViaEmail:
     "Don't know how to do this? Contact support via email {email}.",
   wouldYouReallyLikeToRemoveFeature: "Would you really like to remove feature?",
+  remove: "Remove",
+  removeCatalogItem: "Remove catalog item",
   removeFeature: "Remove feature",
   removeDomain: "Remove domain",
   subdomain: "Subdomain",

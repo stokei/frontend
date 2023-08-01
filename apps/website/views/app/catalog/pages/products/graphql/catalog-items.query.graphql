@@ -6,19 +6,20 @@ query GetAdminCatalogPageCatalogItems(
   catalogItems(where: $where, orderBy: $orderBy, page: $page) {
     totalCount
     items {
-      ...AdminCatalogPageItem
+      ...AdminCatalogPageCatalogItem
     }
   }
 }
 
-fragment AdminCatalogPageItem on CatalogItem {
+fragment AdminCatalogPageCatalogItem on CatalogItem {
   id
+  catalog
   product {
-    ...AdminCatalogPageItemProduct
+    ...AdminCatalogPageCatalogItemProduct
   }
 }
 
-fragment AdminCatalogPageItemProduct on Product {
+fragment AdminCatalogPageCatalogItemProduct on Product {
   id
   name
   description
@@ -29,13 +30,13 @@ fragment AdminCatalogPageItemProduct on Product {
   }
   parent {
     __typename
-    ...AdminCatalogPageItemProductCourse
-    ...AdminCatalogPageItemProductMaterial
-    ...AdminCatalogPageItemProductApp
+    ...AdminCatalogPageCatalogItemProductCourse
+    ...AdminCatalogPageCatalogItemProductMaterial
+    ...AdminCatalogPageCatalogItemProductApp
   }
 }
 
-fragment AdminCatalogPageItemProductApp on App {
+fragment AdminCatalogPageCatalogItemProductApp on App {
   avatar {
     file {
       url
@@ -43,7 +44,7 @@ fragment AdminCatalogPageItemProductApp on App {
   }
 }
 
-fragment AdminCatalogPageItemProductCourse on Course {
+fragment AdminCatalogPageCatalogItemProductCourse on Course {
   avatar {
     file {
       url
@@ -51,7 +52,7 @@ fragment AdminCatalogPageItemProductCourse on Course {
   }
 }
 
-fragment AdminCatalogPageItemProductMaterial on Material {
+fragment AdminCatalogPageCatalogItemProductMaterial on Material {
   avatar {
     file {
       url

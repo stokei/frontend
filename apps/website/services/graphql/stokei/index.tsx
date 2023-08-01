@@ -248,6 +248,7 @@ export type CatalogItemsArgs = {
 export type CatalogItem = {
   __typename?: 'CatalogItem';
   app?: Maybe<App>;
+  catalog: Scalars['String'];
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];

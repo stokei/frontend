@@ -36,26 +36,13 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
     [product]
   );
 
-  const currentAvatar = useMemo(() => {
-    if (product?.avatar?.file?.url) {
-      return product?.avatar?.file?.url;
-    }
-    if (product?.parent?.__typename === "Course") {
-      return product?.parent?.avatar?.file?.url || "";
-    }
-    if (product?.parent?.__typename === "Material") {
-      return product?.parent?.avatar?.file?.url || "";
-    }
-    return;
-  }, [product]);
-
   return (
     <Link as={NextLink} href={editProductURL}>
       <Card background="background.50" overflow="hidden">
         <CardHeader position="relative" padding="0">
           <Image
             width="full"
-            src={currentAvatar}
+            src={product?.avatar?.file?.url || ""}
             fallbackSrc={defaultNoImage.src}
             alt={translate.formatMessage({ id: "course" })}
           />

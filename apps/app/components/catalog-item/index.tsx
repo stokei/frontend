@@ -13,13 +13,12 @@ import {
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components/price";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
-import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
 import { SelectPrice } from "../select-price";
+import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
 
 export interface CatalogItemProps {
   readonly productId?: string;
@@ -47,19 +46,6 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
       () => (parent?.__typename === "Course" ? parent : null),
       [parent]
     );
-
-    const currentAvatar = useMemo(() => {
-      if (avatar) {
-        return avatar;
-      }
-      if (parent?.__typename === "Course") {
-        return parent?.avatar?.file?.url || "";
-      }
-      if (parent?.__typename === "Material") {
-        return parent?.avatar?.file?.url || "";
-      }
-      return;
-    }, [avatar, parent]);
 
     useEffect(() => {
       if (defaultPrice) {
@@ -90,7 +76,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
         >
           <Image
             width="full"
-            src={currentAvatar}
+            src={avatar}
             fallbackSrc={defaultNoImage.src}
             alt={translate.formatMessage({ id: "product" })}
           />

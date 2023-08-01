@@ -93,11 +93,6 @@ export const EditCatalog: FC<EditCatalogProps> = ({ catalog }) => {
 
   return (
     <Section>
-      <SectionInformation>
-        <Title fontSize="lg">
-          {translate.formatMessage({ id: "editCatalog" })}
-        </Title>
-      </SectionInformation>
       <SectionContent>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing="5">

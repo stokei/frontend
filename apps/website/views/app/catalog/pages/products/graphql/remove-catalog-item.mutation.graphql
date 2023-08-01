@@ -1,0 +1,5 @@
+mutation RemoveCatalogItem($input: RemoveCatalogItemInput!) {
+  removeCatalogItem(input: $input) {
+    ...AdminCatalogPageCatalogItem
+  }
+}

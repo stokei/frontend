@@ -10,20 +10,20 @@ export type GetAdminCatalogPageCatalogItemsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAdminCatalogPageCatalogItemsQuery = { __typename?: 'Query', catalogItems: { __typename?: 'CatalogItems', totalCount: number, items?: Array<{ __typename?: 'CatalogItem', id: string, product: { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, parent?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | null } }> | null } };
+export type GetAdminCatalogPageCatalogItemsQuery = { __typename?: 'Query', catalogItems: { __typename?: 'CatalogItems', totalCount: number, items?: Array<{ __typename?: 'CatalogItem', id: string, catalog: string, product: { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, parent?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | null } }> | null } };
 
-export type AdminCatalogPageItemFragment = { __typename?: 'CatalogItem', id: string, product: { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, parent?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | null } };
+export type AdminCatalogPageCatalogItemFragment = { __typename?: 'CatalogItem', id: string, catalog: string, product: { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, parent?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | null } };
 
-export type AdminCatalogPageItemProductFragment = { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, parent?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | null };
+export type AdminCatalogPageCatalogItemProductFragment = { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, parent?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | null };
 
-export type AdminCatalogPageItemProductAppFragment = { __typename?: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+export type AdminCatalogPageCatalogItemProductAppFragment = { __typename?: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
-export type AdminCatalogPageItemProductCourseFragment = { __typename?: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+export type AdminCatalogPageCatalogItemProductCourseFragment = { __typename?: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
-export type AdminCatalogPageItemProductMaterialFragment = { __typename?: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+export type AdminCatalogPageCatalogItemProductMaterialFragment = { __typename?: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
-export const AdminCatalogPageItemProductCourseFragmentDoc = gql`
-    fragment AdminCatalogPageItemProductCourse on Course {
+export const AdminCatalogPageCatalogItemProductCourseFragmentDoc = gql`
+    fragment AdminCatalogPageCatalogItemProductCourse on Course {
   avatar {
     file {
       url
@@ -31,8 +31,8 @@ export const AdminCatalogPageItemProductCourseFragmentDoc = gql`
   }
 }
     `;
-export const AdminCatalogPageItemProductMaterialFragmentDoc = gql`
-    fragment AdminCatalogPageItemProductMaterial on Material {
+export const AdminCatalogPageCatalogItemProductMaterialFragmentDoc = gql`
+    fragment AdminCatalogPageCatalogItemProductMaterial on Material {
   avatar {
     file {
       url
@@ -40,8 +40,8 @@ export const AdminCatalogPageItemProductMaterialFragmentDoc = gql`
   }
 }
     `;
-export const AdminCatalogPageItemProductAppFragmentDoc = gql`
-    fragment AdminCatalogPageItemProductApp on App {
+export const AdminCatalogPageCatalogItemProductAppFragmentDoc = gql`
+    fragment AdminCatalogPageCatalogItemProductApp on App {
   avatar {
     file {
       url
@@ -49,8 +49,8 @@ export const AdminCatalogPageItemProductAppFragmentDoc = gql`
   }
 }
     `;
-export const AdminCatalogPageItemProductFragmentDoc = gql`
-    fragment AdminCatalogPageItemProduct on Product {
+export const AdminCatalogPageCatalogItemProductFragmentDoc = gql`
+    fragment AdminCatalogPageCatalogItemProduct on Product {
   id
   name
   description
@@ -61,32 +61,33 @@ export const AdminCatalogPageItemProductFragmentDoc = gql`
   }
   parent {
     __typename
-    ...AdminCatalogPageItemProductCourse
-    ...AdminCatalogPageItemProductMaterial
-    ...AdminCatalogPageItemProductApp
+    ...AdminCatalogPageCatalogItemProductCourse
+    ...AdminCatalogPageCatalogItemProductMaterial
+    ...AdminCatalogPageCatalogItemProductApp
   }
 }
-    ${AdminCatalogPageItemProductCourseFragmentDoc}
-${AdminCatalogPageItemProductMaterialFragmentDoc}
-${AdminCatalogPageItemProductAppFragmentDoc}`;
-export const AdminCatalogPageItemFragmentDoc = gql`
-    fragment AdminCatalogPageItem on CatalogItem {
+    ${AdminCatalogPageCatalogItemProductCourseFragmentDoc}
+${AdminCatalogPageCatalogItemProductMaterialFragmentDoc}
+${AdminCatalogPageCatalogItemProductAppFragmentDoc}`;
+export const AdminCatalogPageCatalogItemFragmentDoc = gql`
+    fragment AdminCatalogPageCatalogItem on CatalogItem {
   id
+  catalog
   product {
-    ...AdminCatalogPageItemProduct
+    ...AdminCatalogPageCatalogItemProduct
   }
 }
-    ${AdminCatalogPageItemProductFragmentDoc}`;
+    ${AdminCatalogPageCatalogItemProductFragmentDoc}`;
 export const GetAdminCatalogPageCatalogItemsDocument = gql`
     query GetAdminCatalogPageCatalogItems($where: WhereDataFindAllCatalogItemsInput!, $orderBy: OrderByDataFindAllCatalogItemsInput, $page: PaginationInput) {
   catalogItems(where: $where, orderBy: $orderBy, page: $page) {
     totalCount
     items {
-      ...AdminCatalogPageItem
+      ...AdminCatalogPageCatalogItem
     }
   }
 }
-    ${AdminCatalogPageItemFragmentDoc}`;
+    ${AdminCatalogPageCatalogItemFragmentDoc}`;
 
 export function useGetAdminCatalogPageCatalogItemsQuery(options: Omit<Urql.UseQueryArgs<GetAdminCatalogPageCatalogItemsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetAdminCatalogPageCatalogItemsQuery, GetAdminCatalogPageCatalogItemsQueryVariables>({ query: GetAdminCatalogPageCatalogItemsDocument, ...options });
