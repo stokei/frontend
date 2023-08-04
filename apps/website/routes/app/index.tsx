@@ -22,6 +22,9 @@ export const routesApp = (data: { appId?: string }) => {
     },
     onboardings: {
       home: baseURL + "/onboardings",
+      pix: {
+        home: baseURL + "/onboardings/pix",
+      },
       stripe: {
         home: baseURL + "/onboardings/stripe",
         refresh: baseURL + "/onboardings/stripe/refresh",

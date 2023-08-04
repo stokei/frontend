@@ -4,6 +4,7 @@ query CurrentGlobalApp {
     name
     isStokei
     isIntegratedWithStripe
+    isIntegratedWithPix
     stripeAccount
     status
     currentSubscriptionContract {

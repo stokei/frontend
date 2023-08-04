@@ -1,0 +1,5 @@
+mutation CreateAppPagarmeAccount($input: CreateAppPagarmeAccountInput!) {
+  createAppPagarmeAccount(input: $input) {
+    id
+  }
+}

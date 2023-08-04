@@ -109,6 +109,7 @@ export const ptBRMessages = {
   accountUpdatedSuccessfully: "Conta atualizada com successo!",
   appUpdatedSuccessfully: "Aplicação atualizada com successo!",
   stripeOnboarding: "Integração com a Stripe",
+  pixOnboarding: "Integração com PIX",
   youDontHaveAnyPaymentGatewayYet:
     "Você ainda não possui nenhum gateway de pagamento.",
   clickHereToConfigure: "Clique aqui para configurar",
@@ -307,6 +308,8 @@ export const ptBRMessages = {
   paymentMethods: "Meio de pagamentos",
   integrateYourBusinessWithStripesPaymentsPlatform:
     "Integre sua empresa na plataforma de pagamentos da Stripe.",
+  integrateThePixPaymentMethodIntoYourPlatform:
+    "Integre na sua plataforma o meio de pagamento PIX.",
   financial: "Financeiro",
   member: "Membro",
   members: "Membros",

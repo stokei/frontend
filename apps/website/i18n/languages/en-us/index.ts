@@ -107,6 +107,9 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   accountUpdatedSuccessfully: "Account updated successfully!",
   appUpdatedSuccessfully: "App updated successfully!",
   stripeOnboarding: "Stripe onboarding",
+  integrateThePixPaymentMethodIntoYourPlatform:
+    "Integrate the PIX payment method into your platform",
+  pixOnboarding: "PIX onboarding",
   youDontHaveAnyPaymentGatewayYet: "You don't have any payment gateway yet.",
   clickHereToConfigure: "Click here to configure",
   activate: "Activate",
