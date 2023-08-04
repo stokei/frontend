@@ -46,6 +46,7 @@ export * from "./footer-link";
 export * from "./file-uploader";
 export * from "./description";
 export * from "./input";
+export * from "./input-document";
 export * from "./input-left-addon";
 export * from "./input-left-element";
 export * from "./input-right-addon";

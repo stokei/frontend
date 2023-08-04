@@ -2,6 +2,10 @@ import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
   dateFormat: "yyyy-MM-dd",
+  cpf: "CPF",
+  cnpj: "CNPJ",
+  cpfPlaceholder: "999.999.999-99",
+  cnpjPlaceholder: "99.999.999/9999-99",
   byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies:
     "By clicking register you accept our terms of use and privacy policies.",
   updatePassword: "Update password",

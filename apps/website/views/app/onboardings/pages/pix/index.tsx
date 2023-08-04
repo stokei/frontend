@@ -1,4 +1,5 @@
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
+import { routes } from "@/routes";
 import { PagarmeAccountType } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,10 +9,12 @@ import {
   Card,
   CardBody,
   Container,
+  DocumentType,
   Form,
   FormControl,
   FormErrorMessage,
   Input,
+  InputDocument,
   InputGroup,
   Label,
   Stack,
@@ -19,15 +22,23 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Navbar } from "../../components/navbar";
+import { Navbar } from "./components/navbar";
+import { Section } from "./components/section";
+import { SectionContent } from "./components/section-content";
+import { SectionInformation } from "./components/section-information";
 import { useCreateAppPagarmeAccountMutation } from "./graphql/create-app-pagarme-account.mutation.graphql.generated";
+
+const onlyNumbers = (value: string) => value?.trim()?.replace(/\D/g, "");
 
 interface OnboardingPixPageProps {}
 
 export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
+  const [documentType, setDocumentType] = useState<DocumentType>(
+    DocumentType.CPF
+  );
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -40,39 +51,84 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
   ] = useCreateAppPagarmeAccountMutation();
 
   const validationSchema = z.object({
-    name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+    document: z.string().min(1, {
+      message: translate.formatMessage({ id: "required" }),
     }),
-    description: z.string(),
+    defaultBankAccount: z.object({
+      accountCheckDigit: z
+        .string()
+        .min(1, {
+          message: translate.formatMessage({ id: "required" }),
+        })
+        .transform(onlyNumbers),
+      accountNumber: z
+        .string()
+        .min(1, {
+          message: translate.formatMessage({ id: "required" }),
+        })
+        .transform(onlyNumbers),
+      bank: z
+        .string()
+        .min(1, {
+          message: translate.formatMessage({ id: "required" }),
+        })
+        .transform(onlyNumbers),
+      branchCheckDigit: z
+        .string()
+        .min(1, {
+          message: translate.formatMessage({ id: "required" }),
+        })
+        .transform(onlyNumbers),
+      branchNumber: z
+        .string()
+        .min(1, {
+          message: translate.formatMessage({ id: "required" }),
+        })
+        .transform(onlyNumbers),
+      holderName: z.string().min(1, {
+        message: translate.formatMessage({ id: "required" }),
+      }),
+    }),
   });
 
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
   });
+  const document = watch("document");
+
+  useEffect(() => {
+    register("document", { value: "" });
+  }, [register]);
 
   const onSubmit = async ({
-    name,
-    description,
+    document,
+    defaultBankAccount,
   }: z.infer<typeof validationSchema>) => {
     try {
+      const pagarmeAccountType =
+        documentType === DocumentType.CPF
+          ? PagarmeAccountType.Individual
+          : PagarmeAccountType.Company;
       const response = await onExecuteCreateAppPagarmeAccount({
         input: {
+          document,
+          documentType: pagarmeAccountType,
           defaultBankAccount: {
-            accountCheckDigit: "",
-            accountNumber: "",
-            bank: "",
-            branchCheckDigit: "",
-            branchNumber: "",
-            holderDocument: "",
-            holderName: "",
-            holderType: PagarmeAccountType.Individual,
+            accountCheckDigit: defaultBankAccount?.accountCheckDigit,
+            accountNumber: defaultBankAccount?.accountNumber,
+            bank: defaultBankAccount?.bank,
+            branchCheckDigit: defaultBankAccount?.branchCheckDigit,
+            branchNumber: defaultBankAccount?.branchNumber,
+            holderDocument: document,
+            holderName: defaultBankAccount?.holderName,
+            holderType: pagarmeAccountType,
           },
-          document: "",
-          type: PagarmeAccountType.Individual,
         },
       });
       if (!!response?.data?.createAppPagarmeAccount) {
@@ -81,7 +137,9 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
           status: "success",
         });
 
-        return;
+        return router.push(
+          routes.app({ appId: currentApp?.id }).onboardings.pix.callback
+        );
       }
 
       if (!!response.error?.graphQLErrors?.length) {
@@ -101,24 +159,183 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
             <CardBody>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Stack direction="column" spacing="5">
-                  <Title fontSize="xl">
-                    {translate.formatMessage({ id: "pixOnboarding" })}
-                  </Title>
-                  <FormControl isInvalid={!!errors?.name}>
-                    <Label htmlFor="name">
-                      {translate.formatMessage({ id: "name" })}
-                    </Label>
-                    <InputGroup>
-                      <Input
-                        id="name"
-                        placeholder={translate.formatMessage({
-                          id: "namePlaceholder",
-                        })}
-                        {...register("name")}
-                      />
-                    </InputGroup>
-                    <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-                  </FormControl>
+                  <Section>
+                    <SectionInformation>
+                      <Title fontSize="xl">
+                        {translate.formatMessage({ id: "document" })}
+                      </Title>
+                    </SectionInformation>
+                    <SectionContent>
+                      <FormControl>
+                        <Label htmlFor="documentType">
+                          {translate.formatMessage({
+                            id: "document",
+                          })}
+                        </Label>
+                        <InputDocument
+                          id="documentType"
+                          document={document}
+                          documentType={documentType}
+                          onChangeDocumentType={setDocumentType}
+                          onChangeDocument={(value) =>
+                            setValue("document", value)
+                          }
+                        />
+                      </FormControl>
+                    </SectionContent>
+                  </Section>
+                  <Section>
+                    <SectionInformation>
+                      <Title fontSize="xl">
+                        {translate.formatMessage({ id: "bankAccount" })}
+                      </Title>
+                    </SectionInformation>
+                    <SectionContent>
+                      <FormControl
+                        isInvalid={!!errors?.defaultBankAccount?.bank}
+                      >
+                        <Label htmlFor="bank">
+                          {translate.formatMessage({ id: "bankCode" })}
+                        </Label>
+                        <InputGroup>
+                          <Input
+                            id="bank"
+                            maxLength={3}
+                            pattern="\d*"
+                            placeholder={translate.formatMessage({
+                              id: "bankCode",
+                            })}
+                            {...register("defaultBankAccount.bank")}
+                          />
+                        </InputGroup>
+                        <FormErrorMessage>
+                          {errors?.defaultBankAccount?.bank?.message}
+                        </FormErrorMessage>
+                      </FormControl>
+
+                      <Stack direction="row" spacing="5">
+                        <FormControl
+                          isInvalid={!!errors?.defaultBankAccount?.branchNumber}
+                        >
+                          <Label htmlFor="branchNumber">
+                            {translate.formatMessage({ id: "branchNumber" })}
+                          </Label>
+                          <InputGroup>
+                            <Input
+                              id="branchNumber"
+                              maxLength={4}
+                              pattern="\d*"
+                              placeholder={translate.formatMessage({
+                                id: "branchNumber",
+                              })}
+                              {...register("defaultBankAccount.branchNumber")}
+                            />
+                          </InputGroup>
+                          <FormErrorMessage>
+                            {errors?.defaultBankAccount?.branchNumber?.message}
+                          </FormErrorMessage>
+                        </FormControl>
+                        <FormControl
+                          width="14"
+                          isInvalid={
+                            !!errors?.defaultBankAccount?.branchCheckDigit
+                          }
+                        >
+                          <Label htmlFor="branchCheckDigit">
+                            {translate.formatMessage({ id: "digit" })}
+                          </Label>
+                          <InputGroup>
+                            <Input
+                              id="branchCheckDigit"
+                              maxLength={1}
+                              pattern="\d*"
+                              {...register(
+                                "defaultBankAccount.branchCheckDigit"
+                              )}
+                            />
+                          </InputGroup>
+                          <FormErrorMessage>
+                            {
+                              errors?.defaultBankAccount?.branchCheckDigit
+                                ?.message
+                            }
+                          </FormErrorMessage>
+                        </FormControl>
+                      </Stack>
+                      <Stack direction="row" spacing="5">
+                        <FormControl
+                          isInvalid={
+                            !!errors?.defaultBankAccount?.accountNumber
+                          }
+                        >
+                          <Label htmlFor="accountNumber">
+                            {translate.formatMessage({ id: "accountNumber" })}
+                          </Label>
+                          <InputGroup>
+                            <Input
+                              id="accountNumber"
+                              maxLength={13}
+                              pattern="\d*"
+                              placeholder={translate.formatMessage({
+                                id: "accountNumber",
+                              })}
+                              {...register("defaultBankAccount.accountNumber")}
+                            />
+                          </InputGroup>
+                          <FormErrorMessage>
+                            {errors?.defaultBankAccount?.accountNumber?.message}
+                          </FormErrorMessage>
+                        </FormControl>
+                        <FormControl
+                          width="14"
+                          isInvalid={
+                            !!errors?.defaultBankAccount?.accountCheckDigit
+                          }
+                        >
+                          <Label htmlFor="accountCheckDigit">
+                            {translate.formatMessage({ id: "digit" })}
+                          </Label>
+                          <InputGroup>
+                            <Input
+                              id="accountCheckDigit"
+                              maxLength={2}
+                              pattern="\d*"
+                              {...register(
+                                "defaultBankAccount.accountCheckDigit"
+                              )}
+                            />
+                          </InputGroup>
+                          <FormErrorMessage>
+                            {
+                              errors?.defaultBankAccount?.accountCheckDigit
+                                ?.message
+                            }
+                          </FormErrorMessage>
+                        </FormControl>
+                      </Stack>
+                      <FormControl
+                        isInvalid={!!errors?.defaultBankAccount?.holderName}
+                      >
+                        <Label htmlFor="holderName">
+                          {translate.formatMessage({ id: "holderName" })}
+                        </Label>
+                        <InputGroup>
+                          <Input
+                            id="holderName"
+                            maxLength={30}
+                            pattern="\d*"
+                            placeholder={translate.formatMessage({
+                              id: "holderName",
+                            })}
+                            {...register("defaultBankAccount.holderName")}
+                          />
+                        </InputGroup>
+                        <FormErrorMessage>
+                          {errors?.defaultBankAccount?.holderName?.message}
+                        </FormErrorMessage>
+                      </FormControl>
+                    </SectionContent>
+                  </Section>
                   <ButtonGroup>
                     <Button
                       type="submit"

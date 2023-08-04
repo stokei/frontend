@@ -1,5 +1,9 @@
 export const ptBRMessages = {
   dateFormat: "dd/MM/yyyy",
+  cpf: "CPF",
+  cnpj: "CNPJ",
+  cpfPlaceholder: "999.999.999-99",
+  cnpjPlaceholder: "99.999.999/9999-99",
   byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies:
     "Ao clicar em cadastre-se você aceita nossos termos de uso e políticas de privacidade.",
   updatePassword: "Alterar senha",

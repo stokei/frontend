@@ -24,6 +24,7 @@ export const routesApp = (data: { appId?: string }) => {
       home: baseURL + "/onboardings",
       pix: {
         home: baseURL + "/onboardings/pix",
+        callback: baseURL + "/onboardings/pix/callback",
       },
       stripe: {
         home: baseURL + "/onboardings/stripe",

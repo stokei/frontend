@@ -474,7 +474,7 @@ export type CreateAppInput = {
 export type CreateAppPagarmeAccountInput = {
   defaultBankAccount: CreateAppPagarmeDefaultBankAccountInput;
   document: Scalars['String'];
-  type: PagarmeAccountType;
+  documentType: PagarmeAccountType;
 };
 
 export type CreateAppPagarmeDefaultBankAccountInput = {

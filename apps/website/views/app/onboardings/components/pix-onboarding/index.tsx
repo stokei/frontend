@@ -50,9 +50,12 @@ export const PixOnboarding: FC<PixOnboardingProps> = () => {
             </Text>
           </Box>
           <ButtonGroup>
-            <Button onClick={goToPixOnboarding}>
+            <Button
+              onClick={!isIntegratedWithPix ? goToPixOnboarding : undefined}
+              isDisabled={isIntegratedWithPix}
+            >
               {translate.formatMessage({
-                id: isIntegratedWithPix ? "update" : "add",
+                id: isIntegratedWithPix ? "added" : "add",
               })}
             </Button>
           </ButtonGroup>
