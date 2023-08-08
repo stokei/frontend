@@ -9,7 +9,7 @@ export type GetAppMaterialQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAppMaterialQuery = { __typename?: 'Query', material: { __typename?: 'Material', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } };
+export type GetAppMaterialQuery = { __typename?: 'Query', material: { __typename?: 'Material', id: string, name: string, description?: string | null, file?: { __typename?: 'File', id: string, url?: string | null, filename: string, extension?: string | null } | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } };
 
 
 export const GetAppMaterialDocument = gql`
