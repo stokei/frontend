@@ -1,3 +1,4 @@
+import { STOKEI_API_FILE_UPLOAD_URL } from "@/environments";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,6 +7,7 @@ import {
   ButtonGroup,
   Card,
   CardBody,
+  FileUploader,
   Form,
   FormControl,
   FormErrorMessage,
@@ -18,7 +20,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AppMaterialFragment } from "../../../home/graphql/materials.query.graphql.generated";
@@ -29,6 +31,7 @@ interface EditMaterialFormProps {
 }
 
 export const EditMaterialForm: FC<EditMaterialFormProps> = ({ material }) => {
+  const [fileId, setFileId] = useState<string>("");
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
@@ -88,6 +91,7 @@ export const EditMaterialForm: FC<EditMaterialFormProps> = ({ material }) => {
             name,
             description,
             ...(imageId && { avatar: imageId }),
+            ...(fileId && { file: fileId }),
           },
           where: {
             material: material?.id || "",
@@ -117,6 +121,30 @@ export const EditMaterialForm: FC<EditMaterialFormProps> = ({ material }) => {
           <Stack direction="column" spacing="5">
             <Title fontSize="xl">{currentMaterialName}</Title>
             <FormControl>
+              <Label htmlFor="material-file">
+                {translate.formatMessage({ id: "file" })}
+              </Label>
+              <FileUploader
+                id="material-file"
+                previews={
+                  material?.file?.url
+                    ? [
+                        {
+                          fileId: material?.file?.id,
+                          filename: material?.file?.filename,
+                          extension: material?.file?.extension || "",
+                          url: material?.file?.url,
+                        },
+                      ]
+                    : undefined
+                }
+                uploadURL={STOKEI_API_FILE_UPLOAD_URL}
+                onSuccess={(result) => setFileId(result.file)}
+                onError={() => {}}
+              />
+            </FormControl>
+
+            <FormControl>
               <Label htmlFor="material-image">
                 {translate.formatMessage({ id: "image" })}
               </Label>
@@ -142,6 +170,7 @@ export const EditMaterialForm: FC<EditMaterialFormProps> = ({ material }) => {
                 onError={() => {}}
               />
             </FormControl>
+
             <FormControl isInvalid={!!errors?.name}>
               <Label htmlFor="name">
                 {translate.formatMessage({ id: "name" })}

@@ -14,8 +14,10 @@ import { Title } from "../title";
 const defaultMimetypes = [".pdf", ".zip", ".rar", ".7zip"];
 
 export interface FileUploaderFilePreview {
-  url?: string;
+  fileId: string;
   filename: string;
+  extension?: string;
+  url?: string;
 }
 
 export interface FileUploaderOnSuccessData {
@@ -25,6 +27,7 @@ export interface FileUploaderOnSuccessData {
 export interface FileUploaderProps extends Omit<StackProps, "onError"> {
   readonly id: string;
   readonly uploadURL: string;
+  readonly previews?: FileUploaderFilePreview[];
   readonly accept?: string[];
   readonly onSuccess: (data: FileUploaderOnSuccessData) => void;
   readonly onError: () => void;
@@ -35,6 +38,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
   id,
   accept,
   uploadURL,
+  previews,
   onSuccess,
   onError,
   onRemoveFile,
@@ -49,7 +53,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
     onOpen: onOpenDashboard,
     onClose: onCloseDashboard,
   } = useDisclosure({
-    startOpen: true,
+    startOpen: !previews?.length,
   });
 
   const currentLanguage = useMemo(
@@ -122,7 +126,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
 
   return (
     <Stack width="full" spacing="4" direction="column" {...props}>
-      {fileURL && (
+      {fileURL ? (
         <Stack direction="column" spacing="5" width="full">
           <Stack direction="column" spacing="5" width="full">
             <Title fontSize="md">{file?.name}</Title>
@@ -132,6 +136,22 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
             <IconButton name="reload" onClick={onShowDashboard} />
           </ButtonGroup>
         </Stack>
+      ) : (
+        <>
+          {previews?.map((preview) => (
+            <Stack direction="column" spacing="5" width="full">
+              <Stack direction="column" spacing="5" width="full">
+                <Title fontSize="md">{`${preview?.filename}${
+                  preview?.extension ? `.${preview?.extension}` : ""
+                }`}</Title>
+              </Stack>
+              <ButtonGroup variant="outline">
+                <IconButton name="trash" onClick={onShowDashboard} />
+                <IconButton name="reload" onClick={onShowDashboard} />
+              </ButtonGroup>
+            </Stack>
+          ))}
+        </>
       )}
       {isOpenDashboard && (
         <Box

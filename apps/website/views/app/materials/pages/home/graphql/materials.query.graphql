@@ -20,6 +20,12 @@ fragment AppMaterial on Material {
   id
   name
   description
+  file {
+    id
+    url
+    filename
+    extension
+  }
   avatar {
     file {
       url

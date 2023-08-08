@@ -10,15 +10,21 @@ export type GetAppMaterialsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAppMaterialsQuery = { __typename?: 'Query', materials: { __typename?: 'Materials', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Material', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }> | null } };
+export type GetAppMaterialsQuery = { __typename?: 'Query', materials: { __typename?: 'Materials', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Material', id: string, name: string, description?: string | null, file?: { __typename?: 'File', id: string, url?: string | null, filename: string, extension?: string | null } | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }> | null } };
 
-export type AppMaterialFragment = { __typename?: 'Material', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+export type AppMaterialFragment = { __typename?: 'Material', id: string, name: string, description?: string | null, file?: { __typename?: 'File', id: string, url?: string | null, filename: string, extension?: string | null } | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
 export const AppMaterialFragmentDoc = gql`
     fragment AppMaterial on Material {
   id
   name
   description
+  file {
+    id
+    url
+    filename
+    extension
+  }
   avatar {
     file {
       url
