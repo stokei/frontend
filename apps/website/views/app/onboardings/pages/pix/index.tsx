@@ -1,6 +1,9 @@
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import { PagarmeAccountType } from "@/services/graphql/stokei";
+import {
+  PagarmeAccountType,
+  PagarmeBankAccountType,
+} from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -17,6 +20,8 @@ import {
   InputDocument,
   InputGroup,
   Label,
+  Radio,
+  RadioGroup,
   Stack,
   Title,
   useToast,
@@ -39,6 +44,8 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
   const [documentType, setDocumentType] = useState<DocumentType>(
     DocumentType.CPF
   );
+  const [bankAccountType, setBankAccountType] =
+    useState<PagarmeBankAccountType>(PagarmeBankAccountType.Checking);
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -55,36 +62,21 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
       message: translate.formatMessage({ id: "required" }),
     }),
     defaultBankAccount: z.object({
-      accountCheckDigit: z
-        .string()
-        .min(1, {
-          message: translate.formatMessage({ id: "required" }),
-        })
-        .transform(onlyNumbers),
-      accountNumber: z
-        .string()
-        .min(1, {
-          message: translate.formatMessage({ id: "required" }),
-        })
-        .transform(onlyNumbers),
-      bank: z
-        .string()
-        .min(1, {
-          message: translate.formatMessage({ id: "required" }),
-        })
-        .transform(onlyNumbers),
-      branchCheckDigit: z
-        .string()
-        .min(1, {
-          message: translate.formatMessage({ id: "required" }),
-        })
-        .transform(onlyNumbers),
-      branchNumber: z
-        .string()
-        .min(1, {
-          message: translate.formatMessage({ id: "required" }),
-        })
-        .transform(onlyNumbers),
+      accountCheckDigit: z.string().min(1, {
+        message: translate.formatMessage({ id: "required" }),
+      }),
+      accountNumber: z.string().min(1, {
+        message: translate.formatMessage({ id: "required" }),
+      }),
+      bank: z.string().min(1, {
+        message: translate.formatMessage({ id: "required" }),
+      }),
+      branchCheckDigit: z.string().min(1, {
+        message: translate.formatMessage({ id: "required" }),
+      }),
+      branchNumber: z.string().min(1, {
+        message: translate.formatMessage({ id: "required" }),
+      }),
       holderName: z.string().min(1, {
         message: translate.formatMessage({ id: "required" }),
       }),
@@ -120,6 +112,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
           document,
           documentType: pagarmeAccountType,
           defaultBankAccount: {
+            bankAccountType,
             accountCheckDigit: defaultBankAccount?.accountCheckDigit,
             accountNumber: defaultBankAccount?.accountNumber,
             bank: defaultBankAccount?.bank,
@@ -191,6 +184,47 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                       </Title>
                     </SectionInformation>
                     <SectionContent>
+                      <FormControl isInvalid={!bankAccountType}>
+                        <Label htmlFor="bankAccountType">
+                          {translate.formatMessage({ id: "bankAccountType" })}
+                        </Label>
+                        <RadioGroup>
+                          <Stack direction="column" spacing="2">
+                            <Radio
+                              id={PagarmeBankAccountType.Checking}
+                              value={PagarmeBankAccountType.Checking}
+                            >
+                              {translate.formatMessage({
+                                id: "accountChecking",
+                              })}
+                            </Radio>
+                            <Radio
+                              id={PagarmeBankAccountType.Savings}
+                              value={PagarmeBankAccountType.Savings}
+                            >
+                              {translate.formatMessage({
+                                id: "accountSavings",
+                              })}
+                            </Radio>
+                            <Radio
+                              id={PagarmeBankAccountType.ConjunctChecking}
+                              value={PagarmeBankAccountType.ConjunctChecking}
+                            >
+                              {translate.formatMessage({
+                                id: "accountConjunctChecking",
+                              })}
+                            </Radio>
+                            <Radio
+                              id={PagarmeBankAccountType.ConjunctSavings}
+                              value={PagarmeBankAccountType.ConjunctSavings}
+                            >
+                              {translate.formatMessage({
+                                id: "accountConjunctSavings",
+                              })}
+                            </Radio>
+                          </Stack>
+                        </RadioGroup>
+                      </FormControl>
                       <FormControl
                         isInvalid={!!errors?.defaultBankAccount?.bank}
                       >
@@ -205,7 +239,13 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                             placeholder={translate.formatMessage({
                               id: "bankCode",
                             })}
-                            {...register("defaultBankAccount.bank")}
+                            {...register("defaultBankAccount.bank", {
+                              onChange(event) {
+                                event.target.value = onlyNumbers(
+                                  event.target.value
+                                );
+                              },
+                            })}
                           />
                         </InputGroup>
                         <FormErrorMessage>
@@ -228,7 +268,13 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                               placeholder={translate.formatMessage({
                                 id: "branchNumber",
                               })}
-                              {...register("defaultBankAccount.branchNumber")}
+                              {...register("defaultBankAccount.branchNumber", {
+                                onChange(event) {
+                                  event.target.value = onlyNumbers(
+                                    event.target.value
+                                  );
+                                },
+                              })}
                             />
                           </InputGroup>
                           <FormErrorMessage>
@@ -250,7 +296,14 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                               maxLength={1}
                               pattern="\d*"
                               {...register(
-                                "defaultBankAccount.branchCheckDigit"
+                                "defaultBankAccount.branchCheckDigit",
+                                {
+                                  onChange(event) {
+                                    event.target.value = onlyNumbers(
+                                      event.target.value
+                                    );
+                                  },
+                                }
                               )}
                             />
                           </InputGroup>
@@ -279,7 +332,13 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                               placeholder={translate.formatMessage({
                                 id: "accountNumber",
                               })}
-                              {...register("defaultBankAccount.accountNumber")}
+                              {...register("defaultBankAccount.accountNumber", {
+                                onChange(event) {
+                                  event.target.value = onlyNumbers(
+                                    event.target.value
+                                  );
+                                },
+                              })}
                             />
                           </InputGroup>
                           <FormErrorMessage>
@@ -301,7 +360,14 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                               maxLength={2}
                               pattern="\d*"
                               {...register(
-                                "defaultBankAccount.accountCheckDigit"
+                                "defaultBankAccount.accountCheckDigit",
+                                {
+                                  onChange(event) {
+                                    event.target.value = onlyNumbers(
+                                      event.target.value
+                                    );
+                                  },
+                                }
                               )}
                             />
                           </InputGroup>
@@ -323,7 +389,6 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                           <Input
                             id="holderName"
                             maxLength={30}
-                            pattern="\d*"
                             placeholder={translate.formatMessage({
                               id: "holderName",
                             })}

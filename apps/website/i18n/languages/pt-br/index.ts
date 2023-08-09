@@ -1,5 +1,10 @@
 export const ptBRMessages = {
   me: "Eu",
+  bankAccountType: "Tipo de conta bancária",
+  accountChecking: "Conta corrente",
+  accountSavings: "Conta poupança",
+  accountConjunctSavings: "Conta poupança conjunta",
+  accountConjunctChecking: "Conta corrente conjunta",
   cpf: "CPF",
   cnpj: "CNPJ",
   cpfPlaceholder: "999.999.999-99",

@@ -481,6 +481,7 @@ export type CreateAppPagarmeDefaultBankAccountInput = {
   accountCheckDigit: Scalars['String'];
   accountNumber: Scalars['String'];
   bank: Scalars['String'];
+  bankAccountType: PagarmeBankAccountType;
   branchCheckDigit: Scalars['String'];
   branchNumber: Scalars['String'];
   holderDocument: Scalars['String'];
@@ -1953,6 +1954,13 @@ export type OrderByDataFindAllVideosInput = {
 export enum PagarmeAccountType {
   Company = 'COMPANY',
   Individual = 'INDIVIDUAL'
+}
+
+export enum PagarmeBankAccountType {
+  Checking = 'CHECKING',
+  ConjunctChecking = 'CONJUNCT_CHECKING',
+  ConjunctSavings = 'CONJUNCT_SAVINGS',
+  Savings = 'SAVINGS'
 }
 
 export type PaginationInput = {

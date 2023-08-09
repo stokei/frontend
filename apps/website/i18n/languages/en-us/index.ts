@@ -2,6 +2,11 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  bankAccountType: "Bank account type",
+  accountChecking: "Account checking",
+  accountSavings: "Account savings",
+  accountConjunctSavings: "Account conjunct savings",
+  accountConjunctChecking: "Account conjunct checking",
   cpf: "CPF",
   cnpj: "CNPJ",
   cpfPlaceholder: "999.999.999-99",
