@@ -1,3 +1,4 @@
+import { Bank, SelectBank } from "@/components/select-bank";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
@@ -46,6 +47,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
   );
   const [bankAccountType, setBankAccountType] =
     useState<PagarmeBankAccountType>(PagarmeBankAccountType.Checking);
+  const [bank, setBank] = useState<Bank>();
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -66,9 +68,6 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
         message: translate.formatMessage({ id: "required" }),
       }),
       accountNumber: z.string().min(1, {
-        message: translate.formatMessage({ id: "required" }),
-      }),
-      bank: z.string().min(1, {
         message: translate.formatMessage({ id: "required" }),
       }),
       branchCheckDigit: z.string().min(1, {
@@ -107,6 +106,10 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
         documentType === DocumentType.CPF
           ? PagarmeAccountType.Individual
           : PagarmeAccountType.Company;
+      const bankCode =
+        bank?.code && !isNaN(parseInt(bank?.code))
+          ? parseInt(bank?.code) + ""
+          : "";
       const response = await onExecuteCreateAppPagarmeAccount({
         input: {
           document,
@@ -115,7 +118,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
             bankAccountType,
             accountCheckDigit: defaultBankAccount?.accountCheckDigit,
             accountNumber: defaultBankAccount?.accountNumber,
-            bank: defaultBankAccount?.bank,
+            bank: bankCode,
             branchCheckDigit: defaultBankAccount?.branchCheckDigit,
             branchNumber: defaultBankAccount?.branchNumber,
             holderDocument: document,
@@ -188,7 +191,9 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                         <Label htmlFor="bankAccountType">
                           {translate.formatMessage({ id: "bankAccountType" })}
                         </Label>
-                        <RadioGroup>
+                        <RadioGroup
+                          onChange={(value) => setBankAccountType(value as any)}
+                        >
                           <Stack direction="column" spacing="2">
                             <Radio
                               id={PagarmeBankAccountType.Checking}
@@ -225,32 +230,13 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                           </Stack>
                         </RadioGroup>
                       </FormControl>
-                      <FormControl
-                        isInvalid={!!errors?.defaultBankAccount?.bank}
-                      >
-                        <Label htmlFor="bank">
-                          {translate.formatMessage({ id: "bankCode" })}
-                        </Label>
-                        <InputGroup>
-                          <Input
-                            id="bank"
-                            maxLength={3}
-                            pattern="\d*"
-                            placeholder={translate.formatMessage({
-                              id: "bankCode",
-                            })}
-                            {...register("defaultBankAccount.bank", {
-                              onChange(event) {
-                                event.target.value = onlyNumbers(
-                                  event.target.value
-                                );
-                              },
-                            })}
-                          />
-                        </InputGroup>
-                        <FormErrorMessage>
-                          {errors?.defaultBankAccount?.bank?.message}
-                        </FormErrorMessage>
+                      <FormControl isInvalid={!bank}>
+                        <SelectBank
+                          label={translate.formatMessage({ id: "bankCode" })}
+                          bank={bank}
+                          onRemoveChooseBank={setBank}
+                          onChooseBank={setBank}
+                        />
                       </FormControl>
 
                       <Stack direction="row" spacing="5">
