@@ -1,34 +1,38 @@
 query GetCheckoutProduct($product: String!) {
   product(id: $product) {
-    id
-    name
-    description
-    avatar {
-      file {
-        url
-      }
+    ...CheckoutProduct
+  }
+}
+
+fragment CheckoutProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
     }
-    features {
-      totalCount
-      items {
-        id
-        name
-      }
+  }
+  features {
+    totalCount
+    items {
+      id
+      name
     }
-    defaultPrice {
+  }
+  defaultPrice {
+    ...PriceComponent
+  }
+  prices {
+    totalCount
+    items {
       ...PriceComponent
     }
-    prices {
-      totalCount
-      items {
-        ...PriceComponent
-      }
-    }
-    parent {
-      __typename
-      ...CheckoutProductCourse
-      ...CheckoutProductPlan
-    }
+  }
+  parent {
+    __typename
+    ...CheckoutProductCourse
+    ...CheckoutProductPlan
   }
 }
 

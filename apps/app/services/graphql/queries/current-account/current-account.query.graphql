@@ -9,6 +9,7 @@ query CurrentAccount {
     email
     username
     status
+    pagarmeCustomer
     roles {
       totalCount
       items {

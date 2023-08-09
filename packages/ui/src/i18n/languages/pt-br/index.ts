@@ -1,5 +1,8 @@
 export const ptBRMessages = {
   dateFormat: "dd/MM/yyyy",
+  phone: "Telefone",
+  country: "País",
+  ddd: "DDD",
   cpf: "CPF",
   cnpj: "CNPJ",
   cpfPlaceholder: "999.999.999-99",

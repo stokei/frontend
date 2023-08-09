@@ -1,9 +1,11 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { CheckoutStep } from "@/constants/checkout-steps";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
+import { PaymentMethodType } from "@/services/graphql/stokei";
 import {
   Box,
   Button,
@@ -15,6 +17,11 @@ import {
   RadioCard,
   RadioGroup,
   Stack,
+  StepItem,
+  StepList,
+  StepPanel,
+  StepPanels,
+  Steps,
   Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
@@ -22,12 +29,18 @@ import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useCreateCheckoutMutation } from "../../graphql/create-checkout.mutation.graphql.generated";
 import { useGetCheckoutProductQuery } from "../../graphql/product.query.graphql.generated";
 import { CheckoutLayout } from "../../layout";
+import { CreatePixAccountStep } from "./steps/create-pix-account";
+import { PaymentMethodStep } from "./steps/payment-method";
+import { SubscriptionStep } from "./steps/subscription";
 
 interface CheckoutPageProps {
   readonly productId: string;
 }
 
 export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneAreaCode, setPhoneAreaCode] = useState("");
+  const [phoneCountryCode, setPhoneCountryCode] = useState("55");
   const [currentPrice, setCurrentPrice] = useState<
     PriceComponentFragment | undefined | null
   >();
@@ -35,6 +48,12 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
   const router = useRouter();
   const { currentAccount } = useCurrentAccount();
   const { onShowAPIError } = useAPIErrors();
+  const [currentStep, setCurrentStep] = useState<CheckoutStep>(
+    CheckoutStep.SUBSCRIPTION
+  );
+  const [paymentMethodType, setPaymentMethodType] = useState<PaymentMethodType>(
+    PaymentMethodType.Card
+  );
 
   const [{ fetching: isLoadingCheckout }, onExecuteCheckout] =
     useCreateCheckoutMutation();
@@ -67,7 +86,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     }
   }, [priceURLParamId, product]);
 
-  const onBuy = async () => {
+  const onBuy = useCallback(async () => {
     try {
       if (!currentAccount) {
         router.push({
@@ -96,7 +115,14 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
         message: translate.formatMessage({ id: "somethingWentWrong" }),
       });
     }
-  };
+  }, [
+    currentAccount,
+    currentPrice?.id,
+    onExecuteCheckout,
+    onShowAPIError,
+    router,
+    translate,
+  ]);
 
   const onChoosePrice = useCallback(
     (priceId: string) => {
@@ -108,64 +134,94 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     [product]
   );
 
+  const goToPayment = useCallback(() => {
+    if (paymentMethodType === PaymentMethodType.Pix) {
+      if (currentAccount?.pagarmeCustomer) {
+        return setCurrentStep(CheckoutStep.PAYMENT);
+      }
+      return setCurrentStep(CheckoutStep.CREATE_PIX_ACCOUNT);
+    }
+    return onBuy();
+  }, [currentAccount?.pagarmeCustomer, onBuy, paymentMethodType]);
+
   return (
     <CheckoutLayout isLoading={isLoadingProduct}>
       <Container paddingY="10" align="center">
         <Box
-          width={["full", "full", "584px", "584px"]}
+          width={["full", "full", "700px", "700px"]}
           height="fit-content"
           flexDirection="column"
         >
-          <Title fontSize="xl" marginBottom="5">
-            {translate.formatMessage({ id: "chooseYourPlan" })}
-          </Title>
-          <Card background="background.50">
-            <CardBody>
-              <Stack direction="column" spacing="10">
-                <Stack direction="row" spacing="5" align="center">
-                  <Image
-                    width="24"
-                    rounded="md"
-                    src={product?.avatar?.file?.url || ""}
-                    fallbackSrc={defaultNoImage.src}
-                    alt={translate.formatMessage({ id: "product" })}
-                  />
-
-                  <Title fontSize="lg">{product?.name}</Title>
-                </Stack>
-
-                <RadioGroup value={currentPrice?.id} onChange={onChoosePrice}>
-                  <Stack spacing="5" direction="column">
-                    {product?.prices?.items?.map((price) => (
-                      <RadioCard
-                        key={price?.id}
-                        id={price?.id}
-                        value={price?.id}
-                        isChecked={price?.id === currentPrice?.id}
-                      >
-                        <Stack direction="column" spacing="3">
-                          {price?.nickname && (
-                            <Title fontSize="md">{price?.nickname}</Title>
-                          )}
-                          <Price price={price} />
-                        </Stack>
-                      </RadioCard>
-                    ))}
-                  </Stack>
-                </RadioGroup>
-
-                <ButtonGroup width="full" justifyContent="flex-end">
-                  <Button
-                    onClick={onBuy}
-                    isDisabled={!currentPrice}
-                    isLoading={isLoadingCheckout}
-                  >
-                    {translate.formatMessage({ id: "subscribe" })}
-                  </Button>
-                </ButtonGroup>
-              </Stack>
-            </CardBody>
-          </Card>
+          <Steps
+            currentStep={currentStep}
+            onChangeStep={(step) => setCurrentStep(step)}
+          >
+            <StepList justify="center" align="center">
+              <StepItem
+                title={translate.formatMessage({ id: "subscription" })}
+                stepIndex={CheckoutStep.SUBSCRIPTION}
+              />
+              <StepItem
+                title={translate.formatMessage({ id: "paymentMethod" })}
+                stepIndex={CheckoutStep.PAYMENT_METHOD}
+                isDisabled={!currentPrice}
+              />
+              {!currentAccount?.pagarmeCustomer && (
+                <StepItem
+                  title={translate.formatMessage({ id: "account" })}
+                  stepIndex={CheckoutStep.CREATE_PIX_ACCOUNT}
+                  isDisabled={!currentPrice && !paymentMethodType}
+                />
+              )}
+              <StepItem
+                title={translate.formatMessage({ id: "payment" })}
+                stepIndex={CheckoutStep.PAYMENT}
+                isDisabled={!currentPrice && !paymentMethodType}
+              />
+            </StepList>
+            <StepPanels>
+              <Card background="background.50">
+                <CardBody>
+                  <StepPanel stepIndex={CheckoutStep.SUBSCRIPTION}>
+                    <SubscriptionStep
+                      prices={product?.prices?.items || []}
+                      product={product}
+                      currentPrice={currentPrice}
+                      onChoosePrice={onChoosePrice}
+                      onNextStep={() =>
+                        setCurrentStep(CheckoutStep.PAYMENT_METHOD)
+                      }
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={CheckoutStep.PAYMENT_METHOD}>
+                    <PaymentMethodStep
+                      paymentMethodType={paymentMethodType}
+                      onChoosePaymentMethod={setPaymentMethodType}
+                      onPreviousStep={() =>
+                        setCurrentStep(CheckoutStep.SUBSCRIPTION)
+                      }
+                      onNextStep={goToPayment}
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={CheckoutStep.CREATE_PIX_ACCOUNT}>
+                    <CreatePixAccountStep
+                      phoneNumber={phoneNumber}
+                      phoneAreaCode={phoneAreaCode}
+                      phoneCountryCode={phoneCountryCode}
+                      onChangeNumber={setPhoneNumber}
+                      onChangeAreaCode={setPhoneAreaCode}
+                      onChangeCountryCode={setPhoneCountryCode}
+                      onPreviousStep={() =>
+                        setCurrentStep(CheckoutStep.SUBSCRIPTION)
+                      }
+                      onNextStep={goToPayment}
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={CheckoutStep.PAYMENT}></StepPanel>
+                </CardBody>
+              </Card>
+            </StepPanels>
+          </Steps>
         </Box>
       </Container>
     </CheckoutLayout>

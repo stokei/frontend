@@ -56,6 +56,7 @@ export type Account = {
   isOwner?: Maybe<Scalars['Boolean']>;
   isStokei: Scalars['Boolean'];
   lastname: Scalars['String'];
+  pagarmeCustomer?: Maybe<Scalars['String']>;
   roles?: Maybe<Roles>;
   status: AccountStatus;
   updatedAt?: Maybe<Scalars['String']>;
@@ -148,6 +149,7 @@ export type App = {
   email?: Maybe<Scalars['String']>;
   icon?: Maybe<Image>;
   id: Scalars['ID'];
+  isIntegratedWithPix: Scalars['Boolean'];
   isIntegratedWithStripe: Scalars['Boolean'];
   isStokei: Scalars['Boolean'];
   logo?: Maybe<Image>;
@@ -248,6 +250,7 @@ export type CatalogItemsArgs = {
 export type CatalogItem = {
   __typename?: 'CatalogItem';
   app?: Maybe<App>;
+  catalog: Scalars['String'];
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
@@ -444,6 +447,12 @@ export type CreateAccountInput = {
   password: Scalars['String'];
 };
 
+export type CreateAccountPagarmeCustomerInput = {
+  cpf: Scalars['String'];
+  dateBirthday: Scalars['String'];
+  phone: CreatePhoneInput;
+};
+
 export type CreateAddressInput = {
   city: Scalars['String'];
   complement?: InputMaybe<Scalars['String']>;
@@ -460,6 +469,24 @@ export type CreateAppInput = {
   email: Scalars['String'];
   language: Scalars['String'];
   name: Scalars['String'];
+};
+
+export type CreateAppPagarmeAccountInput = {
+  defaultBankAccount: CreateAppPagarmeDefaultBankAccountInput;
+  document: Scalars['String'];
+  documentType: PagarmeAccountType;
+};
+
+export type CreateAppPagarmeDefaultBankAccountInput = {
+  accountCheckDigit: Scalars['String'];
+  accountNumber: Scalars['String'];
+  bank: Scalars['String'];
+  bankAccountType: PagarmeBankAccountType;
+  branchCheckDigit: Scalars['String'];
+  branchNumber: Scalars['String'];
+  holderDocument: Scalars['String'];
+  holderName: Scalars['String'];
+  holderType: PagarmeAccountType;
 };
 
 export type CreateCatalogInput = {
@@ -595,7 +622,11 @@ export type CreatePhoneInput = {
   areaCode: Scalars['String'];
   countryCode: Scalars['String'];
   number: Scalars['String'];
-  parent: Scalars['String'];
+  parent?: InputMaybe<Scalars['String']>;
+};
+
+export type CreatePixCheckoutInput = {
+  price: Scalars['String'];
 };
 
 export type CreatePlanInput = {
@@ -1024,6 +1055,7 @@ export type MeAccount = {
   isOwner?: Maybe<Scalars['Boolean']>;
   isStokei: Scalars['Boolean'];
   lastname: Scalars['String'];
+  pagarmeCustomer?: Maybe<Scalars['String']>;
   paymentMethods?: Maybe<PaymentMethods>;
   phones?: Maybe<Phones>;
   roles?: Maybe<Roles>;
@@ -1094,8 +1126,10 @@ export type Mutation = {
   changePassword: Scalars['Boolean'];
   completeAccountConfiguration: AuthResponse;
   createAccount: Account;
+  createAccountPagarmeCustomer: Account;
   createAddress: Address;
   createApp: App;
+  createAppPagarmeAccount: App;
   createAppStripeDashboardLink: Link;
   createAppStripeOnboarding: Link;
   createCatalog: Catalog;
@@ -1120,6 +1154,7 @@ export type Mutation = {
   createOrUpdateColor: Color;
   createPaymentMethod: PaymentMethod;
   createPhone: Phone;
+  createPixCheckout: PixCheckout;
   createPlan: Plan;
   createPrice: Price;
   createProduct: Product;
@@ -1212,6 +1247,11 @@ export type MutationCreateAccountArgs = {
 };
 
 
+export type MutationCreateAccountPagarmeCustomerArgs = {
+  input: CreateAccountPagarmeCustomerInput;
+};
+
+
 export type MutationCreateAddressArgs = {
   input: CreateAddressInput;
 };
@@ -1219,6 +1259,11 @@ export type MutationCreateAddressArgs = {
 
 export type MutationCreateAppArgs = {
   input: CreateAppInput;
+};
+
+
+export type MutationCreateAppPagarmeAccountArgs = {
+  input: CreateAppPagarmeAccountInput;
 };
 
 
@@ -1324,6 +1369,11 @@ export type MutationCreatePaymentMethodArgs = {
 
 export type MutationCreatePhoneArgs = {
   input: CreatePhoneInput;
+};
+
+
+export type MutationCreatePixCheckoutArgs = {
+  input: CreatePixCheckoutInput;
 };
 
 
@@ -1901,6 +1951,18 @@ export type OrderByDataFindAllVideosInput = {
   updatedBy?: InputMaybe<OrderBy>;
 };
 
+export enum PagarmeAccountType {
+  Company = 'COMPANY',
+  Individual = 'INDIVIDUAL'
+}
+
+export enum PagarmeBankAccountType {
+  Checking = 'CHECKING',
+  ConjunctChecking = 'CONJUNCT_CHECKING',
+  ConjunctSavings = 'CONJUNCT_SAVINGS',
+  Savings = 'SAVINGS'
+}
+
 export type PaginationInput = {
   limit?: InputMaybe<Scalars['Int']>;
   number?: InputMaybe<Scalars['Int']>;
@@ -1918,9 +1980,16 @@ export type PaymentMethod = {
   lastFourCardNumber?: Maybe<Scalars['String']>;
   parent: Scalars['String'];
   stripePaymentMethod?: Maybe<Scalars['String']>;
+  type?: Maybe<PaymentMethodType>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };
+
+export enum PaymentMethodType {
+  Boleto = 'BOLETO',
+  Card = 'CARD',
+  Pix = 'PIX'
+}
 
 export type PaymentMethods = {
   __typename?: 'PaymentMethods';
@@ -1974,6 +2043,11 @@ export type Phones = {
   previousPage: Scalars['Int'];
   totalCount: Scalars['Int'];
   totalPages: Scalars['Int'];
+};
+
+export type PixCheckout = {
+  __typename?: 'PixCheckout';
+  qrCodeURL: Scalars['String'];
 };
 
 export type Plan = {

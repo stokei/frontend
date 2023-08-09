@@ -5,9 +5,11 @@ import {
   AiOutlineArrowRight,
   AiOutlineArrowUp,
   AiOutlineBank,
+  AiOutlineBarcode,
   AiOutlineBold,
   AiOutlineCloudDownload,
   AiOutlineCloudUpload,
+  AiOutlineCreditCard,
   AiOutlineDollar,
   AiOutlineEdit,
   AiOutlineEllipsis,
@@ -73,6 +75,7 @@ import {
   MdOutlineBuild,
   MdOutlineDomainVerification,
   MdOutlineFeaturedPlayList,
+  MdOutlinePix,
   MdOutlineStorage,
 } from "react-icons/md";
 import {
@@ -179,3 +182,6 @@ export const OnboardingIcon = AiOutlineLink;
 export const WebsiteIcon = MdOutlineBuild;
 export const FeatureIcon = MdOutlineFeaturedPlayList;
 export const CatalogIcon = GrCatalog;
+export const BoletoIcon = AiOutlineBarcode;
+export const CardIcon = AiOutlineCreditCard;
+export const PixIcon = MdOutlinePix;

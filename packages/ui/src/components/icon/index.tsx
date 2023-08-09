@@ -93,6 +93,9 @@ export const icons = {
   website: IconComponent.WebsiteIcon,
   feature: IconComponent.FeatureIcon,
   catalog: IconComponent.CatalogIcon,
+  boleto: IconComponent.BoletoIcon,
+  card: IconComponent.CardIcon,
+  pix: IconComponent.PixIcon,
 };
 
 export type IconName = keyof typeof icons;
