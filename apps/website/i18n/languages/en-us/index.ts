@@ -95,8 +95,12 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
     "After generating your invoice, you have 10 days to pay it. If the payment does not occur, your application will remain in the INACTIVE state, and it will not be possible to access it.",
   withOurPlansYouOnlyPayForWhatYouUse:
     "With our plans you only pay for what you use.",
-  receiveByCardIn30DaysAnd2WorkingDaysForPaymentsByBoleto:
-    "Receive by card in 30 days and 2 working days for payments by boleto.",
+  receiveByCardIn30DaysForPaymentsByCard:
+    "Receive by card in 30 days for payments by card.",
+  receiveByBoletoIn2DaysForPaymentsByBoleto:
+    "Receive by boleto in 30 days for payments by boleto",
+  afterPaymentOfThePixTheAmountIsMadeAvailableOnTheSameDay:
+    "After payment of the pix, the amount is made available on the same day.",
   doYouHaveALargeVolumeOfData: "Do you have a large volume of data?",
   getInTouchWithUsViaEmail: "Get in touch with us via email",
   stripeTax: "Stripe tax",
@@ -338,6 +342,9 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   financial: "Financial",
   sale: "Sale",
   sales: "Sales",
+  salesByCard: "Sales by Card",
+  salesByBoleto: "Sales by Boleto",
+  salesByPix: "Sales by PIX",
   user: "User",
   users: "Users",
   subscription: "Subscription",

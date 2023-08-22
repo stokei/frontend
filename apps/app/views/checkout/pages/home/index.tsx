@@ -1,51 +1,49 @@
-import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { CheckoutStep } from "@/constants/checkout-steps";
-import { useAPIErrors, useTranslations } from "@/hooks";
+import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
 import { PaymentMethodType } from "@/services/graphql/stokei";
 import {
   Box,
-  Button,
-  ButtonGroup,
   Card,
   CardBody,
   Container,
-  Image,
-  RadioCard,
-  RadioGroup,
-  Stack,
   StepItem,
   StepList,
   StepPanel,
   StepPanels,
   Steps,
-  Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { useCreateCheckoutMutation } from "../../graphql/create-checkout.mutation.graphql.generated";
 import { useGetCheckoutProductQuery } from "../../graphql/product.query.graphql.generated";
 import { CheckoutLayout } from "../../layout";
+import { useCreateCheckoutMutation } from "./graphql/create-checkout.mutation.graphql.generated";
+import { useCreateOrderMutation } from "./graphql/create-order.mutation.graphql.generated";
 import { CreatePixAccountStep } from "./steps/create-pix-account";
+import { PaymentStep } from "./steps/payment";
 import { PaymentMethodStep } from "./steps/payment-method";
 import { SubscriptionStep } from "./steps/subscription";
+import { SummaryStep } from "./steps/summary";
 
 interface CheckoutPageProps {
   readonly productId: string;
 }
 
 export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [phoneAreaCode, setPhoneAreaCode] = useState("");
-  const [phoneCountryCode, setPhoneCountryCode] = useState("55");
+  const [qrCodeCopyAndPaste, setQRCodeCopyAndPaste] = useState("");
+  const [qrCodeURL, setQRCodeURL] = useState("");
+  const [orderId, setOrderId] = useState("");
   const [currentPrice, setCurrentPrice] = useState<
     PriceComponentFragment | undefined | null
   >();
+  const [isDisabledCreatePixAccount, setIsDisabledCreatePixAccount] =
+    useState(true);
+  const [isDisabledPayment, setIsDisabledPayment] = useState(true);
   const translate = useTranslations();
   const router = useRouter();
+  const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();
   const { onShowAPIError } = useAPIErrors();
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(
@@ -57,6 +55,9 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
 
   const [{ fetching: isLoadingCheckout }, onExecuteCheckout] =
     useCreateCheckoutMutation();
+
+  const [{ fetching: isLoadingOrder }, onExecuteOrder] =
+    useCreateOrderMutation();
 
   const [{ fetching: isLoadingProduct, data: dataProduct }] =
     useGetCheckoutProductQuery({
@@ -70,6 +71,21 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     () => router.query?.price?.toString() || "",
     [router.query?.price]
   );
+
+  useEffect(() => {
+    if (currentApp?.isIntegratedWithStripe) {
+      setPaymentMethodType(PaymentMethodType.Card);
+    } else if (currentApp?.isIntegratedWithPix) {
+      setPaymentMethodType(PaymentMethodType.Pix);
+    }
+  }, [currentApp]);
+
+  useEffect(() => {
+    setIsDisabledCreatePixAccount(
+      paymentMethodType !== PaymentMethodType.Pix ||
+        !!currentAccount?.pagarmeCustomer
+    );
+  }, [currentAccount?.pagarmeCustomer, paymentMethodType]);
 
   useEffect(() => {
     let priceSelected = product?.defaultPrice;
@@ -86,24 +102,52 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     }
   }, [priceURLParamId, product]);
 
-  const onBuy = useCallback(async () => {
-    try {
-      if (!currentAccount) {
-        router.push({
-          pathname: routes.auth.login,
-          query: { redirectTo: router.asPath },
-        });
-        return;
+  const onChoosePrice = useCallback(
+    (priceId: string) => {
+      const price = product?.prices?.items?.find(
+        (productPrice) => productPrice?.id === priceId
+      );
+      setCurrentPrice(price || null);
+    },
+    [product]
+  );
+
+  const goToSummary = useCallback(() => {
+    return setCurrentStep(CheckoutStep.SUMMARY);
+  }, []);
+
+  const goToSummaryOrCreatePixAccount = useCallback(() => {
+    if (paymentMethodType === PaymentMethodType.Pix) {
+      if (!currentAccount?.pagarmeCustomer) {
+        return setCurrentStep(CheckoutStep.CREATE_PIX_ACCOUNT);
       }
-      const response = await onExecuteCheckout({
+    }
+    return goToSummary();
+  }, [currentAccount?.pagarmeCustomer, goToSummary, paymentMethodType]);
+
+  const onCreateOrder = useCallback(async () => {
+    if (!currentAccount) {
+      router.push({
+        pathname: routes.auth.login,
+        query: { redirectTo: router.asPath },
+      });
+      return;
+    }
+    try {
+      const response = await onExecuteOrder({
         input: {
-          price: currentPrice?.id || "",
+          items: [
+            {
+              price: currentPrice?.id || "",
+            },
+          ],
         },
       });
 
-      if (!!response?.data?.createCheckout) {
-        router.push(response.data.createCheckout.url || "");
-        return;
+      if (!!response?.data?.createOrder) {
+        const order = response.data.createOrder;
+        setOrderId(order?.id);
+        return order;
       }
       if (!!response.error?.graphQLErrors?.length) {
         response.error.graphQLErrors.map((error) =>
@@ -118,31 +162,58 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
   }, [
     currentAccount,
     currentPrice?.id,
-    onExecuteCheckout,
+    onExecuteOrder,
     onShowAPIError,
     router,
     translate,
   ]);
 
-  const onChoosePrice = useCallback(
-    (priceId: string) => {
-      const price = product?.prices?.items?.find(
-        (productPrice) => productPrice?.id === priceId
-      );
-      setCurrentPrice(price || null);
+  const onCreatePayment = useCallback(
+    async (order: string) => {
+      try {
+        const response = await onExecuteCheckout({
+          input: {
+            order,
+            paymentMethodType,
+          },
+        });
+
+        if (!!response?.data?.createCheckout) {
+          const checkout = response.data.createCheckout;
+          if (checkout.pix) {
+            setQRCodeCopyAndPaste(checkout.pix?.copyAndPaste || "");
+            setQRCodeURL(checkout.pix?.qrCodeURL || "");
+          }
+          setIsDisabledPayment(false);
+          if (checkout.url) {
+            return router.push(checkout.url);
+          }
+          return setCurrentStep(CheckoutStep.PAYMENT);
+        }
+        if (!!response.error?.graphQLErrors?.length) {
+          response.error.graphQLErrors.map((error) =>
+            onShowAPIError({ message: error?.message })
+          );
+        }
+      } catch (error) {
+        onShowAPIError({
+          message: translate.formatMessage({ id: "somethingWentWrong" }),
+        });
+      }
     },
-    [product]
+    [onExecuteCheckout, onShowAPIError, paymentMethodType, router, translate]
   );
 
-  const goToPayment = useCallback(() => {
-    if (paymentMethodType === PaymentMethodType.Pix) {
-      if (currentAccount?.pagarmeCustomer) {
-        return setCurrentStep(CheckoutStep.PAYMENT);
+  const onGoToPayment = async () => {
+    let currentOrderId = orderId;
+    if (!currentOrderId) {
+      const order = await onCreateOrder();
+      if (order?.id) {
+        currentOrderId = order.id;
       }
-      return setCurrentStep(CheckoutStep.CREATE_PIX_ACCOUNT);
     }
-    return onBuy();
-  }, [currentAccount?.pagarmeCustomer, onBuy, paymentMethodType]);
+    return await onCreatePayment(currentOrderId);
+  };
 
   return (
     <CheckoutLayout isLoading={isLoadingProduct}>
@@ -166,7 +237,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                 stepIndex={CheckoutStep.PAYMENT_METHOD}
                 isDisabled={!currentPrice}
               />
-              {!currentAccount?.pagarmeCustomer && (
+              {!isDisabledCreatePixAccount && (
                 <StepItem
                   title={translate.formatMessage({ id: "account" })}
                   stepIndex={CheckoutStep.CREATE_PIX_ACCOUNT}
@@ -174,9 +245,14 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                 />
               )}
               <StepItem
+                title={translate.formatMessage({ id: "summary" })}
+                stepIndex={CheckoutStep.SUMMARY}
+                isDisabled={!currentPrice && !paymentMethodType}
+              />
+              <StepItem
                 title={translate.formatMessage({ id: "payment" })}
                 stepIndex={CheckoutStep.PAYMENT}
-                isDisabled={!currentPrice && !paymentMethodType}
+                isDisabled={isDisabledPayment}
               />
             </StepList>
             <StepPanels>
@@ -200,24 +276,50 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                       onPreviousStep={() =>
                         setCurrentStep(CheckoutStep.SUBSCRIPTION)
                       }
-                      onNextStep={goToPayment}
+                      onNextStep={goToSummaryOrCreatePixAccount}
                     />
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.CREATE_PIX_ACCOUNT}>
                     <CreatePixAccountStep
-                      phoneNumber={phoneNumber}
-                      phoneAreaCode={phoneAreaCode}
-                      phoneCountryCode={phoneCountryCode}
-                      onChangeNumber={setPhoneNumber}
-                      onChangeAreaCode={setPhoneAreaCode}
-                      onChangeCountryCode={setPhoneCountryCode}
                       onPreviousStep={() =>
                         setCurrentStep(CheckoutStep.SUBSCRIPTION)
                       }
-                      onNextStep={goToPayment}
+                      onNextStep={() => {
+                        setIsDisabledCreatePixAccount(true);
+                        goToSummary();
+                      }}
                     />
                   </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.PAYMENT}></StepPanel>
+                  <StepPanel stepIndex={CheckoutStep.SUMMARY}>
+                    <SummaryStep
+                      price={currentPrice}
+                      product={product}
+                      paymentMethodType={paymentMethodType}
+                      isLoadingCheckout={isLoadingCheckout || isLoadingOrder}
+                      onGoToSubscription={() =>
+                        setCurrentStep(CheckoutStep.SUBSCRIPTION)
+                      }
+                      onGoToPaymentMethod={() =>
+                        setCurrentStep(CheckoutStep.PAYMENT_METHOD)
+                      }
+                      onPreviousStep={() =>
+                        setCurrentStep(CheckoutStep.PAYMENT_METHOD)
+                      }
+                      onNextStep={onGoToPayment}
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={CheckoutStep.PAYMENT}>
+                    <PaymentStep
+                      price={currentPrice}
+                      orderId={orderId}
+                      qrCodeCopyAndPaste={qrCodeCopyAndPaste}
+                      qrCodeURL={qrCodeURL}
+                      paymentMethodType={paymentMethodType}
+                      onPreviousStep={() =>
+                        setCurrentStep(CheckoutStep.PAYMENT_METHOD)
+                      }
+                    />
+                  </StepPanel>
                 </CardBody>
               </Card>
             </StepPanels>

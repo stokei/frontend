@@ -1,4 +1,4 @@
-import * as Types from '../../../services/graphql/stokei/index';
+import * as Types from '../../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
@@ -8,13 +8,20 @@ export type CreateCheckoutMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateCheckoutMutation = { __typename?: 'Mutation', createCheckout: { __typename?: 'Checkout', url: string } };
+export type CreateCheckoutMutation = { __typename?: 'Mutation', createCheckout: { __typename?: 'Checkout', url?: string | null, payment?: { __typename?: 'Payment', id: string } | null, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null } };
 
 
 export const CreateCheckoutDocument = gql`
     mutation CreateCheckout($input: CreateCheckoutInput!) {
   createCheckout(input: $input) {
     url
+    payment {
+      id
+    }
+    pix {
+      copyAndPaste
+      qrCodeURL
+    }
   }
 }
     `;

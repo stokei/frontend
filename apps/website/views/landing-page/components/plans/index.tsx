@@ -13,8 +13,10 @@ import { FC, useMemo } from "react";
 import { PlanItem } from "../plan-item";
 import { useGetLandingPageProductsQuery } from "../../graphql/products.query.graphql.generated";
 import { OrderBy } from "@/services/graphql/stokei";
-import { PaymentGatewayItem } from "../payment-gateway-item";
+import { PlanItemPaymentWithCard } from "../plan-item-payment-with-card";
 import { PlanItemSkeleton } from "../plan-item-skeleton";
+import { PlanItemPaymentWithBoleto } from "../plan-item-payment-with-boleto";
+import { PlanItemPaymentWithPix } from "../plan-item-payment-with-pix";
 
 const features = [
   { id: "1", description: "1 lorem ipsum" },
@@ -105,9 +107,7 @@ export const Plans: FC<PlansProps> = () => {
                 const icon =
                   product?.parent?.__typename === "Plan" &&
                   product?.parent?.icon;
-                const features =
-                  product?.parent?.__typename === "Plan" &&
-                  product?.parent?.features?.items;
+                const features = product?.features?.items;
                 return (
                   <PlanItem
                     key={product?.id}
@@ -118,7 +118,9 @@ export const Plans: FC<PlansProps> = () => {
                   />
                 );
               })}
-              <PaymentGatewayItem />
+              <PlanItemPaymentWithCard />
+              <PlanItemPaymentWithBoleto />
+              <PlanItemPaymentWithPix />
             </>
           )}
         </SimpleGrid>

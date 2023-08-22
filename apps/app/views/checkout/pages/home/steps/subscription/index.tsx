@@ -31,6 +31,9 @@ export const SubscriptionStep: React.FC<SubscriptionStepProps> = ({
 
   return (
     <Stack direction="column" spacing="10">
+      <Title fontSize="lg">
+        {translate.formatMessage({ id: "chooseYourPlan" })}
+      </Title>
       <Stack direction="row" spacing="5" align="center">
         <Image
           width="24"

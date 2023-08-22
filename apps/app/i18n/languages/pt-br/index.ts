@@ -1,5 +1,23 @@
 export const ptBRMessages = {
   me: "Eu",
+  copy: "Copiar",
+  makePaymentViaPixToCompleteYourPurchase:
+    "Faça o pagamento via PIX para concluir sua compra",
+  useTheCodeOrUseTheQrCodeToCompleteYourPurchase:
+    "Utilize o código ou use o QR code para finalizar sua compra.",
+  openYourBankAppAndChoosePaymentViaPix:
+    "Abra seu aplicativo do banco e escolha o pagamento via PIX",
+  ifYouPreferToUseTheQrCodeJustChooseTheQrCodeOptionAndPointYourCameraToScanIt:
+    "Se preferir utilizar o QR code, basta escolher a opção de QR Code e apontar sua câmera para escaneá-lo.",
+  ifYouPreferToUseTheCodeJustClickOnTheButtonToCopyTheCodeChooseThePixCopyAndPaste:
+    "Se preferir utilizar o código, basta clicar no botão para copiar o código, escolher a opção de PIX Copia e Cola e colar o código copiado.",
+  checkTheTotalPurchaseAmountBeforeCompletingThePayment:
+    "Confira o valor total da compra antes de concluir o pagamento.",
+  afterPaymentJustGoBackToTheBeginningAndWaitForTheProductsToBeReleasedAsSoonAsThePaymentIsMade:
+    "Após o pagamento, basta voltar para o início e aguardar que os produtos serão liberados assim que o pagamento for efetivado.",
+  goToHomePage: "Ir para página inicial",
+  amountToPay: "Valor a pagar",
+  dateBirthday: "Data de nascimento",
   boleto: "Boleto",
   card: "Cartão",
   pix: "Pix",
@@ -66,6 +84,7 @@ export const ptBRMessages = {
   plan: "Plano",
   plans: "Planos",
   chooseYourPlan: "Escolha seu plano",
+  chooseYourPaymentMethod: "Escolha seu meio de pagamento",
   next: "Próximo",
   previous: "Anterior",
   result: "Resultado",
@@ -76,6 +95,7 @@ export const ptBRMessages = {
   students: "Alunos",
   inactive: "Inativo",
   blocked: "Bloqueado",
+  copied: "Copiado",
   copiedLink: "Link copiado",
   copyPaymentLink: "Copiar link de pagamento",
   configurationPending: "Configuração pendente",

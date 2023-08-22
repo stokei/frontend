@@ -1,5 +1,12 @@
 mutation CreateCheckout($input: CreateCheckoutInput!) {
   createCheckout(input: $input) {
     url
+    payment {
+      id
+    }
+    pix {
+      copyAndPaste
+      qrCodeURL
+    }
   }
 }

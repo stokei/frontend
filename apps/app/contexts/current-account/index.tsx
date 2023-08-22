@@ -27,6 +27,7 @@ export interface CurrentAccountProviderValues {
   readonly isLoading?: boolean;
   readonly currentAccount?: CurrentAccount;
   readonly hasSomeRole?: (roleNames: RoleName[]) => boolean;
+  readonly onReloadCurrentAccount: () => void;
 }
 
 export const CurrentAccountContext = createContext(
@@ -41,9 +42,10 @@ export const CurrentAccountProvider: FC<
   >();
 
   const router = useRouter();
-  const [{ fetching: isLoading, data, error }] = useCurrentAccountQuery({
-    pause: !!currentAccountProp,
-  });
+  const [{ fetching: isLoading, data, error }, onReloadCurrentAccount] =
+    useCurrentAccountQuery({
+      pause: !!currentAccountProp,
+    });
 
   const hasSomeRole = useCallback(
     (roleNames: RoleName[]) => {
@@ -83,8 +85,15 @@ export const CurrentAccountProvider: FC<
       isLoading,
       homePageURL,
       hasSomeRole,
+      onReloadCurrentAccount,
     }),
-    [currentAccount, homePageURL, isLoading, hasSomeRole]
+    [
+      currentAccount,
+      isLoading,
+      homePageURL,
+      hasSomeRole,
+      onReloadCurrentAccount,
+    ]
   );
 
   return (

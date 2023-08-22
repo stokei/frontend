@@ -96,6 +96,7 @@ export const icons = {
   boleto: IconComponent.BoletoIcon,
   card: IconComponent.CardIcon,
   pix: IconComponent.PixIcon,
+  copy: IconComponent.CopyIcon,
 };
 
 export type IconName = keyof typeof icons;

@@ -74,6 +74,8 @@ export * from "./icon-button";
 export * from "./image";
 export * from "./image-uploader";
 export * from "./list";
+export * from "./list-ordered";
+export * from "./list-ordered-item";
 export * from "./list-icon";
 export * from "./list-item";
 export * from "./link";

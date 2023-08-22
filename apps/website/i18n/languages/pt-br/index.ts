@@ -95,8 +95,12 @@ export const ptBRMessages = {
     "Após a geração da sua fatura você tem 10 dias de vencimento para pagar ela. Caso não ocorra o pagamento a sua aplicação fica no estado de INATIVO, não sendo possível ser acessada.",
   withOurPlansYouOnlyPayForWhatYouUse:
     "Com os nossos planos você paga apenas pelo que usar.",
-  receiveByCardIn30DaysAnd2WorkingDaysForPaymentsByBoleto:
-    "Receba por cartão em 30 dias e 2 dias úteis para pagamentos por boleto.",
+  receiveByCardIn30DaysForPaymentsByCard:
+    "Receba por cartão em 30 dias úteis para pagamentos por cartão.",
+  receiveByBoletoIn2DaysForPaymentsByBoleto:
+    "Receba por boleto em 2 dias úteis para pagamentos por boleto.",
+  afterPaymentOfThePixTheAmountIsMadeAvailableOnTheSameDay:
+    "Após o pagamento do pix, o valor é disponibilizado no mesmo dia.",
   doYouHaveALargeVolumeOfData: "Você tem um grande volume de dados?",
   getInTouchWithUsViaEmail: "Entre em contato conosco pelo email",
   stripeTax: "taxa da Stripe",
@@ -339,6 +343,9 @@ export const ptBRMessages = {
   members: "Membros",
   sale: "Venda",
   sales: "Vendas",
+  salesByCard: "Vendas por Cartão",
+  salesByBoleto: "Vendas por Boleto",
+  salesByPix: "Vendas por PIX",
   user: "Usuário",
   users: "Usuários",
   dashboard: "Dashboard",

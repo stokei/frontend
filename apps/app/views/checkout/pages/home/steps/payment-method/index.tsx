@@ -1,15 +1,14 @@
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { PaymentMethodType } from "@/services/graphql/stokei";
 import {
-  Avatar,
   Button,
   ButtonGroup,
-  Icon,
   RadioCard,
   RadioGroup,
   Stack,
-  Text,
+  Title,
 } from "@stokei/ui";
+import { PaymentMethod } from "../../components/payment-method";
 
 export interface PaymentMethodStepProps {
   paymentMethodType: PaymentMethodType;
@@ -25,59 +24,42 @@ export const PaymentMethodStep: React.FC<PaymentMethodStepProps> = ({
   onPreviousStep,
 }) => {
   const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
 
   return (
     <Stack direction="column" spacing="10">
+      <Title fontSize="lg">
+        {translate.formatMessage({ id: "chooseYourPaymentMethod" })}
+      </Title>
       <RadioGroup value={paymentMethodType} onChange={onChoosePaymentMethod}>
         <Stack spacing="5" direction="column">
-          <RadioCard
-            id={PaymentMethodType.Boleto}
-            value={PaymentMethodType.Boleto}
-            isChecked={paymentMethodType === PaymentMethodType.Boleto}
-          >
-            <Stack direction="row" spacing="3" align="center">
-              <Avatar
-                background="primary.500"
-                borderColor="primary.500"
-                icon={<Icon name="boleto" />}
-              />
-              <Text fontWeight="bold">
-                {translate.formatMessage({ id: "boleto" })}
-              </Text>
-            </Stack>
-          </RadioCard>
-          <RadioCard
-            id={PaymentMethodType.Card}
-            value={PaymentMethodType.Card}
-            isChecked={paymentMethodType === PaymentMethodType.Card}
-          >
-            <Stack direction="row" spacing="3" align="center">
-              <Avatar
-                background="primary.500"
-                borderColor="primary.500"
-                icon={<Icon name="card" />}
-              />
-              <Text fontWeight="bold">
-                {translate.formatMessage({ id: "card" })}
-              </Text>
-            </Stack>
-          </RadioCard>
-          <RadioCard
-            id={PaymentMethodType.Pix}
-            value={PaymentMethodType.Pix}
-            isChecked={paymentMethodType === PaymentMethodType.Pix}
-          >
-            <Stack direction="row" spacing="3" align="center">
-              <Avatar
-                background="primary.500"
-                borderColor="primary.500"
-                icon={<Icon name="pix" />}
-              />
-              <Text fontWeight="bold">
-                {translate.formatMessage({ id: "pix" })}
-              </Text>
-            </Stack>
-          </RadioCard>
+          {currentApp?.isIntegratedWithStripe && (
+            <>
+              <RadioCard
+                id={PaymentMethodType.Boleto}
+                value={PaymentMethodType.Boleto}
+                isChecked={paymentMethodType === PaymentMethodType.Boleto}
+              >
+                <PaymentMethod paymentMethodType={PaymentMethodType.Boleto} />
+              </RadioCard>
+              <RadioCard
+                id={PaymentMethodType.Card}
+                value={PaymentMethodType.Card}
+                isChecked={paymentMethodType === PaymentMethodType.Card}
+              >
+                <PaymentMethod paymentMethodType={PaymentMethodType.Card} />
+              </RadioCard>
+            </>
+          )}
+          {currentApp?.isIntegratedWithPix && (
+            <RadioCard
+              id={PaymentMethodType.Pix}
+              value={PaymentMethodType.Pix}
+              isChecked={paymentMethodType === PaymentMethodType.Pix}
+            >
+              <PaymentMethod paymentMethodType={PaymentMethodType.Pix} />
+            </RadioCard>
+          )}
         </Stack>
       </RadioGroup>
 

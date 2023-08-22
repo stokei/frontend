@@ -1,6 +1,11 @@
 import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
+  orderNotFound: "Order not found",
+  ordersNotFound: "Orders not found",
+  orderAlreadyPaid: "Order already paid",
+  paymentNotFound: "Payment not found",
+  paymentsNotFound: "Payments not found",
   accessNotFound: "Access not found",
   accessesNotFound: "Accesses not found",
   accountAlreadyExists: "Account already exists",

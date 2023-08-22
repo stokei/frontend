@@ -5,12 +5,13 @@ import { useDisclosure } from "../../hooks";
 import { Stack, StackProps } from "../stack";
 import { Popover } from "../popover";
 
-export interface SelectProps extends Omit<StackProps, "onChange"> {
+export interface SelectProps<TValue = any>
+  extends Omit<StackProps, "onChange"> {
   readonly isLoading?: boolean;
   readonly isDisabled?: boolean;
-  readonly value: any;
-  readonly onChooseItem: (value: any) => void;
-  readonly onRemoveChooseItem: (value: any) => void;
+  readonly value: TValue;
+  readonly onChooseItem: (value: TValue) => void;
+  readonly onRemoveChooseItem: (value: TValue) => void;
   readonly ref?: ForwardedRef<any>;
 }
 

@@ -1,0 +1,10 @@
+query GetCheckoutPageOrder($orderId: String!) {
+  order(id: $orderId) {
+    ...CheckoutPageOrder
+  }
+}
+
+fragment CheckoutPageOrder on Order {
+  id
+  status
+}

@@ -19,6 +19,7 @@ export interface InputDocumentProps {
   isLoading?: boolean;
   document: string;
   documentType: DocumentType;
+  withDocumentTypeDisabled?: boolean;
   onChangeDocument: (document: string) => void;
   onChangeDocumentType: (documentType: DocumentType) => void;
 }
@@ -28,6 +29,7 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
   isLoading,
   document,
   documentType,
+  withDocumentTypeDisabled,
   onChangeDocument,
   onChangeDocumentType,
   ...props
@@ -49,6 +51,7 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
           value={documentType}
           onChooseItem={onChangeDocumentType}
           onRemoveChooseItem={onChangeDocumentType}
+          isDisabled={withDocumentTypeDisabled}
         >
           <SelectInput
             id={`${id || ""}-select-input`}

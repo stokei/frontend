@@ -1,0 +1,7 @@
+mutation CreateAccountPagarmeCustomer(
+  $input: CreateAccountPagarmeCustomerInput!
+) {
+  createAccountPagarmeCustomer(input: $input) {
+    id
+  }
+}

@@ -2,6 +2,25 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  copy: "Copy",
+  copied: "Copied",
+  makePaymentViaPixToCompleteYourPurchase:
+    "Make payment via PIX to complete your purchase",
+  useTheCodeOrUseTheQrCodeToCompleteYourPurchase:
+    "Use the code or use the QR code to complete your purchase.",
+  openYourBankAppAndChoosePaymentViaPix:
+    "Open your bank app and choose payment via PIX",
+  ifYouPreferToUseTheQrCodeJustChooseTheQrCodeOptionAndPointYourCameraToScanIt:
+    "If you prefer to use the QR code, just choose the QR Code option and point your camera to scan it.",
+  ifYouPreferToUseTheCodeJustClickOnTheButtonToCopyTheCodeChooseThePixCopyAndPaste:
+    "If you prefer to use the code, just click on the button to copy the code, choose the PIX Copy and Paste option and paste the copied code.",
+  checkTheTotalPurchaseAmountBeforeCompletingThePayment:
+    "Check the total purchase amount before completing the payment.",
+  afterPaymentJustGoBackToTheBeginningAndWaitForTheProductsToBeReleasedAsSoonAsThePaymentIsMade:
+    "After payment, just go back to the beginning and wait for the products to be released as soon as the payment is made.",
+  goToHomePage: "Go to home page",
+  amountToPay: "Amount to pay",
+  dateBirthday: "Date birthday",
   boleto: "Boleto",
   card: "Card",
   pix: "Pix",
@@ -67,6 +86,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   makeDefault: "Make default",
   previous: "Previous",
   chooseYourPlan: "Choose your plan",
+  chooseYourPaymentMethod: "Choose your payment method",
   creationDate: "Creation date",
   startDate: "Start date",
   endDate: "End date",

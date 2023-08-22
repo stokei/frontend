@@ -13,12 +13,18 @@ import { Text } from "../text";
 
 const onlyNumbers = (value: string) => value?.trim()?.replace(/\D/g, "");
 
+export interface InputPhoneCountryCode {
+  country: string;
+  code: string;
+}
+
 export interface InputPhoneProps {
   id: string;
+  countryCodes: InputPhoneCountryCode[];
   number: string;
   areaCode: string;
   countryCode: string;
-  countryCodeDisabled?: boolean;
+  withCountryCodeDisabled?: boolean;
   onChangeNumber: (number: string) => void;
   onChangeAreaCode: (areaCode: string) => void;
   onChangeCountryCode: (countryCode: string) => void;
@@ -29,7 +35,8 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
   number,
   areaCode,
   countryCode,
-  countryCodeDisabled,
+  countryCodes,
+  withCountryCodeDisabled,
   onChangeNumber,
   onChangeAreaCode,
   onChangeCountryCode,
@@ -37,20 +44,53 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
 }) => {
   const translate = useTranslations();
 
+  const getPhoneCode = (countryCodeValue: string) => {
+    return countryCodes?.find(
+      (currentCountryCode) => currentCountryCode?.code === countryCodeValue
+    );
+  };
+
   return (
     <Stack direction="row" spacing="2" {...props}>
-      <FormControl width="24">
+      <FormControl width="fit-content">
         <Label htmlFor={`${id}-country-code`}>
           {translate.formatMessage({ id: "country" })}
         </Label>
-        <Input
+        <Select
           id={`${id}-country-code`}
-          value={countryCode}
-          placeholder="55"
-          maxLength={2}
-          onChange={(e) => onChangeCountryCode(onlyNumbers(e.target.value))}
-          isDisabled={countryCodeDisabled}
-        />
+          value={countryCode || countryCodes?.[0]}
+          onChooseItem={(value) => onChangeCountryCode(value?.code)}
+          onRemoveChooseItem={(value) => onChangeCountryCode(value?.code)}
+          isDisabled={withCountryCodeDisabled}
+        >
+          <SelectInput
+            id={`${id}-country-code`}
+            item={(code) => {
+              const countryCodeItem = getPhoneCode(code);
+              return (
+                <Stack direction="row" spacing="2">
+                  <Text>
+                    {countryCodeItem?.country} ({countryCodeItem?.code})
+                  </Text>
+                </Stack>
+              );
+            }}
+          />
+          <SelectList>
+            {countryCodes?.map((currentCountryCode) => (
+              <SelectItem
+                key={currentCountryCode?.code}
+                value={currentCountryCode}
+              >
+                <Stack direction="row" spacing="2">
+                  <Text>
+                    {currentCountryCode?.country} ({currentCountryCode?.code})
+                  </Text>
+                </Stack>
+              </SelectItem>
+            ))}
+          </SelectList>
+        </Select>
       </FormControl>
       <FormControl width="24">
         <Label htmlFor={`${id}-area-code`}>

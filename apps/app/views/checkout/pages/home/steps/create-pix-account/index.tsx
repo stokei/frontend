@@ -1,64 +1,129 @@
-import { useTranslations } from "@/hooks";
-import { PaymentMethodType } from "@/services/graphql/stokei";
+import { useAPIErrors, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
+import { usePhoneCodes } from "@/hooks/use-phone-codes";
 import {
-  Avatar,
   Button,
   ButtonGroup,
-  Icon,
+  DatePicker,
+  DocumentType,
+  FormControl,
+  InputDocument,
   InputPhone,
-  RadioCard,
-  RadioGroup,
+  Label,
   Stack,
-  Text,
 } from "@stokei/ui";
 import { useMemo, useState } from "react";
+import { useCreateAccountPagarmeCustomerMutation } from "../../graphql/create-account-pagarme-customer.mutation.graphql.generated";
 
 export interface CreatePixAccountStepProps {
-  phoneNumber: string;
-  phoneAreaCode: string;
-  phoneCountryCode: string;
-  onChangeNumber: (number: string) => void;
-  onChangeAreaCode: (areaCode: string) => void;
-  onChangeCountryCode: (countryCode: string) => void;
   onPreviousStep: () => void;
   onNextStep: () => void;
 }
 
 export const CreatePixAccountStep: React.FC<CreatePixAccountStepProps> = ({
-  phoneNumber,
-  phoneAreaCode,
-  phoneCountryCode,
-  onChangeNumber,
-  onChangeAreaCode,
-  onChangeCountryCode,
   onNextStep,
   onPreviousStep,
 }) => {
+  const [cpf, setCPF] = useState("");
+  const [dateBirthday, setDateBirthday] = useState<Date>(new Date());
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneAreaCode, setPhoneAreaCode] = useState("");
+  const [phoneCountryCode, setPhoneCountryCode] = useState("55");
   const translate = useTranslations();
+  const { onShowAPIError } = useAPIErrors();
+  const { phoneCodes } = usePhoneCodes();
+  const { onReloadCurrentAccount } = useCurrentAccount();
+
+  const [
+    { fetching: isLoadingCreateAccountPagarmeCustomer },
+    onExecuteCreateAccountPagarmeCustomer,
+  ] = useCreateAccountPagarmeCustomerMutation();
 
   const isValid = useMemo(
-    () => !!phoneNumber && !!phoneAreaCode && !!phoneCountryCode,
-    [phoneAreaCode, phoneCountryCode, phoneNumber]
+    () =>
+      !!cpf &&
+      !!dateBirthday &&
+      !!phoneNumber &&
+      !!phoneAreaCode &&
+      !!phoneCountryCode,
+    [cpf, dateBirthday, phoneAreaCode, phoneCountryCode, phoneNumber]
   );
 
+  const onSubmit = async () => {
+    try {
+      const response = await onExecuteCreateAccountPagarmeCustomer({
+        input: {
+          cpf,
+          dateBirthday: dateBirthday?.toISOString(),
+          phone: {
+            areaCode: phoneAreaCode,
+            countryCode: phoneCountryCode,
+            number: phoneNumber,
+          },
+        },
+      });
+      if (!!response?.data?.createAccountPagarmeCustomer) {
+        await onReloadCurrentAccount();
+        return onNextStep();
+      }
+
+      if (!!response.error?.graphQLErrors?.length) {
+        response.error.graphQLErrors.map((error) =>
+          onShowAPIError({ message: error?.message })
+        );
+      }
+    } catch (error) {
+      onShowAPIError({ message: "somethingWentWrong" });
+    }
+  };
+
   return (
-    <Stack direction="column" spacing="10">
+    <Stack direction="column" spacing="5">
+      <FormControl>
+        <Label htmlFor="input-document">
+          {translate.formatMessage({ id: "dateBirthday" })}
+        </Label>
+        <DatePicker
+          id="input-date-birthday"
+          value={dateBirthday}
+          onChange={setDateBirthday}
+        />
+      </FormControl>
+
+      <FormControl>
+        <Label htmlFor="input-document">
+          {translate.formatMessage({ id: "cpf" })}
+        </Label>
+        <InputDocument
+          id="input-document"
+          document={cpf}
+          documentType={DocumentType.CPF}
+          onChangeDocument={setCPF}
+          onChangeDocumentType={() => {}}
+          withDocumentTypeDisabled
+        />
+      </FormControl>
+
       <InputPhone
-        id="input-number"
-        countryCodeDisabled
+        id="input-phone"
+        countryCodes={phoneCodes}
         number={phoneNumber}
         areaCode={phoneAreaCode}
         countryCode={phoneCountryCode}
-        onChangeNumber={onChangeNumber}
-        onChangeAreaCode={onChangeAreaCode}
-        onChangeCountryCode={onChangeCountryCode}
+        onChangeNumber={setPhoneNumber}
+        onChangeAreaCode={setPhoneAreaCode}
+        onChangeCountryCode={setPhoneCountryCode}
       />
 
       <ButtonGroup width="full" justifyContent="space-between">
         <Button onClick={onPreviousStep} variant="ghost">
           {translate.formatMessage({ id: "previous" })}
         </Button>
-        <Button onClick={onNextStep} isDisabled={!isValid}>
+        <Button
+          onClick={onSubmit}
+          isLoading={isLoadingCreateAccountPagarmeCustomer}
+          isDisabled={!isValid}
+        >
           {translate.formatMessage({ id: "next" })}
         </Button>
       </ButtonGroup>
