@@ -1,0 +1,61 @@
+query GetAppOrders(
+  $where: WhereDataFindAllOrdersInput
+  $orderBy: OrderByDataFindAllOrdersInput
+  $page: PaginationInput
+) {
+  orders(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppOrder
+    }
+  }
+}
+
+fragment AppOrder on Order {
+  id
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  items {
+    items {
+      ...AppOrderItem
+    }
+  }
+  status
+  totalAmount
+  subtotalAmount
+  paidAt
+  canceledAt
+  paymentErrorAt
+  createdAt
+}
+
+fragment AppOrderItem on OrderItem {
+  id
+  product {
+    id
+    name
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+  recurring {
+    interval
+    intervalCount
+  }
+  price {
+    ...PriceComponent
+  }
+  totalAmount
+  subtotalAmount
+  createdAt
+}

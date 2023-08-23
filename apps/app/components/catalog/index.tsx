@@ -1,6 +1,7 @@
 import {
   Box,
   Container,
+  Loading,
   NotFound,
   NotFoundIcon,
   NotFoundSubtitle,
@@ -13,7 +14,8 @@ import { FC, memo, useMemo } from "react";
 import { CatalogItem } from "../catalog-item";
 
 import { useTranslations } from "@/hooks";
-import { useSortedItemsQuery } from "./graphql/sorted-items.query.graphql.generated";
+import { OrderBy } from "@/services/graphql/stokei";
+import { useCatalogItemsQuery } from "./graphql/catalog-items.query.graphql.generated";
 
 export interface CatalogProps {
   readonly catalogId?: string;
@@ -24,36 +26,33 @@ export interface CatalogProps {
 export const Catalog: FC<CatalogProps> = memo(
   ({ catalogId, title, subtitle }) => {
     const translate = useTranslations();
-    const [{ fetching: isLoading, data: dataSortedItems }] =
-      useSortedItemsQuery({
+    const [{ fetching: isLoading, data: dataCatalogItems }] =
+      useCatalogItemsQuery({
         pause: !catalogId,
         variables: {
           where: {
             AND: {
-              parent: {
+              catalog: {
                 equals: catalogId,
               },
             },
+          },
+          orderBy: {
+            createdAt: OrderBy.Desc,
           },
         },
       });
 
     const catalogItems = useMemo(() => {
-      const items = dataSortedItems?.sortedItems?.items;
+      const items = dataCatalogItems?.catalogItems?.items;
       const sortedItems = items?.sort((itemA, itemB) => {
-        if (
-          itemA.item?.__typename === "CatalogItem" &&
-          itemB.item?.__typename === "CatalogItem"
-        ) {
-          if (!itemB.item?.product.defaultPrice) {
-            return -1;
-          }
-          return 1;
+        if (!itemB.product.defaultPrice) {
+          return -1;
         }
         return 1;
       });
       return sortedItems;
-    }, [dataSortedItems]);
+    }, [dataCatalogItems]);
 
     return (
       <Box flexDirection="column" as="section" paddingY="5">
@@ -65,34 +64,37 @@ export const Catalog: FC<CatalogProps> = memo(
             </Text>
           )}
         </Container>
-        {!catalogItems?.length ? (
-          <NotFound>
-            <NotFoundIcon name="course" />
-            <NotFoundSubtitle>
-              {translate.formatMessage({ id: "productsNotFound" })}
-            </NotFoundSubtitle>
-          </NotFound>
+        {isLoading ? (
+          <Loading />
         ) : (
-          <Box flexDirection="row" overflowY="hidden">
-            <Container>
-              <SimpleGrid columns={[1, 1, 2, 4]} spacing="5">
-                {catalogItems?.map(
-                  ({ item }) =>
-                    item?.__typename === "CatalogItem" && (
+          <>
+            {!catalogItems?.length ? (
+              <NotFound>
+                <NotFoundIcon name="course" />
+                <NotFoundSubtitle>
+                  {translate.formatMessage({ id: "productsNotFound" })}
+                </NotFoundSubtitle>
+              </NotFound>
+            ) : (
+              <Box flexDirection="row" overflowY="hidden">
+                <Container>
+                  <SimpleGrid columns={[1, 1, 2, 4]} spacing="5">
+                    {catalogItems?.map(({ product }) => (
                       <CatalogItem
-                        key={item?.product?.id}
-                        productId={item?.product?.id}
-                        name={item?.product?.name}
-                        avatar={item?.product?.avatar?.file?.url || ""}
-                        defaultPrice={item?.product?.defaultPrice}
-                        prices={item?.product?.prices}
-                        parent={item?.product?.parent}
+                        key={product?.id}
+                        productId={product?.id}
+                        name={product?.name}
+                        avatar={product?.avatar?.file?.url || ""}
+                        defaultPrice={product?.defaultPrice}
+                        prices={product?.prices}
+                        parent={product?.parent}
                       />
-                    )
-                )}
-              </SimpleGrid>
-            </Container>
-          </Box>
+                    ))}
+                  </SimpleGrid>
+                </Container>
+              </Box>
+            )}
+          </>
         )}
       </Box>
     );

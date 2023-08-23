@@ -10,6 +10,9 @@ query CurrentAccount {
     username
     status
     pagarmeCustomer
+    app {
+      id
+    }
     roles {
       totalCount
       items {
