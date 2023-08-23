@@ -8,6 +8,7 @@ import { PriceComponentFragment } from "./price.fragment.graphql.generated";
 export interface PriceProps extends StackProps {
   price?: PriceComponentFragment | null;
   size?: "md" | "lg";
+  readonly withRecurringLabel?: boolean;
   readonly withPriceAndUnitDirectionColumn?: boolean;
   readonly withUnitDescription?: boolean;
 }
@@ -15,6 +16,7 @@ export const Price: FC<PriceProps> = ({
   price,
   size,
   justify,
+  withRecurringLabel = true,
   withUnitDescription,
   withPriceAndUnitDirectionColumn,
   ...props
@@ -46,6 +48,9 @@ export const Price: FC<PriceProps> = ({
   }, [price, translate]);
 
   const priceRecurringIntervalTypeKey = useMemo(() => {
+    if (!withRecurringLabel) {
+      return;
+    }
     if (!price?.recurring?.interval) {
       return undefined;
     }
@@ -54,7 +59,11 @@ export const Price: FC<PriceProps> = ({
       return key.plural;
     }
     return key.singular;
-  }, [price]);
+  }, [
+    price?.recurring?.interval,
+    price?.recurring?.intervalCount,
+    withRecurringLabel,
+  ]);
 
   const perUnitDescription = useMemo(
     () => (withUnitDescription ? translate.formatMessage({ id: "per" }) : "/"),

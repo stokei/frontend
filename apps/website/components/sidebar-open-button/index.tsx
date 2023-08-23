@@ -11,6 +11,7 @@ export const SidebarOpenButton: FC<SidebarOpenButtonProps> = ({ ...props }) => {
       marginTop="1"
       marginRight="5"
       variant="ghost"
+      color="text.500"
       onClick={onToggleSidebar}
       display={["block", "block", "none", "none"]}
       {...props}

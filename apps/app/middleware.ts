@@ -5,7 +5,7 @@ import {
 } from "@stokei/graphql";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { URL } from "url";
+import { BASE_URL_HEADER_NAME } from "./constants/base-url-header-name";
 import { RoleName } from "./constants/role-names";
 import { STOKEI_APP_NOT_FOUND_URL } from "./constants/stokei-urls";
 import { DOMAIN } from "./environments";
@@ -24,7 +24,6 @@ import {
   withLocalDomain,
   withSubDomain,
 } from "./services/middlewares";
-import { BASE_URL_HEADER_NAME } from "./constants/base-url-header-name";
 
 const getDomain = ({
   domain,
@@ -116,18 +115,30 @@ export async function middleware(request: NextRequest) {
       const adminDashboardRegex = /\/app\/.*\/admins/;
       const isPrivateRoute = !!url.pathname?.match(privateRoutesRegex);
       const isAdminDashboard = url.pathname?.match(adminDashboardRegex);
+      const isAppOwner = currentAccount?.isOwner;
+      const isAppAdmin = currentAccount?.roles?.items?.some(
+        (role) => role.name === RoleName.ADMIN
+      );
+      const isFromOtherApp =
+        isAuth && currentAccount?.app?.id !== currentApp?.id;
+      if (!!isFromOtherApp && (!isAppOwner || !isAppAdmin)) {
+        const response = NextResponse.redirect(authURL);
+        response.cookies.delete(ACCESS_TOKEN_HEADER_NAME);
+        response.cookies.delete(REFRESH_TOKEN_HEADER_NAME);
+        response.cookies.set(APP_ID_HEADER_NAME, appId);
+        response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
+        return response;
+      }
       if (isPrivateRoute) {
         if (!isAuth) {
           const response = NextResponse.redirect(authURL);
+          response.cookies.delete(ACCESS_TOKEN_HEADER_NAME);
+          response.cookies.delete(REFRESH_TOKEN_HEADER_NAME);
           response.cookies.set(APP_ID_HEADER_NAME, appId);
           response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
           return response;
         }
         if (isAuth) {
-          const isAppOwner = currentAccount?.isOwner;
-          const isAppAdmin = currentAccount?.roles?.items?.some(
-            (role) => role.name === RoleName.ADMIN
-          );
           if (!isAppOwner && !isAppAdmin && isAdminDashboard) {
             const response = NextResponse.redirect(customersDashboardURL);
             response.cookies.set(APP_ID_HEADER_NAME, appId);

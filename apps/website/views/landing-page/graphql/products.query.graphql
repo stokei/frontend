@@ -28,6 +28,11 @@ fragment LandingPageProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
+  features {
+    items {
+      ...LandingPageProductFeature
+    }
+  }
   parent {
     __typename
     ...LandingPageProductPlan
@@ -38,14 +43,9 @@ fragment LandingPageProductPlan on Plan {
   id
   name
   icon
-  features {
-    items {
-      ...LandingPageProductPlanFeature
-    }
-  }
 }
 
-fragment LandingPageProductPlanFeature on Feature {
+fragment LandingPageProductFeature on Feature {
   id
   name
   description

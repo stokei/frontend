@@ -53,7 +53,7 @@ export const CatalogsPage: FC<CatalogsPageProps> = () => {
           },
         },
         orderBy: {
-          createdAt: OrderBy.Asc,
+          createdAt: OrderBy.Desc,
         },
       },
     });

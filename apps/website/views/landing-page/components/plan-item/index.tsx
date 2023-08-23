@@ -12,18 +12,16 @@ import {
   List,
   ListIcon,
   ListItem,
-  SimpleGrid,
   Stack,
-  Text,
   Title,
 } from "@stokei/ui";
 import { FC } from "react";
-import { LandingPageProductPlanFeatureFragment } from "../../graphql/products.query.graphql.generated";
+import { LandingPageProductFeatureFragment } from "../../graphql/products.query.graphql.generated";
 
 interface PlanItemProps {
   readonly icon: IconName;
   readonly title: string;
-  readonly features: LandingPageProductPlanFeatureFragment[];
+  readonly features: LandingPageProductFeatureFragment[];
   readonly price?: PriceComponentFragment | null;
 }
 

@@ -5,7 +5,8 @@ import { Stack, StackProps } from "../stack";
 import { Icon } from "../icon";
 import { Box } from "../box";
 
-const getValue = (value: any) => value || value?.id || value?.value;
+const getValue = (value: any) =>
+  value || value?.id || value?.code || value?.value;
 const isActiveGenericValue = (firstValue: any, secondValue: any) => {
   const first = getValue(firstValue);
   const second = getValue(secondValue);

@@ -57,11 +57,7 @@ fragment SubscriptionPageSubscriptionContract on SubscriptionContract {
     }
   }
   paymentMethod {
-    id
-    cardBrand
-    cardExpiryMonth
-    cardExpiryYear
-    lastFourCardNumber
+    ...PaymentMethodComponent
   }
 }
 

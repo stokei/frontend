@@ -72,14 +72,26 @@ export const StripeOnboarding: FC<StripeOnboardingProps> = () => {
           </Text>
 
           <ButtonGroup>
-            <Button
-              isLoading={isLoadingCreateAppStripeOnboarding}
-              onClick={goToStripeOnboarding}
-            >
-              {translate.formatMessage({
-                id: isIntegratedWithStripe ? "update" : "add",
-              })}
-            </Button>
+            {isIntegratedWithStripe ? (
+              <Button
+                isLoading={isLoadingCreateAppStripeOnboarding}
+                onClick={goToStripeOnboarding}
+                variant="outline"
+              >
+                {translate.formatMessage({
+                  id: "update",
+                })}
+              </Button>
+            ) : (
+              <Button
+                isLoading={isLoadingCreateAppStripeOnboarding}
+                onClick={goToStripeOnboarding}
+              >
+                {translate.formatMessage({
+                  id: "add",
+                })}
+              </Button>
+            )}
           </ButtonGroup>
         </Stack>
       </CardBody>

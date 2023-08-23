@@ -1,8 +1,9 @@
-import { STRIPE_URL } from "@/constants/stripe-links";
+import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
+import { PaymentGatewayType } from "@/constants/payment-gateway-type";
+import { STRIPE_PRICES_URL } from "@/constants/stripe-links";
 import { useTranslations } from "@/hooks";
 import {
   Avatar,
-  Box,
   Card,
   CardBody,
   CardFooter,
@@ -18,10 +19,13 @@ import {
 } from "@stokei/ui";
 import { FC } from "react";
 
-interface PaymentGatewayItemProps {}
+interface PlanItemPaymentWithBoletoProps {}
 
-export const PaymentGatewayItem: FC<PaymentGatewayItemProps> = () => {
+export const PlanItemPaymentWithBoleto: FC<
+  PlanItemPaymentWithBoletoProps
+> = () => {
   const translate = useTranslations();
+  const stripeGateway = paymentGatewayFees[PaymentGatewayType.STRIPE];
   return (
     <Card background="background.50">
       <CardHeader>
@@ -31,7 +35,9 @@ export const PaymentGatewayItem: FC<PaymentGatewayItemProps> = () => {
             size="lg"
             icon={<Icon name="plan" fontSize="2xl" color="white.500" />}
           />
-          <Title size={"md"}>{translate.formatMessage({ id: "sales" })}</Title>
+          <Title size={"md"}>
+            {translate.formatMessage({ id: "salesByBoleto" })}
+          </Title>
         </Stack>
       </CardHeader>
       <CardBody paddingTop={0}>
@@ -39,7 +45,7 @@ export const PaymentGatewayItem: FC<PaymentGatewayItemProps> = () => {
           <ListItem>
             <ListIcon name="check" color="green.500" />
             {translate.formatMessage({
-              id: "receiveByCardIn30DaysAnd2WorkingDaysForPaymentsByBoleto",
+              id: "receiveByBoletoIn2DaysForPaymentsByBoleto",
             })}
           </ListItem>
         </List>
@@ -57,32 +63,24 @@ export const PaymentGatewayItem: FC<PaymentGatewayItemProps> = () => {
             align="center"
             justify="center"
           >
-            <Text fontSize="md" fontWeight="600">
-              %
-            </Text>
             <Text
               fontSize="2xl"
               color="primary.500"
               fontWeight="900"
               lineHeight="shorter"
             >
-              7%
+              {stripeGateway.percentage}%
             </Text>
-          </Stack>
-          <Stack width="fit-content" direction="row" spacing="1">
-            <Text fontSize="md" color="text.200">
-              {translate.formatMessage({ id: "each" })}
-            </Text>
-            <Text fontSize="md" color="text.200">
-              {translate.formatMessage({ id: "sale" })}
-            </Text>
-            <Text fontSize="md" color="text.200">
-              +
-            </Text>
-            <Link fontSize="md" href={STRIPE_URL} target="_blank">
+            <Text fontSize="md">+</Text>
+            <Link fontSize="md" href={STRIPE_PRICES_URL} target="_blank">
               {translate.formatMessage({ id: "stripeTax" })}
             </Link>
           </Stack>
+          <Text fontSize="md" color="text.400">
+            {`${translate.formatMessage({
+              id: "each",
+            })} ${translate.formatMessage({ id: "sale" })}`}
+          </Text>
         </Stack>
       </CardFooter>
     </Card>

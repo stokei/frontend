@@ -30,7 +30,7 @@ export const ModulesList: FC<ModulesListProps> = ({ courseId }) => {
   }
 
   return (
-    <Box width="full" flex="1" flexDirection="column">
+    <Box width="full" flexDirection="column">
       {isLoading ? (
         <ModuleLoading />
       ) : (

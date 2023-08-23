@@ -5,9 +5,11 @@ import {
   AiOutlineArrowRight,
   AiOutlineArrowUp,
   AiOutlineBank,
+  AiOutlineBarcode,
   AiOutlineBold,
   AiOutlineCloudDownload,
   AiOutlineCloudUpload,
+  AiOutlineCreditCard,
   AiOutlineDollar,
   AiOutlineEdit,
   AiOutlineEllipsis,
@@ -58,6 +60,7 @@ import {
 } from "react-icons/bs";
 import { FaMoneyBill, FaStore, FaUserShield, FaUserTie } from "react-icons/fa";
 import { FiPlus, FiSettings } from "react-icons/fi";
+import { GrCatalog } from "react-icons/gr";
 import { HiOutlineAcademicCap } from "react-icons/hi";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import {
@@ -70,9 +73,11 @@ import {
   LuHeading6,
 } from "react-icons/lu";
 import {
+  MdContentCopy,
   MdOutlineBuild,
   MdOutlineDomainVerification,
   MdOutlineFeaturedPlayList,
+  MdOutlinePix,
   MdOutlineStorage,
 } from "react-icons/md";
 import {
@@ -82,7 +87,6 @@ import {
   RxCaretUp,
 } from "react-icons/rx";
 import { TbApps } from "react-icons/tb";
-import { GrCatalog } from "react-icons/gr";
 
 import {
   RiCheckboxBlankCircleLine,
@@ -179,3 +183,7 @@ export const OnboardingIcon = AiOutlineLink;
 export const WebsiteIcon = MdOutlineBuild;
 export const FeatureIcon = MdOutlineFeaturedPlayList;
 export const CatalogIcon = GrCatalog;
+export const BoletoIcon = AiOutlineBarcode;
+export const CardIcon = AiOutlineCreditCard;
+export const PixIcon = MdOutlinePix;
+export const CopyIcon = MdContentCopy;

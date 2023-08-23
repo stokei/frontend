@@ -1,0 +1,45 @@
+query GetOrderPageOrder($orderId: String!) {
+  order(id: $orderId) {
+    ...OrderPageOrder
+  }
+}
+
+fragment OrderPageOrder on Order {
+  id
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  payments(orderBy: { createdAt: DESC }) {
+    items {
+      ...OrderPagePayment
+    }
+  }
+  status
+  totalAmount
+  subtotalAmount
+  paidAt
+  canceledAt
+  paymentErrorAt
+  createdAt
+}
+
+fragment OrderPagePayment on Payment {
+  id
+  paymentMethod {
+    ...PaymentMethodComponent
+  }
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  status
+  totalAmount
+  subtotalAmount
+  paidAt
+  canceledAt
+  paymentErrorAt
+  createdAt
+}

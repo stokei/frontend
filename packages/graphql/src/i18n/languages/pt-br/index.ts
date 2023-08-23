@@ -1,4 +1,9 @@
 export const ptBRMessages = {
+  orderNotFound: "Pedido não encontrado",
+  ordersNotFound: "Pedidos não encontrado",
+  orderAlreadyPaid: "Pedido já foi pago",
+  paymentNotFound: "Pagamento não encontrado",
+  paymentsNotFound: "Pagamentos não encontrado",
   accessNotFound: "Acesso não encontrado",
   accessesNotFound: "Acessos não encontrados",
   accountAlreadyExists: "Essa conta já existe",

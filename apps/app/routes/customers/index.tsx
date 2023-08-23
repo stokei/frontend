@@ -32,5 +32,9 @@ export const routesCustomers = {
     subscription: ({ subscription }: { subscription?: string }) =>
       baseURL + "/subscriptions/" + subscription,
   },
+  orders: {
+    home: baseURL + "/orders",
+    order: ({ order }: { order?: string }) => baseURL + "/orders/" + order,
+  },
   invoices: baseURL + "/invoices",
 };
