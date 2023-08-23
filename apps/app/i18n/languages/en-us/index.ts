@@ -43,6 +43,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   materials: "Materials",
   account: "Account",
   new: "New",
+  order: "Order",
+  orders: "Orders",
   unavailable: "Unavailable",
   informations: "Informations",
   successfullyIntegrated: "Successfully integrated!",
