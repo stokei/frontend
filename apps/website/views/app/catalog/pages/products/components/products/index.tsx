@@ -1,4 +1,5 @@
 import { useTranslations } from "@/hooks";
+import { OrderBy } from "@/services/graphql/stokei";
 import { Section } from "@/views/app/catalog/components/section";
 import { SectionContent } from "@/views/app/catalog/components/section-content";
 import { CatalogPageCatalogFragment } from "@/views/app/catalog/graphql/catalog.query.graphql.generated";
@@ -47,6 +48,9 @@ export const Products: FC<ProductsProps> = ({ catalog }) => {
             equals: catalog?.id,
           },
         },
+      },
+      orderBy: {
+        createdAt: OrderBy.Desc,
       },
     },
   });

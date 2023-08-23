@@ -212,6 +212,9 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
         currentOrderId = order.id;
       }
     }
+    if (!currentOrderId) {
+      return;
+    }
     return await onCreatePayment(currentOrderId);
   };
 

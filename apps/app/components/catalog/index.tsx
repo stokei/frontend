@@ -21,10 +21,11 @@ export interface CatalogProps {
   readonly catalogId?: string;
   readonly title?: string;
   readonly subtitle?: string | null;
+  readonly maxItems?: number;
 }
 
 export const Catalog: FC<CatalogProps> = memo(
-  ({ catalogId, title, subtitle }) => {
+  ({ catalogId, title, subtitle, maxItems }) => {
     const translate = useTranslations();
     const [{ fetching: isLoading, data: dataCatalogItems }] =
       useCatalogItemsQuery({
@@ -39,6 +40,9 @@ export const Catalog: FC<CatalogProps> = memo(
           },
           orderBy: {
             createdAt: OrderBy.Desc,
+          },
+          page: {
+            limit: maxItems,
           },
         },
       });

@@ -36,7 +36,7 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
               <TableHeader>
                 <TableRow>
                   <TableHeaderCell>
-                    {translate.formatMessage({ id: "product" })}
+                    {translate.formatMessage({ id: "products" })}
                   </TableHeaderCell>
                   <TableHeaderCell>
                     {translate.formatMessage({ id: "total" })}

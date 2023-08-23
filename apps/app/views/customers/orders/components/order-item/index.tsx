@@ -1,7 +1,10 @@
 import { useTranslations } from "@/hooks";
+import { routes } from "@/routes";
 import { getI18nKeyFromRecurringInterval, getProductURL } from "@/utils";
 import { getOrderStatusColor } from "@/utils/get-order-status-color";
 import {
+  Avatar,
+  AvatarGroup,
   Badge,
   Box,
   Description,
@@ -11,6 +14,7 @@ import {
   TableRow,
   Text,
 } from "@stokei/ui";
+import { useRouter } from "next/router";
 import { FC, memo, useMemo } from "react";
 import { AppOrderFragment } from "../../graphql/orders.query.graphql.generated";
 
@@ -19,6 +23,7 @@ export interface OrderItemProps {
 }
 
 export const OrderItem: FC<OrderItemProps> = memo(({ order }) => {
+  const router = useRouter();
   const translate = useTranslations();
 
   const statusColor = useMemo(
@@ -26,40 +31,25 @@ export const OrderItem: FC<OrderItemProps> = memo(({ order }) => {
     [order]
   );
 
-  const orderItem = useMemo(() => order?.items?.items?.[0], [order]);
-  const recurringLabel = useMemo(() => {
-    if (!orderItem?.recurring?.interval) {
-      return;
-    }
-    const interalKeys = getI18nKeyFromRecurringInterval(
-      orderItem?.recurring?.interval
-    );
-    const intervalCount = orderItem?.recurring?.intervalCount || 0;
-    const intervalTypeLabel =
-      intervalCount > 1 ? interalKeys.plural : interalKeys.singular;
-    return `${intervalCount} ${translate.formatMessage({
-      id: intervalTypeLabel as any,
-    })}`;
-  }, [
-    orderItem?.recurring?.interval,
-    orderItem?.recurring?.intervalCount,
-    translate,
-  ]);
+  const orderItems = useMemo(() => order?.items?.items, [order]);
+
+  const goToOrderPage = () => {
+    router.push(routes.customers.orders.order({ order: order?.id }));
+  };
+
   return (
-    <TableRow>
+    <TableRow onClick={goToOrderPage}>
       <TableCell>
-        <Stack direction="row" spacing="4" align="center">
-          <Image
-            width="10"
-            rounded="sm"
-            src={getProductURL(orderItem?.product?.avatar?.file?.url)}
-            alt={translate.formatMessage({ id: "product" })}
-          />
-          <Stack direction="column" spacing="1">
-            <Text fontWeight="bold">{orderItem?.price?.nickname}</Text>
-            {recurringLabel && <Description>{recurringLabel}</Description>}
-          </Stack>
-        </Stack>
+        <AvatarGroup>
+          {orderItems?.map((orderItem) => (
+            <Avatar
+              key={orderItem?.id}
+              size="sm"
+              src={getProductURL(orderItem?.product?.avatar?.file?.url)}
+              name={orderItem?.price?.nickname || ""}
+            />
+          ))}
+        </AvatarGroup>
       </TableCell>
       <TableCell>
         <Stack direction="row" spacing="1">

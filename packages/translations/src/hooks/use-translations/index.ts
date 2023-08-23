@@ -62,23 +62,6 @@ export const useTranslations = <TKeys = string>() => {
     });
   }, []);
 
-  const formatDate = useCallback(
-    (
-      date: Parameters<Intl.DateTimeFormat["format"]>[0] | string,
-      options?: Intl.DateTimeFormatOptions & { format?: string }
-    ) => {
-      if (!date) {
-        return;
-      }
-      try {
-        return intl.formatDate(date, options);
-      } catch (error) {
-        return undefined;
-      }
-    },
-    []
-  );
-
   const formatDateTime = useCallback(
     (
       time: Parameters<Intl.DateTimeFormat["format"]>[0] | string,
@@ -93,6 +76,28 @@ export const useTranslations = <TKeys = string>() => {
         return intl.formatTime(time, options);
       } catch (error) {
         return;
+      }
+    },
+    []
+  );
+
+  const formatDate = useCallback(
+    (
+      date: Parameters<Intl.DateTimeFormat["format"]>[0] | string,
+      options?: Intl.DateTimeFormatOptions & {
+        format?: string;
+        fullDate?: boolean;
+      }
+    ) => {
+      if (!date) {
+        return;
+      }
+      try {
+        const dateString = intl.formatDate(date, options);
+        const timeString = options?.fullDate ? formatDateTime(date) : "";
+        return `${dateString} ${timeString}`;
+      } catch (error) {
+        return undefined;
       }
     },
     []

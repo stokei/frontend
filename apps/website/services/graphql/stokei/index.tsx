@@ -1644,15 +1644,22 @@ export type Order = {
   currency: Currency;
   feeAmount: Scalars['Float'];
   id: Scalars['ID'];
+  items?: Maybe<OrderItems>;
   paidAmount: Scalars['Float'];
   paidAt?: Maybe<Scalars['String']>;
-  parent: Scalars['String'];
+  parent: OrderParentUnion;
   paymentErrorAt?: Maybe<Scalars['String']>;
   status: OrderStatus;
   subtotalAmount: Scalars['Float'];
   totalAmount: Scalars['Float'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+};
+
+
+export type OrderItemsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllOrderItemsInput>;
+  page?: InputMaybe<PaginationInput>;
 };
 
 export enum OrderBy {
@@ -1843,15 +1850,23 @@ export type OrderByDataFindAllModulesInput = {
 export type OrderByDataFindAllOrderItemsInput = {
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
-  name?: InputMaybe<OrderBy>;
+  quantity?: InputMaybe<OrderBy>;
+  subtotalAmount?: InputMaybe<OrderBy>;
+  totalAmount?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
 
 export type OrderByDataFindAllOrdersInput = {
+  active?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
-  name?: InputMaybe<OrderBy>;
+  currency?: InputMaybe<OrderBy>;
+  feeAmount?: InputMaybe<OrderBy>;
+  paidAmount?: InputMaybe<OrderBy>;
+  status?: InputMaybe<OrderBy>;
+  subtotalAmount?: InputMaybe<OrderBy>;
+  totalAmount?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -2012,7 +2027,7 @@ export type OrderItem = {
   id: Scalars['ID'];
   parent: Scalars['String'];
   price?: Maybe<Price>;
-  product: Scalars['String'];
+  product: Product;
   quantity: Scalars['Float'];
   recurring?: Maybe<Recurring>;
   subtotalAmount: Scalars['Float'];
@@ -2034,6 +2049,8 @@ export type OrderItems = {
   totalCount: Scalars['Int'];
   totalPages: Scalars['Int'];
 };
+
+export type OrderParentUnion = Account | App;
 
 export enum OrderStatus {
   Canceled = 'CANCELED',
@@ -3810,11 +3827,13 @@ export type WhereDataFindAllModulesInput = {
 };
 
 export type WhereDataFindAllOrderItemsDataInput = {
+  app?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  description?: InputMaybe<WhereDataSearchInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
-  name?: InputMaybe<WhereDataSearchInput>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  price?: InputMaybe<WhereDataStringInput>;
+  product?: InputMaybe<WhereDataSearchInput>;
+  recurring?: InputMaybe<WhereDataStringInput>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 
@@ -3825,11 +3844,13 @@ export type WhereDataFindAllOrderItemsInput = {
 };
 
 export type WhereDataFindAllOrdersDataInput = {
+  active?: InputMaybe<WhereDataBooleanInput>;
+  app?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  description?: InputMaybe<WhereDataSearchInput>;
+  currency?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
-  name?: InputMaybe<WhereDataSearchInput>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  status?: InputMaybe<OrderStatus>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 

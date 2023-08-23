@@ -1649,6 +1649,7 @@ export type Order = {
   paidAt?: Maybe<Scalars['String']>;
   parent: OrderParentUnion;
   paymentErrorAt?: Maybe<Scalars['String']>;
+  payments?: Maybe<Payments>;
   status: OrderStatus;
   subtotalAmount: Scalars['Float'];
   totalAmount: Scalars['Float'];
@@ -1659,6 +1660,12 @@ export type Order = {
 
 export type OrderItemsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllOrderItemsInput>;
+  page?: InputMaybe<PaginationInput>;
+};
+
+
+export type OrderPaymentsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllPaymentsInput>;
   page?: InputMaybe<PaginationInput>;
 };
 
