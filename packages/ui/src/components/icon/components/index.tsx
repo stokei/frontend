@@ -38,6 +38,7 @@ import {
 import { BiLineChart, BiRedo, BiUndo } from "react-icons/bi";
 import {
   BsBell,
+  BsBox,
   BsCart,
   BsCheck,
   BsFilter,
@@ -163,7 +164,8 @@ export const AdminIcon = FaUserShield;
 export const InstructorIcon = FaUserTie;
 export const DomainIcon = MdOutlineDomainVerification;
 export const StorageIcon = MdOutlineStorage;
-export const ProductIcon = AiOutlineShoppingCart;
+export const ProductIcon = BsBox;
+export const SaleIcon = AiOutlineShoppingCart;
 export const BoldIcon = AiOutlineBold;
 export const ItalicIcon = AiOutlineItalic;
 export const UndoIcon = BiUndo;

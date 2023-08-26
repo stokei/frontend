@@ -63,9 +63,7 @@ export const SubscriptionContractFilters: FC<
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
-      <DrawerHeader>
-        {translate.formatMessage({ id: "addSubscription" })}
-      </DrawerHeader>
+      <DrawerHeader>{translate.formatMessage({ id: "filters" })}</DrawerHeader>
       <DrawerBody>
         <Stack direction="column" spacing="5">
           <SelectMembers

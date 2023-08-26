@@ -1649,6 +1649,7 @@ export type Order = {
   paidAt?: Maybe<Scalars['String']>;
   parent: OrderParentUnion;
   paymentErrorAt?: Maybe<Scalars['String']>;
+  payments?: Maybe<Payments>;
   status: OrderStatus;
   subtotalAmount: Scalars['Float'];
   totalAmount: Scalars['Float'];
@@ -1659,6 +1660,12 @@ export type Order = {
 
 export type OrderItemsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllOrderItemsInput>;
+  page?: InputMaybe<PaginationInput>;
+};
+
+
+export type OrderPaymentsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllPaymentsInput>;
   page?: InputMaybe<PaginationInput>;
 };
 
@@ -1880,9 +1887,15 @@ export type OrderByDataFindAllPaymentMethodsInput = {
 };
 
 export type OrderByDataFindAllPaymentsInput = {
+  active?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
-  name?: InputMaybe<OrderBy>;
+  currency?: InputMaybe<OrderBy>;
+  feeAmount?: InputMaybe<OrderBy>;
+  paymentMethod?: InputMaybe<OrderBy>;
+  status?: InputMaybe<OrderBy>;
+  subtotalAmount?: InputMaybe<OrderBy>;
+  totalAmount?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -2104,7 +2117,7 @@ export type Payment = {
   paidAmount: Scalars['Float'];
   paidAt?: Maybe<Scalars['String']>;
   parent: Scalars['String'];
-  payer: Account;
+  payer?: Maybe<Account>;
   paymentErrorAt?: Maybe<Scalars['String']>;
   paymentMethod?: Maybe<PaymentMethod>;
   status: PaymentStatus;
@@ -3876,11 +3889,14 @@ export type WhereDataFindAllPaymentMethodsInput = {
 };
 
 export type WhereDataFindAllPaymentsDataInput = {
+  active?: InputMaybe<WhereDataBooleanInput>;
+  app?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
-  description?: InputMaybe<WhereDataSearchInput>;
+  currency?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
-  name?: InputMaybe<WhereDataSearchInput>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  payer?: InputMaybe<WhereDataSearchInput>;
+  paymentMethod?: InputMaybe<WhereDataStringInput>;
+  status?: InputMaybe<PaymentStatus>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 

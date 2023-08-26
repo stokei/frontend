@@ -2,6 +2,8 @@ export const ptBRMessages = {
   me: "Eu",
   order: "Pedido",
   orders: "Pedidos",
+  orderItem: "Item do pedido",
+  orderItems: "Itens do pedido",
   copy: "Copiar",
   makePaymentViaPixToCompleteYourPurchase:
     "Faça o pagamento via PIX para concluir sua compra",

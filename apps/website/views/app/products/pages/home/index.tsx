@@ -46,7 +46,7 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
       requestPolicy: "network-only",
       variables: {
         page: {
-          limit: 10,
+          limit: 12,
           number: currentPage,
         },
         where: {

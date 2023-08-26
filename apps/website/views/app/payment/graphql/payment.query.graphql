@@ -1,0 +1,36 @@
+query GetPaymentPagePayment($paymentId: String!) {
+  payment(id: $paymentId) {
+    ...PaymentPagePayment
+  }
+}
+
+fragment PaymentPagePayment on Payment {
+  id
+  payer {
+    id
+    fullname
+    email
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+  paymentMethod {
+    ...PaymentMethodComponent
+  }
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  status
+  feeAmount
+  totalAmount
+  subtotalAmount
+  paidAt
+  canceledAt
+  paymentErrorAt
+  updatedAt
+  createdAt
+}

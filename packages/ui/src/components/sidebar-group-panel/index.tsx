@@ -1,4 +1,5 @@
 import { useSidebarGroup } from "../../hooks";
+import { Divider } from "../divider";
 import { Stack, StackProps } from "../stack";
 
 export interface SidebarGroupPanelProps extends StackProps {}
@@ -12,12 +13,16 @@ export const SidebarGroupPanel: React.FC<SidebarGroupPanelProps> = ({
     <Stack
       width="full"
       padding="3"
-      align="center"
-      direction="column"
+      paddingLeft="6"
+      direction="row"
+      spacing="0"
       display={isOpen ? "flex" : "none"}
       {...props}
     >
-      {children}
+      <Divider orientation="vertical" />
+      <Stack width="full" align="center" direction="column">
+        {children}
+      </Stack>
     </Stack>
   );
 };
