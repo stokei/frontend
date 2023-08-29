@@ -2117,7 +2117,7 @@ export type Payment = {
   paidAmount: Scalars['Float'];
   paidAt?: Maybe<Scalars['String']>;
   parent: Scalars['String'];
-  payer: Account;
+  payer?: Maybe<Account>;
   paymentErrorAt?: Maybe<Scalars['String']>;
   paymentMethod?: Maybe<PaymentMethod>;
   status: PaymentStatus;
@@ -3894,6 +3894,7 @@ export type WhereDataFindAllPaymentsDataInput = {
   createdBy?: InputMaybe<WhereDataStringInput>;
   currency?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
+  payer?: InputMaybe<WhereDataSearchInput>;
   paymentMethod?: InputMaybe<WhereDataStringInput>;
   status?: InputMaybe<PaymentStatus>;
   updatedBy?: InputMaybe<WhereDataStringInput>;

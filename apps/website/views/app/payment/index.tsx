@@ -20,6 +20,7 @@ export const PaymentPage: FC<PaymentPageProps> = () => {
   const [{ data: dataGetPayment, fetching: isLoadingPayment }] =
     useGetPaymentPagePaymentQuery({
       pause: !paymentId,
+      requestPolicy: "network-only",
       variables: {
         paymentId: paymentId || "",
       },

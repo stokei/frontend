@@ -98,6 +98,7 @@ export const icons = {
   pix: IconComponent.PixIcon,
   copy: IconComponent.CopyIcon,
   sale: IconComponent.SaleIcon,
+  buy: IconComponent.BuyIcon,
 };
 
 export type IconName = keyof typeof icons;

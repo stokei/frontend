@@ -56,6 +56,7 @@ export const PaymentsPage: FC<PaymentsPageProps> = () => {
   const [{ data: dataGetPayments, fetching: isLoading }] =
     useGetAppPaymentsQuery({
       pause: !currentApp,
+      requestPolicy: "network-only",
       variables: {
         page: {
           limit: 10,

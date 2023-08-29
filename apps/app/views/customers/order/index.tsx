@@ -21,6 +21,7 @@ export const OrderPage: FC<OrderPageProps> = () => {
   const [{ data: dataGetOrder, fetching: isLoadingOrder }] =
     useGetOrderPageOrderQuery({
       pause: !orderId,
+      requestPolicy: "network-only",
       variables: {
         orderId: orderId || "",
       },

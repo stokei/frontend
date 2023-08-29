@@ -44,7 +44,6 @@ import {
   BsFilter,
   BsFullscreen,
   BsFullscreenExit,
-  BsListUl,
   BsMoon,
   BsPauseFill,
   BsPlayCircle,
@@ -127,7 +126,7 @@ export const PlusIcon = FiPlus;
 export const SettingIcon = FiSettings;
 export const PlanIcon = FaMoneyBill;
 export const DashboardIcon = BiLineChart;
-export const OrderIcon = BsListUl;
+export const OrderIcon = AiOutlineShoppingCart;
 export const CartIcon = BsCart;
 export const CheckIcon = BsCheck;
 export const StoreIcon = FaStore;
@@ -166,6 +165,7 @@ export const DomainIcon = MdOutlineDomainVerification;
 export const StorageIcon = MdOutlineStorage;
 export const ProductIcon = BsBox;
 export const SaleIcon = AiOutlineShoppingCart;
+export const BuyIcon = AiOutlineShoppingCart;
 export const BoldIcon = AiOutlineBold;
 export const ItalicIcon = AiOutlineItalic;
 export const UndoIcon = BiUndo;

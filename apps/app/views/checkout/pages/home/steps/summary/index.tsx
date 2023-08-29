@@ -71,7 +71,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
           {translate.formatMessage({ id: "previous" })}
         </Button>
         <Button onClick={onNextStep} isLoading={isLoadingCheckout}>
-          {translate.formatMessage({ id: "subscribe" })}
+          {translate.formatMessage({ id: "buy" })}
         </Button>
       </ButtonGroup>
     </Stack>
