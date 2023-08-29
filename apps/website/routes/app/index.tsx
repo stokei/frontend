@@ -81,6 +81,15 @@ export const routesApp = (data: { appId?: string }) => {
       home: baseURL + "/products",
       add: baseURL + "/products/add",
     },
+    orders: {
+      home: baseURL + "/orders",
+      order: ({ order }: { order?: string }) => baseURL + "/orders/" + order,
+    },
+    payments: {
+      home: baseURL + "/payments",
+      payment: ({ payment }: { payment?: string }) =>
+        baseURL + "/payments/" + payment,
+    },
     material: ({ material }: { material: string }) => {
       const baseMaterialURL = baseURL + "/materials/view/" + material;
       return {

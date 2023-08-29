@@ -1,0 +1,46 @@
+query GetAppPayments(
+  $where: WhereDataFindAllPaymentsInput
+  $orderBy: OrderByDataFindAllPaymentsInput
+  $page: PaginationInput
+) {
+  payments(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppPayment
+    }
+  }
+}
+
+fragment AppPayment on Payment {
+  id
+  payer {
+    id
+    fullname
+    email
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+  paymentMethod {
+    ...PaymentMethodComponent
+  }
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  status
+  totalAmount
+  subtotalAmount
+  paidAt
+  canceledAt
+  paymentErrorAt
+  createdAt
+}

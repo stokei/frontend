@@ -11,6 +11,11 @@ fragment OrderPageOrder on Order {
     symbol
     minorUnit
   }
+  items {
+    items {
+      ...OrderPageOrderItem
+    }
+  }
   payments(orderBy: { createdAt: DESC }) {
     items {
       ...OrderPagePayment
@@ -41,5 +46,28 @@ fragment OrderPagePayment on Payment {
   paidAt
   canceledAt
   paymentErrorAt
+  createdAt
+}
+
+fragment OrderPageOrderItem on OrderItem {
+  id
+  product {
+    id
+    name
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+  recurring {
+    interval
+    intervalCount
+  }
+  price {
+    ...PriceComponent
+  }
+  totalAmount
+  subtotalAmount
   createdAt
 }

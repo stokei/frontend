@@ -6,7 +6,6 @@ import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
   Box,
-  Icon,
   SidebarBody,
   SidebarGroup,
   SidebarGroupButton,
@@ -40,6 +39,22 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
     );
   }, [baseRoutes.onboardings.home, baseRoutes.settings.home, isActiveRoute]);
 
+  const isActiveProducts = useMemo(() => {
+    return (
+      isActiveRoute(baseRoutes.products.home) ||
+      isActiveRoute(baseRoutes.catalogs.home)
+    );
+  }, [baseRoutes, isActiveRoute]);
+
+  const isActiveSales = useMemo(() => {
+    return (
+      isActiveRoute(baseRoutes.orders.home) ||
+      isActiveRoute(baseRoutes.subscriptions.home) ||
+      isActiveRoute(baseRoutes.payments.home) ||
+      isActiveRoute(baseRoutes.invoices)
+    );
+  }, [baseRoutes, isActiveRoute]);
+
   return (
     <SidebarProvider>
       <Box width="full" flexDirection="row">
@@ -64,6 +79,68 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
             >
               {translate.formatMessage({ id: "financial" })}
             </SidebarNavLink>
+            <SidebarGroup isActive={isActiveSales}>
+              <SidebarGroupButton leftIcon="sale">
+                {translate.formatMessage({ id: "sales" })}
+              </SidebarGroupButton>
+              <SidebarGroupPanel>
+                <SidebarNavLink
+                  leftIcon="subscription"
+                  as={NextLink}
+                  href={baseRoutes.subscriptions.home}
+                  isActive={isActiveRoute(baseRoutes.subscriptions.home)}
+                >
+                  {translate.formatMessage({ id: "subscriptions" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  leftIcon="invoice"
+                  as={NextLink}
+                  href={baseRoutes.invoices}
+                  isActive={isActiveRoute(baseRoutes.invoices)}
+                >
+                  {translate.formatMessage({ id: "invoices" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  leftIcon="order"
+                  as={NextLink}
+                  href={baseRoutes.orders.home}
+                  isActive={isActiveRoute(baseRoutes.orders.home)}
+                >
+                  {translate.formatMessage({ id: "orders" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  leftIcon="price"
+                  as={NextLink}
+                  href={baseRoutes.payments.home}
+                  isActive={isActiveRoute(baseRoutes.payments.home)}
+                >
+                  {translate.formatMessage({ id: "payments" })}
+                </SidebarNavLink>
+              </SidebarGroupPanel>
+            </SidebarGroup>
+            <SidebarGroup isActive={isActiveProducts}>
+              <SidebarGroupButton leftIcon="product">
+                {translate.formatMessage({ id: "products" })}
+              </SidebarGroupButton>
+              <SidebarGroupPanel>
+                <SidebarNavLink
+                  as={NextLink}
+                  leftIcon="catalog"
+                  href={baseRoutes.catalogs.home}
+                  isActive={isActiveRoute(baseRoutes.catalogs.home)}
+                >
+                  {translate.formatMessage({ id: "catalogs" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  as={NextLink}
+                  leftIcon="product"
+                  href={baseRoutes.products.home}
+                  isActive={isActiveRoute(baseRoutes.products.home)}
+                >
+                  {translate.formatMessage({ id: "products" })}
+                </SidebarNavLink>
+              </SidebarGroupPanel>
+            </SidebarGroup>
             <SidebarNavLink
               leftIcon="course"
               as={NextLink}
@@ -73,44 +150,12 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               {translate.formatMessage({ id: "courses" })}
             </SidebarNavLink>
             <SidebarNavLink
-              as={NextLink}
-              leftIcon="catalog"
-              href={baseRoutes.catalogs.home}
-              isActive={isActiveRoute(baseRoutes.catalogs.home)}
-            >
-              {translate.formatMessage({ id: "catalogs" })}
-            </SidebarNavLink>
-            <SidebarNavLink
-              as={NextLink}
-              leftIcon="product"
-              href={baseRoutes.products.home}
-              isActive={isActiveRoute(baseRoutes.products.home)}
-            >
-              {translate.formatMessage({ id: "products" })}
-            </SidebarNavLink>
-            <SidebarNavLink
               leftIcon="material"
               as={NextLink}
               href={baseRoutes.materials.home}
               isActive={isActiveRoute(baseRoutes.materials.home)}
             >
               {translate.formatMessage({ id: "materials" })}
-            </SidebarNavLink>
-            <SidebarNavLink
-              leftIcon="subscription"
-              as={NextLink}
-              href={baseRoutes.subscriptions.home}
-              isActive={isActiveRoute(baseRoutes.subscriptions.home)}
-            >
-              {translate.formatMessage({ id: "subscriptions" })}
-            </SidebarNavLink>
-            <SidebarNavLink
-              leftIcon="invoice"
-              as={NextLink}
-              href={baseRoutes.invoices}
-              isActive={isActiveRoute(baseRoutes.invoices)}
-            >
-              {translate.formatMessage({ id: "invoices" })}
             </SidebarNavLink>
             <SidebarNavLink
               leftIcon="user"

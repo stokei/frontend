@@ -1,0 +1,8 @@
+fragment PaymentMethodComponent on PaymentMethod {
+  id
+  type
+  cardBrand
+  cardExpiryMonth
+  cardExpiryYear
+  lastFourCardNumber
+}

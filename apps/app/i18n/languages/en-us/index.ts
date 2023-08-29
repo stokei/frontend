@@ -2,6 +2,7 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  buy: "Buy",
   copy: "Copy",
   copied: "Copied",
   makePaymentViaPixToCompleteYourPurchase:
@@ -45,6 +46,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   new: "New",
   order: "Order",
   orders: "Orders",
+  orderItem: "Order item",
+  orderItems: "Order items",
   unavailable: "Unavailable",
   informations: "Informations",
   successfullyIntegrated: "Successfully integrated!",

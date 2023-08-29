@@ -4,6 +4,7 @@ import { FC, useMemo } from "react";
 import { CustomerLayout } from "../layout";
 import { Navbar } from "./components/navbar";
 import { OrderDetails } from "./components/order-details";
+import { OrderItems } from "./components/order-items";
 import { Payments } from "./components/payments";
 import { useGetOrderPageOrderQuery } from "./graphql/order.query.graphql.generated";
 import { Loading as LoadingPage } from "./loading";
@@ -20,6 +21,7 @@ export const OrderPage: FC<OrderPageProps> = () => {
   const [{ data: dataGetOrder, fetching: isLoadingOrder }] =
     useGetOrderPageOrderQuery({
       pause: !orderId,
+      requestPolicy: "network-only",
       variables: {
         orderId: orderId || "",
       },
@@ -37,6 +39,7 @@ export const OrderPage: FC<OrderPageProps> = () => {
           <Container>
             <Stack direction="column" spacing="5">
               <OrderDetails order={order} />
+              <OrderItems order={order} />
               <Payments order={order} />
             </Stack>
           </Container>

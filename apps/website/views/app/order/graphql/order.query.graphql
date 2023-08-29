@@ -1,0 +1,98 @@
+query GetOrderPageOrder($orderId: String!) {
+  order(id: $orderId) {
+    ...OrderPageOrder
+  }
+}
+
+fragment OrderPageOrder on Order {
+  id
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  items {
+    items {
+      ...OrderPageOrderItem
+    }
+  }
+  payments(orderBy: { createdAt: DESC }) {
+    items {
+      ...OrderPagePayment
+    }
+  }
+  parent {
+    __typename
+    ... on App {
+      id
+      name
+      accountEmail: email
+      logo {
+        file {
+          url
+        }
+      }
+    }
+    ... on Account {
+      id
+      firstname
+      fullname
+      appEmail: email
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
+  status
+  totalAmount
+  subtotalAmount
+  paidAt
+  canceledAt
+  paymentErrorAt
+  updatedAt
+  createdAt
+}
+
+fragment OrderPagePayment on Payment {
+  id
+  paymentMethod {
+    ...PaymentMethodComponent
+  }
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  status
+  totalAmount
+  subtotalAmount
+  paidAt
+  canceledAt
+  paymentErrorAt
+  createdAt
+}
+
+fragment OrderPageOrderItem on OrderItem {
+  id
+  product {
+    id
+    name
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+  recurring {
+    interval
+    intervalCount
+  }
+  price {
+    ...PriceComponent
+  }
+  totalAmount
+  subtotalAmount
+  createdAt
+}

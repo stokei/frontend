@@ -47,6 +47,7 @@ export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
         ref={ref}
         display="flex"
         flexDirection="row"
+        rounded="md"
         _focus={hoverStyle}
         _hover={hoverStyle}
         _active={activeStyle}

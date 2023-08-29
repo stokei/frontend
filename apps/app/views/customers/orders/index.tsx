@@ -18,6 +18,7 @@ export const OrdersPage: FC<OrdersPageProps> = () => {
 
   const [{ data: dataGetOrders, fetching: isLoading }] = useGetAppOrdersQuery({
     pause: !currentApp,
+    requestPolicy: "network-only",
     variables: {
       page: {
         limit: 10,
