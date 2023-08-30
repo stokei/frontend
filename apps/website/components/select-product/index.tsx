@@ -66,7 +66,7 @@ export const SelectProducts: FC<SelectProductsProps> = ({
               equals: currentApp?.id,
             },
             name: {
-              startsWith: searchProductQueryText,
+              search: searchProductQueryText,
             },
           },
         },
