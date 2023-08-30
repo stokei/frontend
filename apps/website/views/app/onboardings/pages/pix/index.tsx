@@ -70,12 +70,10 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
       accountNumber: z.string().min(1, {
         message: translate.formatMessage({ id: "required" }),
       }),
-      branchCheckDigit: z.string().min(1, {
-        message: translate.formatMessage({ id: "required" }),
-      }),
       branchNumber: z.string().min(1, {
         message: translate.formatMessage({ id: "required" }),
       }),
+      branchCheckDigit: z.string(),
       holderName: z.string().min(1, {
         message: translate.formatMessage({ id: "required" }),
       }),
