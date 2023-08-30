@@ -76,12 +76,12 @@ export const SelectMembers: FC<SelectMembersProps> = ({
           OR: [
             {
               firstname: {
-                startsWith: searchMemberQueryText,
+                search: searchMemberQueryText,
               },
             },
             {
               lastname: {
-                startsWith: searchMemberQueryText,
+                search: searchMemberQueryText,
               },
             },
             {
