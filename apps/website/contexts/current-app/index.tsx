@@ -8,6 +8,7 @@ export interface CurrentAppProviderProps {
 export type CurrentApp = CurrentGlobalAppQuery["currentApp"];
 export interface CurrentAppProviderValues {
   readonly currentApp?: CurrentApp;
+  readonly hasPaymentIntegrations: boolean;
 }
 
 export const CurrentAppContext = createContext({} as CurrentAppProviderValues);
@@ -15,11 +16,20 @@ export const CurrentAppContext = createContext({} as CurrentAppProviderValues);
 export const CurrentAppProvider: FC<
   PropsWithChildren<CurrentAppProviderProps>
 > = ({ currentApp, children }) => {
+  const hasPaymentIntegrations = useMemo(
+    () =>
+      !!currentApp?.isIntegratedWithStripe ||
+      !!currentApp?.isIntegratedWithPix ||
+      !!currentApp?.isStokei,
+    [currentApp]
+  );
+
   const values: CurrentAppProviderValues = useMemo(
     () => ({
       currentApp,
+      hasPaymentIntegrations,
     }),
-    [currentApp]
+    [currentApp, hasPaymentIntegrations]
   );
 
   return (

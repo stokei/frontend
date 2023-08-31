@@ -68,7 +68,6 @@ export const PaymentMethodManagement: FC<PaymentMethodManagementProps> = ({
     });
 
   useEffect(() => {
-    console.log({ dataPaymentMethods });
     if (!!dataPaymentMethods?.paymentMethods?.items?.length) {
       setPaymentMethods(dataPaymentMethods.paymentMethods.items);
     }

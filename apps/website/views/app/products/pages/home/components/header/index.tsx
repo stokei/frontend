@@ -14,7 +14,7 @@ export const Header: FC<HeaderProps> = ({
   onOpenFilters,
 }) => {
   const router = useRouter();
-  const { currentApp } = useCurrentApp();
+  const { currentApp, hasPaymentIntegrations } = useCurrentApp();
   const translate = useTranslations();
   const onGoToAddProductsPage = () => {
     return router.push(
@@ -38,7 +38,11 @@ export const Header: FC<HeaderProps> = ({
       >
         {translate.formatMessage({ id: "filters" })}
       </Button>
-      <Button leftIcon={<Icon name="plus" />} onClick={onGoToAddProductsPage}>
+      <Button
+        leftIcon={<Icon name="plus" />}
+        onClick={onGoToAddProductsPage}
+        isDisabled={!hasPaymentIntegrations}
+      >
         {translate.formatMessage({ id: "add" })}
       </Button>
     </Stack>

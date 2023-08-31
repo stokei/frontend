@@ -1,0 +1,23 @@
+query GetAppCatalogs(
+  $where: WhereDataFindAllCatalogsInput
+  $orderBy: OrderByDataFindAllCatalogsInput
+  $page: PaginationInput
+) {
+  catalogs(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppCatalog
+    }
+  }
+}
+
+fragment AppCatalog on Catalog {
+  id
+  title
+  subtitle
+}
