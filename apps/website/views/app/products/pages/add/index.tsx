@@ -1,6 +1,7 @@
 import { AddProductStep } from "@/constants/add-product-steps";
 import { ProductType } from "@/constants/product-type";
 import { useTranslations } from "@/hooks";
+import { useSelectCatalogs } from "@/hooks/use-select-catalogs";
 import { AppLayout } from "@/views/app/layout";
 import {
   Card,
@@ -15,10 +16,13 @@ import {
 } from "@stokei/ui";
 import { FC, useState } from "react";
 import { ProductParent } from "./@types/product-parent";
+import { ProductPayload } from "./@types/product-payload";
 import { Navbar } from "./components/navbar";
-import { ProductChooseTypeStep } from "./components/product-choose-type-step";
-import { ProductInformationStep } from "./components/product-information-step";
-import { ProductTypeStep } from "./components/product-type-step";
+import { CatalogsStep } from "./steps/catalogs-step";
+import { ProductChooseTypeStep } from "./steps/product-choose-type-step";
+import { ProductInformationStep } from "./steps/product-information-step";
+import { ProductTypeStep } from "./steps/product-type-step";
+import { SummaryStep } from "./steps/summary";
 
 interface AddProductPageProps {}
 
@@ -26,7 +30,9 @@ export const AddProductPage: FC<AddProductPageProps> = () => {
   const [productType, setProductType] = useState<ProductType>(
     ProductType.COURSE
   );
+  const { catalogs, onChooseCatalog, onRemoveCatalog } = useSelectCatalogs();
   const [productParent, setProductParent] = useState<ProductParent>();
+  const [productPayload, setProductPayload] = useState<ProductPayload>();
   const [isEnabledProductStep, setIsEnabledProductStep] =
     useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<AddProductStep>(
@@ -75,8 +81,18 @@ export const AddProductPage: FC<AddProductPageProps> = () => {
               />
               <StepItem
                 isDisabled={!isEnabledProductStep}
-                title={translate.formatMessage({ id: "product" })}
+                title={translate.formatMessage({ id: "informations" })}
                 stepIndex={AddProductStep.PRODUCT_INFORMATION}
+              />
+              <StepItem
+                isDisabled={!productPayload}
+                title={translate.formatMessage({ id: "catalogs" })}
+                stepIndex={AddProductStep.CATALOG}
+              />
+              <StepItem
+                isDisabled={!productPayload}
+                title={translate.formatMessage({ id: "summary" })}
+                stepIndex={AddProductStep.SUMMARY}
               />
             </StepList>
             <StepPanels>
@@ -103,7 +119,30 @@ export const AddProductPage: FC<AddProductPageProps> = () => {
                   <StepPanel stepIndex={AddProductStep.PRODUCT_INFORMATION}>
                     <ProductInformationStep
                       productParent={productParent}
+                      onChangeProductPayload={setProductPayload}
+                      onNextStep={() => setCurrentStep(AddProductStep.CATALOG)}
                       onPreviousStep={onPreviousProductInformation}
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={AddProductStep.CATALOG}>
+                    <CatalogsStep
+                      catalogs={catalogs}
+                      onChooseCatalog={onChooseCatalog}
+                      onRemoveCatalog={onRemoveCatalog}
+                      onNextStep={() => setCurrentStep(AddProductStep.SUMMARY)}
+                      onPreviousStep={() =>
+                        setCurrentStep(AddProductStep.PRODUCT_INFORMATION)
+                      }
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={AddProductStep.SUMMARY}>
+                    <SummaryStep
+                      productParent={productParent}
+                      productPayload={productPayload}
+                      catalogs={catalogs}
+                      onPreviousStep={() =>
+                        setCurrentStep(AddProductStep.CATALOG)
+                      }
                     />
                   </StepPanel>
                 </CardBody>

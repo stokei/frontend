@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
+import { useTranslations } from "../../hooks";
 import { useSteps } from "../../hooks/use-steps";
 import { Icon, IconName } from "../icon";
 import { Stack, StackProps } from "../stack";
 import { Text } from "../text";
-import { Box } from "../box";
 import { Title } from "../title";
 
 export interface StepItemProps extends StackProps {
@@ -11,6 +11,7 @@ export interface StepItemProps extends StackProps {
   readonly title: string;
   readonly icon?: IconName;
   readonly subtitle?: string;
+  readonly isOptional?: boolean;
   readonly isCompleted?: boolean;
   readonly isDisabled?: boolean;
   readonly isInvalid?: boolean;
@@ -20,12 +21,14 @@ export const StepItem: React.FC<StepItemProps> = ({
   title,
   subtitle,
   icon,
+  isOptional,
   isCompleted,
   isDisabled,
   isInvalid,
   onClick,
   ...props
 }) => {
+  const translate = useTranslations();
   const { currentStep, onChangeStep } = useSteps();
 
   const isCurrentStep = useMemo(
@@ -81,6 +84,12 @@ export const StepItem: React.FC<StepItemProps> = ({
         {subtitle && (
           <Text fontSize="xs" color="text.300">
             {subtitle}
+          </Text>
+        )}
+
+        {isOptional && (
+          <Text fontSize="xs" color="text.300">
+            {translate.formatMessage({ id: "optional" })}
           </Text>
         )}
       </Stack>

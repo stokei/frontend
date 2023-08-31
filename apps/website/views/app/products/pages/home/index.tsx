@@ -87,16 +87,14 @@ export const ProductsPage: FC<ProductsPageProps> = () => {
         filteredProductQuery={filteredProductQuery}
         onChangeFilteredProductQuery={setFilteredProductQuery}
       />
-      <Container paddingTop="5">
-        <Header
-          productsTotalCount={dataProducts?.products?.totalCount || 0}
-          onOpenFilters={onToggleFiltersDrawer}
-        />
-      </Container>
 
       <Container paddingY="5">
         <Stack direction="column" spacing="5">
           <OnboardingAlerts />
+          <Header
+            productsTotalCount={dataProducts?.products?.totalCount || 0}
+            onOpenFilters={onToggleFiltersDrawer}
+          />
 
           {isLoading ? (
             <Loading />
