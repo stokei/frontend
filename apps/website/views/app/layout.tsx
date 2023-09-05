@@ -1,6 +1,6 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
 import { AppLayoutContent } from "@/components/app-layout-content";
-import { STRIPE_DASHBOARD_URL } from "@/constants/stripe-links";
+import { BadgeNew } from "@/components/badge-new";
 import { SidebarProvider } from "@/contexts";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
@@ -74,8 +74,9 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
             <SidebarNavLink
               leftIcon="price"
               as={NextLink}
-              href={STRIPE_DASHBOARD_URL}
-              target="_blank"
+              href={baseRoutes.financial.home}
+              isActive={isActiveRoute(baseRoutes.financial.home)}
+              badge={<BadgeNew />}
             >
               {translate.formatMessage({ id: "financial" })}
             </SidebarNavLink>

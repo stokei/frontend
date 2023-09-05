@@ -139,6 +139,8 @@ export * from "./slider-thumb";
 export * from "./slider-track";
 export * from "./stack";
 export * from "./stat";
+export * from "./stat-arrow";
+export * from "./stat-group";
 export * from "./stat-help-text";
 export * from "./stat-label";
 export * from "./stat-number";

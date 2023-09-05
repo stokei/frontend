@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   me: "Eu",
+  toReceive: "A receber",
   chooseYourCatalogsForYourProduct:
     "Escolha os seus catálogos para o seu produto",
   feeAmount: "Valor da tarifa",
@@ -13,6 +14,7 @@ export const ptBRMessages = {
   orderItem: "Item do pedido",
   orderItems: "Itens do pedido",
   goToHomePage: "Ir para página inicial",
+  goToStripe: "Ir para Stripe",
   amountToPay: "Valor a pagar",
   dateBirthday: "Data de nascimento",
   boleto: "Boleto",
@@ -117,8 +119,8 @@ export const ptBRMessages = {
     "Receba por cartão em 30 dias úteis para pagamentos por cartão.",
   receiveByBoletoIn2DaysForPaymentsByBoleto:
     "Receba por boleto em 2 dias úteis para pagamentos por boleto.",
-  afterPaymentOfThePixTheAmountIsMadeAvailableOnTheSameDay:
-    "Após o pagamento do pix, o valor é disponibilizado no mesmo dia.",
+  afterPaymentOfThePixTheAmountIsAvailableWithin2BusinessDays:
+    "Após o pagamento do pix, o valor é disponibilizado em ate 2 dias úteis.",
   doYouHaveALargeVolumeOfData: "Você tem um grande volume de dados?",
   getInTouchWithUsViaEmail: "Entre em contato conosco pelo email",
   stripeTax: "taxa da Stripe",

@@ -1,4 +1,5 @@
 import stripeImage from "@/assets/stripe.png";
+import { STRIPE_URL } from "@/constants/stripe-links";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import {
   Button,
@@ -56,7 +57,7 @@ export const StripeOnboarding: FC<StripeOnboardingProps> = () => {
     <Card background="background.50">
       <CardBody>
         <Stack direction="column" spacing="5">
-          <Link href="https://stripe.com/" target="_blank">
+          <Link href={STRIPE_URL} target="_blank">
             <Image
               width="24"
               src={stripeImage.src}
