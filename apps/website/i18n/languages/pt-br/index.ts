@@ -1,5 +1,7 @@
 export const ptBRMessages = {
   me: "Eu",
+  chooseYourCatalogsForYourProduct:
+    "Escolha os seus catálogos para o seu produto",
   feeAmount: "Valor da tarifa",
   payer: "Pagante",
   payers: "Pagantes",

@@ -47,8 +47,6 @@ export const SelectPrice: FC<SelectPriceProps> = ({
     [onRemoveChooseCurrentPrice]
   );
 
-  console.log({ prices });
-
   return (
     <FormControl flex="3">
       {showLabel && (

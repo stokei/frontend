@@ -1,5 +1,4 @@
-import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { useTranslations } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -12,29 +11,27 @@ import {
   Label,
   RichTextEditor,
   Stack,
-  useToast,
 } from "@stokei/ui";
-import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ProductParent } from "../../@types/product-parent";
-import { useCreateProductMutation } from "../../graphql/create-product.mutation.graphql.generated";
+import { ProductPayload } from "../../@types/product-payload";
 
 interface ProductInformationStepProps {
   productParent?: ProductParent;
+  onChangeProductPayload: (productPayload: ProductPayload) => void;
   onPreviousStep: () => void;
+  onNextStep: () => void;
 }
 
 export const ProductInformationStep: FC<ProductInformationStepProps> = ({
   productParent,
+  onChangeProductPayload,
   onPreviousStep,
+  onNextStep,
 }) => {
-  const router = useRouter();
   const translate = useTranslations();
-  const { onShowToast } = useToast();
-  const { onShowAPIError } = useAPIErrors();
-  const { currentApp } = useCurrentApp();
 
   const validationSchema = z.object({
     name: z.string().min(1, {
@@ -53,9 +50,6 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
     resolver: zodResolver(validationSchema),
   });
 
-  const [{ fetching: isLoadingCreateProduct }, onCreateProduct] =
-    useCreateProductMutation();
-
   useEffect(() => {
     register("description", { value: productParent?.description });
   }, [productParent?.description, register]);
@@ -66,45 +60,22 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
         name: productParent?.name || "",
         description: productParent?.description || "",
       });
-    }
-  }, [productParent, reset]);
-
-  const onSubmit = async ({
-    name,
-    description,
-  }: z.infer<typeof validationSchema>) => {
-    try {
-      const parent = productParent?.id || currentApp?.id;
-      const response = await onCreateProduct({
-        input: {
-          parent: parent || "",
-          name,
-          description,
-        },
-      });
-      if (!!response?.data?.createProduct) {
-        onShowToast({
-          title: translate.formatMessage({ id: "productCreatedSuccessfully" }),
-          status: "success",
+      if (productParent?.name || productParent?.description) {
+        onChangeProductPayload({
+          name: productParent?.name || "",
+          description: productParent?.description || "",
         });
-        router.push(
-          routes
-            .app({ appId: currentApp?.id })
-            .product({ product: response.data.createProduct.id }).home
-        );
-        return;
       }
+    }
+  }, [onChangeProductPayload, productParent, reset]);
 
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {}
+  const onSuccess = (data: z.infer<typeof validationSchema>) => {
+    onChangeProductPayload(data);
+    onNextStep();
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSuccess)}>
       <Stack direction="column" spacing="5">
         <FormControl isInvalid={!!errors?.name}>
           <Label htmlFor="name">
@@ -138,11 +109,7 @@ export const ProductInformationStep: FC<ProductInformationStepProps> = ({
           <Button variant="ghost" onClick={onPreviousStep}>
             {translate.formatMessage({ id: "previous" })}
           </Button>
-          <Button
-            type="submit"
-            isLoading={isLoadingCreateProduct}
-            isDisabled={!isValid}
-          >
+          <Button type="submit" isDisabled={!isValid}>
             {translate.formatMessage({ id: "next" })}
           </Button>
         </ButtonGroup>

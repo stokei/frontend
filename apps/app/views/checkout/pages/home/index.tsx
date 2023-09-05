@@ -118,12 +118,19 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
 
   const goToSummaryOrCreatePixAccount = useCallback(() => {
     if (paymentMethodType === PaymentMethodType.Pix) {
+      if (!currentAccount) {
+        router.push({
+          pathname: routes.auth.login,
+          query: { redirectTo: router.asPath },
+        });
+        return;
+      }
       if (!currentAccount?.pagarmeCustomer) {
         return setCurrentStep(CheckoutStep.CREATE_PIX_ACCOUNT);
       }
     }
     return goToSummary();
-  }, [currentAccount?.pagarmeCustomer, goToSummary, paymentMethodType]);
+  }, [currentAccount, goToSummary, paymentMethodType, router]);
 
   const onCreateOrder = useCallback(async () => {
     if (!currentAccount) {

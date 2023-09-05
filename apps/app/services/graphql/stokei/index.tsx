@@ -673,6 +673,7 @@ export type CreatePriceTierInput = {
 };
 
 export type CreateProductInput = {
+  catalogs?: InputMaybe<Array<Scalars['String']>>;
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   parent: Scalars['String'];

@@ -145,7 +145,6 @@ export const AddMaterialPage: FC<AddMaterialPageProps> = () => {
                       id="material-file"
                       uploadURL={STOKEI_API_FILE_UPLOAD_URL}
                       onSuccess={(result) => {
-                        console.log({ success: result });
                         setFileId(result.file);
                       }}
                       onError={() => {}}

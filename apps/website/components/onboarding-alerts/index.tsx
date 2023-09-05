@@ -17,19 +17,14 @@ interface OnboardingAlertsProps {}
 export const OnboardingAlerts: FC<OnboardingAlertsProps> = () => {
   const router = useRouter();
   const translate = useTranslations();
-  const { currentApp } = useCurrentApp();
-
-  const hasIntegrations = useMemo(
-    () => !currentApp?.isIntegratedWithStripe && !currentApp?.isStokei,
-    [currentApp]
-  );
+  const { currentApp, hasPaymentIntegrations } = useCurrentApp();
 
   const goToStripeOnboarding = useCallback(
     () => router.push(routes.app({ appId: currentApp?.id }).onboardings.home),
     [currentApp?.id, router]
   );
 
-  if (!hasIntegrations) {
+  if (hasPaymentIntegrations) {
     return <></>;
   }
 
