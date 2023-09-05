@@ -28,16 +28,14 @@ export const useTranslations = <TKeys = string>() => {
       minorUnit?: number;
       showSymbol?: boolean;
     }) => {
-      if (!amount) {
-        return 0;
-      }
+      const valueAmount = amount ? amount / Math.pow(10, minorUnit || 0) : 0;
       try {
         return new Intl.NumberFormat(intl.locale, {
           ...(showSymbol && { style: "currency" }),
           currency,
           minimumFractionDigits: minorUnit,
           maximumFractionDigits: 10,
-        }).format(amount / Math.pow(10, minorUnit || 0));
+        }).format(valueAmount);
       } catch (error) {
         return 0;
       }

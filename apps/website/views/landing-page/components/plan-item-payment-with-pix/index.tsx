@@ -45,7 +45,7 @@ export const PlanItemPaymentWithPix: FC<PlanItemPaymentWithPixProps> = () => {
           <ListItem>
             <ListIcon name="check" color="green.500" />
             {translate.formatMessage({
-              id: "afterPaymentOfThePixTheAmountIsMadeAvailableOnTheSameDay",
+              id: "afterPaymentOfThePixTheAmountIsAvailableWithin2BusinessDays",
             })}
           </ListItem>
         </List>

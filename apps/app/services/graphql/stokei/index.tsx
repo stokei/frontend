@@ -137,6 +137,7 @@ export type App = {
   activatedAt?: Maybe<Scalars['String']>;
   active: Scalars['Boolean'];
   avatar?: Maybe<Image>;
+  balances?: Maybe<Array<Balance>>;
   blockedAt?: Maybe<Scalars['String']>;
   colors?: Maybe<Colors>;
   createdAt?: Maybe<Scalars['String']>;
@@ -201,6 +202,14 @@ export type AuthResponse = {
   account: MeAccount;
   prefixToken: Scalars['String'];
   refreshToken: Scalars['String'];
+};
+
+export type Balance = {
+  __typename?: 'Balance';
+  availableAmount?: Maybe<Scalars['Float']>;
+  currency?: Maybe<Currency>;
+  paymentGatewayType: PaymentGatewayType;
+  pendingAmount?: Maybe<Scalars['Float']>;
 };
 
 export type Billing = {
@@ -2127,6 +2136,11 @@ export type Payment = {
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };
+
+export enum PaymentGatewayType {
+  Pagarme = 'PAGARME',
+  Stripe = 'STRIPE'
+}
 
 export type PaymentMethod = {
   __typename?: 'PaymentMethod';

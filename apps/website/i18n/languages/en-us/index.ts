@@ -2,6 +2,7 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  toReceive: "To receive",
   chooseYourCatalogsForYourProduct: "Choose your catalogs for your product",
   feeAmount: "Fee amount",
   payer: "Payer",
@@ -14,6 +15,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   orderItem: "Order item",
   orderItems: "Order items",
   goToHomePage: "Go to home page",
+  goToStripe: "Go to Stripe",
   amountToPay: "Amount to pay",
   dateBirthday: "Date birthday",
   boleto: "Boleto",
@@ -116,8 +118,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
     "Receive by card in 30 days for payments by card.",
   receiveByBoletoIn2DaysForPaymentsByBoleto:
     "Receive by boleto in 30 days for payments by boleto",
-  afterPaymentOfThePixTheAmountIsMadeAvailableOnTheSameDay:
-    "After payment of the pix, the amount is made available on the same day.",
+  afterPaymentOfThePixTheAmountIsAvailableWithin2BusinessDays:
+    "After payment of the pix, the amount is available within 2 business days.",
   doYouHaveALargeVolumeOfData: "Do you have a large volume of data?",
   getInTouchWithUsViaEmail: "Get in touch with us via email",
   stripeTax: "Stripe tax",

@@ -18,6 +18,7 @@ import {
   InputRightElement,
   ListOrdered,
   ListOrderedItem,
+  Loading,
   Stack,
   Text,
   Title,
@@ -102,11 +103,19 @@ export const PaymentStep: React.FC<PaymentStepProps> = ({
             />
           </CardBody>
         </Card>
-        <Stack width="fit-content" direction="column" spacing="2">
-          <Text fontWeight="bold">
-            {translate.formatMessage({ id: "amountToPay" })}:
-          </Text>
-          <Price price={price} withRecurringLabel={false} />
+        <Stack width="fit-content" direction="column" spacing="5">
+          <Stack width="fit-content" direction="column" spacing="2">
+            <Text fontWeight="bold">
+              {translate.formatMessage({ id: "amountToPay" })}:
+            </Text>
+            <Price price={price} withRecurringLabel={false} />
+          </Stack>
+          <Stack width="fit-content" direction="row" spacing="2">
+            <Loading />
+            <Text fontWeight="bold">
+              {translate.formatMessage({ id: "waitingPayment" })}...
+            </Text>
+          </Stack>
         </Stack>
       </Stack>
 
