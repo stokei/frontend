@@ -64,8 +64,8 @@ export const ProductInformation: FC<ProductInformationProps> = ({
   });
 
   useEffect(() => {
-    register("description", { value: "" });
-  }, [register]);
+    register("description", { value: currentProduct?.description || "" });
+  }, [currentProduct?.description, register]);
 
   const {
     imageId,
@@ -82,7 +82,6 @@ export const ProductInformation: FC<ProductInformationProps> = ({
     if (currentProduct) {
       reset({
         name: currentProduct?.name || "",
-        description: currentProduct?.description || "",
       });
     }
   }, [currentProduct, reset]);

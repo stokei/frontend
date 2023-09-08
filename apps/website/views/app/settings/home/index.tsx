@@ -70,6 +70,7 @@ export const SettingsHomePage: FC<SettingsHomePageProps> = () => {
     if (currentApp) {
       reset({
         name: currentApp?.name || "",
+        slug: currentApp?.slug || "",
       });
     }
   }, [currentApp, reset]);

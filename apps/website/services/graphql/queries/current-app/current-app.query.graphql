@@ -2,6 +2,7 @@ query CurrentGlobalApp {
   currentApp {
     id
     name
+    slug
     isStokei
     isIntegratedWithStripe
     isIntegratedWithPix
