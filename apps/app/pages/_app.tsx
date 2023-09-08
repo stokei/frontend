@@ -1,9 +1,7 @@
 import {
-  StokeiGraphQLClientProvider,
-  ptBRMessages as ptBRMessagesStokeiGraphQL,
   enUSMessages as enUSMessagesStokeiGraphQL,
-  ACCESS_TOKEN_HEADER_NAME,
-  REFRESH_TOKEN_HEADER_NAME,
+  ptBRMessages as ptBRMessagesStokeiGraphQL,
+  StokeiGraphQLClientProvider,
 } from "@stokei/graphql";
 import { Messages, TranslationsProvider } from "@stokei/translations";
 import {
@@ -15,6 +13,7 @@ import { getAppIdFromNextRouter } from "@stokei/utils";
 
 import { CLOUDFLARE_TOKEN } from "@/environments";
 
+import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
@@ -29,12 +28,9 @@ import {
 } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 import { formatAppColorsToThemeColors } from "@/utils";
 import "@stokei/ui/src/styles/css/global.css";
+import Head from "next/head";
 import { Router } from "next/router";
 import { useMemo } from "react";
-import { RoleName } from "@/constants/role-names";
-import { routes } from "@/routes";
-import Head from "next/head";
-import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 
 const messages: Messages = {
   "pt-BR": {
@@ -107,35 +103,43 @@ function MyApp({
 }
 
 MyApp.getInitialProps = async ({ router, ctx }: any) => {
-  const appId = getAppIdFromNextRouter(router);
-  if (!appId) {
+  const slug = router?.query?.slug;
+  if (!slug) {
     return {};
   }
   const cookies: Record<string, string> = ctx?.req?.cookies;
-  const stokeiGraphQLClient = createAPIClient({
-    appId,
+  const stokeiGetAppGraphQLClient = createAPIClient({
     cookies,
   });
-  const currentApp = await stokeiGraphQLClient.api
+  const currentApp = await stokeiGetAppGraphQLClient.api
     .query<CurrentGlobalAppQuery>(
       CurrentGlobalAppDocument,
-      {},
-      { requestPolicy: "network-only" }
+      {
+        slug,
+      },
+      { requestPolicy: "cache-and-network" }
     )
     .toPromise();
 
-  let currentAccount;
-  try {
-    currentAccount = await stokeiGraphQLClient.api
-      .query<CurrentAccountQuery>(
-        CurrentAccountDocument,
-        {},
-        { requestPolicy: "network-only" }
-      )
-      .toPromise();
-  } catch (error) {}
-
   const currentAppData = currentApp?.data?.currentApp;
+  const appId = currentAppData?.id;
+  let currentAccount;
+  if (currentAppData) {
+    try {
+      const stokeiGraphQLClient = createAPIClient({
+        appId,
+        cookies,
+      });
+      currentAccount = await stokeiGraphQLClient.api
+        .query<CurrentAccountQuery>(
+          CurrentAccountDocument,
+          {},
+          { requestPolicy: "cache-and-network" }
+        )
+        .toPromise();
+    } catch (error) {}
+  }
+
   const currentAccountData = currentAccount?.data?.me;
   let baseURL = cookies?.[BASE_URL_HEADER_NAME];
   return {

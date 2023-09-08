@@ -3,6 +3,7 @@ import { MeLayoutContent } from "@/components/me-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
+import { removeRouteAppPrefix } from "@/utils/remove-route-app-prefix";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -17,12 +18,11 @@ export const MeLayout: FC<PropsWithChildren<MeLayoutProps>> = ({
   const translate = useTranslations();
 
   const isActiveHome = useCallback(
-    (route: string) => router.route?.replace("/app/[appId]", "") === route,
+    (route: string) => removeRouteAppPrefix(router.route) === route,
     [router.route]
   );
   const isActiveRoute = useCallback(
-    (route: string) =>
-      router.route?.replace("/app/[appId]", "")?.startsWith(route),
+    (route: string) => removeRouteAppPrefix(router.route)?.startsWith(route),
     [router.route]
   );
 
