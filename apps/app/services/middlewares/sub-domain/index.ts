@@ -5,8 +5,8 @@ import { createAPIClient } from "@/services/graphql/client";
 import { gql } from "urql";
 
 const currentAppQuery = gql`
-  query CurrentAppSubDomain {
-    currentApp {
+  query CurrentAppSubDomain($slug: String!) {
+    currentApp: app(slug: $slug) {
       id
       name
     }
@@ -22,10 +22,14 @@ export const withSubDomain = async ({
 
   let appId = domain?.split(`.${DOMAIN}`)[0];
   let isRedirect = false;
-
+  let app: any;
   try {
     const stokeiClient = createAPIClient({ appId, cookies });
-    await stokeiClient.api.query(currentAppQuery, {}).toPromise();
+    app = await stokeiClient.api
+      .query(currentAppQuery, {
+        slug: appId,
+      })
+      .toPromise();
     if (url.pathname.startsWith("/app/" + appId)) {
       url.href = url.href
         .replace("/app/" + appId, "/")
@@ -39,7 +43,7 @@ export const withSubDomain = async ({
   }
 
   return {
-    appId,
+    appId: app?.id,
     isRedirect,
     url,
   };

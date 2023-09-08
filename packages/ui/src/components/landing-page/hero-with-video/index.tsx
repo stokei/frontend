@@ -15,7 +15,8 @@ export const HeroWithVideo: FC<HeroWithVideoProps> = ({
   subtitle,
   titleHighlight,
   subtitleHighlight,
-  onSignUp,
+  ctaText,
+  onCTA,
 }) => {
   return (
     <Container>
@@ -25,7 +26,8 @@ export const HeroWithVideo: FC<HeroWithVideoProps> = ({
           subtitle={subtitle}
           titleHighlight={titleHighlight}
           subtitleHighlight={subtitleHighlight}
-          onSignUp={onSignUp}
+          onCTA={onCTA}
+          ctaText={ctaText}
         />
         {videoURL && (
           <HeroMedia width={["full", "full", "40%", "40%"]}>

@@ -5,8 +5,8 @@ import { createAPIClient } from "@/services/graphql/client";
 import { gql } from "urql";
 
 const currentAppQuery = gql`
-  query CurrentAppLocalDomain {
-    currentApp {
+  query CurrentAppLocalDomain($slug: String!) {
+    currentApp: app(slug: $slug) {
       id
       name
     }
@@ -22,6 +22,7 @@ export const withLocalDomain = async ({
   const { pathname } = nextUrl;
   let isRedirect = false;
   let appId = pathname.split("/")[2];
+  let app: any;
 
   try {
     if (!appId?.startsWith("app_")) {
@@ -34,9 +35,12 @@ export const withLocalDomain = async ({
     if (!!appId) {
       const stokeiClient = createAPIClient({ appId, cookies });
       const currentAppResponse = await stokeiClient.api
-        .query<{ currentApp: any }>(currentAppQuery, {})
+        .query<{ currentApp: any }>(currentAppQuery, {
+          slug: appId,
+        })
         .toPromise();
       if (!!currentAppResponse?.data?.currentApp) {
+        app = currentAppResponse?.data?.currentApp;
         if (!url.pathname.startsWith("/app/" + appId)) {
           url.pathname = url.pathname.replace("/", "/app/" + appId + "/");
           isRedirect = true;
@@ -49,7 +53,7 @@ export const withLocalDomain = async ({
     appId = "";
   }
   return {
-    appId,
+    appId: app?.id,
     isRedirect,
     url,
   };

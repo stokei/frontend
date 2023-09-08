@@ -2,6 +2,19 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  createYourProduct: "Create your product",
+  createYourPrices: "Create your prices",
+  createYourApp: "Create your app",
+  chooseYourDomain: "Choose your domain",
+  startSell: "Start sell",
+  haveMoreThanOneWebsite: "Have more than one website",
+  payOnlyForWhatYouUse: "Pay only for what you use",
+  payOnlyForWhatYouUseHighlight: "only",
+  benefit: "Benefit",
+  benefits: "Benefits",
+  storage: "Storage",
+  storages: "Storages",
+  premium: "Premium",
   toReceive: "To receive",
   chooseYourCatalogsForYourProduct: "Choose your catalogs for your product",
   feeAmount: "Fee amount",
@@ -132,8 +145,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   theRightPlansForYourBusinessHighlight: "your business",
   turnYourKnowledgeIntoAProduct: "Turn your knowledge into a product",
   turnYourKnowledgeIntoAProductHighlight: "knowledge",
-  withStokeiYouCanTransformYourKnowledgeIntoOnlineCoursesStartTeachingNow:
-    "With Stokei you can transform your knowledge into online courses. Start teaching now.",
+  withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses:
+    "With Stokei you transform your knowledge into online courses, materials such as e-books, models, zip files and much more. Start teaching now.",
   website: "Website",
   addApp: "Add app",
   informations: "Informations",

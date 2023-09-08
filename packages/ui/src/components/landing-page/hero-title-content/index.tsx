@@ -11,9 +11,10 @@ export interface HeroTitleContentProps {
   readonly textTheme?: "light" | "dark";
   readonly title?: string | null;
   readonly subtitle?: string | null;
+  readonly ctaText?: string;
   readonly titleHighlight?: string | null;
   readonly subtitleHighlight?: string | null;
-  readonly onSignUp: () => void;
+  readonly onCTA?: () => void;
 }
 
 export const HeroTitleContent: FC<HeroTitleContentProps> = ({
@@ -22,7 +23,8 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
   titleHighlight,
   subtitle,
   subtitleHighlight,
-  onSignUp,
+  ctaText,
+  onCTA,
 }) => {
   const translate = useTranslations();
 
@@ -46,11 +48,13 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
           )}
         </HeroSubtitle>
       )}
-      <ButtonGroup>
-        <Button onClick={onSignUp}>
-          {translate.formatMessage({ id: "signUp" })}
-        </Button>
-      </ButtonGroup>
+      {onCTA && (
+        <ButtonGroup>
+          <Button onClick={onCTA}>
+            {ctaText || translate.formatMessage({ id: "signUp" })}
+          </Button>
+        </ButtonGroup>
+      )}
     </HeroContent>
   );
 };

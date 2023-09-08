@@ -40,7 +40,7 @@ import {
   BsBell,
   BsBox,
   BsCart,
-  BsCheck,
+  BsCheckCircleFill,
   BsFilter,
   BsFullscreen,
   BsFullscreenExit,
@@ -128,7 +128,7 @@ export const PlanIcon = FaMoneyBill;
 export const DashboardIcon = BiLineChart;
 export const OrderIcon = AiOutlineShoppingCart;
 export const CartIcon = BsCart;
-export const CheckIcon = BsCheck;
+export const CheckIcon = BsCheckCircleFill;
 export const StoreIcon = FaStore;
 export const SubscriptionIcon = LuFileSignature;
 export const AppIcon = TbApps;

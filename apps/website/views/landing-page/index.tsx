@@ -1,4 +1,5 @@
 import stokeiDashboardImage from "@/assets/stokei-dashboard.svg";
+import createYourAppImage from "@/assets/create-your-app.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { HeroWithImage } from "@stokei/ui";
@@ -31,10 +32,61 @@ export const LandingPage: FC<LandingPageProps> = () => {
           id: "turnYourKnowledgeIntoAProductHighlight",
         })}
         subtitle={translate.formatMessage({
-          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCoursesStartTeachingNow",
+          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
         })}
         imageURL={stokeiDashboardImage?.src}
-        onSignUp={goToSignUp}
+        onCTA={goToSignUp}
+      />
+      <HeroWithImage
+        title={translate.formatMessage({ id: "createYourApp" })}
+        subtitle={translate.formatMessage({
+          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
+        })}
+        imageURL={createYourAppImage?.src}
+      />
+      {/* <HeroWithImage
+        orientation="right"
+        title={translate.formatMessage({ id: "haveMoreThanOneWebsite" })}
+        titleHighlight={translate.formatMessage({
+          id: "turnYourKnowledgeIntoAProductHighlight",
+        })}
+        subtitle={translate.formatMessage({
+          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
+        })}
+        imageURL={stokeiDashboardImage?.src}
+      /> */}
+      <HeroWithImage
+        orientation="right"
+        title={translate.formatMessage({ id: "chooseYourDomain" })}
+        titleHighlight={translate.formatMessage({
+          id: "turnYourKnowledgeIntoAProductHighlight",
+        })}
+        subtitle={translate.formatMessage({
+          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
+        })}
+        imageURL={stokeiDashboardImage?.src}
+      />
+      <HeroWithImage
+        title={translate.formatMessage({ id: "createYourProduct" })}
+        subtitle={translate.formatMessage({
+          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
+        })}
+        imageURL={stokeiDashboardImage?.src}
+      />
+      <HeroWithImage
+        orientation="right"
+        title={translate.formatMessage({ id: "createYourPrices" })}
+        subtitle={translate.formatMessage({
+          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
+        })}
+        imageURL={stokeiDashboardImage?.src}
+      />
+      <HeroWithImage
+        title={translate.formatMessage({ id: "startSell" })}
+        subtitle={translate.formatMessage({
+          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
+        })}
+        imageURL={stokeiDashboardImage?.src}
       />
       <Plans />
       <CommonQuestions />

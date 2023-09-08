@@ -7,6 +7,7 @@ import { HeroImage } from "../../hero-image";
 
 interface HeroWithImageProps extends HeroTitleContentProps {
   readonly imageURL?: string;
+  readonly orientation?: "left" | "right";
 }
 
 export const HeroWithImage: FC<HeroWithImageProps> = ({
@@ -15,17 +16,26 @@ export const HeroWithImage: FC<HeroWithImageProps> = ({
   subtitle,
   titleHighlight,
   subtitleHighlight,
-  onSignUp,
+  ctaText,
+  onCTA,
+  orientation = "left",
 }) => {
   return (
     <Container>
-      <Hero>
+      <Hero
+        direction={
+          orientation === "left"
+            ? ["column", "column", "row", "row"]
+            : ["column", "column", "row-reverse", "row-reverse"]
+        }
+      >
         <HeroTitleContent
           title={title}
           subtitle={subtitle}
           titleHighlight={titleHighlight}
           subtitleHighlight={subtitleHighlight}
-          onSignUp={onSignUp}
+          onCTA={onCTA}
+          ctaText={ctaText}
         />
         {imageURL && (
           <HeroMedia width={["full", "full", "40%", "40%"]}>

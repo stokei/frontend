@@ -1,5 +1,5 @@
-query CurrentGlobalApp {
-  currentApp {
+query CurrentGlobalApp($slug: String!) {
+  currentApp: app(slug: $slug) {
     id
     name
     isStokei

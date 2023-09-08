@@ -1,5 +1,18 @@
 export const ptBRMessages = {
   me: "Eu",
+  createYourProduct: "Crie seu produto",
+  createYourPrices: "Crie seus preços",
+  createYourApp: "Crie sua aplicação",
+  chooseYourDomain: "Escolha seu domínio",
+  haveMoreThanOneWebsite: "Tenha mais de um site",
+  startSell: "Comece a vender",
+  payOnlyForWhatYouUse: "Pague apenas pelo que usar",
+  payOnlyForWhatYouUseHighlight: "apenas",
+  premium: "Premium",
+  benefit: "Benefício",
+  benefits: "Benefícios",
+  storage: "Armazenamento",
+  storages: "Armazenamentos",
   toReceive: "A receber",
   chooseYourCatalogsForYourProduct:
     "Escolha os seus catálogos para o seu produto",
@@ -133,8 +146,8 @@ export const ptBRMessages = {
   theRightPlansForYourBusinessHighlight: "seu negócio",
   turnYourKnowledgeIntoAProduct: "Torne seu conhecimento em produto",
   turnYourKnowledgeIntoAProductHighlight: "conhecimento",
-  withStokeiYouCanTransformYourKnowledgeIntoOnlineCoursesStartTeachingNow:
-    "Com a Stokei você transforma o seu conhecimento em cursos online. Comece agora a ensinar.",
+  withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses:
+    "Com a Stokei você transforma o seu conhecimento em cursos online, materiais como e-books, modelagens, arquivos zip e muito mais. Comece agora a ensinar.",
   website: "Website",
   app: "Aplicação",
   apps: "Aplicações",

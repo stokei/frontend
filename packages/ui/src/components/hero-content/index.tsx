@@ -6,7 +6,7 @@ export const HeroContent: React.FC<HeroContentProps> = ({
   ...props
 }) => (
   <Stack
-    width="auto"
+    width="fit-content"
     flex="1"
     direction="column"
     spacing="5"

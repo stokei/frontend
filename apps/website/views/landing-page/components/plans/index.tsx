@@ -76,14 +76,14 @@ export const Plans: FC<PlansProps> = () => {
             justify="center"
             align="center"
           >
-            <Title size="lg" textAlign="center">
+            <Title textAlign="center">
               <Highlight
                 query={translate.formatMessage({
-                  id: "theRightPlansForYourBusinessHighlight",
+                  id: "payOnlyForWhatYouUseHighlight",
                 })}
               >
                 {translate.formatMessage({
-                  id: "theRightPlansForYourBusiness",
+                  id: "payOnlyForWhatYouUse",
                 })}
               </Highlight>
             </Title>
