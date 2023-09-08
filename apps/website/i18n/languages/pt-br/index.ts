@@ -1,9 +1,22 @@
 export const ptBRMessages = {
   me: "Eu",
+  slug: "Identificador de URL",
+  slugPlaceholder: "meuscursos",
   createYourProduct: "Crie seu produto",
+  createYourProducts: "Crie seus produtos",
   createYourPrices: "Crie seus preços",
   createYourApp: "Crie sua aplicação",
   chooseYourDomain: "Escolha seu domínio",
+  startYourSalesJourneyBySharingYourAppLinkRightNow:
+    "Inicie sua jornada de vendas compartilhando o link da sua aplicação agora mesmo.",
+  startCreatingYourProductsWithHighQualityImagesAndChooseImpactfulNames:
+    "Comece a criar seus produtos com imagens de alta qualidade e escolha nomes impactantes.",
+  setPricesThatMeetYourCustomersNeeds:
+    "Defina preços que atendam às necessidades dos seus clientes.",
+  customizeYourExperienceChooseFromStokeiSFreeDomainOrAddYourOwnCustomDomain:
+    "Customize sua experiência: escolha entre o domínio gratuito da Stokei ou adicione o seu próprio domínio personalizado.",
+  anApplicationIsYourControlCenterForManagingProducts:
+    "Uma aplicação é o seu centro de controle para gerenciar produtos, cursos, materiais, vendas e alunos, tudo ao alcance das suas mãos.",
   haveMoreThanOneWebsite: "Tenha mais de um site",
   startSell: "Comece a vender",
   payOnlyForWhatYouUse: "Pague apenas pelo que usar",
@@ -146,8 +159,8 @@ export const ptBRMessages = {
   theRightPlansForYourBusinessHighlight: "seu negócio",
   turnYourKnowledgeIntoAProduct: "Torne seu conhecimento em produto",
   turnYourKnowledgeIntoAProductHighlight: "conhecimento",
-  withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses:
-    "Com a Stokei você transforma o seu conhecimento em cursos online, materiais como e-books, modelagens, arquivos zip e muito mais. Comece agora a ensinar.",
+  thePlatformThatTransformsYourKnowledgeIntoOnlineCourses:
+    "A plataforma que transforma seu conhecimento em cursos online, e-books, modelagens, arquivos zip e muito mais. Inicie sua jornada de ensino agora mesmo!",
   website: "Website",
   app: "Aplicação",
   apps: "Aplicações",

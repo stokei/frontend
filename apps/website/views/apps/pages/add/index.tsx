@@ -1,8 +1,4 @@
-import {
-  useAPIErrors,
-  usePaymentMethodManagement,
-  useTranslations,
-} from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -16,6 +12,7 @@ import {
   FormErrorMessage,
   Input,
   InputGroup,
+  InputSlug,
   Label,
   Stack,
   Title,
@@ -26,8 +23,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Navbar } from "./components/navbar";
 import { useCreateAppMutation } from "./graphql/create-app.mutation.graphql.generated";
-import { PaymentMethodManagement } from "@/components";
-import { useCurrentAccount } from "@/hooks/use-current-account";
 
 interface AddAppPageProps {}
 
@@ -42,6 +37,9 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
   const validationSchema = z.object({
     name: z.string().min(1, {
       message: translate.formatMessage({ id: "nameIsRequired" }),
+    }),
+    slug: z.string().min(1, {
+      message: translate.formatMessage({ id: "required" }),
     }),
     email: z
       .string()
@@ -61,12 +59,14 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
 
   const onSubmit = async ({
     name,
+    slug,
     email,
   }: z.infer<typeof validationSchema>) => {
     try {
       const response = await onExecuteCreateAppMutation({
         input: {
           name,
+          slug,
           email,
           currency: "BRL",
           language: "pt-BR",
@@ -123,7 +123,6 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
                     <InputGroup>
                       <Input
                         id="name"
-                        textTransform="capitalize"
                         placeholder={translate.formatMessage({
                           id: "namePlaceholder",
                         })}
@@ -131,6 +130,19 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
                       />
                     </InputGroup>
                     <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+                  </FormControl>
+                  <FormControl isInvalid={!!errors?.slug}>
+                    <Label htmlFor="slug">
+                      {translate.formatMessage({ id: "slug" })}
+                    </Label>
+                    <InputSlug
+                      id="slug"
+                      placeholder={translate.formatMessage({
+                        id: "slugPlaceholder",
+                      })}
+                      {...register("slug")}
+                    />
+                    <FormErrorMessage>{errors?.slug?.message}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={!!errors?.email}>
                     <Label htmlFor="email">

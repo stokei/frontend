@@ -3,7 +3,6 @@ import {
   CurrentAccountQuery,
   useCurrentAccountQuery,
 } from "@/services/graphql/queries/current-account/current-account.query.graphql.generated";
-import { useRouter } from "next/router";
 import {
   createContext,
   FC,
@@ -38,8 +37,7 @@ export const CurrentAccountProvider: FC<
     CurrentAccount | undefined
   >();
 
-  const router = useRouter();
-  const [{ fetching: isLoading, data, error }] = useCurrentAccountQuery({
+  const [{ fetching: isLoading, data }] = useCurrentAccountQuery({
     pause: !!currentAccountProp,
   });
 
