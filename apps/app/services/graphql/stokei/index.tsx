@@ -2538,7 +2538,8 @@ export type QueryAddressesArgs = {
 
 
 export type QueryAppArgs = {
-  id: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 

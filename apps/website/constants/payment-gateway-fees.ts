@@ -1,20 +1,39 @@
-import { PaymentGatewayType } from "@/constants/payment-gateway-type";
+import {
+  PaymentGatewayType,
+  PaymentMethodType,
+} from "@/services/graphql/stokei";
 
-interface PaymentGatewayFeeValue {
+export interface PaymentMethodTypeFee {
   percentage: number;
   fixAmount: number;
 }
-
-export const paymentGatewayFees: Record<
+export type PaymentGatewayFeeValue = Record<
+  PaymentMethodType,
+  PaymentMethodTypeFee | undefined
+>;
+export type PaymentGatewayFees = Record<
   PaymentGatewayType,
   PaymentGatewayFeeValue
-> = {
-  [PaymentGatewayType.STRIPE]: {
-    percentage: 7,
-    fixAmount: 0,
+>;
+
+export const paymentGatewayFees: PaymentGatewayFees = {
+  [PaymentGatewayType.Stripe]: {
+    [PaymentMethodType.Boleto]: {
+      percentage: 5,
+      fixAmount: 345,
+    },
+    [PaymentMethodType.Card]: {
+      percentage: 7,
+      fixAmount: 50,
+    },
+    [PaymentMethodType.Pix]: undefined,
   },
-  [PaymentGatewayType.PAGARME]: {
-    percentage: 4,
-    fixAmount: 200,
+  [PaymentGatewayType.Pagarme]: {
+    [PaymentMethodType.Boleto]: undefined,
+    [PaymentMethodType.Card]: undefined,
+    [PaymentMethodType.Pix]: {
+      percentage: 4,
+      fixAmount: 200,
+    },
   },
 };

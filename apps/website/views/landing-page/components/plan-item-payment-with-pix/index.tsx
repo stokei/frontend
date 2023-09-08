@@ -1,16 +1,16 @@
 import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
-import { PaymentGatewayType } from "@/constants/payment-gateway-type";
-import { STRIPE_URL } from "@/constants/stripe-links";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
+  PaymentGatewayType,
+  PaymentMethodType,
+} from "@/services/graphql/stokei";
+import {
   Avatar,
-  Box,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   Icon,
-  Link,
   List,
   ListIcon,
   ListItem,
@@ -25,7 +25,8 @@ interface PlanItemPaymentWithPixProps {}
 export const PlanItemPaymentWithPix: FC<PlanItemPaymentWithPixProps> = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
-  const pagarmeGateway = paymentGatewayFees[PaymentGatewayType.PAGARME];
+  const pagarmeGateway =
+    paymentGatewayFees[PaymentGatewayType.Pagarme][PaymentMethodType.Pix];
   return (
     <Card background="background.50">
       <CardHeader>
@@ -35,7 +36,7 @@ export const PlanItemPaymentWithPix: FC<PlanItemPaymentWithPixProps> = () => {
             size="lg"
             icon={<Icon name="plan" fontSize="2xl" color="white.500" />}
           />
-          <Title size={"md"}>
+          <Title size={"md"} textAlign="center">
             {translate.formatMessage({ id: "salesByPix" })}
           </Title>
         </Stack>
@@ -69,15 +70,15 @@ export const PlanItemPaymentWithPix: FC<PlanItemPaymentWithPixProps> = () => {
               fontWeight="900"
               lineHeight="shorter"
             >
-              {pagarmeGateway.percentage}%
+              {pagarmeGateway?.percentage}%
             </Text>
-            {pagarmeGateway.fixAmount && (
+            {pagarmeGateway?.fixAmount && (
               <>
                 <Text fontSize="md">+</Text>
                 <Text fontSize="md" fontWeight="600">
                   {translate.formatMoney({
                     showSymbol: true,
-                    amount: pagarmeGateway.fixAmount,
+                    amount: pagarmeGateway?.fixAmount,
                     currency: currentApp?.currency?.id || "",
                     minorUnit: currentApp?.currency?.minorUnit,
                   })}

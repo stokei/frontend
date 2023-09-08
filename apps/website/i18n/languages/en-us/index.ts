@@ -2,6 +2,32 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  slug: "URL identifier",
+  slugPlaceholder: "mycourses",
+  createYourProduct: "Create your product",
+  createYourProducts: "Create your products",
+  createYourPrices: "Create your prices",
+  createYourApp: "Create your app",
+  chooseYourDomain: "Choose your domain",
+  startSell: "Start sell",
+  startYourSalesJourneyBySharingYourAppLinkRightNow:
+    "Start your sales journey by sharing your app link right now.",
+  startCreatingYourProductsWithHighQualityImagesAndChooseImpactfulNames:
+    "Start creating your products with high quality images and choose impactful names",
+  haveMoreThanOneWebsite: "Have more than one website",
+  setPricesThatMeetYourCustomersNeeds:
+    "Set prices that meet your customers needs.",
+  customizeYourExperienceChooseFromStokeiSFreeDomainOrAddYourOwnCustomDomain:
+    "Customize your experience: choose from Stokei's free domain or add your own custom domain.",
+  anApplicationIsYourControlCenterForManagingProducts:
+    "An application is your control center for managing products, courses, materials, sales and students, all at your fingertips.",
+  payOnlyForWhatYouUse: "Pay only for what you use",
+  payOnlyForWhatYouUseHighlight: "only",
+  benefit: "Benefit",
+  benefits: "Benefits",
+  storage: "Storage",
+  storages: "Storages",
+  premium: "Premium",
   toReceive: "To receive",
   chooseYourCatalogsForYourProduct: "Choose your catalogs for your product",
   feeAmount: "Fee amount",
@@ -132,8 +158,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   theRightPlansForYourBusinessHighlight: "your business",
   turnYourKnowledgeIntoAProduct: "Turn your knowledge into a product",
   turnYourKnowledgeIntoAProductHighlight: "knowledge",
-  withStokeiYouCanTransformYourKnowledgeIntoOnlineCoursesStartTeachingNow:
-    "With Stokei you can transform your knowledge into online courses. Start teaching now.",
+  thePlatformThatTransformsYourKnowledgeIntoOnlineCourses:
+    "The platform that transforms your knowledge into online courses, e-books, modeling, zip files and much more. Start your teaching journey right now!",
   website: "Website",
   addApp: "Add app",
   informations: "Informations",

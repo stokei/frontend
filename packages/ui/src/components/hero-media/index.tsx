@@ -3,7 +3,8 @@ import { Box, BoxProps } from "../box";
 export interface HeroMediaProps extends BoxProps {}
 export const HeroMedia: React.FC<HeroMediaProps> = ({ children, ...props }) => (
   <Box
-    width={["full", "full", "40%", "40%"]}
+    width={["full", "full", "50%", "50%"]}
+    flex="1"
     height="full"
     flexDirection="column"
     justify="center"

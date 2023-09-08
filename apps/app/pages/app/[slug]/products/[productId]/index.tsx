@@ -7,6 +7,8 @@ import {
   ProductPageProductFragment,
 } from "@/views/product/graphql/product.query.graphql.generated";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
+import { getAppSlugFromContext } from "@/utils/get-app-slug-from-context";
+import { getAppBySlug } from "@/services/graphql/queries/get-app-by-slug";
 
 interface Props {
   readonly product: ProductPageProductFragment;
@@ -23,16 +25,19 @@ const Page: NextPage<Props> = ({ product }) => {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const appId =
-    context?.query?.appId?.toString() || context?.params?.appId?.toString();
-  if (!appId) {
+  const cookies = context?.req?.cookies;
+  const slug = getAppSlugFromContext(context);
+  const app = await getAppBySlug({
+    slug,
+    cookies,
+  });
+  if (!app) {
     return {
       notFound: true,
     };
   }
-  const cookies = context?.req?.cookies;
   const stokeiGraphQLClient = createAPIClient({
-    appId,
+    appId: app?.id,
     cookies,
   });
   const productId =

@@ -11,6 +11,7 @@ const currentAppDomainQuery = gql`
       parent
       app {
         id
+        slug
         name
       }
     }
@@ -24,7 +25,8 @@ export const withCustomDomain = async ({
 }: WithDomainProps): Promise<MiddlewareResponse> => {
   const url = nextUrl.clone();
   const { pathname } = nextUrl;
-  let appId;
+  let slug;
+  let app: any;
   let isRedirect = false;
   try {
     const stokeiClient = createAPIClient({
@@ -35,23 +37,25 @@ export const withCustomDomain = async ({
         domain,
       })
       .toPromise();
-    appId = currentDomain?.data?.domain?.parent;
-    if (!!appId) {
-      if (pathname.startsWith("/app/" + appId)) {
+    app = currentDomain?.data?.domain?.app;
+    slug = app?.slug;
+    if (!!slug) {
+      if (pathname.startsWith("/app/" + slug)) {
         url.href = url.href
-          .replace("/app/" + appId, "/")
+          .replace("/app/" + slug, "/")
           .replace(url.hostname, domain);
         isRedirect = true;
       } else {
-        url.pathname = url.pathname.replace("/", "/app/" + appId + "/");
+        url.pathname = url.pathname.replace("/", "/app/" + slug + "/");
       }
     }
   } catch (error) {
-    appId = "";
+    slug = "";
   }
 
   return {
-    appId,
+    appId: app?.id,
+    slug,
     isRedirect,
     url,
   };

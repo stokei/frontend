@@ -55,7 +55,7 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
             subtitle={sortedItem?.item?.heroSubtitle}
             titleHighlight={sortedItem?.item?.titleHighlight}
             imageURL={sortedItem?.item?.image?.file?.url || ""}
-            onSignUp={goToSignUp}
+            onCTA={goToSignUp}
             {...props}
           />
         ),
@@ -65,7 +65,7 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
             subtitle={sortedItem?.item?.heroSubtitle}
             titleHighlight={sortedItem?.item?.titleHighlight}
             imageURL={sortedItem?.item?.backgroundImage?.file?.url || ""}
-            onSignUp={goToSignUp}
+            onCTA={goToSignUp}
             {...props}
           />
         ),
@@ -75,7 +75,7 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
             subtitle={sortedItem?.item?.heroSubtitle}
             titleHighlight={sortedItem?.item?.titleHighlight}
             videoURL={sortedItem?.item?.video?.file?.url || ""}
-            onSignUp={goToSignUp}
+            onCTA={goToSignUp}
             {...props}
           />
         ),
@@ -84,7 +84,7 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
             title={sortedItem?.item?.heroTitle}
             subtitle={sortedItem?.item?.heroSubtitle}
             titleHighlight={sortedItem?.item?.titleHighlight}
-            onSignUp={goToSignUp}
+            onCTA={goToSignUp}
             {...props}
           />
         ),

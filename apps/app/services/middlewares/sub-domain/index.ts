@@ -5,8 +5,8 @@ import { createAPIClient } from "@/services/graphql/client";
 import { gql } from "urql";
 
 const currentAppQuery = gql`
-  query CurrentAppSubDomain {
-    currentApp {
+  query CurrentAppSubDomain($slug: String!) {
+    currentApp: app(slug: $slug) {
       id
       name
     }
@@ -20,26 +20,31 @@ export const withSubDomain = async ({
 }: WithDomainProps): Promise<MiddlewareResponse> => {
   const url = nextUrl.clone();
 
-  let appId = domain?.split(`.${DOMAIN}`)[0];
+  let slug = domain?.split(`.${DOMAIN}`)[0];
   let isRedirect = false;
-
+  let app: any;
   try {
-    const stokeiClient = createAPIClient({ appId, cookies });
-    await stokeiClient.api.query(currentAppQuery, {}).toPromise();
-    if (url.pathname.startsWith("/app/" + appId)) {
+    const stokeiClient = createAPIClient({ cookies });
+    app = await stokeiClient.api
+      .query(currentAppQuery, {
+        slug,
+      })
+      .toPromise();
+    if (url.pathname.startsWith("/app/" + slug)) {
       url.href = url.href
-        .replace("/app/" + appId, "/")
+        .replace("/app/" + slug, "/")
         .replace(url.hostname, domain);
       isRedirect = true;
     } else {
-      url.pathname = url.pathname.replace("/", "/app/" + appId + "/");
+      url.pathname = url.pathname.replace("/", "/app/" + slug + "/");
     }
   } catch (error) {
-    appId = "";
+    slug = "";
   }
 
   return {
-    appId,
+    slug,
+    appId: app?.id,
     isRedirect,
     url,
   };

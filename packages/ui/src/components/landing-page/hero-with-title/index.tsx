@@ -10,7 +10,8 @@ export const HeroWithTitle: FC<HeroWithTitleProps> = ({
   subtitle,
   titleHighlight,
   subtitleHighlight,
-  onSignUp,
+  ctaText,
+  onCTA,
 }) => {
   return (
     <Container>
@@ -20,7 +21,8 @@ export const HeroWithTitle: FC<HeroWithTitleProps> = ({
           subtitle={subtitle}
           titleHighlight={titleHighlight}
           subtitleHighlight={subtitleHighlight}
-          onSignUp={onSignUp}
+          onCTA={onCTA}
+          ctaText={ctaText}
         />
       </Hero>
     </Container>

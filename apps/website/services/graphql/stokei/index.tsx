@@ -487,6 +487,7 @@ export type CreateAppInput = {
   email: Scalars['String'];
   language: Scalars['String'];
   name: Scalars['String'];
+  slug: Scalars['String'];
 };
 
 export type CreateAppPagarmeAccountInput = {
@@ -2538,7 +2539,8 @@ export type QueryAddressesArgs = {
 
 
 export type QueryAppArgs = {
-  id: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -3285,6 +3287,7 @@ export type UpdateDataAppInput = {
   icon?: InputMaybe<Scalars['String']>;
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateDataCatalogInput = {

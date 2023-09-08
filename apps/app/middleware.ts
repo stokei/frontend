@@ -1,11 +1,11 @@
 import {
   ACCESS_TOKEN_HEADER_NAME,
-  APP_ID_HEADER_NAME,
   REFRESH_TOKEN_HEADER_NAME,
 } from "@stokei/graphql";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { BASE_URL_HEADER_NAME } from "./constants/base-url-header-name";
+import { APP_SLUG_COOKIE_KEY } from "./constants/cookies-keys";
 import { RoleName } from "./constants/role-names";
 import { STOKEI_APP_NOT_FOUND_URL } from "./constants/stokei-urls";
 import { DOMAIN } from "./environments";
@@ -66,14 +66,15 @@ export async function middleware(request: NextRequest) {
   }
 
   const cookies: Record<string, string> = {
-    [APP_ID_HEADER_NAME]: request.cookies.get(APP_ID_HEADER_NAME)?.value || "",
+    [APP_SLUG_COOKIE_KEY]:
+      request.cookies.get(APP_SLUG_COOKIE_KEY)?.value || "",
     [ACCESS_TOKEN_HEADER_NAME]:
       request.cookies.get(ACCESS_TOKEN_HEADER_NAME)?.value || "",
     [REFRESH_TOKEN_HEADER_NAME]:
       request.cookies.get(REFRESH_TOKEN_HEADER_NAME)?.value || "",
   };
 
-  const { appId, isRedirect, url } = await getDomain({
+  const { appId, slug, isRedirect, url } = await getDomain({
     domain,
     request,
     cookies,
@@ -83,7 +84,7 @@ export async function middleware(request: NextRequest) {
   }
   let baseURL = url.origin.replace(url.hostname, domain);
   if (!!domain?.match("localhost") || !!domain?.match("vercel.app")) {
-    baseURL = `${baseURL}/app/${appId}`;
+    baseURL = `${baseURL}/app/${slug}`;
   }
   try {
     const stokeiClient = createAPIClient({
@@ -94,14 +95,14 @@ export async function middleware(request: NextRequest) {
       .query<CurrentGlobalAppQuery>(
         CurrentGlobalAppDocument,
         {},
-        { requestPolicy: "network-only" }
+        { requestPolicy: "cache-and-network" }
       )
       .toPromise();
     const currentAccountResponse = await stokeiClient.api
       .query<CurrentAccountQuery>(
         CurrentAccountDocument,
         {},
-        { requestPolicy: "network-only" }
+        { requestPolicy: "cache-and-network" }
       )
       .toPromise();
 
@@ -125,7 +126,7 @@ export async function middleware(request: NextRequest) {
         const response = NextResponse.redirect(authURL);
         response.cookies.delete(ACCESS_TOKEN_HEADER_NAME);
         response.cookies.delete(REFRESH_TOKEN_HEADER_NAME);
-        response.cookies.set(APP_ID_HEADER_NAME, appId);
+        response.cookies.set(APP_SLUG_COOKIE_KEY, slug);
         response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
         return response;
       }
@@ -134,14 +135,14 @@ export async function middleware(request: NextRequest) {
           const response = NextResponse.redirect(authURL);
           response.cookies.delete(ACCESS_TOKEN_HEADER_NAME);
           response.cookies.delete(REFRESH_TOKEN_HEADER_NAME);
-          response.cookies.set(APP_ID_HEADER_NAME, appId);
+          response.cookies.set(APP_SLUG_COOKIE_KEY, slug);
           response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
           return response;
         }
         if (isAuth) {
           if (!isAppOwner && !isAppAdmin && isAdminDashboard) {
             const response = NextResponse.redirect(customersDashboardURL);
-            response.cookies.set(APP_ID_HEADER_NAME, appId);
+            response.cookies.set(APP_SLUG_COOKIE_KEY, slug);
             response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
             return response;
           }
@@ -152,12 +153,12 @@ export async function middleware(request: NextRequest) {
 
   if (isRedirect) {
     const response = NextResponse.redirect(url);
-    response.cookies.set(APP_ID_HEADER_NAME, appId);
+    response.cookies.set(APP_SLUG_COOKIE_KEY, slug);
     response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
     return response;
   }
   const response = NextResponse.rewrite(url);
-  response.cookies.set(APP_ID_HEADER_NAME, appId);
+  response.cookies.set(APP_SLUG_COOKIE_KEY, slug);
   response.cookies.set(BASE_URL_HEADER_NAME, baseURL);
   return response;
 }

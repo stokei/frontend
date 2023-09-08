@@ -4,7 +4,6 @@ import {
   useCurrentAccountQuery,
 } from "@/services/graphql/queries/current-account/current-account.query.graphql.generated";
 import { getDashboardHomePageURL } from "@/utils";
-import { useRouter } from "next/router";
 import {
   createContext,
   FC,
@@ -41,10 +40,10 @@ export const CurrentAccountProvider: FC<
     CurrentAccount | undefined
   >();
 
-  const router = useRouter();
-  const [{ fetching: isLoading, data, error }, onReloadCurrentAccount] =
+  const [{ fetching: isLoading, data }, onReloadCurrentAccount] =
     useCurrentAccountQuery({
       pause: !!currentAccountProp,
+      requestPolicy: "cache-and-network",
     });
 
   const hasSomeRole = useCallback(
@@ -78,6 +77,11 @@ export const CurrentAccountProvider: FC<
     setCurrentAccount(currentAccountProp);
   }, [currentAccountProp]);
 
+  const onReloadAccount = useCallback(
+    () => onReloadCurrentAccount({ requestPolicy: "network-only" }),
+    [onReloadCurrentAccount]
+  );
+
   const values: CurrentAccountProviderValues = useMemo(
     () => ({
       isAuthenticated: !!currentAccount,
@@ -85,15 +89,9 @@ export const CurrentAccountProvider: FC<
       isLoading,
       homePageURL,
       hasSomeRole,
-      onReloadCurrentAccount,
+      onReloadCurrentAccount: onReloadAccount,
     }),
-    [
-      currentAccount,
-      isLoading,
-      homePageURL,
-      hasSomeRole,
-      onReloadCurrentAccount,
-    ]
+    [currentAccount, isLoading, homePageURL, hasSomeRole, onReloadAccount]
   );
 
   return (

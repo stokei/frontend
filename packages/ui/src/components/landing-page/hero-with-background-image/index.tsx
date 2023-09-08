@@ -13,7 +13,8 @@ export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
   subtitle,
   titleHighlight,
   subtitleHighlight,
-  onSignUp,
+  ctaText,
+  onCTA,
 }) => {
   return (
     <Hero
@@ -29,7 +30,8 @@ export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
           subtitle={subtitle}
           titleHighlight={titleHighlight}
           subtitleHighlight={subtitleHighlight}
-          onSignUp={onSignUp}
+          onCTA={onCTA}
+          ctaText={ctaText}
         />
       </Container>
     </Hero>

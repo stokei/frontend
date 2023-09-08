@@ -1,7 +1,10 @@
 import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
-import { PaymentGatewayType } from "@/constants/payment-gateway-type";
 import { STRIPE_PRICES_URL } from "@/constants/stripe-links";
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
+import {
+  PaymentGatewayType,
+  PaymentMethodType,
+} from "@/services/graphql/stokei";
 import {
   Avatar,
   Card,
@@ -22,8 +25,11 @@ import { FC } from "react";
 interface PlanItemPaymentWithCardProps {}
 
 export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
+  const { currentApp } = useCurrentApp();
   const translate = useTranslations();
-  const stripeGateway = paymentGatewayFees[PaymentGatewayType.STRIPE];
+  const stripeGateway =
+    paymentGatewayFees[PaymentGatewayType.Stripe][PaymentMethodType.Card];
+
   return (
     <Card background="background.50">
       <CardHeader>
@@ -33,7 +39,7 @@ export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
             size="lg"
             icon={<Icon name="plan" fontSize="2xl" color="white.500" />}
           />
-          <Title size={"md"}>
+          <Title size={"md"} textAlign="center">
             {translate.formatMessage({ id: "salesByCard" })}
           </Title>
         </Stack>
@@ -67,12 +73,21 @@ export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
               fontWeight="900"
               lineHeight="shorter"
             >
-              {stripeGateway.percentage}%
+              {stripeGateway?.percentage}%
             </Text>
-            <Text fontSize="md">+</Text>
-            <Link fontSize="md" href={STRIPE_PRICES_URL} target="_blank">
-              {translate.formatMessage({ id: "stripeTax" })}
-            </Link>
+            {stripeGateway?.fixAmount && (
+              <>
+                <Text fontSize="md">+</Text>
+                <Text fontSize="md" fontWeight="600">
+                  {translate.formatMoney({
+                    showSymbol: true,
+                    amount: stripeGateway?.fixAmount,
+                    currency: currentApp?.currency?.id || "",
+                    minorUnit: currentApp?.currency?.minorUnit,
+                  })}
+                </Text>
+              </>
+            )}
           </Stack>
           <Text fontSize="md" color="text.400">
             {`${translate.formatMessage({
