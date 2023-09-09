@@ -6,6 +6,7 @@ import {
 export interface PaymentMethodTypeFee {
   percentage: number;
   fixAmount: number;
+  transferAmount?: number;
 }
 export type PaymentGatewayFeeValue = Record<
   PaymentMethodType,
@@ -34,6 +35,7 @@ export const paymentGatewayFees: PaymentGatewayFees = {
     [PaymentMethodType.Pix]: {
       percentage: 4,
       fixAmount: 200,
+      transferAmount: 367,
     },
   },
 };

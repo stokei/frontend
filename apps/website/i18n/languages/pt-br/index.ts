@@ -7,6 +7,8 @@ export const ptBRMessages = {
   createYourPrices: "Crie seus preços",
   createYourApp: "Crie sua aplicação",
   chooseYourDomain: "Escolha seu domínio",
+  theTransferFeeToBankAccount:
+    "A taxa de transferência para conta bancária é {transferAmount}",
   startYourSalesJourneyBySharingYourAppLinkRightNow:
     "Inicie sua jornada de vendas compartilhando o link da sua aplicação agora mesmo.",
   startCreatingYourProductsWithHighQualityImagesAndChooseImpactfulNames:

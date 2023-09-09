@@ -27,6 +27,12 @@ export const PlanItemPaymentWithPix: FC<PlanItemPaymentWithPixProps> = () => {
   const translate = useTranslations();
   const pagarmeGateway =
     paymentGatewayFees[PaymentGatewayType.Pagarme][PaymentMethodType.Pix];
+  const transferAmount = translate.formatMoney({
+    showSymbol: true,
+    amount: pagarmeGateway?.transferAmount || 0,
+    currency: currentApp?.currency?.id || "",
+    minorUnit: currentApp?.currency?.minorUnit,
+  });
   return (
     <Card background="background.50">
       <CardHeader>
@@ -48,6 +54,17 @@ export const PlanItemPaymentWithPix: FC<PlanItemPaymentWithPixProps> = () => {
             {translate.formatMessage({
               id: "afterPaymentOfThePixTheAmountIsAvailableWithin2BusinessDays",
             })}
+          </ListItem>
+          <ListItem>
+            <ListIcon name="check" color="green.500" />
+            {translate.formatMessage(
+              {
+                id: "theTransferFeeToBankAccount",
+              },
+              {
+                transferAmount,
+              }
+            )}
           </ListItem>
         </List>
       </CardBody>
