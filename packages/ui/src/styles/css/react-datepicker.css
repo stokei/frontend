@@ -1,0 +1,43 @@
+.date-picker-calender {
+  background: var(--chakra-colors-background-50) !important;
+}
+.date-picker-popper .react-datepicker__header {
+  background: var(--chakra-colors-background-200) !important;
+}
+
+.date-picker-calender,
+.date-picker-popper .react-datepicker__header {
+  border-color: var(--chakra-colors-chakra-border-color) !important;
+}
+.react-datepicker-popper[data-placement^="bottom"]
+  .react-datepicker__triangle::before {
+  border-bottom-color: var(--chakra-colors-chakra-border-color) !important;
+}
+.react-datepicker-popper[data-placement^="bottom"]
+  .react-datepicker__triangle::after {
+  border-bottom-color: var(--chakra-colors-background-200) !important;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: var(--chakra-colors-primary-500) !important;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: var(--chakra-colors-text-500) !important;
+}
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  color: var(--chakra-colors-heading-500) !important;
+}
+.react-datepicker__day--selected {
+  font-weight: bold !important;
+  background: var(--chakra-colors-primary-100) !important;
+  color: var(--chakra-colors-primary-900) !important;
+}
+.react-datepicker__navigation-icon {
+  top: inherit !important;
+  font-size: inherit !important;
+}

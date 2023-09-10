@@ -1,6 +1,15 @@
 export { ColorModeScript } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
-import React, { PropsWithChildren, useCallback, useMemo } from "react";
+import { languages as stokeiLanguages } from "@stokei/translations";
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import dateFnsPortuguese from "date-fns/locale/pt-BR";
+import dateFnsEnglish from "date-fns/locale/en-US";
 import {
   IColorHue,
   IColorName,
@@ -8,6 +17,9 @@ import {
   StokeiConfig,
 } from "../../interfaces";
 import { theme } from "../../styles/themes";
+
+registerLocale(stokeiLanguages.PT_BR, dateFnsPortuguese);
+registerLocale(stokeiLanguages.EN_US, dateFnsEnglish);
 
 export interface StokeiUIContextValues {
   readonly appId?: string;
@@ -75,6 +87,12 @@ export const StokeiUIProvider: React.FC<
       getHexdecimalColor,
     ]
   );
+
+  useEffect(() => {
+    if (language) {
+      setDefaultLocale(language);
+    }
+  }, [language]);
 
   return (
     <ChakraProvider theme={themeData}>
