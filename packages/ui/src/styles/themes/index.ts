@@ -6,7 +6,6 @@ import {
 } from "../../utils/color-palette";
 import { colors } from "./colors";
 import { components } from "./components";
-import { buttonTheme } from "./components/button";
 import { foundations } from "./foundations";
 
 export * from "./colors";
