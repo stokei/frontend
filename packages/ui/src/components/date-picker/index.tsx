@@ -1,67 +1,40 @@
-import { SingleDatepicker } from "chakra-dayzed-datepicker";
+import { forwardRef } from "react";
+import ReactDatePicker from "react-datepicker";
 import { useTranslations } from "../../hooks";
+import { Box, BoxProps } from "../box";
+import { Input } from "../input";
 
-export interface DatePickerProps {
+const DatePickerInput = forwardRef((props: any, ref) => (
+  <Input width="full" {...props} ref={ref} />
+));
+DatePickerInput.displayName = "DatePickerInput";
+
+export interface DatePickerProps extends Omit<BoxProps, "onChange"> {
   id?: string;
   value: Date;
   isDisabled?: boolean;
   onChange: (data: Date) => void;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({
-  id,
-  isDisabled,
-  value,
-  onChange,
-  ...props
-}) => {
-  const translate = useTranslations();
-
-  return (
-    <SingleDatepicker
-      id={`${id}-date-picker`}
-      onDateChange={onChange}
-      date={value}
-      usePortal
-      configs={{
-        dateFormat: translate.formatMessage({ id: "dateFormat" }),
-      }}
-      propsConfigs={{
-        dateNavBtnProps: {
-          colorScheme: "primary",
-          variant: "ghost",
-        },
-        dayOfMonthBtnProps: {
-          defaultBtnProps: {
-            borderColor: "primary.900",
-            _hover: {
-              background: "primary.500",
-            },
-          },
-          isInRangeBtnProps: {
-            background: "primary.500",
-            color: "primary.900",
-          },
-          selectedBtnProps: {
-            background: "primary.500",
-            color: "primary.900",
-          },
-          todayBtnProps: {
-            background: "primary.100",
-            color: "primary.900",
-          },
-        },
-        inputProps: {
-          size: "md",
-        },
-        popoverCompProps: {
-          popoverContentProps: {
-            padding: 0,
-            background: "background.50",
-            color: "text.500",
-          },
-        },
-      }}
-    />
-  );
-};
+export const DatePicker: React.FC<DatePickerProps> = forwardRef(
+  ({ id, isDisabled, value, onChange, ...props }, ref) => {
+    const translate = useTranslations();
+    return (
+      <Box width="full" {...props}>
+        <ReactDatePicker
+          id={`${id}-date-picker`}
+          ref={ref as any}
+          onChange={onChange}
+          selected={value}
+          disabled={isDisabled}
+          popperClassName="date-picker-popper"
+          calendarClassName="date-picker-calender"
+          locale={translate.locale}
+          customInput={<DatePickerInput />}
+          dateFormat={translate.formatMessage({ id: "dateFormat" })}
+        />
+      </Box>
+    );
+  }
+);
+DatePicker.displayName = "DatePicker";
