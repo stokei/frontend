@@ -29,6 +29,12 @@ export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
   const translate = useTranslations();
   const stripeGateway =
     paymentGatewayFees[PaymentGatewayType.Stripe][PaymentMethodType.Card];
+  const transferAmount = translate.formatMoney({
+    showSymbol: true,
+    amount: stripeGateway?.transferAmount || 0,
+    currency: currentApp?.currency?.id || "",
+    minorUnit: currentApp?.currency?.minorUnit,
+  });
 
   return (
     <Card background="background.50">
@@ -51,6 +57,17 @@ export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
             {translate.formatMessage({
               id: "receiveByCardIn30DaysForPaymentsByCard",
             })}
+          </ListItem>
+          <ListItem>
+            <ListIcon name="check" color="green.500" />
+            {translate.formatMessage(
+              {
+                id: "theTransferFeeToBankAccount",
+              },
+              {
+                transferAmount,
+              }
+            )}
           </ListItem>
         </List>
       </CardBody>

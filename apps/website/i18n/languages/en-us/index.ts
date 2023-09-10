@@ -10,6 +10,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   createYourApp: "Create your app",
   chooseYourDomain: "Choose your domain",
   startSell: "Start sell",
+  theTransferFeeToBankAccount:
+    "The transfer fee to bank account is {transferAmount}",
   startYourSalesJourneyBySharingYourAppLinkRightNow:
     "Start your sales journey by sharing your app link right now.",
   startCreatingYourProductsWithHighQualityImagesAndChooseImpactfulNames:

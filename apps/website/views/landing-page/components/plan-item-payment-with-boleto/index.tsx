@@ -29,6 +29,12 @@ export const PlanItemPaymentWithBoleto: FC<
   const translate = useTranslations();
   const stripeGateway =
     paymentGatewayFees[PaymentGatewayType.Stripe][PaymentMethodType.Boleto];
+  const transferAmount = translate.formatMoney({
+    showSymbol: true,
+    amount: stripeGateway?.transferAmount || 0,
+    currency: currentApp?.currency?.id || "",
+    minorUnit: currentApp?.currency?.minorUnit,
+  });
   return (
     <Card background="background.50">
       <CardHeader>
@@ -50,6 +56,17 @@ export const PlanItemPaymentWithBoleto: FC<
             {translate.formatMessage({
               id: "receiveByBoletoIn2DaysForPaymentsByBoleto",
             })}
+          </ListItem>
+          <ListItem>
+            <ListIcon name="check" color="green.500" />
+            {translate.formatMessage(
+              {
+                id: "theTransferFeeToBankAccount",
+              },
+              {
+                transferAmount,
+              }
+            )}
           </ListItem>
         </List>
       </CardBody>
