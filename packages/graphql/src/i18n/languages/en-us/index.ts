@@ -1,6 +1,14 @@
 import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
+  componentNotFound: "Component not found",
+  componentsNotFound: "Components not found",
+  pageNotFound: "Page not found",
+  pagesNotFound: "Pages not found",
+  siteNotFound: "Site not found",
+  sitesNotFound: "Sites not found",
+  versionNotFound: "Version not found",
+  versionsNotFound: "Versions not found",
   orderNotFound: "Order not found",
   ordersNotFound: "Orders not found",
   orderAlreadyPaid: "Order already paid",

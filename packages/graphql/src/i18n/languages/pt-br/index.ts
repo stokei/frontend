@@ -1,4 +1,12 @@
 export const ptBRMessages = {
+  componentNotFound: "Componente não encontrado",
+  componentsNotFound: "Componentes não encontrado",
+  pageNotFound: "Página não encontrada",
+  pagesNotFound: "Páginas não encontrada",
+  siteNotFound: "Site não encontrado",
+  sitesNotFound: "Sites não encontrado",
+  versionNotFound: "Versão não encontrada",
+  versionsNotFound: "Versões não encontrada",
   orderNotFound: "Pedido não encontrado",
   ordersNotFound: "Pedidos não encontrado",
   orderAlreadyPaid: "Pedido já foi pago",
