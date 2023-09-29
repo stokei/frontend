@@ -2,16 +2,7 @@ import { DOMAIN } from "@/environments";
 import { MiddlewareResponse } from "@/interfaces/middleware-response";
 import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
-import { gql } from "urql";
-
-const currentAppQuery = gql`
-  query CurrentAppSubDomain($slug: String!) {
-    currentApp: app(slug: $slug) {
-      id
-      name
-    }
-  }
-`;
+import { CurrentGlobalAppDocument } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 
 export const withSubDomain = async ({
   cookies,
@@ -25,11 +16,14 @@ export const withSubDomain = async ({
   let app: any;
   try {
     const stokeiClient = createAPIClient({ cookies });
-    app = await stokeiClient.api
-      .query(currentAppQuery, {
+    const currentSiteResponse = await stokeiClient.api
+      .query(CurrentGlobalAppDocument, {
         slug,
       })
       .toPromise();
+    slug = currentSiteResponse?.data?.site?.slug;
+    app = currentSiteResponse?.data?.site?.app;
+
     if (url.pathname.startsWith("/app/" + slug)) {
       url.href = url.href
         .replace("/app/" + slug, "/")

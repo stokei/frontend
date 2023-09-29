@@ -8,24 +8,19 @@ export type CurrentGlobalAppQueryVariables = Types.Exact<{
 }>;
 
 
-export type CurrentGlobalAppQuery = { __typename?: 'Query', currentApp: { __typename?: 'App', id: string, name: string, isStokei: boolean, isIntegratedWithPix: boolean, isIntegratedWithStripe: boolean, stripeAccount?: string | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, icon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } };
+export type CurrentGlobalAppQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, name: string, homePage?: { __typename?: 'Page', id: string, slug: string } | null, favicon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, app?: { __typename?: 'App', id: string, name: string, isStokei: boolean, isIntegratedWithPix: boolean, isIntegratedWithStripe: boolean, stripeAccount?: string | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, icon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } | null } };
 
 
 export const CurrentGlobalAppDocument = gql`
     query CurrentGlobalApp($slug: String!) {
-  currentApp: app(slug: $slug) {
+  site(slug: $slug) {
     id
     name
-    isStokei
-    isIntegratedWithPix
-    isIntegratedWithStripe
-    stripeAccount
-    currency {
+    homePage {
       id
-      symbol
-      minorUnit
+      slug
     }
-    icon {
+    favicon {
       file {
         url
       }
@@ -35,11 +30,34 @@ export const CurrentGlobalAppDocument = gql`
         url
       }
     }
-    colors {
-      items {
-        color
-        themeMode
-        type
+    app {
+      id
+      name
+      isStokei
+      isIntegratedWithPix
+      isIntegratedWithStripe
+      stripeAccount
+      currency {
+        id
+        symbol
+        minorUnit
+      }
+      icon {
+        file {
+          url
+        }
+      }
+      logo {
+        file {
+          url
+        }
+      }
+      colors {
+        items {
+          color
+          themeMode
+          type
+        }
       }
     }
   }

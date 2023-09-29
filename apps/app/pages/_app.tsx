@@ -56,6 +56,7 @@ function MyApp({
   cookies,
   baseURL,
   currentApp,
+  currentSite,
   currentAccount,
   themeColors,
   router,
@@ -70,7 +71,11 @@ function MyApp({
   );
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
-      <CurrentAppProvider baseURL={baseURL} currentApp={currentApp}>
+      <CurrentAppProvider
+        baseURL={baseURL}
+        currentApp={currentApp}
+        currentSite={currentSite}
+      >
         <CurrentAccountProvider currentAccount={currentAccount}>
           <StokeiUIProvider
             config={{
@@ -121,7 +126,8 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
     )
     .toPromise();
 
-  const currentAppData = currentApp?.data?.currentApp;
+  const currentSiteData = currentApp?.data?.site;
+  const currentAppData = currentSiteData?.app;
   const appId = currentAppData?.id;
   let currentAccount;
   if (currentAppData) {
@@ -146,11 +152,10 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
     appId,
     baseURL,
     cookies,
+    currentSite: currentSiteData,
     currentApp: currentAppData,
     currentAccount: currentAccountData,
-    themeColors: formatAppColorsToThemeColors(
-      currentApp?.data?.currentApp?.colors?.items
-    ),
+    themeColors: formatAppColorsToThemeColors(currentAppData?.colors?.items),
   };
 };
 

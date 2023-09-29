@@ -4,16 +4,7 @@ import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
 import { gql } from "urql";
 import { APP_SLUG_COOKIE_KEY } from "@/constants/cookies-keys";
-
-const currentAppQuery = gql`
-  query CurrentAppLocalDomain($slug: String!) {
-    currentApp: app(slug: $slug) {
-      id
-      slug
-      name
-    }
-  }
-`;
+import { CurrentGlobalAppDocument } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 
 export const withLocalDomain = async ({
   cookies,
@@ -34,13 +25,15 @@ export const withLocalDomain = async ({
     }
     if (!!slug) {
       const stokeiClient = createAPIClient({ cookies });
-      const currentAppResponse = await stokeiClient.api
-        .query<{ currentApp: any }>(currentAppQuery, {
+      const currentSiteResponse = await stokeiClient.api
+        .query(CurrentGlobalAppDocument, {
           slug,
         })
         .toPromise();
-      if (!!currentAppResponse?.data?.currentApp) {
-        app = currentAppResponse?.data?.currentApp;
+      slug = currentSiteResponse?.data?.site?.slug;
+      app = currentSiteResponse?.data?.site?.app;
+
+      if (!!app) {
         if (!url.pathname.startsWith("/app/" + slug)) {
           url.pathname = url.pathname.replace("/", "/app/" + slug + "/");
           isRedirect = true;

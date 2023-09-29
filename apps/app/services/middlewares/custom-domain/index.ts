@@ -1,6 +1,7 @@
 import { MiddlewareResponse } from "@/interfaces/middleware-response";
 import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
+import { CurrentGlobalAppDocument } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 import { gql } from "urql";
 
 const currentAppDomainQuery = gql`
@@ -9,11 +10,6 @@ const currentAppDomainQuery = gql`
       id
       name
       parent
-      app {
-        id
-        slug
-        name
-      }
     }
   }
 `;
@@ -37,8 +33,16 @@ export const withCustomDomain = async ({
         domain,
       })
       .toPromise();
-    app = currentDomain?.data?.domain?.app;
-    slug = app?.slug;
+    const domainModel = currentDomain?.data?.domain;
+
+    const currentSite = await stokeiClient.api
+      .query(CurrentGlobalAppDocument, {
+        site: domainModel?.parent,
+      })
+      .toPromise();
+    slug = currentSite?.data?.site?.slug;
+    app = currentSite?.data?.site?.app;
+
     if (!!slug) {
       if (pathname.startsWith("/app/" + slug)) {
         url.href = url.href

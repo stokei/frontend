@@ -8,7 +8,7 @@ import {
 
 export interface DrawerProps extends ChakraDrawerProps {}
 export const Drawer: React.FC<DrawerProps> = ({ children, ...props }) => (
-  <ChakraDrawer size="md" {...props}>
+  <ChakraDrawer size={["xs", "xs", "md", "md"]} {...props}>
     <ChakraDrawerOverlay />
     <ChakraDrawerContent background="background.50">
       <ChakraDrawerCloseButton />

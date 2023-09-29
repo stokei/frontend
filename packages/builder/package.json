@@ -1,0 +1,33 @@
+{
+  "name": "@stokei/builder",
+  "version": "0.0.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "codegen:generate": "graphql-codegen --config codegen.ts",
+    "codegen:generate:watch": "graphql-codegen --config codegen.ts --watch",
+    "lint": "eslint \"**/*.ts*\"",
+    "lint:fix": "eslint \"**/*.ts*\" --fix"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.16.2",
+    "@graphql-codegen/client-preset": "^1.2.4",
+    "@graphql-codegen/import-types-preset": "^2.2.6",
+    "@graphql-codegen/near-operation-file-preset": "^2.5.0",
+    "@graphql-codegen/typescript": "^2.8.6",
+    "@graphql-codegen/typescript-operations": "^2.5.11",
+    "@graphql-codegen/typescript-urql": "^3.7.3",
+    "@stokei/ui": "*",
+    "@stokei/translations": "*",
+    "@stokei/tsconfig": "*",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "next": "^13.1.6",
+    "react": "^18.2.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {}
+}
