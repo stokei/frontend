@@ -9,6 +9,6 @@ export const Readable: FC<BaseComponentReadable<ReadableProps>> = ({
   data,
   ...props
 }) => {
-  const dataProps = useDataToProps(data);
-  return <Stack {...dataProps} {...props} />;
+  const dataProps = useDataToProps({ data, props });
+  return <Stack {...dataProps} />;
 };

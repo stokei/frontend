@@ -2,9 +2,13 @@ query CurrentGlobalApp($slug: String!) {
   site(slug: $slug) {
     id
     name
+    slug
     homePage {
       id
       slug
+      version {
+        id
+      }
     }
     favicon {
       file {

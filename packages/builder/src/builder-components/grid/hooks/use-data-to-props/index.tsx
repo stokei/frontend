@@ -11,7 +11,7 @@ interface Data {
   desktop?: ResponsiveData;
 }
 
-export const useDataToProps = ({ data }: { data: Data }) => {
+export const useDataToProps = ({ data, props }: { data: Data; props: any }) => {
   const columns = useMemo(() => {
     const mobileColumns = data?.mobile?.columns || data?.desktop?.columns;
     const desktopColumns = data?.desktop?.columns || data?.mobile?.columns;
@@ -44,5 +44,6 @@ export const useDataToProps = ({ data }: { data: Data }) => {
     gap: data?.gap || "5",
     templateColumns: columns,
     templateRows: rows,
+    children: props?.children,
   };
 };

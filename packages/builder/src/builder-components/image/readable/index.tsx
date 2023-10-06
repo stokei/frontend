@@ -9,6 +9,6 @@ export const Readable: FC<BaseComponentReadable<ReadableProps>> = ({
   data,
   ...props
 }) => {
-  const dataProps = useDataToProps(data);
-  return <Image {...dataProps} alt="" {...props} />;
+  const dataProps = useDataToProps({ data, props });
+  return <Image {...dataProps} alt="" />;
 };

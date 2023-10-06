@@ -1,4 +1,8 @@
-import { MiddlewareResponse } from "@/interfaces/middleware-response";
+import {
+  MiddlewareAppResponse,
+  MiddlewareResponse,
+  MiddlewareSiteResponse,
+} from "@/interfaces/middleware-response";
 import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
 import { CurrentGlobalAppDocument } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
@@ -22,7 +26,8 @@ export const withCustomDomain = async ({
   const url = nextUrl.clone();
   const { pathname } = nextUrl;
   let slug;
-  let app: any;
+  let app: MiddlewareAppResponse | undefined;
+  let site: MiddlewareSiteResponse | undefined;
   let isRedirect = false;
   try {
     const stokeiClient = createAPIClient({
@@ -35,13 +40,14 @@ export const withCustomDomain = async ({
       .toPromise();
     const domainModel = currentDomain?.data?.domain;
 
-    const currentSite = await stokeiClient.api
+    const currentSiteResponse = await stokeiClient.api
       .query(CurrentGlobalAppDocument, {
         site: domainModel?.parent,
       })
       .toPromise();
-    slug = currentSite?.data?.site?.slug;
-    app = currentSite?.data?.site?.app;
+    site = currentSiteResponse?.data?.site;
+    slug = site?.slug || "";
+    app = site?.app;
 
     if (!!slug) {
       if (pathname.startsWith("/app/" + slug)) {
@@ -58,7 +64,8 @@ export const withCustomDomain = async ({
   }
 
   return {
-    appId: app?.id,
+    site,
+    app,
     slug,
     isRedirect,
     url,

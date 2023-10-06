@@ -18,9 +18,9 @@
     "@graphql-codegen/typescript": "^2.8.6",
     "@graphql-codegen/typescript-operations": "^2.5.11",
     "@graphql-codegen/typescript-urql": "^3.7.3",
-    "@stokei/ui": "*",
     "@stokei/translations": "*",
     "@stokei/tsconfig": "*",
+    "@stokei/ui": "*",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "eslint": "^7.32.0",
@@ -29,5 +29,8 @@
     "react": "^18.2.0",
     "typescript": "^4.5.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "graphql-tag": "^2.12.6",
+    "urql": "^4.0.5"
+  }
 }

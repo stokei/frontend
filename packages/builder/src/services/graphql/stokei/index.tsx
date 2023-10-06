@@ -146,7 +146,6 @@ export type App = {
   currency: Currency;
   currentSubscriptionContract?: Maybe<SubscriptionContract>;
   deactivatedAt?: Maybe<Scalars['String']>;
-  defaultDomain?: Maybe<Domain>;
   description?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   icon?: Maybe<Image>;
@@ -159,7 +158,6 @@ export type App = {
   phones?: Maybe<Phones>;
   slug: Scalars['String'];
   status: AppStatus;
-  stokeiDomain?: Maybe<Domain>;
   stripeAccount?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
@@ -393,6 +391,9 @@ export enum ComponentType {
   Grid = 'GRID',
   GridItem = 'GRID_ITEM',
   Header = 'HEADER',
+  Hero = 'HERO',
+  HeroContent = 'HERO_CONTENT',
+  HeroMedia = 'HERO_MEDIA',
   Image = 'IMAGE',
   Menu = 'MENU',
   MenuItem = 'MENU_ITEM',
@@ -2296,6 +2297,7 @@ export type Page = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   drafVersion?: Maybe<Version>;
+  draftVersion?: Maybe<Version>;
   id: Scalars['ID'];
   parent: Scalars['String'];
   slug: Scalars['String'];

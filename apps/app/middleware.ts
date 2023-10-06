@@ -16,10 +16,6 @@ import {
   CurrentAccountQuery,
 } from "./services/graphql/queries/current-account/current-account.query.graphql.generated";
 import {
-  CurrentGlobalAppDocument,
-  CurrentGlobalAppQuery,
-} from "./services/graphql/queries/current-app/current-app.query.graphql.generated";
-import {
   withCustomDomain,
   withLocalDomain,
   withSubDomain,
@@ -74,12 +70,12 @@ export async function middleware(request: NextRequest) {
       request.cookies.get(REFRESH_TOKEN_HEADER_NAME)?.value || "",
   };
 
-  const { appId, slug, isRedirect, url } = await getDomain({
+  const { app, slug, isRedirect, url } = await getDomain({
     domain,
     request,
     cookies,
   });
-  if (!appId) {
+  if (!app) {
     return NextResponse.redirect(STOKEI_APP_NOT_FOUND_URL);
   }
   let baseURL = url.origin.replace(url.hostname, domain);
@@ -88,16 +84,10 @@ export async function middleware(request: NextRequest) {
   }
   try {
     const stokeiClient = createAPIClient({
-      appId,
+      appId: app?.id,
       cookies,
     });
-    const currentAppResponse = await stokeiClient.api
-      .query<CurrentGlobalAppQuery>(
-        CurrentGlobalAppDocument,
-        {},
-        { requestPolicy: "cache-and-network" }
-      )
-      .toPromise();
+
     const currentAccountResponse = await stokeiClient.api
       .query<CurrentAccountQuery>(
         CurrentAccountDocument,
@@ -106,12 +96,11 @@ export async function middleware(request: NextRequest) {
       )
       .toPromise();
 
-    const currentApp = currentAppResponse?.data?.currentApp;
     const currentAccount = currentAccountResponse?.data?.me;
     const isAuth = !!currentAccount;
     const authURL = baseURL + routes.auth.login;
     const customersDashboardURL = baseURL + routes.customers.home;
-    if (!!currentApp) {
+    if (!!app) {
       const privateRoutesRegex = /\/app\/.*\/(admins|customers)/;
       const adminDashboardRegex = /\/app\/.*\/admins/;
       const isPrivateRoute = !!url.pathname?.match(privateRoutesRegex);
@@ -120,8 +109,7 @@ export async function middleware(request: NextRequest) {
       const isAppAdmin = currentAccount?.roles?.items?.some(
         (role) => role.name === RoleName.ADMIN
       );
-      const isFromOtherApp =
-        isAuth && currentAccount?.app?.id !== currentApp?.id;
+      const isFromOtherApp = isAuth && currentAccount?.app?.id !== app?.id;
       if (!!isFromOtherApp && (!isAppOwner || !isAppAdmin)) {
         const response = NextResponse.redirect(authURL);
         response.cookies.delete(ACCESS_TOKEN_HEADER_NAME);

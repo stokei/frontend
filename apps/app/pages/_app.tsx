@@ -122,7 +122,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
       {
         slug,
       },
-      { requestPolicy: "cache-and-network" }
+      { requestPolicy: "network-only" }
     )
     .toPromise();
 
@@ -140,7 +140,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
         .query<CurrentAccountQuery>(
           CurrentAccountDocument,
           {},
-          { requestPolicy: "cache-and-network" }
+          { requestPolicy: "network-only" }
         )
         .toPromise();
     } catch (error) {}

@@ -10,10 +10,10 @@ export const Editable: FC<BaseComponentEditable<EditableProps>> = ({
   data,
   ...props
 }) => {
-  const dataProps = useDataToProps(data);
+  const dataProps = useDataToProps({ data, props });
   return (
     <BlockEditable>
-      <Button {...dataProps} {...props} />
+      <Button {...dataProps} />
     </BlockEditable>
   );
 };

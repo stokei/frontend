@@ -1,0 +1,7 @@
+mutation RefreshAccess {
+  response: refreshAccess {
+    accessToken
+    refreshToken
+    prefixToken
+  }
+}

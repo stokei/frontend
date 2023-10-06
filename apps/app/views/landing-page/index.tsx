@@ -1,35 +1,27 @@
-import { SortedItemFactory } from "@/components";
-import { useCurrentApp } from "@/hooks";
-import { FC, useMemo } from "react";
-import { useSortedItemsQuery } from "./graphql/sorted-items.query.graphql.generated";
+import { GetVersionResponse } from "@/services/axios/models/version";
+import { BuilderComponent, ComponentBuilderType } from "@stokei/builder";
+import { useRouter } from "next/router";
+import { FC } from "react";
 import { LandingPageLayout } from "./layout";
 
-interface LandingPageProps {}
+interface LandingPageProps {
+  version: GetVersionResponse;
+}
 
-export const LandingPage: FC<LandingPageProps> = () => {
-  const { currentApp } = useCurrentApp();
-  const [{ fetching: isLoading, data: dataSortedItems }] = useSortedItemsQuery({
-    pause: !currentApp?.id,
-    variables: {
-      where: {
-        AND: {
-          parent: {
-            equals: currentApp?.id,
-          },
-        },
-      },
-    },
-  });
-
-  const sortedItems = useMemo(
-    () => dataSortedItems?.sortedItems,
-    [dataSortedItems]
-  );
-
+export const LandingPage: FC<LandingPageProps> = ({ version }) => {
+  const router = useRouter();
   return (
     <LandingPageLayout>
-      {sortedItems?.items?.map((sortedItem) => (
-        <SortedItemFactory key={sortedItem?.id} sortedItem={sortedItem} />
+      {version?.components?.map((component) => (
+        <BuilderComponent
+          id={component?.id}
+          key={component?.id}
+          type={component?.type}
+          builderType={ComponentBuilderType.BLOCK_READABLE}
+          components={component?.components}
+          data={component?.data}
+          onRedirect={router.push}
+        />
       ))}
     </LandingPageLayout>
   );

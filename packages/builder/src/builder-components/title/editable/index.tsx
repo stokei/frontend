@@ -1,14 +1,27 @@
-import { Title } from "@stokei/ui";
+import { Highlight, Title } from "@stokei/ui";
 import { FC } from "react";
 import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { BlockEditable } from "../../../components/block-editable";
+import { useDataToProps } from "../hooks/use-data-to-props";
 
 interface EditableProps {}
 
-export const Editable: FC<BaseComponentEditable<EditableProps>> = (props) => {
+export const Editable: FC<BaseComponentEditable<EditableProps>> = ({
+  data,
+  ...props
+}) => {
+  const dataProps = useDataToProps({ data, props });
   return (
     <BlockEditable>
-      <Title {...props} />
+      <Title {...dataProps}>
+        {dataProps?.highlight ? (
+          <Highlight query={dataProps?.highlight}>
+            {dataProps?.children}
+          </Highlight>
+        ) : (
+          <>{dataProps?.children}</>
+        )}
+      </Title>
     </BlockEditable>
   );
 };

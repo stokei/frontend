@@ -1,8 +1,15 @@
 import { DOMAIN } from "@/environments";
-import { MiddlewareResponse } from "@/interfaces/middleware-response";
+import {
+  MiddlewareAppResponse,
+  MiddlewareResponse,
+  MiddlewareSiteResponse,
+} from "@/interfaces/middleware-response";
 import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
-import { CurrentGlobalAppDocument } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
+import {
+  CurrentGlobalAppDocument,
+  CurrentGlobalAppQuery,
+} from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 
 export const withSubDomain = async ({
   cookies,
@@ -13,16 +20,18 @@ export const withSubDomain = async ({
 
   let slug = domain?.split(`.${DOMAIN}`)[0];
   let isRedirect = false;
-  let app: any;
+  let app: MiddlewareAppResponse | undefined;
+  let site: MiddlewareSiteResponse | undefined;
   try {
     const stokeiClient = createAPIClient({ cookies });
     const currentSiteResponse = await stokeiClient.api
-      .query(CurrentGlobalAppDocument, {
+      .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {
         slug,
       })
       .toPromise();
-    slug = currentSiteResponse?.data?.site?.slug;
-    app = currentSiteResponse?.data?.site?.app;
+    site = currentSiteResponse?.data?.site;
+    slug = site?.slug || "";
+    app = site?.app;
 
     if (url.pathname.startsWith("/app/" + slug)) {
       url.href = url.href
@@ -38,7 +47,8 @@ export const withSubDomain = async ({
 
   return {
     slug,
-    appId: app?.id,
+    site,
+    app,
     isRedirect,
     url,
   };

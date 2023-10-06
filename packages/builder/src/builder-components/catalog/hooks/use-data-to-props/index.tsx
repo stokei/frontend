@@ -1,6 +1,9 @@
-export const useDataToProps = ({ data }: { data: any }) => {
+interface Data {
+  catalog?: string;
+}
+
+export const useDataToProps = ({ data, props }: { data: Data; props: any }) => {
   return {
-    direction: data?.direction || "column",
-    spacing: data?.gap || "5",
+    catalog: data?.catalog,
   };
 };
