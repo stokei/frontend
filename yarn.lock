@@ -1544,6 +1544,11 @@
   resolved "https://registry.yarnpkg.com/@chakra-ui/visually-hidden/-/visually-hidden-2.0.15.tgz#60df64e0ab97d95fee4e6c61ccabd15fd5ace398"
   integrity sha512-WWULIiucYRBIewHKFA7BssQ2ABLHLVd9lrUo3N3SZgR0u4ZRDDVEUNOy+r+9ruDze8+36dGbN9wsN1IdELtdOw==
 
+"@cloudflare/stream-react@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@cloudflare/stream-react/-/stream-react-1.8.0.tgz#b858b5aeb473a3c217043f9609ea11389053b24d"
+  integrity sha512-Kxt4s1xA/Nf4oSAeLvWrkeUftXNhykY+Up6dFH881vrAKCJUeSKSqSGgn5gi0BV0UvjwriOxHRa1Fu0cyuOS3w==
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"

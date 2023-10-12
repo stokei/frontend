@@ -10,7 +10,7 @@ export type GetModulesQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetModulesQuery = { __typename?: 'Query', modules: { __typename?: 'Modules', totalCount: number, items?: Array<{ __typename?: 'Module', id: string, name: string, videos?: { __typename?: 'Videos', totalCount: number, items?: Array<{ __typename?: 'Video', id: string, name: string, private: boolean, active: boolean, file?: { __typename?: 'File', url?: string | null, duration?: number | null } | null }> | null } | null }> | null } };
+export type GetModulesQuery = { __typename?: 'Query', modules: { __typename?: 'Modules', totalCount: number, items?: Array<{ __typename?: 'Module', id: string, name: string, videos?: { __typename?: 'Videos', totalCount: number, items?: Array<{ __typename?: 'Video', id: string, name: string, private: boolean, active: boolean, file?: { __typename?: 'File', url?: string | null, duration?: number | null, filename: string } | null }> | null } | null }> | null } };
 
 
 export const GetModulesDocument = gql`

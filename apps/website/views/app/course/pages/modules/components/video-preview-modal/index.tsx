@@ -8,6 +8,7 @@ export interface VideoPreviewModalProps {
   readonly videoId?: string;
   readonly videoName?: string;
   readonly videoURL?: string;
+  readonly videoFilename: string;
 }
 
 export const VideoPreviewModal: FC<VideoPreviewModalProps> = ({
@@ -16,6 +17,7 @@ export const VideoPreviewModal: FC<VideoPreviewModalProps> = ({
   videoURL,
   videoId,
   videoName,
+  videoFilename,
 }) => {
   const translate = useTranslations();
   return (
@@ -24,7 +26,11 @@ export const VideoPreviewModal: FC<VideoPreviewModalProps> = ({
         <Title size="md">{videoName}</Title>
       </ModalHeader>
       <ModalBody>
-        <VideoPlayer id={"my-preview-player" + videoId} src={videoURL || ""} />
+        <VideoPlayer
+          id={"my-preview-player" + videoId}
+          filename={videoFilename}
+          src={videoURL || ""}
+        />
       </ModalBody>
     </Modal>
   );

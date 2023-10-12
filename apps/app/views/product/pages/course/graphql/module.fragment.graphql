@@ -17,5 +17,6 @@ fragment CoursePageModuleVideo on Video {
   file {
     url
     duration
+    filename
   }
 }

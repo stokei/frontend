@@ -92,6 +92,7 @@ const CourseVideoPage: FC<CourseVideoPageProps> = () => {
               {video?.file ? (
                 <VideoPlayer
                   id="video"
+                  filename={video?.file?.filename}
                   src={video?.file?.url || ""}
                   roundedBottom="none"
                 />
