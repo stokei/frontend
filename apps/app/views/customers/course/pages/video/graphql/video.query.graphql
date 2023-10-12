@@ -33,6 +33,7 @@ fragment CustomersCoursePageVideo on Video {
   }
   file {
     url
+    filename
     duration
   }
 }

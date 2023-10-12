@@ -141,6 +141,7 @@ export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
             videoId={modalVideoPreview?.id}
             videoName={modalVideoPreview?.name}
             videoURL={modalVideoPreview?.file?.url || ""}
+            videoFilename={modalVideoPreview?.file?.filename || ""}
             onClose={onCloseVideoPreview}
             isOpen={isOpenVideoPreview}
           />

@@ -140,6 +140,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
             <VideoPlayer
               id={props.id || "video-uploader-video-player-file-preview"}
               src={fileURL || previewURL}
+              filename=""
             />
             {fileURL && (
               <ButtonGroup variant="outline">

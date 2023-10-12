@@ -11,7 +11,10 @@ import {
 import { FC, memo, useState } from "react";
 import { VideoPreviewModal } from "../video-preview-modal";
 
-import { CoursePageModuleFragment } from "../../graphql/module.fragment.graphql.generated";
+import {
+  CoursePageModuleFragment,
+  CoursePageModuleVideoFragment,
+} from "../../graphql/module.fragment.graphql.generated";
 import { VideosList } from "../videos-list";
 
 export interface ModuleItemProps {
@@ -22,7 +25,7 @@ export const ModuleItem: FC<ModuleItemProps> = memo(({ module }) => {
   const translate = useTranslations();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const [modalVideo, setModalVideo] = useState<any>(null);
+  const [modalVideo, setModalVideo] = useState<CoursePageModuleVideoFragment>();
 
   const onOpenPreviewModal = (video: any) => {
     setModalVideo(video);
@@ -32,9 +35,10 @@ export const ModuleItem: FC<ModuleItemProps> = memo(({ module }) => {
   return (
     <>
       <VideoPreviewModal
-        videoId={modalVideo?.id}
-        videoName={modalVideo?.name}
-        videoURL={modalVideo?.file?.url}
+        videoId={modalVideo?.id || ""}
+        videoName={modalVideo?.name || ""}
+        videoFilename={modalVideo?.file?.filename || ""}
+        videoURL={modalVideo?.file?.url || ""}
         onClose={onClose}
         isOpen={isOpen}
       />
