@@ -23,11 +23,15 @@ import { useEditHeroWithVideoFormUpdateHeroMutation } from "./graphql/update-her
 import { useUploadVideo } from "@/hooks/use-upload-video";
 import { useCreateVideoMutation } from "@/services/graphql/mutations/create-video/create-video.mutation.graphql.generated";
 
+interface EditHeroWithVideoFormHeroVideoFile {
+  url?: string;
+  filename?: string;
+}
 interface EditHeroWithVideoFormHero {
   id: string;
   title: string;
   subtitle: string;
-  videoURL: string;
+  videoFile?: EditHeroWithVideoFormHeroVideoFile;
 }
 
 interface EditHeroWithVideoFormProps {
@@ -173,14 +177,14 @@ export const EditHeroWithVideoForm: FC<EditHeroWithVideoFormProps> = ({
               marginBottom="5"
             >
               {translate.formatMessage({
-                id: hero?.videoURL ? "changeVideo" : "addVideo",
+                id: !!hero?.videoFile ? "changeVideo" : "addVideo",
               })}
             </Button>
           )}
           <VideoUploader
             id="module-video"
             uploadURL={videoUploadURL}
-            previewURL={hero?.videoURL || ""}
+            preview={hero?.videoFile}
             onStartUpload={onStartVideoUpload}
             onSuccess={onUploadComplete}
             onError={() => {}}

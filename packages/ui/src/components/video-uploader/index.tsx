@@ -17,11 +17,15 @@ export interface VideoUploaderOnSuccessData {
   size?: number;
   duration?: number;
 }
+export interface VideoUploaderPreview {
+  url?: string;
+  filename?: string;
+}
 
 export interface VideoUploaderProps extends Omit<StackProps, "onError"> {
   readonly id: string;
   readonly uploadURL: string;
-  readonly previewURL?: string;
+  readonly preview?: VideoUploaderPreview;
   readonly accept?: string[];
   readonly onStartUpload: () => void;
   readonly onSuccess: (data: VideoUploaderOnSuccessData) => void;
@@ -33,7 +37,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
   ({
     accept,
     uploadURL,
-    previewURL,
+    preview,
     onStartUpload,
     onSuccess,
     onError,
@@ -135,12 +139,12 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
 
     return (
       <Stack width="full" spacing="4" direction="column" {...props}>
-        {(previewURL || fileURL) && (
+        {(!!preview || fileURL) && (
           <Stack direction="column" spacing="5" width="full" maxWidth="96">
             <VideoPlayer
               id={props.id || "video-uploader-video-player-file-preview"}
-              src={fileURL || previewURL}
-              filename=""
+              src={fileURL || preview?.url}
+              filename={preview?.filename || ""}
             />
             {fileURL && (
               <ButtonGroup variant="outline">

@@ -283,7 +283,14 @@ export const EditVideoPage: FC<EditVideoPageProps> = () => {
                       <VideoUploader
                         id="module-video"
                         uploadURL={videoUploadURL}
-                        previewURL={currentVideo?.file?.url || ""}
+                        preview={
+                          currentVideo?.file
+                            ? {
+                                url: currentVideo?.file?.url || "",
+                                filename: currentVideo?.file?.filename || "",
+                              }
+                            : undefined
+                        }
                         onStartUpload={onStartVideoUpload}
                         onSuccess={onUploadComplete}
                         onError={() => {}}

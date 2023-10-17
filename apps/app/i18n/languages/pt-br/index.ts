@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   me: "Eu",
+  menu: "Menu",
   waitingPayment: "Aguardando pagamento",
   buy: "Comprar",
   order: "Pedido",
