@@ -19,6 +19,7 @@ fragment SortedItemComponentHero on Hero {
   video {
     file {
       url
+      filename
     }
   }
   image {

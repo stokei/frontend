@@ -33,6 +33,7 @@ fragment AdminCoursePageEditVideo on Video {
   }
   file {
     url
+    filename
     duration
   }
 }

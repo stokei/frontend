@@ -75,6 +75,7 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
             subtitle={sortedItem?.item?.heroSubtitle}
             titleHighlight={sortedItem?.item?.titleHighlight}
             videoURL={sortedItem?.item?.video?.file?.url || ""}
+            videoFilename={sortedItem?.item?.video?.file?.filename || ""}
             onCTA={goToSignUp}
             {...props}
           />

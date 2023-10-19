@@ -44,13 +44,16 @@ export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
         <Stack width="auto" flex="1" direction="column" spacing="2">
           <Title fontSize="md">{video?.name}</Title>
 
-          {video?.active ||
-          (video?.file?.duration && video?.file?.duration >= 0) ? (
+          {video?.file?.duration && video?.file?.duration >= 0 ? (
             <Text>{translate.formatTime(video?.file?.duration || 0)}</Text>
           ) : (
-            <Text textTransform="uppercase">
-              {translate.formatMessage({ id: "comingSoon" })}
-            </Text>
+            <>
+              {(!video?.active || !video?.file) && (
+                <Text textTransform="uppercase">
+                  {translate.formatMessage({ id: "comingSoon" })}
+                </Text>
+              )}
+            </>
           )}
 
           {!video?.private && (

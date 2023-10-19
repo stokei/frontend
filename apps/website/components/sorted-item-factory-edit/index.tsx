@@ -39,7 +39,12 @@ export const SortedItemFactoryEdit: FC<SortedItemFactoryEditProps> = memo(
               id: sortedItem?.item?.heroId || "",
               title: sortedItem?.item?.heroTitle || "",
               subtitle: sortedItem?.item?.heroSubtitle || "",
-              videoURL: sortedItem?.item?.video?.file?.url || "",
+              videoFile: sortedItem?.item?.video?.file
+                ? {
+                    filename: sortedItem?.item?.video?.file?.filename || "",
+                    url: sortedItem?.item?.video?.file?.url || "",
+                  }
+                : undefined,
             }}
             {...props}
           />

@@ -7,10 +7,12 @@ import { HeroVideoPlayer } from "../../hero-video-player";
 
 interface HeroWithVideoProps extends HeroTitleContentProps {
   readonly videoURL?: string;
+  readonly videoFilename?: string;
 }
 
 export const HeroWithVideo: FC<HeroWithVideoProps> = ({
   videoURL,
+  videoFilename,
   title,
   subtitle,
   titleHighlight,
@@ -34,6 +36,7 @@ export const HeroWithVideo: FC<HeroWithVideoProps> = ({
             <HeroVideoPlayer
               id={"hero-video-player" + title}
               src={videoURL || ""}
+              filename={videoFilename || ""}
             />
           </HeroMedia>
         )}

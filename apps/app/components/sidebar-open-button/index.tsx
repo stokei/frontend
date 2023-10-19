@@ -1,21 +1,30 @@
-import { useSidebar } from "@/hooks";
-import { IconButton, IconButtonProps } from "@stokei/ui";
+import { useSidebar, useTranslations } from "@/hooks";
+import { Button, Icon, IconButtonProps, Stack, Text } from "@stokei/ui";
 import { FC } from "react";
 
 interface SidebarOpenButtonProps extends Omit<IconButtonProps, "name"> {}
 
 export const SidebarOpenButton: FC<SidebarOpenButtonProps> = ({ ...props }) => {
+  const translate = useTranslations();
   const { onToggleSidebar } = useSidebar();
   return (
-    <IconButton
-      marginTop="1"
-      marginRight="5"
+    <Button
       variant="ghost"
       color="text.500"
       onClick={onToggleSidebar}
       display={["block", "block", "none", "none"]}
       {...props}
-      name="menu"
-    />
+    >
+      <Stack
+        width="fit-content"
+        direction="row"
+        align="center"
+        justify="center"
+        spacing="3"
+      >
+        <Icon name="menu" />
+        <Text>{translate.formatMessage({ id: "menu" })}</Text>
+      </Stack>
+    </Button>
   );
 };

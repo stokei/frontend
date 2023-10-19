@@ -11,8 +11,6 @@ import {
 } from "@stokei/ui";
 import { getAppIdFromNextRouter } from "@stokei/utils";
 
-import { CLOUDFLARE_TOKEN } from "@/environments";
-
 import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
@@ -85,7 +83,6 @@ function MyApp({
             accountId={currentAccount?.id}
             accountAccessToken={stokeiGraphQLClient?.accessToken}
             accountRefreshToken={stokeiGraphQLClient?.refreshToken}
-            cloudflareAPIToken={CLOUDFLARE_TOKEN}
           >
             <TranslationsProvider
               language={DEFAULT_LANGUAGE}
