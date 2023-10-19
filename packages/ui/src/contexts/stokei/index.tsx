@@ -27,7 +27,6 @@ export interface StokeiUIContextValues {
   readonly accountAccessToken?: string;
   readonly accountRefreshToken?: string;
   readonly language?: Language;
-  readonly cloudflareAPIToken?: string;
   readonly getHexdecimalColor: (
     colorName: IColorName,
     colorHue: IColorHue
@@ -39,7 +38,6 @@ export interface StokeiUIContextProps {
   readonly accountId?: string;
   readonly accountAccessToken?: string;
   readonly accountRefreshToken?: string;
-  readonly cloudflareAPIToken?: string;
   readonly language?: Language;
   readonly config?: StokeiConfig;
 }
@@ -53,7 +51,6 @@ export const StokeiUIProvider: React.FC<
   config,
   appId,
   accountId,
-  cloudflareAPIToken,
   language,
   accountAccessToken,
   accountRefreshToken,
@@ -71,7 +68,6 @@ export const StokeiUIProvider: React.FC<
     () => ({
       appId,
       accountId,
-      cloudflareAPIToken,
       language,
       accountAccessToken,
       accountRefreshToken,
@@ -80,7 +76,6 @@ export const StokeiUIProvider: React.FC<
     [
       appId,
       accountId,
-      cloudflareAPIToken,
       language,
       accountAccessToken,
       accountRefreshToken,

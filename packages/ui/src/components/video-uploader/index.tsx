@@ -45,7 +45,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
     ...props
   }) => {
     const [file, setFile] = useState<any>();
-    const { appId, accountId, cloudflareAPIToken, language } = useStokeiUI();
+    const { appId, accountId, language } = useStokeiUI();
     const {
       isOpen: isOpenDashboard,
       onOpen: onOpenDashboard,
@@ -83,8 +83,9 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
         }).use(Tus, {
           endpoint: uploadURL,
           removeFingerprintOnSuccess: true,
-          headers: {
-            Authorization: `Bearer ${cloudflareAPIToken}`,
+          chunkSize: 50 * 1024 * 1024,
+          onAfterResponse(req, res) {
+            console.log("STATUS:", res.getStatus());
           },
           onShouldRetry() {
             return false;
@@ -93,7 +94,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
     });
 
     useEffect(() => {
-      uppy.on("upload-success", async (result) => {
+      uppy?.on("upload-success", async (result) => {
         const getVideoDuration = async (): Promise<number> => {
           if (result?.data) {
             return new Promise((resolve) => {
@@ -127,7 +128,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
         }
       });
       return () => {
-        uppy.off("upload-success", () => {});
+        uppy?.off("upload-success", () => {});
       };
     }, [uppy, onSuccess, onCloseDashboard]);
 
