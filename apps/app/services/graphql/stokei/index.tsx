@@ -848,7 +848,7 @@ export type File = {
   filename: Scalars['String'];
   id: Scalars['ID'];
   mimetype?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['Int']>;
+  size?: Maybe<Scalars['Float']>;
   status: FileStatus;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;

@@ -1,33 +1,26 @@
-import { useCallback, useEffect, useState } from "react";
-import { useTranslations } from "@/hooks/use-translations";
+import { useCallback, useState } from "react";
+import { useAPIErrors } from "../use-api-errors";
+import { useTranslations } from "../use-translations";
 import { useCreateFileDownloadUrlMutation } from "./create-file-download-url.mutation.graphql.generated";
-import { useAPIErrors } from "@/hooks/use-api-errors";
 
 export const useCreateFileDownloadURL = () => {
-  const [url, setURL] = useState<string>("");
+  const [url, setURL] = useState("");
   const translate = useTranslations();
   const { onShowAPIError } = useAPIErrors();
-
-  const [{ data, fetching: isLoading }, onExecuteCreateFileDownloadURL] =
+  const [{ fetching: isLoadingCreateFileDownloadURL }, onGenerate] =
     useCreateFileDownloadUrlMutation();
 
-  useEffect(() => {
-    if (!!data?.url) {
-      setURL(data?.url);
-    }
-  }, [data]);
-
-  const onCreateFileDownloadURL = useCallback(
+  const onGenerateFileDownloadURL = useCallback(
     async (fileId: string) => {
       try {
-        const response = await onExecuteCreateFileDownloadURL({
+        const response = await onGenerate({
           input: {
             file: fileId,
           },
         });
         if (!!response?.data?.url) {
           setURL(response?.data?.url);
-          return;
+          return response?.data?.url;
         }
         if (!!response.error?.graphQLErrors?.length) {
           response.error.graphQLErrors.map((error) =>
@@ -39,13 +32,34 @@ export const useCreateFileDownloadURL = () => {
           message: translate.formatMessage({ id: "somethingWentWrong" }),
         });
       }
+      return;
     },
-    [onExecuteCreateFileDownloadURL, onShowAPIError, translate]
+    [onGenerate, onShowAPIError, translate]
+  );
+
+  const onGenerateFileDownloadURLAndRedirectToURL = useCallback(
+    async (fileId: string) => {
+      const currentURL = await onGenerateFileDownloadURL(fileId);
+      if (currentURL) {
+        const link = document.createElement("a");
+        link.href = currentURL;
+        link.setAttribute("download", "");
+        // Append to html link element page
+        document.body.appendChild(link);
+        // Start download
+        link?.click();
+        // Clean up and remove the link
+        link?.parentNode?.removeChild(link);
+        // window.open(currentURL, "_blank");
+      }
+    },
+    [onGenerateFileDownloadURL]
   );
 
   return {
     url,
-    isLoading,
-    onCreateFileDownloadURL,
+    isLoadingCreateFileDownloadURL,
+    onGenerateFileDownloadURL,
+    onGenerateFileDownloadURLAndRedirectToURL,
   };
 };
