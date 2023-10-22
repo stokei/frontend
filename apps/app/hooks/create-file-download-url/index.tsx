@@ -41,7 +41,16 @@ export const useCreateFileDownloadURL = () => {
     async (fileId: string) => {
       const currentURL = await onGenerateFileDownloadURL(fileId);
       if (currentURL) {
-        window.open(currentURL, "_blank");
+        const link = document.createElement("a");
+        link.href = currentURL;
+        link.setAttribute("download", "");
+        // Append to html link element page
+        document.body.appendChild(link);
+        // Start download
+        link?.click();
+        // Clean up and remove the link
+        link?.parentNode?.removeChild(link);
+        // window.open(currentURL, "_blank");
       }
     },
     [onGenerateFileDownloadURL]

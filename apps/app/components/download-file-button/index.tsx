@@ -18,7 +18,6 @@ export const DownloadFileButton: FC<DownloadFileButtonProps> = ({ fileId }) => {
   return (
     <Box>
       <Button
-        as="a"
         leftIcon={<Icon name="download" />}
         variant="outline"
         onClick={() => onGenerateFileDownloadURLAndRedirectToURL(fileId || "")}
