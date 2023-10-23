@@ -67,6 +67,7 @@ export const Button: React.FC<ButtonProps> = forwardRef(
 
     return (
       <ChakraButton
+        width="fit-content"
         rounded="full"
         height="fit-content"
         h="fit-content"

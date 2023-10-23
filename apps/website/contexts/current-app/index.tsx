@@ -13,9 +13,10 @@ export interface CurrentAppProviderValues {
 
 export const CurrentAppContext = createContext({} as CurrentAppProviderValues);
 
-export const CurrentAppProvider: FC<
-  PropsWithChildren<CurrentAppProviderProps>
-> = ({ currentApp, children }) => {
+export const CurrentAppProvider = ({
+  currentApp,
+  children,
+}: PropsWithChildren<CurrentAppProviderProps>) => {
   const hasPaymentIntegrations = useMemo(
     () =>
       !!currentApp?.isIntegratedWithStripe ||

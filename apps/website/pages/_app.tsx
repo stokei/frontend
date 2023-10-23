@@ -10,6 +10,7 @@ import {
   uiTranslationsMessages,
 } from "@stokei/ui";
 import { getAppIdFromNextRouter } from "@stokei/utils";
+import { BuilderProvider } from "@stokei/builder";
 
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
@@ -65,33 +66,35 @@ function MyApp({
   );
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
-      <CurrentAppProvider currentApp={currentApp}>
-        <CurrentAccountProvider currentAccount={currentAccount}>
-          <StokeiUIProvider
-            config={{
-              colors: themeColors,
-            }}
-            appId={appId}
-            accountId={currentAccount?.id}
-            accountAccessToken={stokeiGraphQLClient?.accessToken}
-            accountRefreshToken={stokeiGraphQLClient?.refreshToken}
-          >
-            <TranslationsProvider
-              language={DEFAULT_LANGUAGE}
-              messages={messages}
+      <BuilderProvider stokeiGraphQLApi={stokeiGraphQLClient?.api}>
+        <CurrentAppProvider currentApp={currentApp}>
+          <CurrentAccountProvider currentAccount={currentAccount}>
+            <StokeiUIProvider
+              config={{
+                colors: themeColors,
+              }}
+              appId={appId}
+              accountId={currentAccount?.id}
+              accountAccessToken={stokeiGraphQLClient?.accessToken}
+              accountRefreshToken={stokeiGraphQLClient?.refreshToken}
             >
-              <Head>
-                <title>{currentApp?.name}</title>
-                <meta
-                  name="viewport"
-                  content="width=device-width, initial-scale=1"
-                />
-              </Head>
-              <Component {...pageProps} />
-            </TranslationsProvider>
-          </StokeiUIProvider>
-        </CurrentAccountProvider>
-      </CurrentAppProvider>
+              <TranslationsProvider
+                language={DEFAULT_LANGUAGE}
+                messages={messages}
+              >
+                <Head>
+                  <title>{currentApp?.name}</title>
+                  <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                  />
+                </Head>
+                <Component {...pageProps} />
+              </TranslationsProvider>
+            </StokeiUIProvider>
+          </CurrentAccountProvider>
+        </CurrentAppProvider>
+      </BuilderProvider>
     </StokeiGraphQLClientProvider>
   );
 }

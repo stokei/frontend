@@ -52,7 +52,6 @@ function MyApp({
   pageProps,
   appId,
   cookies,
-  baseURL,
   currentApp,
   currentSite,
   currentAccount,
@@ -69,11 +68,7 @@ function MyApp({
   );
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
-      <CurrentAppProvider
-        baseURL={baseURL}
-        currentApp={currentApp}
-        currentSite={currentSite}
-      >
+      <CurrentAppProvider currentApp={currentApp} currentSite={currentSite}>
         <CurrentAccountProvider currentAccount={currentAccount}>
           <StokeiUIProvider
             config={{

@@ -29,9 +29,15 @@ export const withLocalDomain = async ({
     if (!!slug) {
       const stokeiClient = createAPIClient({ cookies });
       const currentSiteResponse = await stokeiClient.api
-        .query(CurrentGlobalAppDocument, {
-          slug,
-        })
+        .query(
+          CurrentGlobalAppDocument,
+          {
+            slug,
+          },
+          {
+            requestPolicy: "cache-and-network",
+          }
+        )
         .toPromise();
       site = currentSiteResponse?.data?.site;
       slug = site?.slug || "";
