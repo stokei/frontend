@@ -3,6 +3,7 @@ import { useCurrentApp } from "@/hooks";
 import { FC, useMemo } from "react";
 import { useSortedItemsQuery } from "./graphql/sorted-items.query.graphql.generated";
 import { LandingPageLayout } from "./layout";
+import { Loading } from "./loading";
 
 interface LandingPageProps {}
 
@@ -28,9 +29,15 @@ export const LandingPage: FC<LandingPageProps> = () => {
 
   return (
     <LandingPageLayout>
-      {sortedItems?.items?.map((sortedItem) => (
-        <SortedItemFactory key={sortedItem?.id} sortedItem={sortedItem} />
-      ))}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          {sortedItems?.items?.map((sortedItem) => (
+            <SortedItemFactory key={sortedItem?.id} sortedItem={sortedItem} />
+          ))}
+        </>
+      )}
     </LandingPageLayout>
   );
 };

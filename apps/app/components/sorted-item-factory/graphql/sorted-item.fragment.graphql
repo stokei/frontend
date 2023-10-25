@@ -38,6 +38,12 @@ fragment SortedItemComponentCatalog on Catalog {
   catalogId: id
   catalogTitle: title
   catalogSubtitle: subtitle
+  catalogItems: items {
+    totalCount
+    items {
+      ...SortedItemComponentCatalogItem
+    }
+  }
 }
 
 fragment SortedItemComponentCatalogItem on CatalogItem {

@@ -29,6 +29,7 @@ export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
           catalogId={sortedItem?.item?.catalogId}
           title={sortedItem?.item?.catalogTitle}
           subtitle={sortedItem?.item?.catalogSubtitle}
+          items={sortedItem?.item?.catalogItems?.items || []}
           {...props}
         />
       );

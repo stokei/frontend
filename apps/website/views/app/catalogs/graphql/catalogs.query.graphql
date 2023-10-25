@@ -20,9 +20,4 @@ fragment AdminCatalogsPageCatalog on Catalog {
   id
   title
   subtitle
-  items(page: { limit: 5 }) {
-    items {
-      ...SortedItemComponentCatalogItem
-    }
-  }
 }

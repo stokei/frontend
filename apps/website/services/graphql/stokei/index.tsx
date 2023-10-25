@@ -250,12 +250,6 @@ export type Catalog = {
   updatedBy?: Maybe<Account>;
 };
 
-
-export type CatalogItemsArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllCatalogItemsInput>;
-  page?: InputMaybe<PaginationInput>;
-};
-
 export type CatalogItem = {
   __typename?: 'CatalogItem';
   app?: Maybe<App>;
@@ -384,12 +378,6 @@ export type Course = {
   name: Scalars['String'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
-};
-
-
-export type CourseInstructorsArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllAccountsInput>;
-  page?: InputMaybe<PaginationInput>;
 };
 
 export type CourseInstructor = {
@@ -2263,12 +2251,6 @@ export type Plan = {
   updatedBy?: Maybe<Account>;
 };
 
-
-export type PlanFeaturesArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllFeaturesInput>;
-  page?: InputMaybe<PaginationInput>;
-};
-
 export enum PlanType {
   Admin = 'ADMIN',
   Domain = 'DOMAIN',
@@ -2392,18 +2374,6 @@ export type Product = {
   prices?: Maybe<Prices>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
-};
-
-
-export type ProductFeaturesArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllFeaturesInput>;
-  page?: InputMaybe<PaginationInput>;
-};
-
-
-export type ProductPricesArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllPricesInput>;
-  page?: InputMaybe<PaginationInput>;
 };
 
 export type ProductParentUnion = App | Course | Material | Plan;
