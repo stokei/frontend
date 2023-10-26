@@ -15,6 +15,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
     "@stokei/graphql": "*",
+    "@stokei/plugins": "*",
     "@stokei/translations": "*",
     "@stokei/ui": "*",
     "@stokei/utils": "*",

@@ -17,3 +17,6 @@ export const STOKEI_API_FILE_UPLOAD_URL: string =
 
 export const STRIPE_PUBLISHABLE_KEY: string =
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "";
+
+export const GOOGLE_ANALYTICS_KEY: string =
+  process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY || "";

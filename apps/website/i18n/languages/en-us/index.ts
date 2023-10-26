@@ -153,6 +153,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   getInTouchWithUsViaEmail: "Get in touch with us via email",
   stripeTax: "Stripe tax",
   kb: "kbyte",
+  gb: "gbyte",
   min: "minute",
   un: "unit",
   each: "each",

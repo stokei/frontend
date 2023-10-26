@@ -154,6 +154,7 @@ export const ptBRMessages = {
   getInTouchWithUsViaEmail: "Entre em contato conosco pelo email",
   stripeTax: "taxa da Stripe",
   kb: "kbyte",
+  gb: "gbyte",
   min: "minuto",
   un: "unidade",
   each: "a cada",
