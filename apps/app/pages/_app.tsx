@@ -13,7 +13,11 @@ import { getAppIdFromNextRouter } from "@stokei/utils";
 
 import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
-import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
+import {
+  CurrentAccountProvider,
+  CurrentAppProvider,
+  ShoppingCartProvider,
+} from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
 import {
@@ -93,7 +97,9 @@ function MyApp({
                 />
               </Head>
               <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
-              <Component {...pageProps} />
+              <ShoppingCartProvider>
+                <Component {...pageProps} />
+              </ShoppingCartProvider>
             </TranslationsProvider>
           </StokeiUIProvider>
         </CurrentAccountProvider>

@@ -6,7 +6,7 @@ export const routesCheckout = {
     product,
     clientSecret,
   }: {
-    product: string;
+    product?: string;
     clientSecret?: string;
   }) =>
     baseURL +

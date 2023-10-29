@@ -2,6 +2,8 @@ import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
   dateFormat: "yyyy-MM-dd",
+  showLess: "Show less",
+  showMore: "Show more",
   phone: "Phone",
   country: "Country",
   ddd: "DDD",

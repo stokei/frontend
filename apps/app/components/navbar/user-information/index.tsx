@@ -12,6 +12,7 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
+import { ShoppingCartMenu } from "../shopping-cart-menu";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
 export interface NavbarUserInformationProps extends StackProps {}
@@ -37,6 +38,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
       direction="row"
       {...props}
     >
+      <ShoppingCartMenu />
       {!!currentAccount ? (
         <>
           <NavbarUserInformationDrawer

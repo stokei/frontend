@@ -1,5 +1,12 @@
 export const ptBRMessages = {
   me: "Eu",
+  addedSuccessfully: "Adicionado com sucesso!",
+  removedSuccessfully: "Removido com sucesso!",
+  shoppingCart: "Carrinho de compras",
+  addToCart: "Adicionar ao carrinho",
+  shoppingCartItemsNotFound: "Nenhum item do carrinho encontrado!",
+  store: "Loja",
+  seeAll: "Ver todos",
   menu: "Menu",
   waitingPayment: "Aguardando pagamento",
   buy: "Comprar",
@@ -67,10 +74,10 @@ export const ptBRMessages = {
   deactivate: "Desativar",
   courseInstructorCreatedSuccessfully:
     "Instrutor do curso criado com successo!",
-  courseInstructorRemoveedSuccessfully:
+  courseInstructorRemovedSuccessfully:
     "Instrutor do curso removido com successo!",
-  moduleRemoveedSuccessfully: "Módulo removido com successo!",
-  videoRemoveedSuccessfully: "Video removido com successo!",
+  moduleRemovedSuccessfully: "Módulo removido com successo!",
+  videoRemovedSuccessfully: "Video removido com successo!",
   signUpSuccessfully: "Cadastro efetuado com successo!",
   moduleCreatedSuccessfully: "Módulo criado com successo!",
   videoCreatedSuccessfully: "Video criado com successo!",

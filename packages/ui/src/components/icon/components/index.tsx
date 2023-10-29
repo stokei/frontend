@@ -37,6 +37,7 @@ import {
 } from "react-icons/ai";
 import { BiLineChart, BiRedo, BiUndo } from "react-icons/bi";
 import {
+  BsArrowUpRightSquare,
   BsBell,
   BsBox,
   BsCart,
@@ -189,3 +190,4 @@ export const BoletoIcon = AiOutlineBarcode;
 export const CardIcon = AiOutlineCreditCard;
 export const PixIcon = MdOutlinePix;
 export const CopyIcon = MdContentCopy;
+export const ViewIcon = BsArrowUpRightSquare;

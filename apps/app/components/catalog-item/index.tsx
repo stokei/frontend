@@ -2,10 +2,13 @@ import {
   Badge,
   Box,
   Button,
+  ButtonGroup,
   Card,
   CardBody,
   CardHeader,
   Description,
+  Icon,
+  IconButton,
   Image,
   Stack,
   Title,
@@ -14,7 +17,7 @@ import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useTranslations } from "@/hooks";
+import { useShoppingCart, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { SelectPrice } from "../select-price";
@@ -40,6 +43,8 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
 
     const router = useRouter();
     const translate = useTranslations();
+    const { onAddShoppingCartItem } = useShoppingCart();
+
     const isAvailable = !!defaultPrice;
 
     const course = useMemo(
@@ -120,15 +125,32 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
                   />
                 )}
               </Box>
-              <Button
-                width="full"
-                onClick={goToProductDetails}
-                isDisabled={!isAvailable}
-              >
-                {translate.formatMessage({
-                  id: isAvailable ? "buyNow" : "unavailable",
-                })}
-              </Button>
+              <ButtonGroup>
+                <Button
+                  width="full"
+                  isDisabled={!isAvailable}
+                  leftIcon={<Icon name="cart" />}
+                  onClick={() =>
+                    onAddShoppingCartItem({
+                      price: currentPrice,
+                      product: {
+                        id: productId || "",
+                        name: name || "",
+                        avatarURL: avatar,
+                      },
+                    })
+                  }
+                >
+                  {translate.formatMessage({
+                    id: isAvailable ? "addToCart" : "unavailable",
+                  })}
+                </Button>
+                <IconButton
+                  name="view"
+                  variant="ghost"
+                  onClick={goToProductDetails}
+                />
+              </ButtonGroup>
             </Stack>
           </Box>
         </CardBody>

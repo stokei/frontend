@@ -50,7 +50,7 @@ export const SelectCatalogs: FC<SelectCatalogsProps> = ({
     resolver: zodResolver(validationSchema),
   });
 
-  const searchCatalogQueryText = useDebounce(watch("searchCatalog"), 500);
+  const [searchCatalogQueryText] = useDebounce(watch("searchCatalog"), 500);
 
   const [{ data: dataGetCatalogs, fetching: isLoadingGetCatalogs }] =
     useGetAppCatalogsQuery({

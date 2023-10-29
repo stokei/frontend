@@ -48,7 +48,7 @@ export const SelectProducts: FC<SelectProductsProps> = ({
     resolver: zodResolver(validationSchema),
   });
 
-  const searchProductQueryText = useDebounce(watch("searchProduct"), 500);
+  const [searchProductQueryText] = useDebounce(watch("searchProduct"), 500);
 
   const [{ data: dataGetProducts, fetching: isLoadingGetProducts }] =
     useGetAppProductsQuery({
