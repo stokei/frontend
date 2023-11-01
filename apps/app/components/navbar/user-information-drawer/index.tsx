@@ -53,6 +53,11 @@ export const NavbarUserInformationDrawer: FC<
             {translate.formatMessage({ id: "home" })}
           </NavbarUserInformationDrawerButton>
           <NavbarUserInformationDrawerButton
+            onClick={() => onRedirectToURLAndCloseModal(routes.store.home)}
+          >
+            {translate.formatMessage({ id: "store" })}
+          </NavbarUserInformationDrawerButton>
+          <NavbarUserInformationDrawerButton
             onClick={() => onRedirectToURLAndCloseModal(routes.me.home)}
           >
             {translate.formatMessage({ id: "profile" })}

@@ -1,9 +1,17 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { CheckoutStep } from "@/constants/checkout-steps";
-import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
+import {
+  useAPIErrors,
+  useCurrentApp,
+  useShoppingCart,
+  useTranslations,
+} from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
-import { PaymentMethodType } from "@/services/graphql/stokei";
+import {
+  CreateOrderItemInput,
+  PaymentMethodType,
+} from "@/services/graphql/stokei";
 import {
   Box,
   Card,
@@ -24,34 +32,29 @@ import { useCreateOrderMutation } from "./graphql/create-order.mutation.graphql.
 import { CreatePixAccountStep } from "./steps/create-pix-account";
 import { PaymentStep } from "./steps/payment";
 import { PaymentMethodStep } from "./steps/payment-method";
-import { SubscriptionStep } from "./steps/subscription";
+import { ProductsStep } from "./steps/products";
 import { SummaryStep } from "./steps/summary";
 
-interface CheckoutPageProps {
-  readonly productId: string;
-}
+interface CheckoutPageProps {}
 
-export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
+export const CheckoutPage: FC<CheckoutPageProps> = () => {
   const [qrCodeCopyAndPaste, setQRCodeCopyAndPaste] = useState("");
   const [qrCodeURL, setQRCodeURL] = useState("");
   const [orderId, setOrderId] = useState("");
-  const [currentPrice, setCurrentPrice] = useState<
-    PriceComponentFragment | undefined | null
-  >();
   const [isDisabledCreatePixAccount, setIsDisabledCreatePixAccount] =
     useState(true);
   const [isDisabledPayment, setIsDisabledPayment] = useState(true);
+  const [currentStep, setCurrentStep] = useState<CheckoutStep>(
+    CheckoutStep.PRODUCTS
+  );
+  const [paymentMethodType, setPaymentMethodType] =
+    useState<PaymentMethodType>();
   const translate = useTranslations();
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();
   const { onShowAPIError } = useAPIErrors();
-  const [currentStep, setCurrentStep] = useState<CheckoutStep>(
-    CheckoutStep.SUBSCRIPTION
-  );
-  const [paymentMethodType, setPaymentMethodType] = useState<PaymentMethodType>(
-    PaymentMethodType.Card
-  );
+  const { shoppingCartItems, isEmptyShoppingCart } = useShoppingCart();
 
   const [{ fetching: isLoadingCheckout }, onExecuteCheckout] =
     useCreateCheckoutMutation();
@@ -59,24 +62,13 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
   const [{ fetching: isLoadingOrder }, onExecuteOrder] =
     useCreateOrderMutation();
 
-  const [{ fetching: isLoadingProduct, data: dataProduct }] =
-    useGetCheckoutProductQuery({
-      variables: {
-        product: productId,
-      },
-    });
-
-  const product = useMemo(() => dataProduct?.product, [dataProduct]);
-  const priceURLParamId = useMemo(
-    () => router.query?.price?.toString() || "",
-    [router.query?.price]
-  );
-
   useEffect(() => {
     if (currentApp?.isIntegratedWithStripe) {
       setPaymentMethodType(PaymentMethodType.Card);
     } else if (currentApp?.isIntegratedWithPix) {
       setPaymentMethodType(PaymentMethodType.Pix);
+    } else {
+      setPaymentMethodType(undefined);
     }
   }, [currentApp]);
 
@@ -86,31 +78,6 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
         !!currentAccount?.pagarmeCustomer
     );
   }, [currentAccount?.pagarmeCustomer, paymentMethodType]);
-
-  useEffect(() => {
-    let priceSelected = product?.defaultPrice;
-    if (priceURLParamId) {
-      priceSelected = product?.prices?.items?.find(
-        (currentPriceItem) => priceURLParamId === currentPriceItem?.id
-      );
-      if (!priceSelected) {
-        priceSelected = product?.defaultPrice;
-      }
-    }
-    if (priceSelected) {
-      setCurrentPrice(priceSelected || undefined);
-    }
-  }, [priceURLParamId, product]);
-
-  const onChoosePrice = useCallback(
-    (priceId: string) => {
-      const price = product?.prices?.items?.find(
-        (productPrice) => productPrice?.id === priceId
-      );
-      setCurrentPrice(price || null);
-    },
-    [product]
-  );
 
   const goToSummary = useCallback(() => {
     return setCurrentStep(CheckoutStep.SUMMARY);
@@ -141,13 +108,14 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
       return;
     }
     try {
+      const orderItems: CreateOrderItemInput[] = shoppingCartItems.map(
+        (shoppingCartItem) => ({
+          price: shoppingCartItem.price?.id || "",
+        })
+      );
       const response = await onExecuteOrder({
         input: {
-          items: [
-            {
-              price: currentPrice?.id || "",
-            },
-          ],
+          items: orderItems,
         },
       });
 
@@ -168,16 +136,22 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
     }
   }, [
     currentAccount,
-    currentPrice?.id,
     onExecuteOrder,
     onShowAPIError,
     router,
+    shoppingCartItems,
     translate,
   ]);
 
   const onCreatePayment = useCallback(
     async (order: string) => {
       try {
+        if (!paymentMethodType) {
+          onShowAPIError({
+            message: translate.formatMessage({ id: "paymentMethodNotFound" }),
+          });
+          return;
+        }
         const response = await onExecuteCheckout({
           input: {
             order,
@@ -226,7 +200,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
   };
 
   return (
-    <CheckoutLayout isLoading={isLoadingProduct}>
+    <CheckoutLayout>
       <Container paddingY="10" align="center">
         <Box
           width={["full", "full", "700px", "700px"]}
@@ -240,24 +214,24 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
             <StepList justify="center" align="center">
               <StepItem
                 title={translate.formatMessage({ id: "subscription" })}
-                stepIndex={CheckoutStep.SUBSCRIPTION}
+                stepIndex={CheckoutStep.PRODUCTS}
               />
               <StepItem
                 title={translate.formatMessage({ id: "paymentMethod" })}
                 stepIndex={CheckoutStep.PAYMENT_METHOD}
-                isDisabled={!currentPrice}
+                isDisabled={isEmptyShoppingCart}
               />
               {!isDisabledCreatePixAccount && (
                 <StepItem
                   title={translate.formatMessage({ id: "account" })}
                   stepIndex={CheckoutStep.CREATE_PIX_ACCOUNT}
-                  isDisabled={!currentPrice && !paymentMethodType}
+                  isDisabled={isEmptyShoppingCart || !paymentMethodType}
                 />
               )}
               <StepItem
                 title={translate.formatMessage({ id: "summary" })}
                 stepIndex={CheckoutStep.SUMMARY}
-                isDisabled={!currentPrice && !paymentMethodType}
+                isDisabled={isEmptyShoppingCart || !paymentMethodType}
               />
               <StepItem
                 title={translate.formatMessage({ id: "payment" })}
@@ -268,12 +242,8 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
             <StepPanels>
               <Card background="background.50">
                 <CardBody>
-                  <StepPanel stepIndex={CheckoutStep.SUBSCRIPTION}>
-                    <SubscriptionStep
-                      prices={product?.prices?.items || []}
-                      product={product}
-                      currentPrice={currentPrice}
-                      onChoosePrice={onChoosePrice}
+                  <StepPanel stepIndex={CheckoutStep.PRODUCTS}>
+                    <ProductsStep
                       onNextStep={() =>
                         setCurrentStep(CheckoutStep.PAYMENT_METHOD)
                       }
@@ -284,7 +254,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                       paymentMethodType={paymentMethodType}
                       onChoosePaymentMethod={setPaymentMethodType}
                       onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.SUBSCRIPTION)
+                        setCurrentStep(CheckoutStep.PRODUCTS)
                       }
                       onNextStep={goToSummaryOrCreatePixAccount}
                     />
@@ -292,7 +262,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                   <StepPanel stepIndex={CheckoutStep.CREATE_PIX_ACCOUNT}>
                     <CreatePixAccountStep
                       onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.SUBSCRIPTION)
+                        setCurrentStep(CheckoutStep.PRODUCTS)
                       }
                       onNextStep={() => {
                         setIsDisabledCreatePixAccount(true);
@@ -302,12 +272,10 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.SUMMARY}>
                     <SummaryStep
-                      price={currentPrice}
-                      product={product}
                       paymentMethodType={paymentMethodType}
                       isLoadingCheckout={isLoadingCheckout || isLoadingOrder}
-                      onGoToSubscription={() =>
-                        setCurrentStep(CheckoutStep.SUBSCRIPTION)
+                      onGoToProducts={() =>
+                        setCurrentStep(CheckoutStep.PRODUCTS)
                       }
                       onGoToPaymentMethod={() =>
                         setCurrentStep(CheckoutStep.PAYMENT_METHOD)
@@ -320,7 +288,6 @@ export const CheckoutPage: FC<CheckoutPageProps> = ({ productId }) => {
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.PAYMENT}>
                     <PaymentStep
-                      price={currentPrice}
                       orderId={orderId}
                       qrCodeCopyAndPaste={qrCodeCopyAndPaste}
                       qrCodeURL={qrCodeURL}

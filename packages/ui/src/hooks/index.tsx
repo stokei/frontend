@@ -4,6 +4,7 @@ export * from "./use-disclosure";
 export * from "./use-upload-files";
 export * from "./use-merge-refs";
 export * from "./use-outside-click";
+export * from "./use-persisted-state";
 export * from "./use-select";
 export * from "./use-sidebar-group";
 export * from "./use-stokei";

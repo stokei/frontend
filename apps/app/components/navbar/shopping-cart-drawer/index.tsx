@@ -1,22 +1,24 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { useShoppingCart, useTranslations } from "@/hooks";
-import NextLink from "next/link";
 import { routes } from "@/routes";
 import {
   Button,
   ButtonGroup,
+  Card,
+  CardBody,
   Drawer,
   DrawerBody,
   DrawerFooter,
   DrawerHeader,
-  IconButton,
+  Icon,
   Image,
   Link,
   Stack,
   Text,
   Title,
 } from "@stokei/ui";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { FC, useCallback } from "react";
 
@@ -37,15 +39,27 @@ export const ShoppingCartDrawer: FC<ShoppingCartDrawerProps> = () => {
 
   const onBuyAndCloseModal = useCallback(() => {
     onToggleShoppingCart?.();
-    return router.push(routes.checkout.home({}));
+    return router.push(routes.checkout.home);
   }, [onToggleShoppingCart, router]);
+
+  const goToProductDetails = useCallback(
+    ({ productId, priceId }: { productId: string; priceId?: string }) => {
+      router.push({
+        pathname: routes.product.home({ product: productId || "" }),
+        query: {
+          price: priceId,
+        },
+      });
+    },
+    [router]
+  );
 
   return (
     <Drawer isOpen={!!isOpenShoppingCart} onClose={onToggleShoppingCart}>
       <DrawerHeader>
         {translate.formatMessage({ id: "shoppingCart" })}
       </DrawerHeader>
-      <DrawerBody>
+      <DrawerBody paddingY="5" background="background.100">
         <Stack direction="column" spacing="5">
           {!shoppingCartItems?.length ? (
             <Text lineHeight="shorter">
@@ -54,108 +68,146 @@ export const ShoppingCartDrawer: FC<ShoppingCartDrawerProps> = () => {
           ) : (
             <>
               {shoppingCartItems?.map((shoppingCartItem) => (
-                <Stack
-                  key={shoppingCartItem?.product?.id}
-                  direction="row"
-                  spacing="5"
-                  align="center"
-                >
-                  <Image
-                    width="20"
-                    src={shoppingCartItem?.product?.avatarURL || ""}
-                    fallbackSrc={defaultNoImage.src}
-                    alt={translate.formatMessage({ id: "course" })}
-                  />
-                  <Stack direction="column" spacing="1">
-                    <Link
-                      as={NextLink}
-                      href={routes.product.home({
-                        product: shoppingCartItem?.product?.id,
-                      })}
-                    >
-                      <Title fontSize="md">
-                        {shoppingCartItem?.product?.name}
-                      </Title>
-                    </Link>
-                    <Price price={shoppingCartItem?.price} />
-                  </Stack>
-                  <IconButton
-                    name="trash"
-                    variant="ghost"
-                    colorScheme="gray"
-                    onClick={() =>
-                      onRemoveShoppingCartItem(shoppingCartItem?.product?.id)
-                    }
-                  />
-                </Stack>
+                <Card key={shoppingCartItem?.product?.id}>
+                  <CardBody>
+                    <Stack direction="column" spacing="5">
+                      <Stack direction="row" spacing="5" align="center">
+                        <Image
+                          width={["20", "20", "28", "28"]}
+                          src={shoppingCartItem?.product?.avatarURL || ""}
+                          fallbackSrc={defaultNoImage.src}
+                          alt={translate.formatMessage({ id: "course" })}
+                        />
+                        <Link
+                          width="fit-content"
+                          as={NextLink}
+                          href={routes.product.home({
+                            product: shoppingCartItem?.product?.id,
+                          })}
+                        >
+                          <Title
+                            fontSize={["md", "md", "lg", "lg"]}
+                            color="inherit"
+                          >
+                            {shoppingCartItem?.product?.name}
+                          </Title>
+                        </Link>
+                      </Stack>
+                      <Price size="md" price={shoppingCartItem?.price} />
+
+                      <ButtonGroup
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Button
+                          leftIcon={<Icon name="trash" />}
+                          variant="link"
+                          colorScheme="red"
+                          onClick={() =>
+                            onRemoveShoppingCartItem(
+                              shoppingCartItem?.product?.id
+                            )
+                          }
+                        >
+                          {translate.formatMessage({ id: "remove" })}
+                        </Button>
+                        <Button
+                          variant="link"
+                          onClick={() =>
+                            goToProductDetails({
+                              productId: shoppingCartItem?.product?.id,
+                              priceId: shoppingCartItem?.price?.id,
+                            })
+                          }
+                        >
+                          {translate.formatMessage({ id: "view" })}
+                        </Button>
+                      </ButtonGroup>
+                    </Stack>
+                  </CardBody>
+                </Card>
               ))}
             </>
           )}
         </Stack>
       </DrawerBody>
       <DrawerFooter>
-        <Stack direction="column" spacing="1">
-          <Stack direction="row" spacing="1" align="center">
-            <Text lineHeight="shorter">
-              {translate.formatMessage({ id: "subtotal" })}:
-            </Text>
-            <Title
-              fontSize="md"
-              textDecoration="line-through"
-              color="text.400"
-              lineHeight="shorter"
-            >
-              {translate.formatMoney({
-                amount: subtotalAmount,
-                currency: currency?.id || "",
-                minorUnit: currency?.minorUnit,
-                showSymbol: true,
-              })}
-            </Title>
-          </Stack>
-          <Stack direction="column" spacing="1">
-            <Text fontWeight="bold" lineHeight="shorter">
-              {translate.formatMessage({ id: "total" })}:
-            </Text>
+        <Stack direction="column" spacing="8">
+          <Stack direction="column" spacing="5">
             <Stack
-              width="fit-content"
               direction="row"
+              spacing="1"
+              justify="space-between"
               align="center"
-              justify="center"
             >
-              <Text fontSize="md" fontWeight="600">
-                {currency?.symbol}
+              <Text lineHeight="shorter">
+                {translate.formatMessage({ id: "subtotal" })}:
               </Text>
-              <Text
-                fontSize="3xl"
-                color="primary.500"
-                fontWeight="900"
+              <Title
+                fontSize="md"
+                textDecoration="line-through"
+                color="text.400"
                 lineHeight="shorter"
               >
                 {translate.formatMoney({
-                  amount: totalAmount,
+                  amount: subtotalAmount,
                   currency: currency?.id || "",
                   minorUnit: currency?.minorUnit,
+                  showSymbol: true,
                 })}
+              </Title>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing="1"
+              justify="space-between"
+              align="center"
+            >
+              <Text fontWeight="bold" lineHeight="shorter">
+                {translate.formatMessage({ id: "total" })}:
               </Text>
+              <Stack
+                width="fit-content"
+                direction="row"
+                align="center"
+                justify="center"
+              >
+                <Text fontSize="md" fontWeight="600">
+                  {currency?.symbol}
+                </Text>
+                <Text
+                  fontSize="3xl"
+                  color="primary.500"
+                  fontWeight="900"
+                  lineHeight="shorter"
+                >
+                  {translate.formatMoney({
+                    amount: totalAmount,
+                    currency: currency?.id || "",
+                    minorUnit: currency?.minorUnit,
+                  })}
+                </Text>
+              </Stack>
             </Stack>
           </Stack>
+          <Stack direction="column" spacing="5">
+            <Button
+              width="full"
+              onClick={onBuyAndCloseModal}
+              isDisabled={!shoppingCartItems?.length}
+            >
+              {translate.formatMessage({ id: "buy" })}
+            </Button>
+            <Button
+              width="full"
+              variant="ghost"
+              onClick={onClearShoppingCart}
+              isDisabled={!shoppingCartItems?.length}
+            >
+              {translate.formatMessage({ id: "clear" })}
+            </Button>
+          </Stack>
         </Stack>
-        <ButtonGroup>
-          <Button
-            variant="ghost"
-            onClick={onClearShoppingCart}
-            isDisabled={!shoppingCartItems?.length}
-          >
-            {translate.formatMessage({ id: "clear" })}
-          </Button>
-          <Button
-            onClick={onBuyAndCloseModal}
-            isDisabled={!shoppingCartItems?.length}
-          >
-            {translate.formatMessage({ id: "buy" })}
-          </Button>
-        </ButtonGroup>
       </DrawerFooter>
     </Drawer>
   );

@@ -1,5 +1,7 @@
 export const ptBRMessages = {
   me: "Eu",
+  remove: "Remover",
+  goToStore: "Ir para loja",
   addedSuccessfully: "Adicionado com sucesso!",
   removedSuccessfully: "Removido com sucesso!",
   shoppingCart: "Carrinho de compras",

@@ -1,58 +1,69 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useTranslations } from "@/hooks";
+import { useShoppingCart, useTranslations } from "@/hooks";
+import { routes } from "@/routes";
 import { PaymentMethodType } from "@/services/graphql/stokei";
-import { CheckoutProductFragment } from "@/views/checkout/graphql/product.query.graphql.generated";
-import { Button, ButtonGroup, Image, Stack, Title } from "@stokei/ui";
+import { Button, ButtonGroup, Image, Link, Stack, Title } from "@stokei/ui";
+import NextLink from "next/link";
 import { ChoiseEditableSummary } from "../../components/choice-editable-summary";
 import { PaymentMethod } from "../../components/payment-method";
 
 export interface SummaryStepProps {
   isLoadingCheckout: boolean;
-  product?: CheckoutProductFragment | null;
-  price?: PriceComponentFragment | null;
-  paymentMethodType: PaymentMethodType;
+  paymentMethodType?: PaymentMethodType;
   onGoToPaymentMethod: () => void;
-  onGoToSubscription: () => void;
+  onGoToProducts: () => void;
   onPreviousStep: () => void;
   onNextStep: () => void;
 }
 
 export const SummaryStep: React.FC<SummaryStepProps> = ({
-  price,
-  product,
   paymentMethodType,
   isLoadingCheckout,
   onPreviousStep,
   onNextStep,
   onGoToPaymentMethod,
-  onGoToSubscription,
+  onGoToProducts,
 }) => {
   const translate = useTranslations();
+  const { shoppingCartItems } = useShoppingCart();
 
   return (
     <Stack direction="column" spacing="10">
-      <Stack direction="row" spacing="5" align="center">
-        <Image
-          width="24"
-          rounded="md"
-          src={product?.avatar?.file?.url || ""}
-          fallbackSrc={defaultNoImage.src}
-          alt={translate.formatMessage({ id: "product" })}
-        />
-
-        <Title fontSize="lg">{product?.name}</Title>
-      </Stack>
-
       <Stack direction="column" spacing="3">
         <Title fontSize="sm" color="text.700">
-          {translate.formatMessage({ id: "price" })}
+          {translate.formatMessage({ id: "products" })}
         </Title>
-        <ChoiseEditableSummary onChange={onGoToSubscription}>
-          <Stack direction="column" spacing="3">
-            {price?.nickname && <Title fontSize="md">{price?.nickname}</Title>}
-            <Price price={price} withUnitDescription />
+        <ChoiseEditableSummary onChange={onGoToProducts}>
+          <Stack direction="column" spacing="5">
+            {shoppingCartItems?.map((shoppingCartItem) => (
+              <Stack
+                key={shoppingCartItem?.product?.id}
+                direction="row"
+                spacing="5"
+                align="center"
+              >
+                <Image
+                  width="20"
+                  src={shoppingCartItem?.product?.avatarURL || ""}
+                  fallbackSrc={defaultNoImage.src}
+                  alt={translate.formatMessage({ id: "course" })}
+                />
+                <Stack direction="column" spacing="1">
+                  <Link
+                    as={NextLink}
+                    href={routes.product.home({
+                      product: shoppingCartItem?.product?.id,
+                    })}
+                  >
+                    <Title fontSize="md" color="inherit">
+                      {shoppingCartItem?.product?.name}
+                    </Title>
+                  </Link>
+                  <Price price={shoppingCartItem?.price} />
+                </Stack>
+              </Stack>
+            ))}
           </Stack>
         </ChoiseEditableSummary>
       </Stack>
@@ -62,7 +73,9 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
           {translate.formatMessage({ id: "paymentMethod" })}
         </Title>
         <ChoiseEditableSummary onChange={onGoToPaymentMethod}>
-          <PaymentMethod paymentMethodType={paymentMethodType} />
+          {paymentMethodType && (
+            <PaymentMethod paymentMethodType={paymentMethodType} />
+          )}
         </ChoiseEditableSummary>
       </Stack>
 

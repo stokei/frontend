@@ -1,14 +1,12 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
-import { useDisclosure, useToast } from "@stokei/ui";
+import { useDisclosure, usePersistedState, useToast } from "@stokei/ui";
 import {
   createContext,
   FC,
   PropsWithChildren,
   useCallback,
-  useEffect,
   useMemo,
-  useState,
 } from "react";
 
 export interface ShoppingCartProviderProps {}
@@ -31,7 +29,7 @@ export interface ShoppingCartItem {
 export interface ShoppingCartProviderValues {
   readonly shoppingCartItems: ShoppingCartItem[];
   readonly isOpenShoppingCart: boolean;
-  readonly hasNewShoppingCartItemAdded: boolean;
+  readonly isEmptyShoppingCart: boolean;
   readonly totalAmount: number;
   readonly subtotalAmount: number;
   readonly currency?: Currency;
@@ -48,21 +46,14 @@ export const ShoppingCartContext = createContext(
 export const ShoppingCartProvider: FC<
   PropsWithChildren<ShoppingCartProviderProps>
 > = ({ children }) => {
-  const [shoppingCartItems, setShoppingCartItems] = useState<
-    ShoppingCartItem[]
-  >([]);
-  const [hasNewShoppingCartItemAdded, setHasNewShoppingCartItemAdded] =
-    useState(false);
+  const { value: shoppingCartItems, setValue: setShoppingCartItems } =
+    usePersistedState<ShoppingCartItem[]>({
+      key: "shopping-cart-items",
+    });
   const { isOpen: isOpenShoppingCart, onToggle: onToggleShoppingCart } =
     useDisclosure();
   const translate = useTranslations();
   const { onShowToast } = useToast();
-
-  useEffect(() => {
-    if (isOpenShoppingCart) {
-      setHasNewShoppingCartItemAdded(false);
-    }
-  }, [isOpenShoppingCart]);
 
   const onAddShoppingCartItem = useCallback(
     (shoppingCartItem: ShoppingCartItem) => {
@@ -70,15 +61,16 @@ export const ShoppingCartProvider: FC<
         return;
       }
       setShoppingCartItems((currentItems) => {
-        const currentItemIndex = currentItems?.findIndex(
+        const oldShoppingCartItems = !!currentItems?.length ? currentItems : [];
+        const currentItemIndex = oldShoppingCartItems?.findIndex(
           (currentItem) =>
             currentItem.product.id === shoppingCartItem.product.id
         );
         const existsItem = currentItemIndex >= 0;
         if (!existsItem) {
-          return [...currentItems, shoppingCartItem];
+          return [...oldShoppingCartItems, shoppingCartItem];
         }
-        const newItems = [...currentItems];
+        const newItems = [...oldShoppingCartItems];
         newItems[currentItemIndex] = shoppingCartItem;
         return newItems;
       });
@@ -86,9 +78,8 @@ export const ShoppingCartProvider: FC<
         title: translate.formatMessage({ id: "addedSuccessfully" }),
         status: "success",
       });
-      setHasNewShoppingCartItemAdded(true);
     },
-    [onShowToast, translate]
+    [onShowToast, setShoppingCartItems, translate]
   );
 
   const onRemoveShoppingCartItem = useCallback(
@@ -106,7 +97,7 @@ export const ShoppingCartProvider: FC<
         status: "success",
       });
     },
-    [onShowToast, translate]
+    [onShowToast, setShoppingCartItems, translate]
   );
 
   const currency = useMemo(() => {
@@ -137,29 +128,30 @@ export const ShoppingCartProvider: FC<
     );
   }, [shoppingCartItems]);
 
-  const values: ShoppingCartProviderValues = useMemo(
-    () => ({
-      currency,
-      totalAmount,
-      subtotalAmount,
-      shoppingCartItems,
-      isOpenShoppingCart,
-      hasNewShoppingCartItemAdded,
-      onAddShoppingCartItem,
-      onRemoveShoppingCartItem,
-      onToggleShoppingCart,
-      onClearShoppingCart: () => setShoppingCartItems([]),
-    }),
+  const values = useMemo(
+    () =>
+      ({
+        currency,
+        totalAmount,
+        subtotalAmount,
+        shoppingCartItems,
+        isOpenShoppingCart,
+        isEmptyShoppingCart: !shoppingCartItems?.length,
+        onAddShoppingCartItem,
+        onRemoveShoppingCartItem,
+        onToggleShoppingCart,
+        onClearShoppingCart: () => setShoppingCartItems(() => []),
+      } as ShoppingCartProviderValues),
     [
       currency,
       totalAmount,
       subtotalAmount,
       shoppingCartItems,
       isOpenShoppingCart,
-      hasNewShoppingCartItemAdded,
       onAddShoppingCartItem,
       onRemoveShoppingCartItem,
       onToggleShoppingCart,
+      setShoppingCartItems,
     ]
   );
 

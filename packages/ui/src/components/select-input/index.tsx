@@ -1,15 +1,14 @@
-import { forwardRef, useMultiStyleConfig } from "@chakra-ui/react";
+import { forwardRef, useStyleConfig } from "@chakra-ui/react";
 import { ReactNode, useCallback } from "react";
 import { useSelect } from "../../hooks";
 import { Box } from "../box";
-import { Button } from "../button";
+import { Button, ButtonProps } from "../button";
 import { Icon, IconName } from "../icon";
-import { InputProps } from "../input";
 import { Loading } from "../loading";
 import { SelectTagItem } from "../select-tag-item";
 import { SelectTagList } from "../select-tag-list";
 
-export interface SelectInputProps extends InputProps {
+export interface SelectInputProps extends Omit<ButtonProps, "rightIcon"> {
   readonly rightIcon?: IconName;
   readonly item: (value: any) => ReactNode;
 }
@@ -36,25 +35,24 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
       [onClick, onToggleList]
     );
 
-    const themeInput: any = useMultiStyleConfig("Input", props);
-
+    const themeInput: any = useStyleConfig("Input", props);
     return (
       <Button
-        {...themeInput.field}
-        _focusWithin={themeInput.field._focus}
+        __css={themeInput?.field}
         height="fit-content"
         h="fit-content"
         pos="relative"
         minH="10"
         py="0"
         px="0"
-        spacing="0"
         alignItems="center"
         justifyContent="space-between"
         cursor={isBlocked ? "not-allowed" : undefined}
         isDisabled={isBlocked}
         onClick={onClickInput}
         variant="unstyled"
+        borderRadius="md"
+        overflow="hidden"
         {...props}
       >
         <Box
@@ -69,6 +67,7 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
               flex="1"
               height="full"
               paddingX="3"
+              flexWrap="wrap"
               cursor={isBlocked ? "not-allowed" : undefined}
             >
               <SelectTagList>

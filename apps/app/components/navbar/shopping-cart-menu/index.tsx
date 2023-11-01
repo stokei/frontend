@@ -1,10 +1,11 @@
-import { useShoppingCart } from "@/hooks";
-import { Box, Circle, IconButton, Indicator } from "@stokei/ui";
+import { useShoppingCart, useTranslations } from "@/hooks";
+import { Box, Button, Circle, Icon, Indicator, Text } from "@stokei/ui";
 import { FC } from "react";
 import { ShoppingCartDrawer } from "../shopping-cart-drawer";
 
 export interface ShoppingCartMenuProps {}
 export const ShoppingCartMenu: FC<ShoppingCartMenuProps> = () => {
+  const translate = useTranslations();
   const { onToggleShoppingCart, shoppingCartItems } = useShoppingCart();
 
   return (
@@ -18,11 +19,15 @@ export const ShoppingCartMenu: FC<ShoppingCartMenuProps> = () => {
             </Circle>
           </Indicator>
         )}
-        <IconButton
-          name="cart"
+        <Button
+          leftIcon={<Icon name="cart" />}
           variant="ghost"
           onClick={onToggleShoppingCart}
-        />
+        >
+          <Text display={["none", "none", "block", "block"]} color="inherit">
+            {translate.formatMessage({ id: "shoppingCart" })}
+          </Text>
+        </Button>
       </Box>
     </>
   );

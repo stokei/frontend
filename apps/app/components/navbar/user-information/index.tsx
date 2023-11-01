@@ -4,6 +4,7 @@ import { routes } from "@/routes";
 import {
   Avatar,
   Button,
+  Divider,
   Icon,
   NavbarNavLink,
   Stack,
@@ -31,11 +32,11 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
 
   return (
     <Stack
-      width="auto"
-      flex="1"
+      width="fit-content"
       align="center"
       justify="flex-end"
       direction="row"
+      spacing="2"
       {...props}
     >
       <ShoppingCartMenu />

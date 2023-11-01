@@ -10,10 +10,12 @@ import {
   Icon,
   IconButton,
   Image,
+  Link,
   Stack,
   Title,
 } from "@stokei/ui";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
+import NextLink from "next/link";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
@@ -98,22 +100,30 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
             </Box>
           )}
         </CardHeader>
-        <CardBody>
-          <Box width="full" flexDirection="column" height="full">
-            <Title size="md" marginBottom="5">
-              {name}
-            </Title>
+        <CardBody
+          display="flex"
+          flexDirection="column"
+          justifyContent="flex-end"
+        >
+          <Stack spacing="5" direction="column">
+            <Link
+              width="fit-content"
+              as={NextLink}
+              onClick={goToProductDetails}
+            >
+              <Title size="md" color="inherit">
+                {name}
+              </Title>
+            </Link>
             <Stack spacing="3" direction="column">
-              <Stack spacing="3" flex="1">
-                {!!course?.instructors?.items?.length && (
-                  <Description>
-                    {course?.instructors?.items
-                      ?.map((instructor) => instructor.instructor?.fullname)
-                      .join(", ")}
-                  </Description>
-                )}
-              </Stack>
-              <Box marginBottom="5">
+              {!!course?.instructors?.items?.length && (
+                <Description>
+                  {course?.instructors?.items
+                    ?.map((instructor) => instructor.instructor?.fullname)
+                    .join(", ")}
+                </Description>
+              )}
+              <Box>
                 {!!prices?.items?.length && (
                   <SelectPrice
                     size="lg"
@@ -152,7 +162,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
                 />
               </ButtonGroup>
             </Stack>
-          </Box>
+          </Stack>
         </CardBody>
       </Card>
     );

@@ -14,16 +14,16 @@ export const Header: FC<HeaderProps> = ({
   const translate = useTranslations();
 
   return (
-    <Stack
-      align={["flex-start", "flex-start", "center", "center"]}
-      direction={["column", "column", "row", "row"]}
-      spacing="2"
-    >
+    <Stack align="center" direction="row" spacing="2">
       <Title fontSize="sm">
         {translate.formatMessage({ id: "total" })}: {productsTotalCount || 0}
       </Title>
       <Spacer />
-      <Button leftIcon={<Icon name="filters" />} onClick={onOpenFilters}>
+      <Button
+        variant="ghost"
+        leftIcon={<Icon name="filters" />}
+        onClick={onOpenFilters}
+      >
         {translate.formatMessage({ id: "filters" })}
       </Button>
     </Stack>
