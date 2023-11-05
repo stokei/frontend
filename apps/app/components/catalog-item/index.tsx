@@ -45,7 +45,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
 
     const router = useRouter();
     const translate = useTranslations();
-    const { onAddShoppingCartItem } = useShoppingCart();
+    const { onAddOrUpdateShoppingCartItem } = useShoppingCart();
 
     const isAvailable = !!defaultPrice;
 
@@ -141,7 +141,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
                   isDisabled={!isAvailable}
                   leftIcon={<Icon name="cart" />}
                   onClick={() =>
-                    onAddShoppingCartItem({
+                    onAddOrUpdateShoppingCartItem({
                       price: currentPrice,
                       product: {
                         id: productId || "",

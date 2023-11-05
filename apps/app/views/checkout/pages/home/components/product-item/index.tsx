@@ -27,7 +27,8 @@ export interface ProductItemProps {
 export const ProductItem: FC<ProductItemProps> = memo(({ product, price }) => {
   const translate = useTranslations();
 
-  const { onRemoveShoppingCartItem, onAddShoppingCartItem } = useShoppingCart();
+  const { onRemoveShoppingCartItem, onAddOrUpdateShoppingCartItem } =
+    useShoppingCart();
 
   return (
     <Card>
@@ -57,7 +58,7 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product, price }) => {
               size="md"
               showLabel={false}
               onChooseCurrentPrice={() =>
-                onAddShoppingCartItem({
+                onAddOrUpdateShoppingCartItem({
                   price,
                   product: {
                     id: product?.id || "",

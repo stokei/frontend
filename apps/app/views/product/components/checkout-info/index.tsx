@@ -41,7 +41,7 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
   const router = useRouter();
   const translate = useTranslations();
   const { isAuthenticated } = useCurrentAccount();
-  const { onAddShoppingCartItem } = useShoppingCart();
+  const { onAddOrUpdateShoppingCartItem } = useShoppingCart();
 
   const priceURLParamId = useMemo(
     () => router.query?.price?.toString() || "",
@@ -65,7 +65,7 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
 
   const onRedirectToCheckout = async () => {
     const checkoutURL = routes.checkout.home;
-    onAddShoppingCartItem({
+    onAddOrUpdateShoppingCartItem({
       price: currentPrice,
       product: {
         id: product?.id || "",

@@ -33,7 +33,9 @@ export interface ShoppingCartProviderValues {
   readonly totalAmount: number;
   readonly subtotalAmount: number;
   readonly currency?: Currency;
-  readonly onAddShoppingCartItem: (shoppingCartItem: ShoppingCartItem) => void;
+  readonly onAddOrUpdateShoppingCartItem: (
+    shoppingCartItem: ShoppingCartItem
+  ) => void;
   readonly onRemoveShoppingCartItem: (productId: string) => void;
   readonly onClearShoppingCart: () => void;
   readonly onToggleShoppingCart: () => void;
@@ -55,7 +57,7 @@ export const ShoppingCartProvider: FC<
   const translate = useTranslations();
   const { onShowToast } = useToast();
 
-  const onAddShoppingCartItem = useCallback(
+  const onAddOrUpdateShoppingCartItem = useCallback(
     (shoppingCartItem: ShoppingCartItem) => {
       if (!shoppingCartItem?.price) {
         return;
@@ -137,7 +139,7 @@ export const ShoppingCartProvider: FC<
         shoppingCartItems,
         isOpenShoppingCart,
         isEmptyShoppingCart: !shoppingCartItems?.length,
-        onAddShoppingCartItem,
+        onAddOrUpdateShoppingCartItem,
         onRemoveShoppingCartItem,
         onToggleShoppingCart,
         onClearShoppingCart: () => setShoppingCartItems(() => []),
@@ -148,7 +150,7 @@ export const ShoppingCartProvider: FC<
       subtotalAmount,
       shoppingCartItems,
       isOpenShoppingCart,
-      onAddShoppingCartItem,
+      onAddOrUpdateShoppingCartItem,
       onRemoveShoppingCartItem,
       onToggleShoppingCart,
       setShoppingCartItems,
