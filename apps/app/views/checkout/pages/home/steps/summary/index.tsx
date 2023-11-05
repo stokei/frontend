@@ -3,7 +3,17 @@ import { Price } from "@/components";
 import { useShoppingCart, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { PaymentMethodType } from "@/services/graphql/stokei";
-import { Button, ButtonGroup, Image, Link, Stack, Title } from "@stokei/ui";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  Image,
+  Link,
+  Stack,
+  Text,
+  Title,
+} from "@stokei/ui";
 import NextLink from "next/link";
 import { ChoiseEditableSummary } from "../../components/choice-editable-summary";
 import { PaymentMethod } from "../../components/payment-method";
@@ -26,7 +36,8 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
   onGoToProducts,
 }) => {
   const translate = useTranslations();
-  const { shoppingCartItems } = useShoppingCart();
+  const { shoppingCartItems, totalAmount, subtotalAmount, currency } =
+    useShoppingCart();
 
   return (
     <Stack direction="column" spacing="10">
@@ -77,6 +88,73 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
             <PaymentMethod paymentMethodType={paymentMethodType} />
           )}
         </ChoiseEditableSummary>
+      </Stack>
+
+      <Stack direction="column" spacing="3">
+        <Title fontSize="sm" color="text.700">
+          {translate.formatMessage({ id: "payment" })}
+        </Title>
+        <Card>
+          <CardBody>
+            <Stack direction="column" spacing="5">
+              <Stack
+                direction="row"
+                spacing="1"
+                justify="space-between"
+                align="center"
+              >
+                <Text lineHeight="shorter">
+                  {translate.formatMessage({ id: "subtotal" })}:
+                </Text>
+                <Title
+                  fontSize="md"
+                  textDecoration="line-through"
+                  color="text.400"
+                  lineHeight="shorter"
+                >
+                  {translate.formatMoney({
+                    amount: subtotalAmount,
+                    currency: currency?.id || "",
+                    minorUnit: currency?.minorUnit,
+                    showSymbol: true,
+                  })}
+                </Title>
+              </Stack>
+              <Stack
+                direction="row"
+                spacing="1"
+                justify="space-between"
+                align="center"
+              >
+                <Text fontWeight="bold" lineHeight="shorter">
+                  {translate.formatMessage({ id: "total" })}:
+                </Text>
+                <Stack
+                  width="fit-content"
+                  direction="row"
+                  align="center"
+                  justify="center"
+                >
+                  <Text fontSize="md" fontWeight="600">
+                    {currency?.symbol}
+                  </Text>
+                  <Text
+                    fontSize="3xl"
+                    color="primary.500"
+                    fontWeight="900"
+                    lineHeight="shorter"
+                  >
+                    {translate.formatMoney({
+                      amount: totalAmount,
+                      currency: currency?.id || "",
+                      minorUnit: currency?.minorUnit,
+                    })}
+                  </Text>
+                </Stack>
+              </Stack>
+            </Stack>
+          </CardBody>
+        </Card>
       </Stack>
 
       <ButtonGroup width="full" justifyContent="space-between">
