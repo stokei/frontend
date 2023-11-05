@@ -96,7 +96,7 @@ export const SelectBank: FC<SelectBankProps> = ({
       </Label>
       <Select
         isLoading={isLoading}
-        value={banks}
+        value={bank}
         onChooseItem={onChooseItem}
         onRemoveChooseItem={onRemoveChooseItem}
         marginBottom="2"

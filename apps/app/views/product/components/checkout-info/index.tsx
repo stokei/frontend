@@ -65,15 +65,14 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
 
   const onRedirectToCheckout = async () => {
     const checkoutURL = routes.checkout.home;
-    const onAdd = () =>
-      onAddShoppingCartItem({
-        price: currentPrice,
-        product: {
-          id: product?.id || "",
-          name: product?.name || "",
-          avatarURL: product?.avatar?.file?.url || "",
-        },
-      });
+    onAddShoppingCartItem({
+      price: currentPrice,
+      product: {
+        id: product?.id || "",
+        name: product?.name || "",
+        avatarURL: product?.avatar?.file?.url || "",
+      },
+    });
     if (!isAuthenticated) {
       await router.push({
         pathname: routes.auth.login,
@@ -81,11 +80,9 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
           redirectTo: checkoutURL,
         },
       });
-      onAdd();
       return;
     }
     await router.push(checkoutURL);
-    onAdd();
   };
 
   const onChoosePrice = useCallback(

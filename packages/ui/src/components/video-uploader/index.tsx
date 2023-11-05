@@ -84,9 +84,6 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
           endpoint: uploadURL,
           removeFingerprintOnSuccess: true,
           chunkSize: 50 * 1024 * 1024,
-          onAfterResponse(req, res) {
-            console.log("STATUS:", res.getStatus());
-          },
           onShouldRetry() {
             return false;
           },

@@ -213,7 +213,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
           >
             <StepList justify="center" align="center">
               <StepItem
-                title={translate.formatMessage({ id: "subscription" })}
+                title={translate.formatMessage({ id: "products" })}
                 stepIndex={CheckoutStep.PRODUCTS}
               />
               <StepItem

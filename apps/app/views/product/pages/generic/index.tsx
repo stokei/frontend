@@ -35,8 +35,8 @@ export const GenericProductPage: FC<GenericProductPageProps> = ({
           </Stack>
 
           <CheckoutInfo
+            product={product}
             avatarURL={product?.avatar?.file?.url || ""}
-            productId={product?.id}
             defaultPrice={product?.defaultPrice}
             features={product?.features}
             prices={product?.prices}

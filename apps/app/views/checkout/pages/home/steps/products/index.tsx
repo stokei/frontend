@@ -52,11 +52,6 @@ export const ProductsStep: React.FC<ProductsStepProps> = ({ onNextStep }) => {
       price: shoppingCartItem?.price,
     }));
   }, [dataProducts?.products?.items, shoppingCartItems]);
-  console.log({
-    productsWithPrice,
-    prods: dataProducts?.products?.items,
-    shoppingCartItems,
-  });
 
   const goToStore = useCallback(() => router.push(routes.store.home), [router]);
 

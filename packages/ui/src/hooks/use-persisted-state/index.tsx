@@ -1,11 +1,5 @@
 import cookies from "js-cookie";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const initializeState = (key: string) => {
   const currentValue = cookies.get(key);
@@ -23,15 +17,8 @@ export function usePersistedState<TValue = any>({ key }: { key: string }) {
   const [value, setValue] = useState<TValue>();
 
   useEffect(() => {
-    initializeState(key);
+    setValue(initializeState(key));
   }, [key]);
-
-  useEffect(() => {
-    cookies.set(key, JSON.stringify(value));
-    return () => {
-      cookies.set(key, JSON.stringify(value));
-    };
-  }, [key, value]);
 
   const onSetValue = useCallback(
     (currentValue: (prevState: TValue | undefined) => TValue | undefined) => {
