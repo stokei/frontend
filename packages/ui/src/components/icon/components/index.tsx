@@ -59,10 +59,11 @@ import {
   BsVolumeUp,
   BsWallet2,
 } from "react-icons/bs";
-import { FaMoneyBill, FaStore, FaUserShield, FaUserTie } from "react-icons/fa";
+import { FaMoneyBill, FaUserShield, FaUserTie } from "react-icons/fa";
 import { FiPlus, FiSettings } from "react-icons/fi";
 import { GrCatalog } from "react-icons/gr";
 import { HiOutlineAcademicCap } from "react-icons/hi";
+import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import {
   LuFileSignature,
@@ -130,7 +131,7 @@ export const DashboardIcon = BiLineChart;
 export const OrderIcon = AiOutlineShoppingCart;
 export const CartIcon = BsCart;
 export const CheckIcon = BsCheckCircleFill;
-export const StoreIcon = FaStore;
+export const StoreIcon = HiOutlineBuildingStorefront;
 export const SubscriptionIcon = LuFileSignature;
 export const AppIcon = TbApps;
 export const CourseIcon = HiOutlineAcademicCap;

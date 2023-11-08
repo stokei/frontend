@@ -130,6 +130,11 @@ export const ShoppingCartProvider: FC<
     );
   }, [shoppingCartItems]);
 
+  const onClearShoppingCart = useCallback(
+    () => setShoppingCartItems(() => []),
+    [setShoppingCartItems]
+  );
+
   const values = useMemo(
     () =>
       ({
@@ -142,7 +147,7 @@ export const ShoppingCartProvider: FC<
         onAddOrUpdateShoppingCartItem,
         onRemoveShoppingCartItem,
         onToggleShoppingCart,
-        onClearShoppingCart: () => setShoppingCartItems(() => []),
+        onClearShoppingCart,
       } as ShoppingCartProviderValues),
     [
       currency,
@@ -153,7 +158,7 @@ export const ShoppingCartProvider: FC<
       onAddOrUpdateShoppingCartItem,
       onRemoveShoppingCartItem,
       onToggleShoppingCart,
-      setShoppingCartItems,
+      onClearShoppingCart,
     ]
   );
 

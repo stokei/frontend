@@ -71,7 +71,7 @@ export const Catalog: FC<CatalogProps> = memo(
                   })
                 }
               >
-                {translate.formatMessage({ id: "seeAll" })}
+                {translate.formatMessage({ id: "goToStore" })}
               </Button>
             </ButtonGroup>
           </Stack>

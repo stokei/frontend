@@ -4,6 +4,7 @@ import { routes } from "@/routes";
 import {
   Avatar,
   Button,
+  ButtonGroup,
   Divider,
   Icon,
   NavbarNavLink,
@@ -11,6 +12,7 @@ import {
   StackProps,
   useDisclosure,
 } from "@stokei/ui";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { ShoppingCartMenu } from "../shopping-cart-menu";
@@ -46,10 +48,14 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
             isOpen={isOpenDrawer}
             onClose={onToggleDrawer}
           />
-          <Stack spacing="4" direction="row" justify="flex-end" align="center">
-            <NavbarNavLink href={homePageURL}>
-              <Icon fontSize="lg" name="home" />
-            </NavbarNavLink>
+          <Stack
+            width="fit-content"
+            spacing="4"
+            direction="row"
+            justify="flex-end"
+            align="center"
+          >
+            <NavbarNavLink as={NextLink} href={homePageURL} icon="home" />
             <Avatar
               cursor="pointer"
               size="sm"
@@ -60,7 +66,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
           </Stack>
         </>
       ) : (
-        <>
+        <ButtonGroup width="fit-content">
           <Button
             variant="ghost"
             onClick={() =>
@@ -86,7 +92,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
           >
             {translate.formatMessage({ id: "signUp" })}
           </Button>
-        </>
+        </ButtonGroup>
       )}
     </Stack>
   );

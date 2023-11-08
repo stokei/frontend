@@ -7,6 +7,7 @@ import {
   DrawerBody,
   DrawerFooter,
   DrawerHeader,
+  Icon,
   Stack,
   Text,
 } from "@stokei/ui";
@@ -48,16 +49,19 @@ export const NavbarUserInformationDrawer: FC<
       <DrawerBody>
         <Stack direction="column" spacing="2">
           <NavbarUserInformationDrawerButton
+            leftIcon={<Icon name="home" />}
             onClick={() => onRedirectToURLAndCloseModal(homePageURL || "")}
           >
             {translate.formatMessage({ id: "home" })}
           </NavbarUserInformationDrawerButton>
           <NavbarUserInformationDrawerButton
+            leftIcon={<Icon name="store" />}
             onClick={() => onRedirectToURLAndCloseModal(routes.store.home)}
           >
             {translate.formatMessage({ id: "store" })}
           </NavbarUserInformationDrawerButton>
           <NavbarUserInformationDrawerButton
+            leftIcon={<Icon name="user" />}
             onClick={() => onRedirectToURLAndCloseModal(routes.me.home)}
           >
             {translate.formatMessage({ id: "profile" })}
@@ -66,7 +70,10 @@ export const NavbarUserInformationDrawer: FC<
       </DrawerBody>
       <DrawerFooter>
         <Stack direction="column" spacing="1">
-          <NavbarUserInformationDrawerButton onClick={onLogout}>
+          <NavbarUserInformationDrawerButton
+            leftIcon={<Icon name="logout" />}
+            onClick={onLogout}
+          >
             {translate.formatMessage({ id: "logout" })}
           </NavbarUserInformationDrawerButton>
         </Stack>
