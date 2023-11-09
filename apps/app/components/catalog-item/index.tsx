@@ -47,7 +47,10 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
     const translate = useTranslations();
     const { onAddOrUpdateShoppingCartItem } = useShoppingCart();
 
-    const isAvailable = !!defaultPrice;
+    const isAvailable = useMemo(
+      () => !!prices?.items?.length,
+      [prices?.items?.length]
+    );
 
     const course = useMemo(
       () => (parent?.__typename === "Course" ? parent : null),

@@ -5,6 +5,7 @@ import { useCallback, useMemo } from "react";
 
 export interface StoreFilters {
   productType?: ProductType;
+  page?: number;
   productName?: string;
   catalog?: string;
 }
@@ -13,7 +14,13 @@ export const useStoreFilters = () => {
   const router = useRouter();
 
   const filters = useMemo(() => {
-    return router.query as StoreFilters;
+    const page = router.query?.page?.toString()
+      ? parseInt(router.query?.page?.toString())
+      : 0;
+    return {
+      ...router.query,
+      page: !isNaN(page) ? page : 0,
+    } as StoreFilters;
   }, [router.query]);
 
   const onChangeFilter = useCallback(

@@ -21,42 +21,69 @@ export const Pagination: React.FC<PaginationProps> = ({
   nextPage,
   previousPage,
   ...props
-}) => (
-  <ButtonGroup isAttached spacing="0" variant="outline" rounded="md" {...props}>
-    <Button
-      h="10"
-      colorScheme="gray"
-      paddingRight="5"
-      isDisabled={!hasPreviousPage}
-      background="background.50"
-      onClick={
-        hasPreviousPage ? () => onChangePage(currentPage - 1) : undefined
-      }
+}) => {
+  return (
+    <ButtonGroup
+      isAttached
+      spacing="0"
+      variant="outline"
+      rounded="md"
+      {...props}
     >
-      <Icon name="arrowLeft" />
-    </Button>
-    <Button
-      h="10"
-      colorScheme="gray"
-      paddingX="5"
-      paddingY="3"
-      background="background.50"
-      cursor="default"
-      _hover={{
-        background: "background.50",
-      }}
-    >
-      {currentPage}
-    </Button>
-    <Button
-      h="10"
-      colorScheme="gray"
-      paddingRight="5"
-      isDisabled={!hasNextPage}
-      background="background.50"
-      onClick={hasNextPage ? () => onChangePage(currentPage + 1) : undefined}
-    >
-      <Icon name="arrowRight" />
-    </Button>
-  </ButtonGroup>
-);
+      <Button
+        h="10"
+        colorScheme="gray"
+        paddingRight="5"
+        isDisabled={!hasPreviousPage}
+        background="background.50"
+        onClick={
+          hasPreviousPage ? () => onChangePage(currentPage - 1) : undefined
+        }
+      >
+        <Icon name="arrowLeft" />
+      </Button>
+      {hasPreviousPage && (
+        <Button
+          h="10"
+          colorScheme="gray"
+          paddingX="5"
+          paddingY="3"
+          onClick={() => onChangePage(currentPage - 1)}
+        >
+          {currentPage - 1}
+        </Button>
+      )}
+      <Button
+        h="10"
+        isActive
+        colorScheme="gray"
+        paddingX="5"
+        paddingY="3"
+        cursor="default"
+      >
+        {currentPage}
+      </Button>
+      {hasNextPage && (
+        <Button
+          h="10"
+          colorScheme="gray"
+          paddingX="5"
+          paddingY="3"
+          onClick={() => onChangePage(currentPage + 1)}
+        >
+          {currentPage + 1}
+        </Button>
+      )}
+      <Button
+        h="10"
+        colorScheme="gray"
+        paddingRight="5"
+        isDisabled={!hasNextPage}
+        background="background.50"
+        onClick={hasNextPage ? () => onChangePage(currentPage + 1) : undefined}
+      >
+        <Icon name="arrowRight" />
+      </Button>
+    </ButtonGroup>
+  );
+};

@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { useStoreFilters } from "../hooks/use-filters";
 import { StoreLayout } from "../layout";
 import { Header } from "./components/header";
@@ -24,8 +24,7 @@ interface HomePageProps {}
 export const HomePage: FC<HomePageProps> = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
-  const { filters } = useStoreFilters();
-  const { currentPage, onChangePage } = usePagination();
+  const { filters, onChangeFilter } = useStoreFilters();
   const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
     useDisclosure();
 
@@ -33,6 +32,10 @@ export const HomePage: FC<HomePageProps> = () => {
     useGetStoreProductsQuery({
       pause: !currentApp?.id,
       variables: {
+        page: {
+          limit: 10,
+          number: filters?.page || 1,
+        },
         orderBy: {
           createdAt: OrderBy.Desc,
         },
@@ -56,9 +59,20 @@ export const HomePage: FC<HomePageProps> = () => {
       },
     });
 
-  const products = useMemo(
-    () => dataProducts?.products?.items || [],
-    [dataProducts?.products?.items]
+  const products = useMemo(() => {
+    const productsList = dataProducts?.products?.items || [];
+    const sortedProducts = productsList?.sort((itemA, itemB) => {
+      if (!itemB.prices?.items?.length) {
+        return -1;
+      }
+      return 1;
+    });
+    return sortedProducts;
+  }, [dataProducts?.products?.items]);
+
+  const onChangePage = useCallback(
+    (page: number) => onChangeFilter({ page }),
+    [onChangeFilter]
   );
 
   return (
@@ -93,7 +107,7 @@ export const HomePage: FC<HomePageProps> = () => {
           {dataProducts?.products?.totalPages &&
             dataProducts?.products?.totalPages > 1 && (
               <Pagination
-                currentPage={currentPage}
+                currentPage={filters?.page || 1}
                 onChangePage={onChangePage}
                 hasNextPage={!!dataProducts?.products?.hasNextPage}
                 hasPreviousPage={!!dataProducts?.products?.hasPreviousPage}
