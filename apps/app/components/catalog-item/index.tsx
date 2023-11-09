@@ -2,19 +2,24 @@ import {
   Badge,
   Box,
   Button,
+  ButtonGroup,
   Card,
   CardBody,
   CardHeader,
   Description,
+  Icon,
+  IconButton,
   Image,
+  Link,
   Stack,
   Title,
 } from "@stokei/ui";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
+import NextLink from "next/link";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useTranslations } from "@/hooks";
+import { useShoppingCart, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { SelectPrice } from "../select-price";
@@ -40,6 +45,8 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
 
     const router = useRouter();
     const translate = useTranslations();
+    const { onAddOrUpdateShoppingCartItem } = useShoppingCart();
+
     const isAvailable = !!defaultPrice;
 
     const course = useMemo(
@@ -93,22 +100,30 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
             </Box>
           )}
         </CardHeader>
-        <CardBody>
-          <Box width="full" flexDirection="column" height="full">
-            <Title size="md" marginBottom="5">
-              {name}
-            </Title>
+        <CardBody
+          display="flex"
+          flexDirection="column"
+          justifyContent="flex-end"
+        >
+          <Stack spacing="5" direction="column">
+            <Link
+              width="fit-content"
+              as={NextLink}
+              onClick={goToProductDetails}
+            >
+              <Title size="md" color="inherit">
+                {name}
+              </Title>
+            </Link>
             <Stack spacing="3" direction="column">
-              <Stack spacing="3" flex="1">
-                {!!course?.instructors?.items?.length && (
-                  <Description>
-                    {course?.instructors?.items
-                      ?.map((instructor) => instructor.instructor?.fullname)
-                      .join(", ")}
-                  </Description>
-                )}
-              </Stack>
-              <Box marginBottom="5">
+              {!!course?.instructors?.items?.length && (
+                <Description>
+                  {course?.instructors?.items
+                    ?.map((instructor) => instructor.instructor?.fullname)
+                    .join(", ")}
+                </Description>
+              )}
+              <Box>
                 {!!prices?.items?.length && (
                   <SelectPrice
                     size="lg"
@@ -120,17 +135,34 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
                   />
                 )}
               </Box>
-              <Button
-                width="full"
-                onClick={goToProductDetails}
-                isDisabled={!isAvailable}
-              >
-                {translate.formatMessage({
-                  id: isAvailable ? "buyNow" : "unavailable",
-                })}
-              </Button>
+              <ButtonGroup>
+                <Button
+                  width="full"
+                  isDisabled={!isAvailable}
+                  leftIcon={<Icon name="cart" />}
+                  onClick={() =>
+                    onAddOrUpdateShoppingCartItem({
+                      price: currentPrice,
+                      product: {
+                        id: productId || "",
+                        name: name || "",
+                        avatarURL: avatar,
+                      },
+                    })
+                  }
+                >
+                  {translate.formatMessage({
+                    id: isAvailable ? "addToCart" : "unavailable",
+                  })}
+                </Button>
+                <IconButton
+                  name="view"
+                  variant="ghost"
+                  onClick={goToProductDetails}
+                />
+              </ButtonGroup>
             </Stack>
-          </Box>
+          </Stack>
         </CardBody>
       </Card>
     );

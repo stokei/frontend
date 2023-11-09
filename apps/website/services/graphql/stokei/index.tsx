@@ -242,7 +242,7 @@ export type Catalog = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
-  items?: Maybe<CatalogItems>;
+  items?: Maybe<Array<CatalogItem>>;
   parent: Scalars['String'];
   subtitle?: Maybe<Scalars['String']>;
   title: Scalars['String'];

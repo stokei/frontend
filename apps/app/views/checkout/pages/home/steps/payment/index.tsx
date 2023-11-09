@@ -34,7 +34,7 @@ export interface PaymentStepProps {
   qrCodeURL: string;
   orderId: string;
   price?: PriceComponentFragment | null;
-  paymentMethodType: PaymentMethodType;
+  paymentMethodType?: PaymentMethodType;
   onPreviousStep: () => void;
 }
 

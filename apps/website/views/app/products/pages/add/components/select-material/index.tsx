@@ -32,7 +32,7 @@ export const SelectMaterial: React.FC<SelectMaterialProps> = ({
   const [materialQuery, setMaterialQuery] = useState<string>("");
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
-  const materialQueryValue = useDebounce(materialQuery, 500);
+  const [materialQueryValue] = useDebounce(materialQuery, 500);
 
   const [{ fetching: isLoading, data: dataMaterials }] =
     useGetAddProductMaterialsSelectQuery({

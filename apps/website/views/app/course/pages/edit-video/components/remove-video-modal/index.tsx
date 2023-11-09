@@ -47,7 +47,7 @@ export const RemoveVideoModal: FC<RemoveVideoModalProps> = ({
         onSuccessRemoveVideo(response?.data?.removeVideo);
         onShowToast({
           title: translate.formatMessage({
-            id: "videoRemoveedSuccessfully",
+            id: "videoRemovedSuccessfully",
           }),
           status: "success",
         });

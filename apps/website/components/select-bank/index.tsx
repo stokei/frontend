@@ -49,7 +49,7 @@ export const SelectBank: FC<SelectBankProps> = ({
     resolver: zodResolver(validationSchema),
   });
 
-  const searchBankQueryText = useDebounce(watch("searchBank"), 500);
+  const [searchBankQueryText] = useDebounce(watch("searchBank"), 500);
 
   useEffect(() => {
     const loadBanks = async () => {
@@ -96,7 +96,7 @@ export const SelectBank: FC<SelectBankProps> = ({
       </Label>
       <Select
         isLoading={isLoading}
-        value={banks}
+        value={bank}
         onChooseItem={onChooseItem}
         onRemoveChooseItem={onRemoveChooseItem}
         marginBottom="2"

@@ -1,6 +1,8 @@
 export const ptBRMessages = {
   dateFormat: "dd/MM/yyyy",
   phone: "Telefone",
+  showLess: "Mostrar menos",
+  showMore: "Mostrar mais",
   country: "País",
   ddd: "DDD",
   cpf: "CPF",

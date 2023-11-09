@@ -2,6 +2,12 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  remove: "Remove",
+  goToStore: "Go to store",
+  shoppingCart: "Shopping cart",
+  addToCart: "Add to cart",
+  store: "Store",
+  seeAll: "See all",
   menu: "Menu",
   waitingPayment: "Waiting payment",
   buy: "Buy",
@@ -70,15 +76,18 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   deactivate: "Deactivate",
   courseInstructorCreatedSuccessfully:
     "Course instructor created successfully!",
-  courseInstructorRemoveedSuccessfully:
+  courseInstructorRemovedSuccessfully:
     "Course instructor removed successfully!",
-  moduleRemoveedSuccessfully: "Module removed successfully!",
-  videoRemoveedSuccessfully: "Video removed successfully!",
+  addedSuccessfully: "Added successfully!",
+  removedSuccessfully: "Removed successfully!",
+  moduleRemovedSuccessfully: "Module removed successfully!",
+  videoRemovedSuccessfully: "Video removed successfully!",
   signUpSuccessfully: "Sign up successfully!",
   moduleCreatedSuccessfully: "Module created successfully!",
   videoCreatedSuccessfully: "Video created successfully!",
   videoUpdatedSuccessfully: "Video updated successfully!",
   moduleUpdatedSuccessfully: "Module updated successfully!",
+  shoppingCartItemsNotFound: "Shopping cart items not found!",
   firstnameNotFound: "Firstname not found!",
   lastnameNotFound: "Lastname not found!",
   emailNotFound: "Email not found!",

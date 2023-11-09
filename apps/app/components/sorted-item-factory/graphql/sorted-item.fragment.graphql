@@ -39,10 +39,7 @@ fragment SortedItemComponentCatalog on Catalog {
   catalogTitle: title
   catalogSubtitle: subtitle
   catalogItems: items {
-    totalCount
-    items {
-      ...SortedItemComponentCatalogItem
-    }
+    ...SortedItemComponentCatalogItem
   }
 }
 

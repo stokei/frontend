@@ -54,7 +54,7 @@ export const SelectMembers: FC<SelectMembersProps> = ({
     resolver: zodResolver(validationSchema),
   });
 
-  const searchMemberQueryText = useDebounce(watch("searchMember"), 500);
+  const [searchMemberQueryText] = useDebounce(watch("searchMember"), 500);
 
   const [{ data: dataGetMembers, fetching: isLoadingGetMembers }] =
     useGetAppAccountsQuery({

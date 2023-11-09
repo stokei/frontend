@@ -195,10 +195,10 @@ export const ptBRMessages = {
   deactivate: "Desativar",
   courseInstructorCreatedSuccessfully:
     "Instrutor do curso criado com successo!",
-  courseInstructorRemoveedSuccessfully:
+  courseInstructorRemovedSuccessfully:
     "Instrutor do curso removido com successo!",
-  moduleRemoveedSuccessfully: "Módulo removido com successo!",
-  videoRemoveedSuccessfully: "Video removido com successo!",
+  moduleRemovedSuccessfully: "Módulo removido com successo!",
+  videoRemovedSuccessfully: "Video removido com successo!",
   signUpSuccessfully: "Cadastro efetuado com successo!",
   moduleCreatedSuccessfully: "Módulo criado com successo!",
   videoCreatedSuccessfully: "Video criado com successo!",

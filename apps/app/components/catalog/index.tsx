@@ -1,10 +1,14 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
   Container,
+  Icon,
   NotFound,
   NotFoundIcon,
   NotFoundSubtitle,
   SimpleGrid,
+  Stack,
   Text,
   Title,
 } from "@stokei/ui";
@@ -14,6 +18,8 @@ import { CatalogItem } from "../catalog-item";
 
 import { useTranslations } from "@/hooks";
 import { SortedItemComponentCatalogItemFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
+import { useRouter } from "next/router";
+import { routes } from "@/routes";
 
 export interface CatalogProps {
   readonly catalogId?: string;
@@ -24,6 +30,7 @@ export interface CatalogProps {
 
 export const Catalog: FC<CatalogProps> = memo(
   ({ catalogId, title, subtitle, items: catalogItemsProp }) => {
+    const router = useRouter();
     const translate = useTranslations();
 
     const catalogItems = useMemo(() => {
@@ -39,12 +46,35 @@ export const Catalog: FC<CatalogProps> = memo(
     return (
       <Box flexDirection="column" as="section" paddingY="5">
         <Container marginBottom="5">
-          <Title fontSize="xl">{title}</Title>
-          {subtitle && (
-            <Text fontSize="sm" marginBottom="5" color="text.300">
-              {subtitle}
-            </Text>
-          )}
+          <Stack
+            direction={["column", "column", "row", "row"]}
+            justify="space-between"
+          >
+            <Box width="full" flexDirection="column">
+              <Title fontSize="xl">{title}</Title>
+              {subtitle && (
+                <Text fontSize="sm" marginBottom="5" color="text.300">
+                  {subtitle}
+                </Text>
+              )}
+            </Box>
+            <ButtonGroup width="fit-content">
+              <Button
+                variant="outline"
+                leftIcon={<Icon name="arrowRight" />}
+                onClick={() =>
+                  router.push({
+                    pathname: routes.store.home,
+                    query: {
+                      catalog: catalogId,
+                    },
+                  })
+                }
+              >
+                {translate.formatMessage({ id: "goToStore" })}
+              </Button>
+            </ButtonGroup>
+          </Stack>
         </Container>
         {!catalogItems?.length ? (
           <NotFound>

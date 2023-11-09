@@ -55,8 +55,8 @@ export const CoursePage: FC<CoursePageProps> = ({ product }) => {
           </Stack>
 
           <CheckoutInfo
+            product={product}
             avatarURL={product?.avatar?.file?.url || ""}
-            productId={product?.id}
             defaultPrice={product?.defaultPrice}
             prices={product?.prices}
           />

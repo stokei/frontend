@@ -193,10 +193,10 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   deactivate: "Deactivate",
   courseInstructorCreatedSuccessfully:
     "Course instructor created successfully!",
-  courseInstructorRemoveedSuccessfully:
+  courseInstructorRemovedSuccessfully:
     "Course instructor removed successfully!",
-  moduleRemoveedSuccessfully: "Module removed successfully!",
-  videoRemoveedSuccessfully: "Video removed successfully!",
+  moduleRemovedSuccessfully: "Module removed successfully!",
+  videoRemovedSuccessfully: "Video removed successfully!",
   signUpSuccessfully: "Sign up successfully!",
   moduleCreatedSuccessfully: "Module created successfully!",
   videoCreatedSuccessfully: "Video created successfully!",
