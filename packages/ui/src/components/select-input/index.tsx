@@ -7,6 +7,7 @@ import { Icon, IconName } from "../icon";
 import { Loading } from "../loading";
 import { SelectTagItem } from "../select-tag-item";
 import { SelectTagList } from "../select-tag-list";
+import { Text } from "../text";
 
 export interface SelectInputProps extends Omit<ButtonProps, "rightIcon"> {
   readonly rightIcon?: IconName;
@@ -14,7 +15,10 @@ export interface SelectInputProps extends Omit<ButtonProps, "rightIcon"> {
 }
 
 export const SelectInput: React.FC<SelectInputProps> = forwardRef(
-  ({ children, onClick, size, rightIcon, item, ...props }, ref) => {
+  (
+    { children, onClick, size, rightIcon, item, placeholder, ...props },
+    ref
+  ) => {
     const {
       value,
       onToggleList,
@@ -61,7 +65,7 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
           align="center"
           justify="space-between"
         >
-          {hasValue && !!item && (
+          {hasValue && !!item ? (
             <Box
               maxWidth="full"
               flex="1"
@@ -82,6 +86,19 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
                 )}
               </SelectTagList>
             </Box>
+          ) : (
+            <>
+              {placeholder && (
+                <Text
+                  flex="1"
+                  paddingX="3"
+                  cursor={isBlocked ? "not-allowed" : undefined}
+                  color="text.200"
+                >
+                  {placeholder}
+                </Text>
+              )}
+            </>
           )}
           <Box paddingX="3" height="full">
             {isLoading ? (

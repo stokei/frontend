@@ -24,22 +24,25 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { StoreCatalogFragment } from "../../graphql/catalogs.query.graphql.generated";
 
 interface ProductFiltersProps {
   readonly isOpen: boolean;
+  readonly catalogs: StoreCatalogFragment[];
   readonly onClose: () => void;
 }
 
 export const ProductFilters: FC<ProductFiltersProps> = ({
   isOpen,
+  catalogs,
   onClose,
 }) => {
-  const [productType, setProductType] = useState<ProductType>(ProductType.ALL);
+  const [catalog, setCatalog] = useState<StoreCatalogFragment | undefined>();
   const translate = useTranslations();
-  const { filters, onChangeFilter } = useStoreFilters();
+  const { filters, onChangeFilter, onClearFilter } = useStoreFilters();
 
   const validationSchema = z.object({
     name: z.string(),
@@ -54,6 +57,19 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
     resolver: zodResolver(validationSchema),
   });
 
+  const getCatalog = useCallback(
+    (catalog: string) => {
+      if (!catalog) {
+        return;
+      }
+      const currentCatalog = catalogs?.find(
+        (currentItem) => currentItem.id === catalog
+      );
+      return currentCatalog;
+    },
+    [catalogs]
+  );
+
   useEffect(() => {
     reset({
       name: filters?.productName || "",
@@ -61,13 +77,13 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
   }, [filters?.productName, reset]);
 
   useEffect(() => {
-    setProductType(filters?.productType || ProductType.ALL);
-  }, [filters?.productType]);
+    setCatalog(getCatalog(filters?.catalog || ""));
+  }, [filters?.catalog, getCatalog]);
 
   const onSubmit = async ({ name }: z.infer<typeof validationSchema>) => {
     onChangeFilter({
       productName: name,
-      productType,
+      catalog: catalog?.id,
     });
     onClose?.();
   };
@@ -76,33 +92,9 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
     reset({
       name: "",
     });
-    onChangeFilter({});
+    setCatalog(undefined);
+    onClearFilter();
     onClose?.();
-  };
-
-  const getProductTypeText = (item: ProductType) => {
-    const items: Record<ProductType, { text: string; iconName: IconName }> = {
-      [ProductType.ALL]: {
-        text: translate.formatMessage({ id: "all" }),
-        iconName: "product",
-      },
-      [ProductType.OTHER]: {
-        text: translate.formatMessage({ id: "other" }),
-        iconName: "product",
-      },
-      [ProductType.COURSE]: {
-        text: translate.formatMessage({ id: "courses" }),
-        iconName: "course",
-      },
-      [ProductType.MATERIAL]: {
-        text: translate.formatMessage({
-          id: "materials",
-        }),
-        iconName: "material",
-      },
-    };
-
-    return items[item];
   };
 
   return (
@@ -134,47 +126,33 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
               <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
             </FormControl>
             <FormControl>
-              <Label htmlFor="product-type">
-                {translate.formatMessage({ id: "productType" })}
+              <Label htmlFor="catalogs">
+                {translate.formatMessage({ id: "catalogs" })}
               </Label>
               <Select
-                value={productType}
-                onChooseItem={setProductType}
-                onRemoveChooseItem={setProductType}
+                value={catalog}
+                onChooseItem={setCatalog}
+                onRemoveChooseItem={setCatalog}
               >
                 <SelectInput
-                  id="product-type"
-                  item={(item) => {
-                    const itemData = getProductTypeText(item);
-                    return (
-                      <Stack direction="row" spacing="5" align="center">
-                        <Icon name={itemData.iconName} color="primary.500" />
-                        <Text>{itemData.text}</Text>
-                      </Stack>
-                    );
-                  }}
+                  id="catalogs"
+                  placeholder={translate.formatMessage({ id: "chooseCatalog" })}
+                  item={(item) => (
+                    <Stack direction="row" spacing="5" align="center">
+                      <Icon name="catalog" color="primary.500" />
+                      <Text>{item?.title}</Text>
+                    </Stack>
+                  )}
                 />
                 <SelectList>
-                  <SelectItem value={ProductType.ALL}>
-                    <Stack direction="row" spacing="5" align="center">
-                      <Icon name="product" color="primary.500" />
-                      <Text>{translate.formatMessage({ id: "all" })}</Text>
-                    </Stack>
-                  </SelectItem>
-                  <SelectItem value={ProductType.COURSE}>
-                    <Stack direction="row" spacing="5" align="center">
-                      <Icon name="course" color="primary.500" />
-                      <Text>{translate.formatMessage({ id: "courses" })}</Text>
-                    </Stack>
-                  </SelectItem>
-                  <SelectItem value={ProductType.MATERIAL}>
-                    <Stack direction="row" spacing="5" align="center">
-                      <Icon name="material" color="primary.500" />
-                      <Text>
-                        {translate.formatMessage({ id: "materials" })}
-                      </Text>
-                    </Stack>
-                  </SelectItem>
+                  {catalogs?.map((catalogItem) => (
+                    <SelectItem key={catalogItem?.id} value={catalogItem}>
+                      <Stack direction="row" spacing="5" align="center">
+                        <Icon name="catalog" color="primary.500" />
+                        <Text>{catalogItem?.title}</Text>
+                      </Stack>
+                    </SelectItem>
+                  ))}
                 </SelectList>
               </Select>
             </FormControl>

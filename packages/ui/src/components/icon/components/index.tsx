@@ -61,9 +61,9 @@ import {
 } from "react-icons/bs";
 import { FaMoneyBill, FaUserShield, FaUserTie } from "react-icons/fa";
 import { FiPlus, FiSettings } from "react-icons/fi";
-import { GrCatalog } from "react-icons/gr";
 import { HiOutlineAcademicCap } from "react-icons/hi";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
+import { IoBookOutline } from "react-icons/io5";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import {
   LuFileSignature,
@@ -186,7 +186,7 @@ export const UploadIcon = AiOutlineCloudUpload;
 export const OnboardingIcon = AiOutlineLink;
 export const WebsiteIcon = MdOutlineBuild;
 export const FeatureIcon = MdOutlineFeaturedPlayList;
-export const CatalogIcon = GrCatalog;
+export const CatalogIcon = IoBookOutline;
 export const BoletoIcon = AiOutlineBarcode;
 export const CardIcon = AiOutlineCreditCard;
 export const PixIcon = MdOutlinePix;

@@ -1,5 +1,4 @@
-import { ProductType } from "@/constants/product-type";
-import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { OrderBy } from "@/services/graphql/stokei";
 import {
   Container,
@@ -17,6 +16,8 @@ import { StoreLayout } from "../layout";
 import { Header } from "./components/header";
 import { ProductFilters } from "./components/product-filters";
 import { ProductsList } from "./components/products-list";
+import { useGetStoreCatalogItemsQuery } from "./graphql/catalog-items.query.graphql.generated";
+import { useGetStoreCatalogsQuery } from "./graphql/catalogs.query.graphql.generated";
 import { useGetStoreProductsQuery } from "./graphql/products.query.graphql.generated";
 
 interface HomePageProps {}
@@ -27,6 +28,45 @@ export const HomePage: FC<HomePageProps> = () => {
   const { filters, onChangeFilter } = useStoreFilters();
   const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
     useDisclosure();
+
+  const [{ data: dataCatalogs, fetching: isLoadingCatalogs }] =
+    useGetStoreCatalogsQuery({
+      pause: !currentApp?.id,
+      variables: {
+        orderBy: {
+          title: OrderBy.Asc,
+        },
+        where: {
+          AND: {
+            parent: {
+              equals: currentApp?.id,
+            },
+          },
+        },
+      },
+    });
+
+  const [{ data: dataCatalogItems, fetching: isLoadingCatalogItems }] =
+    useGetStoreCatalogItemsQuery({
+      pause: !currentApp?.id || !filters?.catalog,
+      variables: {
+        where: {
+          AND: {
+            catalog: {
+              equals: filters?.catalog,
+            },
+          },
+        },
+      },
+    });
+
+  const catalogItemsProductsIds = useMemo(
+    () =>
+      dataCatalogItems?.catalogItems?.items?.map(
+        (catalogItem) => catalogItem?.product?.id
+      ),
+    [dataCatalogItems?.catalogItems?.items]
+  );
 
   const [{ data: dataProducts, fetching: isLoadingProducts }] =
     useGetStoreProductsQuery({
@@ -41,14 +81,12 @@ export const HomePage: FC<HomePageProps> = () => {
         },
         where: {
           AND: {
+            ...(!!catalogItemsProductsIds?.length && {
+              ids: catalogItemsProductsIds,
+            }),
             app: {
               equals: currentApp?.id,
             },
-            ...(filters?.productType !== ProductType.ALL && {
-              parent: {
-                startsWith: filters?.productType?.toLowerCase(),
-              },
-            }),
             ...(filters?.productName && {
               name: {
                 startsWith: filters?.productName,
@@ -58,6 +96,11 @@ export const HomePage: FC<HomePageProps> = () => {
         },
       },
     });
+
+  const catalogs = useMemo(
+    () => dataCatalogs?.catalogs?.items || [],
+    [dataCatalogs?.catalogs?.items]
+  );
 
   const products = useMemo(() => {
     const productsList = dataProducts?.products?.items || [];
@@ -79,6 +122,7 @@ export const HomePage: FC<HomePageProps> = () => {
     <StoreLayout>
       <Container paddingY="5">
         <ProductFilters
+          catalogs={catalogs}
           isOpen={isOpenFiltersDrawer}
           onClose={onToggleFiltersDrawer}
         />
