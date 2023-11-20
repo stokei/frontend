@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 
 export interface StoreFilters {
-  productType?: ProductType;
   page?: number;
   productName?: string;
   catalog?: string;
@@ -25,6 +24,12 @@ export const useStoreFilters = () => {
 
   const onChangeFilter = useCallback(
     (newFilters: Partial<StoreFilters>) => {
+      if ((newFilters as any)?.slug) {
+        delete (newFilters as any).slug;
+      }
+      if ((filters as any)?.slug) {
+        delete (filters as any).slug;
+      }
       return router.replace({
         pathname: routes.store.home,
         query: {
@@ -36,8 +41,13 @@ export const useStoreFilters = () => {
     [filters, router]
   );
 
+  const onClearFilter = useCallback(() => {
+    return router.replace(routes.store.home);
+  }, [router]);
+
   return {
     filters,
+    onClearFilter,
     onChangeFilter,
   };
 };

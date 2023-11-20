@@ -1,0 +1,19 @@
+query GetStoreCatalogItems(
+  $where: WhereDataFindAllCatalogItemsInput
+  $orderBy: OrderByDataFindAllCatalogItemsInput
+  $page: PaginationInput
+) {
+  catalogItems(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      product {
+        id
+      }
+    }
+  }
+}
