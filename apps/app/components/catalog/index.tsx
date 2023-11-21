@@ -60,7 +60,6 @@ export const Catalog: FC<CatalogProps> = memo(
             </Box>
             <ButtonGroup width="fit-content">
               <Button
-                variant="outline"
                 leftIcon={<Icon name="arrowRight" />}
                 onClick={() =>
                   router.push({

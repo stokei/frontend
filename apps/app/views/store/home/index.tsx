@@ -73,7 +73,7 @@ export const HomePage: FC<HomePageProps> = () => {
       pause: !currentApp?.id,
       variables: {
         page: {
-          limit: 12,
+          limit: 36,
           number: filters?.page || 1,
         },
         orderBy: {
