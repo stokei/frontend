@@ -25,9 +25,7 @@ export const ShoppingCartMenu: FC<ShoppingCartMenuProps> = () => {
             e.preventDefault();
             onToggleShoppingCart();
           }}
-        >
-          {translate.formatMessage({ id: "shoppingCart" })}
-        </NavbarNavLink>
+        />
       </Box>
     </>
   );

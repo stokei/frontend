@@ -38,7 +38,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
       align="center"
       justify="flex-end"
       direction="row"
-      spacing="2"
+      spacing="0"
       {...props}
     >
       <ShoppingCartMenu />
@@ -66,7 +66,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
           </Stack>
         </>
       ) : (
-        <ButtonGroup width="fit-content">
+        <ButtonGroup width="fit-content" spacing="0">
           <Button
             variant="ghost"
             onClick={() =>
