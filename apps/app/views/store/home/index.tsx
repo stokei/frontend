@@ -89,7 +89,7 @@ export const HomePage: FC<HomePageProps> = () => {
             },
             ...(filters?.productName && {
               name: {
-                startsWith: filters?.productName,
+                search: filters?.productName,
               },
             }),
           },
