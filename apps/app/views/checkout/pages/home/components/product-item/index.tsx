@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, useCallback } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { SelectPrice } from "@/components";
@@ -30,6 +30,19 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product, price }) => {
   const { onRemoveShoppingCartItem, onAddOrUpdateShoppingCartItem } =
     useShoppingCart();
 
+  const onChoosePrice = useCallback(
+    (currentPrice?: PriceComponentFragment) =>
+      onAddOrUpdateShoppingCartItem({
+        price: currentPrice,
+        product: {
+          id: product?.id || "",
+          name: product?.name || "",
+          avatarURL: product?.avatar?.file?.url || "",
+        },
+      }),
+    [onAddOrUpdateShoppingCartItem, product]
+  );
+
   return (
     <Card>
       <CardBody>
@@ -57,19 +70,8 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product, price }) => {
             <SelectPrice
               size="md"
               showLabel={false}
-              onChooseCurrentPrice={() =>
-                onAddOrUpdateShoppingCartItem({
-                  price,
-                  product: {
-                    id: product?.id || "",
-                    name: product?.name || "",
-                    avatarURL: product?.avatar?.file?.url || "",
-                  },
-                })
-              }
-              onRemoveChooseCurrentPrice={() =>
-                onRemoveShoppingCartItem(product?.id)
-              }
+              onChooseCurrentPrice={onChoosePrice}
+              onRemoveChooseCurrentPrice={onChoosePrice}
               prices={product?.prices?.items}
               currentPrice={price}
             />
