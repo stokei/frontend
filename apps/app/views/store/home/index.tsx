@@ -8,9 +8,15 @@ import {
   NotFoundSubtitle,
   Pagination,
   Stack,
+  Tag,
+  TagCloseButton,
+  TagLabel,
+  TagList,
   useDisclosure,
+  useTags,
+  UseTagsTagItem,
 } from "@stokei/ui";
-import { FC, useCallback, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo } from "react";
 import { useStoreFilters } from "../hooks/use-filters";
 import { StoreLayout } from "../layout";
 import { Header } from "./components/header";
@@ -26,6 +32,8 @@ export const HomePage: FC<HomePageProps> = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const { filters, onChangeFilter } = useStoreFilters();
+  const { tags, onAddTags, onClearTags } = useTags();
+
   const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
     useDisclosure();
 
@@ -113,6 +121,41 @@ export const HomePage: FC<HomePageProps> = () => {
     return sortedProducts;
   }, [dataProducts?.products?.items]);
 
+  useEffect(() => {
+    const tagsList: UseTagsTagItem[] = [];
+    if (filters?.productName) {
+      tagsList.push({
+        id: filters?.productName,
+        label: filters?.productName,
+        onRemove: () => {
+          onChangeFilter({
+            productName: "",
+          });
+        },
+      });
+    }
+    if (filters?.catalog) {
+      const catalog = catalogs?.find(
+        (currentCatalog) => currentCatalog?.id === filters.catalog
+      );
+      if (catalog) {
+        tagsList.push({
+          id: catalog?.id,
+          label: catalog?.title,
+          onRemove: () => {
+            onChangeFilter({
+              catalog: "",
+            });
+          },
+        });
+      }
+    }
+    if (tagsList?.length) {
+      onAddTags(tagsList);
+    }
+    return () => onClearTags();
+  }, [catalogs, filters, onAddTags, onChangeFilter, onClearTags]);
+
   const onChangePage = useCallback(
     (page: number) => onChangeFilter({ page }),
     [onChangeFilter]
@@ -131,6 +174,18 @@ export const HomePage: FC<HomePageProps> = () => {
             productsTotalCount={dataProducts?.products?.totalCount || 0}
             onOpenFilters={onToggleFiltersDrawer}
           />
+
+          {tags?.length && (
+            <TagList>
+              {tags?.map((tag) => (
+                <Tag key={tag?.id}>
+                  <TagLabel>{tag?.label}</TagLabel>
+                  <TagCloseButton onClick={tag?.onRemove} />
+                </Tag>
+              ))}
+            </TagList>
+          )}
+
           {isLoadingProducts ? (
             <Loading />
           ) : (

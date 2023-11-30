@@ -174,6 +174,7 @@ export * from "./table-row";
 export * from "./tag";
 export * from "./tag-close-button";
 export * from "./tag-label";
+export * from "./tag-list";
 export * from "./rich-text-editor";
 export * from "./radio";
 export * from "./radio-card";

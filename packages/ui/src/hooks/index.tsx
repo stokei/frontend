@@ -10,6 +10,7 @@ export * from "./use-sidebar-group";
 export * from "./use-stokei";
 export * from "./use-toast";
 export * from "./use-uppy";
+export * from "./use-tags";
 export * from "./use-translations";
 export * from "./use-video-fullscreen";
 export * from "./use-video-picture-in-picture";

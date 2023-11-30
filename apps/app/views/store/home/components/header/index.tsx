@@ -19,11 +19,7 @@ export const Header: FC<HeaderProps> = ({
         {translate.formatMessage({ id: "total" })}: {productsTotalCount || 0}
       </Title>
       <Spacer />
-      <Button
-        variant="ghost"
-        leftIcon={<Icon name="filters" />}
-        onClick={onOpenFilters}
-      >
+      <Button leftIcon={<Icon name="filters" />} onClick={onOpenFilters}>
         {translate.formatMessage({ id: "filters" })}
       </Button>
     </Stack>
