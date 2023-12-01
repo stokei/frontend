@@ -9,7 +9,7 @@ import {
   StokeiUIProvider,
   uiTranslationsMessages,
 } from "@stokei/ui";
-import { getAppIdFromNextRouter } from "@stokei/utils";
+import noImage from "@/assets/no-image.png";
 
 import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
@@ -94,6 +94,10 @@ function MyApp({
                 <meta
                   name="viewport"
                   content="width=device-width, initial-scale=1"
+                />
+                <link
+                  rel="icon"
+                  href={currentApp?.icon?.file?.url || noImage?.src}
                 />
               </Head>
               <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
