@@ -317,6 +317,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   amountIsRequired: "Amount is required",
   intervalIsRequired: "Interval type is required",
   intervalCountIsRequired: "Interval is required",
+  fromAmount: "From amount",
   amount: "Amount",
   interval: "Interval type",
   intervalCount: "Interval",

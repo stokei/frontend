@@ -65,6 +65,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     amount: z.string().min(1, {
       message: translate.formatMessage({ id: "amountIsRequired" }),
     }),
+    fromAmount: z.string(),
     automaticRenew: z.boolean().default(false),
   });
 
@@ -99,6 +100,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
   const onSubmit = async ({
     name,
     amount,
+    fromAmount,
     automaticRenew,
   }: z.infer<typeof validationSchema>) => {
     try {
@@ -106,6 +108,9 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
         input: {
           parent: productId || "",
           nickname: name,
+          fromAmount: fromAmount
+            ? translate.formatMoneyToNumber(fromAmount)
+            : undefined,
           amount: translate.formatMoneyToNumber(amount),
           billingScheme: BillingScheme.PerUnit,
           inventoryType: InventoryType.Infinite,
@@ -171,6 +176,31 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
               </InputGroup>
               <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
             </FormControl>
+            <FormControl isInvalid={!!errors?.amount}>
+              <Label htmlFor="fromAmount">
+                {translate.formatMessage({ id: "fromAmount" })}
+              </Label>
+              <InputGroup>
+                <InputLeftAddon paddingX="5">
+                  <Text>{currentApp?.currency?.symbol}</Text>
+                </InputLeftAddon>
+                <Input
+                  id="fromAmount"
+                  placeholder="0.00"
+                  roundedLeft="none"
+                  {...register("fromAmount", {
+                    onChange(event) {
+                      event.target.value = convertAmountToMoney(
+                        event.target.value
+                      );
+                      return event;
+                    },
+                  })}
+                />
+              </InputGroup>
+              <FormErrorMessage>{errors?.amount?.message}</FormErrorMessage>
+            </FormControl>
+
             <FormControl isInvalid={!!errors?.amount}>
               <Label htmlFor="amount">
                 {translate.formatMessage({ id: "price" })}

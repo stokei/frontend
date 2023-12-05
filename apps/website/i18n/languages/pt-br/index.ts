@@ -274,6 +274,7 @@ export const ptBRMessages = {
   amountIsRequired: "Preço é obrigatório",
   intervalIsRequired: "Tipo do intervalo é obrigatório",
   intervalCountIsRequired: "Intervalo é obrigatório",
+  fromAmount: "Preço anterior",
   amount: "Preço",
   interval: "Tipo do intervalo",
   intervalCount: "Intervalo",
