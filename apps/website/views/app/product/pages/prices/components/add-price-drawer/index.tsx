@@ -176,8 +176,8 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
               </InputGroup>
               <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={!!errors?.amount}>
-              <Label htmlFor="fromAmount">
+            <FormControl isInvalid={!!errors?.fromAmount}>
+              <Label htmlFor="fromAmount" isOptional>
                 {translate.formatMessage({ id: "fromAmount" })}
               </Label>
               <InputGroup>
@@ -198,7 +198,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
                   })}
                 />
               </InputGroup>
-              <FormErrorMessage>{errors?.amount?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors?.fromAmount?.message}</FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors?.amount}>
