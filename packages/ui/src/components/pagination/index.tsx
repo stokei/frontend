@@ -28,6 +28,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       spacing="0"
       variant="outline"
       rounded="md"
+      justifyContent="center"
       {...props}
     >
       <Button

@@ -9,6 +9,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   addToCart: "Add to cart",
   store: "Store",
   seeAll: "See all",
+  seeAllProducts: "See all products",
   menu: "Menu",
   waitingPayment: "Waiting payment",
   buy: "Buy",

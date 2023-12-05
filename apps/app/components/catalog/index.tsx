@@ -82,7 +82,7 @@ export const Catalog: FC<CatalogProps> = memo(
               </Box>
               <Box width="full" justifyContent="center">
                 <Button
-                  leftIcon={<Icon name="arrowRight" />}
+                  rightIcon={<Icon name="arrowRight" />}
                   onClick={() =>
                     router.push({
                       pathname: routes.store.home,
@@ -92,7 +92,7 @@ export const Catalog: FC<CatalogProps> = memo(
                     })
                   }
                 >
-                  {translate.formatMessage({ id: "goToStore" })}
+                  {translate.formatMessage({ id: "seeAllProducts" })}
                 </Button>
               </Box>
             </Stack>

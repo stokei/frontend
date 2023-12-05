@@ -111,7 +111,7 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
           <Stack direction="column" spacing="5">
             <FormControl isInvalid={!!errors?.name}>
               <Label htmlFor="name">
-                {translate.formatMessage({ id: "name" })}
+                {translate.formatMessage({ id: "product" })}
               </Label>
               <InputGroup>
                 <Input
