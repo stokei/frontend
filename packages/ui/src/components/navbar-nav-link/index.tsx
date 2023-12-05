@@ -15,7 +15,7 @@ export const NavbarNavLink: React.FC<NavbarNavLinkProps> = ({
   ...props
 }) => {
   const hoverStyle = {
-    background: "background.200",
+    background: "primary.50",
   };
   const activeStyle = isActive ? hoverStyle : {};
   return (
@@ -23,7 +23,7 @@ export const NavbarNavLink: React.FC<NavbarNavLinkProps> = ({
       padding="2"
       paddingX="5"
       alignItems="center"
-      color="primary.900"
+      color="primary.600"
       fontWeight="semibold"
       rounded="full"
       {...props}

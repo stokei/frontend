@@ -10,6 +10,7 @@ export const ptBRMessages = {
   shoppingCartItemsNotFound: "Nenhum item do carrinho encontrado!",
   store: "Loja",
   seeAll: "Ver todos",
+  seeAllProducts: "Ver todos produtos",
   menu: "Menu",
   waitingPayment: "Aguardando pagamento",
   buy: "Comprar",

@@ -46,34 +46,14 @@ export const Catalog: FC<CatalogProps> = memo(
     return (
       <Box flexDirection="column" as="section" paddingY="5">
         <Container marginBottom="5">
-          <Stack
-            direction={["column", "column", "row", "row"]}
-            justify="space-between"
-          >
-            <Box width="full" flexDirection="column">
-              <Title fontSize="xl">{title}</Title>
-              {subtitle && (
-                <Text fontSize="sm" marginBottom="5" color="text.300">
-                  {subtitle}
-                </Text>
-              )}
-            </Box>
-            <ButtonGroup width="fit-content">
-              <Button
-                leftIcon={<Icon name="arrowRight" />}
-                onClick={() =>
-                  router.push({
-                    pathname: routes.store.home,
-                    query: {
-                      catalog: catalogId,
-                    },
-                  })
-                }
-              >
-                {translate.formatMessage({ id: "goToStore" })}
-              </Button>
-            </ButtonGroup>
-          </Stack>
+          <Box width="full" flexDirection="column">
+            <Title fontSize="xl">{title}</Title>
+            {subtitle && (
+              <Text fontSize="sm" marginBottom="5" color="text.300">
+                {subtitle}
+              </Text>
+            )}
+          </Box>
         </Container>
         {!catalogItems?.length ? (
           <NotFound>
@@ -83,23 +63,40 @@ export const Catalog: FC<CatalogProps> = memo(
             </NotFoundSubtitle>
           </NotFound>
         ) : (
-          <Box flexDirection="row" overflowY="hidden">
-            <Container>
-              <SimpleGrid columns={[1, 1, 2, 4]} spacing="5">
-                {catalogItems?.map(({ product, catalogItemId }) => (
-                  <CatalogItem
-                    key={catalogItemId}
-                    productId={product?.id}
-                    name={product?.name}
-                    avatar={product?.avatar?.file?.url || ""}
-                    defaultPrice={product?.defaultPrice}
-                    prices={product?.prices}
-                    parent={product?.parent}
-                  />
-                ))}
-              </SimpleGrid>
-            </Container>
-          </Box>
+          <Container>
+            <Stack direction="column" spacing="5">
+              <Box flexDirection="row" overflowY="hidden">
+                <SimpleGrid columns={[1, 1, 2, 4]} spacing="5">
+                  {catalogItems?.map(({ product, catalogItemId }) => (
+                    <CatalogItem
+                      key={catalogItemId}
+                      productId={product?.id}
+                      name={product?.name}
+                      avatar={product?.avatar?.file?.url || ""}
+                      defaultPrice={product?.defaultPrice}
+                      prices={product?.prices}
+                      parent={product?.parent}
+                    />
+                  ))}
+                </SimpleGrid>
+              </Box>
+              <Box width="full" justifyContent="center">
+                <Button
+                  rightIcon={<Icon name="arrowRight" />}
+                  onClick={() =>
+                    router.push({
+                      pathname: routes.store.home,
+                      query: {
+                        catalog: catalogId,
+                      },
+                    })
+                  }
+                >
+                  {translate.formatMessage({ id: "seeAllProducts" })}
+                </Button>
+              </Box>
+            </Stack>
+          </Container>
         )}
       </Box>
     );

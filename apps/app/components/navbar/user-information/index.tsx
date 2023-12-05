@@ -5,8 +5,6 @@ import {
   Avatar,
   Button,
   ButtonGroup,
-  Divider,
-  Icon,
   NavbarNavLink,
   Stack,
   StackProps,
@@ -42,6 +40,9 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
       {...props}
     >
       <ShoppingCartMenu />
+      <NavbarNavLink icon="store" as={NextLink} href={routes.store.home}>
+        {translate.formatMessage({ id: "store" })}
+      </NavbarNavLink>
       {!!currentAccount ? (
         <>
           <NavbarUserInformationDrawer
@@ -81,6 +82,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
             {translate.formatMessage({ id: "login" })}
           </Button>
           <Button
+            display={["none", "none", "block", "block"]}
             onClick={() =>
               router.push({
                 pathname: routes.auth.signUp,
