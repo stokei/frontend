@@ -56,6 +56,14 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
       () => (parent?.__typename === "Course" ? parent : null),
       [parent]
     );
+    const productURL = useMemo(
+      () =>
+        routes.product.home({
+          product: productId || "",
+          price: currentPrice?.id,
+        }),
+      [currentPrice?.id, productId]
+    );
 
     useEffect(() => {
       if (defaultPrice) {
@@ -64,13 +72,8 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
     }, [defaultPrice]);
 
     const goToProductDetails = useCallback(() => {
-      router.push({
-        pathname: routes.product.home({ product: productId || "" }),
-        query: {
-          price: currentPrice?.id,
-        },
-      });
-    }, [currentPrice?.id, productId, router]);
+      router.push(productURL);
+    }, [productURL, router]);
 
     const onChoosePrice = useCallback((price?: PriceComponentFragment) => {
       setCurrentPrice(price || null);
@@ -109,11 +112,7 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
           justifyContent="flex-end"
         >
           <Stack spacing="5" direction="column">
-            <Link
-              width="fit-content"
-              as={NextLink}
-              onClick={goToProductDetails}
-            >
+            <Link width="fit-content" as={NextLink} href={productURL}>
               <Title size="md" color="inherit">
                 {name}
               </Title>
