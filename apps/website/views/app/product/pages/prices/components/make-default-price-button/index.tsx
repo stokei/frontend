@@ -1,5 +1,5 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { Button, useToast } from "@stokei/ui";
+import { Icon, MenuItem, useToast } from "@stokei/ui";
 import { FC } from "react";
 import { useUpdateProductMutation } from "../../../../graphql/update-product.mutation.graphql.generated";
 
@@ -50,15 +50,10 @@ export const MakeDefaultPriceButton: FC<MakeDefaultPriceButtonProps> = ({
   };
 
   return (
-    <Button
-      variant="link"
-      isLoading={isLoading}
-      onClick={onMakeDefaulPrice}
-      colorScheme="blue"
-    >
+    <MenuItem icon={<Icon name="star" />} onClick={onMakeDefaulPrice}>
       {translate.formatMessage({
-        id: "makeDefault",
+        id: isLoading ? "loading" : "makeDefault",
       })}
-    </Button>
+    </MenuItem>
   );
 };

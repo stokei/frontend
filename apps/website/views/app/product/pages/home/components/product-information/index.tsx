@@ -1,6 +1,5 @@
-import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
-import { getCheckoutURL } from "@/utils/get-checkout-url";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -16,17 +15,16 @@ import {
   Stack,
   Text,
   Title,
-  useClipboard,
   useToast,
 } from "@stokei/ui";
 import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ProductPageProductFragment } from "../../../../graphql/product.query.graphql.generated";
-import { useUpdateProductMutation } from "../../../../graphql/update-product.mutation.graphql.generated";
 import { Section } from "../../../../components/section";
 import { SectionContent } from "../../../../components/section-content";
 import { SectionInformation } from "../../../../components/section-information";
+import { ProductPageProductFragment } from "../../../../graphql/product.query.graphql.generated";
+import { useUpdateProductMutation } from "../../../../graphql/update-product.mutation.graphql.generated";
 
 interface ProductInformationProps {
   currentProduct?: ProductPageProductFragment;
@@ -38,13 +36,6 @@ export const ProductInformation: FC<ProductInformationProps> = ({
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
-  const { currentApp } = useCurrentApp();
-  const { onCopy, hasCopied } = useClipboard(
-    getCheckoutURL({
-      domain: currentApp?.defaultDomain?.name || "",
-      product: currentProduct?.id || "",
-    })
-  );
 
   const validationSchema = z.object({
     name: z.string().min(1, {
@@ -137,13 +128,6 @@ export const ProductInformation: FC<ProductInformationProps> = ({
               })}
             </Text>
           </Stack>
-          <ButtonGroup variant="link">
-            <Button onClick={onCopy} isDisabled={hasCopied}>
-              {translate.formatMessage({
-                id: hasCopied ? "copiedLink" : "copyPaymentLink",
-              })}
-            </Button>
-          </ButtonGroup>
         </Stack>
       </SectionInformation>
       <SectionContent>

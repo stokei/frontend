@@ -1,8 +1,8 @@
+import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { Button, useToast } from "@stokei/ui";
+import { Icon, MenuItem, useToast } from "@stokei/ui";
 import { FC } from "react";
 import { useActivatePriceMutation } from "../../graphql/activate-price.mutation.graphql.generated";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 
 interface ActivatePriceButtonProps {
   priceId?: string;
@@ -44,10 +44,14 @@ export const ActivatePriceButton: FC<ActivatePriceButtonProps> = ({
   };
 
   return (
-    <Button variant="outline" isLoading={isLoading} onClick={onActivatePrice}>
+    <MenuItem
+      icon={<Icon name="reload" />}
+      onClick={onActivatePrice}
+      color="green.500"
+    >
       {translate.formatMessage({
-        id: "activate",
+        id: isLoading ? "loading" : "activate",
       })}
-    </Button>
+    </MenuItem>
   );
 };

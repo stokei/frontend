@@ -10,11 +10,13 @@ export interface PriceProps extends StackProps {
   size?: "md" | "lg";
   readonly withPriceAndUnitDirectionColumn?: boolean;
   readonly withUnitDescription?: boolean;
+  readonly withRecurring?: boolean;
 }
 export const Price: FC<PriceProps> = ({
   price,
   size,
   justify,
+  withRecurring = true,
   withUnitDescription,
   withPriceAndUnitDirectionColumn,
   ...props
@@ -46,7 +48,7 @@ export const Price: FC<PriceProps> = ({
   }, [price, translate]);
 
   const priceRecurringIntervalTypeKey = useMemo(() => {
-    if (!price?.recurring?.interval) {
+    if (!price?.recurring?.interval || !withRecurring) {
       return undefined;
     }
     const key = getI18nKeyFromRecurringInterval(price?.recurring?.interval);
@@ -54,7 +56,7 @@ export const Price: FC<PriceProps> = ({
       return key.plural;
     }
     return key.singular;
-  }, [price]);
+  }, [price?.recurring, withRecurring]);
 
   const perUnitDescription = useMemo(
     () => (withUnitDescription ? translate.formatMessage({ id: "per" }) : "/"),

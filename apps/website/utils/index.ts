@@ -3,7 +3,6 @@ export * from "./format-app-colors-to-theme-colors";
 export * from "./get-account-status-color";
 export * from "./get-app-status-color";
 export * from "./get-card-flag-url";
-export * from "./get-checkout-url";
 export * from "./get-i18n-key-from-recurring-interval";
 export * from "./get-invoice-status-color";
 export * from "./get-product-url";

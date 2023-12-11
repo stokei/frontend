@@ -6,5 +6,7 @@ import {
 export interface MenuItemProps extends ChakraMenuItemProps {}
 
 export const MenuItem: React.FC<MenuItemProps> = ({ children, ...props }) => (
-  <ChakraMenuItem {...props}>{children}</ChakraMenuItem>
+  <ChakraMenuItem paddingY="3" {...props}>
+    {children}
+  </ChakraMenuItem>
 );

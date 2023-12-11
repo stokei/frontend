@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { secondsToTime } from "../../utils/seconds-to-time";
 
@@ -37,7 +37,7 @@ export const useTranslations = <TKeys = string>() => {
           maximumFractionDigits: 10,
         }).format(valueAmount);
       } catch (error) {
-        return 0;
+        return "0";
       }
     },
     []
@@ -109,14 +109,27 @@ export const useTranslations = <TKeys = string>() => {
     }
   }, []);
 
-  return {
-    locale: intl.locale,
-    formatNumber,
-    formatMessage,
-    formatMoney,
-    formatDate,
-    formatTime,
-    formatDateTime,
-    formatMoneyToNumber,
-  };
+  const values = useMemo(
+    () => ({
+      locale: intl.locale,
+      formatNumber,
+      formatMessage,
+      formatMoney,
+      formatDate,
+      formatTime,
+      formatDateTime,
+      formatMoneyToNumber,
+    }),
+    [
+      formatNumber,
+      formatMessage,
+      formatMoney,
+      formatDate,
+      formatTime,
+      formatDateTime,
+      formatMoneyToNumber,
+    ]
+  );
+
+  return values;
 };
