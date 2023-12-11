@@ -35,23 +35,23 @@ export const ActionsMenu: FC<ActionsMenuProps> = ({
           price={price}
           onSuccessPriceUpdated={onSuccessPriceUpdated}
         />
-        {price?.active ? (
+        {!isDefaultPrice && (
           <>
-            <MakeDefaultPriceButton
-              priceId={price?.id || ""}
-              productId={price?.parent || ""}
-              onSuccess={onSuccessPriceUpdated}
-            />
-            {!isDefaultPrice && (
-              <DeactivatePriceButton
-                priceId={price?.id}
-                onSuccess={onSuccessPriceDeactivated}
-              />
-            )}
-          </>
-        ) : (
-          <>
-            {!isDefaultPrice && (
+            {price?.active ? (
+              <>
+                <MakeDefaultPriceButton
+                  priceId={price?.id || ""}
+                  productId={price?.parent || ""}
+                  onSuccess={onSuccessPriceUpdated}
+                />
+                {!isDefaultPrice && (
+                  <DeactivatePriceButton
+                    priceId={price?.id}
+                    onSuccess={onSuccessPriceDeactivated}
+                  />
+                )}
+              </>
+            ) : (
               <ActivatePriceButton
                 priceId={price?.id}
                 onSuccess={onSuccessPriceActivated}
