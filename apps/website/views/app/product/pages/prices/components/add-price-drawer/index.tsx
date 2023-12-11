@@ -260,25 +260,33 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
             </FormControl>
 
             {type === PriceType.Recurring && (
-              <RecurringIntervalInput
-                interval={interval}
-                intervalCount={intervalCount}
-                onChangeInterval={setInterval}
-                onChangeIntervalCount={setIntervalCount}
-              />
+              <>
+                <RecurringIntervalInput
+                  interval={interval}
+                  intervalCount={intervalCount}
+                  onChangeInterval={setInterval}
+                  onChangeIntervalCount={setIntervalCount}
+                />
+                <FormControl isInvalid={!!errors?.automaticRenew}>
+                  <Stack direction="row" align="center" spacing="5">
+                    <Label
+                      width="fit-content"
+                      margin="0"
+                      htmlFor="automaticRenew"
+                    >
+                      {translate.formatMessage({ id: "automaticRenew" })}
+                    </Label>
+                    <Switch
+                      id="automaticRenew"
+                      {...register("automaticRenew")}
+                    />
+                  </Stack>
+                  <FormErrorMessage>
+                    {errors?.automaticRenew?.message}
+                  </FormErrorMessage>
+                </FormControl>
+              </>
             )}
-
-            <FormControl isInvalid={!!errors?.automaticRenew}>
-              <Stack direction="row" align="center" spacing="5">
-                <Label width="fit-content" margin="0" htmlFor="automaticRenew">
-                  {translate.formatMessage({ id: "automaticRenew" })}
-                </Label>
-                <Switch id="automaticRenew" {...register("automaticRenew")} />
-              </Stack>
-              <FormErrorMessage>
-                {errors?.automaticRenew?.message}
-              </FormErrorMessage>
-            </FormControl>
 
             <Button
               type="submit"

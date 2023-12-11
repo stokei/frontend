@@ -1,5 +1,6 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
+import { PriceType } from "@/services/graphql/stokei";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -199,17 +200,23 @@ export const UpdatePriceDrawer: FC<UpdatePriceDrawerProps> = ({
               <FormErrorMessage>{errors?.amount?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors?.automaticRenew}>
-              <Stack direction="row" align="center" spacing="5">
-                <Label width="fit-content" margin="0" htmlFor="automaticRenew">
-                  {translate.formatMessage({ id: "automaticRenew" })}
-                </Label>
-                <Switch id="automaticRenew" {...register("automaticRenew")} />
-              </Stack>
-              <FormErrorMessage>
-                {errors?.automaticRenew?.message}
-              </FormErrorMessage>
-            </FormControl>
+            {price?.type === PriceType.Recurring && (
+              <FormControl isInvalid={!!errors?.automaticRenew}>
+                <Stack direction="row" align="center" spacing="5">
+                  <Label
+                    width="fit-content"
+                    margin="0"
+                    htmlFor="automaticRenew"
+                  >
+                    {translate.formatMessage({ id: "automaticRenew" })}
+                  </Label>
+                  <Switch id="automaticRenew" {...register("automaticRenew")} />
+                </Stack>
+                <FormErrorMessage>
+                  {errors?.automaticRenew?.message}
+                </FormErrorMessage>
+              </FormControl>
+            )}
 
             <Button
               type="submit"
