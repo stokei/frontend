@@ -19,7 +19,6 @@ import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
 import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
-import { getCheckoutURL } from "@/utils";
 
 export interface CatalogItemProps {
   readonly productId?: string;
@@ -45,14 +44,13 @@ export const CatalogItem: FC<CatalogItemProps> = memo(
     );
 
     const productURL = useMemo(() => {
-      if (!!course) {
-        return getCheckoutURL({
-          domain: currentApp?.defaultDomain?.name || "",
+      if (productId) {
+        return routes.app({ appId: currentApp?.id }).product({
           product: productId || "",
-        });
+        }).home;
       }
       return "";
-    }, [course, currentApp?.defaultDomain?.name, productId]);
+    }, [currentApp?.id, productId]);
 
     const goToCheckout = useCallback(() => {
       router.push(productURL);
