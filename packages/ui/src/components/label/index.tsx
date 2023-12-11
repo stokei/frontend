@@ -18,13 +18,10 @@ export const Label: React.FC<LabelProps> = ({
   return (
     <ChakraFormLabel width="full" fontSize="sm" color="text.500" {...props}>
       {children}
-
-      {isOptional ? (
+      {isOptional && (
         <Text marginLeft="1" color="text.300">
-          - {translate.formatMessage({ id: "optional" })}
+          ({translate.formatMessage({ id: "optional" })})
         </Text>
-      ) : (
-        ""
       )}
     </ChakraFormLabel>
   );

@@ -63,7 +63,7 @@ import { FaMoneyBill, FaUserShield, FaUserTie } from "react-icons/fa";
 import { FiPlus, FiSettings } from "react-icons/fi";
 import { HiOutlineAcademicCap } from "react-icons/hi";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
-import { IoBookOutline } from "react-icons/io5";
+import { IoBookOutline, IoClose } from "react-icons/io5";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import {
   LuFileSignature,
@@ -134,6 +134,7 @@ export const CheckIcon = BsCheckCircleFill;
 export const StoreIcon = HiOutlineBuildingStorefront;
 export const SubscriptionIcon = LuFileSignature;
 export const AppIcon = TbApps;
+export const CloseIcon = IoClose;
 export const CourseIcon = HiOutlineAcademicCap;
 export const NotificationIcon = BsBell;
 export const WalletIcon = BsWallet2;

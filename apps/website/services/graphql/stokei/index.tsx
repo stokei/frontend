@@ -3317,6 +3317,7 @@ export type UpdateDataModuleInput = {
 };
 
 export type UpdateDataPriceInput = {
+  amount?: InputMaybe<Scalars['Int']>;
   automaticRenew?: InputMaybe<Scalars['Boolean']>;
   fromAmount?: InputMaybe<Scalars['Int']>;
   quantity?: InputMaybe<Scalars['Int']>;

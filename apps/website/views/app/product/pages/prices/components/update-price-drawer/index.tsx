@@ -1,15 +1,5 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { RecurringIntervalInput } from "@/components/recurring-interval-input";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import {
-  BillingScheme,
-  IntervalType,
-  InventoryType,
-  PriceType,
-  TiersMode,
-  UsageType,
-} from "@/services/graphql/stokei";
-import { convertEnumValueToCamelCase } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -23,45 +13,35 @@ import {
   InputGroup,
   InputLeftAddon,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
   Stack,
   Switch,
   Text,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCreatePriceMutation } from "../../graphql/create-price.mutation.graphql.generated";
+import { useUpdatePriceMutation } from "../../graphql/update-price.mutation.graphql.generated";
 
-interface AddPriceDrawerProps {
-  productId?: string;
+interface UpdatePriceDrawerProps {
+  price?: PriceComponentFragment;
   isOpenDrawer?: boolean;
   onCloseDrawer: () => void;
   onSuccess?: (price: PriceComponentFragment) => void;
 }
 
-export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
-  productId,
+export const UpdatePriceDrawer: FC<UpdatePriceDrawerProps> = ({
+  price,
   isOpenDrawer,
   onSuccess,
   onCloseDrawer,
 }) => {
-  const [type, setType] = useState<PriceType>(PriceType.OneTime);
-  const [interval, setInterval] = useState<IntervalType>(IntervalType.Month);
-  const [intervalCount, setIntervalCount] = useState<string>("");
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
 
   const validationSchema = z.object({
-    name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
-    }),
     amount: z.string().min(1, {
       message: translate.formatMessage({ id: "amountIsRequired" }),
     }),
@@ -69,8 +49,8 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     automaticRenew: z.boolean().default(false),
   });
 
-  const [{ fetching: isLoadingCreatePrice }, createPrice] =
-    useCreatePriceMutation();
+  const [{ fetching: isLoadingCreatePrice }, onUpdatePrice] =
+    useUpdatePriceMutation();
 
   const {
     register,
@@ -98,40 +78,31 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
   );
 
   const onSubmit = async ({
-    name,
     amount,
     fromAmount,
     automaticRenew,
   }: z.infer<typeof validationSchema>) => {
     try {
-      const response = await createPrice({
+      const response = await onUpdatePrice({
         input: {
-          parent: productId || "",
-          nickname: name,
-          fromAmount: fromAmount
-            ? translate.formatMoneyToNumber(fromAmount)
-            : undefined,
-          amount: translate.formatMoneyToNumber(amount),
-          billingScheme: BillingScheme.PerUnit,
-          inventoryType: InventoryType.Infinite,
-          tiersMode: TiersMode.Volume,
-          automaticRenew,
-          type,
-          ...(type === PriceType.Recurring && {
-            recurring: {
-              interval,
-              intervalCount: parseInt(intervalCount),
-              usageType: UsageType.Licensed,
-            },
-          }),
+          data: {
+            automaticRenew,
+            fromAmount: fromAmount
+              ? translate.formatMoneyToNumber(fromAmount)
+              : undefined,
+            amount: translate.formatMoneyToNumber(amount),
+          },
+          where: {
+            price: price?.id || "",
+          },
         },
       });
-      if (!!response?.data?.createPrice) {
+      if (!!response?.data?.updatePrice) {
         onShowToast({
-          title: translate.formatMessage({ id: "priceCreatedSuccessfully" }),
+          title: translate.formatMessage({ id: "updatedSuccessfully" }),
           status: "success",
         });
-        onSuccess?.(response?.data?.createPrice);
+        onSuccess?.(response?.data?.updatePrice);
         return;
       }
 
@@ -142,6 +113,20 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
       }
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if (price) {
+      reset({
+        automaticRenew: price?.automaticRenew,
+        ...(price?.amount && {
+          amount: convertAmountToMoney(price?.amount + ""),
+        }),
+        ...(price?.fromAmount && {
+          fromAmount: convertAmountToMoney(price?.fromAmount + ""),
+        }),
+      });
+    }
+  }, [convertAmountToMoney, price, reset]);
 
   useEffect(() => {
     if (!isOpenDrawer) {
@@ -156,26 +141,14 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
 
   return (
     <Drawer isOpen={!!isOpenDrawer} onClose={onClose}>
-      <DrawerHeader>{translate.formatMessage({ id: "addPrice" })}</DrawerHeader>
+      <DrawerHeader>
+        {translate.formatMessage({ id: "updatePrice" })}
+      </DrawerHeader>
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing="5">
-            <FormControl isInvalid={!!errors?.name}>
-              <Label htmlFor="name">
-                {translate.formatMessage({ id: "name" })}
-              </Label>
-              <InputGroup>
-                <Input
-                  id="name"
-                  type="name"
-                  placeholder={translate.formatMessage({
-                    id: "namePlaceholder",
-                  })}
-                  {...register("name")}
-                />
-              </InputGroup>
-              <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-            </FormControl>
+            <Text fontWeight="bold">{price?.nickname || ""}</Text>
+
             <FormControl isInvalid={!!errors?.fromAmount}>
               <Label htmlFor="fromAmount" isOptional>
                 {translate.formatMessage({ id: "fromAmount" })}
@@ -225,48 +198,6 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
               </InputGroup>
               <FormErrorMessage>{errors?.amount?.message}</FormErrorMessage>
             </FormControl>
-
-            <FormControl isInvalid={!!errors?.automaticRenew}>
-              <Label htmlFor="price-type">
-                {translate.formatMessage({ id: "type" })}
-              </Label>
-              <Select
-                value={type}
-                onChooseItem={setType}
-                onRemoveChooseItem={setType}
-              >
-                <SelectInput
-                  id="price-type"
-                  item={(item) => (
-                    <Text>
-                      {translate.formatMessage({
-                        id:
-                          item === PriceType.OneTime
-                            ? "lifelong"
-                            : (convertEnumValueToCamelCase(item) as any),
-                      })}
-                    </Text>
-                  )}
-                />
-                <SelectList>
-                  <SelectItem value={PriceType.OneTime}>
-                    <Text>{translate.formatMessage({ id: "lifelong" })}</Text>
-                  </SelectItem>
-                  <SelectItem value={PriceType.Recurring}>
-                    <Text>{translate.formatMessage({ id: "recurring" })}</Text>
-                  </SelectItem>
-                </SelectList>
-              </Select>
-            </FormControl>
-
-            {type === PriceType.Recurring && (
-              <RecurringIntervalInput
-                interval={interval}
-                intervalCount={intervalCount}
-                onChangeInterval={setInterval}
-                onChangeIntervalCount={setIntervalCount}
-              />
-            )}
 
             <FormControl isInvalid={!!errors?.automaticRenew}>
               <Stack direction="row" align="center" spacing="5">

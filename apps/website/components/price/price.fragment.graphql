@@ -8,6 +8,7 @@ fragment PriceComponent on Price {
   discountPercent
   unit
   active
+  automaticRenew
   isDefault
   currency {
     id
