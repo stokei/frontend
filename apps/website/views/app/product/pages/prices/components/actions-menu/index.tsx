@@ -9,6 +9,7 @@ import { MakeDefaultPriceButton } from "../make-default-price-button";
 import { UpdatePriceButton } from "../update-price-button";
 
 interface ActionsMenuProps {
+  isDefaultPrice?: boolean;
   price?: PriceComponentFragment;
   onSuccessPriceUpdated: () => void;
   onSuccessPriceActivated: (price?: PriceComponentFragment) => void;
@@ -17,6 +18,7 @@ interface ActionsMenuProps {
 
 export const ActionsMenu: FC<ActionsMenuProps> = ({
   price,
+  isDefaultPrice,
   onSuccessPriceUpdated,
   onSuccessPriceActivated,
   onSuccessPriceDeactivated,
@@ -40,16 +42,22 @@ export const ActionsMenu: FC<ActionsMenuProps> = ({
               productId={price?.parent || ""}
               onSuccess={onSuccessPriceUpdated}
             />
-            <DeactivatePriceButton
-              priceId={price?.id}
-              onSuccess={onSuccessPriceDeactivated}
-            />
+            {!isDefaultPrice && (
+              <DeactivatePriceButton
+                priceId={price?.id}
+                onSuccess={onSuccessPriceDeactivated}
+              />
+            )}
           </>
         ) : (
-          <ActivatePriceButton
-            priceId={price?.id}
-            onSuccess={onSuccessPriceActivated}
-          />
+          <>
+            {!isDefaultPrice && (
+              <ActivatePriceButton
+                priceId={price?.id}
+                onSuccess={onSuccessPriceActivated}
+              />
+            )}
+          </>
         )}
       </MenuList>
     </Menu>

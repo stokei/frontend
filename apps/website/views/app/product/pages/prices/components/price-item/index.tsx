@@ -48,14 +48,13 @@ export const PriceItem: FC<PriceItemProps> = memo(
             <Text fontSize="md" lineHeight="shorter" fontWeight="600">
               {price?.nickname}
             </Text>
-            {!isDefaultPrice && (
-              <ActionsMenu
-                price={price}
-                onSuccessPriceUpdated={onSuccessPriceUpdated}
-                onSuccessPriceDeactivated={onSuccessPriceDeactivated}
-                onSuccessPriceActivated={onSuccessPriceActivated}
-              />
-            )}
+            <ActionsMenu
+              isDefaultPrice={isDefaultPrice}
+              price={price}
+              onSuccessPriceUpdated={onSuccessPriceUpdated}
+              onSuccessPriceDeactivated={onSuccessPriceDeactivated}
+              onSuccessPriceActivated={onSuccessPriceActivated}
+            />
           </Stack>
         </CardHeader>
         <CardBody paddingBottom={0}>
