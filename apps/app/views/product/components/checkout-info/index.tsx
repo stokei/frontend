@@ -1,7 +1,7 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useTranslations } from "@/hooks";
+import { useShoppingCart, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
 import {
@@ -21,7 +21,7 @@ import { ProductPageProductFragment } from "../../graphql/product.query.graphql.
 import { Features } from "../../pages/generic/components/features";
 
 export interface CheckoutInfoProps {
-  readonly productId?: string;
+  readonly product?: ProductPageProductFragment;
   readonly avatarURL?: string;
   readonly defaultPrice?: PriceComponentFragment | null;
   readonly features?: ProductPageProductFragment["features"];
@@ -29,7 +29,7 @@ export interface CheckoutInfoProps {
 }
 
 export const CheckoutInfo: FC<CheckoutInfoProps> = ({
-  productId,
+  product,
   avatarURL,
   features,
   defaultPrice,
@@ -41,6 +41,7 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
   const router = useRouter();
   const translate = useTranslations();
   const { isAuthenticated } = useCurrentAccount();
+  const { onAddOrUpdateShoppingCartItem } = useShoppingCart();
 
   const priceURLParamId = useMemo(
     () => router.query?.price?.toString() || "",
@@ -63,27 +64,25 @@ export const CheckoutInfo: FC<CheckoutInfoProps> = ({
   }, [defaultPrice, priceURLParamId, prices?.items]);
 
   const onRedirectToCheckout = async () => {
-    const checkoutURL = routes.checkout.home({
-      product: productId || "",
+    const checkoutURL = routes.checkout.home;
+    onAddOrUpdateShoppingCartItem({
+      price: currentPrice,
+      product: {
+        id: product?.id || "",
+        name: product?.name || "",
+        avatarURL: product?.avatar?.file?.url || "",
+      },
     });
-    const urlParams = new URLSearchParams();
-    if (currentPrice?.id) {
-      urlParams.set("price", currentPrice?.id);
-    }
-    const urlParamsString = urlParams.toString()
-      ? "?" + urlParams.toString()
-      : "";
-
     if (!isAuthenticated) {
-      router.push({
+      await router.push({
         pathname: routes.auth.login,
         query: {
-          redirectTo: checkoutURL + urlParamsString,
+          redirectTo: checkoutURL,
         },
       });
       return;
     }
-    router.push(checkoutURL + urlParamsString);
+    await router.push(checkoutURL);
   };
 
   const onChoosePrice = useCallback(

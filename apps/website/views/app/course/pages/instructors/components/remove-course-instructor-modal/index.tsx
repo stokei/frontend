@@ -58,7 +58,7 @@ export const RemoveCourseInstructorModal: FC<
         );
         onShowToast({
           title: translate.formatMessage({
-            id: "courseInstructorRemoveedSuccessfully",
+            id: "courseInstructorRemovedSuccessfully",
           }),
           status: "success",
         });

@@ -1,0 +1,23 @@
+query GetStoreCatalogs(
+  $where: WhereDataFindAllCatalogsInput
+  $orderBy: OrderByDataFindAllCatalogsInput
+  $page: PaginationInput
+) {
+  catalogs(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...StoreCatalog
+    }
+  }
+}
+
+fragment StoreCatalog on Catalog {
+  id
+  title
+  subtitle
+}

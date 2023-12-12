@@ -1,12 +1,10 @@
 import { NavbarUserInformation, SidebarOpenButton } from "@/components";
-import { useTranslations } from "@/hooks";
-import { Navbar as NavbarUI, Title } from "@stokei/ui";
+import { Navbar as NavbarUI, Spacer } from "@stokei/ui";
 import { FC } from "react";
 
 interface NavbarProps {}
 
 export const Navbar: FC<NavbarProps> = () => {
-  const translate = useTranslations();
   return (
     <NavbarUI
       align="center"
@@ -14,9 +12,7 @@ export const Navbar: FC<NavbarProps> = () => {
       borderBottomWidth="thin"
     >
       <SidebarOpenButton />
-      <Title fontSize="md" lineHeight="shorter">
-        {translate.formatMessage({ id: "subscription" })}
-      </Title>
+      <Spacer />
       <NavbarUserInformation />
     </NavbarUI>
   );

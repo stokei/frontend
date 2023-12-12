@@ -10,9 +10,9 @@ export const SidebarOpenButton: FC<SidebarOpenButtonProps> = ({ ...props }) => {
   return (
     <Button
       variant="ghost"
-      color="text.500"
       onClick={onToggleSidebar}
       display={["block", "block", "none", "none"]}
+      marginLeft="-4"
       {...props}
     >
       <Stack
@@ -23,7 +23,7 @@ export const SidebarOpenButton: FC<SidebarOpenButtonProps> = ({ ...props }) => {
         spacing="3"
       >
         <Icon name="menu" />
-        <Text>{translate.formatMessage({ id: "menu" })}</Text>
+        <Text color="inherit">{translate.formatMessage({ id: "menu" })}</Text>
       </Stack>
     </Button>
   );

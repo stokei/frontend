@@ -1,8 +1,6 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
-  Avatar,
-  AvatarGroup,
   Box,
   Button,
   Card,
@@ -42,17 +40,6 @@ export const CatalogItem: FC<CatalogItemProps> = memo(({ catalog }) => {
               <Description>{catalog?.subtitle}</Description>
             )}
           </Box>
-          {!!catalog?.items?.items?.length && (
-            <AvatarGroup>
-              {catalog?.items?.items?.map((item) => (
-                <Avatar
-                  size="xs"
-                  src={item.product?.avatar?.file?.url || ""}
-                  name={item?.product?.name}
-                />
-              ))}
-            </AvatarGroup>
-          )}
           <Button onClick={goToCatalog}>
             {translate.formatMessage({ id: "view" })}
           </Button>

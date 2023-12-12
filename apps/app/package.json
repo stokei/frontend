@@ -16,6 +16,7 @@
     "@hookform/resolvers": "^2.9.10",
     "@stokei/builder": "*",
     "@stokei/graphql": "*",
+    "@stokei/plugins": "*",
     "@stokei/translations": "*",
     "@stokei/ui": "*",
     "@stokei/utils": "*",

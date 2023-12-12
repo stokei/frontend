@@ -6,7 +6,7 @@ import { Icon } from "../icon";
 import { Box } from "../box";
 
 const getValue = (value: any) =>
-  value || value?.id || value?.code || value?.value;
+  value?.id || value?.code || value?.value || value;
 const isActiveGenericValue = (firstValue: any, secondValue: any) => {
   const first = getValue(firstValue);
   const second = getValue(secondValue);

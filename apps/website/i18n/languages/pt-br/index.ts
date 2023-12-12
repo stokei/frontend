@@ -154,6 +154,7 @@ export const ptBRMessages = {
   getInTouchWithUsViaEmail: "Entre em contato conosco pelo email",
   stripeTax: "taxa da Stripe",
   kb: "kbyte",
+  gb: "gbyte",
   min: "minuto",
   un: "unidade",
   each: "a cada",
@@ -194,10 +195,10 @@ export const ptBRMessages = {
   deactivate: "Desativar",
   courseInstructorCreatedSuccessfully:
     "Instrutor do curso criado com successo!",
-  courseInstructorRemoveedSuccessfully:
+  courseInstructorRemovedSuccessfully:
     "Instrutor do curso removido com successo!",
-  moduleRemoveedSuccessfully: "Módulo removido com successo!",
-  videoRemoveedSuccessfully: "Video removido com successo!",
+  moduleRemovedSuccessfully: "Módulo removido com successo!",
+  videoRemovedSuccessfully: "Video removido com successo!",
   signUpSuccessfully: "Cadastro efetuado com successo!",
   moduleCreatedSuccessfully: "Módulo criado com successo!",
   videoCreatedSuccessfully: "Video criado com successo!",
@@ -250,6 +251,7 @@ export const ptBRMessages = {
   editVideoOfTheModule: "Editar video do módulo de",
   addCourse: "Adicionar curso",
   addPrice: "Adicionar preço",
+  updatePrice: "Atualizar preço",
   addCourseInstructor: "Adicionar instrutor do curso",
   removeCourseInstructor: "Remover instrutor do curso",
   removeModule: "Remover módulo",
@@ -273,6 +275,8 @@ export const ptBRMessages = {
   amountIsRequired: "Preço é obrigatório",
   intervalIsRequired: "Tipo do intervalo é obrigatório",
   intervalCountIsRequired: "Intervalo é obrigatório",
+  fromAmount: "DE",
+  toAmount: "POR",
   amount: "Preço",
   interval: "Tipo do intervalo",
   intervalCount: "Intervalo",

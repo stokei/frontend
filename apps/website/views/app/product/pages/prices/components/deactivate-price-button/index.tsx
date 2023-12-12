@@ -1,8 +1,8 @@
+import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { Button, useToast } from "@stokei/ui";
+import { Icon, MenuItem, useToast } from "@stokei/ui";
 import { FC } from "react";
 import { useDeactivatePriceMutation } from "../../graphql/deactivate-price.mutation.graphql.generated";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 
 interface DeactivatePriceButtonProps {
   priceId?: string;
@@ -47,15 +47,14 @@ export const DeactivatePriceButton: FC<DeactivatePriceButtonProps> = ({
   };
 
   return (
-    <Button
-      variant="outline"
-      isLoading={isLoading}
+    <MenuItem
+      icon={<Icon name="close" />}
       onClick={onDeactivatePrice}
-      colorScheme="red"
+      color="red.500"
     >
       {translate.formatMessage({
-        id: "deactivate",
+        id: isLoading ? "loading" : "deactivate",
       })}
-    </Button>
+    </MenuItem>
   );
 };

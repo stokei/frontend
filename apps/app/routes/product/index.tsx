@@ -1,5 +1,6 @@
 const baseURL = "/products";
 
 export const routesProduct = {
-  home: ({ product }: { product: string }) => baseURL + "/" + (product || ""),
+  home: ({ product, price }: { product: string; price?: string }) =>
+    `${baseURL}/${product}${price ? "?price=" + price : ""}`,
 };

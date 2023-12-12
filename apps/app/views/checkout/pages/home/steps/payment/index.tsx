@@ -1,7 +1,7 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { usePoolling, useTranslations } from "@/hooks";
+import { usePoolling, useShoppingCart, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { OrderStatus, PaymentMethodType } from "@/services/graphql/stokei";
 import { CheckoutProductFragment } from "@/views/checkout/graphql/product.query.graphql.generated";
@@ -34,7 +34,7 @@ export interface PaymentStepProps {
   qrCodeURL: string;
   orderId: string;
   price?: PriceComponentFragment | null;
-  paymentMethodType: PaymentMethodType;
+  paymentMethodType?: PaymentMethodType;
   onPreviousStep: () => void;
 }
 
@@ -49,6 +49,7 @@ export const PaymentStep: React.FC<PaymentStepProps> = ({
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
+  const { totalAmount, subtotalAmount, currency } = useShoppingCart();
 
   const [{ data: dataGetCheckoutPageOrder }, onExecuteGetCheckoutPageOrder] =
     useGetCheckoutPageOrderQuery({
@@ -108,7 +109,28 @@ export const PaymentStep: React.FC<PaymentStepProps> = ({
             <Text fontWeight="bold">
               {translate.formatMessage({ id: "amountToPay" })}:
             </Text>
-            <Price price={price} withRecurringLabel={false} />
+            <Stack
+              width="fit-content"
+              direction="row"
+              align="center"
+              justify="center"
+            >
+              <Text fontSize="md" fontWeight="600">
+                {currency?.symbol}
+              </Text>
+              <Text
+                fontSize="3xl"
+                color="primary.500"
+                fontWeight="900"
+                lineHeight="shorter"
+              >
+                {translate.formatMoney({
+                  amount: totalAmount,
+                  currency: currency?.id || "",
+                  minorUnit: currency?.minorUnit,
+                })}
+              </Text>
+            </Stack>
           </Stack>
           <Stack width="fit-content" direction="row" spacing="2">
             <Loading />

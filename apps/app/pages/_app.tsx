@@ -9,11 +9,15 @@ import {
   StokeiUIProvider,
   uiTranslationsMessages,
 } from "@stokei/ui";
-import { getAppIdFromNextRouter } from "@stokei/utils";
+import noImage from "@/assets/no-image.png";
 
 import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
-import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
+import {
+  CurrentAccountProvider,
+  CurrentAppProvider,
+  ShoppingCartProvider,
+} from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
 import {
@@ -29,6 +33,8 @@ import "@stokei/ui/src/styles/css/global.css";
 import Head from "next/head";
 import { Router } from "next/router";
 import { useMemo } from "react";
+import { GoogleAnalytics } from "@stokei/plugins";
+import { GOOGLE_ANALYTICS_KEY } from "@/environments";
 
 const messages: Messages = {
   "pt-BR": {
@@ -89,8 +95,15 @@ function MyApp({
                   name="viewport"
                   content="width=device-width, initial-scale=1"
                 />
+                <link
+                  rel="icon"
+                  href={currentApp?.icon?.file?.url || noImage?.src}
+                />
               </Head>
-              <Component {...pageProps} />
+              <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
+              <ShoppingCartProvider>
+                <Component {...pageProps} />
+              </ShoppingCartProvider>
             </TranslationsProvider>
           </StokeiUIProvider>
         </CurrentAccountProvider>

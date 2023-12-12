@@ -11,7 +11,7 @@ import {
 import { PaymentMethod } from "../../components/payment-method";
 
 export interface PaymentMethodStepProps {
-  paymentMethodType: PaymentMethodType;
+  paymentMethodType?: PaymentMethodType;
   onChoosePaymentMethod: (paymentMethodType: PaymentMethodType) => void;
   onPreviousStep: () => void;
   onNextStep: () => void;

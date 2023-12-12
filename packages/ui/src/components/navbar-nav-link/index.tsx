@@ -1,31 +1,31 @@
+import { Icon, IconName } from "../icon";
 import { Link, LinkProps } from "../link";
+import { Text } from "../text";
+import { Stack } from "../stack";
 
 export interface NavbarNavLinkProps extends LinkProps {
+  readonly icon?: IconName;
   readonly isActive?: boolean;
 }
 
 export const NavbarNavLink: React.FC<NavbarNavLinkProps> = ({
   children,
+  icon,
   isActive,
   ...props
 }) => {
   const hoverStyle = {
-    color: "primary.900",
-    background: "background.200",
-    rounded: "md",
+    background: "primary.50",
   };
-  const activeStyle = isActive
-    ? {
-        ...hoverStyle,
-        fontWeight: "semibold",
-      }
-    : {};
+  const activeStyle = isActive ? hoverStyle : {};
   return (
     <Link
       padding="2"
       paddingX="5"
       alignItems="center"
-      color="text.500"
+      color="primary.600"
+      fontWeight="semibold"
+      rounded="full"
       {...props}
       display="flex"
       flexDirection="row"
@@ -34,6 +34,13 @@ export const NavbarNavLink: React.FC<NavbarNavLinkProps> = ({
       _active={activeStyle}
       {...activeStyle}
     >
+      {icon && (
+        <Icon
+          name={icon}
+          fontSize="lg"
+          marginRight={!!children ? "2" : undefined}
+        />
+      )}
       {children}
     </Link>
   );

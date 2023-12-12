@@ -47,7 +47,7 @@ export const RemoveModuleModal: FC<RemoveModuleModalProps> = ({
         onSuccessRemoveModule(response?.data?.removeModule);
         onShowToast({
           title: translate.formatMessage({
-            id: "moduleRemoveedSuccessfully",
+            id: "moduleRemovedSuccessfully",
           }),
           status: "success",
         });

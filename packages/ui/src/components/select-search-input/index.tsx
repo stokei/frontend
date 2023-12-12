@@ -1,4 +1,4 @@
-import { forwardRef, theme, useMultiStyleConfig } from "@chakra-ui/react";
+import { forwardRef, useStyleConfig } from "@chakra-ui/react";
 import { ReactNode, useCallback } from "react";
 import { useSelect } from "../../hooks";
 import { Box } from "../box";
@@ -9,7 +9,7 @@ import { InputRightElement } from "../input-right-element";
 import { Loading } from "../loading";
 import { SelectTagItem } from "../select-tag-item";
 import { SelectTagList } from "../select-tag-list";
-import { Stack } from "../stack";
+import { Stack, StackProps } from "../stack";
 
 export interface SelectSearchInputProps extends InputProps {
   readonly rightIcon?: IconName;
@@ -39,16 +39,17 @@ export const SelectSearchInput: React.FC<SelectSearchInputProps> = forwardRef(
       [onFocus, onOpenList]
     );
 
-    const themeInput: any = useMultiStyleConfig("Input", props);
-    const inputStylesProps = {
+    const themeInput: any = useStyleConfig("Input", props);
+    const inputStylesProps: StackProps = {
       ...(isAllowedToAddMultiStyles && {
-        ...themeInput.field,
+        __css: themeInput?.field,
         _focusWithin: themeInput.field._focus,
         pos: "relative",
         minH: "10",
         py: 0,
         px: 0,
         spacing: 0,
+        borderRadius: "md",
       }),
     };
 

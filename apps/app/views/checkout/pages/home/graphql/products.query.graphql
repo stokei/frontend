@@ -1,0 +1,17 @@
+query GetCheckoutProducts(
+  $where: WhereDataFindAllProductsInput
+  $orderBy: OrderByDataFindAllProductsInput
+  $page: PaginationInput
+) {
+  products(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...SortedItemComponentCatalogItemProduct
+    }
+  }
+}

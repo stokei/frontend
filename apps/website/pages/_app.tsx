@@ -9,6 +9,7 @@ import {
   StokeiUIProvider,
   uiTranslationsMessages,
 } from "@stokei/ui";
+import { GoogleAnalytics } from "@stokei/plugins";
 import { getAppIdFromNextRouter } from "@stokei/utils";
 import { BuilderProvider } from "@stokei/builder";
 
@@ -29,6 +30,7 @@ import "@stokei/ui/src/styles/css/global.css";
 import Head from "next/head";
 import { Router } from "next/router";
 import { useMemo } from "react";
+import { GOOGLE_ANALYTICS_KEY } from "@/environments";
 
 const messages: Messages = {
   "pt-BR": {
@@ -89,6 +91,7 @@ function MyApp({
                     content="width=device-width, initial-scale=1"
                   />
                 </Head>
+                <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
                 <Component {...pageProps} />
               </TranslationsProvider>
             </StokeiUIProvider>

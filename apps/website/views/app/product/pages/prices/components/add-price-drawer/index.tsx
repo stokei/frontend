@@ -65,6 +65,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
     amount: z.string().min(1, {
       message: translate.formatMessage({ id: "amountIsRequired" }),
     }),
+    fromAmount: z.string(),
     automaticRenew: z.boolean().default(false),
   });
 
@@ -99,6 +100,7 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
   const onSubmit = async ({
     name,
     amount,
+    fromAmount,
     automaticRenew,
   }: z.infer<typeof validationSchema>) => {
     try {
@@ -106,6 +108,9 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
         input: {
           parent: productId || "",
           nickname: name,
+          fromAmount: fromAmount
+            ? translate.formatMoneyToNumber(fromAmount)
+            : undefined,
           amount: translate.formatMoneyToNumber(amount),
           billingScheme: BillingScheme.PerUnit,
           inventoryType: InventoryType.Infinite,
@@ -171,9 +176,34 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
               </InputGroup>
               <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
             </FormControl>
+            <FormControl isInvalid={!!errors?.fromAmount}>
+              <Label htmlFor="fromAmount" isOptional>
+                {translate.formatMessage({ id: "fromAmount" })}
+              </Label>
+              <InputGroup>
+                <InputLeftAddon paddingX="5">
+                  <Text>{currentApp?.currency?.symbol}</Text>
+                </InputLeftAddon>
+                <Input
+                  id="fromAmount"
+                  placeholder="0.00"
+                  roundedLeft="none"
+                  {...register("fromAmount", {
+                    onChange(event) {
+                      event.target.value = convertAmountToMoney(
+                        event.target.value
+                      );
+                      return event;
+                    },
+                  })}
+                />
+              </InputGroup>
+              <FormErrorMessage>{errors?.fromAmount?.message}</FormErrorMessage>
+            </FormControl>
+
             <FormControl isInvalid={!!errors?.amount}>
               <Label htmlFor="amount">
-                {translate.formatMessage({ id: "price" })}
+                {translate.formatMessage({ id: "toAmount" })}
               </Label>
               <InputGroup>
                 <InputLeftAddon paddingX="5">
@@ -230,25 +260,33 @@ export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
             </FormControl>
 
             {type === PriceType.Recurring && (
-              <RecurringIntervalInput
-                interval={interval}
-                intervalCount={intervalCount}
-                onChangeInterval={setInterval}
-                onChangeIntervalCount={setIntervalCount}
-              />
+              <>
+                <RecurringIntervalInput
+                  interval={interval}
+                  intervalCount={intervalCount}
+                  onChangeInterval={setInterval}
+                  onChangeIntervalCount={setIntervalCount}
+                />
+                <FormControl isInvalid={!!errors?.automaticRenew}>
+                  <Stack direction="row" align="center" spacing="5">
+                    <Label
+                      width="fit-content"
+                      margin="0"
+                      htmlFor="automaticRenew"
+                    >
+                      {translate.formatMessage({ id: "automaticRenew" })}
+                    </Label>
+                    <Switch
+                      id="automaticRenew"
+                      {...register("automaticRenew")}
+                    />
+                  </Stack>
+                  <FormErrorMessage>
+                    {errors?.automaticRenew?.message}
+                  </FormErrorMessage>
+                </FormControl>
+              </>
             )}
-
-            <FormControl isInvalid={!!errors?.automaticRenew}>
-              <Stack direction="row" align="center" spacing="5">
-                <Label width="fit-content" margin="0" htmlFor="automaticRenew">
-                  {translate.formatMessage({ id: "automaticRenew" })}
-                </Label>
-                <Switch id="automaticRenew" {...register("automaticRenew")} />
-              </Stack>
-              <FormErrorMessage>
-                {errors?.automaticRenew?.message}
-              </FormErrorMessage>
-            </FormControl>
 
             <Button
               type="submit"

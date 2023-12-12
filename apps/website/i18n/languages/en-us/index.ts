@@ -153,6 +153,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   getInTouchWithUsViaEmail: "Get in touch with us via email",
   stripeTax: "Stripe tax",
   kb: "kbyte",
+  gb: "gbyte",
   min: "minute",
   un: "unit",
   each: "each",
@@ -192,10 +193,10 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   deactivate: "Deactivate",
   courseInstructorCreatedSuccessfully:
     "Course instructor created successfully!",
-  courseInstructorRemoveedSuccessfully:
+  courseInstructorRemovedSuccessfully:
     "Course instructor removed successfully!",
-  moduleRemoveedSuccessfully: "Module removed successfully!",
-  videoRemoveedSuccessfully: "Video removed successfully!",
+  moduleRemovedSuccessfully: "Module removed successfully!",
+  videoRemovedSuccessfully: "Video removed successfully!",
   signUpSuccessfully: "Sign up successfully!",
   moduleCreatedSuccessfully: "Module created successfully!",
   videoCreatedSuccessfully: "Video created successfully!",
@@ -287,6 +288,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   editVideoOfTheModule: "Edit video of the module",
   addCourse: "Add course",
   addPrice: "Add price",
+  updatePrice: "Update price",
   addCourseInstructor: "Add course instructor",
   removeCourseInstructor: "Remove course instructor",
   removeModule: "Remove module",
@@ -316,6 +318,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   amountIsRequired: "Amount is required",
   intervalIsRequired: "Interval type is required",
   intervalCountIsRequired: "Interval is required",
+  fromAmount: "FROM",
+  toAmount: "TO",
   amount: "Amount",
   interval: "Interval type",
   intervalCount: "Interval",

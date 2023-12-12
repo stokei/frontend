@@ -13,7 +13,13 @@ export const PriceSelectItemContent: FC<PriceSelectItemContentProps> = ({
   size,
 }) => {
   return (
-    <Stack direction="row" spacing="2" align="center">
+    <Stack
+      width="fit-content"
+      direction="row"
+      spacing="2"
+      align="center"
+      flexWrap="wrap"
+    >
       <Price price={price} size={size} />
     </Stack>
   );

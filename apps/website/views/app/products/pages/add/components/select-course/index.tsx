@@ -33,7 +33,7 @@ export const SelectCurse: React.FC<SelectCurseProps> = ({
   const [courseQuery, setCourseQuery] = useState<string>("");
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
-  const courseQueryValue = useDebounce(courseQuery, 500);
+  const [courseQueryValue] = useDebounce(courseQuery, 500);
 
   const [{ fetching: isLoading, data: dataCourses }] =
     useGetAddProductCoursesSelectQuery({

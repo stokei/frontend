@@ -37,12 +37,12 @@ export const CustomerLayout: FC<PropsWithChildren<CustomerLayoutProps>> = ({
           <SidebarBody paddingX="0">
             <SidebarNavLink
               as={NextLink}
-              leftIcon="product"
-              href={routes.customers.products}
-              isActive={isActiveHome(routes.customers.products)}
+              leftIcon="store"
+              href={routes.store.home}
+              isActive={isActiveHome(routes.store.home)}
               badge={<BadgeNew />}
             >
-              {translate.formatMessage({ id: "products" })}
+              {translate.formatMessage({ id: "store" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}

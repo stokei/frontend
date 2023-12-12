@@ -1,20 +1,18 @@
 import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
-import { BillingScheme, PriceType } from "@/services/graphql/stokei";
-import { getI18nKeyFromRecurringInterval } from "@/utils";
+import { PriceType } from "@/services/graphql/stokei";
 import {
   Badge,
-  ButtonGroup,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Stack,
-  TableCell,
-  TableRow,
   Text,
 } from "@stokei/ui";
 import { FC, memo, useMemo } from "react";
-import { DeactivatePriceButton } from "../deactivate-price-button";
-import { ActivatePriceButton } from "../activate-price-button";
-import { MakeDefaultPriceButton } from "../make-default-price-button";
+import { ActionsMenu } from "../actions-menu";
 
 interface PriceItemProps {
   price?: PriceComponentFragment;
@@ -43,37 +41,47 @@ export const PriceItem: FC<PriceItemProps> = memo(
       [price?.type]
     );
 
-    const priceAmount = useMemo(() => {
-      return translate.formatMoney({
-        amount: price?.amount || 0,
-        currency: price?.currency?.id || "",
-        minorUnit: price?.currency?.minorUnit,
-      });
-    }, [
-      price?.amount,
-      price?.currency?.id,
-      price?.currency?.minorUnit,
-      translate,
-    ]);
-
-    const priceRecurringIntervalTypeKey = useMemo(() => {
-      if (!price?.recurring?.interval) {
-        return undefined;
-      }
-      const key = getI18nKeyFromRecurringInterval(price?.recurring?.interval);
-      if (price?.recurring?.intervalCount > 1) {
-        return key.plural;
-      }
-      return key.singular;
-    }, [price]);
-
     return (
-      <TableRow key={price?.id}>
-        <TableCell>
-          <Stack direction="row" align="center">
+      <Card>
+        <CardHeader paddingBottom={0}>
+          <Stack direction="row" spacing="5" justify="space-between">
             <Text fontSize="md" lineHeight="shorter" fontWeight="600">
               {price?.nickname}
             </Text>
+            <ActionsMenu
+              isDefaultPrice={isDefaultPrice}
+              price={price}
+              onSuccessPriceUpdated={onSuccessPriceUpdated}
+              onSuccessPriceDeactivated={onSuccessPriceDeactivated}
+              onSuccessPriceActivated={onSuccessPriceActivated}
+            />
+          </Stack>
+        </CardHeader>
+        <CardBody paddingBottom={0}>
+          <Price price={price} withUnitDescription />
+        </CardBody>
+        <CardFooter>
+          <Stack direction="row" spacing="5" align="center">
+            {price?.active ? (
+              <Badge colorScheme="green">
+                {translate.formatMessage({
+                  id: "active",
+                })}
+              </Badge>
+            ) : (
+              <Badge colorScheme="gray">
+                {translate.formatMessage({
+                  id: "inactive",
+                })}
+              </Badge>
+            )}
+            {!isRecurring && (
+              <Badge colorScheme="purple">
+                {translate.formatMessage({
+                  id: "lifelong",
+                })}
+              </Badge>
+            )}
             {isDefaultPrice && (
               <Badge colorScheme="gray">
                 {translate.formatMessage({
@@ -82,66 +90,8 @@ export const PriceItem: FC<PriceItemProps> = memo(
               </Badge>
             )}
           </Stack>
-        </TableCell>
-        <TableCell>
-          <Stack width="full" direction="row" align="center">
-            <Text fontSize="md" lineHeight="shorter" fontWeight="600">
-              {price?.currency?.symbol}
-            </Text>
-            <Text
-              fontSize="xl"
-              color="primary.500"
-              fontWeight="700"
-              lineHeight="shorter"
-            >
-              {priceAmount}
-            </Text>
-          </Stack>
-        </TableCell>
-        <TableCell>
-          {isRecurring ? (
-            <>
-              {price?.recurring?.intervalCount &&
-                `${price?.recurring?.intervalCount} `}
-              {translate
-                .formatMessage({
-                  id: priceRecurringIntervalTypeKey as any,
-                })
-                ?.toLowerCase()}
-            </>
-          ) : (
-            <Badge colorScheme="purple">
-              {translate.formatMessage({
-                id: "lifelong",
-              })}
-            </Badge>
-          )}
-        </TableCell>
-        <TableCell display="flex" justifyContent="flex-end">
-          {!isDefaultPrice && (
-            <ButtonGroup alignItems="center" spacing="5">
-              {price?.active ? (
-                <>
-                  <MakeDefaultPriceButton
-                    priceId={price?.id || ""}
-                    productId={price?.parent || ""}
-                    onSuccess={onSuccessPriceUpdated}
-                  />
-                  <DeactivatePriceButton
-                    priceId={price?.id}
-                    onSuccess={onSuccessPriceDeactivated}
-                  />
-                </>
-              ) : (
-                <ActivatePriceButton
-                  priceId={price?.id}
-                  onSuccess={onSuccessPriceActivated}
-                />
-              )}
-            </ButtonGroup>
-          )}
-        </TableCell>
-      </TableRow>
+        </CardFooter>
+      </Card>
     );
   }
 );

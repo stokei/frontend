@@ -69,9 +69,8 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
               const countryCodeItem = getPhoneCode(code);
               return (
                 <Stack direction="row" spacing="2">
-                  <Text>
-                    {countryCodeItem?.country} ({countryCodeItem?.code})
-                  </Text>
+                  <Text>{countryCodeItem?.country}</Text>
+                  <Text>({countryCodeItem?.code})</Text>
                 </Stack>
               );
             }}
@@ -83,9 +82,8 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
                 value={currentCountryCode}
               >
                 <Stack direction="row" spacing="2">
-                  <Text>
-                    {currentCountryCode?.country} ({currentCountryCode?.code})
-                  </Text>
+                  <Text>{currentCountryCode?.country}</Text>
+                  <Text>({currentCountryCode?.code})</Text>
                 </Stack>
               </SelectItem>
             ))}

@@ -27,6 +27,7 @@ import { SectionInformation } from "../../../../components/section-information";
 import { useGetProductPagePricesQuery } from "../../graphql/prices.query.graphql.generated";
 import { AddPriceDrawer } from "../add-price-drawer";
 import { PriceItem } from "../price-item";
+import { UpdatePriceDrawer } from "../update-price-drawer";
 
 interface PricesProps {
   productId?: string;
@@ -159,76 +160,52 @@ export const Prices: FC<PricesProps> = ({ productId }) => {
           </ButtonGroup>
         </Stack>
       </SectionInformation>
-      <SectionContent>
-        <AddPriceDrawer
-          isOpenDrawer={isOpenAddPriceDrawer}
-          onCloseDrawer={onCloseAddPriceDrawer}
-          onSuccess={onSuccessPriceAdded}
-          productId={productId}
-        />
-        {isLoadingPrices ? (
-          <Loading />
-        ) : (
-          <>
-            {!prices?.length ? (
-              <NotFound>
-                <NotFoundIcon name="price" />
-                <NotFoundSubtitle>
-                  {translate.formatMessage({ id: "pricesNotFound" })}
-                </NotFoundSubtitle>
-              </NotFound>
-            ) : (
-              <Stack direction="column" spacing="5">
-                <Box width="full" flexDirection="column" overflow="hidden">
-                  <Box width="full" flexDirection="column" overflowX="auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHeaderCell>
-                            {translate.formatMessage({ id: "name" })}
-                          </TableHeaderCell>
-                          <TableHeaderCell>
-                            {translate.formatMessage({ id: "value" })}
-                          </TableHeaderCell>
-                          <TableHeaderCell>
-                            {translate.formatMessage({ id: "duration" })}
-                          </TableHeaderCell>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {pricesSorted?.map((price) => (
-                          <PriceItem
-                            key={price?.id}
-                            isFirstPrice={isFirstPrice}
-                            price={price}
-                            onSuccessPriceUpdated={() =>
-                              onReloadPrices({ requestPolicy: "network-only" })
-                            }
-                            onSuccessPriceActivated={onSuccessPriceActivated}
-                            onSuccessPriceDeactivated={
-                              onSuccessPriceDeactivated
-                            }
-                          />
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </Box>
-                </Box>
-                {dataPrices?.prices?.totalPages &&
-                  dataPrices?.prices?.totalPages > 1 && (
-                    <Pagination
-                      currentPage={currentPage}
-                      onChangePage={onChangePage}
-                      hasNextPage={!!dataPrices?.prices?.hasNextPage}
-                      hasPreviousPage={!!dataPrices?.prices?.hasPreviousPage}
-                      totalPages={dataPrices?.prices?.totalPages || 1}
-                    />
-                  )}
-              </Stack>
-            )}
-          </>
-        )}
-      </SectionContent>
+      <AddPriceDrawer
+        isOpenDrawer={isOpenAddPriceDrawer}
+        onCloseDrawer={onCloseAddPriceDrawer}
+        onSuccess={onSuccessPriceAdded}
+        productId={productId}
+      />
+      {isLoadingPrices ? (
+        <Loading />
+      ) : (
+        <>
+          {!prices?.length ? (
+            <NotFound>
+              <NotFoundIcon name="price" />
+              <NotFoundSubtitle>
+                {translate.formatMessage({ id: "pricesNotFound" })}
+              </NotFoundSubtitle>
+            </NotFound>
+          ) : (
+            <Stack direction="column" spacing="5">
+              {pricesSorted?.map((price) => (
+                <PriceItem
+                  key={price?.id}
+                  isFirstPrice={isFirstPrice}
+                  price={price}
+                  onSuccessPriceUpdated={() =>
+                    onReloadPrices({ requestPolicy: "network-only" })
+                  }
+                  onSuccessPriceActivated={onSuccessPriceActivated}
+                  onSuccessPriceDeactivated={onSuccessPriceDeactivated}
+                />
+              ))}
+
+              {dataPrices?.prices?.totalPages &&
+                dataPrices?.prices?.totalPages > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    onChangePage={onChangePage}
+                    hasNextPage={!!dataPrices?.prices?.hasNextPage}
+                    hasPreviousPage={!!dataPrices?.prices?.hasPreviousPage}
+                    totalPages={dataPrices?.prices?.totalPages || 1}
+                  />
+                )}
+            </Stack>
+          )}
+        </>
+      )}
     </Section>
   );
 };
