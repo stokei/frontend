@@ -17,7 +17,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { useGetAdminCatalogPageCatalogItemsQuery } from "../../graphql/catalog-items.query.graphql.generated";
 import { AddCatalogItemDrawer } from "../add-catalog-item-drawer";
 import { ProductItem } from "../product-item";
@@ -65,6 +65,11 @@ export const Products: FC<ProductsProps> = ({ catalog }) => {
     return filteredList || [];
   }, [dataGetCatalogItems?.catalogItems?.items, productNameQuery]);
 
+  const onReloadList = useCallback(() => {
+    onReloadCatalogItems({ requestPolicy: "network-only" });
+    setProductNameQuery("");
+  }, [onReloadCatalogItems]);
+
   return (
     <Section>
       <SectionContent>
@@ -72,9 +77,7 @@ export const Products: FC<ProductsProps> = ({ catalog }) => {
           catalogId={catalog?.id || ""}
           isOpenDrawer={isOpenAddCatalogItemDrawer}
           onCloseDrawer={onCloseAddCatalogItemDrawer}
-          onSuccess={() =>
-            onReloadCatalogItems({ requestPolicy: "network-only" })
-          }
+          onSuccess={onReloadList}
         />
         <Stack direction="column" spacing="5">
           {isLoadingCatalogItems ? (
@@ -121,9 +124,7 @@ export const Products: FC<ProductsProps> = ({ catalog }) => {
                   {catalogItems?.map((catalogItem) => (
                     <ProductItem
                       catalogItem={catalogItem}
-                      onCatalogItemRemoved={() =>
-                        onReloadCatalogItems({ requestPolicy: "network-only" })
-                      }
+                      onCatalogItemRemoved={onReloadList}
                     />
                   ))}
                 </>
