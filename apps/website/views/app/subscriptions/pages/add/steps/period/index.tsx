@@ -1,22 +1,36 @@
 import { RecurringIntervalInput } from "@/components/recurring-interval-input";
 import { useTranslations } from "@/hooks";
-import { IntervalType } from "@/services/graphql/stokei";
+import {
+  IntervalType,
+  SubscriptionContractType,
+} from "@/services/graphql/stokei";
+import { convertEnumValueToCamelCase } from "@/utils";
 import {
   Box,
   Button,
   ButtonGroup,
   DatePicker,
   DatePickerGroup,
+  FormControl,
   Label,
+  Select,
+  SelectInput,
+  SelectItem,
+  SelectList,
   Stack,
+  Text,
 } from "@stokei/ui";
 import { FC } from "react";
 
 interface PeriodStepProps {
+  subscriptionType: SubscriptionContractType;
   interval: IntervalType;
   intervalCount: string;
   startAt?: Date;
   endAt?: Date;
+  onChangeSubscriptionType: (
+    subscriptionType: SubscriptionContractType
+  ) => void;
   onChangeInterval: (data: IntervalType) => void;
   onChangeIntervalCount: (data: string) => void;
   onChangeStartAt: (data: Date) => void;
@@ -26,6 +40,8 @@ interface PeriodStepProps {
 }
 
 export const PeriodStep: FC<PeriodStepProps> = ({
+  subscriptionType,
+  onChangeSubscriptionType,
   interval,
   intervalCount,
   startAt,
@@ -41,30 +57,67 @@ export const PeriodStep: FC<PeriodStepProps> = ({
 
   return (
     <Stack direction="column" spacing="5">
-      <RecurringIntervalInput
-        interval={interval}
-        intervalCount={intervalCount}
-        onChangeInterval={onChangeInterval}
-        onChangeIntervalCount={onChangeIntervalCount}
-      />
-
-      <Box flexDirection="column">
-        <Label htmlFor="datepicker">
-          {translate.formatMessage({ id: "intervalCount" })}
+      <FormControl isInvalid={!subscriptionType}>
+        <Label htmlFor="price-type">
+          {translate.formatMessage({ id: "type" })}
         </Label>
-        <DatePickerGroup>
-          <DatePicker
-            id="datepicker-start-at"
-            value={startAt ? startAt : new Date()}
-            onChange={onChangeStartAt}
+        <Select
+          value={subscriptionType}
+          onChooseItem={onChangeSubscriptionType}
+          onRemoveChooseItem={onChangeSubscriptionType}
+        >
+          <SelectInput
+            id="price-type"
+            item={(item) => (
+              <Text>
+                {translate.formatMessage({
+                  id:
+                    item === SubscriptionContractType.OneTime
+                      ? "lifelong"
+                      : (convertEnumValueToCamelCase(item) as any),
+                })}
+              </Text>
+            )}
           />
-          <DatePicker
-            id="datepicker-end-at"
-            value={endAt ? endAt : new Date()}
-            onChange={onChangeEndAt}
+          <SelectList>
+            <SelectItem value={SubscriptionContractType.OneTime}>
+              <Text>{translate.formatMessage({ id: "lifelong" })}</Text>
+            </SelectItem>
+            <SelectItem value={SubscriptionContractType.Recurring}>
+              <Text>{translate.formatMessage({ id: "recurring" })}</Text>
+            </SelectItem>
+          </SelectList>
+        </Select>
+      </FormControl>
+
+      {subscriptionType === SubscriptionContractType.Recurring && (
+        <>
+          <RecurringIntervalInput
+            interval={interval}
+            intervalCount={intervalCount}
+            onChangeInterval={onChangeInterval}
+            onChangeIntervalCount={onChangeIntervalCount}
           />
-        </DatePickerGroup>
-      </Box>
+
+          <Box flexDirection="column">
+            <Label htmlFor="datepicker">
+              {translate.formatMessage({ id: "intervalCount" })}
+            </Label>
+            <DatePickerGroup>
+              <DatePicker
+                id="datepicker-start-at"
+                value={startAt ? startAt : new Date()}
+                onChange={onChangeStartAt}
+              />
+              <DatePicker
+                id="datepicker-end-at"
+                value={endAt ? endAt : new Date()}
+                onChange={onChangeEndAt}
+              />
+            </DatePickerGroup>
+          </Box>
+        </>
+      )}
 
       <ButtonGroup width="full" justifyContent="space-between">
         <Button onClick={onPreviousStep} variant="ghost">

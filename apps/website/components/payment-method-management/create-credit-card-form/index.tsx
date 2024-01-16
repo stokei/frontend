@@ -10,12 +10,12 @@ import {
 } from "@stokei/ui";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FC, useState } from "react";
-import { usePaymentMethodManagementCreatePaymentMethodMutation } from "../graphql/create-payment-method.mutation.graphql.generated";
-import { PaymentMethodManagementPaymentMethodFragment } from "../graphql/payment-methods.query.graphql.generated";
+import { usePaymentMethodManagementCreatePaymentMethodCardMutation } from "../graphql/create-payment-method.mutation.graphql.generated";
+import { PaymentMethodManagementPaymentMethodCardFragment } from "../graphql/payment-methods.query.graphql.generated";
 
 interface CreateCreditCardFormProps {
   readonly onSuccess: (
-    paymentMethod: PaymentMethodManagementPaymentMethodFragment
+    paymentMethod: PaymentMethodManagementPaymentMethodCardFragment
   ) => void;
 }
 
@@ -29,7 +29,7 @@ export const CreateCreditCardForm: FC<CreateCreditCardFormProps> = ({
   const { onShowAPIError } = useAPIErrors();
 
   const [{}, onCreatePaymentMethod] =
-    usePaymentMethodManagementCreatePaymentMethodMutation();
+    usePaymentMethodManagementCreatePaymentMethodCardMutation();
 
   const onCreateCreditCardPaymentMethod = async () => {
     setIsCreatingPaymentMethod(true);

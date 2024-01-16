@@ -1,7 +1,7 @@
-mutation PaymentMethodManagementCreatePaymentMethod(
-  $input: CreatePaymentMethodInput!
+mutation PaymentMethodManagementCreatePaymentMethodCard(
+  $input: CreatePaymentMethodCardInput!
 ) {
-  createPaymentMethod(input: $input) {
-    ...PaymentMethodManagementPaymentMethod
+  createPaymentMethodCard(input: $input) {
+    ...PaymentMethodManagementPaymentMethodCard
   }
 }

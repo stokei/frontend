@@ -8,7 +8,7 @@ export type CreateCheckoutMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateCheckoutMutation = { __typename?: 'Mutation', createCheckout: { __typename?: 'Checkout', url?: string | null, payment?: { __typename?: 'Payment', id: string } | null, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null } };
+export type CreateCheckoutMutation = { __typename?: 'Mutation', createCheckout: { __typename?: 'Checkout', url?: string | null, payment: { __typename?: 'Payment', id: string }, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null } };
 
 
 export const CreateCheckoutDocument = gql`

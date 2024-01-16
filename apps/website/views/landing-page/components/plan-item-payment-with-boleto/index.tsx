@@ -27,11 +27,11 @@ export const PlanItemPaymentWithBoleto: FC<
 > = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
-  const stripeGateway =
-    paymentGatewayFees[PaymentGatewayType.Stripe][PaymentMethodType.Boleto];
+  const paymentGateway =
+    paymentGatewayFees[PaymentGatewayType.Pagarme][PaymentMethodType.Boleto];
   const transferAmount = translate.formatMoney({
     showSymbol: true,
-    amount: stripeGateway?.transferAmount || 0,
+    amount: paymentGateway?.transferAmount || 0,
     currency: currentApp?.currency?.id || "",
     minorUnit: currentApp?.currency?.minorUnit,
   });
@@ -89,15 +89,15 @@ export const PlanItemPaymentWithBoleto: FC<
               fontWeight="900"
               lineHeight="shorter"
             >
-              {stripeGateway?.percentage}%
+              {paymentGateway?.percentage}%
             </Text>
-            {stripeGateway?.fixAmount && (
+            {paymentGateway?.fixAmount && (
               <>
                 <Text fontSize="md">+</Text>
                 <Text fontSize="md" fontWeight="600">
                   {translate.formatMoney({
                     showSymbol: true,
-                    amount: stripeGateway?.fixAmount,
+                    amount: paymentGateway?.fixAmount,
                     currency: currentApp?.currency?.id || "",
                     minorUnit: currentApp?.currency?.minorUnit,
                   })}

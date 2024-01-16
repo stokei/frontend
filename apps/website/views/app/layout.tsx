@@ -1,6 +1,5 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
 import { AppLayoutContent } from "@/components/app-layout-content";
-import { BadgeNew } from "@/components/badge-new";
 import { SidebarProvider } from "@/contexts";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
@@ -76,7 +75,6 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               as={NextLink}
               href={baseRoutes.financial.home}
               isActive={isActiveRoute(baseRoutes.financial.home)}
-              badge={<BadgeNew />}
             >
               {translate.formatMessage({ id: "financial" })}
             </SidebarNavLink>
@@ -93,14 +91,14 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                 >
                   {translate.formatMessage({ id: "subscriptions" })}
                 </SidebarNavLink>
-                <SidebarNavLink
+                {/* <SidebarNavLink
                   leftIcon="invoice"
                   as={NextLink}
                   href={baseRoutes.invoices}
                   isActive={isActiveRoute(baseRoutes.invoices)}
                 >
                   {translate.formatMessage({ id: "invoices" })}
-                </SidebarNavLink>
+                </SidebarNavLink> */}
                 <SidebarNavLink
                   leftIcon="order"
                   as={NextLink}

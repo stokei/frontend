@@ -8,30 +8,30 @@ export type PaymentMethodManagementPaymentMethodsQueryVariables = Types.Exact<{
 }>;
 
 
-export type PaymentMethodManagementPaymentMethodsQuery = { __typename?: 'Query', paymentMethods: { __typename?: 'PaymentMethods', items?: Array<{ __typename?: 'PaymentMethod', id: string, parent: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null, stripePaymentMethod?: string | null }> | null } };
+export type PaymentMethodManagementPaymentMethodsQuery = { __typename?: 'Query', paymentMethods: { __typename?: 'PaymentMethods', items?: Array<{ __typename?: 'PaymentMethod', id: string, parent: string, referenceId?: string | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null }> | null } };
 
-export type PaymentMethodManagementPaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, parent: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null, stripePaymentMethod?: string | null };
+export type PaymentMethodManagementPaymentMethodCardFragment = { __typename?: 'PaymentMethod', id: string, parent: string, referenceId?: string | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null };
 
-export const PaymentMethodManagementPaymentMethodFragmentDoc = gql`
-    fragment PaymentMethodManagementPaymentMethod on PaymentMethod {
+export const PaymentMethodManagementPaymentMethodCardFragmentDoc = gql`
+    fragment PaymentMethodManagementPaymentMethodCard on PaymentMethod {
   id
   parent
+  referenceId
   cardBrand
   cardExpiryMonth
   cardExpiryYear
   lastFourCardNumber
-  stripePaymentMethod
 }
     `;
 export const PaymentMethodManagementPaymentMethodsDocument = gql`
     query PaymentMethodManagementPaymentMethods($where: WhereDataFindAllPaymentMethodsInput) {
   paymentMethods(where: $where) {
     items {
-      ...PaymentMethodManagementPaymentMethod
+      ...PaymentMethodManagementPaymentMethodCard
     }
   }
 }
-    ${PaymentMethodManagementPaymentMethodFragmentDoc}`;
+    ${PaymentMethodManagementPaymentMethodCardFragmentDoc}`;
 
 export function usePaymentMethodManagementPaymentMethodsQuery(options?: Omit<Urql.UseQueryArgs<PaymentMethodManagementPaymentMethodsQueryVariables>, 'query'>) {
   return Urql.useQuery<PaymentMethodManagementPaymentMethodsQuery, PaymentMethodManagementPaymentMethodsQueryVariables>({ query: PaymentMethodManagementPaymentMethodsDocument, ...options });

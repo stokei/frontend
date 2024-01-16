@@ -3,17 +3,17 @@ query PaymentMethodManagementPaymentMethods(
 ) {
   paymentMethods(where: $where) {
     items {
-      ...PaymentMethodManagementPaymentMethod
+      ...PaymentMethodManagementPaymentMethodCard
     }
   }
 }
 
-fragment PaymentMethodManagementPaymentMethod on PaymentMethod {
+fragment PaymentMethodManagementPaymentMethodCard on PaymentMethod {
   id
   parent
+  referenceId
   cardBrand
   cardExpiryMonth
   cardExpiryYear
   lastFourCardNumber
-  stripePaymentMethod
 }

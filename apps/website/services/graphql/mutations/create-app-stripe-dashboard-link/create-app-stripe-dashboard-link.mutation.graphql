@@ -1,5 +1,0 @@
-mutation CreateAppStripeDashboardLink {
-  createAppStripeDashboardLink {
-    url
-  }
-}

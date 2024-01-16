@@ -2,10 +2,10 @@ import { useTranslations } from "@/hooks";
 import { getCardFlagURL } from "@/utils";
 import { Box, Image, Stack, Text } from "@stokei/ui";
 import { FC } from "react";
-import { PaymentMethodManagementPaymentMethodFragment } from "../graphql/payment-methods.query.graphql.generated";
+import { PaymentMethodManagementPaymentMethodCardFragment } from "../graphql/payment-methods.query.graphql.generated";
 
 interface PaymentMethodItemProps {
-  readonly paymentMethod?: PaymentMethodManagementPaymentMethodFragment | null;
+  readonly paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment | null;
 }
 
 export const PaymentMethodItem: FC<PaymentMethodItemProps> = ({

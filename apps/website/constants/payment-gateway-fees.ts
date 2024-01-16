@@ -19,19 +19,21 @@ export type PaymentGatewayFees = Record<
 
 export const paymentGatewayFees: PaymentGatewayFees = {
   [PaymentGatewayType.Stripe]: {
-    [PaymentMethodType.Boleto]: {
-      percentage: 5,
-      fixAmount: 345,
-    },
-    [PaymentMethodType.Card]: {
-      percentage: 7,
-      fixAmount: 50,
-    },
+    [PaymentMethodType.Boleto]: undefined,
+    [PaymentMethodType.Card]: undefined,
     [PaymentMethodType.Pix]: undefined,
   },
   [PaymentGatewayType.Pagarme]: {
-    [PaymentMethodType.Boleto]: undefined,
-    [PaymentMethodType.Card]: undefined,
+    [PaymentMethodType.Boleto]: {
+      percentage: 5,
+      fixAmount: 345,
+      transferAmount: 367,
+    },
+    [PaymentMethodType.Card]: {
+      percentage: 7,
+      fixAmount: 200,
+      transferAmount: 367,
+    },
     [PaymentMethodType.Pix]: {
       percentage: 4,
       fixAmount: 200,

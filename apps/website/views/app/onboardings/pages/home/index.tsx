@@ -2,7 +2,6 @@ import { AppLayout } from "@/views/app/layout";
 import { Container, SimpleGrid, Stack, Title } from "@stokei/ui";
 import { FC } from "react";
 import { Navbar } from "../../components/navbar";
-import { StripeOnboarding } from "../../components/stripe-onboarding";
 import { PixOnboarding } from "../../components/pix-onboarding";
 import { useTranslations } from "@/hooks";
 
@@ -19,7 +18,6 @@ export const OnboardingsPage: FC<OnboardingsPageProps> = () => {
             {translate.formatMessage({ id: "paymentMethods" })}
           </Title>
           <SimpleGrid columns={[1, 1, 2, 2]} spacing="5">
-            <StripeOnboarding />
             <PixOnboarding />
           </SimpleGrid>
         </Container>

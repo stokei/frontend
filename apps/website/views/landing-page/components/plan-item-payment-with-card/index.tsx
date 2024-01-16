@@ -1,5 +1,4 @@
 import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
-import { STRIPE_PRICES_URL } from "@/constants/stripe-links";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
   PaymentGatewayType,
@@ -12,7 +11,6 @@ import {
   CardFooter,
   CardHeader,
   Icon,
-  Link,
   List,
   ListIcon,
   ListItem,
@@ -27,11 +25,11 @@ interface PlanItemPaymentWithCardProps {}
 export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
-  const stripeGateway =
-    paymentGatewayFees[PaymentGatewayType.Stripe][PaymentMethodType.Card];
+  const paymentGateway =
+    paymentGatewayFees[PaymentGatewayType.Pagarme][PaymentMethodType.Card];
   const transferAmount = translate.formatMoney({
     showSymbol: true,
-    amount: stripeGateway?.transferAmount || 0,
+    amount: paymentGateway?.transferAmount || 0,
     currency: currentApp?.currency?.id || "",
     minorUnit: currentApp?.currency?.minorUnit,
   });
@@ -90,15 +88,15 @@ export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
               fontWeight="900"
               lineHeight="shorter"
             >
-              {stripeGateway?.percentage}%
+              {paymentGateway?.percentage}%
             </Text>
-            {stripeGateway?.fixAmount && (
+            {paymentGateway?.fixAmount && (
               <>
                 <Text fontSize="md">+</Text>
                 <Text fontSize="md" fontWeight="600">
                   {translate.formatMoney({
                     showSymbol: true,
-                    amount: stripeGateway?.fixAmount,
+                    amount: paymentGateway?.fixAmount,
                     currency: currentApp?.currency?.id || "",
                     minorUnit: currentApp?.currency?.minorUnit,
                   })}
