@@ -5,6 +5,9 @@ export const routesApp = (data: { appId?: string }) => {
     financial: {
       home: baseURL + "/financial",
     },
+    coupons: {
+      home: baseURL + "/coupons",
+    },
     subscriptions: {
       home: baseURL + "/subscriptions",
       add: baseURL + "/subscriptions/add",

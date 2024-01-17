@@ -1,0 +1,34 @@
+query GetCouponPageCoupons(
+  $where: WhereDataFindAllCouponsInput
+  $orderBy: OrderByDataFindAllCouponsInput
+  $page: PaginationInput
+) {
+  coupons(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...CouponPageCoupon
+    }
+  }
+}
+
+fragment CouponPageCoupon on Coupon {
+  id
+  code
+  active
+  amountOff
+  percentOff
+  recipient {
+    id
+    fullname
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+}

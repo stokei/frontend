@@ -148,6 +148,7 @@ export const AddSubscriptionContractPage: FC<
                       student={student}
                       startAt={startAt}
                       endAt={endAt}
+                      subscriptionType={subscriptionType}
                       recurringInterval={recurringInterval}
                       recurringIntervalCount={recurringIntervalCount}
                       onPreviousStep={onGoToPeriod}

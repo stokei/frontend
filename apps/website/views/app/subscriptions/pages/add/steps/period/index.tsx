@@ -6,6 +6,7 @@ import {
 } from "@/services/graphql/stokei";
 import { convertEnumValueToCamelCase } from "@/utils";
 import {
+  Badge,
   Box,
   Button,
   ButtonGroup,
@@ -28,9 +29,7 @@ interface PeriodStepProps {
   intervalCount: string;
   startAt?: Date;
   endAt?: Date;
-  onChangeSubscriptionType: (
-    subscriptionType: SubscriptionContractType
-  ) => void;
+  onChangeSubscriptionType: (data: SubscriptionContractType) => void;
   onChangeInterval: (data: IntervalType) => void;
   onChangeIntervalCount: (data: string) => void;
   onChangeStartAt: (data: Date) => void;
@@ -54,12 +53,13 @@ export const PeriodStep: FC<PeriodStepProps> = ({
   onNextStep,
 }) => {
   const translate = useTranslations();
+  const isRecurring = subscriptionType === SubscriptionContractType.Recurring;
 
   return (
     <Stack direction="column" spacing="5">
       <FormControl isInvalid={!subscriptionType}>
         <Label htmlFor="price-type">
-          {translate.formatMessage({ id: "type" })}
+          {translate.formatMessage({ id: "period" })}
         </Label>
         <Select
           value={subscriptionType}
@@ -90,34 +90,39 @@ export const PeriodStep: FC<PeriodStepProps> = ({
         </Select>
       </FormControl>
 
-      {subscriptionType === SubscriptionContractType.Recurring && (
-        <>
-          <RecurringIntervalInput
-            interval={interval}
-            intervalCount={intervalCount}
-            onChangeInterval={onChangeInterval}
-            onChangeIntervalCount={onChangeIntervalCount}
-          />
-
-          <Box flexDirection="column">
-            <Label htmlFor="datepicker">
-              {translate.formatMessage({ id: "intervalCount" })}
-            </Label>
-            <DatePickerGroup>
-              <DatePicker
-                id="datepicker-start-at"
-                value={startAt ? startAt : new Date()}
-                onChange={onChangeStartAt}
-              />
-              <DatePicker
-                id="datepicker-end-at"
-                value={endAt ? endAt : new Date()}
-                onChange={onChangeEndAt}
-              />
-            </DatePickerGroup>
-          </Box>
-        </>
+      {isRecurring && (
+        <RecurringIntervalInput
+          interval={interval}
+          intervalCount={intervalCount}
+          onChangeInterval={onChangeInterval}
+          onChangeIntervalCount={onChangeIntervalCount}
+        />
       )}
+      <Box flexDirection="column">
+        <Label htmlFor="datepicker">
+          {translate.formatMessage({ id: "intervalCount" })}
+        </Label>
+        <DatePickerGroup>
+          <DatePicker
+            id="datepicker-start-at"
+            value={startAt ? startAt : new Date()}
+            onChange={onChangeStartAt}
+          />
+          {isRecurring ? (
+            <DatePicker
+              id="datepicker-end-at"
+              value={endAt ? endAt : new Date()}
+              onChange={onChangeEndAt}
+            />
+          ) : (
+            <Badge colorScheme="green">
+              {translate.formatMessage({
+                id: "lifelong",
+              })}
+            </Badge>
+          )}
+        </DatePickerGroup>
+      </Box>
 
       <ButtonGroup width="full" justifyContent="space-between">
         <Button onClick={onPreviousStep} variant="ghost">

@@ -1,6 +1,8 @@
 export const ptBRMessages = {
   me: "Eu",
   menu: "Menu",
+  coupon: "Cupom",
+  coupons: "Cupons",
   slug: "Identificador de URL",
   slugPlaceholder: "meuscursos",
   createYourProduct: "Crie seu produto",

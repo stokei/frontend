@@ -93,6 +93,7 @@ import { TbApps } from "react-icons/tb";
 import {
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
+  RiCoupon3Line,
   RiErrorWarningFill,
   RiPictureInPicture2Line,
   RiPictureInPictureExitLine,
@@ -193,3 +194,4 @@ export const CardIcon = AiOutlineCreditCard;
 export const PixIcon = MdOutlinePix;
 export const CopyIcon = MdContentCopy;
 export const ViewIcon = BsArrowUpRightSquare;
+export const CouponIcon = RiCoupon3Line;
