@@ -1,40 +1,82 @@
-import stripeImage from "@/assets/stripe.png";
-import { STRIPE_DASHBOARD_URL } from "@/constants/stripe-links";
-import { useTranslations } from "@/hooks";
-import { PaymentGatewayType } from "@/services/graphql/stokei";
+import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
+import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import {
-  Box,
-  Button,
-  Card,
-  CardBody,
   Container,
-  Icon,
-  Image,
+  NotFound,
+  NotFoundIcon,
+  NotFoundSubtitle,
+  Pagination,
   Stack,
-  Stat,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
-  Text,
+  useDisclosure,
 } from "@stokei/ui";
-import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
+import { AddCouponDrawer } from "./components/add-coupon-drawer";
+import { CouponItem } from "./components/coupon-item";
+import { EditCouponDrawer } from "./components/edit-coupon-drawer";
+import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
-import { useGetCurrentAppFinancialQuery } from "./graphql/app.query.graphql.generated";
+import {
+  CouponPageCouponFragment,
+  useGetCouponPageCouponsQuery,
+} from "./graphql/coupons.query.graphql.generated";
 import { Loading } from "./loading";
+import { CouponFilters } from "./components/coupon-filters";
+import { useFilters } from "./hooks/use-filters";
 
-interface FinancialPageProps {}
+interface CouponsPageProps {}
 
-export const FinancialPage: FC<FinancialPageProps> = () => {
-  const router = useRouter();
+export const CouponsPage: FC<CouponsPageProps> = () => {
+  const { codeFilter, setCodeFilter } = useFilters();
+  const [couponToEdit, setCouponToEdit] = useState<CouponPageCouponFragment>();
   const translate = useTranslations();
-  const [{ fetching: isLoading, data: dataGetCurrentAppFinancial }] =
-    useGetCurrentAppFinancialQuery();
+  const { currentPage, onChangePage } = usePagination();
+  const { currentApp } = useCurrentApp();
 
-  const balances = useMemo(
-    () => dataGetCurrentAppFinancial?.currentApp?.balances,
-    [dataGetCurrentAppFinancial?.currentApp?.balances]
+  const {
+    isOpen: isOpenAddCouponDrawer,
+    onClose: onCloseAddCouponDrawer,
+    onOpen: onOpenAddCouponDrawer,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenEditCouponDrawer,
+    onClose: onCloseEditCouponDrawer,
+    onOpen: onOpenEditCouponDrawer,
+  } = useDisclosure();
+  const { isOpen: isOpenFiltersDrawer, onToggle: onToggleFiltersDrawer } =
+    useDisclosure();
+
+  const [{ fetching: isLoading, data: dataGetCoupons }, onReloadCoupons] =
+    useGetCouponPageCouponsQuery({
+      pause: !currentApp?.id,
+      requestPolicy: "network-only",
+      variables: {
+        page: {
+          limit: 10,
+          number: currentPage,
+        },
+        orderBy: {
+          createdAt: OrderBy.Desc,
+          active: OrderBy.Desc,
+        },
+        where: {
+          AND: {
+            parent: {
+              equals: currentApp?.id,
+            },
+            ...(codeFilter && {
+              code: {
+                search: codeFilter,
+              },
+            }),
+          },
+        },
+      },
+    });
+
+  const coupons = useMemo(
+    () => dataGetCoupons?.coupons?.items || [],
+    [dataGetCoupons?.coupons?.items]
   );
   return (
     <AppLayout>
@@ -42,83 +84,72 @@ export const FinancialPage: FC<FinancialPageProps> = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <Container>
-          <Stack
-            direction={["column", "column", "row", "row"]}
-            paddingY="5"
-            spacing="5"
-          >
-            {balances?.map((balance) => (
-              <Card
-                key={balance.paymentGatewayType}
-                width="full"
-                background="background.50"
-              >
-                <CardBody overflow="hidden" alignItems="center">
-                  <Stack direction="row" spacing="5">
-                    <Stack direction="column" spacing="5">
-                      <Stat>
-                        <StatLabel>
-                          {translate.formatMessage({ id: "balance" })}
-                        </StatLabel>
-                        <StatNumber
-                          color={
-                            balance.availableAmount &&
-                            balance.availableAmount < 0
-                              ? "red.500"
-                              : "text.500"
-                          }
-                        >
-                          {translate.formatMoney({
-                            showSymbol: true,
-                            amount: balance.availableAmount || 0,
-                            currency: balance.currency?.id || "",
-                            minorUnit: balance.currency?.minorUnit,
-                          })}
-                        </StatNumber>
-
-                        <StatHelpText>
-                          {translate.formatMessage({ id: "toReceive" })}:
-                          <Text as="b" marginLeft="2">
-                            {balance?.currency?.symbol}{" "}
-                            {translate.formatMoney({
-                              showSymbol: false,
-                              amount: balance.pendingAmount || 0,
-                              currency: balance.currency?.id || "",
-                              minorUnit: balance.currency?.minorUnit,
-                            })}
-                          </Text>
-                        </StatHelpText>
-                      </Stat>
-                      <Box>
-                        {balance.paymentGatewayType ===
-                          PaymentGatewayType.Stripe && (
-                          <Button
-                            size="sm"
-                            onClick={() => router.push(STRIPE_DASHBOARD_URL)}
-                          >
-                            {translate.formatMessage({ id: "goToStripe" })}
-                          </Button>
-                        )}
-                      </Box>
-                    </Stack>
-                    <Box>
-                      {balance.paymentGatewayType ===
-                      PaymentGatewayType.Stripe ? (
-                        <Image
-                          width="12"
-                          src={stripeImage.src}
-                          fallbackSrc={stripeImage.blurDataURL}
-                          alt={translate.formatMessage({ id: "paymentMethod" })}
-                        />
-                      ) : (
-                        <Icon name="pix" fontSize="lg" color="green.500" />
-                      )}
-                    </Box>
-                  </Stack>
-                </CardBody>
-              </Card>
-            ))}
+        <Container paddingY="5">
+          <Stack direction="column" spacing="5">
+            <AddCouponDrawer
+              isOpenDrawer={isOpenAddCouponDrawer}
+              onCloseDrawer={onCloseAddCouponDrawer}
+              onSuccess={() =>
+                onReloadCoupons({ requestPolicy: "network-only" })
+              }
+            />
+            <EditCouponDrawer
+              coupon={couponToEdit}
+              isOpenDrawer={isOpenEditCouponDrawer}
+              onCloseDrawer={() => {
+                onCloseEditCouponDrawer();
+                setCouponToEdit(undefined);
+              }}
+              onSuccess={() =>
+                onReloadCoupons({ requestPolicy: "network-only" })
+              }
+            />
+            <CouponFilters
+              isOpen={isOpenFiltersDrawer}
+              onClose={onToggleFiltersDrawer}
+              codeFilter={codeFilter}
+              onChangeCodeFilter={setCodeFilter}
+            />
+            <Header
+              onAdd={onOpenAddCouponDrawer}
+              onOpenFilters={onToggleFiltersDrawer}
+              totalCount={dataGetCoupons?.coupons?.totalCount || 0}
+            />
+            {!coupons?.length ? (
+              <NotFound>
+                <NotFoundIcon name="coupon" />
+                <NotFoundSubtitle>
+                  {translate.formatMessage({
+                    id: "couponsNotFound",
+                  })}
+                </NotFoundSubtitle>
+              </NotFound>
+            ) : (
+              <Stack direction="column" spacing="5">
+                {coupons?.map((coupon) => (
+                  <CouponItem
+                    key={coupon.id}
+                    coupon={coupon}
+                    onOpenEditCouponDrawer={() => {
+                      setCouponToEdit(coupon);
+                      onOpenEditCouponDrawer();
+                    }}
+                  />
+                ))}
+                {dataGetCoupons?.coupons?.totalPages &&
+                  dataGetCoupons?.coupons?.totalPages > 1 && (
+                    <Pagination
+                      currentPage={currentPage}
+                      onChangePage={onChangePage}
+                      hasNextPage={!!dataGetCoupons?.coupons?.hasNextPage}
+                      hasPreviousPage={
+                        !!dataGetCoupons?.coupons?.hasPreviousPage
+                      }
+                      totalPages={dataGetCoupons?.coupons?.totalPages || 1}
+                    />
+                  )}
+              </Stack>
+            )}
           </Stack>
         </Container>
       )}

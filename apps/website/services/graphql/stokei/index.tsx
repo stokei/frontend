@@ -1819,6 +1819,7 @@ export type OrderByDataFindAllColorsInput = {
 };
 
 export type OrderByDataFindAllCouponsInput = {
+  active?: InputMaybe<OrderBy>;
   code?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
@@ -3372,6 +3373,7 @@ export type UpdateDataColorInput = {
 };
 
 export type UpdateDataCouponInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
   amountOff?: InputMaybe<Scalars['Float']>;
   code?: InputMaybe<Scalars['String']>;
   percentOff?: InputMaybe<Scalars['Float']>;
@@ -3759,6 +3761,7 @@ export type WhereDataFindAllColorsInput = {
 };
 
 export type WhereDataFindAllCouponsDataInput = {
+  active?: InputMaybe<WhereDataBooleanInput>;
   code?: InputMaybe<WhereDataSearchInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;

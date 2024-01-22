@@ -29,6 +29,7 @@ import { useCurrentAccount } from "@/hooks/use-current-account";
 
 interface SelectMembersProps {
   readonly label?: string;
+  readonly isOptional?: boolean;
   readonly hasCurrentAccount?: boolean;
   readonly currentMembers?: AppAccountFragment[];
   readonly onChooseCurrentMember: (value?: AppAccountFragment) => void;
@@ -37,6 +38,7 @@ interface SelectMembersProps {
 
 export const SelectMembers: FC<SelectMembersProps> = ({
   label,
+  isOptional,
   currentMembers,
   hasCurrentAccount = true,
   onChooseCurrentMember,
@@ -132,7 +134,10 @@ export const SelectMembers: FC<SelectMembersProps> = ({
 
   return (
     <FormControl flex="3">
-      <Label htmlFor="member-invoice-filters-select-search-input">
+      <Label
+        htmlFor="member-invoice-filters-select-search-input"
+        isOptional={!!isOptional}
+      >
         {label || translate.formatMessage({ id: "student" })}
       </Label>
       <Select

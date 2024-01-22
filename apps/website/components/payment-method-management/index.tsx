@@ -22,7 +22,8 @@ import { PaymentMethodItem } from "./payment-method-item";
 import { STRIPE_PUBLISHABLE_KEY } from "@/environments";
 import { Elements } from "@stripe/react-stripe-js";
 
-const stripeLoadElements = loadStripe(STRIPE_PUBLISHABLE_KEY);
+const stripeLoadElements =
+  STRIPE_PUBLISHABLE_KEY && loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 interface PaymentMethodManagementProps {
   readonly title?: string;
