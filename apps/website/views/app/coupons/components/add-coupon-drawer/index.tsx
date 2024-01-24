@@ -49,19 +49,19 @@ export const AddCouponDrawer: FC<AddCouponDrawerProps> = ({
     code: z.string().min(1, {
       message: translate.formatMessage({ id: "required" }),
     }),
-    amountOff: z.string(),
-    percentOff: z.coerce.number(),
+    amountOff: z.string().optional(),
+    percentOff: z.coerce.number().optional(),
   });
 
   const [{ fetching: isLoadingCreateCoupon }, onExecuteCreateCoupon] =
     useCreateCouponMutation();
 
   const {
+    reset,
     register,
-    handleSubmit,
     setError,
     clearErrors,
-    reset,
+    handleSubmit,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
@@ -70,7 +70,12 @@ export const AddCouponDrawer: FC<AddCouponDrawerProps> = ({
   useEffect(() => {
     clearErrors("amountOff");
     clearErrors("percentOff");
-  }, [clearErrors, discountType]);
+
+    reset({
+      amountOff: undefined,
+      percentOff: undefined,
+    });
+  }, [clearErrors, discountType, reset]);
 
   const convertAmountToMoney = useCallback(
     (value: string) => {
@@ -164,7 +169,10 @@ export const AddCouponDrawer: FC<AddCouponDrawerProps> = ({
                             id: "required",
                           }),
                         });
+                      } else {
+                        clearErrors("code");
                       }
+                      return event;
                     },
                     onChange(event) {
                       event.target.value = getOnlyLettersAndNumbers(
@@ -208,7 +216,10 @@ export const AddCouponDrawer: FC<AddCouponDrawerProps> = ({
                               id: "required",
                             }),
                           });
+                        } else {
+                          clearErrors("amountOff");
                         }
+                        return event;
                       },
                       onChange(event) {
                         event.target.value = convertAmountToMoney(
@@ -247,7 +258,10 @@ export const AddCouponDrawer: FC<AddCouponDrawerProps> = ({
                               id: "required",
                             }),
                           });
+                        } else {
+                          clearErrors("percentOff");
                         }
+                        return event;
                       },
                       onChange(event) {
                         const valueNumber = event.target.valueAsNumber;
@@ -256,6 +270,7 @@ export const AddCouponDrawer: FC<AddCouponDrawerProps> = ({
                         } else if (valueNumber > 100) {
                           event.target.value = "100";
                         }
+                        return event;
                       },
                     })}
                   />

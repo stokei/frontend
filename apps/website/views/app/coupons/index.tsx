@@ -27,7 +27,8 @@ import { useFilters } from "./hooks/use-filters";
 interface CouponsPageProps {}
 
 export const CouponsPage: FC<CouponsPageProps> = () => {
-  const { codeFilter, setCodeFilter } = useFilters();
+  const { codeFilter, activeFilter, setCodeFilter, setActiveFilter } =
+    useFilters();
   const [couponToEdit, setCouponToEdit] = useState<CouponPageCouponFragment>();
   const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();
@@ -67,6 +68,11 @@ export const CouponsPage: FC<CouponsPageProps> = () => {
             ...(codeFilter && {
               code: {
                 search: codeFilter,
+              },
+            }),
+            ...(typeof activeFilter === "boolean" && {
+              active: {
+                equals: activeFilter,
               },
             }),
           },
@@ -109,6 +115,8 @@ export const CouponsPage: FC<CouponsPageProps> = () => {
               onClose={onToggleFiltersDrawer}
               codeFilter={codeFilter}
               onChangeCodeFilter={setCodeFilter}
+              activeFilter={activeFilter}
+              onChangeActiveFilter={setActiveFilter}
             />
             <Header
               onAdd={onOpenAddCouponDrawer}

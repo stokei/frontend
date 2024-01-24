@@ -50,8 +50,8 @@ export const EditCouponDrawer: FC<EditCouponDrawerProps> = ({
     code: z.string().min(1, {
       message: translate.formatMessage({ id: "required" }),
     }),
-    amountOff: z.string(),
-    percentOff: z.coerce.number(),
+    amountOff: z.string().optional(),
+    percentOff: z.coerce.number().optional(),
     active: z.boolean(),
   });
 

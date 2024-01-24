@@ -2,6 +2,7 @@ import { useTranslations } from "@/hooks";
 import {
   Button,
   ButtonGroup,
+  Circle,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -11,44 +12,61 @@ import {
   Input,
   InputGroup,
   Label,
+  Select,
+  SelectInput,
+  SelectItem,
+  SelectList,
   Stack,
+  Text,
 } from "@stokei/ui";
 import { FC, useEffect } from "react";
 import { useFilters } from "../../hooks/use-filters";
+import { DiscountType } from "../select-discount-type";
 
 interface CouponFiltersProps {
   readonly isOpen: boolean;
   readonly onClose: () => void;
   readonly codeFilter?: string;
   readonly onChangeCodeFilter: (value: string) => void;
+  readonly activeFilter?: boolean;
+  readonly onChangeActiveFilter: (value?: boolean) => void;
 }
 
 export const CouponFilters: FC<CouponFiltersProps> = ({
   isOpen,
-  onClose,
   codeFilter,
+  activeFilter,
+  onClose,
   onChangeCodeFilter,
+  onChangeActiveFilter,
 }) => {
   const translate = useTranslations();
   const {
     codeFilter: code,
     setCodeFilter: setCode,
+    activeFilter: active,
+    setActiveFilter: setActive,
     onCleanFilters,
   } = useFilters();
 
   useEffect(() => {
-    console.log({ codeFilter });
     setCode(codeFilter || "");
   }, [codeFilter, setCode]);
 
+  useEffect(() => {
+    setActive(activeFilter);
+  }, [activeFilter, setActive]);
+
   const onSubmit = async () => {
     onChangeCodeFilter(code);
+    onChangeActiveFilter(active);
     onClose?.();
   };
 
   const onClean = () => {
     onCleanFilters();
     onChangeCodeFilter("");
+    onChangeActiveFilter(undefined);
     onClose?.();
   };
 
@@ -78,6 +96,56 @@ export const CouponFilters: FC<CouponFiltersProps> = ({
                   onChange={(e) => setCode(e.target.value)}
                 />
               </InputGroup>
+            </FormControl>
+            <FormControl>
+              <Label htmlFor="status">
+                {translate.formatMessage({ id: "status" })}
+              </Label>
+              <Select
+                id="status"
+                value={active}
+                onChooseItem={setActive}
+                onRemoveChooseItem={() => setActive(undefined)}
+              >
+                <SelectInput
+                  placeholder={translate.formatMessage({ id: "status" })}
+                  item={(item) => (
+                    <Stack direction="row" spacing="2" align="center">
+                      <Circle
+                        size="2"
+                        background={!!item ? "green.500" : "gray.500"}
+                      />
+                      <Text>
+                        {translate.formatMessage({
+                          id: !!item ? "active" : "inactive",
+                        })}
+                      </Text>
+                    </Stack>
+                  )}
+                />
+                <SelectList>
+                  <SelectItem value={true}>
+                    <Stack direction="row" spacing="2" align="center">
+                      <Circle size="2" background="green.500" />
+                      <Text>
+                        {translate.formatMessage({
+                          id: "active",
+                        })}
+                      </Text>
+                    </Stack>
+                  </SelectItem>
+                  <SelectItem value={false}>
+                    <Stack direction="row" spacing="2" align="center">
+                      <Circle size="2" background="gray.500" />
+                      <Text>
+                        {translate.formatMessage({
+                          id: "inactive",
+                        })}
+                      </Text>
+                    </Stack>
+                  </SelectItem>
+                </SelectList>
+              </Select>
             </FormControl>
           </Stack>
         </DrawerBody>
