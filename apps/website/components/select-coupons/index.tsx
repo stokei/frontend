@@ -26,16 +26,16 @@ import { CouponSelectItemContent } from "./coupon-select-item-content";
 
 interface SelectCouponsProps {
   readonly label?: string;
-  readonly currentCoupons?: AppCouponFragment[];
-  readonly onChooseCurrentCoupon: (value?: AppCouponFragment) => void;
-  readonly onRemoveChooseCurrentCoupon: (value?: AppCouponFragment) => void;
+  readonly value?: AppCouponFragment[];
+  readonly onChooseCoupon: (value?: AppCouponFragment) => void;
+  readonly onRemoveChooseCoupon: (value?: AppCouponFragment) => void;
 }
 
 export const SelectCoupons: FC<SelectCouponsProps> = ({
   label,
-  currentCoupons,
-  onChooseCurrentCoupon,
-  onRemoveChooseCurrentCoupon,
+  value,
+  onChooseCoupon,
+  onRemoveChooseCoupon,
 }) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -80,15 +80,15 @@ export const SelectCoupons: FC<SelectCouponsProps> = ({
 
   const onChooseItem = useCallback(
     (value?: AppCouponFragment) => {
-      onChooseCurrentCoupon?.(value);
+      onChooseCoupon?.(value);
     },
-    [onChooseCurrentCoupon]
+    [onChooseCoupon]
   );
   const onRemoveChooseItem = useCallback(
     (value?: AppCouponFragment) => {
-      onRemoveChooseCurrentCoupon?.(value);
+      onRemoveChooseCoupon?.(value);
     },
-    [onRemoveChooseCurrentCoupon]
+    [onRemoveChooseCoupon]
   );
 
   return (
@@ -98,7 +98,7 @@ export const SelectCoupons: FC<SelectCouponsProps> = ({
       </Label>
       <Select
         isLoading={isLoadingGetCoupons}
-        value={currentCoupons}
+        value={value}
         onChooseItem={onChooseItem}
         onRemoveChooseItem={onRemoveChooseItem}
         marginBottom="2"
@@ -116,16 +116,16 @@ export const SelectCoupons: FC<SelectCouponsProps> = ({
           ))}
         </SelectList>
       </Select>
-      {!!currentCoupons?.length && (
+      {!!value?.length && (
         <SelectTagList>
-          {currentCoupons?.map((currentCoupon) => (
+          {value?.map((currentCoupon) => (
             <SelectTagItem key={currentCoupon.id}>
               <Tag>
                 <TagLabel>
                   <CouponSelectItemContent coupon={currentCoupon} />
                 </TagLabel>
                 <TagCloseButton
-                  onClick={() => onRemoveChooseCurrentCoupon(currentCoupon)}
+                  onClick={() => onRemoveChooseCoupon(currentCoupon)}
                 />
               </Tag>
             </SelectTagItem>

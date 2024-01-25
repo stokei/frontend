@@ -50,16 +50,7 @@ export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
 
       <Card background="background.50">
         <CardBody>
-          <Stack
-            direction={["column", "column", "row", "row"]}
-            justify={[
-              "flex-start",
-              "flex-start",
-              "space-between",
-              "space-between",
-            ]}
-            spacing="5"
-          >
+          <Stack direction="column" spacing="5">
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "customer" })}</Label>
               <Stack direction="row" spacing="4" align="center">
@@ -78,11 +69,15 @@ export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
             </Box>
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "lastUpdate" })}</Label>
-              <Text fontWeight="semibold">
+              <Text>
                 {translate.formatDate(order?.updatedAt || "", {
                   fullDate: true,
                 })}
               </Text>
+            </Box>
+            <Box flexDirection="column">
+              <Label>{translate.formatMessage({ id: "coupon" })}</Label>
+              <Text>{order?.coupon?.code}</Text>
             </Box>
           </Stack>
         </CardBody>

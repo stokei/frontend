@@ -11,63 +11,60 @@ import {
   DrawerHeader,
   Stack,
 } from "@stokei/ui";
-import { FC, useState } from "react";
+import { FC } from "react";
+import { useFilters } from "../../hooks/use-filters";
 import { SelectFilterStatus } from "../select-filter-status";
+import { SelectCoupons } from "@/components/select-coupons";
+import { AppCouponFragment } from "@/components/select-coupons/graphql/coupons.query.graphql.generated";
 
 interface OrderFiltersProps {
   readonly isOpen: boolean;
-  readonly currentStatus: OrderStatusFilter;
-  readonly currentCustomers?: AppAccountFragment[];
+  readonly statusFilter: OrderStatusFilter;
+  readonly customersFilter?: AppAccountFragment[];
   readonly onClose: () => void;
-  readonly onChooseCurrentCustomers: (values: AppAccountFragment[]) => void;
-  readonly onRemoveCurrentCustomers: () => void;
-  readonly onChooseCurrentStatus: (value: OrderStatusFilter) => void;
-  readonly onRemoveCurrentStatus: () => void;
+  readonly onChooseFilterCustomers: (values: AppAccountFragment[]) => void;
+  readonly onChooseFilterCoupons: (values: AppCouponFragment[]) => void;
+  readonly onChooseFilterStatus: (value: OrderStatusFilter) => void;
+  readonly onClearFilters: () => void;
 }
 
 export const OrderFilters: FC<OrderFiltersProps> = ({
   isOpen,
-  currentStatus,
-  currentCustomers,
+  statusFilter,
+  customersFilter,
   onClose,
-  onRemoveCurrentCustomers,
-  onChooseCurrentCustomers,
-  onChooseCurrentStatus,
-  onRemoveCurrentStatus,
+  onClearFilters,
+  onChooseFilterCustomers,
+  onChooseFilterCoupons,
+  onChooseFilterStatus,
 }) => {
-  const [status, setStatus] = useState<OrderStatusFilter>(currentStatus);
-  const [customers, setCustomers] = useState<AppAccountFragment[]>(
-    currentCustomers || []
-  );
+  const {
+    status,
+    coupons,
+    customers,
+    setStatus,
+    onChooseCustomer,
+    onRemoveChooseCustomer,
+    onChooseCoupon,
+    onRemoveChooseCoupon,
+    onClearFilters: onClearCurrentFilters,
+  } = useFilters({
+    customers: customersFilter,
+    status: statusFilter,
+  });
 
   const translate = useTranslations();
-  const onChooseCustomer = (customer?: AppAccountFragment) => {
-    if (customer) {
-      setCustomers((currentCustomers) => [...currentCustomers, customer]);
-    }
-  };
-  const onRemoveChooseCustomer = (customerRemoved?: AppAccountFragment) => {
-    if (customerRemoved) {
-      setCustomers((currentCustomers) =>
-        currentCustomers?.filter(
-          (customer) => customer?.id !== customerRemoved?.id
-        )
-      );
-    }
-  };
 
   const onSubmit = () => {
-    onChooseCurrentStatus(status);
-    onChooseCurrentCustomers(customers);
+    onChooseFilterCoupons(coupons);
+    onChooseFilterStatus(status);
+    onChooseFilterCustomers(customers);
     onClose();
   };
 
   const onClean = () => {
-    setStatus(OrderStatusFilter.All);
-    setCustomers([]);
-
-    onRemoveCurrentCustomers();
-    onRemoveCurrentStatus();
+    onClearCurrentFilters();
+    onClearFilters();
     onClose();
   };
 
@@ -87,6 +84,11 @@ export const OrderFilters: FC<OrderFiltersProps> = ({
             status={status}
             onChooseStatus={setStatus}
             onRemoveChooseStatus={setStatus}
+          />
+          <SelectCoupons
+            value={coupons}
+            onChooseCoupon={onChooseCoupon}
+            onRemoveChooseCoupon={onRemoveChooseCoupon}
           />
         </Stack>
       </DrawerBody>
