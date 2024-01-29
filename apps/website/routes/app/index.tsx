@@ -27,14 +27,9 @@ export const routesApp = (data: { appId?: string }) => {
     },
     onboardings: {
       home: baseURL + "/onboardings",
-      pix: {
-        home: baseURL + "/onboardings/pix",
-        callback: baseURL + "/onboardings/pix/callback",
-      },
-      stripe: {
-        home: baseURL + "/onboardings/stripe",
-        refresh: baseURL + "/onboardings/stripe/refresh",
-        callback: baseURL + "/onboardings/stripe/callback",
+      pagarme: {
+        home: baseURL + "/onboardings/pagarme",
+        callback: baseURL + "/onboardings/pagarme/callback",
       },
     },
     courses: baseURL + "/courses",

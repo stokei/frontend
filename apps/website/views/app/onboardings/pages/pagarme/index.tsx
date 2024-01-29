@@ -27,6 +27,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
+import { getOnlyNumbers } from "@stokei/utils";
 import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -37,13 +38,11 @@ import { SectionContent } from "./components/section-content";
 import { SectionInformation } from "./components/section-information";
 import { useCreateAppPagarmeAccountMutation } from "./graphql/create-app-pagarme-account.mutation.graphql.generated";
 
-const onlyNumbers = (value: string) => value?.trim()?.replace(/\D/g, "");
+interface OnboardingPagarmePageProps {}
 
-interface OnboardingPixPageProps {}
-
-export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
+export const OnboardingPagarmePage: FC<OnboardingPagarmePageProps> = () => {
   const [documentType, setDocumentType] = useState<DocumentType>(
-    DocumentType.CPF
+    DocumentType.Cpf
   );
   const [bankAccountType, setBankAccountType] =
     useState<PagarmeBankAccountType>(PagarmeBankAccountType.Checking);
@@ -101,7 +100,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
   }: z.infer<typeof validationSchema>) => {
     try {
       const pagarmeAccountType =
-        documentType === DocumentType.CPF
+        documentType === DocumentType.Cpf
           ? PagarmeAccountType.Individual
           : PagarmeAccountType.Company;
       const bankCode =
@@ -132,7 +131,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
         });
 
         return router.push(
-          routes.app({ appId: currentApp?.id }).onboardings.pix.callback
+          routes.app({ appId: currentApp?.id }).onboardings.pagarme.callback
         );
       }
 
@@ -254,7 +253,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                               })}
                               {...register("defaultBankAccount.branchNumber", {
                                 onChange(event) {
-                                  event.target.value = onlyNumbers(
+                                  event.target.value = getOnlyNumbers(
                                     event.target.value
                                   );
                                 },
@@ -283,7 +282,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                                 "defaultBankAccount.branchCheckDigit",
                                 {
                                   onChange(event) {
-                                    event.target.value = onlyNumbers(
+                                    event.target.value = getOnlyNumbers(
                                       event.target.value
                                     );
                                   },
@@ -318,7 +317,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                               })}
                               {...register("defaultBankAccount.accountNumber", {
                                 onChange(event) {
-                                  event.target.value = onlyNumbers(
+                                  event.target.value = getOnlyNumbers(
                                     event.target.value
                                   );
                                 },
@@ -347,7 +346,7 @@ export const OnboardingPixPage: FC<OnboardingPixPageProps> = () => {
                                 "defaultBankAccount.accountCheckDigit",
                                 {
                                   onChange(event) {
-                                    event.target.value = onlyNumbers(
+                                    event.target.value = getOnlyNumbers(
                                       event.target.value
                                     );
                                   },

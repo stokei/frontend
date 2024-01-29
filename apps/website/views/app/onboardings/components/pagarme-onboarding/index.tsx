@@ -1,4 +1,4 @@
-import pixImage from "@/assets/pix.png";
+import pagarmeImage from "@/assets/pagarme.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
@@ -14,21 +14,21 @@ import {
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 
-interface PixOnboardingProps {}
+interface PagarmeOnboardingProps {}
 
-export const PixOnboarding: FC<PixOnboardingProps> = () => {
+export const PagarmeOnboarding: FC<PagarmeOnboardingProps> = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const router = useRouter();
 
-  const isIntegratedWithPix = useMemo(
-    () => !!currentApp?.isIntegratedWithPix,
+  const isIntegratedWithPagarme = useMemo(
+    () => !!currentApp?.isIntegratedWithPagarme,
     [currentApp]
   );
 
-  const goToPixOnboarding = () => {
+  const goToPagarmeOnboarding = () => {
     router.push(
-      routes.app({ appId: currentApp?.id || "" }).onboardings.pix.home
+      routes.app({ appId: currentApp?.id || "" }).onboardings.pagarme.home
     );
   };
 
@@ -38,24 +38,26 @@ export const PixOnboarding: FC<PixOnboardingProps> = () => {
         <Stack height="full" direction="column" spacing="5">
           <Image
             width="24"
-            src={pixImage.src}
-            fallbackSrc={pixImage.blurDataURL}
-            alt={translate.formatMessage({ id: "pixOnboarding" })}
+            src={pagarmeImage.src}
+            fallbackSrc={pagarmeImage.blurDataURL}
+            alt={translate.formatMessage({ id: "pagarmeOnboarding" })}
           />
           <Box flexDirection="column" flex="auto">
             <Text>
               {translate.formatMessage({
-                id: "integrateThePixPaymentMethodIntoYourPlatform",
+                id: "integrateThePagarmePaymentMethodIntoYourPlatform",
               })}
             </Text>
           </Box>
           <ButtonGroup>
             <Button
-              onClick={!isIntegratedWithPix ? goToPixOnboarding : undefined}
-              isDisabled={isIntegratedWithPix}
+              onClick={
+                !isIntegratedWithPagarme ? goToPagarmeOnboarding : undefined
+              }
+              isDisabled={isIntegratedWithPagarme}
             >
               {translate.formatMessage({
-                id: isIntegratedWithPix ? "added" : "add",
+                id: isIntegratedWithPagarme ? "added" : "add",
               })}
             </Button>
           </ButtonGroup>

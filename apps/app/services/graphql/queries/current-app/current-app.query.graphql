@@ -3,8 +3,7 @@ query CurrentGlobalApp($slug: String!) {
     id
     name
     isStokei
-    isIntegratedWithPix
-    isIntegratedWithStripe
+    isIntegratedWithPagarme
     stripeAccount
     currency {
       id

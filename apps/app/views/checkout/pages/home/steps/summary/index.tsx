@@ -1,5 +1,6 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
+import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
 import { useShoppingCart, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { PaymentMethodType } from "@/services/graphql/stokei";
@@ -15,11 +16,12 @@ import {
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { ChoiseEditableSummary } from "../../components/choice-editable-summary";
+import { ChoiseEditable } from "../../components/choice-editable";
 import { PaymentMethod } from "../../components/payment-method";
 
 export interface SummaryStepProps {
   isLoadingCheckout: boolean;
+  paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment;
   paymentMethodType?: PaymentMethodType;
   onGoToPaymentMethod: () => void;
   onGoToProducts: () => void;
@@ -28,6 +30,7 @@ export interface SummaryStepProps {
 }
 
 export const SummaryStep: React.FC<SummaryStepProps> = ({
+  paymentMethod,
   paymentMethodType,
   isLoadingCheckout,
   onPreviousStep,
@@ -45,7 +48,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
         <Title fontSize="sm" color="text.700">
           {translate.formatMessage({ id: "products" })}
         </Title>
-        <ChoiseEditableSummary onChange={onGoToProducts}>
+        <ChoiseEditable onChange={onGoToProducts}>
           <Stack direction="column" spacing="5">
             {shoppingCartItems?.map((shoppingCartItem) => (
               <Stack
@@ -76,18 +79,21 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
               </Stack>
             ))}
           </Stack>
-        </ChoiseEditableSummary>
+        </ChoiseEditable>
       </Stack>
 
       <Stack direction="column" spacing="3">
         <Title fontSize="sm" color="text.700">
           {translate.formatMessage({ id: "paymentMethod" })}
         </Title>
-        <ChoiseEditableSummary onChange={onGoToPaymentMethod}>
+        <ChoiseEditable onChange={onGoToPaymentMethod}>
           {paymentMethodType && (
-            <PaymentMethod paymentMethodType={paymentMethodType} />
+            <PaymentMethod
+              paymentMethodType={paymentMethodType}
+              paymentMethod={paymentMethod}
+            />
           )}
-        </ChoiseEditableSummary>
+        </ChoiseEditable>
       </Stack>
 
       <Stack direction="column" spacing="3">
@@ -97,12 +103,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
         <Card>
           <CardBody>
             <Stack direction="column" spacing="5">
-              <Stack
-                direction="row"
-                spacing="1"
-                justify="space-between"
-                align="center"
-              >
+              <Stack direction="column" spacing="1">
                 <Text lineHeight="shorter">
                   {translate.formatMessage({ id: "subtotal" })}:
                 </Text>
@@ -120,12 +121,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
                   })}
                 </Title>
               </Stack>
-              <Stack
-                direction="row"
-                spacing="1"
-                justify="space-between"
-                align="center"
-              >
+              <Stack direction="column" spacing="1">
                 <Text fontWeight="bold" lineHeight="shorter">
                   {translate.formatMessage({ id: "total" })}:
                 </Text>

@@ -150,8 +150,7 @@ export type App = {
   email?: Maybe<Scalars['String']>;
   icon?: Maybe<Image>;
   id: Scalars['ID'];
-  isIntegratedWithPix: Scalars['Boolean'];
-  isIntegratedWithStripe: Scalars['Boolean'];
+  isIntegratedWithPagarme: Scalars['Boolean'];
   isStokei: Scalars['Boolean'];
   logo?: Maybe<Image>;
   name: Scalars['String'];
@@ -553,7 +552,6 @@ export type CreateCatalogItemInput = {
 };
 
 export type CreateCheckoutInput = {
-  address: Scalars['String'];
   order: Scalars['String'];
   paymentMethod?: InputMaybe<Scalars['String']>;
   paymentMethodType: PaymentMethodType;
@@ -1128,6 +1126,7 @@ export type MeAccount = {
   lastname: Scalars['String'];
   pagarmeCustomer?: Maybe<Scalars['String']>;
   paymentMethods?: Maybe<PaymentMethods>;
+  phone?: Maybe<Phone>;
   phones?: Maybe<Phones>;
   roles?: Maybe<Roles>;
   status: AccountStatus;
@@ -2638,7 +2637,8 @@ export type QueryColorsArgs = {
 
 
 export type QueryCouponArgs = {
-  id: Scalars['String'];
+  code?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
 };
 
 

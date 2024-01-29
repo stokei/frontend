@@ -1,0 +1,7 @@
+mutation UpdateAccountPagarmeCustomer(
+  $input: UpdateAccountPagarmeCustomerInput!
+) {
+  updateAccountPagarmeCustomer(input: $input) {
+    id
+  }
+}

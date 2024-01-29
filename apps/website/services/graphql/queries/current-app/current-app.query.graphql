@@ -4,8 +4,7 @@ query CurrentGlobalApp {
     name
     slug
     isStokei
-    isIntegratedWithStripe
-    isIntegratedWithPix
+    isIntegratedWithPagarme
     stripeAccount
     status
     currentSubscriptionContract {

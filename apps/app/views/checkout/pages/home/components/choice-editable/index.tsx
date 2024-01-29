@@ -8,12 +8,12 @@ import {
 } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 
-export interface ChoiseEditableSummaryProps {
+export interface ChoiseEditableProps {
   onChange: () => void;
 }
 
-export const ChoiseEditableSummary: React.FC<
-  PropsWithChildren<ChoiseEditableSummaryProps>
+export const ChoiseEditable: React.FC<
+  PropsWithChildren<ChoiseEditableProps>
 > = ({ onChange, children }) => {
   return (
     <Card>
