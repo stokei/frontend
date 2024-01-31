@@ -5,7 +5,7 @@ export const ptBRMessages = {
   invalidCardNumber: "Número do cartão está inválido",
   addNewAddress: "Adicionar novo endereço",
   street: "Rua",
-  streetPlaceholder: "Rua/Avenida/Estrada",
+  streetPlaceholder: "Rua/Av/Estrada, Bairro",
   number: "Número",
   numberPlaceholder: "999",
   city: "Cidade",
@@ -50,6 +50,8 @@ export const ptBRMessages = {
   orderItem: "Item do pedido",
   orderItems: "Itens do pedido",
   copy: "Copiar",
+  makePaymentViaBoletoToCompleteYourPurchase:
+    "Faça o pagamento via Boleto para concluir sua compra",
   makePaymentViaPixToCompleteYourPurchase:
     "Faça o pagamento via PIX para concluir sua compra",
   useTheCodeOrUseTheQrCodeToCompleteYourPurchase:

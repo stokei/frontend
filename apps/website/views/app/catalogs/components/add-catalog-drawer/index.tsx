@@ -51,6 +51,7 @@ export const AddCatalogDrawer: FC<AddCatalogDrawerProps> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

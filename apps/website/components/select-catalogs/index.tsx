@@ -47,6 +47,7 @@ export const SelectCatalogs: FC<SelectCatalogsProps> = ({
   });
 
   const { register, watch } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

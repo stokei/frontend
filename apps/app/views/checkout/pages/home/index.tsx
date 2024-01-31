@@ -20,7 +20,10 @@ import {
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
 import { CheckoutLayout } from "../../layout";
-import { useCreateCheckoutMutation } from "./graphql/create-checkout.mutation.graphql.generated";
+import {
+  CreateCheckoutPageCheckoutFragment,
+  useCreateCheckoutMutation,
+} from "./graphql/create-checkout.mutation.graphql.generated";
 import { useCreateOrderMutation } from "./graphql/create-order.mutation.graphql.generated";
 import { AccountStep } from "./steps/account";
 import { AddressStep } from "./steps/address";
@@ -37,8 +40,10 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
   const [address, setAddress] = useState<AddressManagementAddressFragment>();
   const [paymentMethod, setPaymentMethod] =
     useState<PaymentMethodManagementPaymentMethodCardFragment>();
-  const [qrCodeCopyAndPaste, setQRCodeCopyAndPaste] = useState("");
-  const [qrCodeURL, setQRCodeURL] = useState("");
+  const [checkoutResponsePix, setCheckoutResponsePix] =
+    useState<CreateCheckoutPageCheckoutFragment["pix"]>();
+  const [checkoutResponseBoleto, setCheckoutResponseBoleto] =
+    useState<CreateCheckoutPageCheckoutFragment["boleto"]>();
   const [orderId, setOrderId] = useState("");
   const [isDisabledPayment, setIsDisabledPayment] = useState(true);
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(
@@ -127,9 +132,20 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
 
         if (!!response?.data?.createCheckout) {
           const checkout = response.data.createCheckout;
+          if (paymentMethodType === PaymentMethodType.Card) {
+            if (checkout.card) {
+              return router.push(routes.checkout.callback);
+            } else {
+              return onShowAPIError({
+                message: translate.formatMessage({ id: "somethingWentWrong" }),
+              });
+            }
+          }
           if (checkout.pix) {
-            setQRCodeCopyAndPaste(checkout.pix?.copyAndPaste || "");
-            setQRCodeURL(checkout.pix?.qrCodeURL || "");
+            setCheckoutResponsePix(checkout.pix);
+          }
+          if (checkout.boleto) {
+            setCheckoutResponseBoleto(checkout.boleto);
           }
           setIsDisabledPayment(false);
           if (checkout.url) {
@@ -205,7 +221,9 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                 title={translate.formatMessage({ id: "paymentMethod" })}
                 stepIndex={CheckoutStep.PAYMENT_METHOD}
                 isDisabled={
-                  isEmptyShoppingCart || !currentAccount?.pagarmeCustomer
+                  isEmptyShoppingCart ||
+                  !address ||
+                  !currentAccount?.pagarmeCustomer
                 }
               />
               <StepItem
@@ -284,8 +302,8 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                   <StepPanel stepIndex={CheckoutStep.PAYMENT}>
                     <PaymentStep
                       orderId={orderId}
-                      qrCodeCopyAndPaste={qrCodeCopyAndPaste}
-                      qrCodeURL={qrCodeURL}
+                      pix={checkoutResponsePix}
+                      boleto={checkoutResponseBoleto}
                       paymentMethodType={paymentMethodType}
                       onPreviousStep={() =>
                         setCurrentStep(CheckoutStep.PAYMENT_METHOD)

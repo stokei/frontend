@@ -54,6 +54,7 @@ export const FormChangePassword: FC<FormChangePasswordProps> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

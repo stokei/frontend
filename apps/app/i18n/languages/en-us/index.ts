@@ -7,7 +7,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   invalidCardNumber: "Invalid card number",
   address: "Address",
   street: "Street",
-  streetPlaceholder: "Street/Av",
+  streetPlaceholder: "Street/Av, neighborhood",
   number: "Number",
   numberPlaceholder: "999",
   city: "City",
@@ -46,6 +46,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   buy: "Buy",
   copy: "Copy",
   copied: "Copied",
+  makePaymentViaBoletoToCompleteYourPurchase:
+    "Make payment via Boleto to complete your purchase",
   makePaymentViaPixToCompleteYourPurchase:
     "Make payment via PIX to complete your purchase",
   useTheCodeOrUseTheQrCodeToCompleteYourPurchase:

@@ -64,6 +64,7 @@ export const AddMemberDrawer: FC<AddMemberDrawerProps> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

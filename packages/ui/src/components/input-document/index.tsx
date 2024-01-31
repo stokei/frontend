@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useTranslations } from "../../hooks";
 import { Box } from "../box";
 import { Input } from "../input";
@@ -46,6 +46,21 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
         : [DocumentType.Cpf, DocumentType.Cnpj, DocumentType.Passport],
     [documentTypesAllowed]
   );
+
+  const maxLength = useMemo(() => {
+    const sizes: Record<DocumentType, number> = {
+      [DocumentType.Cpf]: 11,
+      [DocumentType.Cnpj]: 16,
+      [DocumentType.Passport]: 50,
+    };
+    return sizes[documentType || DocumentType.Cpf];
+  }, [documentType]);
+
+  useEffect(() => {
+    if (document) {
+      onChangeDocument(document?.slice(0, maxLength));
+    }
+  }, [document, maxLength, onChangeDocument]);
 
   const setDocument = useCallback(
     (e: any) => {
@@ -104,7 +119,7 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
         placeholder={translate.formatMessage({
           id: documentType?.toLowerCase() as any,
         })}
-        maxLength={documentType === DocumentType.Passport ? 50 : 16}
+        maxLength={maxLength}
         onChange={setDocument}
       />
     </Stack>

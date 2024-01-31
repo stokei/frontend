@@ -1,12 +1,27 @@
 mutation CreateCheckout($input: CreateCheckoutInput!) {
   createCheckout(input: $input) {
-    url
-    payment {
-      id
-    }
-    pix {
-      copyAndPaste
-      qrCodeURL
-    }
+    ...CreateCheckoutPageCheckout
+  }
+}
+
+fragment CreateCheckoutPageCheckout on Checkout {
+  payment {
+    id
+  }
+  url
+  boleto {
+    barcode
+    line
+    pdf
+  }
+  card {
+    brand
+    expiryYear
+    expiryMonth
+    lastFourNumber
+  }
+  pix {
+    copyAndPaste
+    qrCodeURL
   }
 }

@@ -54,6 +54,7 @@ export const ProductFilters: FC<ProductFiltersProps> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

@@ -3,6 +3,8 @@ export const ptBRMessages = {
   monthAndYearFormat: "MM/yyyy",
   yearFormat: "yyyy",
   expirationDate: "Data de validade",
+  copy: "Copiar",
+  copied: "Copiado",
   phone: "Telefone",
   showLess: "Mostrar menos",
   showMore: "Mostrar mais",

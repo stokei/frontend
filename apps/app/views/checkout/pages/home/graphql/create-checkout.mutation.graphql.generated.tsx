@@ -8,23 +8,40 @@ export type CreateCheckoutMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateCheckoutMutation = { __typename?: 'Mutation', createCheckout: { __typename?: 'Checkout', url?: string | null, payment: { __typename?: 'Payment', id: string }, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null } };
+export type CreateCheckoutMutation = { __typename?: 'Mutation', createCheckout: { __typename?: 'Checkout', url?: string | null, payment: { __typename?: 'Payment', id: string }, boleto?: { __typename?: 'CheckoutBoleto', barcode: string, line: string, pdf: string } | null, card?: { __typename?: 'CheckoutCard', brand: string, expiryYear: string, expiryMonth: string, lastFourNumber: string } | null, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null } };
 
+export type CreateCheckoutPageCheckoutFragment = { __typename?: 'Checkout', url?: string | null, payment: { __typename?: 'Payment', id: string }, boleto?: { __typename?: 'CheckoutBoleto', barcode: string, line: string, pdf: string } | null, card?: { __typename?: 'CheckoutCard', brand: string, expiryYear: string, expiryMonth: string, lastFourNumber: string } | null, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null };
 
-export const CreateCheckoutDocument = gql`
-    mutation CreateCheckout($input: CreateCheckoutInput!) {
-  createCheckout(input: $input) {
-    url
-    payment {
-      id
-    }
-    pix {
-      copyAndPaste
-      qrCodeURL
-    }
+export const CreateCheckoutPageCheckoutFragmentDoc = gql`
+    fragment CreateCheckoutPageCheckout on Checkout {
+  payment {
+    id
+  }
+  url
+  boleto {
+    barcode
+    line
+    pdf
+  }
+  card {
+    brand
+    expiryYear
+    expiryMonth
+    lastFourNumber
+  }
+  pix {
+    copyAndPaste
+    qrCodeURL
   }
 }
     `;
+export const CreateCheckoutDocument = gql`
+    mutation CreateCheckout($input: CreateCheckoutInput!) {
+  createCheckout(input: $input) {
+    ...CreateCheckoutPageCheckout
+  }
+}
+    ${CreateCheckoutPageCheckoutFragmentDoc}`;
 
 export function useCreateCheckoutMutation() {
   return Urql.useMutation<CreateCheckoutMutation, CreateCheckoutMutationVariables>(CreateCheckoutDocument);

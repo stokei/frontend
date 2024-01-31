@@ -61,6 +61,7 @@ export const CreateAddressForm: FC<CreateAddressFormProps> = ({
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 
@@ -148,7 +149,7 @@ export const CreateAddressForm: FC<CreateAddressFormProps> = ({
           <FormErrorMessage>{errors?.number?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={!!errors?.complement}>
-          <Label htmlFor="complement">
+          <Label htmlFor="complement" isOptional>
             {translate.formatMessage({ id: "complement" })}
           </Label>
           <InputGroup>

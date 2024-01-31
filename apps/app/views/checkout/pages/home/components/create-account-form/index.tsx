@@ -95,6 +95,7 @@ export const CreateAccountForm: React.FC<CreateAccountFormProps> = ({
               id="input-date-birthday"
               value={dateBirthday}
               onChange={setDateBirthday}
+              maxDate={new Date()}
             />
           </FormControl>
 

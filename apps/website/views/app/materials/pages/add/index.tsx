@@ -58,6 +58,7 @@ export const AddMaterialPage: FC<AddMaterialPageProps> = () => {
     setValue,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

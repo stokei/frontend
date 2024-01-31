@@ -7,6 +7,8 @@ export const enUSMessages: Record<I18nKey, string> = {
   showLess: "Show less",
   showMore: "Show more",
   expirationDate: "Expiration date",
+  copy: "Copy",
+  copied: "Copied",
   phone: "Phone",
   country: "Country",
   ddd: "DDD",

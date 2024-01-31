@@ -47,6 +47,7 @@ export const EditCatalog: FC<EditCatalogProps> = ({ catalog }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

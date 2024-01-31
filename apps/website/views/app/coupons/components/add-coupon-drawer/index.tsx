@@ -64,6 +64,7 @@ export const AddCouponDrawer: FC<AddCouponDrawerProps> = ({
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 
