@@ -158,7 +158,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
           {translate.formatMessage({ id: "coupon" })}
         </Title>
         <Card>
-          <CardBody>a</CardBody>
+          <CardBody></CardBody>
         </Card>
       </Stack>
 
