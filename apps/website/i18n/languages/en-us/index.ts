@@ -4,6 +4,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
   menu: "Menu",
   code: "Code",
+  downloadBoleto: "Download boleto",
   percent: "Percent",
   recipient: "Recipient",
   discountType: "Discount type",

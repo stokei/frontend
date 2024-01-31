@@ -153,6 +153,15 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
         </Card>
       </Stack>
 
+      <Stack direction="column" spacing="3">
+        <Title fontSize="sm" color="text.700">
+          {translate.formatMessage({ id: "coupon" })}
+        </Title>
+        <Card>
+          <CardBody>a</CardBody>
+        </Card>
+      </Stack>
+
       <ButtonGroup width="full" justifyContent="space-between">
         <Button onClick={onPreviousStep} variant="ghost">
           {translate.formatMessage({ id: "previous" })}

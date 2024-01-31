@@ -1,6 +1,8 @@
 export const ptBRMessages = {
   me: "Eu",
   address: "Endereço",
+  coupon: "Cupom",
+  downloadBoleto: "Baixar boleto",
   billingAddress: "Endereço de cobrança",
   invalidCardNumber: "Número do cartão está inválido",
   addNewAddress: "Adicionar novo endereço",

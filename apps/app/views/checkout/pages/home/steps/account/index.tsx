@@ -1,7 +1,7 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { Box, Button, ButtonGroup, Label, Stack, Text } from "@stokei/ui";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChoiseEditable } from "../../components/choice-editable";
 import { CreateAccountForm } from "../../components/create-account-form";
 import { UpdateAccountForm } from "../../components/update-account-form";
@@ -27,13 +27,40 @@ export const AccountStep: React.FC<AccountStepProps> = ({
   const translate = useTranslations();
   const { currentAccount } = useCurrentAccount();
 
+  const existsOneAccountData = useMemo(
+    () =>
+      !!currentAccount?.document ||
+      !!currentAccount?.phone ||
+      !!currentAccount?.dateBirthday,
+    [
+      currentAccount?.dateBirthday,
+      currentAccount?.document,
+      currentAccount?.phone,
+    ]
+  );
+  const isValidData = useMemo(
+    () =>
+      !!currentAccount?.pagarmeCustomer &&
+      !!currentAccount?.document &&
+      !!currentAccount?.phone &&
+      !!currentAccount?.dateBirthday,
+    [
+      currentAccount?.dateBirthday,
+      currentAccount?.document,
+      currentAccount?.pagarmeCustomer,
+      currentAccount?.phone,
+    ]
+  );
+
   useEffect(() => {
     if (!currentAccount?.pagarmeCustomer) {
       setUserDataStep(AccountStepUserDataStep.CREATE);
+    } else if (existsOneAccountData && !isValidData) {
+      setUserDataStep(AccountStepUserDataStep.UPDATE);
     } else {
       setUserDataStep(AccountStepUserDataStep.SHOW_DATA);
     }
-  }, [currentAccount?.pagarmeCustomer]);
+  }, [currentAccount?.pagarmeCustomer, existsOneAccountData, isValidData]);
 
   return (
     <Stack direction="column" spacing="5">
@@ -87,10 +114,7 @@ export const AccountStep: React.FC<AccountStepProps> = ({
         <Button onClick={onPreviousStep} variant="ghost">
           {translate.formatMessage({ id: "previous" })}
         </Button>
-        <Button
-          onClick={onNextStep}
-          isDisabled={!currentAccount?.pagarmeCustomer}
-        >
+        <Button onClick={onNextStep} isDisabled={!isValidData}>
           {translate.formatMessage({ id: "next" })}
         </Button>
       </ButtonGroup>

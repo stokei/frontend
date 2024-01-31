@@ -56,6 +56,12 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
   const { currentAccount } = useCurrentAccount();
   const { onShowAPIError } = useAPIErrors();
   const { shoppingCartItems, isEmptyShoppingCart } = useShoppingCart();
+  const accountStepIsDisabled =
+    isEmptyShoppingCart ||
+    !currentAccount?.pagarmeCustomer ||
+    !currentAccount?.document ||
+    !currentAccount?.phone ||
+    !currentAccount?.dateBirthday;
 
   const [{ fetching: isLoadingCheckout }, onExecuteCheckout] =
     useCreateCheckoutMutation();
@@ -208,20 +214,20 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
               <StepItem
                 title={translate.formatMessage({ id: "account" })}
                 stepIndex={CheckoutStep.ACCOUNT}
-                isDisabled={isEmptyShoppingCart}
+                isDisabled={accountStepIsDisabled}
               />
               <StepItem
                 title={translate.formatMessage({ id: "address" })}
                 stepIndex={CheckoutStep.ADDRESS}
                 isDisabled={
-                  isEmptyShoppingCart || !currentAccount?.pagarmeCustomer
+                  accountStepIsDisabled || !currentAccount?.pagarmeCustomer
                 }
               />
               <StepItem
                 title={translate.formatMessage({ id: "paymentMethod" })}
                 stepIndex={CheckoutStep.PAYMENT_METHOD}
                 isDisabled={
-                  isEmptyShoppingCart ||
+                  accountStepIsDisabled ||
                   !address ||
                   !currentAccount?.pagarmeCustomer
                 }
@@ -230,7 +236,8 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                 title={translate.formatMessage({ id: "summary" })}
                 stepIndex={CheckoutStep.SUMMARY}
                 isDisabled={
-                  isEmptyShoppingCart ||
+                  accountStepIsDisabled ||
+                  !address ||
                   !currentAccount?.pagarmeCustomer ||
                   !paymentMethodType
                 }

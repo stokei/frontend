@@ -2,6 +2,7 @@ export const ptBRMessages = {
   me: "Eu",
   menu: "Menu",
   code: "Código",
+  downloadBoleto: "Baixar boleto",
   recipient: "Recebedor",
   percent: "Porcentagem",
   discountType: "Tipo de desconto",

@@ -47,6 +47,8 @@ export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({ boleto }) => {
             />
           </CardBody>
         </Card>
+        <CopyInput value={boleto?.line || ""} />
+
         <Stack width="fit-content" direction="column" spacing="5">
           <Stack width="fit-content" direction="column" spacing="2">
             <Text fontWeight="bold">
@@ -76,12 +78,18 @@ export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({ boleto }) => {
             </Stack>
           </Stack>
         </Stack>
+        {boleto?.pdf && (
+          <Button onClick={() => router.push(boleto?.pdf)}>
+            {translate.formatMessage({ id: "downloadBoleto" })}
+          </Button>
+        )}
       </Stack>
 
-      <CopyInput value={boleto?.line || ""} />
-
       <ButtonGroup justifyContent="flex-end">
-        <Button onClick={() => router.push(routes.customers.home)}>
+        <Button
+          variant="ghost"
+          onClick={() => router.push(routes.customers.home)}
+        >
           {translate.formatMessage({ id: "goToHomePage" })}
         </Button>
       </ButtonGroup>
