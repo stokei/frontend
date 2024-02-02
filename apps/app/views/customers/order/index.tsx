@@ -6,6 +6,7 @@ import { Navbar } from "./components/navbar";
 import { OrderDetails } from "./components/order-details";
 import { OrderItems } from "./components/order-items";
 import { Payments } from "./components/payments";
+import { Stats } from "./components/stats";
 import { useGetOrderPageOrderQuery } from "./graphql/order.query.graphql.generated";
 import { Loading as LoadingPage } from "./loading";
 
@@ -38,6 +39,7 @@ export const OrderPage: FC<OrderPageProps> = () => {
         ) : (
           <Container>
             <Stack direction="column" spacing="5">
+              <Stats order={order} />
               <OrderDetails order={order} />
               <OrderItems order={order} />
               <Payments order={order} />

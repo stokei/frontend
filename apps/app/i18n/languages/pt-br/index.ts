@@ -1,5 +1,9 @@
 export const ptBRMessages = {
   me: "Eu",
+  code: "Código",
+  lastUpdate: "Última atualização",
+  promitionItems: "Items em promoção",
+  discount: "Desconto",
   address: "Endereço",
   coupon: "Cupom",
   downloadBoleto: "Baixar boleto",

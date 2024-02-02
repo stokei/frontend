@@ -2,7 +2,11 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  code: "Code",
+  discount: "Discount",
   coupon: "Coupon",
+  lastUpdate: "Last update",
+  promitionItems: "Promotion items",
   downloadBoleto: "Download boleto",
   billingAddress: "Billing address",
   addNewAddress: "Add new address",

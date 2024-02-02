@@ -11,6 +11,9 @@ fragment OrderPageOrder on Order {
     symbol
     minorUnit
   }
+  coupon {
+    ...AppCoupon
+  }
   items {
     items {
       ...OrderPageOrderItem
@@ -26,6 +29,7 @@ fragment OrderPageOrder on Order {
   subtotalAmount
   paidAt
   canceledAt
+  updatedAt
   paymentErrorAt
   createdAt
 }

@@ -1,0 +1,11 @@
+query GetCheckoutPageApplyCouponToValue($input: ApplyCouponToValueInput!) {
+  applyCouponToValue(input: $input) {
+    ...CheckoutPageApplyCouponToValue
+  }
+}
+
+fragment CheckoutPageApplyCouponToValue on ApplyCouponToValue {
+  totalAmount
+  subtotalAmount
+  discountAmount
+}

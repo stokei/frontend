@@ -18,12 +18,16 @@ import { CreateCheckoutPageCheckoutFragment } from "../../graphql/create-checkou
 
 export interface PaymentBoletoProps {
   boleto?: CreateCheckoutPageCheckoutFragment["boleto"];
+  totalAmount?: number;
 }
 
-export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({ boleto }) => {
+export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({
+  boleto,
+  totalAmount,
+}) => {
   const router = useRouter();
   const translate = useTranslations();
-  const { totalAmount, currency } = useShoppingCart();
+  const { currency } = useShoppingCart();
 
   return (
     <Stack direction="column" spacing="10">
@@ -70,7 +74,7 @@ export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({ boleto }) => {
                 lineHeight="shorter"
               >
                 {translate.formatMoney({
-                  amount: totalAmount,
+                  amount: totalAmount || 0,
                   currency: currency?.id || "",
                   minorUnit: currency?.minorUnit,
                 })}

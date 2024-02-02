@@ -181,6 +181,18 @@ export enum AppStatus {
   Inactive = 'INACTIVE'
 }
 
+export type ApplyCouponToValue = {
+  __typename?: 'ApplyCouponToValue';
+  discountAmount: Scalars['Float'];
+  subtotalAmount: Scalars['Float'];
+  totalAmount: Scalars['Float'];
+};
+
+export type ApplyCouponToValueInput = {
+  coupon: Scalars['String'];
+  value: Scalars['Float'];
+};
+
 export type Apps = {
   __typename?: 'Apps';
   currentPage: Scalars['Int'];
@@ -2479,6 +2491,7 @@ export type Query = {
   address: Address;
   addresses: Addresses;
   app: App;
+  applyCouponToValue: ApplyCouponToValue;
   apps: Apps;
   billing: Billing;
   catalog: Catalog;
@@ -2590,6 +2603,11 @@ export type QueryAddressesArgs = {
 export type QueryAppArgs = {
   id?: InputMaybe<Scalars['String']>;
   slug?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryApplyCouponToValueArgs = {
+  input: ApplyCouponToValueInput;
 };
 
 

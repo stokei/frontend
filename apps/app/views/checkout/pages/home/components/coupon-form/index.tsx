@@ -1,87 +1,103 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { useCurrentAccount } from "@/hooks/use-current-account";
-import { usePhoneCodes } from "@/hooks/use-phone-codes";
 import {
   Button,
-  ButtonGroup,
-  DatePicker,
-  FormControl,
-  Label,
+  Form,
+  Input,
+  InputGroup,
+  InputRightAddon,
   Stack,
 } from "@stokei/ui";
-import { useState } from "react";
-import { useCreateAccountPagarmeCustomerMutation } from "../../graphql/create-account-pagarme-customer.mutation.graphql.generated";
+import { useEffect, useState } from "react";
+import {
+  CheckoutPageCouponFragment,
+  useGetCheckoutPageCouponQuery,
+} from "../../graphql/coupon.query.graphql.generated";
 
 export interface CouponFormProps {
-  onSuccess?: () => void;
+  coupon?: CheckoutPageCouponFragment;
+  onSuccess?: (coupon?: CheckoutPageCouponFragment) => void;
 }
 
-export const CouponForm: React.FC<CouponFormProps> = ({ onSuccess }) => {
-  const [document, setDocument] = useState("");
+export const CouponForm: React.FC<CouponFormProps> = ({
+  coupon,
+  onSuccess,
+}) => {
+  const [couponCode, setCouponCode] = useState("");
   const translate = useTranslations();
   const { onShowAPIError } = useAPIErrors();
-  const { phoneCodes } = usePhoneCodes();
-  const { onReloadCurrentAccount } = useCurrentAccount();
 
   const [
-    { fetching: isLoadingCreateAccountPagarmeCustomer },
-    onExecuteCreateAccountPagarmeCustomer,
-  ] = useCreateAccountPagarmeCustomerMutation();
+    {
+      fetching: isLoadingGetCheckoutPageCoupon,
+      data: dataGetCoupon,
+      error: errorGetCoupon,
+    },
+    onExecuteGetCheckoutPageCoupon,
+  ] = useGetCheckoutPageCouponQuery({
+    pause: true,
+    requestPolicy: "network-only",
+    variables: {
+      code: couponCode,
+    },
+  });
+
+  useEffect(() => {
+    if (dataGetCoupon?.coupon) {
+      onSuccess?.(dataGetCoupon?.coupon);
+    }
+  }, [dataGetCoupon?.coupon, onSuccess]);
+
+  useEffect(() => {
+    if (!!errorGetCoupon?.graphQLErrors?.length) {
+      errorGetCoupon.graphQLErrors.map((error) =>
+        onShowAPIError({ message: error?.message })
+      );
+      onSuccess?.(undefined);
+    }
+  }, [errorGetCoupon, onShowAPIError, onSuccess]);
 
   const onSubmit = async () => {
     try {
-      const response = await onExecuteCreateAccountPagarmeCustomer({
-        input: {
-          document: {
-            document,
-            type: documentType,
-          },
-          dateBirthday: dateBirthday?.toISOString(),
-          phone: {
-            areaCode: phoneAreaCode,
-            countryCode: phoneCountryCode,
-            number: phoneNumber,
-          },
-        },
+      await onExecuteGetCheckoutPageCoupon({
+        requestPolicy: "network-only",
       });
-      if (!!response?.data?.createAccountPagarmeCustomer) {
-        await onReloadCurrentAccount();
-        return onSuccess?.();
-      }
-
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
     } catch (error) {
       onShowAPIError({ message: "somethingWentWrong" });
     }
   };
 
   return (
-    <Stack direction="column" spacing="5">
-      <FormControl>
-        <Label htmlFor="input-date-birthday">
-          {translate.formatMessage({ id: "dateBirthday" })}
-        </Label>
-        <DatePicker
-          id="input-date-birthday"
-          value={dateBirthday}
-          onChange={setDateBirthday}
-          maxDate={new Date()}
-        />
-      </FormControl>
+    <Form onSubmit={onSubmit}>
+      <Stack direction="column" spacing="5">
+        <InputGroup>
+          <Input
+            id="input-coupon-code"
+            value={couponCode}
+            onChange={(e) => setCouponCode(e.target.value)}
+            placeholder={translate.formatMessage({ id: "code" })}
+            borderRight="none"
+            roundedRight="none"
+            isReadOnly={isLoadingGetCheckoutPageCoupon}
+          />
 
-      <ButtonGroup width="full" justifyContent="space-between">
-        <Button
-          onClick={onSubmit}
-          isLoading={isLoadingCreateAccountPagarmeCustomer}
-          isDisabled={!isValid}
-        >
-          {translate.formatMessage({ id: "save" })}
-        </Button>
-      </ButtonGroup>
-    </Stack>
+          <InputRightAddon
+            width="auto"
+            paddingX="2"
+            background="transparent"
+            borderLeft="none"
+          >
+            <Button
+              size="xs"
+              onClick={onSubmit}
+              isDisabled={!couponCode}
+              isLoading={isLoadingGetCheckoutPageCoupon}
+              colorScheme="gray"
+            >
+              {translate.formatMessage({ id: "apply" })}
+            </Button>
+          </InputRightAddon>
+        </InputGroup>
+      </Stack>
+    </Form>
   );
 };

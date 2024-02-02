@@ -18,7 +18,7 @@ import {
   Steps,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { CheckoutLayout } from "../../layout";
 import {
   CreateCheckoutPageCheckoutFragment,
@@ -33,6 +33,8 @@ import { ProductsStep } from "./steps/products";
 import { SummaryStep } from "./steps/summary";
 import { AddressManagementAddressFragment } from "@/components/address-management/graphql/addresses.query.graphql.generated";
 import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
+import { CheckoutPageCouponFragment } from "./graphql/coupon.query.graphql.generated";
+import { useGetCheckoutPageApplyCouponToValueQuery } from "./graphql/apply-coupon-to-value.query.graphql.generated";
 
 interface CheckoutPageProps {}
 
@@ -46,6 +48,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
     useState<CreateCheckoutPageCheckoutFragment["boleto"]>();
   const [orderId, setOrderId] = useState("");
   const [isDisabledPayment, setIsDisabledPayment] = useState(true);
+  const [coupon, setCoupon] = useState<CheckoutPageCouponFragment>();
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(
     CheckoutStep.PRODUCTS
   );
@@ -55,7 +58,11 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
   const router = useRouter();
   const { currentAccount } = useCurrentAccount();
   const { onShowAPIError } = useAPIErrors();
-  const { shoppingCartItems, isEmptyShoppingCart } = useShoppingCart();
+  const {
+    shoppingCartItems,
+    isEmptyShoppingCart,
+    totalAmount: shoppingCartTotalAmount,
+  } = useShoppingCart();
   const accountStepIsDisabled =
     isEmptyShoppingCart ||
     !currentAccount?.pagarmeCustomer ||
@@ -68,6 +75,39 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
 
   const [{ fetching: isLoadingOrder }, onExecuteOrder] =
     useCreateOrderMutation();
+
+  const [
+    {
+      fetching: isLoadingGetApplyCouponToValue,
+      data: dataGetApplyCouponToValue,
+    },
+  ] = useGetCheckoutPageApplyCouponToValueQuery({
+    pause: !coupon?.id || !shoppingCartTotalAmount,
+    variables: {
+      input: {
+        coupon: coupon?.id || "",
+        value: shoppingCartTotalAmount,
+      },
+    },
+  });
+
+  const { totalAmount, couponDiscountAmount } = useMemo(() => {
+    if (!coupon || !dataGetApplyCouponToValue?.applyCouponToValue) {
+      return {
+        totalAmount: shoppingCartTotalAmount,
+        couponDiscountAmount: undefined,
+      };
+    }
+    return {
+      totalAmount: dataGetApplyCouponToValue?.applyCouponToValue?.totalAmount,
+      couponDiscountAmount:
+        dataGetApplyCouponToValue?.applyCouponToValue?.discountAmount,
+    };
+  }, [
+    dataGetApplyCouponToValue?.applyCouponToValue,
+    shoppingCartTotalAmount,
+    coupon,
+  ]);
 
   useEffect(() => {
     if (paymentMethodType !== PaymentMethodType.Card) {
@@ -92,6 +132,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       const response = await onExecuteOrder({
         input: {
           items: orderItems,
+          coupon: coupon?.id,
         },
       });
 
@@ -111,6 +152,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       });
     }
   }, [
+    coupon?.id,
     currentAccount,
     onExecuteOrder,
     onShowAPIError,
@@ -291,6 +333,13 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.SUMMARY}>
                     <SummaryStep
+                      coupon={coupon}
+                      onChangeCoupon={setCoupon}
+                      totalAmount={totalAmount}
+                      couponDiscountAmount={couponDiscountAmount}
+                      isLoadingGetApplyCouponToValue={
+                        isLoadingGetApplyCouponToValue
+                      }
                       paymentMethod={paymentMethod}
                       paymentMethodType={paymentMethodType}
                       isLoadingCheckout={isLoadingCheckout || isLoadingOrder}
@@ -309,6 +358,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                   <StepPanel stepIndex={CheckoutStep.PAYMENT}>
                     <PaymentStep
                       orderId={orderId}
+                      totalAmount={totalAmount}
                       pix={checkoutResponsePix}
                       boleto={checkoutResponseBoleto}
                       paymentMethodType={paymentMethodType}

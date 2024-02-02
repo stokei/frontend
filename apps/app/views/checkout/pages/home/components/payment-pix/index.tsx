@@ -26,13 +26,18 @@ import { useGetCheckoutPageOrderQuery } from "../../graphql/payment.query.graphq
 export interface PaymentPixProps {
   pix?: CreateCheckoutPageCheckoutFragment["pix"];
   orderId: string;
+  totalAmount?: number;
 }
 
-export const PaymentPix: React.FC<PaymentPixProps> = ({ pix, orderId }) => {
+export const PaymentPix: React.FC<PaymentPixProps> = ({
+  pix,
+  orderId,
+  totalAmount,
+}) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
-  const { totalAmount, currency } = useShoppingCart();
+  const { currency } = useShoppingCart();
 
   const [{ data: dataGetCheckoutPageOrder }, onExecuteGetCheckoutPageOrder] =
     useGetCheckoutPageOrderQuery({
@@ -108,7 +113,7 @@ export const PaymentPix: React.FC<PaymentPixProps> = ({ pix, orderId }) => {
                 lineHeight="shorter"
               >
                 {translate.formatMoney({
-                  amount: totalAmount,
+                  amount: totalAmount || 0,
                   currency: currency?.id || "",
                   minorUnit: currency?.minorUnit,
                 })}

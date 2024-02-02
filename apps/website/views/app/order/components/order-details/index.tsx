@@ -11,6 +11,7 @@ import {
 } from "@stokei/ui";
 import { FC, useMemo } from "react";
 import { OrderPageOrderFragment } from "../../graphql/order.query.graphql.generated";
+import { CouponItem } from "../coupon-item";
 
 interface Customer {
   name: string;
@@ -77,7 +78,7 @@ export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
             </Box>
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "coupon" })}</Label>
-              <Text>{order?.coupon?.code}</Text>
+              <CouponItem coupon={order?.coupon || undefined} />
             </Box>
           </Stack>
         </CardBody>
