@@ -79,9 +79,9 @@ export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
       <TableCell>
         <Text>{translate.formatDate(order?.paidAt || "")}</Text>
       </TableCell>
-      {hasCoupon && order?.coupon && (
+      {hasCoupon && (
         <TableCell>
-          <CouponItem coupon={order?.coupon} />
+          {order?.coupon && <CouponItem coupon={order?.coupon} />}
         </TableCell>
       )}
       <TableCell>

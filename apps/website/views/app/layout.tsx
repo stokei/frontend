@@ -1,5 +1,6 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
 import { AppLayoutContent } from "@/components/app-layout-content";
+import { BadgeNew } from "@/components/badge-new";
 import { SidebarProvider } from "@/contexts";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
@@ -118,7 +119,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               </SidebarGroupPanel>
             </SidebarGroup>
             <SidebarGroup isActive={isActiveProducts}>
-              <SidebarGroupButton leftIcon="product">
+              <SidebarGroupButton leftIcon="product" badge={<BadgeNew />}>
                 {translate.formatMessage({ id: "products" })}
               </SidebarGroupButton>
               <SidebarGroupPanel>
@@ -142,6 +143,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   as={NextLink}
                   leftIcon="coupon"
                   href={baseRoutes.coupons.home}
+                  badge={<BadgeNew />}
                   isActive={isActiveRoute(baseRoutes.coupons.home)}
                 >
                   {translate.formatMessage({ id: "coupons" })}

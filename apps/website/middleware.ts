@@ -43,14 +43,14 @@ export async function middleware(request: NextRequest) {
       .query<CurrentGlobalAppQuery>(
         CurrentGlobalAppDocument,
         {},
-        { requestPolicy: "network-only" }
+        { requestPolicy: "cache-and-network" }
       )
       .toPromise();
     const currentAccountResponse = await stokeiClient.api
       .query<CurrentAccountQuery>(
         CurrentAccountDocument,
         {},
-        { requestPolicy: "network-only" }
+        { requestPolicy: "cache-and-network" }
       )
       .toPromise();
 

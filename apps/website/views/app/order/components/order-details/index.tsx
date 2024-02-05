@@ -76,10 +76,12 @@ export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
                 })}
               </Text>
             </Box>
-            <Box flexDirection="column">
-              <Label>{translate.formatMessage({ id: "coupon" })}</Label>
-              <CouponItem coupon={order?.coupon || undefined} />
-            </Box>
+            {order?.coupon && (
+              <Box flexDirection="column">
+                <Label>{translate.formatMessage({ id: "coupon" })}</Label>
+                <CouponItem coupon={order?.coupon} />
+              </Box>
+            )}
           </Stack>
         </CardBody>
       </Card>

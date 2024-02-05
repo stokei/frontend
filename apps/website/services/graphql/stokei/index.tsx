@@ -2223,6 +2223,9 @@ export enum PaymentGatewayType {
 export type PaymentMethod = {
   __typename?: 'PaymentMethod';
   app?: Maybe<App>;
+  boletoBarcode?: Maybe<Scalars['String']>;
+  boletoLine?: Maybe<Scalars['String']>;
+  boletoURL?: Maybe<Scalars['String']>;
   cardBrand?: Maybe<Scalars['String']>;
   cardExpiryMonth?: Maybe<Scalars['String']>;
   cardExpiryYear?: Maybe<Scalars['String']>;

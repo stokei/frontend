@@ -37,6 +37,11 @@ export const PaymentMethodStep: React.FC<PaymentMethodStepProps> = ({
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 
+  const isDisabledNextButton =
+    paymentMethodType === PaymentMethodType.Card
+      ? !paymentMethodType || !paymentMethod
+      : !paymentMethodType;
+
   return (
     <Stack direction="column" spacing="10">
       <Title fontSize="lg">
@@ -86,7 +91,7 @@ export const PaymentMethodStep: React.FC<PaymentMethodStepProps> = ({
         <Button onClick={onPreviousStep} variant="ghost">
           {translate.formatMessage({ id: "previous" })}
         </Button>
-        <Button onClick={onNextStep} isDisabled={!paymentMethodType}>
+        <Button onClick={onNextStep} isDisabled={isDisabledNextButton}>
           {translate.formatMessage({ id: "next" })}
         </Button>
       </ButtonGroup>

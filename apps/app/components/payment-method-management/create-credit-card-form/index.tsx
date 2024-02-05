@@ -219,7 +219,6 @@ export const CreateCreditCardForm: FC<CreateCreditCardFormProps> = ({
         <ButtonGroup justifyContent="flex-end">
           <Button
             type="submit"
-            variant="ghost"
             isLoading={isCreatingPaymentMethod}
             isDisabled={!isValid || !document || !expirationDate}
           >

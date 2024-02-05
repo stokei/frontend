@@ -83,7 +83,7 @@ export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({
           </Stack>
         </Stack>
         {boleto?.pdf && (
-          <Button onClick={() => router.push(boleto?.pdf)}>
+          <Button onClick={() => window.open(boleto?.pdf, "_blank")}>
             {translate.formatMessage({ id: "downloadBoleto" })}
           </Button>
         )}
