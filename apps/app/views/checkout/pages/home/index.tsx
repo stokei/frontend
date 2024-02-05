@@ -1,11 +1,5 @@
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { CheckoutStep } from "@/constants/checkout-steps";
-import {
-  useAPIErrors,
-  useCurrentApp,
-  useShoppingCart,
-  useTranslations,
-} from "@/hooks";
+import { useAPIErrors, useShoppingCart, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
 import {
@@ -25,25 +19,36 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { useGetCheckoutProductQuery } from "../../graphql/product.query.graphql.generated";
 import { CheckoutLayout } from "../../layout";
-import { useCreateCheckoutMutation } from "./graphql/create-checkout.mutation.graphql.generated";
+import {
+  CreateCheckoutPageCheckoutFragment,
+  useCreateCheckoutMutation,
+} from "./graphql/create-checkout.mutation.graphql.generated";
 import { useCreateOrderMutation } from "./graphql/create-order.mutation.graphql.generated";
-import { CreatePixAccountStep } from "./steps/create-pix-account";
+import { AccountStep } from "./steps/account";
+import { AddressStep } from "./steps/address";
 import { PaymentStep } from "./steps/payment";
 import { PaymentMethodStep } from "./steps/payment-method";
 import { ProductsStep } from "./steps/products";
 import { SummaryStep } from "./steps/summary";
+import { AddressManagementAddressFragment } from "@/components/address-management/graphql/addresses.query.graphql.generated";
+import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
+import { CheckoutPageCouponFragment } from "./graphql/coupon.query.graphql.generated";
+import { useGetCheckoutPageApplyCouponToValueQuery } from "./graphql/apply-coupon-to-value.query.graphql.generated";
 
 interface CheckoutPageProps {}
 
 export const CheckoutPage: FC<CheckoutPageProps> = () => {
-  const [qrCodeCopyAndPaste, setQRCodeCopyAndPaste] = useState("");
-  const [qrCodeURL, setQRCodeURL] = useState("");
+  const [address, setAddress] = useState<AddressManagementAddressFragment>();
+  const [paymentMethod, setPaymentMethod] =
+    useState<PaymentMethodManagementPaymentMethodCardFragment>();
+  const [checkoutResponsePix, setCheckoutResponsePix] =
+    useState<CreateCheckoutPageCheckoutFragment["pix"]>();
+  const [checkoutResponseBoleto, setCheckoutResponseBoleto] =
+    useState<CreateCheckoutPageCheckoutFragment["boleto"]>();
   const [orderId, setOrderId] = useState("");
-  const [isDisabledCreatePixAccount, setIsDisabledCreatePixAccount] =
-    useState(true);
   const [isDisabledPayment, setIsDisabledPayment] = useState(true);
+  const [coupon, setCoupon] = useState<CheckoutPageCouponFragment>();
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(
     CheckoutStep.PRODUCTS
   );
@@ -51,10 +56,19 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
     useState<PaymentMethodType>();
   const translate = useTranslations();
   const router = useRouter();
-  const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();
   const { onShowAPIError } = useAPIErrors();
-  const { shoppingCartItems, isEmptyShoppingCart } = useShoppingCart();
+  const {
+    shoppingCartItems,
+    isEmptyShoppingCart,
+    totalAmount: shoppingCartTotalAmount,
+  } = useShoppingCart();
+  const accountStepIsDisabled =
+    isEmptyShoppingCart ||
+    !currentAccount?.pagarmeCustomer ||
+    !currentAccount?.document ||
+    !currentAccount?.phone ||
+    !currentAccount?.dateBirthday;
 
   const [{ fetching: isLoadingCheckout }, onExecuteCheckout] =
     useCreateCheckoutMutation();
@@ -62,42 +76,44 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
   const [{ fetching: isLoadingOrder }, onExecuteOrder] =
     useCreateOrderMutation();
 
-  useEffect(() => {
-    if (currentApp?.isIntegratedWithStripe) {
-      setPaymentMethodType(PaymentMethodType.Card);
-    } else if (currentApp?.isIntegratedWithPix) {
-      setPaymentMethodType(PaymentMethodType.Pix);
-    } else {
-      setPaymentMethodType(undefined);
+  const [
+    {
+      fetching: isLoadingGetApplyCouponToValue,
+      data: dataGetApplyCouponToValue,
+    },
+  ] = useGetCheckoutPageApplyCouponToValueQuery({
+    pause: !coupon?.id || !shoppingCartTotalAmount,
+    variables: {
+      input: {
+        coupon: coupon?.id || "",
+        value: shoppingCartTotalAmount,
+      },
+    },
+  });
+
+  const { totalAmount, couponDiscountAmount } = useMemo(() => {
+    if (!coupon || !dataGetApplyCouponToValue?.applyCouponToValue) {
+      return {
+        totalAmount: shoppingCartTotalAmount,
+        couponDiscountAmount: undefined,
+      };
     }
-  }, [currentApp]);
+    return {
+      totalAmount: dataGetApplyCouponToValue?.applyCouponToValue?.totalAmount,
+      couponDiscountAmount:
+        dataGetApplyCouponToValue?.applyCouponToValue?.discountAmount,
+    };
+  }, [
+    dataGetApplyCouponToValue?.applyCouponToValue,
+    shoppingCartTotalAmount,
+    coupon,
+  ]);
 
   useEffect(() => {
-    setIsDisabledCreatePixAccount(
-      paymentMethodType !== PaymentMethodType.Pix ||
-        !!currentAccount?.pagarmeCustomer
-    );
-  }, [currentAccount?.pagarmeCustomer, paymentMethodType]);
-
-  const goToSummary = useCallback(() => {
-    return setCurrentStep(CheckoutStep.SUMMARY);
-  }, []);
-
-  const goToSummaryOrCreatePixAccount = useCallback(() => {
-    if (paymentMethodType === PaymentMethodType.Pix) {
-      if (!currentAccount) {
-        router.push({
-          pathname: routes.auth.login,
-          query: { redirectTo: router.asPath },
-        });
-        return;
-      }
-      if (!currentAccount?.pagarmeCustomer) {
-        return setCurrentStep(CheckoutStep.CREATE_PIX_ACCOUNT);
-      }
+    if (paymentMethodType !== PaymentMethodType.Card) {
+      setPaymentMethod(undefined);
     }
-    return goToSummary();
-  }, [currentAccount, goToSummary, paymentMethodType, router]);
+  }, [paymentMethodType]);
 
   const onCreateOrder = useCallback(async () => {
     if (!currentAccount) {
@@ -116,6 +132,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       const response = await onExecuteOrder({
         input: {
           items: orderItems,
+          coupon: coupon?.id,
         },
       });
 
@@ -135,6 +152,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       });
     }
   }, [
+    coupon?.id,
     currentAccount,
     onExecuteOrder,
     onShowAPIError,
@@ -155,15 +173,27 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
         const response = await onExecuteCheckout({
           input: {
             order,
+            paymentMethod: paymentMethod?.id,
             paymentMethodType,
           },
         });
 
         if (!!response?.data?.createCheckout) {
           const checkout = response.data.createCheckout;
+          if (paymentMethodType === PaymentMethodType.Card) {
+            if (checkout.card) {
+              return router.push(routes.checkout.callback);
+            } else {
+              return onShowAPIError({
+                message: translate.formatMessage({ id: "somethingWentWrong" }),
+              });
+            }
+          }
           if (checkout.pix) {
-            setQRCodeCopyAndPaste(checkout.pix?.copyAndPaste || "");
-            setQRCodeURL(checkout.pix?.qrCodeURL || "");
+            setCheckoutResponsePix(checkout.pix);
+          }
+          if (checkout.boleto) {
+            setCheckoutResponseBoleto(checkout.boleto);
           }
           setIsDisabledPayment(false);
           if (checkout.url) {
@@ -182,7 +212,14 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
         });
       }
     },
-    [onExecuteCheckout, onShowAPIError, paymentMethodType, router, translate]
+    [
+      onExecuteCheckout,
+      onShowAPIError,
+      paymentMethod?.id,
+      paymentMethodType,
+      router,
+      translate,
+    ]
   );
 
   const onGoToPayment = async () => {
@@ -203,7 +240,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
     <CheckoutLayout>
       <Container paddingY="10" align="center">
         <Box
-          width={["full", "full", "700px", "700px"]}
+          width={["full", "full", "full", "900px"]}
           height="fit-content"
           flexDirection="column"
         >
@@ -217,21 +254,35 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                 stepIndex={CheckoutStep.PRODUCTS}
               />
               <StepItem
+                title={translate.formatMessage({ id: "account" })}
+                stepIndex={CheckoutStep.ACCOUNT}
+                isDisabled={accountStepIsDisabled}
+              />
+              <StepItem
+                title={translate.formatMessage({ id: "address" })}
+                stepIndex={CheckoutStep.ADDRESS}
+                isDisabled={
+                  accountStepIsDisabled || !currentAccount?.pagarmeCustomer
+                }
+              />
+              <StepItem
                 title={translate.formatMessage({ id: "paymentMethod" })}
                 stepIndex={CheckoutStep.PAYMENT_METHOD}
-                isDisabled={isEmptyShoppingCart}
+                isDisabled={
+                  accountStepIsDisabled ||
+                  !address ||
+                  !currentAccount?.pagarmeCustomer
+                }
               />
-              {!isDisabledCreatePixAccount && (
-                <StepItem
-                  title={translate.formatMessage({ id: "account" })}
-                  stepIndex={CheckoutStep.CREATE_PIX_ACCOUNT}
-                  isDisabled={isEmptyShoppingCart || !paymentMethodType}
-                />
-              )}
               <StepItem
                 title={translate.formatMessage({ id: "summary" })}
                 stepIndex={CheckoutStep.SUMMARY}
-                isDisabled={isEmptyShoppingCart || !paymentMethodType}
+                isDisabled={
+                  accountStepIsDisabled ||
+                  !address ||
+                  !currentAccount?.pagarmeCustomer ||
+                  !paymentMethodType
+                }
               />
               <StepItem
                 title={translate.formatMessage({ id: "payment" })}
@@ -244,6 +295,24 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                 <CardBody>
                   <StepPanel stepIndex={CheckoutStep.PRODUCTS}>
                     <ProductsStep
+                      onNextStep={() => setCurrentStep(CheckoutStep.ACCOUNT)}
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={CheckoutStep.ACCOUNT}>
+                    <AccountStep
+                      onPreviousStep={() =>
+                        setCurrentStep(CheckoutStep.PRODUCTS)
+                      }
+                      onNextStep={() => setCurrentStep(CheckoutStep.ADDRESS)}
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={CheckoutStep.ADDRESS}>
+                    <AddressStep
+                      address={address}
+                      onChangeAddress={setAddress}
+                      onPreviousStep={() =>
+                        setCurrentStep(CheckoutStep.ACCOUNT)
+                      }
                       onNextStep={() =>
                         setCurrentStep(CheckoutStep.PAYMENT_METHOD)
                       }
@@ -251,27 +320,27 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.PAYMENT_METHOD}>
                     <PaymentMethodStep
+                      address={address}
+                      paymentMethod={paymentMethod}
                       paymentMethodType={paymentMethodType}
-                      onChoosePaymentMethod={setPaymentMethodType}
+                      onChoosePaymentMethod={setPaymentMethod}
+                      onChoosePaymentMethodType={setPaymentMethodType}
                       onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.PRODUCTS)
+                        setCurrentStep(CheckoutStep.ADDRESS)
                       }
-                      onNextStep={goToSummaryOrCreatePixAccount}
-                    />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.CREATE_PIX_ACCOUNT}>
-                    <CreatePixAccountStep
-                      onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.PRODUCTS)
-                      }
-                      onNextStep={() => {
-                        setIsDisabledCreatePixAccount(true);
-                        goToSummary();
-                      }}
+                      onNextStep={() => setCurrentStep(CheckoutStep.SUMMARY)}
                     />
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.SUMMARY}>
                     <SummaryStep
+                      coupon={coupon}
+                      onChangeCoupon={setCoupon}
+                      totalAmount={totalAmount}
+                      couponDiscountAmount={couponDiscountAmount}
+                      isLoadingGetApplyCouponToValue={
+                        isLoadingGetApplyCouponToValue
+                      }
+                      paymentMethod={paymentMethod}
                       paymentMethodType={paymentMethodType}
                       isLoadingCheckout={isLoadingCheckout || isLoadingOrder}
                       onGoToProducts={() =>
@@ -289,8 +358,9 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                   <StepPanel stepIndex={CheckoutStep.PAYMENT}>
                     <PaymentStep
                       orderId={orderId}
-                      qrCodeCopyAndPaste={qrCodeCopyAndPaste}
-                      qrCodeURL={qrCodeURL}
+                      totalAmount={totalAmount}
+                      pix={checkoutResponsePix}
+                      boleto={checkoutResponseBoleto}
                       paymentMethodType={paymentMethodType}
                       onPreviousStep={() =>
                         setCurrentStep(CheckoutStep.PAYMENT_METHOD)

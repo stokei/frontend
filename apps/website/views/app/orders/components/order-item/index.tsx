@@ -15,6 +15,7 @@ import {
 import { useRouter } from "next/router";
 import { FC, memo, useMemo } from "react";
 import { AppOrderFragment } from "../../graphql/orders.query.graphql.generated";
+import { CouponItem } from "../coupon-item";
 
 interface Customer {
   name: string;
@@ -24,9 +25,10 @@ interface Customer {
 
 export interface OrderItemProps {
   readonly order?: AppOrderFragment;
+  readonly hasCoupon?: boolean;
 }
 
-export const OrderItem: FC<OrderItemProps> = memo(({ order }) => {
+export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -112,6 +114,11 @@ export const OrderItem: FC<OrderItemProps> = memo(({ order }) => {
       <TableCell>
         <Text>{translate.formatDate(order?.paidAt || "")}</Text>
       </TableCell>
+      {hasCoupon && (
+        <TableCell>
+          {order?.coupon && <CouponItem coupon={order?.coupon} />}
+        </TableCell>
+      )}
       <TableCell>
         <Text>{translate.formatDate(order?.createdAt || "")}</Text>
       </TableCell>

@@ -75,6 +75,7 @@ export const Button: React.FC<ButtonProps> = forwardRef(
         paddingX={padding.x}
         paddingY={padding.y}
         ref={ref}
+        whiteSpace="break-spaces"
         {...props}
         colorScheme={props.colorScheme || "primary"}
         textColor={buttonTextColor}

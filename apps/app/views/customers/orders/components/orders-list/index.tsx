@@ -20,6 +20,7 @@ interface OrdersListProps {
 
 export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
   const translate = useTranslations();
+  const hasCoupon = !!orders?.some((order) => !!order?.coupon);
   return (
     <>
       {!orders?.length ? (
@@ -47,6 +48,11 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
                   <TableHeaderCell>
                     {translate.formatMessage({ id: "paid" })}
                   </TableHeaderCell>
+                  {hasCoupon && (
+                    <TableHeaderCell>
+                      {translate.formatMessage({ id: "coupon" })}
+                    </TableHeaderCell>
+                  )}
                   <TableHeaderCell>
                     {translate.formatMessage({ id: "creationDate" })}
                   </TableHeaderCell>
@@ -54,7 +60,11 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
               </TableHeader>
               <TableBody>
                 {orders?.map((order) => (
-                  <OrderItem key={order?.id} order={order} />
+                  <OrderItem
+                    key={order?.id}
+                    order={order}
+                    hasCoupon={hasCoupon}
+                  />
                 ))}
               </TableBody>
             </Table>

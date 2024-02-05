@@ -46,6 +46,7 @@ export const MembersFilters: FC<MembersFiltersProps> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

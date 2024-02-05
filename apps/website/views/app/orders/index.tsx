@@ -18,14 +18,20 @@ import { OrderFilters } from "./components/orders-filters";
 import { OrdersList } from "./components/orders-list";
 import { useGetAppOrdersQuery } from "./graphql/orders.query.graphql.generated";
 import { Loading } from "./loading";
+import { useFilters } from "./hooks/use-filters";
 
 interface OrdersPageProps {}
 
 export const OrdersPage: FC<OrdersPageProps> = () => {
-  const [customers, setCustomers] = useState<AppAccountFragment[]>([]);
-  const [status, setStatus] = useState<OrderStatusFilter>(
-    OrderStatusFilter.All
-  );
+  const {
+    coupons,
+    customers,
+    status,
+    setCustomers,
+    setCoupons,
+    setStatus,
+    onClearFilters,
+  } = useFilters();
 
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
@@ -36,22 +42,20 @@ export const OrdersPage: FC<OrdersPageProps> = () => {
   } = useDisclosure();
 
   const dataGetOrdersWhereOR = useMemo(() => {
-    if (!customers?.length) {
-      return [];
-    }
-    let operatorList: any[] = [];
-    if (!!customers?.length) {
-      operatorList = [
-        ...operatorList,
-        ...customers?.map((currentCustomer) => ({
-          parent: {
-            equals: currentCustomer?.id,
-          },
-        })),
-      ];
-    }
-    return operatorList;
-  }, [customers]);
+    const operatorList: any[] = [
+      ...customers?.map((currentCustomer) => ({
+        parent: {
+          equals: currentCustomer?.id,
+        },
+      })),
+      ...coupons?.map((currentCoupon) => ({
+        coupon: {
+          equals: currentCoupon?.id,
+        },
+      })),
+    ];
+    return operatorList?.filter(Boolean);
+  }, [coupons, customers]);
 
   const [{ data: dataGetOrders, fetching: isLoading }] = useGetAppOrdersQuery({
     pause: !currentApp,
@@ -83,13 +87,13 @@ export const OrdersPage: FC<OrdersPageProps> = () => {
       <Navbar />
       <Container paddingY="5">
         <OrderFilters
-          currentStatus={status}
-          currentCustomers={customers}
+          statusFilter={status}
+          customersFilter={customers}
           isOpen={isOpenFiltersDrawer}
-          onChooseCurrentStatus={setStatus}
-          onChooseCurrentCustomers={setCustomers}
-          onRemoveCurrentStatus={() => setStatus(OrderStatusFilter.All)}
-          onRemoveCurrentCustomers={() => setCustomers([])}
+          onChooseFilterStatus={setStatus}
+          onChooseFilterCustomers={setCustomers}
+          onChooseFilterCoupons={setCoupons}
+          onClearFilters={onClearFilters}
           onClose={onCloseFiltersDrawer}
         />
         <Stack direction="column" spacing="5">

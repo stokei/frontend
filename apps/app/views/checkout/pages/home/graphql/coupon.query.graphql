@@ -1,0 +1,22 @@
+query GetCheckoutPageCoupon($code: String) {
+  coupon(code: $code) {
+    ...CheckoutPageCoupon
+  }
+}
+
+fragment CheckoutPageCoupon on Coupon {
+  id
+  code
+  active
+  amountOff
+  percentOff
+  recipient {
+    id
+    fullname
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+}

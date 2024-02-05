@@ -1,5 +1,10 @@
 export const ptBRMessages = {
   dateFormat: "dd/MM/yyyy",
+  monthAndYearFormat: "MM/yyyy",
+  yearFormat: "yyyy",
+  expirationDate: "Data de validade",
+  copy: "Copiar",
+  copied: "Copiado",
   phone: "Telefone",
   showLess: "Mostrar menos",
   showMore: "Mostrar mais",
@@ -7,8 +12,10 @@ export const ptBRMessages = {
   ddd: "DDD",
   cpf: "CPF",
   cnpj: "CNPJ",
+  passport: "Passaporte",
   cpfPlaceholder: "999.999.999-99",
   cnpjPlaceholder: "99.999.999/9999-99",
+  passportPlaceholder: "Passaporte",
   byClickingRegisterYouAcceptOurTermsOfUseAndPrivacyPolicies:
     "Ao clicar em cadastre-se você aceita nossos termos de uso e políticas de privacidade.",
   updatePassword: "Alterar senha",

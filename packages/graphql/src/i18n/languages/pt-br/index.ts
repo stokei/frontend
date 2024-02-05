@@ -1,4 +1,8 @@
 export const ptBRMessages = {
+  amountOffNotFound: "Desconto por valor não encontrado",
+  percentOffNotFound: "Desconto por porcentagem não encontrado",
+  couponNotFound: "Cupom não encontrado",
+  couponsNotFound: "Cupons não encontrado",
   orderNotFound: "Pedido não encontrado",
   ordersNotFound: "Pedidos não encontrado",
   orderAlreadyPaid: "Pedido já foi pago",
@@ -7,6 +11,7 @@ export const ptBRMessages = {
   accessNotFound: "Acesso não encontrado",
   accessesNotFound: "Acessos não encontrados",
   accountAlreadyExists: "Essa conta já existe",
+  couponAlreadyExists: "Esse cupom já existe",
   accountNotFound: "Conta não encontrada",
   accountUsernameAlreadyExists: "O nome de usuário da conta já existe",
   accountsNotFound: "Contas não encontradas",

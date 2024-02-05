@@ -76,7 +76,6 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               as={NextLink}
               href={baseRoutes.financial.home}
               isActive={isActiveRoute(baseRoutes.financial.home)}
-              badge={<BadgeNew />}
             >
               {translate.formatMessage({ id: "financial" })}
             </SidebarNavLink>
@@ -93,14 +92,14 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                 >
                   {translate.formatMessage({ id: "subscriptions" })}
                 </SidebarNavLink>
-                <SidebarNavLink
+                {/* <SidebarNavLink
                   leftIcon="invoice"
                   as={NextLink}
                   href={baseRoutes.invoices}
                   isActive={isActiveRoute(baseRoutes.invoices)}
                 >
                   {translate.formatMessage({ id: "invoices" })}
-                </SidebarNavLink>
+                </SidebarNavLink> */}
                 <SidebarNavLink
                   leftIcon="order"
                   as={NextLink}
@@ -120,7 +119,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               </SidebarGroupPanel>
             </SidebarGroup>
             <SidebarGroup isActive={isActiveProducts}>
-              <SidebarGroupButton leftIcon="product">
+              <SidebarGroupButton leftIcon="product" badge={<BadgeNew />}>
                 {translate.formatMessage({ id: "products" })}
               </SidebarGroupButton>
               <SidebarGroupPanel>
@@ -139,6 +138,15 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   isActive={isActiveRoute(baseRoutes.products.home)}
                 >
                   {translate.formatMessage({ id: "products" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  as={NextLink}
+                  leftIcon="coupon"
+                  href={baseRoutes.coupons.home}
+                  badge={<BadgeNew />}
+                  isActive={isActiveRoute(baseRoutes.coupons.home)}
+                >
+                  {translate.formatMessage({ id: "coupons" })}
                 </SidebarNavLink>
               </SidebarGroupPanel>
             </SidebarGroup>

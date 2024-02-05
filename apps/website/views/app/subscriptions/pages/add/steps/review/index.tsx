@@ -11,6 +11,7 @@ import {
 } from "@/services/graphql/stokei";
 import { getI18nKeyFromRecurringInterval } from "@/utils";
 import {
+  Badge,
   Button,
   ButtonGroup,
   DatePickerGroup,
@@ -24,6 +25,7 @@ import { FC, useMemo } from "react";
 import { useCreateSubscriptionContractMutation } from "../../graphql/create-subscription-contract.mutation.graphql.generated";
 
 interface ReviewStepProps {
+  subscriptionType: SubscriptionContractType;
   product?: AppProductFragment;
   student?: AppAccountFragment;
   startAt?: Date;
@@ -34,6 +36,7 @@ interface ReviewStepProps {
 }
 
 export const ReviewStep: FC<ReviewStepProps> = ({
+  subscriptionType,
   product,
   student,
   startAt,
@@ -51,6 +54,7 @@ export const ReviewStep: FC<ReviewStepProps> = ({
     { fetching: isLoadingCreateSubscriptionContract },
     onExecuteCreateSubscriptionContract,
   ] = useCreateSubscriptionContractMutation();
+  const isRecurring = subscriptionType === SubscriptionContractType.Recurring;
 
   const recurringIntervalTypeKey = useMemo(() => {
     if (!recurringInterval) {
@@ -68,18 +72,20 @@ export const ReviewStep: FC<ReviewStepProps> = ({
       const response = await onExecuteCreateSubscriptionContract({
         input: {
           parent: student?.id || "",
-          type: SubscriptionContractType.Recurring,
+          type: subscriptionType,
           startAt: startAt?.toISOString(),
           endAt: endAt?.toISOString(),
           items: [
             {
               quantity: 1,
               product: product?.parentId || "",
-              recurring: {
-                interval: recurringInterval,
-                intervalCount: parseInt(recurringIntervalCount),
-                usageType: UsageType.Licensed,
-              },
+              ...(subscriptionType === SubscriptionContractType.Recurring && {
+                recurring: {
+                  interval: recurringInterval,
+                  intervalCount: parseInt(recurringIntervalCount),
+                  usageType: UsageType.Licensed,
+                },
+              }),
             },
           ],
         },
@@ -132,14 +138,22 @@ export const ReviewStep: FC<ReviewStepProps> = ({
           })}
         </Label>
 
-        <Stack direction="row" spacing="2">
-          <Text>{recurringIntervalCount}</Text>
+        {isRecurring ? (
+          <Stack direction="row" spacing="2">
+            <Text>{recurringIntervalCount}</Text>
+            <Text>
+              {translate.formatMessage({
+                id: recurringIntervalTypeKey as any,
+              })}
+            </Text>
+          </Stack>
+        ) : (
           <Text>
             {translate.formatMessage({
-              id: recurringIntervalTypeKey as any,
+              id: "lifelong",
             })}
           </Text>
-        </Stack>
+        )}
       </Stack>
 
       <Stack direction="column" spacing="2">
@@ -150,7 +164,16 @@ export const ReviewStep: FC<ReviewStepProps> = ({
         </Label>
         <DatePickerGroup>
           <Text>{translate.formatDate(startAt)}</Text>
-          <Text>{translate.formatDate(endAt)}</Text>
+
+          {isRecurring ? (
+            <Text>{translate.formatDate(endAt)}</Text>
+          ) : (
+            <Badge colorScheme="green">
+              {translate.formatMessage({
+                id: "lifelong",
+              })}
+            </Badge>
+          )}
         </DatePickerGroup>
       </Stack>
 

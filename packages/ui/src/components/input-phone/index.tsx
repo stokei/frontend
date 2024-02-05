@@ -90,14 +90,14 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
           </SelectList>
         </Select>
       </FormControl>
-      <FormControl width="24">
+      <FormControl width="40">
         <Label htmlFor={`${id}-area-code`}>
           {translate.formatMessage({ id: "ddd" })}
         </Label>
         <Input
           id={`${id}-area-code`}
           value={areaCode}
-          placeholder="51"
+          placeholder="99"
           maxLength={2}
           onChange={(e) => onChangeAreaCode(onlyNumbers(e.target.value))}
         />

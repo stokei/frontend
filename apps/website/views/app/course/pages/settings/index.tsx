@@ -81,6 +81,7 @@ export const CourseSettingsPage: FC<CourseSettingsPageProps> = () => {
     setValue,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

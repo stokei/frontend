@@ -18,3 +18,5 @@ export const STRIPE_PUBLISHABLE_KEY: string =
 
 export const GOOGLE_ANALYTICS_KEY: string =
   process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY || "";
+
+export const PAGARME_KEY: string = process.env.NEXT_PUBLIC_PAGARME_KEY || "";

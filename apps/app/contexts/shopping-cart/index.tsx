@@ -32,6 +32,7 @@ export interface ShoppingCartProviderValues {
   readonly isEmptyShoppingCart: boolean;
   readonly totalAmount: number;
   readonly subtotalAmount: number;
+  readonly promitionItemsAmount: number;
   readonly currency?: Currency;
   readonly onAddOrUpdateShoppingCartItem: (
     shoppingCartItem: ShoppingCartItem
@@ -130,6 +131,13 @@ export const ShoppingCartProvider: FC<
     );
   }, [shoppingCartItems]);
 
+  const promitionItemsAmount = useMemo(() => {
+    if (!subtotalAmount || !totalAmount) {
+      return 0;
+    }
+    return subtotalAmount - totalAmount;
+  }, [subtotalAmount, totalAmount]);
+
   const onClearShoppingCart = useCallback(
     () => setShoppingCartItems(() => []),
     [setShoppingCartItems]
@@ -141,6 +149,7 @@ export const ShoppingCartProvider: FC<
         currency,
         totalAmount,
         subtotalAmount,
+        promitionItemsAmount,
         shoppingCartItems,
         isOpenShoppingCart,
         isEmptyShoppingCart: !shoppingCartItems?.length,
@@ -153,6 +162,7 @@ export const ShoppingCartProvider: FC<
       currency,
       totalAmount,
       subtotalAmount,
+      promitionItemsAmount,
       shoppingCartItems,
       isOpenShoppingCart,
       onAddOrUpdateShoppingCartItem,

@@ -55,6 +55,7 @@ export const AddFeatureDrawer: FC<AddFeatureDrawerProps> = ({
     reset,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

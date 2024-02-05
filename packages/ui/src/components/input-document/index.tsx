@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useTranslations } from "../../hooks";
 import { Box } from "../box";
 import { Input } from "../input";
@@ -10,8 +10,9 @@ import { Stack } from "../stack";
 import { Text } from "../text";
 
 export enum DocumentType {
-  CPF = "CPF",
-  CNPJ = "CNPJ",
+  Cnpj = "CNPJ",
+  Cpf = "CPF",
+  Passport = "PASSPORT",
 }
 
 export interface InputDocumentProps {
@@ -20,6 +21,7 @@ export interface InputDocumentProps {
   document: string;
   documentType: DocumentType;
   withDocumentTypeDisabled?: boolean;
+  documentTypesAllowed?: DocumentType[];
   onChangeDocument: (document: string) => void;
   onChangeDocumentType: (documentType: DocumentType) => void;
 }
@@ -29,6 +31,7 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
   isLoading,
   document,
   documentType,
+  documentTypesAllowed,
   withDocumentTypeDisabled,
   onChangeDocument,
   onChangeDocumentType,
@@ -36,11 +39,44 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
 }) => {
   const translate = useTranslations();
 
+  const documentTypes = useMemo(
+    () =>
+      documentTypesAllowed?.length
+        ? documentTypesAllowed
+        : [DocumentType.Cpf, DocumentType.Cnpj, DocumentType.Passport],
+    [documentTypesAllowed]
+  );
+
+  const maxLength = useMemo(() => {
+    const sizes: Record<DocumentType, number> = {
+      [DocumentType.Cpf]: 11,
+      [DocumentType.Cnpj]: 16,
+      [DocumentType.Passport]: 50,
+    };
+    return sizes[documentType || DocumentType.Cpf];
+  }, [documentType]);
+
+  useEffect(() => {
+    if (document) {
+      onChangeDocument(document?.slice(0, maxLength));
+    }
+  }, [document, maxLength, onChangeDocument]);
+
   const setDocument = useCallback(
     (e: any) => {
-      onChangeDocument((e.target.value + "")?.trim()?.replace(/\D/g, ""));
+      if (documentType === DocumentType.Passport) {
+        const valueWithOnlyNumbersAndLetters = (e.target.value + "")
+          ?.trim()
+          ?.replace(/[^a-zA-Z0-9]/g, "");
+        onChangeDocument(valueWithOnlyNumbersAndLetters);
+      } else {
+        const valueWithOnlyNumbers = (e.target.value + "")
+          ?.trim()
+          ?.replace(/[^0-9]/g, "");
+        onChangeDocument(valueWithOnlyNumbers);
+      }
     },
-    [onChangeDocument]
+    [documentType, onChangeDocument]
   );
 
   return (
@@ -64,20 +100,15 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
             )}
           />
           <SelectList>
-            <SelectItem value={DocumentType.CPF}>
-              <Text>
-                {translate.formatMessage({
-                  id: "cpf",
-                })}
-              </Text>
-            </SelectItem>
-            <SelectItem value={DocumentType.CNPJ}>
-              <Text>
-                {translate.formatMessage({
-                  id: "cnpj",
-                })}
-              </Text>
-            </SelectItem>
+            {documentTypes.map((documentTypeAllow) => (
+              <SelectItem key={documentTypeAllow} value={documentTypeAllow}>
+                <Text>
+                  {translate.formatMessage({
+                    id: documentTypeAllow?.toLowerCase() as any,
+                  })}
+                </Text>
+              </SelectItem>
+            ))}
           </SelectList>
         </Select>
       </Box>
@@ -86,9 +117,9 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
         value={document || ""}
         isDisabled={isLoading}
         placeholder={translate.formatMessage({
-          id: documentType === DocumentType.CPF ? "cpf" : "cnpj",
+          id: documentType?.toLowerCase() as any,
         })}
-        maxLength={documentType === DocumentType.CPF ? 11 : 14}
+        maxLength={maxLength}
         onChange={setDocument}
       />
     </Stack>

@@ -101,6 +101,7 @@ export const icons = {
   buy: IconComponent.BuyIcon,
   close: IconComponent.CloseIcon,
   view: IconComponent.ViewIcon,
+  coupon: IconComponent.CouponIcon,
 };
 
 export type IconName = keyof typeof icons;

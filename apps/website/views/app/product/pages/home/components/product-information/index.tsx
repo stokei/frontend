@@ -51,6 +51,7 @@ export const ProductInformation: FC<ProductInformationProps> = ({
     setValue,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

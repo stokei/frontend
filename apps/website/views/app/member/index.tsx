@@ -65,6 +65,7 @@ export const MemberPage: FC<MemberPageProps> = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

@@ -1,3 +1,5 @@
+import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
+import { PaymentMethodItem } from "@/components/payment-method-management/payment-method-item";
 import { useTranslations } from "@/hooks";
 import { I18nKey } from "@/interfaces/i18n-key";
 import { PaymentMethodType } from "@/services/graphql/stokei";
@@ -12,14 +14,16 @@ interface PaymentMethodData {
 
 export interface PaymentMethodProps {
   paymentMethodType: PaymentMethodType;
+  paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment;
 }
 
 export const PaymentMethod: React.FC<PaymentMethodProps> = ({
   paymentMethodType,
+  paymentMethod,
 }) => {
   const translate = useTranslations();
 
-  const paymentMethod: PaymentMethodData = useMemo(() => {
+  const paymentMethodConfig: PaymentMethodData = useMemo(() => {
     const methods: Record<PaymentMethodType, PaymentMethodData> = {
       [PaymentMethodType.Pix]: {
         color: "green.500",
@@ -41,11 +45,19 @@ export const PaymentMethod: React.FC<PaymentMethodProps> = ({
   }, [paymentMethodType]);
 
   return (
-    <Stack direction="row" spacing="3" align="center">
-      <Icon name={paymentMethod?.iconName} color={paymentMethod?.color} />
-      <Text fontWeight="bold">
-        {translate.formatMessage({ id: paymentMethod?.text })}
-      </Text>
+    <Stack direction="column" spacing="5">
+      <Stack direction="row" spacing="3" align="center">
+        <Icon
+          name={paymentMethodConfig?.iconName}
+          color={paymentMethodConfig?.color}
+        />
+        <Text fontWeight="bold">
+          {translate.formatMessage({ id: paymentMethodConfig?.text })}
+        </Text>
+      </Stack>
+      {paymentMethod && paymentMethodType === PaymentMethodType.Card && (
+        <PaymentMethodItem paymentMethod={paymentMethod} />
+      )}
     </Stack>
   );
 };

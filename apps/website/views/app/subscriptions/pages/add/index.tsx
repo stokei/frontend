@@ -2,7 +2,10 @@ import { AppAccountFragment } from "@/components/select-members/graphql/accounts
 import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
 import { AddSubscriptionContractStep } from "@/constants/add-subscription-contract-steps";
 import { useTranslations } from "@/hooks";
-import { IntervalType } from "@/services/graphql/stokei";
+import {
+  IntervalType,
+  SubscriptionContractType,
+} from "@/services/graphql/stokei";
 import { getEndDate } from "@/utils/get-end-date";
 import { AppLayout } from "@/views/app/layout";
 import {
@@ -40,6 +43,8 @@ export const AddSubscriptionContractPage: FC<
   );
   const [recurringIntervalCount, setRecurringIntervalCount] =
     useState<string>("1");
+  const [subscriptionType, setSubscriptionType] =
+    useState<SubscriptionContractType>(SubscriptionContractType.OneTime);
   const translate = useTranslations();
 
   useEffect(() => {
@@ -125,6 +130,8 @@ export const AddSubscriptionContractPage: FC<
                     <PeriodStep
                       startAt={startAt}
                       endAt={endAt}
+                      subscriptionType={subscriptionType}
+                      onChangeSubscriptionType={setSubscriptionType}
                       onChangeStartAt={setStartAt}
                       onChangeEndAt={setEndAt}
                       interval={recurringInterval}
@@ -141,6 +148,7 @@ export const AddSubscriptionContractPage: FC<
                       student={student}
                       startAt={startAt}
                       endAt={endAt}
+                      subscriptionType={subscriptionType}
                       recurringInterval={recurringInterval}
                       recurringIntervalCount={recurringIntervalCount}
                       onPreviousStep={onGoToPeriod}
