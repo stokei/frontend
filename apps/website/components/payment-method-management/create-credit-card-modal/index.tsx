@@ -6,6 +6,7 @@ import { CreateCreditCardForm } from "../create-credit-card-form";
 
 interface CreateCreditCardModalProps {
   readonly isOpen?: boolean;
+  readonly address?: string;
   readonly onClose: () => void;
   readonly onSuccess: (
     paymentMethod: PaymentMethodManagementPaymentMethodCardFragment
@@ -14,6 +15,7 @@ interface CreateCreditCardModalProps {
 
 export const CreateCreditCardModal: FC<CreateCreditCardModalProps> = ({
   isOpen,
+  address,
   onClose,
   onSuccess,
 }) => {
@@ -22,7 +24,7 @@ export const CreateCreditCardModal: FC<CreateCreditCardModalProps> = ({
     <Modal isOpen={!!isOpen} onClose={onClose}>
       <ModalHeader>{translate.formatMessage({ id: "addNewCard" })}</ModalHeader>
       <ModalBody>
-        <CreateCreditCardForm onSuccess={onSuccess} />
+        <CreateCreditCardForm onSuccess={onSuccess} address={address} />
       </ModalBody>
     </Modal>
   );

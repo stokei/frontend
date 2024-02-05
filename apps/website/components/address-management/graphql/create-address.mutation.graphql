@@ -1,0 +1,5 @@
+mutation AddressManagementCreateAddress($input: CreateAddressInput!) {
+  createAddress(input: $input) {
+    ...AddressManagementAddress
+  }
+}
