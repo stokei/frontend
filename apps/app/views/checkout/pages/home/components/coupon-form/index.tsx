@@ -42,7 +42,7 @@ export const CouponForm: React.FC<CouponFormProps> = ({
   });
 
   useEffect(() => {
-    if (dataGetCoupon?.coupon) {
+    if (!!dataGetCoupon?.coupon?.active) {
       onSuccess?.(dataGetCoupon?.coupon);
     }
   }, [dataGetCoupon?.coupon, onSuccess]);
