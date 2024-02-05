@@ -150,8 +150,7 @@ export type App = {
   email?: Maybe<Scalars['String']>;
   icon?: Maybe<Image>;
   id: Scalars['ID'];
-  isIntegratedWithPix: Scalars['Boolean'];
-  isIntegratedWithStripe: Scalars['Boolean'];
+  isIntegratedWithPagarme: Scalars['Boolean'];
   isStokei: Scalars['Boolean'];
   logo?: Maybe<Image>;
   name: Scalars['String'];
@@ -180,6 +179,18 @@ export enum AppStatus {
   Blocked = 'BLOCKED',
   Inactive = 'INACTIVE'
 }
+
+export type ApplyCouponToValue = {
+  __typename?: 'ApplyCouponToValue';
+  discountAmount: Scalars['Float'];
+  subtotalAmount: Scalars['Float'];
+  totalAmount: Scalars['Float'];
+};
+
+export type ApplyCouponToValueInput = {
+  coupon: Scalars['String'];
+  value: Scalars['Float'];
+};
 
 export type Apps = {
   __typename?: 'Apps';
@@ -241,18 +252,12 @@ export type Catalog = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
-  items?: Maybe<CatalogItems>;
+  items?: Maybe<Array<CatalogItem>>;
   parent: Scalars['String'];
   subtitle?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
-};
-
-
-export type CatalogItemsArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllCatalogItemsInput>;
-  page?: InputMaybe<PaginationInput>;
 };
 
 export type CatalogItem = {
@@ -314,10 +319,26 @@ export type ChangePasswordInput = {
 
 export type Checkout = {
   __typename?: 'Checkout';
-  order: Order;
-  payment?: Maybe<Payment>;
+  boleto?: Maybe<CheckoutBoleto>;
+  card?: Maybe<CheckoutCard>;
+  payment: Payment;
   pix?: Maybe<CheckoutPix>;
   url?: Maybe<Scalars['String']>;
+};
+
+export type CheckoutBoleto = {
+  __typename?: 'CheckoutBoleto';
+  barcode: Scalars['String'];
+  line: Scalars['String'];
+  pdf: Scalars['String'];
+};
+
+export type CheckoutCard = {
+  __typename?: 'CheckoutCard';
+  brand: Scalars['String'];
+  expiryMonth: Scalars['String'];
+  expiryYear: Scalars['String'];
+  lastFourNumber: Scalars['String'];
 };
 
 export type CheckoutPix = {
@@ -419,6 +440,35 @@ export type Components = {
   totalPages: Scalars['Int'];
 };
 
+export type Coupon = {
+  __typename?: 'Coupon';
+  active: Scalars['Boolean'];
+  amountOff?: Maybe<Scalars['Float']>;
+  app?: Maybe<App>;
+  code: Scalars['String'];
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  percentOff?: Maybe<Scalars['Float']>;
+  recipient?: Maybe<Account>;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export type Coupons = {
+  __typename?: 'Coupons';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<Coupon>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
 export type Course = {
   __typename?: 'Course';
   active: Scalars['Boolean'];
@@ -433,12 +483,6 @@ export type Course = {
   name: Scalars['String'];
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
-};
-
-
-export type CourseInstructorsArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllAccountsInput>;
-  page?: InputMaybe<PaginationInput>;
 };
 
 export type CourseInstructor = {
@@ -515,8 +559,8 @@ export type CreateAccountInput = {
 };
 
 export type CreateAccountPagarmeCustomerInput = {
-  cpf: Scalars['String'];
   dateBirthday: Scalars['String'];
+  document: CreateDocumentInput;
   phone: CreatePhoneInput;
 };
 
@@ -570,6 +614,7 @@ export type CreateCatalogItemInput = {
 
 export type CreateCheckoutInput = {
   order: Scalars['String'];
+  paymentMethod?: InputMaybe<Scalars['String']>;
   paymentMethodType: PaymentMethodType;
 };
 
@@ -584,6 +629,13 @@ export type CreateComponentInput = {
   data?: InputMaybe<Scalars['JSON']>;
   parent: Scalars['String'];
   type: ComponentType;
+};
+
+export type CreateCouponInput = {
+  amountOff?: InputMaybe<Scalars['Float']>;
+  code: Scalars['String'];
+  percentOff?: InputMaybe<Scalars['Float']>;
+  recipient?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateCourseInput = {
@@ -610,9 +662,9 @@ export type CreateCurrencyInput = {
   symbol: Scalars['String'];
 };
 
-export type CreateCustomerPortalSessionInput = {
-  customer?: InputMaybe<Scalars['String']>;
-  returnUrl: Scalars['String'];
+export type CreateDocumentInput = {
+  document: Scalars['String'];
+  type: DocumentType;
 };
 
 export type CreateDomainInput = {
@@ -697,6 +749,7 @@ export type CreateOrUpdateComponentInput = {
 };
 
 export type CreateOrderInput = {
+  coupon?: InputMaybe<Scalars['String']>;
   items: Array<CreateOrderItemInput>;
 };
 
@@ -709,8 +762,9 @@ export type CreatePageInput = {
   title: Scalars['String'];
 };
 
-export type CreatePaymentMethodInput = {
-  stripePaymentMethod: Scalars['String'];
+export type CreatePaymentMethodCardInput = {
+  address: Scalars['String'];
+  cardHash: Scalars['String'];
 };
 
 export type CreatePhoneInput = {
@@ -841,15 +895,21 @@ export type Currency = {
   updatedBy?: Maybe<Account>;
 };
 
-export type CustomerPortalSession = {
-  __typename?: 'CustomerPortalSession';
-  id: Scalars['ID'];
-  url: Scalars['String'];
-};
-
 export type DeactivatePriceInput = {
   price: Scalars['String'];
 };
+
+export type Document = {
+  __typename?: 'Document';
+  document: Scalars['String'];
+  type: DocumentType;
+};
+
+export enum DocumentType {
+  Cnpj = 'CNPJ',
+  Cpf = 'CPF',
+  Passport = 'PASSPORT'
+}
 
 export type Domain = {
   __typename?: 'Domain';
@@ -926,7 +986,7 @@ export type File = {
   filename: Scalars['String'];
   id: Scalars['ID'];
   mimetype?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['Int']>;
+  size?: Maybe<Scalars['Float']>;
   status: FileStatus;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
@@ -1099,11 +1159,6 @@ export type Languages = {
   totalPages: Scalars['Int'];
 };
 
-export type Link = {
-  __typename?: 'Link';
-  url: Scalars['String'];
-};
-
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -1149,6 +1204,7 @@ export type MeAccount = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   dateBirthday?: Maybe<Scalars['String']>;
+  document?: Maybe<Document>;
   email: Scalars['String'];
   firstname: Scalars['String'];
   fullname: Scalars['String'];
@@ -1160,6 +1216,7 @@ export type MeAccount = {
   lastname: Scalars['String'];
   pagarmeCustomer?: Maybe<Scalars['String']>;
   paymentMethods?: Maybe<PaymentMethods>;
+  phone?: Maybe<Phone>;
   phones?: Maybe<Phones>;
   roles?: Maybe<Roles>;
   status: AccountStatus;
@@ -1233,18 +1290,16 @@ export type Mutation = {
   createAddress: Address;
   createApp: App;
   createAppPagarmeAccount: App;
-  createAppStripeDashboardLink: Link;
-  createAppStripeOnboarding: Link;
   createCatalog: Catalog;
   createCatalogItem: CatalogItem;
   createCheckout: Checkout;
   createColor: Color;
   createComponent: Component;
+  createCoupon: Coupon;
   createCourse: Course;
   createCourseInstructor: CourseInstructor;
   createCourseStudent: CourseStudent;
   createCurrency: Currency;
-  createCustomerPortalSession: CustomerPortalSession;
   createDomain: Domain;
   createFeature: Feature;
   createFileByAdmin: File;
@@ -1259,7 +1314,7 @@ export type Mutation = {
   createOrUpdateComponent: Component;
   createOrder: Order;
   createPage: Page;
-  createPaymentMethod: PaymentMethod;
+  createPaymentMethodCard: PaymentMethod;
   createPhone: Phone;
   createPlan: Plan;
   createPrice: Price;
@@ -1304,11 +1359,13 @@ export type Mutation = {
   removeVideoAuthor: VideoAuthor;
   signUp: AuthResponse;
   updateAccount: Account;
+  updateAccountPagarmeCustomer: Account;
   updateAddress: Address;
   updateApp: App;
   updateCatalog: Catalog;
   updateColor: Color;
   updateComponent: Component;
+  updateCoupon: Coupon;
   updateCourse: Course;
   updateCurrency: Currency;
   updateFile: File;
@@ -1406,6 +1463,11 @@ export type MutationCreateComponentArgs = {
 };
 
 
+export type MutationCreateCouponArgs = {
+  input: CreateCouponInput;
+};
+
+
 export type MutationCreateCourseArgs = {
   input: CreateCourseInput;
 };
@@ -1423,11 +1485,6 @@ export type MutationCreateCourseStudentArgs = {
 
 export type MutationCreateCurrencyArgs = {
   input: CreateCurrencyInput;
-};
-
-
-export type MutationCreateCustomerPortalSessionArgs = {
-  input: CreateCustomerPortalSessionInput;
 };
 
 
@@ -1496,8 +1553,8 @@ export type MutationCreatePageArgs = {
 };
 
 
-export type MutationCreatePaymentMethodArgs = {
-  input: CreatePaymentMethodInput;
+export type MutationCreatePaymentMethodCardArgs = {
+  input: CreatePaymentMethodCardInput;
 };
 
 
@@ -1706,6 +1763,11 @@ export type MutationUpdateAccountArgs = {
 };
 
 
+export type MutationUpdateAccountPagarmeCustomerArgs = {
+  input: UpdateAccountPagarmeCustomerInput;
+};
+
+
 export type MutationUpdateAddressArgs = {
   input: UpdateAddressInput;
 };
@@ -1728,6 +1790,11 @@ export type MutationUpdateColorArgs = {
 
 export type MutationUpdateComponentArgs = {
   input: UpdateComponentInput;
+};
+
+
+export type MutationUpdateCouponArgs = {
+  input: UpdateCouponInput;
 };
 
 
@@ -1800,6 +1867,7 @@ export type Order = {
   active: Scalars['Boolean'];
   app?: Maybe<App>;
   canceledAt?: Maybe<Scalars['String']>;
+  coupon?: Maybe<Coupon>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   currency: Currency;
@@ -1912,6 +1980,15 @@ export type OrderByDataFindAllColorsInput = {
 };
 
 export type OrderByDataFindAllComponentsInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
+export type OrderByDataFindAllCouponsInput = {
+  active?: InputMaybe<OrderBy>;
+  code?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
@@ -2357,6 +2434,9 @@ export enum PaymentGatewayType {
 export type PaymentMethod = {
   __typename?: 'PaymentMethod';
   app?: Maybe<App>;
+  boletoBarcode?: Maybe<Scalars['String']>;
+  boletoLine?: Maybe<Scalars['String']>;
+  boletoURL?: Maybe<Scalars['String']>;
   cardBrand?: Maybe<Scalars['String']>;
   cardExpiryMonth?: Maybe<Scalars['String']>;
   cardExpiryYear?: Maybe<Scalars['String']>;
@@ -2365,7 +2445,7 @@ export type PaymentMethod = {
   id: Scalars['ID'];
   lastFourCardNumber?: Maybe<Scalars['String']>;
   parent: Scalars['String'];
-  stripePaymentMethod?: Maybe<Scalars['String']>;
+  referenceId?: Maybe<Scalars['String']>;
   type?: Maybe<PaymentMethodType>;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
@@ -2472,12 +2552,6 @@ export type Plan = {
   type: PlanType;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
-};
-
-
-export type PlanFeaturesArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllFeaturesInput>;
-  page?: InputMaybe<PaginationInput>;
 };
 
 export enum PlanType {
@@ -2605,18 +2679,6 @@ export type Product = {
   updatedBy?: Maybe<Account>;
 };
 
-
-export type ProductFeaturesArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllFeaturesInput>;
-  page?: InputMaybe<PaginationInput>;
-};
-
-
-export type ProductPricesArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllPricesInput>;
-  page?: InputMaybe<PaginationInput>;
-};
-
 export type ProductParentUnion = App | Course | Material | Plan;
 
 export type Products = {
@@ -2647,6 +2709,7 @@ export type Query = {
   address: Address;
   addresses: Addresses;
   app: App;
+  applyCouponToValue: ApplyCouponToValue;
   apps: Apps;
   billing: Billing;
   catalog: Catalog;
@@ -2657,6 +2720,8 @@ export type Query = {
   colors: Colors;
   component: Component;
   components: Components;
+  coupon: Coupon;
+  coupons: Coupons;
   course: Course;
   courseInstructor: CourseInstructor;
   courseInstructors: CourseInstructors;
@@ -2767,6 +2832,11 @@ export type QueryAppArgs = {
 };
 
 
+export type QueryApplyCouponToValueArgs = {
+  input: ApplyCouponToValueInput;
+};
+
+
 export type QueryAppsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAppsInput>;
   page?: InputMaybe<PaginationInput>;
@@ -2819,6 +2889,19 @@ export type QueryComponentsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllComponentsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllComponentsInput>;
+};
+
+
+export type QueryCouponArgs = {
+  code?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryCouponsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllCouponsInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllCouponsInput>;
 };
 
 
@@ -3564,6 +3647,12 @@ export type UpdateAccountInput = {
   where?: InputMaybe<UpdateWhereAccountInput>;
 };
 
+export type UpdateAccountPagarmeCustomerInput = {
+  dateBirthday?: InputMaybe<Scalars['String']>;
+  document?: InputMaybe<CreateDocumentInput>;
+  phone?: InputMaybe<CreatePhoneInput>;
+};
+
 export type UpdateAddressInput = {
   data: UpdateDataAddressInput;
   where: UpdateWhereAddressInput;
@@ -3586,6 +3675,11 @@ export type UpdateColorInput = {
 export type UpdateComponentInput = {
   data: UpdateDataComponentInput;
   where: UpdateWhereComponentInput;
+};
+
+export type UpdateCouponInput = {
+  data: UpdateDataCouponInput;
+  where: UpdateWhereCouponInput;
 };
 
 export type UpdateCourseInput = {
@@ -3637,6 +3731,13 @@ export type UpdateDataColorInput = {
 
 export type UpdateDataComponentInput = {
   data?: InputMaybe<Scalars['JSON']>;
+};
+
+export type UpdateDataCouponInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  amountOff?: InputMaybe<Scalars['Float']>;
+  code?: InputMaybe<Scalars['String']>;
+  percentOff?: InputMaybe<Scalars['Float']>;
 };
 
 export type UpdateDataCourseInput = {
@@ -3691,6 +3792,7 @@ export type UpdateDataPageInput = {
 };
 
 export type UpdateDataPriceInput = {
+  amount?: InputMaybe<Scalars['Int']>;
   automaticRenew?: InputMaybe<Scalars['Boolean']>;
   fromAmount?: InputMaybe<Scalars['Int']>;
   quantity?: InputMaybe<Scalars['Int']>;
@@ -3798,6 +3900,10 @@ export type UpdateWhereColorInput = {
 
 export type UpdateWhereComponentInput = {
   component: Scalars['String'];
+};
+
+export type UpdateWhereCouponInput = {
+  coupon: Scalars['String'];
 };
 
 export type UpdateWhereCourseInput = {
@@ -4091,6 +4197,22 @@ export type WhereDataFindAllComponentsInput = {
   OR?: InputMaybe<Array<WhereDataFindAllComponentsDataInput>>;
 };
 
+export type WhereDataFindAllCouponsDataInput = {
+  active?: InputMaybe<WhereDataBooleanInput>;
+  code?: InputMaybe<WhereDataSearchInput>;
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  recipient?: InputMaybe<WhereDataStringInput>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllCouponsInput = {
+  AND?: InputMaybe<WhereDataFindAllCouponsDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllCouponsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllCouponsDataInput>>;
+};
+
 export type WhereDataFindAllCourseInstructorsDataInput = {
   app?: InputMaybe<WhereDataStringInput>;
   course?: InputMaybe<WhereDataStringInput>;
@@ -4293,6 +4415,7 @@ export type WhereDataFindAllOrderItemsInput = {
 export type WhereDataFindAllOrdersDataInput = {
   active?: InputMaybe<WhereDataBooleanInput>;
   app?: InputMaybe<WhereDataStringInput>;
+  coupon?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
   currency?: InputMaybe<WhereDataStringInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
