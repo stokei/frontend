@@ -8,7 +8,11 @@ import {
 
 export interface ModalProps extends ChakraModalProps {}
 export const Modal: React.FC<ModalProps> = ({ children, ...props }) => (
-  <ChakraModal scrollBehavior="inside" size="lg" {...props}>
+  <ChakraModal
+    scrollBehavior="inside"
+    size={["full", "full", "lg", "lg"]}
+    {...props}
+  >
     <ChakraModalOverlay />
     <ChakraModalContent background="background.50">
       <ChakraModalCloseButton />

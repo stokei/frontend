@@ -11,11 +11,7 @@ export const Header: FC<HeaderProps> = ({ totalCount, onOpenFilters }) => {
   const translate = useTranslations();
 
   return (
-    <Stack
-      align={["flex-start", "flex-start", "center", "center"]}
-      direction={["column", "column", "row", "row"]}
-      spacing="2"
-    >
+    <Stack align="center" direction="row" spacing="2">
       <Title fontSize="sm">
         {translate.formatMessage({ id: "total" })}: {totalCount || 0}
       </Title>

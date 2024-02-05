@@ -71,6 +71,7 @@ export const EditHeroWithVideoForm: FC<EditHeroWithVideoFormProps> = ({
     watch,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

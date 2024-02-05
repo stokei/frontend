@@ -47,6 +47,12 @@ export const SelectProvider: React.FC<
 }) => {
   const isMultiple = useMemo(() => value && Array.isArray(value), [value]);
   const hasValue = useMemo(() => {
+    if (typeof value === "undefined") {
+      return false;
+    }
+    if (typeof value === "boolean") {
+      return true;
+    }
     const isArray = Array.isArray(value);
     if (isArray) {
       return !!value?.length;

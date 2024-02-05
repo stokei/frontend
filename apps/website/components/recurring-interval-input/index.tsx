@@ -44,6 +44,7 @@ export const RecurringIntervalInput: FC<RecurringIntervalInputProps> = ({
     register,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

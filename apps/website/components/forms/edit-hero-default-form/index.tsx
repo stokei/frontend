@@ -50,6 +50,7 @@ export const EditHeroDefaultForm: FC<EditHeroDefaultFormProps> = ({ hero }) => {
     reset,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

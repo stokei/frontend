@@ -42,6 +42,9 @@ fragment AppOrder on Order {
       }
     }
   }
+  coupon {
+    ...AppCoupon
+  }
   currency {
     id
     symbol

@@ -18,10 +18,7 @@ export const CurrentAppProvider = ({
   children,
 }: PropsWithChildren<CurrentAppProviderProps>) => {
   const hasPaymentIntegrations = useMemo(
-    () =>
-      !!currentApp?.isIntegratedWithStripe ||
-      !!currentApp?.isIntegratedWithPix ||
-      !!currentApp?.isStokei,
+    () => !!currentApp?.isIntegratedWithPagarme || !!currentApp?.isStokei,
     [currentApp]
   );
 

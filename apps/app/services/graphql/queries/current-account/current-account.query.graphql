@@ -10,6 +10,18 @@ query CurrentAccount {
     username
     status
     pagarmeCustomer
+    dateBirthday
+    document {
+      document
+      type
+    }
+    phone {
+      id
+      countryCode
+      areaCode
+      number
+      fullnumber
+    }
     app {
       id
     }

@@ -1,0 +1,18 @@
+query AddressManagementAddresss($where: WhereDataFindAllAddressesInput) {
+  addresses(where: $where) {
+    items {
+      ...AddressManagementAddress
+    }
+  }
+}
+
+fragment AddressManagementAddress on Address {
+  id
+  street
+  complement
+  number
+  city
+  country
+  state
+  postalCode
+}

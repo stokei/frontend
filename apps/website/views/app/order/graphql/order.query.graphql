@@ -11,6 +11,9 @@ fragment OrderPageOrder on Order {
     symbol
     minorUnit
   }
+  coupon {
+    ...AppCoupon
+  }
   items {
     items {
       ...OrderPageOrderItem

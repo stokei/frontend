@@ -11,6 +11,7 @@ import {
 } from "@stokei/ui";
 import { FC, useMemo } from "react";
 import { OrderPageOrderFragment } from "../../graphql/order.query.graphql.generated";
+import { CouponItem } from "../coupon-item";
 
 interface Customer {
   name: string;
@@ -50,16 +51,7 @@ export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
 
       <Card background="background.50">
         <CardBody>
-          <Stack
-            direction={["column", "column", "row", "row"]}
-            justify={[
-              "flex-start",
-              "flex-start",
-              "space-between",
-              "space-between",
-            ]}
-            spacing="5"
-          >
+          <Stack direction="column" spacing="5">
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "customer" })}</Label>
               <Stack direction="row" spacing="4" align="center">
@@ -78,12 +70,18 @@ export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
             </Box>
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "lastUpdate" })}</Label>
-              <Text fontWeight="semibold">
+              <Text>
                 {translate.formatDate(order?.updatedAt || "", {
                   fullDate: true,
                 })}
               </Text>
             </Box>
+            {order?.coupon && (
+              <Box flexDirection="column">
+                <Label>{translate.formatMessage({ id: "coupon" })}</Label>
+                <CouponItem coupon={order?.coupon} />
+              </Box>
+            )}
           </Stack>
         </CardBody>
       </Card>

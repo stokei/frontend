@@ -14,6 +14,7 @@ export * from "./alert-icon";
 export * from "./alert-title";
 export * from "./circle";
 export * from "./collapse";
+export * from "./copy-input";
 export * from "./read-more";
 export * from "./indicator";
 export * from "./square";

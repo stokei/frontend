@@ -17,19 +17,14 @@ interface AlertsProps {}
 export const Alerts: FC<AlertsProps> = () => {
   const router = useRouter();
   const translate = useTranslations();
-  const { currentApp } = useCurrentApp();
+  const { currentApp, hasPaymentIntegrations } = useCurrentApp();
 
-  const hasIntegrations = useMemo(
-    () => !currentApp?.isIntegratedWithStripe && !currentApp?.isStokei,
-    [currentApp]
-  );
-
-  const goToStripeOnboarding = useCallback(
+  const goToOnboarding = useCallback(
     () => router.push(routes.app({ appId: currentApp?.id }).onboardings.home),
     [currentApp?.id, router]
   );
 
-  if (!hasIntegrations) {
+  if (hasPaymentIntegrations) {
     return <></>;
   }
 
@@ -55,7 +50,7 @@ export const Alerts: FC<AlertsProps> = () => {
               <Button
                 variant="ghost"
                 colorScheme="black"
-                onClick={goToStripeOnboarding}
+                onClick={goToOnboarding}
               >
                 {translate.formatMessage({
                   id: "clickHereToConfigure",

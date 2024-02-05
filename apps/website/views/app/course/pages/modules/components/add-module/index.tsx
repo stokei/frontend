@@ -52,6 +52,7 @@ export const AddModuleDrawer: FC<AddModuleDrawerProps> = ({
     reset,
     formState: { errors, isSubmitSuccessful },
   } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
     resolver: zodResolver(validationSchema),
   });
 

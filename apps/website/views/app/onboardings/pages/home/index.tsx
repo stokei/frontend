@@ -2,8 +2,7 @@ import { AppLayout } from "@/views/app/layout";
 import { Container, SimpleGrid, Stack, Title } from "@stokei/ui";
 import { FC } from "react";
 import { Navbar } from "../../components/navbar";
-import { StripeOnboarding } from "../../components/stripe-onboarding";
-import { PixOnboarding } from "../../components/pix-onboarding";
+import { PagarmeOnboarding } from "../../components/pagarme-onboarding";
 import { useTranslations } from "@/hooks";
 
 interface OnboardingsPageProps {}
@@ -19,8 +18,7 @@ export const OnboardingsPage: FC<OnboardingsPageProps> = () => {
             {translate.formatMessage({ id: "paymentMethods" })}
           </Title>
           <SimpleGrid columns={[1, 1, 2, 2]} spacing="5">
-            <StripeOnboarding />
-            <PixOnboarding />
+            <PagarmeOnboarding />
           </SimpleGrid>
         </Container>
       </Stack>

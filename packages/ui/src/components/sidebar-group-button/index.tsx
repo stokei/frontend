@@ -1,4 +1,11 @@
-import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  ReactElement,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useSidebarGroup } from "../../hooks";
 import { Button, ButtonProps } from "../button";
 import { Icon, IconName } from "../icon";
@@ -7,10 +14,12 @@ import { Text } from "../text";
 
 export interface SidebarGroupButtonProps extends Omit<ButtonProps, "leftIcon"> {
   readonly leftIcon?: IconName;
+  readonly badge?: ReactElement;
 }
 
 export const SidebarGroupButton: React.FC<SidebarGroupButtonProps> = ({
   leftIcon,
+  badge,
   children,
   ...props
 }) => {
@@ -70,6 +79,7 @@ export const SidebarGroupButton: React.FC<SidebarGroupButtonProps> = ({
       {leftIcon && <Icon name={leftIcon} marginRight="4" />}
       <Stack as="span" direction="row" spacing="5" justify="space-between">
         <Text color={activeStyle?.color}>{children}</Text>
+        {badge}
       </Stack>
     </Button>
   );

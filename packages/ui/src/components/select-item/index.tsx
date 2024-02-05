@@ -10,6 +10,9 @@ const getValue = (value: any) =>
 const isActiveGenericValue = (firstValue: any, secondValue: any) => {
   const first = getValue(firstValue);
   const second = getValue(secondValue);
+  if (typeof first === "boolean" && typeof second === "boolean") {
+    return first === second;
+  }
   if (!first || !second) {
     return false;
   }
