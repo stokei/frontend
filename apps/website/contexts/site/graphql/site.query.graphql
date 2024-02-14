@@ -1,0 +1,28 @@
+query GetSitePageSite($site: String!) {
+  site(id: $site) {
+    ...SitePageSite
+  }
+}
+
+fragment SitePageSite on Site {
+  id
+  name
+  slug
+  homePage {
+    id
+    slug
+    version {
+      id
+    }
+  }
+  favicon {
+    file {
+      url
+    }
+  }
+  logo {
+    file {
+      url
+    }
+  }
+}

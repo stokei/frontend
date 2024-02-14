@@ -1,5 +1,6 @@
-import { useAPIErrors, useTranslations } from "@/hooks";
+import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
+import { AppLayout } from "@/views/app/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -20,29 +21,24 @@ import {
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Navbar } from "./components/navbar";
-import { useCreateAppMutation } from "./graphql/create-app.mutation.graphql.generated";
+import { useCreatePageMutation } from "../../graphql/create-page.mutation.graphql.generated";
+import { Navbar } from "../navbar";
 
-interface AddAppPageProps {}
+interface AddPagePageProps {}
 
-export const AddAppPage: FC<AddAppPageProps> = () => {
+export const AddPagePage: FC<AddPagePageProps> = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
+  const { currentApp } = useCurrentApp();
 
-  const [{ fetching: isLoadingCreateApp }, onExecuteCreateAppMutation] =
-    useCreateAppMutation();
+  const [{ fetching: isLoadingCreatePage }, onExecuteCreatePageMutation] =
+    useCreatePageMutation();
 
   const validationSchema = z.object({
-    name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+    title: z.string().min(1, {
+      message: translate.formatMessage({ id: "required" }),
     }),
-    email: z
-      .string()
-      .min(1, { message: translate.formatMessage({ id: "emailIsRequired" }) })
-      .email({
-        message: translate.formatMessage({ id: "mustBeAValidEmail" }),
-      }),
   });
 
   const {
@@ -54,26 +50,23 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit = async ({
-    name,
-    email,
-  }: z.infer<typeof validationSchema>) => {
+  const onSubmit = async ({ title }: z.infer<typeof validationSchema>) => {
     try {
-      const response = await onExecuteCreateAppMutation({
+      const response = await onExecuteCreatePageMutation({
         input: {
-          name,
-          email,
-          currency: "BRL",
-          language: "pt-BR",
+          title,
+          parent: currentApp?.id || "",
         },
       });
-      if (!!response?.data?.createApp) {
+      if (!!response?.data?.createPage) {
         onShowToast({
-          title: translate.formatMessage({ id: "appCreatedSuccessfully" }),
+          title: translate.formatMessage({ id: "createdSuccessfully" }),
           status: "success",
         });
         return window.location.assign(
-          routes.app({ appId: response?.data?.createApp?.id }).home
+          routes
+            .app({ appId: currentApp?.id })
+            .page({ page: response?.data?.createPage?.id }).home
         );
       }
 
@@ -91,7 +84,7 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
   };
 
   return (
-    <>
+    <AppLayout>
       <Navbar />
       <Container paddingY="5">
         <Stack
@@ -102,7 +95,7 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
           justify="center"
         >
           <Title marginBottom="5" textAlign="center" lineHeight="shorter">
-            {translate.formatMessage({ id: "addApp" })}
+            {translate.formatMessage({ id: "addPage" })}
           </Title>
           <Card
             width={["full", "full", "500px", "500px"]}
@@ -111,48 +104,31 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
             <CardBody>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing="4">
-                  <FormControl isInvalid={!!errors?.name}>
-                    <Label htmlFor="name">
-                      {translate.formatMessage({ id: "name" })}
+                  <FormControl isInvalid={!!errors?.title}>
+                    <Label htmlFor="title">
+                      {translate.formatMessage({ id: "title" })}
                     </Label>
                     <InputGroup>
                       <Input
-                        id="name"
+                        id="title"
                         placeholder={translate.formatMessage({
-                          id: "namePlaceholder",
+                          id: "title",
                         })}
-                        {...register("name")}
-                      />
-                    </InputGroup>
-                    <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-                  </FormControl>
-                  <FormControl isInvalid={!!errors?.email}>
-                    <Label htmlFor="email">
-                      {translate.formatMessage({ id: "email" })}
-                    </Label>
-                    <InputGroup>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder={translate.formatMessage({
-                          id: "emailPlaceholder",
-                        })}
-                        {...register("email")}
+                        {...register("title")}
                       />
                     </InputGroup>
                     <FormErrorMessage>
-                      {errors?.email?.message}
+                      {errors?.title?.message}
                     </FormErrorMessage>
                   </FormControl>
-
                   <Box width="full" paddingBottom="4">
                     <Button
                       width="full"
-                      isLoading={isLoadingCreateApp}
+                      isLoading={isLoadingCreatePage}
                       isDisabled={!isValid}
                       type="submit"
                     >
-                      {translate.formatMessage({ id: "addApp" })}
+                      {translate.formatMessage({ id: "add" })}
                     </Button>
                   </Box>
                 </Stack>
@@ -161,6 +137,6 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
           </Card>
         </Stack>
       </Container>
-    </>
+    </AppLayout>
   );
 };

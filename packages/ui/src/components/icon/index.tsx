@@ -102,6 +102,8 @@ export const icons = {
   close: IconComponent.CloseIcon,
   view: IconComponent.ViewIcon,
   coupon: IconComponent.CouponIcon,
+  site: IconComponent.SiteIcon,
+  page: IconComponent.PageIcon,
 };
 
 export type IconName = keyof typeof icons;

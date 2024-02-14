@@ -1,6 +1,7 @@
 import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
+  slugAlreadyExists: "Slug already exists",
   componentNotFound: "Component not found",
   componentsNotFound: "Components not found",
   pageNotFound: "Page not found",

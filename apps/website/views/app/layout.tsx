@@ -119,7 +119,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               </SidebarGroupPanel>
             </SidebarGroup>
             <SidebarGroup isActive={isActiveProducts}>
-              <SidebarGroupButton leftIcon="product" badge={<BadgeNew />}>
+              <SidebarGroupButton leftIcon="product">
                 {translate.formatMessage({ id: "products" })}
               </SidebarGroupButton>
               <SidebarGroupPanel>
@@ -143,7 +143,6 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   as={NextLink}
                   leftIcon="coupon"
                   href={baseRoutes.coupons.home}
-                  badge={<BadgeNew />}
                   isActive={isActiveRoute(baseRoutes.coupons.home)}
                 >
                   {translate.formatMessage({ id: "coupons" })}
@@ -173,6 +172,15 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               isActive={isActiveRoute(baseRoutes.members)}
             >
               {translate.formatMessage({ id: "members" })}
+            </SidebarNavLink>
+            <SidebarNavLink
+              leftIcon="site"
+              as={NextLink}
+              href={baseRoutes.sites.home}
+              isActive={isActiveRoute(baseRoutes.sites.home)}
+              badge={<BadgeNew />}
+            >
+              {translate.formatMessage({ id: "sites" })}
             </SidebarNavLink>
             <SidebarGroup isActive={isActiveSettings}>
               <SidebarGroupButton leftIcon="setting">
@@ -225,7 +233,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
         </Sidebar>
         <AppLayoutContent>
           <Box flex="1" flexDirection="column">
-            {children}
+            <>{children}</>
           </Box>
           <Footer />
         </AppLayoutContent>

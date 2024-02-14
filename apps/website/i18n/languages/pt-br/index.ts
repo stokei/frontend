@@ -1,6 +1,12 @@
 export const ptBRMessages = {
   me: "Eu",
   menu: "Menu",
+  addSite: "Adicionar site",
+  site: "Site",
+  sites: "Sites",
+  addPage: "Adicionar página",
+  page: "Página",
+  pages: "Páginas",
   promitionItems: "Items em promoção",
   discount: "Desconto",
   address: "Endereço",

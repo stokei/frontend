@@ -81,6 +81,8 @@ import {
   MdOutlineFeaturedPlayList,
   MdOutlinePix,
   MdOutlineStorage,
+  MdOutlineWeb,
+  MdOutlineWebAsset,
 } from "react-icons/md";
 import {
   RxCaretDown,
@@ -195,3 +197,5 @@ export const PixIcon = MdOutlinePix;
 export const CopyIcon = MdContentCopy;
 export const ViewIcon = BsArrowUpRightSquare;
 export const CouponIcon = RiCoupon3Line;
+export const SiteIcon = MdOutlineWeb;
+export const PageIcon = MdOutlineWebAsset;

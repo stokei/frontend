@@ -1,4 +1,4 @@
-import { useAPIErrors, useTranslations } from "@/hooks";
+import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -12,6 +12,7 @@ import {
   FormErrorMessage,
   Input,
   InputGroup,
+  InputSlug,
   Label,
   Stack,
   Title,
@@ -21,28 +22,27 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Navbar } from "./components/navbar";
-import { useCreateAppMutation } from "./graphql/create-app.mutation.graphql.generated";
+import { useCreateSiteMutation } from "./graphql/create-site.mutation.graphql.generated";
+import { AppLayout } from "@/views/app/layout";
 
-interface AddAppPageProps {}
+interface AddSitePageProps {}
 
-export const AddAppPage: FC<AddAppPageProps> = () => {
+export const AddSitePage: FC<AddSitePageProps> = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
+  const { currentApp } = useCurrentApp();
 
-  const [{ fetching: isLoadingCreateApp }, onExecuteCreateAppMutation] =
-    useCreateAppMutation();
+  const [{ fetching: isLoadingCreateSite }, onExecuteCreateSiteMutation] =
+    useCreateSiteMutation();
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
-    email: z
-      .string()
-      .min(1, { message: translate.formatMessage({ id: "emailIsRequired" }) })
-      .email({
-        message: translate.formatMessage({ id: "mustBeAValidEmail" }),
-      }),
+    slug: z.string().min(1, {
+      message: translate.formatMessage({ id: "required" }),
+    }),
   });
 
   const {
@@ -54,26 +54,24 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit = async ({
-    name,
-    email,
-  }: z.infer<typeof validationSchema>) => {
+  const onSubmit = async ({ name, slug }: z.infer<typeof validationSchema>) => {
     try {
-      const response = await onExecuteCreateAppMutation({
+      const response = await onExecuteCreateSiteMutation({
         input: {
           name,
-          email,
-          currency: "BRL",
-          language: "pt-BR",
+          slug,
+          parent: currentApp?.id || "",
         },
       });
-      if (!!response?.data?.createApp) {
+      if (!!response?.data?.createSite?.id) {
         onShowToast({
-          title: translate.formatMessage({ id: "appCreatedSuccessfully" }),
+          title: translate.formatMessage({ id: "createdSuccessfully" }),
           status: "success",
         });
         return window.location.assign(
-          routes.app({ appId: response?.data?.createApp?.id }).home
+          routes
+            .app({ appId: currentApp?.id })
+            .site({ site: response?.data?.createSite?.id }).home
         );
       }
 
@@ -91,7 +89,7 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
   };
 
   return (
-    <>
+    <AppLayout>
       <Navbar />
       <Container paddingY="5">
         <Stack
@@ -102,7 +100,7 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
           justify="center"
         >
           <Title marginBottom="5" textAlign="center" lineHeight="shorter">
-            {translate.formatMessage({ id: "addApp" })}
+            {translate.formatMessage({ id: "addSite" })}
           </Title>
           <Card
             width={["full", "full", "500px", "500px"]}
@@ -126,33 +124,29 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
                     </InputGroup>
                     <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
                   </FormControl>
-                  <FormControl isInvalid={!!errors?.email}>
-                    <Label htmlFor="email">
-                      {translate.formatMessage({ id: "email" })}
+                  <FormControl isInvalid={!!errors?.slug}>
+                    <Label htmlFor="slug">
+                      {translate.formatMessage({ id: "slug" })}
                     </Label>
-                    <InputGroup>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder={translate.formatMessage({
-                          id: "emailPlaceholder",
-                        })}
-                        {...register("email")}
-                      />
-                    </InputGroup>
-                    <FormErrorMessage>
-                      {errors?.email?.message}
-                    </FormErrorMessage>
+                    <InputSlug
+                      id="slug"
+                      type="slug"
+                      placeholder={translate.formatMessage({
+                        id: "slugPlaceholder",
+                      })}
+                      {...register("slug")}
+                    />
+                    <FormErrorMessage>{errors?.slug?.message}</FormErrorMessage>
                   </FormControl>
 
                   <Box width="full" paddingBottom="4">
                     <Button
                       width="full"
-                      isLoading={isLoadingCreateApp}
+                      isLoading={isLoadingCreateSite}
                       isDisabled={!isValid}
                       type="submit"
                     >
-                      {translate.formatMessage({ id: "addApp" })}
+                      {translate.formatMessage({ id: "add" })}
                     </Button>
                   </Box>
                 </Stack>
@@ -161,6 +155,6 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
           </Card>
         </Stack>
       </Container>
-    </>
+    </AppLayout>
   );
 };
