@@ -16,6 +16,7 @@ import {
   StepPanel,
   StepPanels,
   Steps,
+  useActiveSteps,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
@@ -39,36 +40,38 @@ import { useGetCheckoutPageApplyCouponToValueQuery } from "./graphql/apply-coupo
 interface CheckoutPageProps {}
 
 export const CheckoutPage: FC<CheckoutPageProps> = () => {
+  const { activeSteps, onActivateStep, onDeactivateStep } =
+    useActiveSteps<CheckoutStep>({
+      initialState: {
+        [CheckoutStep.PRODUCTS]: true,
+        [CheckoutStep.ADDRESS]: false,
+        [CheckoutStep.ACCOUNT]: false,
+        [CheckoutStep.PAYMENT_METHOD]: false,
+        [CheckoutStep.SUMMARY]: false,
+        [CheckoutStep.PAYMENT]: false,
+      },
+    });
   const [address, setAddress] = useState<AddressManagementAddressFragment>();
   const [paymentMethod, setPaymentMethod] =
     useState<PaymentMethodManagementPaymentMethodCardFragment>();
-  const [checkoutResponsePix, setCheckoutResponsePix] =
-    useState<CreateCheckoutPageCheckoutFragment["pix"]>();
-  const [checkoutResponseBoleto, setCheckoutResponseBoleto] =
-    useState<CreateCheckoutPageCheckoutFragment["boleto"]>();
+  const [checkoutResponse, setCheckoutResponse] =
+    useState<CreateCheckoutPageCheckoutFragment>();
   const [orderId, setOrderId] = useState("");
-  const [isDisabledPayment, setIsDisabledPayment] = useState(true);
   const [coupon, setCoupon] = useState<CheckoutPageCouponFragment>();
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(
     CheckoutStep.PRODUCTS
   );
   const [paymentMethodType, setPaymentMethodType] =
     useState<PaymentMethodType>();
+
   const translate = useTranslations();
   const router = useRouter();
-  const { currentAccount } = useCurrentAccount();
+  const { isAuthenticated } = useCurrentAccount();
   const { onShowAPIError } = useAPIErrors();
-  const {
-    shoppingCartItems,
-    isEmptyShoppingCart,
-    totalAmount: shoppingCartTotalAmount,
-  } = useShoppingCart();
-  const accountStepIsDisabled =
-    isEmptyShoppingCart ||
-    !currentAccount?.pagarmeCustomer ||
-    !currentAccount?.document ||
-    !currentAccount?.phone ||
-    !currentAccount?.dateBirthday;
+  const { shoppingCartItems, totalAmount: shoppingCartTotalAmount } =
+    useShoppingCart();
+
+  const addressIsBR = address?.country?.toLowerCase() === "br";
 
   const [{ fetching: isLoadingCheckout }, onExecuteCheckout] =
     useCreateCheckoutMutation();
@@ -115,8 +118,14 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
     }
   }, [paymentMethodType]);
 
+  useEffect(() => {
+    if (!addressIsBR) {
+      onDeactivateStep(CheckoutStep.ACCOUNT);
+    }
+  }, [addressIsBR, onDeactivateStep]);
+
   const onCreateOrder = useCallback(async () => {
-    if (!currentAccount) {
+    if (!isAuthenticated) {
       router.push({
         pathname: routes.auth.login,
         query: { redirectTo: router.asPath },
@@ -153,7 +162,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
     }
   }, [
     coupon?.id,
-    currentAccount,
+    isAuthenticated,
     onExecuteOrder,
     onShowAPIError,
     router,
@@ -189,16 +198,11 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
               });
             }
           }
-          if (checkout.pix) {
-            setCheckoutResponsePix(checkout.pix);
-          }
-          if (checkout.boleto) {
-            setCheckoutResponseBoleto(checkout.boleto);
-          }
-          setIsDisabledPayment(false);
+          onActivateStep(CheckoutStep.PAYMENT);
           if (checkout.url) {
             return router.push(checkout.url);
           }
+          setCheckoutResponse(checkout);
           return setCurrentStep(CheckoutStep.PAYMENT);
         }
         if (!!response.error?.graphQLErrors?.length) {
@@ -213,6 +217,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       }
     },
     [
+      onActivateStep,
       onExecuteCheckout,
       onShowAPIError,
       paymentMethod?.id,
@@ -221,6 +226,48 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       translate,
     ]
   );
+
+  const onGoToProductsStep = () => {
+    setCurrentStep(CheckoutStep.PRODUCTS);
+  };
+  const onGoToAddressStep = () => {
+    if (!isAuthenticated) {
+      router.push({
+        pathname: routes.auth.login,
+        query: { redirectTo: router.asPath },
+      });
+      return;
+    }
+    onActivateStep(CheckoutStep.ADDRESS);
+    setCurrentStep(CheckoutStep.ADDRESS);
+  };
+  const onGoToAccountStep = () => {
+    onActivateStep(CheckoutStep.ACCOUNT);
+    setCurrentStep(CheckoutStep.ACCOUNT);
+  };
+  const onGoToPaymentMethodStep = () => {
+    onActivateStep(CheckoutStep.PAYMENT_METHOD);
+    setCurrentStep(CheckoutStep.PAYMENT_METHOD);
+  };
+  const onGoToSummaryStep = () => {
+    onActivateStep(CheckoutStep.SUMMARY);
+    setCurrentStep(CheckoutStep.SUMMARY);
+  };
+
+  const onGoToAccountOrPaymentMethod = () => {
+    if (!addressIsBR) {
+      onGoToPaymentMethodStep();
+      return;
+    }
+    onGoToAccountStep();
+  };
+  const onGoBackToAccountOrAddress = () => {
+    if (!addressIsBR) {
+      onGoToAddressStep();
+      return;
+    }
+    onGoToAccountStep();
+  };
 
   const onGoToPayment = async () => {
     let currentOrderId = orderId;
@@ -254,68 +301,49 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                 stepIndex={CheckoutStep.PRODUCTS}
               />
               <StepItem
-                title={translate.formatMessage({ id: "account" })}
-                stepIndex={CheckoutStep.ACCOUNT}
-                isDisabled={accountStepIsDisabled}
-              />
-              <StepItem
                 title={translate.formatMessage({ id: "address" })}
                 stepIndex={CheckoutStep.ADDRESS}
-                isDisabled={
-                  accountStepIsDisabled || !currentAccount?.pagarmeCustomer
-                }
+                isDisabled={!activeSteps?.[CheckoutStep.ADDRESS]}
+              />
+              <StepItem
+                title={translate.formatMessage({ id: "account" })}
+                stepIndex={CheckoutStep.ACCOUNT}
+                isDisabled={!activeSteps?.[CheckoutStep.ACCOUNT]}
               />
               <StepItem
                 title={translate.formatMessage({ id: "paymentMethod" })}
                 stepIndex={CheckoutStep.PAYMENT_METHOD}
-                isDisabled={
-                  accountStepIsDisabled ||
-                  !address ||
-                  !currentAccount?.pagarmeCustomer
-                }
+                isDisabled={!activeSteps?.[CheckoutStep.PAYMENT_METHOD]}
               />
               <StepItem
                 title={translate.formatMessage({ id: "summary" })}
                 stepIndex={CheckoutStep.SUMMARY}
-                isDisabled={
-                  accountStepIsDisabled ||
-                  !address ||
-                  !currentAccount?.pagarmeCustomer ||
-                  !paymentMethodType
-                }
+                isDisabled={!activeSteps?.[CheckoutStep.SUMMARY]}
               />
               <StepItem
                 title={translate.formatMessage({ id: "payment" })}
                 stepIndex={CheckoutStep.PAYMENT}
-                isDisabled={isDisabledPayment}
+                isDisabled={!activeSteps?.[CheckoutStep.PAYMENT]}
               />
             </StepList>
             <StepPanels>
               <Card background="background.50">
                 <CardBody>
                   <StepPanel stepIndex={CheckoutStep.PRODUCTS}>
-                    <ProductsStep
-                      onNextStep={() => setCurrentStep(CheckoutStep.ACCOUNT)}
-                    />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.ACCOUNT}>
-                    <AccountStep
-                      onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.PRODUCTS)
-                      }
-                      onNextStep={() => setCurrentStep(CheckoutStep.ADDRESS)}
-                    />
+                    <ProductsStep onNextStep={onGoToAddressStep} />
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.ADDRESS}>
                     <AddressStep
                       address={address}
                       onChangeAddress={setAddress}
-                      onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.ACCOUNT)
-                      }
-                      onNextStep={() =>
-                        setCurrentStep(CheckoutStep.PAYMENT_METHOD)
-                      }
+                      onPreviousStep={onGoToProductsStep}
+                      onNextStep={onGoToAccountOrPaymentMethod}
+                    />
+                  </StepPanel>
+                  <StepPanel stepIndex={CheckoutStep.ACCOUNT}>
+                    <AccountStep
+                      onPreviousStep={onGoToAddressStep}
+                      onNextStep={onGoToPaymentMethodStep}
                     />
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.PAYMENT_METHOD}>
@@ -325,10 +353,8 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                       paymentMethodType={paymentMethodType}
                       onChoosePaymentMethod={setPaymentMethod}
                       onChoosePaymentMethodType={setPaymentMethodType}
-                      onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.ADDRESS)
-                      }
-                      onNextStep={() => setCurrentStep(CheckoutStep.SUMMARY)}
+                      onPreviousStep={onGoBackToAccountOrAddress}
+                      onNextStep={onGoToSummaryStep}
                     />
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.SUMMARY}>
@@ -343,15 +369,9 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                       paymentMethod={paymentMethod}
                       paymentMethodType={paymentMethodType}
                       isLoadingCheckout={isLoadingCheckout || isLoadingOrder}
-                      onGoToProducts={() =>
-                        setCurrentStep(CheckoutStep.PRODUCTS)
-                      }
-                      onGoToPaymentMethod={() =>
-                        setCurrentStep(CheckoutStep.PAYMENT_METHOD)
-                      }
-                      onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.PAYMENT_METHOD)
-                      }
+                      onGoToProducts={onGoToProductsStep}
+                      onGoToPaymentMethod={onGoToPaymentMethodStep}
+                      onPreviousStep={onGoToPaymentMethodStep}
                       onNextStep={onGoToPayment}
                     />
                   </StepPanel>
@@ -359,12 +379,9 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
                     <PaymentStep
                       orderId={orderId}
                       totalAmount={totalAmount}
-                      pix={checkoutResponsePix}
-                      boleto={checkoutResponseBoleto}
+                      checkout={checkoutResponse}
                       paymentMethodType={paymentMethodType}
-                      onPreviousStep={() =>
-                        setCurrentStep(CheckoutStep.PAYMENT_METHOD)
-                      }
+                      onPreviousStep={onGoToSummaryStep}
                     />
                   </StepPanel>
                 </CardBody>

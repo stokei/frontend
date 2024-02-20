@@ -4,6 +4,7 @@ query CurrentGlobalApp($slug: String!) {
     name
     isStokei
     isIntegratedWithPagarme
+    isIntegratedWithStripe
     stripeAccount
     currency {
       id

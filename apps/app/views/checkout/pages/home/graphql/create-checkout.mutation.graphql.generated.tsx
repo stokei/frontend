@@ -8,9 +8,9 @@ export type CreateCheckoutMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateCheckoutMutation = { __typename?: 'Mutation', createCheckout: { __typename?: 'Checkout', url?: string | null, payment: { __typename?: 'Payment', id: string }, boleto?: { __typename?: 'CheckoutBoleto', barcode: string, line: string, pdf: string } | null, card?: { __typename?: 'CheckoutCard', brand: string, expiryYear: string, expiryMonth: string, lastFourNumber: string } | null, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null } };
+export type CreateCheckoutMutation = { __typename?: 'Mutation', createCheckout: { __typename?: 'Checkout', url?: string | null, payment: { __typename?: 'Payment', id: string }, stripe?: { __typename?: 'CheckoutStripe', clientSecret: string } | null, boleto?: { __typename?: 'CheckoutBoleto', barcode: string, line: string, pdf: string } | null, card?: { __typename?: 'CheckoutCard', brand: string, expiryYear: string, expiryMonth: string, lastFourNumber: string } | null, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null } };
 
-export type CreateCheckoutPageCheckoutFragment = { __typename?: 'Checkout', url?: string | null, payment: { __typename?: 'Payment', id: string }, boleto?: { __typename?: 'CheckoutBoleto', barcode: string, line: string, pdf: string } | null, card?: { __typename?: 'CheckoutCard', brand: string, expiryYear: string, expiryMonth: string, lastFourNumber: string } | null, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null };
+export type CreateCheckoutPageCheckoutFragment = { __typename?: 'Checkout', url?: string | null, payment: { __typename?: 'Payment', id: string }, stripe?: { __typename?: 'CheckoutStripe', clientSecret: string } | null, boleto?: { __typename?: 'CheckoutBoleto', barcode: string, line: string, pdf: string } | null, card?: { __typename?: 'CheckoutCard', brand: string, expiryYear: string, expiryMonth: string, lastFourNumber: string } | null, pix?: { __typename?: 'CheckoutPix', copyAndPaste: string, qrCodeURL: string } | null };
 
 export const CreateCheckoutPageCheckoutFragmentDoc = gql`
     fragment CreateCheckoutPageCheckout on Checkout {
@@ -18,6 +18,9 @@ export const CreateCheckoutPageCheckoutFragmentDoc = gql`
     id
   }
   url
+  stripe {
+    clientSecret
+  }
   boleto {
     barcode
     line

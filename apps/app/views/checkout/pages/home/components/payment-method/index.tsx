@@ -13,6 +13,7 @@ interface PaymentMethodData {
 }
 
 export interface PaymentMethodProps {
+  isDisabled?: boolean;
   paymentMethodType: PaymentMethodType;
   paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment;
 }
@@ -20,6 +21,7 @@ export interface PaymentMethodProps {
 export const PaymentMethod: React.FC<PaymentMethodProps> = ({
   paymentMethodType,
   paymentMethod,
+  isDisabled,
 }) => {
   const translate = useTranslations();
 
@@ -29,6 +31,11 @@ export const PaymentMethod: React.FC<PaymentMethodProps> = ({
         color: "green.500",
         iconName: "pix",
         text: "pix",
+      },
+      [PaymentMethodType.Stripe]: {
+        color: "text.500",
+        iconName: "card",
+        text: "internationalPayment",
       },
       [PaymentMethodType.Card]: {
         color: "text.500",
@@ -49,9 +56,9 @@ export const PaymentMethod: React.FC<PaymentMethodProps> = ({
       <Stack direction="row" spacing="3" align="center">
         <Icon
           name={paymentMethodConfig?.iconName}
-          color={paymentMethodConfig?.color}
+          color={isDisabled ? "gray.500" : paymentMethodConfig?.color}
         />
-        <Text fontWeight="bold">
+        <Text fontWeight="bold" color={isDisabled ? "gray.500" : undefined}>
           {translate.formatMessage({ id: paymentMethodConfig?.text })}
         </Text>
       </Stack>

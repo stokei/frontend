@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  invalidToken: "Por favor, faça o login para continuar",
   amountOffNotFound: "Desconto por valor não encontrado",
   percentOffNotFound: "Desconto por porcentagem não encontrado",
   couponNotFound: "Cupom não encontrado",

@@ -7,6 +7,7 @@ import {
   AiOutlineBank,
   AiOutlineBarcode,
   AiOutlineBold,
+  AiOutlineClockCircle,
   AiOutlineCloudDownload,
   AiOutlineCloudUpload,
   AiOutlineCreditCard,
@@ -34,6 +35,7 @@ import {
   AiOutlineShoppingCart,
   AiOutlineSmile,
   AiOutlineUser,
+  AiOutlineWarning,
 } from "react-icons/ai";
 import { BiLineChart, BiRedo, BiUndo } from "react-icons/bi";
 import {
@@ -195,3 +197,5 @@ export const PixIcon = MdOutlinePix;
 export const CopyIcon = MdContentCopy;
 export const ViewIcon = BsArrowUpRightSquare;
 export const CouponIcon = RiCoupon3Line;
+export const ClockIcon = AiOutlineClockCircle;
+export const WarningIcon = AiOutlineWarning;

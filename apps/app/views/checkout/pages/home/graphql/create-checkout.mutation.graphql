@@ -9,6 +9,9 @@ fragment CreateCheckoutPageCheckout on Checkout {
     id
   }
   url
+  stripe {
+    clientSecret
+  }
   boleto {
     barcode
     line

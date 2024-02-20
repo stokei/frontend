@@ -1,6 +1,7 @@
 import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
+  invalidToken: "Please, you must sign in to continue",
   amountOffNotFound: "Amount discount not found",
   percentOffNotFound: "Amount percent not found",
   couponNotFound: "Cupom not found",

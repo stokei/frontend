@@ -17,7 +17,10 @@ export const CurrentAppProvider: FC<
   PropsWithChildren<CurrentAppProviderProps>
 > = ({ currentApp, children }) => {
   const hasPaymentIntegrations = useMemo(
-    () => !!currentApp?.isIntegratedWithPagarme || !!currentApp?.isStokei,
+    () =>
+      !!currentApp?.isIntegratedWithPagarme ||
+      !!currentApp?.isIntegratedWithStripe ||
+      !!currentApp?.isStokei,
     [currentApp]
   );
 
