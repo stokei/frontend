@@ -1,33 +1,29 @@
-import stokeiDashboardImage from "@/assets/stokei-dashboard.svg";
 import createYourAppImage from "@/assets/create-your-app.png";
 import createYourDomainImage from "@/assets/create-your-domain.png";
-import createYourProductsImage from "@/assets/create-your-product.png";
 import createYourPricesImage from "@/assets/create-your-prices.png";
+import createYourProductsImage from "@/assets/create-your-product.png";
 import startSellImage from "@/assets/start-sell.svg";
-import { useCurrentApp, useTranslations } from "@/hooks";
+import stokeiDashboardImage from "@/assets/stokei-dashboard.svg";
+import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { HeroWithImage } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { LandingPageLayout } from "./layout";
-import { Plans } from "./components/plans";
-import { Contact } from "./components/contact";
-import { Footer } from "./components/footer";
 import { CommonQuestions } from "./components/common-questions";
+import { Contact } from "./components/contact";
+import { Plans } from "./components/plans";
+import { LandingPageLayout } from "./layout";
 
 interface LandingPageProps {}
 
 export const LandingPage: FC<LandingPageProps> = () => {
   const router = useRouter();
   const translate = useTranslations();
-  const { currentApp } = useCurrentApp();
 
-  const goToLogin = () => {
-    return router.push(routes.auth.login);
-  };
   const goToSignUp = () => {
     return router.push(routes.auth.signUp);
   };
+
   return (
     <LandingPageLayout>
       <HeroWithImage

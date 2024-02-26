@@ -38,6 +38,11 @@ export const PaymentMethod: React.FC<PaymentMethodProps> = ({
         iconName: "boleto",
         text: "boleto",
       },
+      [PaymentMethodType.Stripe]: {
+        color: "text.500",
+        iconName: "card",
+        text: "internationalPayment",
+      },
     };
     return methods[paymentMethod?.type || PaymentMethodType.Card];
   }, [paymentMethod]);
