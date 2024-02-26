@@ -4,6 +4,7 @@ import { FC } from "react";
 import { Navbar } from "../../components/navbar";
 import { PagarmeOnboarding } from "../../components/pagarme-onboarding";
 import { useTranslations } from "@/hooks";
+import { StripeOnboarding } from "../../components/stripe-onboarding";
 
 interface OnboardingsPageProps {}
 
@@ -19,6 +20,7 @@ export const OnboardingsPage: FC<OnboardingsPageProps> = () => {
           </Title>
           <SimpleGrid columns={[1, 1, 2, 2]} spacing="5">
             <PagarmeOnboarding />
+            <StripeOnboarding />
           </SimpleGrid>
         </Container>
       </Stack>

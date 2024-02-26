@@ -10,6 +10,7 @@ export const enUSMessages: Record<I18nKey, string> = {
   sitesNotFound: "Sites not found",
   versionNotFound: "Version not found",
   versionsNotFound: "Versions not found",
+  invalidToken: "Please, you must sign in to continue",
   amountOffNotFound: "Amount discount not found",
   percentOffNotFound: "Amount percent not found",
   couponNotFound: "Cupom not found",

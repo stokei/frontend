@@ -17,12 +17,7 @@ import { PlanItemPaymentWithCard } from "../plan-item-payment-with-card";
 import { PlanItemSkeleton } from "../plan-item-skeleton";
 import { PlanItemPaymentWithBoleto } from "../plan-item-payment-with-boleto";
 import { PlanItemPaymentWithPix } from "../plan-item-payment-with-pix";
-
-const features = [
-  { id: "1", description: "1 lorem ipsum" },
-  { id: "2", description: "Lorem, ipsum dolor." },
-  { id: "3", description: "Monthly Updates" },
-];
+import { PlanItemPaymentWithStripe } from "../plan-item-payment-with-stripe";
 
 interface PlansProps {}
 
@@ -121,6 +116,7 @@ export const Plans: FC<PlansProps> = () => {
               <PlanItemPaymentWithCard />
               <PlanItemPaymentWithBoleto />
               <PlanItemPaymentWithPix />
+              <PlanItemPaymentWithStripe />
             </>
           )}
         </SimpleGrid>

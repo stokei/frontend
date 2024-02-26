@@ -1,6 +1,7 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { useShoppingCart, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
 import {
   Button,
@@ -36,11 +37,21 @@ export const ShoppingCartDrawer: FC<ShoppingCartDrawerProps> = () => {
   } = useShoppingCart();
   const router = useRouter();
   const translate = useTranslations();
+  const { isAuthenticated } = useCurrentAccount();
 
   const onBuyAndCloseModal = useCallback(() => {
     onToggleShoppingCart?.();
+
+    if (!isAuthenticated) {
+      router.push({
+        pathname: routes.auth.login,
+        query: { redirectTo: routes.checkout.home },
+      });
+      return;
+    }
+
     return router.push(routes.checkout.home);
-  }, [onToggleShoppingCart, router]);
+  }, [isAuthenticated, onToggleShoppingCart, router]);
 
   const goToProductDetails = useCallback(
     ({ productId, priceId }: { productId: string; priceId?: string }) => {

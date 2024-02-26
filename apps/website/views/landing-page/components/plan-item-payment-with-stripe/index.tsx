@@ -1,4 +1,4 @@
-import { PagarmeImage } from "@/components/pagarme-image";
+import { StripeImage } from "@/components/stripe-image";
 import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
@@ -21,13 +21,15 @@ import {
 } from "@stokei/ui";
 import { FC } from "react";
 
-interface PlanItemPaymentWithCardProps {}
+interface PlanItemPaymentWithStripeProps {}
 
-export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
+export const PlanItemPaymentWithStripe: FC<
+  PlanItemPaymentWithStripeProps
+> = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const paymentGateway =
-    paymentGatewayFees[PaymentGatewayType.Pagarme][PaymentMethodType.Card];
+    paymentGatewayFees[PaymentGatewayType.Stripe][PaymentMethodType.Stripe];
   const transferAmount = translate.formatMoney({
     showSymbol: true,
     amount: paymentGateway?.transferAmount || 0,
@@ -45,7 +47,7 @@ export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
             icon={<Icon name="plan" fontSize="2xl" color="white.500" />}
           />
           <Title size={"md"} textAlign="center">
-            {translate.formatMessage({ id: "salesByCard" })}
+            {translate.formatMessage({ id: "salesByInternationalPayment" })}
           </Title>
         </Stack>
       </CardHeader>
@@ -55,7 +57,7 @@ export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
             <ListItem>
               <ListIcon name="check" color="green.500" />
               {translate.formatMessage({
-                id: "receiveByCardIn14DaysForPaymentsByCard",
+                id: "receiveByCardIn30DaysForPaymentsByCard",
               })}
             </ListItem>
             <ListItem>
@@ -71,7 +73,7 @@ export const PlanItemPaymentWithCard: FC<PlanItemPaymentWithCardProps> = () => {
             </ListItem>
           </List>
 
-          <PagarmeImage width="12" />
+          <StripeImage width="12" />
         </Stack>
       </CardBody>
       <CardFooter background="background.200">

@@ -8,7 +8,7 @@ export type CurrentGlobalAppQueryVariables = Types.Exact<{
 }>;
 
 
-export type CurrentGlobalAppQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, name: string, slug: string, homePage?: { __typename?: 'Page', id: string, slug: string, version?: { __typename?: 'Version', id: string } | null } | null, favicon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, app?: { __typename?: 'App', id: string, name: string, isStokei: boolean, isIntegratedWithPagarme: boolean, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, icon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } | null } };
+export type CurrentGlobalAppQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, name: string, slug: string, homePage?: { __typename?: 'Page', id: string, slug: string, version?: { __typename?: 'Version', id: string } | null } | null, favicon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, app?: { __typename?: 'App', id: string, name: string, isStokei: boolean, isIntegratedWithPagarme: boolean, isIntegratedWithStripe: boolean, stripeAccount?: string | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, icon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } | null } };
 
 
 export const CurrentGlobalAppDocument = gql`
@@ -39,6 +39,8 @@ export const CurrentGlobalAppDocument = gql`
       name
       isStokei
       isIntegratedWithPagarme
+      isIntegratedWithStripe
+      stripeAccount
       currency {
         id
         symbol

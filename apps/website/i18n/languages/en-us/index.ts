@@ -2,6 +2,7 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  internationalPayment: "International payment",
   menu: "Menu",
   addSite: "Add site",
   site: "Site",
@@ -192,8 +193,10 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
     "With our plans you only pay for what you use.",
   receiveByCardIn30DaysForPaymentsByCard:
     "Receive by card in 30 days for payments by card.",
+  receiveByCardIn14DaysForPaymentsByCard:
+    "Receive by card in 14 days for payments by card.",
   receiveByBoletoIn2DaysForPaymentsByBoleto:
-    "Receive by boleto in 30 days for payments by boleto",
+    "Receive by boleto in 2 days for payments by boleto",
   afterPaymentOfThePixTheAmountIsAvailableWithin2BusinessDays:
     "After payment of the pix, the amount is available within 2 business days.",
   doYouHaveALargeVolumeOfData: "Do you have a large volume of data?",
@@ -443,6 +446,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   financial: "Financial",
   sale: "Sale",
   sales: "Sales",
+  salesByInternationalPayment: "Sales by international payment",
   salesByCard: "Sales by Card",
   salesByBoleto: "Sales by Boleto",
   salesByPix: "Sales by PIX",
