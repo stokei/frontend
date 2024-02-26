@@ -12,6 +12,7 @@ import {
   Title,
 } from "@stokei/ui";
 import { PaymentMethod } from "../../components/payment-method";
+import { useEffect } from "react";
 
 export interface PaymentMethodStepProps {
   address?: AddressManagementAddressFragment;
@@ -36,11 +37,18 @@ export const PaymentMethodStep: React.FC<PaymentMethodStepProps> = ({
 }) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
+  const addressIsBR = address?.country?.toLowerCase() === "br";
 
   const isDisabledNextButton =
     paymentMethodType === PaymentMethodType.Card
       ? !paymentMethodType || !paymentMethod
       : !paymentMethodType;
+
+  useEffect(() => {
+    if (!addressIsBR) {
+      onChoosePaymentMethodType(PaymentMethodType.Stripe);
+    }
+  }, [addressIsBR, onChoosePaymentMethodType]);
 
   return (
     <Stack direction="column" spacing="10">
@@ -52,28 +60,40 @@ export const PaymentMethodStep: React.FC<PaymentMethodStepProps> = ({
         onChange={onChoosePaymentMethodType}
       >
         <Stack spacing="5" direction="column">
-          {currentApp?.isIntegratedWithPagarme && (
+          {currentApp?.isIntegratedWithPagarme && addressIsBR && (
             <>
               <RadioCard
                 id={PaymentMethodType.Boleto}
                 value={PaymentMethodType.Boleto}
                 isChecked={paymentMethodType === PaymentMethodType.Boleto}
+                isDisabled={!addressIsBR}
               >
-                <PaymentMethod paymentMethodType={PaymentMethodType.Boleto} />
+                <PaymentMethod
+                  isDisabled={!addressIsBR}
+                  paymentMethodType={PaymentMethodType.Boleto}
+                />
               </RadioCard>
               <RadioCard
                 id={PaymentMethodType.Pix}
                 value={PaymentMethodType.Pix}
                 isChecked={paymentMethodType === PaymentMethodType.Pix}
+                isDisabled={!addressIsBR}
               >
-                <PaymentMethod paymentMethodType={PaymentMethodType.Pix} />
+                <PaymentMethod
+                  isDisabled={!addressIsBR}
+                  paymentMethodType={PaymentMethodType.Pix}
+                />
               </RadioCard>
               <RadioCard
                 id={PaymentMethodType.Card}
                 value={PaymentMethodType.Card}
                 isChecked={paymentMethodType === PaymentMethodType.Card}
+                isDisabled={!addressIsBR}
               >
-                <PaymentMethod paymentMethodType={PaymentMethodType.Card} />
+                <PaymentMethod
+                  isDisabled={!addressIsBR}
+                  paymentMethodType={PaymentMethodType.Card}
+                />
               </RadioCard>
               {paymentMethodType === PaymentMethodType.Card && (
                 <PaymentMethodManagement
@@ -83,6 +103,16 @@ export const PaymentMethodStep: React.FC<PaymentMethodStepProps> = ({
                 />
               )}
             </>
+          )}
+
+          {currentApp?.isIntegratedWithStripe && (
+            <RadioCard
+              id={PaymentMethodType.Stripe}
+              value={PaymentMethodType.Stripe}
+              isChecked={paymentMethodType === PaymentMethodType.Stripe}
+            >
+              <PaymentMethod paymentMethodType={PaymentMethodType.Stripe} />
+            </RadioCard>
           )}
         </Stack>
       </RadioGroup>

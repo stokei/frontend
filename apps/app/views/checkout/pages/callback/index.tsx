@@ -1,17 +1,62 @@
 import { useShoppingCart } from "@/hooks";
 import { Box, Card, CardBody, Container } from "@stokei/ui";
-import { FC, useEffect } from "react";
-import { PaymentSuccessfully } from "../../components/payment-successfully";
+import { useRouter } from "next/router";
+import { FC, useEffect, useState } from "react";
 import { CheckoutLayout } from "../../layout";
+import { PaymentError } from "./components/payment-error";
+import { PaymentProcessing } from "./components/payment-processing";
+import { PaymentRequiresPaymentMethod } from "./components/payment-requires-payment-method";
+import { PaymentSuccessfully } from "./components/payment-successfully";
 
 interface CheckoutCallbackPageProps {}
 
+enum PaymentStatus {
+  SUCCEEDED = "succeeded",
+  PROCESSING = "processing",
+  REQUIRES_PAYMENT_METHOD = "requires_payment_method",
+  ERROR = "error",
+}
+
+const callbackPaymentComponents = {
+  [PaymentStatus.SUCCEEDED]: PaymentSuccessfully,
+  [PaymentStatus.PROCESSING]: PaymentProcessing,
+  [PaymentStatus.REQUIRES_PAYMENT_METHOD]: PaymentRequiresPaymentMethod,
+  [PaymentStatus.ERROR]: PaymentError,
+};
+
 export const CheckoutCallbackPage: FC<CheckoutCallbackPageProps> = () => {
+  const [status, setStatus] = useState<PaymentStatus>(PaymentStatus.SUCCEEDED);
   const { onClearShoppingCart } = useShoppingCart();
 
+  const router = useRouter();
+
   useEffect(() => {
-    onClearShoppingCart();
-  }, [onClearShoppingCart]);
+    const checkStripeStatus = () => {
+      const redirectStatus = router?.query?.redirect_status;
+      if (!redirectStatus) {
+        onClearShoppingCart();
+        return;
+      }
+      const statusesValid = [
+        PaymentStatus.SUCCEEDED,
+        PaymentStatus.PROCESSING,
+        PaymentStatus.REQUIRES_PAYMENT_METHOD,
+      ];
+      const existsStatus = statusesValid.includes(
+        redirectStatus as PaymentStatus
+      );
+      if (existsStatus) {
+        if (redirectStatus === PaymentStatus.SUCCEEDED) {
+          onClearShoppingCart();
+        }
+        return setStatus(redirectStatus as PaymentStatus);
+      }
+      setStatus(PaymentStatus.ERROR);
+    };
+    checkStripeStatus();
+  }, [onClearShoppingCart, router?.query?.redirect_status]);
+
+  const CallbackPaymentComponent = callbackPaymentComponents[status];
 
   return (
     <CheckoutLayout>
@@ -23,7 +68,7 @@ export const CheckoutCallbackPage: FC<CheckoutCallbackPageProps> = () => {
         >
           <Card background="background.50">
             <CardBody>
-              <PaymentSuccessfully />
+              <CallbackPaymentComponent />
             </CardBody>
           </Card>
         </Box>

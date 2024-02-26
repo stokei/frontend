@@ -1,3 +1,4 @@
+import { PagarmeImage } from "@/components/pagarme-image";
 import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
@@ -50,25 +51,29 @@ export const PlanItemPaymentWithBoleto: FC<
         </Stack>
       </CardHeader>
       <CardBody paddingTop={0}>
-        <List>
-          <ListItem>
-            <ListIcon name="check" color="green.500" />
-            {translate.formatMessage({
-              id: "receiveByBoletoIn2DaysForPaymentsByBoleto",
-            })}
-          </ListItem>
-          <ListItem>
-            <ListIcon name="check" color="green.500" />
-            {translate.formatMessage(
-              {
-                id: "theTransferFeeToBankAccount",
-              },
-              {
-                transferAmount,
-              }
-            )}
-          </ListItem>
-        </List>
+        <Stack direction="column" spacing="5">
+          <List>
+            <ListItem>
+              <ListIcon name="check" color="green.500" />
+              {translate.formatMessage({
+                id: "receiveByBoletoIn2DaysForPaymentsByBoleto",
+              })}
+            </ListItem>
+            <ListItem>
+              <ListIcon name="check" color="green.500" />
+              {translate.formatMessage(
+                {
+                  id: "theTransferFeeToBankAccount",
+                },
+                {
+                  transferAmount,
+                }
+              )}
+            </ListItem>
+          </List>
+
+          <PagarmeImage width="12" />
+        </Stack>
       </CardBody>
       <CardFooter background="background.200">
         <Stack

@@ -51,8 +51,12 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
   };
 
   return (
-    <Stack direction="row" spacing="2" {...props}>
-      <FormControl width="fit-content">
+    <Stack
+      direction={["column", "column", "row", "row"]}
+      spacing={["5", "5", "2", "2"]}
+      {...props}
+    >
+      <FormControl width={["full", "full", "fit-content", "fit-content"]}>
         <Label htmlFor={`${id}-country-code`}>
           {translate.formatMessage({ id: "country" })}
         </Label>
@@ -78,7 +82,7 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
           <SelectList>
             {countryCodes?.map((currentCountryCode) => (
               <SelectItem
-                key={currentCountryCode?.code}
+                key={currentCountryCode?.country + currentCountryCode?.code}
                 value={currentCountryCode}
               >
                 <Stack direction="row" spacing="2">
@@ -90,30 +94,32 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
           </SelectList>
         </Select>
       </FormControl>
-      <FormControl width="40">
-        <Label htmlFor={`${id}-area-code`}>
-          {translate.formatMessage({ id: "ddd" })}
-        </Label>
-        <Input
-          id={`${id}-area-code`}
-          value={areaCode}
-          placeholder="99"
-          maxLength={2}
-          onChange={(e) => onChangeAreaCode(onlyNumbers(e.target.value))}
-        />
-      </FormControl>
-      <FormControl>
-        <Label htmlFor={`${id}-number`}>
-          {translate.formatMessage({ id: "phone" })}
-        </Label>
-        <Input
-          id={`${id}-number`}
-          value={number}
-          placeholder="999999999"
-          maxLength={9}
-          onChange={(e) => onChangeNumber(onlyNumbers(e.target.value))}
-        />
-      </FormControl>
+      <Stack direction="row" spacing="2">
+        <FormControl width="40">
+          <Label htmlFor={`${id}-area-code`}>
+            {translate.formatMessage({ id: "ddd" })}
+          </Label>
+          <Input
+            id={`${id}-area-code`}
+            value={areaCode}
+            placeholder="99"
+            maxLength={2}
+            onChange={(e) => onChangeAreaCode(onlyNumbers(e.target.value))}
+          />
+        </FormControl>
+        <FormControl>
+          <Label htmlFor={`${id}-number`}>
+            {translate.formatMessage({ id: "phone" })}
+          </Label>
+          <Input
+            id={`${id}-number`}
+            value={number}
+            placeholder="999999999"
+            maxLength={9}
+            onChange={(e) => onChangeNumber(onlyNumbers(e.target.value))}
+          />
+        </FormControl>
+      </Stack>
     </Stack>
   );
 };

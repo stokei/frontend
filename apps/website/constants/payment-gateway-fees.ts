@@ -22,15 +22,21 @@ export const paymentGatewayFees: PaymentGatewayFees = {
     [PaymentMethodType.Boleto]: undefined,
     [PaymentMethodType.Card]: undefined,
     [PaymentMethodType.Pix]: undefined,
+    [PaymentMethodType.Stripe]: {
+      percentage: 9,
+      fixAmount: 200,
+      transferAmount: 0,
+    },
   },
   [PaymentGatewayType.Pagarme]: {
+    [PaymentMethodType.Stripe]: undefined,
     [PaymentMethodType.Boleto]: {
       percentage: 5,
       fixAmount: 345,
       transferAmount: 367,
     },
     [PaymentMethodType.Card]: {
-      percentage: 7,
+      percentage: 9,
       fixAmount: 200,
       transferAmount: 367,
     },

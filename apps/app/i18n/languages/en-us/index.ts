@@ -34,6 +34,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   expiryYearPlaceholder: "2024",
   cvv: "CVV",
   cvvPlaceholder: "333",
+  internationalPayment: "International payment",
   holderName: "Holder name",
   holderNamePlaceholder: "JHON SNOW",
   holderDocument: "Holder document",
@@ -50,6 +51,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   menu: "Menu",
   waitingPayment: "Waiting payment",
   buy: "Buy",
+  pay: "Pay",
   copy: "Copy",
   copied: "Copied",
   makePaymentViaBoletoToCompleteYourPurchase:

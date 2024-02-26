@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   me: "Eu",
+  internationalPayment: "Pagamento internacional",
   menu: "Menu",
   promitionItems: "Items em promoção",
   discount: "Desconto",
@@ -187,6 +188,8 @@ export const ptBRMessages = {
     "Com os nossos planos você paga apenas pelo que usar.",
   receiveByCardIn30DaysForPaymentsByCard:
     "Receba por cartão em 30 dias úteis para pagamentos por cartão.",
+  receiveByCardIn14DaysForPaymentsByCard:
+    "Receba por cartão em 14 dias úteis para pagamentos por cartão.",
   receiveByBoletoIn2DaysForPaymentsByBoleto:
     "Receba por boleto em 2 dias úteis para pagamentos por boleto.",
   afterPaymentOfThePixTheAmountIsAvailableWithin2BusinessDays:
@@ -439,6 +442,7 @@ export const ptBRMessages = {
   members: "Membros",
   sale: "Venda",
   sales: "Vendas",
+  salesByInternationalPayment: "Vendas por pagamento internacional",
   salesByCard: "Vendas por Cartão",
   salesByBoleto: "Vendas por Boleto",
   salesByPix: "Vendas por PIX",
