@@ -1,13 +1,13 @@
 import { useTranslations } from "@/hooks";
 import { List, ListIcon, ListItem, Stack, Text } from "@stokei/ui";
-import { FC } from "react";
+
 import { ProductPageProductFragment } from "../../../../graphql/product.query.graphql.generated";
 
 export interface FeaturesProps {
   readonly features?: ProductPageProductFragment["features"];
 }
 
-export const Features: FC<FeaturesProps> = ({ features }) => {
+export const Features = ({ features }: FeaturesProps) => {
   const translate = useTranslations();
   return (
     <Stack direction="column" spacing="2">

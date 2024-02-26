@@ -1,5 +1,5 @@
 import { Stack } from "@stokei/ui";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 interface SectionProps {}
 

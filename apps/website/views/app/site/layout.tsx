@@ -13,7 +13,7 @@ import {
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 export interface SiteLayoutProps {}
 

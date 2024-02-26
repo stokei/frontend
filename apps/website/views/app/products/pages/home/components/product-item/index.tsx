@@ -13,7 +13,7 @@ import {
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 
 import { Price } from "@/components";
 import { routes } from "@/routes";
@@ -23,7 +23,7 @@ export interface ProductItemProps {
   readonly product: AdminProductPageProductFragment;
 }
 
-export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
+export const ProductItem = memo(({ product }: ProductItemProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

@@ -1,7 +1,7 @@
 import { useCurrentApp, useSite } from "@/hooks";
 import { Card, CardBody, Link, Title } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { routes } from "@/routes";
 import { SitePagesPageFragment } from "../../graphql/pages.query.graphql.generated";
@@ -10,7 +10,7 @@ export interface PageItemProps {
   readonly page: SitePagesPageFragment;
 }
 
-export const PageItem: FC<PageItemProps> = memo(({ page }) => {
+export const PageItem = memo(({ page }: PageItemProps) => {
   const { site } = useSite();
   const { currentApp } = useCurrentApp();
 

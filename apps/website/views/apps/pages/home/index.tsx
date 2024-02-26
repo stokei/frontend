@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AppsList } from "./components/apps-list";
 import { Navbar } from "./components/navbar";
 import {
@@ -23,9 +23,7 @@ import {
 } from "./graphql/apps.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface AppsPageProps {}
-
-export const AppsPage: FC<AppsPageProps> = () => {
+export const AppsPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const [apps, setApps] = useState<AdminAppPageAppFragment[]>([]);

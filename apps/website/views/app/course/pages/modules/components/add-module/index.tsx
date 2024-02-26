@@ -14,7 +14,7 @@ import {
   Stack,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateModuleMutation } from "../../graphql/create-module.mutation.graphql.generated";
@@ -27,12 +27,12 @@ interface AddModuleDrawerProps {
   onSuccess?: (module: AdminCoursePageModuleFragment) => void;
 }
 
-export const AddModuleDrawer: FC<AddModuleDrawerProps> = ({
+export const AddModuleDrawer = ({
   courseId,
   onSuccess,
   isOpenDrawer,
   onCloseDrawer,
-}) => {
+}: AddModuleDrawerProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

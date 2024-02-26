@@ -1,10 +1,7 @@
 import { Box, BoxProps } from "@stokei/ui";
 import { CardElement } from "@stripe/react-stripe-js";
-import { FC } from "react";
 
-export interface CardInputProps extends BoxProps {}
-
-export const CardInput: FC<CardInputProps> = ({ ...props }) => {
+export const CardInput = ({ ...props }) => {
   return (
     <Box
       display="block"

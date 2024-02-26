@@ -9,7 +9,7 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
@@ -19,7 +19,7 @@ export interface MaterialItemProps {
   readonly material: CourseMaterialFragment;
 }
 
-export const MaterialItem: FC<MaterialItemProps> = memo(({ material }) => {
+export const MaterialItem = memo(({ material }: MaterialItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();

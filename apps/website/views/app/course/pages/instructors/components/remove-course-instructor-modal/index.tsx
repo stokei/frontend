@@ -10,7 +10,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AdminCoursePageCourseInstructorFragment } from "../../graphql/course-instructors.query.graphql.generated";
 import { useRemoveCourseInstructorMutation } from "../../graphql/remove-course-instructor.mutation.graphql.generated";
 

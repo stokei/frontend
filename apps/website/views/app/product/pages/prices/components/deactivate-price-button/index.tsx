@@ -1,7 +1,7 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { Icon, MenuItem, useToast } from "@stokei/ui";
-import { FC } from "react";
+
 import { useDeactivatePriceMutation } from "../../graphql/deactivate-price.mutation.graphql.generated";
 
 interface DeactivatePriceButtonProps {
@@ -9,10 +9,10 @@ interface DeactivatePriceButtonProps {
   onSuccess?: (price: PriceComponentFragment) => void;
 }
 
-export const DeactivatePriceButton: FC<DeactivatePriceButtonProps> = ({
+export const DeactivatePriceButton = ({
   priceId,
   onSuccess,
-}) => {
+}: DeactivatePriceButtonProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

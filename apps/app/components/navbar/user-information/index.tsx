@@ -12,14 +12,14 @@ import {
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { ShoppingCartMenu } from "../shopping-cart-menu";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
 export interface NavbarUserInformationProps extends StackProps {}
-export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
+export const NavbarUserInformation = ({
   ...props
-}) => {
+}: NavbarUserInformationProps) => {
   const { isOpen: isOpenDrawer, onToggle: onToggleDrawer } = useDisclosure();
 
   const router = useRouter();

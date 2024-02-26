@@ -8,7 +8,7 @@ import {
   NotFoundTitle,
   Pagination,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { CustomerLayout } from "../layout";
 import { CoursesList } from "./components/courses-list";
 import { Navbar } from "./components/navbar";
@@ -16,9 +16,7 @@ import { useGetCustomersCoursePageCourseQuery } from "./graphql/courses.query.gr
 import { Loading } from "./loading";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 
-interface CoursesPageProps {}
-
-export const CoursesPage: FC<CoursesPageProps> = () => {
+export const CoursesPage = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();

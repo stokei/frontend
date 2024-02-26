@@ -38,7 +38,7 @@ export interface SummaryStepProps {
   onNextStep: () => void;
 }
 
-export const SummaryStep: React.FC<SummaryStepProps> = ({
+export const SummaryStep = ({
   coupon,
   paymentMethod,
   paymentMethodType,
@@ -51,7 +51,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
   onNextStep,
   onGoToPaymentMethod,
   onGoToProducts,
-}) => {
+}: SummaryStepProps) => {
   const translate = useTranslations();
   const { shoppingCartItems, subtotalAmount, promitionItemsAmount, currency } =
     useShoppingCart();

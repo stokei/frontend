@@ -10,7 +10,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { SubscriptionPageInvoiceFragment } from "../../graphql/invoices.query.graphql.generated";
 import { InvoiceItem } from "../invoice-item";
 
@@ -18,7 +18,7 @@ interface InvoicesListProps {
   invoices?: SubscriptionPageInvoiceFragment[];
 }
 
-export const InvoicesList: FC<InvoicesListProps> = ({ invoices }) => {
+export const InvoicesList = ({ invoices }: InvoicesListProps) => {
   const translate = useTranslations();
   return (
     <>

@@ -5,16 +5,14 @@ import { InvoiceStatusFilter } from "@/interfaces/invoice-status-filter";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
-import { FC, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { InvoiceFilters } from "./components/invoice-filters";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
 import { useGetAppInvoicesQuery } from "./graphql/invoices.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface InvoicesPageProps {}
-
-export const InvoicesPage: FC<InvoicesPageProps> = () => {
+export const InvoicesPage = () => {
   const [currentCustomers, setCurrentCustomers] = useState<
     AppAccountFragment[]
   >([]);

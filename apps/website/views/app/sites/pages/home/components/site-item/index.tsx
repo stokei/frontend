@@ -2,7 +2,7 @@ import defaultNoImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { Card, CardBody, CardHeader, Image, Link, Title } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { routes } from "@/routes";
 import { SitesHomePageSiteFragment } from "../../graphql/sites.query.graphql.generated";
@@ -11,7 +11,7 @@ export interface SiteItemProps {
   readonly site: SitesHomePageSiteFragment;
 }
 
-export const SiteItem: FC<SiteItemProps> = memo(({ site }) => {
+export const SiteItem = memo(({ site }: SiteItemProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

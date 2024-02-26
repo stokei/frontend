@@ -1,5 +1,5 @@
 import { Box, Container, Loading, SimpleGrid, Text, Title } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { OrderBy } from "../../../services/graphql/stokei";
 import { BaseComponentReadable } from "../../../types/base-component-readable";
 import { CatalogItem } from "../components/catalog-item";
@@ -9,10 +9,10 @@ import { useDataToProps } from "../hooks/use-data-to-props";
 
 interface ReadableProps {}
 
-export const Readable: FC<BaseComponentReadable<ReadableProps>> = ({
+export const Readable = ({
   data,
   ...props
-}) => {
+}: BaseComponentReadable<ReadableProps>) => {
   const dataProps = useDataToProps({ data, props });
   const [{ fetching: isLoadingCatalog, data: dataCatalog }] =
     useBuilderComponentCatalogQuery({

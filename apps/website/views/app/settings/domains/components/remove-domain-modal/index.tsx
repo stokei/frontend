@@ -10,7 +10,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AppDomainFragment } from "../../graphql/domains.query.graphql.generated";
 import { useRemoveDomainMutation } from "../../graphql/remove-domain.mutation.graphql.generated";
 
@@ -21,12 +21,12 @@ interface RemoveDomainModalProps {
   onSuccessRemoveDomain: (domain: AppDomainFragment) => void;
 }
 
-export const RemoveDomainModal: FC<RemoveDomainModalProps> = ({
+export const RemoveDomainModal = ({
   domain,
   isOpenModal,
   onCloseModal,
   onSuccessRemoveDomain,
-}) => {
+}: RemoveDomainModalProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

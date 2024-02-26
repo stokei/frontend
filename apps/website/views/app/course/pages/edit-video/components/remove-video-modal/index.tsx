@@ -10,7 +10,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AdminCoursePageEditVideoFragment } from "../../graphql/video.query.graphql.generated";
 import { useRemoveVideoMutation } from "../../graphql/remove-video.mutation.graphql.generated";
 
@@ -21,12 +21,12 @@ interface RemoveVideoModalProps {
   onSuccessRemoveVideo: (module: AdminCoursePageEditVideoFragment) => void;
 }
 
-export const RemoveVideoModal: FC<RemoveVideoModalProps> = ({
+export const RemoveVideoModal = ({
   videoId,
   isOpenModal,
   onCloseModal,
   onSuccessRemoveVideo,
-}) => {
+}: RemoveVideoModalProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

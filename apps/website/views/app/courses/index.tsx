@@ -12,7 +12,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AddCourseDrawer } from "./components/add-course-drawer";
 import { CourseFilters } from "./components/course-filters";
 import { CoursesList } from "./components/courses-list";
@@ -22,9 +22,7 @@ import { AppCourseFragment } from "./graphql/course.fragment.graphql.generated";
 import { useGetCoursesQuery } from "./graphql/courses.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface CoursesPageProps {}
-
-export const CoursesPage: FC<CoursesPageProps> = () => {
+export const CoursesPage = () => {
   const [courses, setCourses] = useState<AppCourseFragment[]>([]);
   const [filteredCourseQuery, setFilteredCourseQuery] = useState<string>();
 

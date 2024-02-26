@@ -1,14 +1,14 @@
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { BuilderComponent, ComponentBuilderType } from "@stokei/builder";
 import { useRouter } from "next/router";
-import { FC } from "react";
+
 import { LandingPageLayout } from "./layout";
 
 interface LandingPageProps {
   version: GetVersionResponse;
 }
 
-export const LandingPage: FC<LandingPageProps> = ({ version }) => {
+export const LandingPage = ({ version }: LandingPageProps) => {
   const router = useRouter();
   return (
     <LandingPageLayout>

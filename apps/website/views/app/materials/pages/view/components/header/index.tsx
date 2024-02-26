@@ -2,7 +2,7 @@ import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { Box, Button, Icon, Stack, useDisclosure } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { AppMaterialFragment } from "../../../home/graphql/materials.query.graphql.generated";
 import { RemoveMaterialModal } from "../remove-material-modal";
 
@@ -10,7 +10,7 @@ interface HeaderProps {
   material?: AppMaterialFragment;
 }
 
-export const Header: FC<HeaderProps> = ({ material }) => {
+export const Header = ({ material }: HeaderProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();

@@ -15,17 +15,16 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
 
 interface HowConfigureDomainModalProps {
   isOpenModal?: boolean;
   onCloseModal: () => void;
 }
 
-export const HowConfigureDomainModal: FC<HowConfigureDomainModalProps> = ({
+export const HowConfigureDomainModal = ({
   isOpenModal,
   onCloseModal,
-}) => {
+}: HowConfigureDomainModalProps) => {
   const translate = useTranslations();
 
   return (

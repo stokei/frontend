@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { Modal, ModalBody, ModalHeader } from "@stokei/ui";
-import { FC } from "react";
+
 import { PaymentMethodManagementPaymentMethodCardFragment } from "../graphql/payment-methods.query.graphql.generated";
 import { CreateCreditCardForm } from "../create-credit-card-form";
 
@@ -13,12 +13,12 @@ interface CreateCreditCardModalProps {
   ) => void;
 }
 
-export const CreateCreditCardModal: FC<CreateCreditCardModalProps> = ({
+export const CreateCreditCardModal = ({
   isOpen,
   address,
   onClose,
   onSuccess,
-}) => {
+}: CreateCreditCardModalProps) => {
   const translate = useTranslations();
   return (
     <Modal isOpen={!!isOpen} onClose={onClose}>

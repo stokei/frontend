@@ -18,6 +18,7 @@ query GetSitePages(
 
 fragment SitePagesPage on Page {
   id
+  parent
   title
   slug
 }

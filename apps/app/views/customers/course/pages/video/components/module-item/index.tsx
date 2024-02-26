@@ -10,7 +10,7 @@ import {
   NotFoundIcon,
   NotFoundSubtitle,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { CustomersCoursePageVideoModuleFragment } from "../../graphql/modules.query.graphql.generated";
 import { VideosList } from "../videos-list";
@@ -20,7 +20,7 @@ export interface ModuleItemProps {
   readonly module: CustomersCoursePageVideoModuleFragment;
 }
 
-export const ModuleItem: FC<ModuleItemProps> = memo(({ module, isOpen }) => {
+export const ModuleItem = memo(({ module, isOpen }: ModuleItemProps) => {
   const translate = useTranslations();
 
   return (

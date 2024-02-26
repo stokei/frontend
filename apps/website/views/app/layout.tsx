@@ -15,13 +15,11 @@ import {
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useCallback, useMemo } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 
 export interface AppLayoutProps {}
 
-export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
-  children,
-}) => {
+export const AppLayout = ({ children }: PropsWithChildren<AppLayoutProps>) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();

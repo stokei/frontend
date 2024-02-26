@@ -1,14 +1,14 @@
 import { Card, CardBody } from "@stokei/ui";
-import { FC } from "react";
+
 import { BaseComponentReadable } from "../../../types/base-component-readable";
 
 interface ReadableProps {}
 
-export const Readable: FC<BaseComponentReadable<ReadableProps>> = ({
+export const Readable = ({
   data,
   children,
   ...props
-}) => {
+}: BaseComponentReadable<ReadableProps>) => {
   return (
     <Card {...props}>
       <CardBody>{children}</CardBody>

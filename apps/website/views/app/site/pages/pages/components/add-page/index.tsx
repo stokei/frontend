@@ -18,15 +18,13 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreatePageMutation } from "../../graphql/create-page.mutation.graphql.generated";
 import { Navbar } from "../navbar";
 
-interface AddPagePageProps {}
-
-export const AddPagePage: FC<AddPagePageProps> = () => {
+export const AddPagePage = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
@@ -66,6 +64,7 @@ export const AddPagePage: FC<AddPagePageProps> = () => {
         return window.location.assign(
           routes
             .app({ appId: currentApp?.id })
+            .site({ site: response?.data?.createPage?.parent })
             .page({ page: response?.data?.createPage?.id }).home
         );
       }

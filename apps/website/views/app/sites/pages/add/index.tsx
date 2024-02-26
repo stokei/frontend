@@ -18,16 +18,14 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Navbar } from "./components/navbar";
 import { useCreateSiteMutation } from "./graphql/create-site.mutation.graphql.generated";
 import { AppLayout } from "@/views/app/layout";
 
-interface AddSitePageProps {}
-
-export const AddSitePage: FC<AddSitePageProps> = () => {
+export const AddSitePage = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

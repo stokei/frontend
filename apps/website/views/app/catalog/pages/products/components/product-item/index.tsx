@@ -11,7 +11,7 @@ import {
   Text,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 import { AdminCatalogPageCatalogItemFragment } from "../../graphql/catalog-items.query.graphql.generated";
 import { RemoveCatalogItemModal } from "../remove-catalog-item-modal";
 
@@ -22,8 +22,8 @@ interface ProductItemProps {
   ) => void;
 }
 
-export const ProductItem: FC<ProductItemProps> = memo(
-  ({ catalogItem, onCatalogItemRemoved }) => {
+export const ProductItem = memo(
+  ({ catalogItem, onCatalogItemRemoved }: ProductItemProps) => {
     const translate = useTranslations();
     const { currentApp } = useCurrentApp();
     const {

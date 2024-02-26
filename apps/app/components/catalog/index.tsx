@@ -12,7 +12,7 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 
 import { CatalogItem } from "../catalog-item";
 
@@ -28,8 +28,8 @@ export interface CatalogProps {
   readonly subtitle?: string | null;
 }
 
-export const Catalog: FC<CatalogProps> = memo(
-  ({ catalogId, title, subtitle, items: catalogItemsProp }) => {
+export const Catalog = memo(
+  ({ catalogId, title, subtitle, items: catalogItemsProp }: CatalogProps) => {
     const router = useRouter();
     const translate = useTranslations();
 

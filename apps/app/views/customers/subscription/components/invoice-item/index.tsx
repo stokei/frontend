@@ -11,7 +11,7 @@ import {
   TableRow,
   Text,
 } from "@stokei/ui";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { SubscriptionPageInvoiceFragment } from "../../graphql/invoices.query.graphql.generated";
 
 export interface InvoiceItemProps {
@@ -23,7 +23,7 @@ interface Customer {
   avatarURL: string;
   email: string;
 }
-export const InvoiceItem: FC<InvoiceItemProps> = memo(({ invoice }) => {
+export const InvoiceItem = memo(({ invoice }: InvoiceItemProps) => {
   const translate = useTranslations();
 
   const customer = useMemo<Customer | undefined>(() => {

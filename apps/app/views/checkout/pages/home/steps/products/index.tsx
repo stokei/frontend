@@ -22,7 +22,7 @@ export interface ProductsStepProps {
   onNextStep: () => void;
 }
 
-export const ProductsStep: React.FC<ProductsStepProps> = ({ onNextStep }) => {
+export const ProductsStep = ({ onNextStep }: ProductsStepProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { isEmptyShoppingCart, shoppingCartItems } = useShoppingCart();

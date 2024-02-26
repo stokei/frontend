@@ -9,14 +9,14 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { OrderPageOrderFragment } from "../../graphql/order.query.graphql.generated";
 
 interface StatsProps {
   readonly order?: OrderPageOrderFragment;
 }
 
-export const Stats: FC<StatsProps> = ({ order }) => {
+export const Stats = ({ order }: StatsProps) => {
   const translate = useTranslations();
 
   const statusColor = useMemo(

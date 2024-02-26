@@ -1,11 +1,12 @@
 import { Box, BoxProps } from "@stokei/ui";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 interface SidebarLayoutContentProps extends BoxProps {}
 
-export const SidebarLayoutContent: FC<
-  PropsWithChildren<SidebarLayoutContentProps>
-> = ({ children, ...props }) => {
+export const SidebarLayoutContent = ({
+  children,
+  ...props
+}: PropsWithChildren<SidebarLayoutContentProps>) => {
   return (
     <Box
       minHeight="100vh"

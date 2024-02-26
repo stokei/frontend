@@ -21,10 +21,7 @@ export interface PaymentBoletoProps {
   totalAmount?: number;
 }
 
-export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({
-  boleto,
-  totalAmount,
-}) => {
+export const PaymentBoleto = ({ boleto, totalAmount }: PaymentBoletoProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currency } = useShoppingCart();

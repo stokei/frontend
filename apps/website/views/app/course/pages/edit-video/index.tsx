@@ -27,7 +27,7 @@ import {
   VideoUploaderOnSuccessData,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";

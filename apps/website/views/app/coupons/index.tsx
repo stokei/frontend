@@ -10,7 +10,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AddCouponDrawer } from "./components/add-coupon-drawer";
 import { CouponItem } from "./components/coupon-item";
 import { EditCouponDrawer } from "./components/edit-coupon-drawer";
@@ -24,9 +24,7 @@ import { Loading } from "./loading";
 import { CouponFilters } from "./components/coupon-filters";
 import { useFilters } from "./hooks/use-filters";
 
-interface CouponsPageProps {}
-
-export const CouponsPage: FC<CouponsPageProps> = () => {
+export const CouponsPage = () => {
   const { codeFilter, activeFilter, setCodeFilter, setActiveFilter } =
     useFilters();
   const [couponToEdit, setCouponToEdit] = useState<CouponPageCouponFragment>();

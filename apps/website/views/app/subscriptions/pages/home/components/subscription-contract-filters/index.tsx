@@ -12,7 +12,7 @@ import {
   DrawerHeader,
   Stack,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { SelectFilterStatus } from "../select-filter-status";
 import { SelectFilterSubscriptionType } from "../select-filter-subscription-type";
 

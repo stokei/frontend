@@ -15,7 +15,7 @@ import {
   Stack,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AppCourseFragment } from "../../graphql/course.fragment.graphql.generated";
@@ -32,11 +32,11 @@ interface AddCourseDrawerProps {
   onSuccess?: (course: AppCourseFragment) => void;
 }
 
-export const AddCourseDrawer: FC<AddCourseDrawerProps> = ({
+export const AddCourseDrawer = ({
   onSuccess,
   isOpenDrawer,
   onCloseDrawer,
-}) => {
+}: AddCourseDrawerProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();

@@ -2,7 +2,7 @@ import { useTranslations } from "../../hooks";
 import { BillingScheme } from "../../services/graphql/stokei";
 import { getI18nKeyFromRecurringInterval } from "../../utils/get-i18n-key-from-recurring-interval";
 import { Stack, StackProps, Text } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { PriceComponentFragment } from "./price.fragment.graphql.generated";
 
 export interface PriceProps extends StackProps {

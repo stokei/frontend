@@ -20,16 +20,14 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { MeLayout } from "../layout";
 import { Navbar } from "./components/navbar";
 import { useUpdateAccountMutation } from "./graphql/update-account.mutation.graphql.generated";
 
-interface MeHomePageProps {}
-
-export const MeHomePage: FC<MeHomePageProps> = () => {
+export const MeHomePage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

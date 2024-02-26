@@ -1,10 +1,9 @@
 import { useSidebar, useTranslations } from "@/hooks";
 import { Button, Icon, IconButtonProps, Stack, Text } from "@stokei/ui";
-import { FC } from "react";
 
 interface SidebarOpenButtonProps extends Omit<IconButtonProps, "name"> {}
 
-export const SidebarOpenButton: FC<SidebarOpenButtonProps> = ({ ...props }) => {
+export const SidebarOpenButton = ({ ...props }: SidebarOpenButtonProps) => {
   const translate = useTranslations();
   const { onToggleSidebar } = useSidebar();
   return (

@@ -1,14 +1,12 @@
 import { useShoppingCart } from "@/hooks";
 import { Box, Card, CardBody, Container } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckoutLayout } from "../../layout";
 import { PaymentError } from "./components/payment-error";
 import { PaymentProcessing } from "./components/payment-processing";
 import { PaymentRequiresPaymentMethod } from "./components/payment-requires-payment-method";
 import { PaymentSuccessfully } from "./components/payment-successfully";
-
-interface CheckoutCallbackPageProps {}
 
 enum PaymentStatus {
   SUCCEEDED = "succeeded",
@@ -24,7 +22,7 @@ const callbackPaymentComponents = {
   [PaymentStatus.ERROR]: PaymentError,
 };
 
-export const CheckoutCallbackPage: FC<CheckoutCallbackPageProps> = () => {
+export const CheckoutCallbackPage = () => {
   const [status, setStatus] = useState<PaymentStatus>(PaymentStatus.SUCCEEDED);
   const { onClearShoppingCart } = useShoppingCart();
 

@@ -3,14 +3,14 @@ import { useCustomersCourse, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { Badge, Box, Image, Link, Stack, Text, Title } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { CustomersCoursePageVideoFragment } from "../../graphql/video.query.graphql.generated";
 
 interface VideoItemProps {
   readonly video?: CustomersCoursePageVideoFragment;
 }
 
-export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
+export const VideoItem = memo(({ video }: VideoItemProps) => {
   const translate = useTranslations();
 
   const { course } = useCustomersCourse();

@@ -16,7 +16,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useAdminCatalogsPageCreateCatalogMutation } from "../../graphql/create-catalog.mutation.graphql.generated";
@@ -26,10 +26,10 @@ interface AddCatalogDrawerProps {
   onCloseDrawer: () => void;
 }
 
-export const AddCatalogDrawer: FC<AddCatalogDrawerProps> = ({
+export const AddCatalogDrawer = ({
   isOpenDrawer,
   onCloseDrawer,
-}) => {
+}: AddCatalogDrawerProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();

@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { HeroType } from "@/services/graphql/stokei";
 import { Catalog } from "../catalog";
@@ -12,8 +12,8 @@ export interface SortedItemFactoryEditProps {
   readonly sortedItem?: SortedItemComponentFragment | null;
 }
 
-export const SortedItemFactoryEdit: FC<SortedItemFactoryEditProps> = memo(
-  ({ sortedItem, ...props }) => {
+export const SortedItemFactoryEdit = memo(
+  ({ sortedItem, ...props }: SortedItemFactoryEditProps) => {
     const type = sortedItem?.item?.__typename;
 
     if (type === "Catalog") {

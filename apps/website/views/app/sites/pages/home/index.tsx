@@ -11,16 +11,14 @@ import {
   Pagination,
   Stack,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
 import { SitesList } from "./components/sites-list";
 import { useGetSitesHomePageSitesQuery } from "./graphql/sites.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface SitesPageProps {}
-
-export const SitesPage: FC<SitesPageProps> = () => {
+export const SitesPage = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();

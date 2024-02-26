@@ -1,13 +1,13 @@
 import { Box, BoxProps, useDisclosure } from "@stokei/ui";
 import { useOnClickOutside } from "@stokei/ui/src/hooks/use-on-click-outside";
-import { FC, PropsWithChildren, useRef } from "react";
+import { PropsWithChildren, useRef } from "react";
 import { BlockEditableMenu } from "./menu";
 
 interface BlockEditableProps {}
 
-export const BlockEditable: FC<PropsWithChildren<BlockEditableProps>> = ({
+export const BlockEditable = ({
   children,
-}) => {
+}: PropsWithChildren<BlockEditableProps>) => {
   const blockRef = useRef<any>();
   const {
     isOpen: isClicked,

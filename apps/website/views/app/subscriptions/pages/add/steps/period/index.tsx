@@ -21,7 +21,6 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { FC } from "react";
 
 interface PeriodStepProps {
   subscriptionType: SubscriptionContractType;

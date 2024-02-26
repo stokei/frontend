@@ -1,16 +1,17 @@
 import { SubscriptionContractTypeFilter } from "@/interfaces/subscription-contract-type-filter";
 import { getSubscriptionContractTypeColor } from "@/utils/get-subscription-contract-type-color";
 import { Box, Stack, Text } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
 interface SubscriptionTypeSelectItemContentProps {
   readonly type?: SubscriptionContractTypeFilter;
   readonly content?: string;
 }
 
-export const SubscriptionTypeSelectItemContent: FC<
-  SubscriptionTypeSelectItemContentProps
-> = ({ type, content }) => {
+export const SubscriptionTypeSelectItemContent = ({
+  type,
+  content,
+}: SubscriptionTypeSelectItemContentProps) => {
   const typeColor = useMemo(
     () => getSubscriptionContractTypeColor(type),
     [type]

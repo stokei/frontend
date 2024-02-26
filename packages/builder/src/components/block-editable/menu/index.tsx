@@ -1,13 +1,14 @@
 import { Button, Stack } from "@stokei/ui";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 interface BlockEditableMenuProps {
   direction: "bottom" | "top";
 }
 
-export const BlockEditableMenu: FC<
-  PropsWithChildren<BlockEditableMenuProps>
-> = ({ direction, ...props }) => {
+export const BlockEditableMenu = ({
+  direction,
+  ...props
+}: PropsWithChildren<BlockEditableMenuProps>) => {
   return (
     <Stack
       top={direction === "top" ? "-20" : undefined}

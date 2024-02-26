@@ -12,7 +12,7 @@ import {
   Label,
   Stack,
 } from "@stokei/ui";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AddressManagementAddressFragment } from "../graphql/addresses.query.graphql.generated";
@@ -22,9 +22,7 @@ interface CreateAddressFormProps {
   readonly onSuccess: (address: AddressManagementAddressFragment) => void;
 }
 
-export const CreateAddressForm: FC<CreateAddressFormProps> = ({
-  onSuccess,
-}) => {
+export const CreateAddressForm = ({ onSuccess }: CreateAddressFormProps) => {
   const translate = useTranslations();
   const { onShowAPIError } = useAPIErrors();
   const { currentAccount } = useCurrentAccount();

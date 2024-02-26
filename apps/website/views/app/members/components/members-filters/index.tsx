@@ -15,7 +15,7 @@ import {
   Label,
   Stack,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -26,12 +26,12 @@ interface MembersFiltersProps {
   readonly onChangeFilteredNameQuery: (value?: string) => void;
 }
 
-export const MembersFilters: FC<MembersFiltersProps> = ({
+export const MembersFilters = ({
   isOpen,
   onClose,
   filteredNameQuery,
   onChangeFilteredNameQuery,
-}) => {
+}: MembersFiltersProps) => {
   const translate = useTranslations();
 
   const validationSchema = z.object({

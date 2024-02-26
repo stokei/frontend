@@ -15,7 +15,7 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { AppSubscriptionContractFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
 
 export interface SubscriptionContractItemProps {
@@ -33,8 +33,8 @@ interface Product {
   avatarURL?: string;
 }
 
-export const SubscriptionContractItem: FC<SubscriptionContractItemProps> = memo(
-  ({ subscriptionContract }) => {
+export const SubscriptionContractItem = memo(
+  ({ subscriptionContract }: SubscriptionContractItemProps) => {
     const translate = useTranslations();
     const router = useRouter();
 

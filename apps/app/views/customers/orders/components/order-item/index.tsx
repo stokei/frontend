@@ -15,7 +15,7 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { AppOrderFragment } from "../../graphql/orders.query.graphql.generated";
 import { CouponItem } from "../coupon-item";
 
@@ -24,7 +24,7 @@ export interface OrderItemProps {
   readonly hasCoupon?: boolean;
 }
 
-export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
+export const OrderItem = memo(({ order, hasCoupon }: OrderItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
 

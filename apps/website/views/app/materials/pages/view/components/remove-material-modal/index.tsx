@@ -13,7 +13,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { AppMaterialFragment } from "../../../home/graphql/materials.query.graphql.generated";
 import { useRemoveMaterialMutation } from "../../graphql/remove-material.mutation.graphql.generated";
 
@@ -23,11 +23,11 @@ interface RemoveMaterialModalProps {
   onCloseModal: () => void;
 }
 
-export const RemoveMaterialModal: FC<RemoveMaterialModalProps> = ({
+export const RemoveMaterialModal = ({
   material,
   isOpenModal,
   onCloseModal,
-}) => {
+}: RemoveMaterialModalProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();

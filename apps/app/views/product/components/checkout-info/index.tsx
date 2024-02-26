@@ -16,7 +16,7 @@ import {
   Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
 import { Features } from "../../pages/generic/components/features";
 
@@ -28,13 +28,13 @@ export interface CheckoutInfoProps {
   readonly prices?: ProductPageProductFragment["prices"];
 }
 
-export const CheckoutInfo: FC<CheckoutInfoProps> = ({
+export const CheckoutInfo = ({
   product,
   avatarURL,
   features,
   defaultPrice,
   prices,
-}) => {
+}: CheckoutInfoProps) => {
   const [currentPrice, setCurrentPrice] =
     useState<PriceComponentFragment | null>();
 

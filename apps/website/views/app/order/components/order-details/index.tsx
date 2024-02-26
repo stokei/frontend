@@ -9,7 +9,7 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { OrderPageOrderFragment } from "../../graphql/order.query.graphql.generated";
 import { CouponItem } from "../coupon-item";
 
@@ -22,7 +22,7 @@ interface OrderDetailsProps {
   readonly order?: OrderPageOrderFragment;
 }
 
-export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
+export const OrderDetails = ({ order }: OrderDetailsProps) => {
   const translate = useTranslations();
 
   const customer = useMemo<Customer | undefined>(() => {

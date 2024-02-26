@@ -11,7 +11,7 @@ import {
   Title,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AddressItem } from "./address-item";
 import { CreateAddressForm } from "./create-address-form";
 import { CreateAddressModal } from "./create-address-modal";
@@ -27,12 +27,12 @@ interface AddressManagementProps {
   readonly onChooseAddress: (address: AddressManagementAddressFragment) => void;
 }
 
-export const AddressManagement: FC<AddressManagementProps> = ({
+export const AddressManagement = ({
   title,
   subtitle,
   selectedAddress,
   onChooseAddress,
-}) => {
+}: AddressManagementProps) => {
   const [addresses, setAddresses] = useState<
     AddressManagementAddressFragment[]
   >([]);

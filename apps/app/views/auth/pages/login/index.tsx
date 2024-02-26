@@ -10,15 +10,11 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { AuthLayout } from "../../layout";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
 
-interface LoginPageProps {
-  readonly redirectTo?: string;
-}
-
-export const LoginPage: FC<LoginPageProps> = () => {
+export const LoginPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

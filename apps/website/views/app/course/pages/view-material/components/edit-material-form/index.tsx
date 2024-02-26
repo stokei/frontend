@@ -18,7 +18,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseMaterialFragment } from "../../../materials/graphql/materials.query.graphql.generated";
@@ -28,7 +28,7 @@ interface EditMaterialFormProps {
   material?: CourseMaterialFragment;
 }
 
-export const EditMaterialForm: FC<EditMaterialFormProps> = ({ material }) => {
+export const EditMaterialForm = ({ material }: EditMaterialFormProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

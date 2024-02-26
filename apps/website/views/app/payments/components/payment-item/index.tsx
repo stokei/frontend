@@ -12,14 +12,14 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { AppPaymentFragment } from "../../graphql/payments.query.graphql.generated";
 
 export interface PaymentItemProps {
   readonly payment?: AppPaymentFragment;
 }
 
-export const PaymentItem: FC<PaymentItemProps> = memo(({ payment }) => {
+export const PaymentItem = memo(({ payment }: PaymentItemProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();

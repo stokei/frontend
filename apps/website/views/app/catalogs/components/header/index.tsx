@@ -1,7 +1,6 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { Button, Icon, Spacer, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
 
 interface HeaderProps {
   readonly catalogsTotalCount: number;
@@ -9,11 +8,11 @@ interface HeaderProps {
   readonly onAddCatalog: () => void;
 }
 
-export const Header: FC<HeaderProps> = ({
+export const Header = ({
   catalogsTotalCount,
   onOpenFilters,
   onAddCatalog,
-}) => {
+}: HeaderProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();

@@ -10,7 +10,7 @@ import {
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 
 import { routes } from "@/routes";
 import { AppStatus } from "@/services/graphql/stokei";
@@ -21,7 +21,7 @@ export interface AppItemProps {
   readonly app: AdminAppPageAppFragment;
 }
 
-export const AppItem: FC<AppItemProps> = memo(({ app }) => {
+export const AppItem = memo(({ app }: AppItemProps) => {
   const translate = useTranslations();
 
   const appStatus = useMemo(() => {

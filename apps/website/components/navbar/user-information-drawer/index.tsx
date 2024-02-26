@@ -13,16 +13,17 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { NavbarUserInformationDrawerButton } from "../user-information-drawer-button";
 
 export interface NavbarUserInformationDrawerProps {
   isOpen?: boolean;
   onClose: () => void;
 }
-export const NavbarUserInformationDrawer: FC<
-  NavbarUserInformationDrawerProps
-> = ({ isOpen, onClose }) => {
+export const NavbarUserInformationDrawer = ({
+  isOpen,
+  onClose,
+}: NavbarUserInformationDrawerProps) => {
   const router = useRouter();
   const { currentAccount } = useCurrentAccount();
   const translate = useTranslations();

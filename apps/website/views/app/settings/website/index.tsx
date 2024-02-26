@@ -2,13 +2,11 @@ import { SortedItemFactoryEdit } from "@/components/sorted-item-factory-edit";
 import { useCurrentApp } from "@/hooks";
 import { AppLayout } from "@/views/app/layout";
 import { Card, CardBody, Container, Loading, Stack } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Navbar } from "./components/navbar";
 import { useSortedItemsQuery } from "./graphql/sorted-items.query.graphql.generated";
 
-interface WebsitePageProps {}
-
-export const WebsitePage: FC<WebsitePageProps> = () => {
+export const WebsitePage = () => {
   const { currentApp } = useCurrentApp();
   const [{ fetching: isLoading, data: dataSortedItems }] = useSortedItemsQuery({
     pause: !currentApp?.id,

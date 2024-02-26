@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { createContext, FC, PropsWithChildren, useMemo } from "react";
+import { createContext, PropsWithChildren, useMemo } from "react";
 import {
   SitePageSiteFragment,
   useGetSitePageSiteQuery,
@@ -15,9 +15,9 @@ export interface SiteProviderValues {
 
 export const SiteContext = createContext({} as SiteProviderValues);
 
-export const SiteProvider: FC<PropsWithChildren<SiteProviderProps>> = ({
+export const SiteProvider = ({
   children,
-}) => {
+}: PropsWithChildren<SiteProviderProps>) => {
   const router = useRouter();
   const siteId = router.query?.siteId?.toString() || "";
 

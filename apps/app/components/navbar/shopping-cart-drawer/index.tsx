@@ -21,10 +21,9 @@ import {
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 
-export interface ShoppingCartDrawerProps {}
-export const ShoppingCartDrawer: FC<ShoppingCartDrawerProps> = () => {
+export const ShoppingCartDrawer = () => {
   const {
     currency,
     totalAmount,

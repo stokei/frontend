@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { ActionsMenu } from "../actions-menu";
 
 interface PriceItemProps {

@@ -1,12 +1,10 @@
 import { useSite } from "@/hooks";
 import { Container, Title } from "@stokei/ui";
-import { FC } from "react";
+
 import { SiteLayout } from "../../layout";
 import { Navbar } from "./components/navbar";
 
-interface SitePageProps {}
-
-const SitePage: FC<SitePageProps> = () => {
+const SitePage = () => {
   const { site } = useSite();
   return (
     <Container paddingY="5">

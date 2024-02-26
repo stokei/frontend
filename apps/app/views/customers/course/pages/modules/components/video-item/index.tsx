@@ -11,14 +11,14 @@ import {
   VideoPlayerPoster,
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { CustomersCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
 
 interface VideoItemProps {
   readonly video?: CustomersCoursePageModuleVideoFragment;
 }
 
-export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
+export const VideoItem = memo(({ video }: VideoItemProps) => {
   const translate = useTranslations();
 
   const { course } = useCustomersCourse();

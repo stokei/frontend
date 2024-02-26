@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 import { AppDomainFragment } from "../../graphql/domains.query.graphql.generated";
 import { RemoveDomainModal } from "../remove-domain-modal";
 
@@ -20,8 +20,8 @@ interface DomainItemProps {
   onDomainRemoved: (domain: AppDomainFragment) => void;
 }
 
-export const DomainItem: FC<DomainItemProps> = memo(
-  ({ domain, onDomainRemoved }) => {
+export const DomainItem = memo(
+  ({ domain, onDomainRemoved }: DomainItemProps) => {
     const { currentApp } = useCurrentApp();
     const translate = useTranslations();
     const {

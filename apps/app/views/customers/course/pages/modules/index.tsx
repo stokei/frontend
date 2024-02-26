@@ -8,16 +8,14 @@ import {
   Pagination,
   Stack,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Navbar } from "../../components/navbar";
 import { CourseLayout } from "../../layout";
 import { ModuleLoading } from "./components/module-loading";
 import { ModulesList } from "./components/modules-list";
 import { useGetCustomersCoursePageModulesQuery } from "./graphql/modules.query.graphql.generated";
 
-interface CourseModulesPageProps {}
-
-const CourseModulesPage: FC<CourseModulesPageProps> = () => {
+const CourseModulesPage = () => {
   const { course } = useCustomersCourse();
   const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();

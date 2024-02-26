@@ -1,5 +1,5 @@
 import { Container, Stack } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
 import { CheckoutInfo } from "../../components/checkout-info";
 import { CourseDescription } from "./components/course-description";
@@ -14,7 +14,7 @@ interface CoursePageProps {
   readonly product: ProductPageProductFragment;
 }
 
-export const CoursePage: FC<CoursePageProps> = ({ product }) => {
+export const CoursePage = ({ product }: CoursePageProps) => {
   const [{ data: dataGetCourse, fetching: isLoadingGetCourse }] =
     useGetProductPageCourseQuery({
       pause: !product?.parentId,

@@ -1,14 +1,14 @@
 import { useTranslations } from "@/hooks";
 import { getProductURL } from "@/utils";
 import { Image, Stack, TableCell, TableRow, Text } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 import { OrderPageOrderItemFragment } from "../../graphql/order.query.graphql.generated";
 
 export interface OrderItemProps {
   readonly orderItem?: OrderPageOrderItemFragment;
 }
 
-export const OrderItem: FC<OrderItemProps> = memo(({ orderItem }) => {
+export const OrderItem = memo(({ orderItem }: OrderItemProps) => {
   const translate = useTranslations();
 
   return (

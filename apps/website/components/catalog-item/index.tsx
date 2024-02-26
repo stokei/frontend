@@ -10,7 +10,7 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
@@ -31,8 +31,8 @@ export interface CatalogItemProps {
   readonly defaultPrice?: PriceComponentFragment | null;
 }
 
-export const CatalogItem: FC<CatalogItemProps> = memo(
-  ({ productId, name, avatar, defaultPrice, parent }) => {
+export const CatalogItem = memo(
+  ({ productId, name, avatar, defaultPrice, parent }: CatalogItemProps) => {
     const router = useRouter();
     const translate = useTranslations();
     const { currentApp } = useCurrentApp();

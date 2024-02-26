@@ -14,7 +14,7 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import NextLink from "next/link";
 
 import defaultNoImage from "@/assets/no-image.png";
@@ -37,8 +37,15 @@ export interface CatalogItemProps {
   readonly prices?: SortedItemComponentCatalogItemProductFragment["prices"];
 }
 
-export const CatalogItem: FC<CatalogItemProps> = memo(
-  ({ productId, avatar, name, defaultPrice, parent, prices }) => {
+export const CatalogItem = memo(
+  ({
+    productId,
+    avatar,
+    name,
+    defaultPrice,
+    parent,
+    prices,
+  }: CatalogItemProps) => {
     const [currentPrice, setCurrentPrice] = useState<
       PriceComponentFragment | undefined | null
     >();

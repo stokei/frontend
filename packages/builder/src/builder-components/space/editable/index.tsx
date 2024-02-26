@@ -1,5 +1,5 @@
 import { Spacer } from "@stokei/ui";
-import { FC } from "react";
+
 import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { BlockEditable } from "../../../components/block-editable";
 

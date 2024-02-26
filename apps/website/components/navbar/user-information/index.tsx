@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
 export interface NavbarUserInformationProps extends StackProps {}

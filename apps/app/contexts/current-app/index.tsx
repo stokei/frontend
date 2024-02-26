@@ -1,5 +1,5 @@
 import { CurrentGlobalAppQuery } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
-import { createContext, FC, PropsWithChildren, useMemo } from "react";
+import { createContext, PropsWithChildren, useMemo } from "react";
 
 export type CurrentSite = CurrentGlobalAppQuery["site"];
 export type CurrentApp = CurrentSite["app"];
@@ -15,9 +15,11 @@ export interface CurrentAppProviderValues {
 
 export const CurrentAppContext = createContext({} as CurrentAppProviderValues);
 
-export const CurrentAppProvider: FC<
-  PropsWithChildren<CurrentAppProviderProps>
-> = ({ currentApp, currentSite, children }) => {
+export const CurrentAppProvider = ({
+  currentApp,
+  currentSite,
+  children,
+}: PropsWithChildren<CurrentAppProviderProps>) => {
   const values: CurrentAppProviderValues = useMemo(
     () => ({
       currentSite,

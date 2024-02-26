@@ -8,13 +8,9 @@ import { removeRouteAppPrefix } from "@/utils/remove-route-app-prefix";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useCallback } from "react";
+import { PropsWithChildren, useCallback } from "react";
 
-export interface CustomerLayoutProps {}
-
-export const CustomerLayout: FC<PropsWithChildren<CustomerLayoutProps>> = ({
-  children,
-}) => {
+export const CustomerLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const translate = useTranslations();
 

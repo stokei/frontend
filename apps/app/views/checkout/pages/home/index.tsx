@@ -1,3 +1,5 @@
+import { AddressManagementAddressFragment } from "@/components/address-management/graphql/addresses.query.graphql.generated";
+import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
 import { CheckoutStep } from "@/constants/checkout-steps";
 import { useAPIErrors, useShoppingCart, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
@@ -19,8 +21,10 @@ import {
   useActiveSteps,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CheckoutLayout } from "../../layout";
+import { useGetCheckoutPageApplyCouponToValueQuery } from "./graphql/apply-coupon-to-value.query.graphql.generated";
+import { CheckoutPageCouponFragment } from "./graphql/coupon.query.graphql.generated";
 import {
   CreateCheckoutPageCheckoutFragment,
   useCreateCheckoutMutation,
@@ -32,14 +36,8 @@ import { PaymentStep } from "./steps/payment";
 import { PaymentMethodStep } from "./steps/payment-method";
 import { ProductsStep } from "./steps/products";
 import { SummaryStep } from "./steps/summary";
-import { AddressManagementAddressFragment } from "@/components/address-management/graphql/addresses.query.graphql.generated";
-import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
-import { CheckoutPageCouponFragment } from "./graphql/coupon.query.graphql.generated";
-import { useGetCheckoutPageApplyCouponToValueQuery } from "./graphql/apply-coupon-to-value.query.graphql.generated";
 
-interface CheckoutPageProps {}
-
-export const CheckoutPage: FC<CheckoutPageProps> = () => {
+export const CheckoutPage = () => {
   const { activeSteps, onActivateStep, onDeactivateStep } =
     useActiveSteps<CheckoutStep>({
       initialState: {

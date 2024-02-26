@@ -19,17 +19,13 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AuthLayout } from "../../layout";
 import { useCompleteAccountConfigurationMutation } from "./graphql/complete-account-configuration.mutation.graphql.generated";
 
-interface CompleteAccountConfigurationPageProps {}
-
-export const CompleteAccountConfigurationPage: FC<
-  CompleteAccountConfigurationPageProps
-> = () => {
+export const CompleteAccountConfigurationPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

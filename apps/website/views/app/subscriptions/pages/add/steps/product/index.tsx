@@ -2,7 +2,6 @@ import { SelectProducts } from "@/components/select-product";
 import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { Button, ButtonGroup, Stack, Title } from "@stokei/ui";
-import { FC } from "react";
 
 interface ProductStepProps {
   product?: AppProductFragment;
@@ -11,12 +10,12 @@ interface ProductStepProps {
   onNextStep: () => void;
 }
 
-export const ProductStep: FC<ProductStepProps> = ({
+export const ProductStep = ({
   product,
   onPreviousStep,
   onNextStep,
   onChooseProduct,
-}) => {
+}: ProductStepProps) => {
   const translate = useTranslations();
 
   return (

@@ -14,7 +14,7 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { FC, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -26,13 +26,13 @@ export interface RecurringIntervalInputProps {
   readonly onChangeIntervalCount: (data: string) => void;
 }
 
-export const RecurringIntervalInput: FC<RecurringIntervalInputProps> = ({
+export const RecurringIntervalInput = ({
   label,
   interval,
   intervalCount,
   onChangeInterval,
   onChangeIntervalCount: onChangeIntervalCountProp,
-}) => {
+}: RecurringIntervalInputProps) => {
   const translate = useTranslations();
   const validationSchema = z.object({
     intervalCount: z.string().min(1, {

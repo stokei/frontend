@@ -8,7 +8,7 @@ import {
   Title,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 import { ProductPageFeatureFragment } from "../../graphql/features.query.graphql.generated";
 import { RemoveFeatureModal } from "../remove-feature-modal";
 
@@ -17,8 +17,8 @@ interface FeatureItemProps {
   onRemovedFeatures: () => void;
 }
 
-export const FeatureItem: FC<FeatureItemProps> = memo(
-  ({ feature, onRemovedFeatures }) => {
+export const FeatureItem = memo(
+  ({ feature, onRemovedFeatures }: FeatureItemProps) => {
     const {
       isOpen: isOpenRemoveFeatureModal,
       onOpen: onOpenRemoveFeatureModal,

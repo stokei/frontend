@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from "react";
+import { memo, useCallback } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { SelectPrice } from "@/components";
@@ -24,7 +24,7 @@ export interface ProductItemProps {
   readonly product?: SortedItemComponentCatalogItemProductFragment | null;
 }
 
-export const ProductItem: FC<ProductItemProps> = memo(({ product, price }) => {
+export const ProductItem = memo(({ product, price }: ProductItemProps) => {
   const translate = useTranslations();
 
   const { onRemoveShoppingCartItem, onAddOrUpdateShoppingCartItem } =

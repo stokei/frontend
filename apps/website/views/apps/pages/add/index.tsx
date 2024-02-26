@@ -17,15 +17,13 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Navbar } from "./components/navbar";
 import { useCreateAppMutation } from "./graphql/create-app.mutation.graphql.generated";
 
-interface AddAppPageProps {}
-
-export const AddAppPage: FC<AddAppPageProps> = () => {
+export const AddAppPage = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

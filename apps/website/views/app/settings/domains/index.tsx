@@ -12,7 +12,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AddDomainDrawer } from "./components/add-domain-drawer";
 import { DomainItem } from "./components/domain-item";
 import { HowConfigureDomainModal } from "./components/how-configure-domain-modal";
@@ -22,9 +22,7 @@ import {
   useGetAppDomainsQuery,
 } from "./graphql/domains.query.graphql.generated";
 
-interface SettingsDomainsPageProps {}
-
-export const SettingsDomainsPage: FC<SettingsDomainsPageProps> = () => {
+export const SettingsDomainsPage = () => {
   const [domains, setDomains] = useState<AppDomainFragment[]>([]);
   const router = useRouter();
   const translate = useTranslations();

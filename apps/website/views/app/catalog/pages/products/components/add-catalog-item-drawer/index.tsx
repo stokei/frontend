@@ -11,7 +11,7 @@ import {
   Stack,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useCreateCatalogItemMutation } from "../../graphql/create-catalog-item.mutation.graphql.generated";
 
 interface AddCatalogItemDrawerProps {
@@ -21,12 +21,12 @@ interface AddCatalogItemDrawerProps {
   onSuccess: () => void;
 }
 
-export const AddCatalogItemDrawer: FC<AddCatalogItemDrawerProps> = ({
+export const AddCatalogItemDrawer = ({
   catalogId,
   onSuccess,
   isOpenDrawer,
   onCloseDrawer,
-}) => {
+}: AddCatalogItemDrawerProps) => {
   const [products, setProducts] = useState<AppProductFragment[]>([]);
   const translate = useTranslations();
   const { onShowToast } = useToast();

@@ -16,11 +16,8 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
 
-interface FooterProps {}
-
-export const Footer: FC<FooterProps> = () => {
+export const Footer = () => {
   const router = useRouter();
   const translate = useTranslations();
   return (

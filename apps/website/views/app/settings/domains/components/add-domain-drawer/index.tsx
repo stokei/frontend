@@ -15,7 +15,7 @@ import {
   Stack,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AppDomainFragment } from "../../graphql/domains.query.graphql.generated";
@@ -28,11 +28,11 @@ interface AddDomainDrawerProps {
   onSuccess?: (domain: AppDomainFragment) => void;
 }
 
-export const AddDomainDrawer: FC<AddDomainDrawerProps> = ({
+export const AddDomainDrawer = ({
   onSuccess,
   isOpenDrawer,
   onCloseDrawer,
-}) => {
+}: AddDomainDrawerProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();

@@ -1,13 +1,13 @@
 import { Text } from "@stokei/ui";
-import { FC } from "react";
+
 import { AppCouponFragment } from "../graphql/coupons.query.graphql.generated";
 
 interface CouponSelectItemContentProps {
   readonly coupon?: AppCouponFragment;
 }
 
-export const CouponSelectItemContent: FC<CouponSelectItemContentProps> = ({
+export const CouponSelectItemContent = ({
   coupon,
-}) => {
+}: CouponSelectItemContentProps) => {
   return <Text fontWeight="bold">{coupon?.code}</Text>;
 };

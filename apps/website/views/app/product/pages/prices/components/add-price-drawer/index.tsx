@@ -32,7 +32,7 @@ import {
   Text,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreatePriceMutation } from "../../graphql/create-price.mutation.graphql.generated";
@@ -44,12 +44,12 @@ interface AddPriceDrawerProps {
   onSuccess?: (price: PriceComponentFragment) => void;
 }
 
-export const AddPriceDrawer: FC<AddPriceDrawerProps> = ({
+export const AddPriceDrawer = ({
   productId,
   isOpenDrawer,
   onSuccess,
   onCloseDrawer,
-}) => {
+}: AddPriceDrawerProps) => {
   const [type, setType] = useState<PriceType>(PriceType.OneTime);
   const [interval, setInterval] = useState<IntervalType>(IntervalType.Month);
   const [intervalCount, setIntervalCount] = useState<string>("");

@@ -8,7 +8,7 @@ import {
   Text,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, memo, useState } from "react";
+import { memo, useState } from "react";
 import { VideoPreviewModal } from "../video-preview-modal";
 
 import {
@@ -21,7 +21,7 @@ export interface ModuleItemProps {
   readonly module: CoursePageModuleFragment;
 }
 
-export const ModuleItem: FC<ModuleItemProps> = memo(({ module }) => {
+export const ModuleItem = memo(({ module }: ModuleItemProps) => {
   const translate = useTranslations();
   const { isOpen, onClose, onOpen } = useDisclosure();
 

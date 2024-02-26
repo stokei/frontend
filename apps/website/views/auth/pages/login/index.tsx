@@ -9,7 +9,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { AuthLayout } from "../../layout";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
 

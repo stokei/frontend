@@ -12,11 +12,9 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
-interface PagarmeOnboardingProps {}
-
-export const PagarmeOnboarding: FC<PagarmeOnboardingProps> = () => {
+export const PagarmeOnboarding = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const router = useRouter();

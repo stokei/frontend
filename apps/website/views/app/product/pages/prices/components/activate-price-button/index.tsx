@@ -1,7 +1,7 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { Icon, MenuItem, useToast } from "@stokei/ui";
-import { FC } from "react";
+
 import { useActivatePriceMutation } from "../../graphql/activate-price.mutation.graphql.generated";
 
 interface ActivatePriceButtonProps {
@@ -9,10 +9,10 @@ interface ActivatePriceButtonProps {
   onSuccess?: (price: PriceComponentFragment) => void;
 }
 
-export const ActivatePriceButton: FC<ActivatePriceButtonProps> = ({
+export const ActivatePriceButton = ({
   priceId,
   onSuccess,
-}) => {
+}: ActivatePriceButtonProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

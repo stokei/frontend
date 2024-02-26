@@ -10,14 +10,14 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { PaymentPagePaymentFragment } from "../../graphql/payment.query.graphql.generated";
 
 interface PaymentDetailsProps {
   readonly payment?: PaymentPagePaymentFragment;
 }
 
-export const PaymentDetails: FC<PaymentDetailsProps> = ({ payment }) => {
+export const PaymentDetails = ({ payment }: PaymentDetailsProps) => {
   const translate = useTranslations();
 
   return (

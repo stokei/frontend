@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
 import { OrderFilters } from "./components/orders-filters";
@@ -20,9 +20,7 @@ import { useGetAppOrdersQuery } from "./graphql/orders.query.graphql.generated";
 import { Loading } from "./loading";
 import { useFilters } from "./hooks/use-filters";
 
-interface OrdersPageProps {}
-
-export const OrdersPage: FC<OrdersPageProps> = () => {
+export const OrdersPage = () => {
   const {
     coupons,
     customers,

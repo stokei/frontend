@@ -13,7 +13,7 @@ import {
   Pagination,
   Stack,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { SiteLayout } from "../../layout";
 import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
@@ -21,9 +21,7 @@ import { PagesList } from "./components/pages-list";
 import { useGetSitePagesQuery } from "./graphql/pages.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface SitePagesPageProps {}
-
-const SitePagesPage: FC<SitePagesPageProps> = () => {
+const SitePagesPage = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { site } = useSite();

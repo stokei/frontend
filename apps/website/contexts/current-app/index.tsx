@@ -1,5 +1,5 @@
 import { CurrentGlobalAppQuery } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
-import { createContext, FC, PropsWithChildren, useMemo } from "react";
+import { createContext, PropsWithChildren, useMemo } from "react";
 
 export interface CurrentAppProviderProps {
   readonly currentApp?: CurrentApp;

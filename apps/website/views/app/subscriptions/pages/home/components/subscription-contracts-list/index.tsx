@@ -10,7 +10,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AppSubscriptionContractFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
 import { SubscriptionContractItem } from "../subscription-contract-item";
 
@@ -18,9 +18,9 @@ interface SubscriptionContractsListProps {
   subscriptionContracts?: AppSubscriptionContractFragment[];
 }
 
-export const SubscriptionContractsList: FC<SubscriptionContractsListProps> = ({
+export const SubscriptionContractsList = ({
   subscriptionContracts,
-}) => {
+}: SubscriptionContractsListProps) => {
   const translate = useTranslations();
   return (
     <>

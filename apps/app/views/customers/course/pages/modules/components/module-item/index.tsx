@@ -10,7 +10,7 @@ import {
   NotFoundIcon,
   NotFoundSubtitle,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { useRouter } from "next/router";
 import { CustomersCoursePageModuleFragment } from "../../graphql/modules.query.graphql.generated";
@@ -21,34 +21,32 @@ export interface ModuleItemProps {
   readonly module: CustomersCoursePageModuleFragment;
 }
 
-export const ModuleItem: FC<ModuleItemProps> = memo(
-  ({ module, isFirstModule }) => {
-    const router = useRouter();
-    const translate = useTranslations();
+export const ModuleItem = memo(({ module, isFirstModule }: ModuleItemProps) => {
+  const router = useRouter();
+  const translate = useTranslations();
 
-    return (
-      <Accordion defaultIndex={!!isFirstModule ? [0] : undefined}>
-        <AccordionItem>
-          <AccordionButton>
-            <AccordionLabel>{module.name}</AccordionLabel>
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel>
-            {!module?.videos?.totalCount ? (
-              <NotFound>
-                <NotFoundIcon name="video" />
-                <NotFoundSubtitle>
-                  {translate.formatMessage({ id: "videosNotFound" })}
-                </NotFoundSubtitle>
-              </NotFound>
-            ) : (
-              <VideosList videos={module?.videos?.items || []} />
-            )}
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
-    );
-  }
-);
+  return (
+    <Accordion defaultIndex={!!isFirstModule ? [0] : undefined}>
+      <AccordionItem>
+        <AccordionButton>
+          <AccordionLabel>{module.name}</AccordionLabel>
+          <AccordionIcon />
+        </AccordionButton>
+        <AccordionPanel>
+          {!module?.videos?.totalCount ? (
+            <NotFound>
+              <NotFoundIcon name="video" />
+              <NotFoundSubtitle>
+                {translate.formatMessage({ id: "videosNotFound" })}
+              </NotFoundSubtitle>
+            </NotFound>
+          ) : (
+            <VideosList videos={module?.videos?.items || []} />
+          )}
+        </AccordionPanel>
+      </AccordionItem>
+    </Accordion>
+  );
+});
 
 ModuleItem.displayName = "ModuleItem";

@@ -20,7 +20,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AppMaterialFragment } from "../../../home/graphql/materials.query.graphql.generated";
@@ -30,7 +30,7 @@ interface EditMaterialFormProps {
   material?: AppMaterialFragment;
 }
 
-export const EditMaterialForm: FC<EditMaterialFormProps> = ({ material }) => {
+export const EditMaterialForm = ({ material }: EditMaterialFormProps) => {
   const [fileId, setFileId] = useState<string>("");
   const translate = useTranslations();
   const { onShowToast } = useToast();

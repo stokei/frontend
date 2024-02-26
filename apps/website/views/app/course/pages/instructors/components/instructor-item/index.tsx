@@ -9,7 +9,7 @@ import {
   Title,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { AdminCoursePageCourseInstructorFragment } from "../../graphql/course-instructors.query.graphql.generated";
 import { RemoveCourseInstructorModal } from "../remove-course-instructor-modal";
@@ -23,8 +23,12 @@ export interface InstructorItemProps {
   ) => void;
 }
 
-export const InstructorItem: FC<InstructorItemProps> = memo(
-  ({ courseId, instructor, onSuccessRemoveCourseInstructor }) => {
+export const InstructorItem = memo(
+  ({
+    courseId,
+    instructor,
+    onSuccessRemoveCourseInstructor,
+  }: InstructorItemProps) => {
     const translate = useTranslations();
     const {
       isOpen: isOpenRemoveCourseInstructorDrawer,

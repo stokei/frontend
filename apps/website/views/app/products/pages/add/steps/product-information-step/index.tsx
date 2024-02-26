@@ -12,7 +12,7 @@ import {
   RichTextEditor,
   Stack,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ProductParent } from "../../@types/product-parent";
@@ -25,12 +25,12 @@ interface ProductInformationStepProps {
   onNextStep: () => void;
 }
 
-export const ProductInformationStep: FC<ProductInformationStepProps> = ({
+export const ProductInformationStep = ({
   productParent,
   onChangeProductPayload,
   onPreviousStep,
   onNextStep,
-}) => {
+}: ProductInformationStepProps) => {
   const translate = useTranslations();
 
   const validationSchema = z.object({

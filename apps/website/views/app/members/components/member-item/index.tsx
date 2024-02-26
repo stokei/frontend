@@ -12,7 +12,7 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC, memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 
 import { RoleName } from "@/constants/role-names";
 import { useCurrentApp, useTranslations } from "@/hooks";
@@ -27,7 +27,7 @@ export interface MemberItemProps {
   readonly appMember?: AppMemberFragment;
 }
 
-export const MemberItem: FC<MemberItemProps> = memo(({ appMember }) => {
+export const MemberItem = memo(({ appMember }: MemberItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentAccount } = useCurrentAccount();

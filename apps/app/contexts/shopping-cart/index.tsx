@@ -1,13 +1,7 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { useDisclosure, usePersistedState, useToast } from "@stokei/ui";
-import {
-  createContext,
-  FC,
-  PropsWithChildren,
-  useCallback,
-  useMemo,
-} from "react";
+import { createContext, PropsWithChildren, useCallback, useMemo } from "react";
 
 export interface ShoppingCartProviderProps {}
 
@@ -46,9 +40,9 @@ export const ShoppingCartContext = createContext(
   {} as ShoppingCartProviderValues
 );
 
-export const ShoppingCartProvider: FC<
-  PropsWithChildren<ShoppingCartProviderProps>
-> = ({ children }) => {
+export const ShoppingCartProvider = ({
+  children,
+}: PropsWithChildren<ShoppingCartProviderProps>) => {
   const { value: shoppingCartItems, setValue: setShoppingCartItems } =
     usePersistedState<ShoppingCartItem[]>({
       key: "shopping-cart-items",
@@ -157,7 +151,7 @@ export const ShoppingCartProvider: FC<
         onRemoveShoppingCartItem,
         onToggleShoppingCart,
         onClearShoppingCart,
-      } as ShoppingCartProviderValues),
+      }) as ShoppingCartProviderValues,
     [
       currency,
       totalAmount,

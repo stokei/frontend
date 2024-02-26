@@ -29,11 +29,7 @@ export interface PaymentPixProps {
   totalAmount?: number;
 }
 
-export const PaymentPix: React.FC<PaymentPixProps> = ({
-  pix,
-  orderId,
-  totalAmount,
-}) => {
+export const PaymentPix = ({ pix, orderId, totalAmount }: PaymentPixProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

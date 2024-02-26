@@ -15,7 +15,7 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { LandingPageProductFeatureFragment } from "../../graphql/products.query.graphql.generated";
 
 interface PlanItemProps {
@@ -25,12 +25,7 @@ interface PlanItemProps {
   readonly price?: PriceComponentFragment | null;
 }
 
-export const PlanItem: FC<PlanItemProps> = ({
-  features,
-  icon,
-  title,
-  price,
-}) => {
+export const PlanItem = ({ features, icon, title, price }: PlanItemProps) => {
   return (
     <Card background="background.50" justify="space-between">
       <CardHeader>

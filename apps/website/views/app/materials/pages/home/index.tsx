@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Header } from "./components/header";
 import { MaterialFilters } from "./components/material-filters";
 import { MaterialsList } from "./components/materials-list";
@@ -21,9 +21,7 @@ import { Navbar } from "./components/navbar";
 import { useGetAppMaterialsQuery } from "./graphql/materials.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface MaterialsHomePageProps {}
-
-export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
+export const MaterialsHomePage = () => {
   const [filteredMaterialQuery, setFilteredMaterialQuery] = useState<string>();
   const router = useRouter();
   const { currentApp } = useCurrentApp();

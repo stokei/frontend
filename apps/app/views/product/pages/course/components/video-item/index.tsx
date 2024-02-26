@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { Box, Icon, Link, Stack, Text } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 import { CoursePageModuleVideoFragment } from "../../graphql/module.fragment.graphql.generated";
 
 interface VideoItemProps {
@@ -8,8 +8,8 @@ interface VideoItemProps {
   readonly onOpenPreviewModal: () => void;
 }
 
-export const VideoItem: FC<VideoItemProps> = memo(
-  ({ video, onOpenPreviewModal }) => {
+export const VideoItem = memo(
+  ({ video, onOpenPreviewModal }: VideoItemProps) => {
     const translate = useTranslations();
 
     return (

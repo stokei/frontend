@@ -151,6 +151,7 @@ export type App = {
   icon?: Maybe<Image>;
   id: Scalars['ID'];
   isIntegratedWithPagarme: Scalars['Boolean'];
+  isIntegratedWithStripe: Scalars['Boolean'];
   isStokei: Scalars['Boolean'];
   logo?: Maybe<Image>;
   name: Scalars['String'];
@@ -323,6 +324,7 @@ export type Checkout = {
   card?: Maybe<CheckoutCard>;
   payment: Payment;
   pix?: Maybe<CheckoutPix>;
+  stripe?: Maybe<CheckoutStripe>;
   url?: Maybe<Scalars['String']>;
 };
 
@@ -345,6 +347,11 @@ export type CheckoutPix = {
   __typename?: 'CheckoutPix';
   copyAndPaste: Scalars['String'];
   qrCodeURL: Scalars['String'];
+};
+
+export type CheckoutStripe = {
+  __typename?: 'CheckoutStripe';
+  clientSecret: Scalars['String'];
 };
 
 export type Color = {
@@ -1159,6 +1166,11 @@ export type Languages = {
   totalPages: Scalars['Int'];
 };
 
+export type Link = {
+  __typename?: 'Link';
+  url: Scalars['String'];
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -1290,6 +1302,7 @@ export type Mutation = {
   createAddress: Address;
   createApp: App;
   createAppPagarmeAccount: App;
+  createAppStripeOnboarding: Link;
   createCatalog: Catalog;
   createCatalogItem: CatalogItem;
   createCheckout: Checkout;
@@ -2454,7 +2467,8 @@ export type PaymentMethod = {
 export enum PaymentMethodType {
   Boleto = 'BOLETO',
   Card = 'CARD',
-  Pix = 'PIX'
+  Pix = 'PIX',
+  Stripe = 'STRIPE'
 }
 
 export type PaymentMethods = {

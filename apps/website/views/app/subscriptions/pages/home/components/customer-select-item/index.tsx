@@ -1,13 +1,13 @@
 import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { Avatar, SelectItem, Stack, Text } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 interface CustomerSelectItemProps {
   readonly customer?: AppAccountFragment;
 }
 
-export const CustomerSelectItem: FC<CustomerSelectItemProps> = memo(
-  ({ customer }) => {
+export const CustomerSelectItem = memo(
+  ({ customer }: CustomerSelectItemProps) => {
     return (
       <SelectItem value={customer}>
         <Stack direction="row" spacing="4" align="center">

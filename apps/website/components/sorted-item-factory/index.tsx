@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { Catalog } from "../catalog";
 import { CatalogItem } from "../catalog-item";
@@ -17,8 +17,8 @@ export interface SortedItemFactoryProps {
   readonly sortedItem?: SortedItemComponentFragment | null;
 }
 
-export const SortedItemFactory: FC<SortedItemFactoryProps> = memo(
-  ({ sortedItem, ...props }) => {
+export const SortedItemFactory = memo(
+  ({ sortedItem, ...props }: SortedItemFactoryProps) => {
     const router = useRouter();
     const type = sortedItem?.item?.__typename;
     const goToSignUp = () => router.push(routes.auth.signUp);

@@ -14,7 +14,7 @@ import {
   TagLabel,
   useDebounce,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CatalogSelectItem } from "./catalog-select-item";
@@ -33,12 +33,12 @@ interface SelectCatalogsProps {
   readonly onRemoveCatalog: (value: SelectCatalogValue) => void;
 }
 
-export const SelectCatalogs: FC<SelectCatalogsProps> = ({
+export const SelectCatalogs = ({
   label,
   catalogs,
   onChooseCatalog,
   onRemoveCatalog,
-}) => {
+}: SelectCatalogsProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

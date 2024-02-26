@@ -9,7 +9,7 @@ import {
   SelectItem,
   SelectList,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { SubscriptionTypeSelectItemContent } from "../subscription-type-select-item-content";
 
 interface SelectFilterSubscriptionTypeProps {

@@ -1,7 +1,7 @@
 import { usePagination, useTranslations } from "@/hooks";
 import { Container, Pagination, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Navbar } from "./components/navbar";
 import { InstructorsList } from "./components/instructors-list";
 import {
@@ -11,9 +11,7 @@ import {
 import { CourseLayout } from "../../layout";
 import { Loading } from "../../loading";
 
-interface CourseInstructorsPageProps {}
-
-export const CourseInstructorsPage: FC<CourseInstructorsPageProps> = () => {
+export const CourseInstructorsPage = () => {
   const [courseInstructorAccounts, setCourseInstructorAccounts] = useState<
     AdminCoursePageCourseInstructorFragment[]
   >([]);

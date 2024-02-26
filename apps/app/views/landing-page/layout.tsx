@@ -1,15 +1,16 @@
 import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
 import { Navbar } from "@stokei/ui";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { Loading } from "./loading";
 
 export interface LandingPageLayoutProps {
   isLoading?: boolean;
 }
 
-export const LandingPageLayout: FC<
-  PropsWithChildren<LandingPageLayoutProps>
-> = ({ isLoading, children }) => {
+export const LandingPageLayout = ({
+  isLoading,
+  children,
+}: PropsWithChildren<LandingPageLayoutProps>) => {
   return (
     <>
       <Navbar>

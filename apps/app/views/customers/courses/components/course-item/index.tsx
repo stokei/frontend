@@ -10,7 +10,7 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
@@ -22,7 +22,7 @@ export interface CourseItemProps {
   readonly course?: CustomersCoursePageCourseFragment;
 }
 
-export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
+export const CourseItem = memo(({ course }: CourseItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
 

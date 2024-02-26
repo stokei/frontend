@@ -13,7 +13,7 @@ import {
   NotFoundSubtitle,
   Stack,
 } from "@stokei/ui";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { routes } from "@/routes";
 import { useRouter } from "next/router";

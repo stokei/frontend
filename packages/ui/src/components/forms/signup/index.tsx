@@ -15,7 +15,7 @@ import {
   Text,
   Title,
 } from "../..";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useTranslations } from "../../../hooks";
@@ -33,11 +33,11 @@ export interface FormSignUpProps {
   onSubmit: (data: FormSignUpOnSubmitData) => void;
 }
 
-export const FormSignUp: FC<FormSignUpProps> = ({
+export const FormSignUp = ({
   isLoading,
   onRedirectToLoginURL,
   onSubmit,
-}) => {
+}: FormSignUpProps) => {
   const translate = useTranslations();
 
   const validationSchema = z.object({

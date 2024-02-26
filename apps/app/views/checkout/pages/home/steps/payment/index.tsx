@@ -14,12 +14,12 @@ export interface PaymentStepProps {
   onPreviousStep: () => void;
 }
 
-export const PaymentStep: React.FC<PaymentStepProps> = ({
+export const PaymentStep = ({
   checkout,
   paymentMethodType,
   totalAmount,
   orderId,
-}) => {
+}: PaymentStepProps) => {
   if (paymentMethodType === PaymentMethodType.Pix) {
     return (
       <PaymentPix

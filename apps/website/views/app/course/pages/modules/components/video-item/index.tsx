@@ -12,14 +12,14 @@ import {
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { AdminCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
 
 interface VideoItemProps {
   readonly video?: AdminCoursePageModuleVideoFragment;
 }
 
-export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
+export const VideoItem = memo(({ video }: VideoItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();

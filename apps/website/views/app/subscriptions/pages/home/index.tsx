@@ -13,7 +13,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
 import { SubscriptionContractFilters } from "./components/subscription-contract-filters";
@@ -24,11 +24,7 @@ import {
 } from "./graphql/subscription-contracts.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface SubscriptionContractsPageProps {}
-
-export const SubscriptionContractsPage: FC<
-  SubscriptionContractsPageProps
-> = () => {
+export const SubscriptionContractsPage = () => {
   const [currentCustomers, setCurrentCustomers] = useState<
     AppAccountFragment[]
   >([]);

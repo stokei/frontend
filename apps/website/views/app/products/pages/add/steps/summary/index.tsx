@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
+
 import { ProductParent } from "../../@types/product-parent";
 import { ProductPayload } from "../../@types/product-payload";
 import { useCreateProductMutation } from "../../graphql/create-product.mutation.graphql.generated";
@@ -27,12 +27,12 @@ interface SummaryStepProps {
   onPreviousStep: () => void;
 }
 
-export const SummaryStep: FC<SummaryStepProps> = ({
+export const SummaryStep = ({
   catalogs,
   productParent,
   productPayload,
   onPreviousStep,
-}) => {
+}: SummaryStepProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

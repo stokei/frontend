@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, useMemo } from "react";
+import { createContext, PropsWithChildren, useMemo } from "react";
 import { StokeiGraphQLClientProvider } from "@stokei/graphql";
 
 export interface BuilderProviderProps {
@@ -11,10 +11,10 @@ export interface BuilderProviderValues {
 
 export const BuilderContext = createContext({} as BuilderProviderValues);
 
-export const BuilderProvider: FC<PropsWithChildren<BuilderProviderProps>> = ({
+export const BuilderProvider = ({
   stokeiGraphQLApi,
   children,
-}) => {
+}: PropsWithChildren<BuilderProviderProps>) => {
   const values: BuilderProviderValues = useMemo(
     () => ({
       stokeiGraphQLApi,

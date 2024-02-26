@@ -1,11 +1,8 @@
-import { useShoppingCart, useTranslations } from "@/hooks";
-import { Box, Circle, Icon, Indicator, NavbarNavLink, Text } from "@stokei/ui";
-import { FC } from "react";
+import { useShoppingCart } from "@/hooks";
+import { Box, Circle, Indicator, NavbarNavLink } from "@stokei/ui";
 import { ShoppingCartDrawer } from "../shopping-cart-drawer";
 
-export interface ShoppingCartMenuProps {}
-export const ShoppingCartMenu: FC<ShoppingCartMenuProps> = () => {
-  const translate = useTranslations();
+export const ShoppingCartMenu = () => {
   const { onToggleShoppingCart, shoppingCartItems } = useShoppingCart();
 
   return (

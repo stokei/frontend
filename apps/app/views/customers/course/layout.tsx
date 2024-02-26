@@ -6,13 +6,9 @@ import { routes } from "@/routes";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useCallback, useMemo } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 
-export interface CourseLayoutProps {}
-
-export const CourseLayout: FC<PropsWithChildren<CourseLayoutProps>> = ({
-  children,
-}) => {
+export const CourseLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const translate = useTranslations();
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
