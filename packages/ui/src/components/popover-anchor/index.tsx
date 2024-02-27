@@ -2,7 +2,9 @@ import { PopoverAnchor as ChakraPopoverAnchor } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 
 export interface PopoverAnchorProps {}
-export const PopoverAnchor: React.FC<PropsWithChildren<PopoverAnchorProps>> = ({
+export const PopoverAnchor = ({
   children,
   ...props
-}) => <ChakraPopoverAnchor {...props}>{children}</ChakraPopoverAnchor>;
+}: PropsWithChildren<PopoverAnchorProps>) => (
+  <ChakraPopoverAnchor {...props}>{children}</ChakraPopoverAnchor>
+);

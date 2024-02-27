@@ -4,7 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface TableCaptionProps extends ChakraTableCaptionProps {}
-export const TableCaption: React.FC<TableCaptionProps> = ({
-  children,
-  ...props
-}) => <ChakraTableCaption {...props}>{children}</ChakraTableCaption>;
+export const TableCaption = ({ children, ...props }: TableCaptionProps) => (
+  <ChakraTableCaption {...props}>{children}</ChakraTableCaption>
+);

@@ -10,8 +10,8 @@ export interface IconButtonProps
   readonly name: IconName;
   readonly ref?: any;
 }
-export const IconButton: React.FC<IconButtonProps> = forwardRef(
-  ({ name, ...props }, ref) => (
+export const IconButton = forwardRef(
+  ({ name, ...props }: IconButtonProps, ref) => (
     <ChakraIconButton
       colorScheme="primary"
       {...props}

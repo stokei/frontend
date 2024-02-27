@@ -5,7 +5,7 @@ import {
 
 export interface ImageProps extends ChakraImageProps {}
 
-export const Image: React.FC<ImageProps> = ({ ...props }) => (
+export const Image = ({ ...props }: ImageProps) => (
   <ChakraImage
     width="full"
     height="auto"

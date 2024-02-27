@@ -15,9 +15,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 
-export interface SiteLayoutProps {}
-
-const SiteLayout: FC<PropsWithChildren<SiteLayoutProps>> = ({ children }) => {
+const SiteLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -74,7 +72,7 @@ const SiteLayout: FC<PropsWithChildren<SiteLayoutProps>> = ({ children }) => {
   );
 };
 
-const LayoutWithProviders: FC<SiteLayoutProps> = ({ ...props }) => {
+const LayoutWithProviders = (props: PropsWithChildren) => {
   return (
     <SiteProvider>
       <SidebarProvider>

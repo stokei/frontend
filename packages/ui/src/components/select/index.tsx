@@ -15,7 +15,7 @@ export interface SelectProps<TValue = any>
   readonly ref?: ForwardedRef<any>;
 }
 
-export const Select: React.FC<SelectProps> = forwardRef(
+export const Select = forwardRef(
   (
     {
       children,
@@ -25,7 +25,7 @@ export const Select: React.FC<SelectProps> = forwardRef(
       onChooseItem,
       onRemoveChooseItem,
       ...props
-    },
+    }: SelectProps,
     ref
   ) => {
     const {

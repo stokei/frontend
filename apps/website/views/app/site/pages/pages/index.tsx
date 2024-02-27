@@ -92,7 +92,7 @@ const SitePagesPage = () => {
   );
 };
 
-const SitePagesWithLayout: FC<SitePagesPageProps> = () => {
+const SitePagesWithLayout = () => {
   return (
     <SiteLayout>
       <Navbar />

@@ -10,8 +10,11 @@ export interface SidebarNavLinkProps extends LinkProps {
   readonly isActive?: boolean;
 }
 
-export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
-  ({ children, isActive, leftIcon, badge, ...props }, ref) => {
+export const SidebarNavLink = forwardRef(
+  (
+    { children, isActive, leftIcon, badge, ...props }: SidebarNavLinkProps,
+    ref
+  ) => {
     const [activeStyle, setActiveStyle] = useState<any>({});
 
     const hoverStyle = useMemo(

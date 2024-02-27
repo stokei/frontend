@@ -5,10 +5,7 @@ import {
 
 export interface AccordionPanelProps extends ChakraAccordionPanelProps {}
 
-export const AccordionPanel: React.FC<AccordionPanelProps> = ({
-  children,
-  ...props
-}) => (
+export const AccordionPanel = ({ children, ...props }: AccordionPanelProps) => (
   <ChakraAccordionPanel
     borderTopWidth="thin"
     padding="4"

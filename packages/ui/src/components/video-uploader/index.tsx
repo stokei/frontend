@@ -33,7 +33,7 @@ export interface VideoUploaderProps extends Omit<StackProps, "onError"> {
   readonly onRemoveFile?: () => void;
 }
 
-export const VideoUploader: React.FC<VideoUploaderProps> = memo(
+export const VideoUploader = memo(
   ({
     accept,
     uploadURL,
@@ -43,7 +43,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = memo(
     onError,
     onRemoveFile,
     ...props
-  }) => {
+  }: VideoUploaderProps) => {
     const [file, setFile] = useState<any>();
     const { appId, accountId, language } = useStokeiUI();
     const {

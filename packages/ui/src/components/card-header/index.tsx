@@ -5,9 +5,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface CardHeaderProps extends ChakraCardHeaderProps {}
-export const CardHeader: React.FC<CardHeaderProps> = ({
-  children,
-  ...props
-}) => {
+export const CardHeader = ({ children, ...props }: CardHeaderProps) => {
   return <ChakraCardHeader {...props}>{children}</ChakraCardHeader>;
 };

@@ -16,7 +16,7 @@ export interface StepItemProps extends StackProps {
   readonly isDisabled?: boolean;
   readonly isInvalid?: boolean;
 }
-export const StepItem: React.FC<StepItemProps> = ({
+export const StepItem = ({
   stepIndex,
   title,
   subtitle,
@@ -27,7 +27,7 @@ export const StepItem: React.FC<StepItemProps> = ({
   isInvalid,
   onClick,
   ...props
-}) => {
+}: StepItemProps) => {
   const translate = useTranslations();
   const { currentStep, onChangeStep } = useSteps();
 

@@ -5,11 +5,11 @@ export interface SidebarGroupProps extends StackProps {
   readonly isActive?: boolean;
 }
 
-export const SidebarGroup: React.FC<SidebarGroupProps> = ({
+export const SidebarGroup = ({
   children,
   isActive,
   ...props
-}) => {
+}: SidebarGroupProps) => {
   return (
     <SidebarGroupProvider isActive={!!isActive}>
       <Stack width="full" direction="column" spacing="0" {...props}>

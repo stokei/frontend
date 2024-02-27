@@ -15,7 +15,7 @@ const SitePage = () => {
   );
 };
 
-const SitePageWithLayout: FC<SitePageProps> = () => {
+const SitePageWithLayout = () => {
   return (
     <SiteLayout>
       <Navbar />

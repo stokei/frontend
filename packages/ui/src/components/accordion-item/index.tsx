@@ -5,10 +5,7 @@ import {
 
 export interface AccordionItemProps extends ChakraAccordionItemProps {}
 
-export const AccordionItem: React.FC<AccordionItemProps> = ({
-  children,
-  ...props
-}) => (
+export const AccordionItem = ({ children, ...props }: AccordionItemProps) => (
   <ChakraAccordionItem borderWidth="thin" {...props}>
     {children}
   </ChakraAccordionItem>

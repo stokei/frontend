@@ -23,8 +23,8 @@ export interface SelectItemProps extends StackProps {
   readonly value: any;
 }
 
-export const SelectItem: React.FC<SelectItemProps> = forwardRef(
-  ({ children, value, ...props }, ref) => {
+export const SelectItem = forwardRef(
+  ({ children, value, ...props }: SelectItemProps, ref) => {
     const {
       value: currentItem,
       isMultiple,

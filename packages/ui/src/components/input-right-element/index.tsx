@@ -5,6 +5,8 @@ import {
 } from "@chakra-ui/react";
 
 export interface InputRightElementProps extends ChakraInputElementProps {}
-export const InputRightElement: React.FC<
-  PropsWithChildren<InputRightElementProps>
-> = ({ ...props }) => <ChakraInputRightElement {...props} />;
+export const InputRightElement = ({
+  ...props
+}: PropsWithChildren<InputRightElementProps>) => (
+  <ChakraInputRightElement {...props} />
+);

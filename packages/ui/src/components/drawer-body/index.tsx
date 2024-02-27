@@ -3,7 +3,9 @@ import { PropsWithChildren } from "react";
 import { ModalBodyProps } from "../modal-body";
 
 export interface DrawerBodyProps extends ModalBodyProps {}
-export const DrawerBody: React.FC<PropsWithChildren<DrawerBodyProps>> = ({
+export const DrawerBody = ({
   children,
   ...props
-}) => <ChakraDrawerBody {...props}>{children}</ChakraDrawerBody>;
+}: PropsWithChildren<DrawerBodyProps>) => (
+  <ChakraDrawerBody {...props}>{children}</ChakraDrawerBody>
+);

@@ -5,10 +5,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface ListOrderedProps extends ChakraListProps {}
-export const ListOrdered: React.FC<ListOrderedProps> = ({
-  children,
-  ...props
-}) => {
+export const ListOrdered = ({ children, ...props }: ListOrderedProps) => {
   return (
     <ChakraOrderedList
       display="flex"

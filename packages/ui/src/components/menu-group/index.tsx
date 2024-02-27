@@ -5,7 +5,9 @@ import {
 
 export interface MenuOptionGroupProps extends ChakraMenuOptionGroupProps {}
 
-export const MenuOptionGroup: React.FC<MenuOptionGroupProps> = ({
+export const MenuOptionGroup = ({
   children,
   ...props
-}) => <ChakraMenuOptionGroup {...props}>{children}</ChakraMenuOptionGroup>;
+}: MenuOptionGroupProps) => (
+  <ChakraMenuOptionGroup {...props}>{children}</ChakraMenuOptionGroup>
+);

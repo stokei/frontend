@@ -17,12 +17,12 @@ export interface SidebarGroupButtonProps extends Omit<ButtonProps, "leftIcon"> {
   readonly badge?: ReactElement;
 }
 
-export const SidebarGroupButton: React.FC<SidebarGroupButtonProps> = ({
+export const SidebarGroupButton = ({
   leftIcon,
   badge,
   children,
   ...props
-}) => {
+}: SidebarGroupButtonProps) => {
   const [activeStyle, setActiveStyle] = useState<any>({});
 
   const { isOpen, onToggle, isActive } = useSidebarGroup();

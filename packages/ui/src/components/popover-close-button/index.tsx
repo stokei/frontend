@@ -5,9 +5,9 @@ import {
 
 export interface PopoverCloseButtonProps
   extends ChakraPopoverCloseButtonProps {}
-export const PopoverCloseButton: React.FC<PopoverCloseButtonProps> = ({
+export const PopoverCloseButton = ({
   children,
   ...props
-}) => (
+}: PopoverCloseButtonProps) => (
   <ChakraPopoverCloseButton {...props}>{children}</ChakraPopoverCloseButton>
 );

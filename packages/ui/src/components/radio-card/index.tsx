@@ -9,8 +9,8 @@ export interface RadioCardProps extends RadioProps {
   readonly ref?: ForwardedRef<any>;
 }
 
-export const RadioCard: React.FC<RadioCardProps> = forwardRef(
-  ({ id, children, ...props }, ref) => {
+export const RadioCard = forwardRef(
+  ({ id, children, ...props }: RadioCardProps, ref) => {
     return (
       <Box
         as="label"

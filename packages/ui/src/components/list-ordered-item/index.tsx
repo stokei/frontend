@@ -5,10 +5,10 @@ import {
 } from "@chakra-ui/react";
 
 export interface ListOrderedItemProps extends ChakraListItemProps {}
-export const ListOrderedItem: React.FC<ListOrderedItemProps> = ({
+export const ListOrderedItem = ({
   children,
   ...props
-}) => {
+}: ListOrderedItemProps) => {
   return (
     <ChakraListItem
       color="text.500"

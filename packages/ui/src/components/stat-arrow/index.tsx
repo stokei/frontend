@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface StatArrowProps extends ChakraStatArrowProps {}
-export const StatArrow: React.FC<StatArrowProps> = ({ children, ...props }) => (
+export const StatArrow = ({ children, ...props }: StatArrowProps) => (
   <ChakraStatArrow {...props}>{children}</ChakraStatArrow>
 );

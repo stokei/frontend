@@ -5,10 +5,10 @@ import {
 
 export interface AccordionButtonProps extends ChakraAccordionButtonProps {}
 
-export const AccordionButton: React.FC<AccordionButtonProps> = ({
+export const AccordionButton = ({
   children,
   ...props
-}) => (
+}: AccordionButtonProps) => (
   <ChakraAccordionButton
     background="background.200"
     paddingY="3"

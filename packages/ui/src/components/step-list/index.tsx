@@ -3,7 +3,7 @@ import { useSteps } from "../../hooks/use-steps";
 import { Stack, StackProps } from "../stack";
 
 export interface StepListProps extends StackProps {}
-export const StepList: React.FC<StepListProps> = ({ children, ...props }) => {
+export const StepList = ({ children, ...props }: StepListProps) => {
   const { orientation } = useSteps();
 
   const direction = useMemo<any>(() => {

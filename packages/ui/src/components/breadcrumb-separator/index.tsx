@@ -5,9 +5,9 @@ import {
 
 export interface BreadcrumbSeparatorProps
   extends ChakraBreadcrumbSeparatorProps {}
-export const BreadcrumbSeparator: React.FC<BreadcrumbSeparatorProps> = ({
+export const BreadcrumbSeparator = ({
   children,
   ...props
-}) => (
+}: BreadcrumbSeparatorProps) => (
   <ChakraBreadcrumbSeparator {...props}>{children}</ChakraBreadcrumbSeparator>
 );

@@ -114,6 +114,6 @@ export interface IconProps extends ChakraIconProps {
   readonly name: IconName;
 }
 
-export const Icon: React.FC<IconProps> = ({ children, ...props }) => (
+export const Icon = ({ children, ...props }: IconProps) => (
   <ChakraIcon {...props} as={icons[props.name] as any} />
 );

@@ -4,8 +4,6 @@ import { BaseComponentReadable } from "../../../types/base-component-readable";
 
 interface ReadableProps {}
 
-export const Readable: FC<BaseComponentReadable<ReadableProps>> = ({
-  ...props
-}) => {
+export const Readable = (props: BaseComponentReadable<ReadableProps>) => {
   return <Spacer {...props} />;
 };

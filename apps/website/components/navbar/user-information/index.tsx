@@ -15,9 +15,7 @@ import { useMemo } from "react";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
 export interface NavbarUserInformationProps extends StackProps {}
-export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
-  ...props
-}) => {
+export const NavbarUserInformation = (props: NavbarUserInformationProps) => {
   const { isOpen: isOpenDrawer, onToggle: onToggleDrawer } = useDisclosure();
 
   const router = useRouter();

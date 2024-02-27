@@ -6,7 +6,7 @@ export interface MarkdownProps extends BoxProps {
   text: string;
 }
 
-export const Markdown: React.FC<MarkdownProps> = ({ text, ...props }) => {
+export const Markdown = ({ text, ...props }: MarkdownProps) => {
   const content = useMemo(() => reactHtmlParser(text), [text]);
   return (
     <Box flexDirection="column" {...props}>

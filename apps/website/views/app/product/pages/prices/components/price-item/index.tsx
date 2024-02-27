@@ -22,14 +22,14 @@ interface PriceItemProps {
   onSuccessPriceDeactivated: (price?: PriceComponentFragment) => void;
 }
 
-export const PriceItem: FC<PriceItemProps> = memo(
+export const PriceItem = memo(
   ({
     price,
     isFirstPrice,
     onSuccessPriceUpdated,
     onSuccessPriceActivated,
     onSuccessPriceDeactivated,
-  }) => {
+  }: PriceItemProps) => {
     const translate = useTranslations();
 
     const isDefaultPrice = useMemo(

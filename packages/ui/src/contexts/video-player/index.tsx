@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren, createContext, useMemo } from "react";
 
 export { ColorModeScript } from "@chakra-ui/react";
 
@@ -50,13 +50,9 @@ export interface VideoPlayerContextProps {
   readonly onChangeVolume: (volume: number) => void;
 }
 
-export const VideoPlayerContext = React.createContext(
-  {} as VideoPlayerContextValues
-);
+export const VideoPlayerContext = createContext({} as VideoPlayerContextValues);
 
-export const VideoPlayerProvider: React.FC<
-  PropsWithChildren<VideoPlayerContextProps>
-> = ({
+export const VideoPlayerProvider = ({
   children,
   isFullScreen,
   isPictureInPicture,
@@ -78,7 +74,7 @@ export const VideoPlayerProvider: React.FC<
   onToggleFullScreen,
   onTogglePictureInPicture,
   onChangeVolume,
-}) => {
+}: PropsWithChildren<VideoPlayerContextProps>) => {
   const configValues: VideoPlayerContextValues = useMemo(
     () => ({
       isPlaying,

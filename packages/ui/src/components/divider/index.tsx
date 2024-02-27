@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface DividerProps extends ChakraDividerProps {}
-export const Divider: React.FC<DividerProps> = ({ children, ...props }) => (
+export const Divider = ({ children, ...props }: DividerProps) => (
   <ChakraDivider {...props}>{children}</ChakraDivider>
 );

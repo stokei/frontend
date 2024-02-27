@@ -9,10 +9,8 @@ export interface StackProps extends ChakraStackProps {
   readonly ref?: ForwardedRef<any>;
 }
 
-export const Stack: React.FC<StackProps> = forwardRef(
-  ({ children, ...props }, ref) => (
-    <ChakraStack width="full" {...props} ref={ref}>
-      {children}
-    </ChakraStack>
-  )
-);
+export const Stack = forwardRef(({ children, ...props }: StackProps, ref) => (
+  <ChakraStack width="full" {...props} ref={ref}>
+    {children}
+  </ChakraStack>
+));

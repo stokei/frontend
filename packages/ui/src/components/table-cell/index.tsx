@@ -5,7 +5,7 @@ import {
 import { Text } from "../text";
 
 export interface TableCellProps extends ChakraTableCellProps {}
-export const TableCell: React.FC<TableCellProps> = ({ children, ...props }) => (
+export const TableCell = ({ children, ...props }: TableCellProps) => (
   <ChakraTableCell
     css={{
       "&:first-of-type": {

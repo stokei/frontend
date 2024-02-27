@@ -24,15 +24,13 @@ interface RemoveCourseInstructorModalProps {
   ) => void;
 }
 
-export const RemoveCourseInstructorModal: FC<
-  RemoveCourseInstructorModalProps
-> = ({
+export const RemoveCourseInstructorModal = ({
   courseId,
   instructorId,
   isOpenModal,
   onCloseModal,
   onSuccessRemoveCourseInstructor,
-}) => {
+}: RemoveCourseInstructorModalProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

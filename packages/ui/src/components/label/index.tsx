@@ -9,11 +9,7 @@ export interface LabelProps extends ChakraFormLabelProps {
   readonly isOptional?: boolean;
 }
 
-export const Label: React.FC<LabelProps> = ({
-  children,
-  isOptional,
-  ...props
-}) => {
+export const Label = ({ children, isOptional, ...props }: LabelProps) => {
   const translate = useTranslations();
   return (
     <ChakraFormLabel width="full" fontSize="sm" color="text.500" {...props}>

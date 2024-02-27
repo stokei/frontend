@@ -32,13 +32,13 @@ export interface ModuleItemProps {
   ) => void;
 }
 
-export const ModuleItem: FC<ModuleItemProps> = memo(
+export const ModuleItem = memo(
   ({
     module,
     isFirstModule,
     onOpenConfirmRemoveModuleModal,
     onOpenEditModule,
-  }) => {
+  }: ModuleItemProps) => {
     const router = useRouter();
     const translate = useTranslations();
     const { currentApp } = useCurrentApp();

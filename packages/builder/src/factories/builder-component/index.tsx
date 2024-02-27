@@ -1,19 +1,19 @@
-import { Fragment, PropsWithChildren, memo, useMemo } from "react";
+import { PropsWithChildren, ReactNode, memo, useMemo } from "react";
 import {
-  Card,
   Button,
-  Video,
-  Image,
-  Stack,
-  Space,
-  Text,
-  Title,
+  Card,
   Catalog,
   Grid,
   GridItem,
   Hero,
-  HeroMedia,
   HeroContent,
+  HeroMedia,
+  Image,
+  Space,
+  Stack,
+  Text,
+  Title,
+  Video,
 } from "../../builder-components";
 import { ComponentType } from "../../services/graphql/stokei";
 import { BaseComponent } from "../../types/base-component";
@@ -38,12 +38,12 @@ const getComponent = ({
   componentType: ComponentType;
   builderType: ComponentBuilderType;
 }) => {
-  const components: Record<ComponentType, FC<BaseComponent>> = {
-    [ComponentType.Header]: () => <Fragment />,
-    [ComponentType.Footer]: () => <Fragment />,
-    [ComponentType.Navlink]: () => <Fragment />,
-    [ComponentType.Menu]: () => <Fragment />,
-    [ComponentType.MenuItem]: () => <Fragment />,
+  const components: Record<ComponentType, BaseComponent | undefined> = {
+    [ComponentType.Header]: undefined,
+    [ComponentType.Footer]: undefined,
+    [ComponentType.Navlink]: undefined,
+    [ComponentType.Menu]: undefined,
+    [ComponentType.MenuItem]: undefined,
     [ComponentType.Hero]: Hero[builderType],
     [ComponentType.HeroMedia]: HeroMedia[builderType],
     [ComponentType.HeroContent]: HeroContent[builderType],
@@ -59,17 +59,23 @@ const getComponent = ({
     [ComponentType.Title]: Title[builderType],
     [ComponentType.Space]: Space[builderType],
   };
-  return components[componentType] || Fragment;
+  return components[componentType] as ReactNode;
 };
 
-export const BuilderComponent: FC<PropsWithChildren<BuilderComponentProps>> =
-  memo(({ builderType, type, components, onRedirect, ...props }) => {
+export const BuilderComponent = memo(
+  ({
+    builderType,
+    type,
+    components,
+    onRedirect,
+    ...props
+  }: PropsWithChildren<BuilderComponentProps>) => {
     const Component = useMemo(
       () =>
         getComponent({
           componentType: type,
           builderType,
-        }),
+        }) as any,
       [builderType, type]
     );
     if (!Component) {
@@ -87,5 +93,6 @@ export const BuilderComponent: FC<PropsWithChildren<BuilderComponentProps>> =
         ))}
       </Component>
     );
-  });
+  }
+);
 BuilderComponent.displayName = "BuilderComponent";

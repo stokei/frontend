@@ -11,8 +11,8 @@ export interface SelectListProps extends StackProps {
   readonly containerRef?: ForwardedRef<any>;
 }
 
-export const SelectList: React.FC<SelectListProps> = forwardRef(
-  ({ children, containerRef, ...props }, ref) => {
+export const SelectList = forwardRef(
+  ({ children, containerRef, ...props }: SelectListProps, ref) => {
     const { onCloseList } = useSelect();
     const myRef = useRef<any>();
     const translate = useTranslations();

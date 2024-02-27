@@ -1,10 +1,7 @@
 import { Stack, StackProps } from "../stack";
 
 export interface HeroContentProps extends StackProps {}
-export const HeroContent: React.FC<HeroContentProps> = ({
-  children,
-  ...props
-}) => (
+export const HeroContent = ({ children, ...props }: HeroContentProps) => (
   <Stack
     width="fit-content"
     flex="1"

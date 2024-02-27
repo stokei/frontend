@@ -37,9 +37,7 @@ interface SubscriptionContractFiltersProps {
   readonly onResetCurrentCustomer: () => void;
 }
 
-export const SubscriptionContractFilters: FC<
-  SubscriptionContractFiltersProps
-> = ({
+export const SubscriptionContractFilters = ({
   isOpen,
   onClose,
   currentStatus,
@@ -52,7 +50,7 @@ export const SubscriptionContractFilters: FC<
   onRemoveChooseCurrentStatus,
   onChooseCurrentSubscriptionType,
   onRemoveChooseCurrentSubscriptionType,
-}) => {
+}: SubscriptionContractFiltersProps) => {
   const translate = useTranslations();
 
   const onClean = () => {

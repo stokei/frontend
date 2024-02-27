@@ -1,7 +1,7 @@
 import { Text, TextProps } from "../text";
 
 export interface NotFoundSubtitleProps extends TextProps {}
-export const NotFoundSubtitle: React.FC<NotFoundSubtitleProps> = ({
+export const NotFoundSubtitle = ({
   children,
   ...props
-}) => <Text {...props}>{children}</Text>;
+}: NotFoundSubtitleProps) => <Text {...props}>{children}</Text>;

@@ -3,6 +3,6 @@ import React from "react";
 import { Icon, IconProps } from "../icon";
 
 export interface ListIconProps extends IconProps {}
-export const ListIcon: React.FC<ListIconProps> = ({ children, ...props }) => {
+export const ListIcon = ({ children, ...props }: ListIconProps) => {
   return <ChakraListIcon as={() => <Icon marginRight="2" {...props} />} />;
 };

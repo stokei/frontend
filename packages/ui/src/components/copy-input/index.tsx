@@ -9,7 +9,7 @@ export interface CopyInputProps {
   value: string;
 }
 
-export const CopyInput: React.FC<CopyInputProps> = ({ value }) => {
+export const CopyInput = ({ value }: CopyInputProps) => {
   const translate = useTranslations();
   const { onCopy, hasCopied } = useClipboard(value || "");
 

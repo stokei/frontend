@@ -22,13 +22,11 @@ interface SelectFilterSubscriptionTypeProps {
   ) => void;
 }
 
-export const SelectFilterSubscriptionType: FC<
-  SelectFilterSubscriptionTypeProps
-> = ({
+export const SelectFilterSubscriptionType = ({
   currentSubscriptionType,
   onChooseCurrentSubscriptionType,
   onRemoveChooseCurrentSubscriptionType,
-}) => {
+}: SelectFilterSubscriptionTypeProps) => {
   const translate = useTranslations();
   const content = useMemo(() => {
     if (currentSubscriptionType === SubscriptionContractTypeFilter.OneTime) {

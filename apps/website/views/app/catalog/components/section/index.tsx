@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 
 interface SectionProps {}
 
-export const Section: FC<PropsWithChildren<SectionProps>> = ({ children }) => {
+export const Section = ({ children }: PropsWithChildren<SectionProps>) => {
   return (
     <Stack direction="column" spacing="5">
       {children}

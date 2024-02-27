@@ -5,6 +5,6 @@ import {
 
 export interface SpacerProps extends ChakraSpacerProps {}
 
-export const Spacer: React.FC<SpacerProps> = ({ children, ...props }) => (
+export const Spacer = ({ children, ...props }: SpacerProps) => (
   <ChakraSpacer {...props}>{children}</ChakraSpacer>
 );

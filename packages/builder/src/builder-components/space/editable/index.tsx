@@ -5,9 +5,7 @@ import { BlockEditable } from "../../../components/block-editable";
 
 interface EditableProps {}
 
-export const Editable: FC<BaseComponentEditable<EditableProps>> = ({
-  ...props
-}) => {
+export const Editable = (props: BaseComponentEditable<EditableProps>) => {
   return (
     <BlockEditable>
       <Spacer {...props} />

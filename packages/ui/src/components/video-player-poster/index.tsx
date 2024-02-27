@@ -9,12 +9,12 @@ export interface VideoPlayerPosterProps extends AspectRatioProps {
   readonly fallbackSrc?: string;
   readonly duration?: number;
 }
-export const VideoPlayerPoster: React.FC<VideoPlayerPosterProps> = ({
+export const VideoPlayerPoster = ({
   src,
   fallbackSrc,
   duration,
   ...props
-}) => {
+}: VideoPlayerPosterProps) => {
   const translate = useTranslations();
   return (
     <Box

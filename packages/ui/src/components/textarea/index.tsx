@@ -6,15 +6,13 @@ import {
 
 export interface TextareaProps extends ChakraTextareaProps {}
 
-export const Textarea: React.FC<TextareaProps> = forwardRef(
-  ({ ...props }, ref) => (
-    <ChakraTextarea
-      colorScheme="primary"
-      {...props}
-      ref={ref}
-      focusBorderColor="primary.500"
-      errorBorderColor="error.500"
-      resize="vertical"
-    />
-  )
-);
+export const Textarea = forwardRef((props: TextareaProps, ref) => (
+  <ChakraTextarea
+    colorScheme="primary"
+    {...props}
+    ref={ref}
+    focusBorderColor="primary.500"
+    errorBorderColor="error.500"
+    resize="vertical"
+  />
+));

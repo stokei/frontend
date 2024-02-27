@@ -11,7 +11,7 @@ import { getAccessibleColor } from "../../utils/get-accessible-color";
 export interface ButtonProps extends ChakraButtonProps {
   readonly ref?: any;
 }
-export const Button: React.FC<ButtonProps> = forwardRef(
+export const Button = forwardRef<ButtonProps, "button">(
   ({ children, ...props }, ref) => {
     const { getHexdecimalColor } = useStokeiUI();
     const buttonTextColor = useMemo(() => {

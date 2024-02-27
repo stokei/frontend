@@ -25,10 +25,10 @@ export interface SelectMaterialProps {
   productParent?: ProductParent;
   onChangeProductParent: (parent?: ProductParent) => void;
 }
-export const SelectMaterial: React.FC<SelectMaterialProps> = ({
+export const SelectMaterial = ({
   productParent,
   onChangeProductParent,
-}) => {
+}: SelectMaterialProps) => {
   const [materialQuery, setMaterialQuery] = useState<string>("");
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();

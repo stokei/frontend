@@ -4,10 +4,10 @@ import {
 } from "@chakra-ui/react";
 
 export interface TableHeaderCellProps extends ChakraTableHeaderCellProps {}
-export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
+export const TableHeaderCell = ({
   children,
   ...props
-}) => (
+}: TableHeaderCellProps) => (
   <ChakraTableHeaderCell
     paddingTop="0"
     css={{

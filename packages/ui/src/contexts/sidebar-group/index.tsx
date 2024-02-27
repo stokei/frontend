@@ -15,9 +15,10 @@ export const SidebarGroupContext = React.createContext(
   {} as SidebarGroupContextValues
 );
 
-export const SidebarGroupProvider: React.FC<
-  PropsWithChildren<SidebarGroupContextProps>
-> = ({ isActive, children }) => {
+export const SidebarGroupProvider = ({
+  isActive,
+  children,
+}: PropsWithChildren<SidebarGroupContextProps>) => {
   const { isOpen, onToggle, onOpen } = useDisclosure();
 
   const configValues: SidebarGroupContextValues = useMemo(

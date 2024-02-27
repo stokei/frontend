@@ -37,7 +37,7 @@ interface PeriodStepProps {
   onNextStep: () => void;
 }
 
-export const PeriodStep: FC<PeriodStepProps> = ({
+export const PeriodStep = ({
   subscriptionType,
   onChangeSubscriptionType,
   interval,
@@ -50,7 +50,7 @@ export const PeriodStep: FC<PeriodStepProps> = ({
   onChangeIntervalCount,
   onPreviousStep,
   onNextStep,
-}) => {
+}: PeriodStepProps) => {
   const translate = useTranslations();
   const isRecurring = subscriptionType === SubscriptionContractType.Recurring;
 

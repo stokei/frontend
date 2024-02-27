@@ -10,8 +10,11 @@ export interface LinkProps extends ChakraLinkProps {
   readonly ref?: any;
 }
 
-export const Link: React.FC<LinkProps> = forwardRef(
-  ({ children, _hover, href, isLoading, onClick, ...props }, ref) => (
+export const Link = forwardRef(
+  (
+    { children, _hover, href, isLoading, onClick, ...props }: LinkProps,
+    ref
+  ) => (
     <ChakraLink
       width="fit-content"
       color="primary.500"

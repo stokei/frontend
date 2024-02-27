@@ -12,7 +12,7 @@ export interface PriceProps extends StackProps {
   readonly withUnitDescription?: boolean;
   readonly withRecurring?: boolean;
 }
-export const Price: FC<PriceProps> = ({
+export const Price = ({
   price,
   size,
   justify,
@@ -20,7 +20,7 @@ export const Price: FC<PriceProps> = ({
   withUnitDescription,
   withPriceAndUnitDirectionColumn,
   ...props
-}) => {
+}: PriceProps) => {
   const translate = useTranslations();
 
   const priceAmount = useMemo(() => {

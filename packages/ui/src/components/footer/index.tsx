@@ -1,7 +1,7 @@
 import { Container, ContainerProps } from "../container";
 
 export interface FooterProps extends ContainerProps {}
-export const Footer: React.FC<FooterProps> = ({ children, ...props }) => (
+export const Footer = ({ children, ...props }: FooterProps) => (
   <Container
     width="full"
     flexDirection={["column", "column", "row", "row"]}

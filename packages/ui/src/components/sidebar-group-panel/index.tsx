@@ -4,10 +4,10 @@ import { Stack, StackProps } from "../stack";
 
 export interface SidebarGroupPanelProps extends StackProps {}
 
-export const SidebarGroupPanel: React.FC<SidebarGroupPanelProps> = ({
+export const SidebarGroupPanel = ({
   children,
   ...props
-}) => {
+}: SidebarGroupPanelProps) => {
   const { isOpen } = useSidebarGroup();
   return (
     <Stack

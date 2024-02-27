@@ -4,7 +4,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface PopoverProps extends ChakraPopoverProps {}
-export const Popover: React.FC<PopoverProps> = ({ children, ...props }) => (
+export const Popover = ({ children, ...props }: PopoverProps) => (
   <ChakraPopover colorScheme="primary" variant="subtle" {...props}>
     {children}
   </ChakraPopover>

@@ -4,7 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface ModalFooterProps extends ChakraModalFooterProps {}
-export const ModalFooter: React.FC<ModalFooterProps> = ({
-  children,
-  ...props
-}) => <ChakraModalFooter {...props}>{children}</ChakraModalFooter>;
+export const ModalFooter = ({ children, ...props }: ModalFooterProps) => (
+  <ChakraModalFooter {...props}>{children}</ChakraModalFooter>
+);
