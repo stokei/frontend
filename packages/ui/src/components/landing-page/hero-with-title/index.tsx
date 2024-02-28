@@ -9,7 +9,7 @@ export const HeroWithTitle = ({
   subtitleHighlight,
   ctaText,
   onCTA,
-}) => {
+}: HeroTitleContentProps) => {
   return (
     <Container>
       <Hero>

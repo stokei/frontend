@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { ActionsMenu } from "../actions-menu";
 
 interface PriceItemProps {
@@ -22,78 +22,74 @@ interface PriceItemProps {
   onSuccessPriceDeactivated: (price?: PriceComponentFragment) => void;
 }
 
-export const PriceItem = memo(
-  ({
-    price,
-    isFirstPrice,
-    onSuccessPriceUpdated,
-    onSuccessPriceActivated,
-    onSuccessPriceDeactivated,
-  }: PriceItemProps) => {
-    const translate = useTranslations();
+export const PriceItem = ({
+  price,
+  isFirstPrice,
+  onSuccessPriceUpdated,
+  onSuccessPriceActivated,
+  onSuccessPriceDeactivated,
+}: PriceItemProps) => {
+  const translate = useTranslations();
 
-    const isDefaultPrice = useMemo(
-      () => !!price?.isDefault || !!isFirstPrice,
-      [price, isFirstPrice]
-    );
-    const isRecurring = useMemo(
-      () => price?.type === PriceType.Recurring,
-      [price?.type]
-    );
+  const isDefaultPrice = useMemo(
+    () => !!price?.isDefault || !!isFirstPrice,
+    [price, isFirstPrice]
+  );
+  const isRecurring = useMemo(
+    () => price?.type === PriceType.Recurring,
+    [price?.type]
+  );
 
-    return (
-      <Card>
-        <CardHeader paddingBottom={0}>
-          <Stack direction="row" spacing="5" justify="space-between">
-            <Text fontSize="md" lineHeight="shorter" fontWeight="600">
-              {price?.nickname}
-            </Text>
-            <ActionsMenu
-              isDefaultPrice={isDefaultPrice}
-              price={price}
-              onSuccessPriceUpdated={onSuccessPriceUpdated}
-              onSuccessPriceDeactivated={onSuccessPriceDeactivated}
-              onSuccessPriceActivated={onSuccessPriceActivated}
-            />
-          </Stack>
-        </CardHeader>
-        <CardBody paddingBottom={0}>
-          <Price price={price} withUnitDescription />
-        </CardBody>
-        <CardFooter>
-          <Stack direction="row" spacing="5" align="center">
-            {price?.active ? (
-              <Badge colorScheme="green">
-                {translate.formatMessage({
-                  id: "active",
-                })}
-              </Badge>
-            ) : (
-              <Badge colorScheme="gray">
-                {translate.formatMessage({
-                  id: "inactive",
-                })}
-              </Badge>
-            )}
-            {!isRecurring && (
-              <Badge colorScheme="purple">
-                {translate.formatMessage({
-                  id: "lifelong",
-                })}
-              </Badge>
-            )}
-            {isDefaultPrice && (
-              <Badge colorScheme="gray">
-                {translate.formatMessage({
-                  id: "default",
-                })}
-              </Badge>
-            )}
-          </Stack>
-        </CardFooter>
-      </Card>
-    );
-  }
-);
-
-PriceItem.displayName = "PriceItem";
+  return (
+    <Card>
+      <CardHeader paddingBottom={0}>
+        <Stack direction="row" spacing="5" justify="space-between">
+          <Text fontSize="md" lineHeight="shorter" fontWeight="600">
+            {price?.nickname}
+          </Text>
+          <ActionsMenu
+            isDefaultPrice={isDefaultPrice}
+            price={price}
+            onSuccessPriceUpdated={onSuccessPriceUpdated}
+            onSuccessPriceDeactivated={onSuccessPriceDeactivated}
+            onSuccessPriceActivated={onSuccessPriceActivated}
+          />
+        </Stack>
+      </CardHeader>
+      <CardBody paddingBottom={0}>
+        <Price price={price} withUnitDescription />
+      </CardBody>
+      <CardFooter>
+        <Stack direction="row" spacing="5" align="center">
+          {price?.active ? (
+            <Badge colorScheme="green">
+              {translate.formatMessage({
+                id: "active",
+              })}
+            </Badge>
+          ) : (
+            <Badge colorScheme="gray">
+              {translate.formatMessage({
+                id: "inactive",
+              })}
+            </Badge>
+          )}
+          {!isRecurring && (
+            <Badge colorScheme="purple">
+              {translate.formatMessage({
+                id: "lifelong",
+              })}
+            </Badge>
+          )}
+          {isDefaultPrice && (
+            <Badge colorScheme="gray">
+              {translate.formatMessage({
+                id: "default",
+              })}
+            </Badge>
+          )}
+        </Stack>
+      </CardFooter>
+    </Card>
+  );
+};

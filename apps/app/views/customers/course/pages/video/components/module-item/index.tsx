@@ -10,7 +10,6 @@ import {
   NotFoundIcon,
   NotFoundSubtitle,
 } from "@stokei/ui";
-import { memo } from "react";
 
 import { CustomersCoursePageVideoModuleFragment } from "../../graphql/modules.query.graphql.generated";
 import { VideosList } from "../videos-list";
@@ -20,7 +19,7 @@ export interface ModuleItemProps {
   readonly module: CustomersCoursePageVideoModuleFragment;
 }
 
-export const ModuleItem = memo(({ module, isOpen }: ModuleItemProps) => {
+export const ModuleItem = ({ module, isOpen }: ModuleItemProps) => {
   const translate = useTranslations();
 
   return (
@@ -45,6 +44,4 @@ export const ModuleItem = memo(({ module, isOpen }: ModuleItemProps) => {
       </AccordionItem>
     </Accordion>
   );
-});
-
-ModuleItem.displayName = "ModuleItem";
+};

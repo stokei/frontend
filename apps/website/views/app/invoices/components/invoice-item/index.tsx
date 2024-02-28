@@ -12,7 +12,7 @@ import {
   TableRow,
   Text,
 } from "@stokei/ui";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { AppInvoiceFragment } from "../../graphql/invoices.query.graphql.generated";
 
 export interface InvoiceItemProps {
@@ -30,7 +30,7 @@ interface Product {
   avatarURL?: string;
 }
 
-export const InvoiceItem = memo(({ invoice }: InvoiceItemProps) => {
+export const InvoiceItem = ({ invoice }: InvoiceItemProps) => {
   const translate = useTranslations();
 
   const customer = useMemo<Customer | undefined>(() => {
@@ -158,6 +158,4 @@ export const InvoiceItem = memo(({ invoice }: InvoiceItemProps) => {
       </TableCell>
     </TableRow>
   );
-});
-
-InvoiceItem.displayName = "InvoiceItem";
+};

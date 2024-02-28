@@ -11,7 +11,7 @@ import {
   Text,
   useDisclosure,
 } from "@stokei/ui";
-import { memo } from "react";
+
 import { AdminCatalogPageCatalogItemFragment } from "../../graphql/catalog-items.query.graphql.generated";
 import { RemoveCatalogItemModal } from "../remove-catalog-item-modal";
 
@@ -22,64 +22,63 @@ interface ProductItemProps {
   ) => void;
 }
 
-export const ProductItem = memo(
-  ({ catalogItem, onCatalogItemRemoved }: ProductItemProps) => {
-    const translate = useTranslations();
-    const { currentApp } = useCurrentApp();
-    const {
-      isOpen: isOpenRemoveCatalogItemModal,
-      onClose: onCloseRemoveCatalogItemModal,
-      onOpen: onOpenRemoveCatalogItemModal,
-    } = useDisclosure();
+export const ProductItem = ({
+  catalogItem,
+  onCatalogItemRemoved,
+}: ProductItemProps) => {
+  const translate = useTranslations();
+  const { currentApp } = useCurrentApp();
+  const {
+    isOpen: isOpenRemoveCatalogItemModal,
+    onClose: onCloseRemoveCatalogItemModal,
+    onOpen: onOpenRemoveCatalogItemModal,
+  } = useDisclosure();
 
-    return (
-      <Stack
-        key={catalogItem?.id}
-        direction={["column", "column", "row", "row"]}
-        spacing="5"
-        justify="space-between"
+  return (
+    <Stack
+      key={catalogItem?.id}
+      direction={["column", "column", "row", "row"]}
+      spacing="5"
+      justify="space-between"
+    >
+      <RemoveCatalogItemModal
+        isOpenModal={isOpenRemoveCatalogItemModal}
+        onCloseModal={onCloseRemoveCatalogItemModal}
+        catalogItem={catalogItem}
+        onCatalogItemRemoved={onCatalogItemRemoved}
+      />
+      <Link
+        href={
+          routes
+            .app({ appId: currentApp?.id })
+            .product({ product: catalogItem?.product.id || "" }).home
+        }
+        target="_blank"
       >
-        <RemoveCatalogItemModal
-          isOpenModal={isOpenRemoveCatalogItemModal}
-          onCloseModal={onCloseRemoveCatalogItemModal}
-          catalogItem={catalogItem}
-          onCatalogItemRemoved={onCatalogItemRemoved}
-        />
-        <Link
-          href={
-            routes
-              .app({ appId: currentApp?.id })
-              .product({ product: catalogItem?.product.id || "" }).home
-          }
-          target="_blank"
-        >
-          <Stack width="fit-content" direction="row" spacing="4" align="center">
-            <Image
-              width="10"
-              rounded="sm"
-              src={getProductAvatarURL({
-                productParent: catalogItem?.product?.parent,
-                defaultAvatar: catalogItem?.product?.avatar?.file.url || "",
-              })}
-              fallbackSrc={defaultNoImage.src}
-              alt={translate.formatMessage({ id: "product" })}
-            />
-            <Stack direction="column" spacing="4">
-              <Text fontWeight="bold">{catalogItem?.product?.name}</Text>
-            </Stack>
-          </Stack>
-        </Link>
-
-        <ButtonGroup width="fit-content">
-          <IconButton
-            name="trash"
-            onClick={onOpenRemoveCatalogItemModal}
-            variant="ghost"
+        <Stack width="fit-content" direction="row" spacing="4" align="center">
+          <Image
+            width="10"
+            rounded="sm"
+            src={getProductAvatarURL({
+              productParent: catalogItem?.product?.parent,
+              defaultAvatar: catalogItem?.product?.avatar?.file.url || "",
+            })}
+            fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "product" })}
           />
-        </ButtonGroup>
-      </Stack>
-    );
-  }
-);
+          <Stack direction="column" spacing="4">
+            <Text fontWeight="bold">{catalogItem?.product?.name}</Text>
+          </Stack>
+        </Stack>
+      </Link>
 
-ProductItem.displayName = "ProductItem";
+      <ButtonGroup width="fit-content">
+        <IconButton
+          name="trash"
+          onClick={onOpenRemoveCatalogItemModal}
+          variant="ghost"
+        />
+      </ButtonGroup>
+    </Stack>
+  );
+};

@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { SelectPrice } from "@/components";
@@ -24,7 +24,7 @@ export interface ProductItemProps {
   readonly product?: SortedItemComponentCatalogItemProductFragment | null;
 }
 
-export const ProductItem = memo(({ product, price }: ProductItemProps) => {
+export const ProductItem = ({ product, price }: ProductItemProps) => {
   const translate = useTranslations();
 
   const { onRemoveShoppingCartItem, onAddOrUpdateShoppingCartItem } =
@@ -91,6 +91,4 @@ export const ProductItem = memo(({ product, price }: ProductItemProps) => {
       </CardBody>
     </Card>
   );
-});
-
-ProductItem.displayName = "ProductItem";
+};

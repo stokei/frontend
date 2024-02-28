@@ -11,14 +11,14 @@ import {
   VideoPlayerPoster,
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { CustomersCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
 
 interface VideoItemProps {
   readonly video?: CustomersCoursePageModuleVideoFragment;
 }
 
-export const VideoItem = memo(({ video }: VideoItemProps) => {
+export const VideoItem = ({ video }: VideoItemProps) => {
   const translate = useTranslations();
 
   const { course } = useCustomersCourse();
@@ -67,6 +67,4 @@ export const VideoItem = memo(({ video }: VideoItemProps) => {
       </Stack>
     </Link>
   );
-});
-
-VideoItem.displayName = "VideoItem";
+};

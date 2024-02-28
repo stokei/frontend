@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, memo, useMemo } from "react";
+import { PropsWithChildren, ReactNode, useMemo } from "react";
 import {
   Button,
   Card,
@@ -62,37 +62,34 @@ const getComponent = ({
   return components[componentType] as ReactNode;
 };
 
-export const BuilderComponent = memo(
-  ({
-    builderType,
-    type,
-    components,
-    onRedirect,
-    ...props
-  }: PropsWithChildren<BuilderComponentProps>) => {
-    const Component = useMemo(
-      () =>
-        getComponent({
-          componentType: type,
-          builderType,
-        }) as any,
-      [builderType, type]
-    );
-    if (!Component) {
-      return <></>;
-    }
-    return (
-      <Component onRedirect={onRedirect} {...props}>
-        {components?.map((component) => (
-          <BuilderComponent
-            key={component?.id}
-            builderType={builderType}
-            onRedirect={onRedirect}
-            {...component}
-          />
-        ))}
-      </Component>
-    );
+export const BuilderComponent = ({
+  builderType,
+  type,
+  components,
+  onRedirect,
+  ...props
+}: PropsWithChildren<BuilderComponentProps>) => {
+  const Component = useMemo(
+    () =>
+      getComponent({
+        componentType: type,
+        builderType,
+      }) as any,
+    [builderType, type]
+  );
+  if (!Component) {
+    return <></>;
   }
-);
-BuilderComponent.displayName = "BuilderComponent";
+  return (
+    <Component onRedirect={onRedirect} {...props}>
+      {components?.map((component) => (
+        <BuilderComponent
+          key={component?.id}
+          builderType={builderType}
+          onRedirect={onRedirect}
+          {...component}
+        />
+      ))}
+    </Component>
+  );
+};

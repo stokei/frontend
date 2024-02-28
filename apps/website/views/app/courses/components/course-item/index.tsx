@@ -10,7 +10,6 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { memo } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
@@ -22,7 +21,7 @@ export interface CourseItemProps {
   readonly course?: AppCourseFragment;
 }
 
-export const CourseItem = memo(({ course }: CourseItemProps) => {
+export const CourseItem = ({ course }: CourseItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -74,5 +73,4 @@ export const CourseItem = memo(({ course }: CourseItemProps) => {
       </CardBody>
     </Card>
   );
-});
-CourseItem.displayName = "CourseItem";
+};

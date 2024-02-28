@@ -1,7 +1,7 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { Menu, MenuButton, MenuList } from "@stokei/ui";
-import { memo } from "react";
+
 import { ActionsButton } from "../actions-button";
 import { ActivatePriceButton } from "../activate-price-button";
 import { DeactivatePriceButton } from "../deactivate-price-button";

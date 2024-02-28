@@ -1,5 +1,4 @@
 import { Avatar, Card, CardHeader, Stack, Text, Title } from "@stokei/ui";
-import { memo } from "react";
 
 import { AdminCoursePageCourseStudentFragment } from "../../graphql/course-students.query.graphql.generated";
 
@@ -7,7 +6,7 @@ export interface StudentItemProps {
   readonly student?: AdminCoursePageCourseStudentFragment;
 }
 
-export const StudentItem = memo(({ student }: StudentItemProps) => {
+export const StudentItem = ({ student }: StudentItemProps) => {
   return (
     <Card background="background.50" overflow="hidden">
       <CardHeader>
@@ -27,6 +26,4 @@ export const StudentItem = memo(({ student }: StudentItemProps) => {
       </CardHeader>
     </Card>
   );
-});
-
-StudentItem.displayName = "StudentItem";
+};

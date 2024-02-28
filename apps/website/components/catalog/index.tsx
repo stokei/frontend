@@ -7,7 +7,7 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 
 import { CatalogItem } from "../catalog-item";
 
@@ -20,7 +20,7 @@ export interface CatalogProps {
   readonly subtitle?: string | null;
 }
 
-export const Catalog = memo(({ catalogId, title, subtitle }: CatalogProps) => {
+export const Catalog = ({ catalogId, title, subtitle }: CatalogProps) => {
   const translate = useTranslations();
   const [{ fetching: isLoading, data: dataSortedItems }] = useSortedItemsQuery({
     pause: !catalogId,
@@ -92,6 +92,4 @@ export const Catalog = memo(({ catalogId, title, subtitle }: CatalogProps) => {
       )}
     </Box>
   );
-});
-
-Catalog.displayName = "Catalog";
+};

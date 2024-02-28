@@ -10,14 +10,14 @@ import {
   TableRow,
   Text,
 } from "@stokei/ui";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { OrderPagePaymentFragment } from "../../graphql/order.query.graphql.generated";
 
 export interface PaymentItemProps {
   readonly payment?: OrderPagePaymentFragment;
 }
 
-export const PaymentItem = memo(({ payment }: PaymentItemProps) => {
+export const PaymentItem = ({ payment }: PaymentItemProps) => {
   const translate = useTranslations();
 
   const statusColor = useMemo(
@@ -67,6 +67,4 @@ export const PaymentItem = memo(({ payment }: PaymentItemProps) => {
       </TableCell>
     </TableRow>
   );
-});
-
-PaymentItem.displayName = "PaymentItem";
+};

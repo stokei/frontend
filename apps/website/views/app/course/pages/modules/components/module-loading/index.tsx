@@ -1,7 +1,6 @@
 import { Card, CardBody, Skeleton, SkeletonText, Stack } from "@stokei/ui";
-import { memo } from "react";
 
-export const ModuleLoading = memo(() => {
+export const ModuleLoading = () => {
   return (
     <>
       {Array.from({ length: 3 }).map((_, i) => (
@@ -12,6 +11,4 @@ export const ModuleLoading = memo(() => {
       ))}
     </>
   );
-});
-
-ModuleLoading.displayName = "ModuleLoading";
+};

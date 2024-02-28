@@ -9,7 +9,6 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { memo } from "react";
 
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
@@ -19,7 +18,7 @@ export interface MaterialItemProps {
   readonly material: CourseMaterialFragment;
 }
 
-export const MaterialItem = memo(({ material }: MaterialItemProps) => {
+export const MaterialItem = ({ material }: MaterialItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -56,6 +55,4 @@ export const MaterialItem = memo(({ material }: MaterialItemProps) => {
       </CardBody>
     </Card>
   );
-});
-
-MaterialItem.displayName = "MaterialItem";
+};

@@ -10,7 +10,6 @@ import {
   NotFoundIcon,
   NotFoundSubtitle,
 } from "@stokei/ui";
-import { memo } from "react";
 
 import { useRouter } from "next/router";
 import { CustomersCoursePageModuleFragment } from "../../graphql/modules.query.graphql.generated";
@@ -21,7 +20,7 @@ export interface ModuleItemProps {
   readonly module: CustomersCoursePageModuleFragment;
 }
 
-export const ModuleItem = memo(({ module, isFirstModule }: ModuleItemProps) => {
+export const ModuleItem = ({ module, isFirstModule }: ModuleItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
 
@@ -47,6 +46,4 @@ export const ModuleItem = memo(({ module, isFirstModule }: ModuleItemProps) => {
       </AccordionItem>
     </Accordion>
   );
-});
-
-ModuleItem.displayName = "ModuleItem";
+};

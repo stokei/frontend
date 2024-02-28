@@ -1,21 +1,19 @@
 import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import { getI18nKeyFromRecurringInterval, getProductURL } from "@/utils";
+import { getProductURL } from "@/utils";
 import { getOrderStatusColor } from "@/utils/get-order-status-color";
 import {
   Avatar,
   AvatarGroup,
   Badge,
   Box,
-  Description,
-  Image,
   Stack,
   TableCell,
   TableRow,
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { AppOrderFragment } from "../../graphql/orders.query.graphql.generated";
 import { CouponItem } from "../coupon-item";
 
@@ -24,7 +22,7 @@ export interface OrderItemProps {
   readonly hasCoupon?: boolean;
 }
 
-export const OrderItem = memo(({ order, hasCoupon }: OrderItemProps) => {
+export const OrderItem = ({ order, hasCoupon }: OrderItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
 
@@ -89,6 +87,4 @@ export const OrderItem = memo(({ order, hasCoupon }: OrderItemProps) => {
       </TableCell>
     </TableRow>
   );
-});
-
-OrderItem.displayName = "OrderItem";
+};

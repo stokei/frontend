@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import { CatalogItem } from "@/components";
 import { SortedItemComponentCatalogItemProductFragment } from "@/components/sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
 
@@ -7,7 +5,7 @@ export interface ProductItemProps {
   readonly product: SortedItemComponentCatalogItemProductFragment;
 }
 
-export const ProductItem = memo(({ product }: ProductItemProps) => {
+export const ProductItem = ({ product }: ProductItemProps) => {
   return (
     <CatalogItem
       productId={product?.id}
@@ -18,6 +16,4 @@ export const ProductItem = memo(({ product }: ProductItemProps) => {
       parent={product?.parent}
     />
   );
-});
-
-ProductItem.displayName = "ProductItem";
+};

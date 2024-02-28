@@ -52,6 +52,7 @@ export * from "./footer";
 export * from "./footer-link";
 export * from "./file-uploader";
 export * from "./description";
+export * from "./iframe";
 export * from "./input";
 export * from "./input-slug";
 export * from "./input-document";

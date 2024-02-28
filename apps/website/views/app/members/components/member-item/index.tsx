@@ -12,7 +12,7 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { memo, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { RoleName } from "@/constants/role-names";
 import { useCurrentApp, useTranslations } from "@/hooks";
@@ -27,7 +27,7 @@ export interface MemberItemProps {
   readonly appMember?: AppMemberFragment;
 }
 
-export const MemberItem = memo(({ appMember }: MemberItemProps) => {
+export const MemberItem = ({ appMember }: MemberItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentAccount } = useCurrentAccount();
@@ -151,6 +151,4 @@ export const MemberItem = memo(({ appMember }: MemberItemProps) => {
       </CardBody>
     </Card>
   );
-});
-
-MemberItem.displayName = "MemberItem";
+};

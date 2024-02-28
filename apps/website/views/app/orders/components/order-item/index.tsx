@@ -13,7 +13,7 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { AppOrderFragment } from "../../graphql/orders.query.graphql.generated";
 import { CouponItem } from "../coupon-item";
 
@@ -28,7 +28,7 @@ export interface OrderItemProps {
   readonly hasCoupon?: boolean;
 }
 
-export const OrderItem = memo(({ order, hasCoupon }: OrderItemProps) => {
+export const OrderItem = ({ order, hasCoupon }: OrderItemProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -124,6 +124,4 @@ export const OrderItem = memo(({ order, hasCoupon }: OrderItemProps) => {
       </TableCell>
     </TableRow>
   );
-});
-
-OrderItem.displayName = "OrderItem";
+};
