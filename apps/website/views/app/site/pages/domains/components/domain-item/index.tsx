@@ -1,4 +1,4 @@
-import { useCurrentApp, useTranslations } from "@/hooks";
+import { useCurrentApp, useSite, useTranslations } from "@/hooks";
 import { convertEnumValueToCamelCase } from "@/utils";
 import { getDomainStatusColor } from "@/utils/get-domain-status-color";
 import {
@@ -22,6 +22,7 @@ interface DomainItemProps {
 
 export const DomainItem = ({ domain, onDomainRemoved }: DomainItemProps) => {
   const { currentApp } = useCurrentApp();
+  const { site } = useSite();
   const translate = useTranslations();
   const {
     isOpen: isOpenRemoveDomainModal,
@@ -30,7 +31,7 @@ export const DomainItem = ({ domain, onDomainRemoved }: DomainItemProps) => {
   } = useDisclosure();
 
   const isFreeDomain = !!domain.free;
-  const isDefaultDomain = domain.id === currentApp?.defaultDomain?.id;
+  const isDefaultDomain = domain.id === site?.defaultDomain?.id;
   const canRemoveDomain = !isDefaultDomain && !isFreeDomain;
 
   return (

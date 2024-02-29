@@ -1,10 +1,10 @@
-import { SettingsDomainsPage } from "@/views/app/settings/domains";
+import { DomainsPage } from "@/views/app/site/pages/domains";
 import { NextPage } from "next";
 
 interface Props {}
 
 const Page: NextPage<Props> = () => {
-  return <SettingsDomainsPage />;
+  return <DomainsPage />;
 };
 
 export default Page;

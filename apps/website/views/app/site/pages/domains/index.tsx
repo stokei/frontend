@@ -3,7 +3,6 @@ import { useCurrentApp } from "@/hooks/use-current-app";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import {
-  Box,
   Button,
   Container,
   Pagination,
@@ -22,12 +21,9 @@ import {
   useGetAppDomainsQuery,
 } from "./graphql/domains.query.graphql.generated";
 
-export const SettingsDomainsPage = () => {
+export const DomainsPage = () => {
   const [domains, setDomains] = useState<AppDomainFragment[]>([]);
-  const router = useRouter();
   const translate = useTranslations();
-  const { onShowToast } = useToast();
-  const { onShowAPIError } = useAPIErrors();
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
   const {
