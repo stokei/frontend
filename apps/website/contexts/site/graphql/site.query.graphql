@@ -8,6 +8,26 @@ fragment SitePageSite on Site {
   id
   name
   slug
+  stokeiDomain {
+    id
+    name
+    url
+    free
+    active
+    status
+    createdAt
+    activatedAt
+  }
+  defaultDomain {
+    id
+    name
+    url
+    free
+    active
+    status
+    createdAt
+    activatedAt
+  }
   homePage {
     id
     slug

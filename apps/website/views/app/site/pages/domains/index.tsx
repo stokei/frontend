@@ -1,4 +1,4 @@
-import { useAPIErrors, usePagination, useTranslations } from "@/hooks";
+import { usePagination, useSite, useTranslations } from "@/hooks";
 import { useCurrentApp } from "@/hooks/use-current-app";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
@@ -8,10 +8,9 @@ import {
   Pagination,
   Stack,
   useDisclosure,
-  useToast,
 } from "@stokei/ui";
-import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+import { SiteLayout } from "../../layout";
 import { AddDomainDrawer } from "./components/add-domain-drawer";
 import { DomainItem } from "./components/domain-item";
 import { HowConfigureDomainModal } from "./components/how-configure-domain-modal";
@@ -21,11 +20,12 @@ import {
   useGetAppDomainsQuery,
 } from "./graphql/domains.query.graphql.generated";
 
-export const DomainsPage = () => {
+const SiteDomainsPage = () => {
   const [domains, setDomains] = useState<AppDomainFragment[]>([]);
   const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
+  const { site } = useSite();
   const {
     isOpen: isOpenAddDomainDrawer,
     onClose: onCloseAddDomainDrawer,
@@ -61,10 +61,10 @@ export const DomainsPage = () => {
 
   useEffect(() => {
     const currentDomains: any[] = dataGetDomains?.domains?.items?.length
-      ? [...dataGetDomains?.domains?.items, currentApp?.stokeiDomain]
-      : [currentApp?.stokeiDomain];
+      ? [...dataGetDomains?.domains?.items, site?.stokeiDomain]
+      : [site?.stokeiDomain];
     setDomains(currentDomains);
-  }, [currentApp?.stokeiDomain, dataGetDomains]);
+  }, [site?.stokeiDomain, dataGetDomains]);
 
   const onDomainCreated = useCallback(
     (newDomain: AppDomainFragment) => {
@@ -126,3 +126,14 @@ export const DomainsPage = () => {
     </AppLayout>
   );
 };
+
+const SiteDomainsWithLayout = () => {
+  return (
+    <SiteLayout>
+      <Navbar />
+      <SiteDomainsPage />
+    </SiteLayout>
+  );
+};
+
+export { SiteDomainsWithLayout as DomainsPage };

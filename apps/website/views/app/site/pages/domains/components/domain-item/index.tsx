@@ -1,4 +1,4 @@
-import { useCurrentApp, useSite, useTranslations } from "@/hooks";
+import { useSite, useTranslations } from "@/hooks";
 import { convertEnumValueToCamelCase } from "@/utils";
 import { getDomainStatusColor } from "@/utils/get-domain-status-color";
 import {
@@ -21,7 +21,6 @@ interface DomainItemProps {
 }
 
 export const DomainItem = ({ domain, onDomainRemoved }: DomainItemProps) => {
-  const { currentApp } = useCurrentApp();
   const { site } = useSite();
   const translate = useTranslations();
   const {

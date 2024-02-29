@@ -8,15 +8,35 @@ export type GetSitePageSiteQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetSitePageSiteQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, name: string, slug: string, homePage?: { __typename?: 'Page', id: string, slug: string, version?: { __typename?: 'Version', id: string } | null } | null, favicon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } };
+export type GetSitePageSiteQuery = { __typename?: 'Query', site: { __typename?: 'Site', id: string, name: string, slug: string, stokeiDomain?: { __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } | null, defaultDomain?: { __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } | null, homePage?: { __typename?: 'Page', id: string, slug: string, version?: { __typename?: 'Version', id: string } | null } | null, favicon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } };
 
-export type SitePageSiteFragment = { __typename?: 'Site', id: string, name: string, slug: string, homePage?: { __typename?: 'Page', id: string, slug: string, version?: { __typename?: 'Version', id: string } | null } | null, favicon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+export type SitePageSiteFragment = { __typename?: 'Site', id: string, name: string, slug: string, stokeiDomain?: { __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } | null, defaultDomain?: { __typename?: 'Domain', id: string, name: string, url?: string | null, free: boolean, active: boolean, status: Types.DomainStatus, createdAt?: string | null, activatedAt?: string | null } | null, homePage?: { __typename?: 'Page', id: string, slug: string, version?: { __typename?: 'Version', id: string } | null } | null, favicon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
 export const SitePageSiteFragmentDoc = gql`
     fragment SitePageSite on Site {
   id
   name
   slug
+  stokeiDomain {
+    id
+    name
+    url
+    free
+    active
+    status
+    createdAt
+    activatedAt
+  }
+  defaultDomain {
+    id
+    name
+    url
+    free
+    active
+    status
+    createdAt
+    activatedAt
+  }
   homePage {
     id
     slug

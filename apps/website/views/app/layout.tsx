@@ -217,14 +217,6 @@ export const AppLayout = ({ children }: PropsWithChildren<AppLayoutProps>) => {
                 >
                   {translate.formatMessage({ id: "onboardings" })}
                 </SidebarNavLink>
-                <SidebarNavLink
-                  leftIcon="domain"
-                  as={NextLink}
-                  href={baseRoutes.settings.domains}
-                  isActive={router.asPath === baseRoutes.settings.domains}
-                >
-                  {translate.formatMessage({ id: "domains" })}
-                </SidebarNavLink>
               </SidebarGroupPanel>
             </SidebarGroup>
           </SidebarBody>

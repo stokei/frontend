@@ -60,6 +60,14 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
           >
             {translate.formatMessage({ id: "pages" })}
           </SidebarNavLink>
+          <SidebarNavLink
+            leftIcon="domain"
+            as={NextLink}
+            href={baseSiteRoutes.domains}
+            isActive={router.asPath === baseSiteRoutes.domains}
+          >
+            {translate.formatMessage({ id: "domains" })}
+          </SidebarNavLink>
         </SidebarBody>
       </Sidebar>
       <SidebarLayoutContent>
