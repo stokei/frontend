@@ -21,7 +21,7 @@ export const ChoiseEditableSummary = ({
       <CardBody>
         <Stack direction="row" spacing="5" align="center">
           <Box flexDirection="column" flex="1">
-            {children}
+            <>{children}</>
           </Box>
           <ButtonGroup>
             <IconButton variant="ghost" name="edit" onClick={onChange} />

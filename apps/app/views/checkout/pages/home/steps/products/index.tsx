@@ -1,18 +1,7 @@
-import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components";
-import { useShoppingCart, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
-import {
-  Button,
-  ButtonGroup,
-  IconButton,
-  Image,
-  Link,
-  Loading,
-  Stack,
-  Text,
-  Title,
-} from "@stokei/ui";
+import { useShoppingCart } from "@stokei/builder";
+import { Button, ButtonGroup, Loading, Stack, Text, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import { ProductItem } from "../../components/product-item";

@@ -1,5 +1,5 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { useShoppingCart, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
   Box,
@@ -15,6 +15,7 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { CreateCheckoutPageCheckoutFragment } from "../../graphql/create-checkout.mutation.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface PaymentBoletoProps {
   boleto?: CreateCheckoutPageCheckoutFragment["boleto"];

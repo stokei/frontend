@@ -3,8 +3,7 @@ import { useCallback } from "react";
 import defaultNoImage from "@/assets/no-image.png";
 import { SelectPrice } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { SortedItemComponentCatalogItemProductFragment } from "@/components/sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
-import { useShoppingCart, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
   Button,
@@ -18,10 +17,12 @@ import {
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
+import { CheckoutProductFragment } from "@/views/checkout/graphql/product.query.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface ProductItemProps {
   readonly price?: PriceComponentFragment | null;
-  readonly product?: SortedItemComponentCatalogItemProductFragment | null;
+  readonly product?: CheckoutProductFragment | null;
 }
 
 export const ProductItem = ({ product, price }: ProductItemProps) => {

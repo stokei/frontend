@@ -1,5 +1,5 @@
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useTranslations } from "@/hooks";
+import { PriceComponentFragment } from "../../components/price/price.fragment.graphql.generated";
+import { useTranslations } from "../../hooks";
 import { useDisclosure, usePersistedState, useToast } from "@stokei/ui";
 import { createContext, PropsWithChildren, useCallback, useMemo } from "react";
 

@@ -1,8 +1,6 @@
-import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components/price";
-import { useShoppingCart, useTranslations } from "@/hooks";
-import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import defaultNoImage from "../../../assets/no-image.png";
+import { Price } from "../../price";
+import { useShoppingCart, useTranslations } from "../../../hooks";
 import {
   Button,
   ButtonGroup,
@@ -22,6 +20,7 @@ import {
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
+import { getProductURL } from "../../../utils/get-product-url";
 
 export const ShoppingCartDrawer = () => {
   const {
@@ -34,34 +33,24 @@ export const ShoppingCartDrawer = () => {
     onClearShoppingCart,
     onRemoveShoppingCartItem,
   } = useShoppingCart();
-  const router = useRouter();
   const translate = useTranslations();
-  const { isAuthenticated } = useCurrentAccount();
 
   const onBuyAndCloseModal = useCallback(() => {
     onToggleShoppingCart?.();
 
-    if (!isAuthenticated) {
-      router.push({
-        pathname: routes.auth.login,
-        query: { redirectTo: routes.checkout.home },
-      });
-      return;
-    }
-
-    return router.push(routes.checkout.home);
-  }, [isAuthenticated, onToggleShoppingCart, router]);
+    return window.location.assign("/checkout");
+  }, [onToggleShoppingCart]);
 
   const goToProductDetails = useCallback(
     ({ productId, priceId }: { productId: string; priceId?: string }) => {
-      router.push({
-        pathname: routes.product.home({ product: productId || "" }),
-        query: {
+      window.location.assign(
+        getProductURL({
+          product: productId,
           price: priceId,
-        },
-      });
+        })
+      );
     },
-    [router]
+    []
   );
 
   return (
@@ -86,12 +75,12 @@ export const ShoppingCartDrawer = () => {
                           width={["20", "20", "28", "28"]}
                           src={shoppingCartItem?.product?.avatarURL || ""}
                           fallbackSrc={defaultNoImage.src}
-                          alt={translate.formatMessage({ id: "course" })}
+                          alt={translate.formatMessage({ id: "product" })}
                         />
                         <Link
                           width="fit-content"
                           as={NextLink}
-                          href={routes.product.home({
+                          href={getProductURL({
                             product: shoppingCartItem?.product?.id,
                           })}
                         >

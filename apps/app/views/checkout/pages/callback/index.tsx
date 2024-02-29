@@ -1,4 +1,3 @@
-import { useShoppingCart } from "@/hooks";
 import { Box, Card, CardBody, Container } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -7,6 +6,7 @@ import { PaymentError } from "./components/payment-error";
 import { PaymentProcessing } from "./components/payment-processing";
 import { PaymentRequiresPaymentMethod } from "./components/payment-requires-payment-method";
 import { PaymentSuccessfully } from "./components/payment-successfully";
+import { useShoppingCart } from "@stokei/builder";
 
 enum PaymentStatus {
   SUCCEEDED = "succeeded",

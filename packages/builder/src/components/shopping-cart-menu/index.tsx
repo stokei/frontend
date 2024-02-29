@@ -1,6 +1,6 @@
-import { useShoppingCart } from "@/hooks";
+import { useShoppingCart } from "../../hooks";
 import { Box, Circle, Indicator, NavbarNavLink } from "@stokei/ui";
-import { ShoppingCartDrawer } from "../shopping-cart-drawer";
+import { ShoppingCartDrawer } from "./shopping-cart-drawer";
 
 export const ShoppingCartMenu = () => {
   const { onToggleShoppingCart, shoppingCartItems } = useShoppingCart();

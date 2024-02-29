@@ -13,7 +13,7 @@ import {
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { ShoppingCartMenu } from "../shopping-cart-menu";
+import { ShoppingCartMenu } from "@stokei/builder";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
 export interface NavbarUserInformationProps extends StackProps {}

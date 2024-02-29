@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "codegen:generate:watch": "turbo run codegen:generate:watch",
     "dev": "turbo run dev --parallel",
     "dev:app": "turbo run dev --scope=@stokei/app",
     "dev:website": "turbo run dev --scope=@stokei/website",

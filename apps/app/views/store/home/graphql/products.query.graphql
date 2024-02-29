@@ -11,7 +11,73 @@ query GetStoreProducts(
     nextPage
     previousPage
     items {
-      ...SortedItemComponentCatalogItemProduct
+      ...StoreProduct
+    }
+  }
+}
+
+fragment StoreProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  defaultPrice {
+    ...PriceComponent
+  }
+  prices {
+    totalCount
+    items {
+      ...PriceComponent
+    }
+  }
+  parent {
+    __typename
+    ...StoreProductCourse
+    ...StoreProductPlan
+    ...StoreProductMaterial
+  }
+}
+
+fragment StoreProductPlan on Plan {
+  planId: id
+  planName: name
+  features {
+    items {
+      id
+      name
+      description
+    }
+  }
+}
+
+fragment StoreProductCourse on Course {
+  courseId: id
+  courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
+  instructors {
+    items {
+      id
+      instructor {
+        fullname
+      }
+    }
+  }
+}
+
+fragment StoreProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
     }
   }
 }

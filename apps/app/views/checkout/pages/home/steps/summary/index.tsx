@@ -1,7 +1,7 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
-import { useShoppingCart, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { PaymentMethodType } from "@/services/graphql/stokei";
 import {
@@ -22,6 +22,7 @@ import { CouponForm } from "../../components/coupon-form";
 import { CouponItem } from "../../components/coupon-item";
 import { PaymentMethod } from "../../components/payment-method";
 import { CheckoutPageCouponFragment } from "../../graphql/coupon.query.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface SummaryStepProps {
   totalAmount?: number;

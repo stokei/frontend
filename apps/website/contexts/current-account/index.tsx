@@ -76,7 +76,7 @@ export const CurrentAccountProvider = ({
 
   return (
     <CurrentAccountContext.Provider value={values}>
-      {children}
+      <>{children}</>
     </CurrentAccountContext.Provider>
   );
 };

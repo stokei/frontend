@@ -71,15 +71,7 @@ export const Readable = ({
               <Container>
                 <SimpleGrid columns={[1, 1, 2, 4]} spacing="5">
                   {catalogItems?.map(({ product }) => (
-                    <CatalogItem
-                      key={product?.id}
-                      productId={product?.id}
-                      name={product?.name}
-                      avatar={product?.avatar?.file?.url || ""}
-                      defaultPrice={product?.defaultPrice}
-                      prices={product?.prices}
-                      parent={product?.parent}
-                    />
+                    <CatalogItem key={product?.id} product={product} />
                   ))}
                 </SimpleGrid>
               </Container>

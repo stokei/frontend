@@ -13,11 +13,7 @@ import noImage from "@/assets/no-image.png";
 
 import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
-import {
-  CurrentAccountProvider,
-  CurrentAppProvider,
-  ShoppingCartProvider,
-} from "@/contexts";
+import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
 import {
@@ -35,6 +31,7 @@ import { Router } from "next/router";
 import { useMemo } from "react";
 import { GoogleAnalytics } from "@stokei/plugins";
 import { GOOGLE_ANALYTICS_KEY } from "@/environments";
+import { ShoppingCartProvider } from "@stokei/builder";
 
 const messages: Messages = {
   "pt-BR": {

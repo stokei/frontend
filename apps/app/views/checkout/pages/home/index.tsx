@@ -1,7 +1,7 @@
 import { AddressManagementAddressFragment } from "@/components/address-management/graphql/addresses.query.graphql.generated";
 import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
 import { CheckoutStep } from "@/constants/checkout-steps";
-import { useAPIErrors, useShoppingCart, useTranslations } from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
 import {
@@ -36,6 +36,7 @@ import { PaymentStep } from "./steps/payment";
 import { PaymentMethodStep } from "./steps/payment-method";
 import { ProductsStep } from "./steps/products";
 import { SummaryStep } from "./steps/summary";
+import { useShoppingCart } from "@stokei/builder";
 
 export const CheckoutPage = () => {
   const { activeSteps, onActivateStep, onDeactivateStep } =

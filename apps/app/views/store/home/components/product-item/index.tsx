@@ -1,8 +1,8 @@
 import { CatalogItem } from "@/components";
-import { SortedItemComponentCatalogItemProductFragment } from "@/components/sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
+import { StoreProductFragment } from "../../graphql/products.query.graphql.generated";
 
 export interface ProductItemProps {
-  readonly product: SortedItemComponentCatalogItemProductFragment;
+  readonly product: StoreProductFragment;
 }
 
 export const ProductItem = ({ product }: ProductItemProps) => {
@@ -12,8 +12,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
       name={product?.name}
       avatar={product?.avatar?.file?.url || ""}
       defaultPrice={product?.defaultPrice}
-      prices={product?.prices}
-      parent={product?.parent}
+      prices={product?.prices?.items || []}
     />
   );
 };

@@ -6,7 +6,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Description,
   Icon,
   IconButton,
   Image,
@@ -14,27 +13,24 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import NextLink from "next/link";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useShoppingCart, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import { routes } from "@/routes";
+import { useShoppingCart } from "@stokei/builder";
 import { useRouter } from "next/router";
 import { SelectPrice } from "../select-price";
-import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
 
 export interface CatalogItemProps {
   readonly productId?: string;
   readonly name?: string;
   readonly avatar?: string;
   readonly avatarURL?: string;
-  readonly parent?:
-    | SortedItemComponentCatalogItemProductFragment["parent"]
-    | null;
   readonly defaultPrice?: PriceComponentFragment | null;
-  readonly prices?: SortedItemComponentCatalogItemProductFragment["prices"];
+  readonly prices?: PriceComponentFragment[];
 }
 
 export const CatalogItem = ({
@@ -42,7 +38,6 @@ export const CatalogItem = ({
   avatar,
   name,
   defaultPrice,
-  parent,
   prices,
 }: CatalogItemProps) => {
   const [currentPrice, setCurrentPrice] = useState<
@@ -53,15 +48,8 @@ export const CatalogItem = ({
   const translate = useTranslations();
   const { onAddOrUpdateShoppingCartItem } = useShoppingCart();
 
-  const isAvailable = useMemo(
-    () => !!prices?.items?.length,
-    [prices?.items?.length]
-  );
+  const isAvailable = useMemo(() => !!prices?.length, [prices?.length]);
 
-  const course = useMemo(
-    () => (parent?.__typename === "Course" ? parent : null),
-    [parent]
-  );
   const productURL = useMemo(
     () =>
       routes.product.home({
@@ -115,21 +103,14 @@ export const CatalogItem = ({
             </Title>
           </Link>
           <Stack spacing="3" direction="column">
-            {!!course?.instructors?.items?.length && (
-              <Description>
-                {course?.instructors?.items
-                  ?.map((instructor) => instructor.instructor?.fullname)
-                  .join(", ")}
-              </Description>
-            )}
             <Box>
-              {!!prices?.items?.length && (
+              {!!prices?.length && (
                 <SelectPrice
                   size="lg"
                   showLabel={false}
                   onChooseCurrentPrice={onChoosePrice}
                   onRemoveChooseCurrentPrice={onChoosePrice}
-                  prices={prices?.items}
+                  prices={prices}
                   currentPrice={currentPrice}
                 />
               )}
