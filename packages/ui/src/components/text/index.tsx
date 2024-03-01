@@ -5,9 +5,14 @@ import {
 
 export interface TextProps extends ChakraTextProps {}
 
-export const Text = ({ children, ...props }: TextProps) => {
+export const Text = ({ children, isTruncated, ...props }: TextProps) => {
   return (
-    <ChakraText display="inline-flex" color="text.500" {...props}>
+    <ChakraText
+      display={!isTruncated ? "inline-flex" : "inline-block"}
+      isTruncated={isTruncated}
+      color="text.500"
+      {...props}
+    >
       {children}
     </ChakraText>
   );

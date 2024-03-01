@@ -1,4 +1,4 @@
-import { VideoPlayer } from "@stokei/ui";
+import { Skeleton, VideoPlayer, VideoPlayerPoster } from "@stokei/ui";
 
 import { BaseComponentReadable } from "../../../types/base-component-readable";
 import { useDataToProps } from "../hooks/use-data-to-props";
@@ -10,5 +10,8 @@ export const Readable = ({
   ...props
 }: BaseComponentReadable<ReadableProps>) => {
   const dataProps = useDataToProps({ data, props });
+  if (dataProps?.isLoading) {
+    return <VideoPlayerPoster src={dataProps?.poster} />;
+  }
   return <VideoPlayer {...dataProps} />;
 };

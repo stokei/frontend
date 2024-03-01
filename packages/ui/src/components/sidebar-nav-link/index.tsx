@@ -59,13 +59,18 @@ export const SidebarNavLink = forwardRef(
       >
         {leftIcon && <Icon name={leftIcon} marginRight="4" />}
         <Stack
-          as="span"
           direction="row"
           spacing="5"
           justify="space-between"
           align="center"
         >
-          <Text color={activeStyle?.color}>{children}</Text>
+          <Text
+            width="full"
+            color={activeStyle?.color}
+            isTruncated={props?.isTruncated}
+          >
+            {children}
+          </Text>
           {badge}
         </Stack>
       </Link>

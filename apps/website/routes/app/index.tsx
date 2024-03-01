@@ -92,7 +92,7 @@ export const routesApp = (data: { appId?: string }) => {
         pages: baseSiteURL + "/pages",
         domains: baseSiteURL + "/domains",
         page: ({ page }: { page: string }) => {
-          const basePageURL = baseURL + "/pages/" + page;
+          const basePageURL = baseSiteURL + "/pages/" + page;
           return {
             home: basePageURL,
           };

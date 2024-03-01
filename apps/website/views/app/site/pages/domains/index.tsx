@@ -1,7 +1,5 @@
 import { usePagination, useSite, useTranslations } from "@/hooks";
-import { useCurrentApp } from "@/hooks/use-current-app";
 import { OrderBy } from "@/services/graphql/stokei";
-import { AppLayout } from "@/views/app/layout";
 import {
   Button,
   Container,
@@ -24,7 +22,6 @@ const SiteDomainsPage = () => {
   const [domains, setDomains] = useState<AppDomainFragment[]>([]);
   const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();
-  const { currentApp } = useCurrentApp();
   const { site } = useSite();
   const {
     isOpen: isOpenAddDomainDrawer,
@@ -39,7 +36,7 @@ const SiteDomainsPage = () => {
 
   const [{ data: dataGetDomains, fetching: isLoadingDomains }] =
     useGetAppDomainsQuery({
-      pause: !currentApp,
+      pause: !site,
       requestPolicy: "network-only",
       variables: {
         page: {
@@ -52,7 +49,7 @@ const SiteDomainsPage = () => {
         where: {
           AND: {
             parent: {
-              equals: currentApp?.id,
+              equals: site?.id,
             },
           },
         },
@@ -82,48 +79,45 @@ const SiteDomainsPage = () => {
   };
 
   return (
-    <AppLayout>
-      <Navbar />
-      <Container paddingY="5">
-        <AddDomainDrawer
-          isOpenDrawer={isOpenAddDomainDrawer}
-          onCloseDrawer={onCloseAddDomainDrawer}
-          onSuccess={onDomainCreated}
-        />
-        <HowConfigureDomainModal
-          isOpenModal={isOpenHowConfigureDomainModal}
-          onCloseModal={onCloseHowConfigureDomainModal}
-        />
-        <Stack direction="column" spacing="5">
-          <Stack
-            direction={["column", "column", "row", "row"]}
-            spacing="5"
-            justify="space-between"
-            align={["flex-start", "flex-start", "center", "center"]}
-          >
-            <Button onClick={onOpenAddDomainDrawer}>
-              {translate.formatMessage({ id: "addDomain" })}
-            </Button>
-            <Button variant="link" onClick={onOpenHowConfigureDomainModal}>
-              {translate.formatMessage({ id: "howConfigureADomain" })}
-            </Button>
-          </Stack>
-          {domains?.map((domain) => (
-            <DomainItem domain={domain} onDomainRemoved={onDomainRemoved} />
-          ))}
-          {dataGetDomains?.domains?.totalPages &&
-            dataGetDomains?.domains?.totalPages > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                onChangePage={onChangePage}
-                hasNextPage={!!dataGetDomains?.domains?.hasNextPage}
-                hasPreviousPage={!!dataGetDomains?.domains?.hasPreviousPage}
-                totalPages={dataGetDomains?.domains?.totalPages || 1}
-              />
-            )}
+    <Container paddingY="5">
+      <AddDomainDrawer
+        isOpenDrawer={isOpenAddDomainDrawer}
+        onCloseDrawer={onCloseAddDomainDrawer}
+        onSuccess={onDomainCreated}
+      />
+      <HowConfigureDomainModal
+        isOpenModal={isOpenHowConfigureDomainModal}
+        onCloseModal={onCloseHowConfigureDomainModal}
+      />
+      <Stack direction="column" spacing="5">
+        <Stack
+          direction={["column", "column", "row", "row"]}
+          spacing="5"
+          justify="space-between"
+          align={["flex-start", "flex-start", "center", "center"]}
+        >
+          <Button onClick={onOpenAddDomainDrawer}>
+            {translate.formatMessage({ id: "addDomain" })}
+          </Button>
+          <Button variant="link" onClick={onOpenHowConfigureDomainModal}>
+            {translate.formatMessage({ id: "howConfigureADomain" })}
+          </Button>
         </Stack>
-      </Container>
-    </AppLayout>
+        {domains?.map((domain) => (
+          <DomainItem domain={domain} onDomainRemoved={onDomainRemoved} />
+        ))}
+        {dataGetDomains?.domains?.totalPages &&
+          dataGetDomains?.domains?.totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              onChangePage={onChangePage}
+              hasNextPage={!!dataGetDomains?.domains?.hasNextPage}
+              hasPreviousPage={!!dataGetDomains?.domains?.hasPreviousPage}
+              totalPages={dataGetDomains?.domains?.totalPages || 1}
+            />
+          )}
+      </Stack>
+    </Container>
   );
 };
 

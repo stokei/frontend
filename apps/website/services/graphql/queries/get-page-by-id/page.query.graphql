@@ -1,0 +1,14 @@
+query GetPageById($id: String!) {
+  page(id: $id) {
+    ...GlobalPage
+  }
+}
+
+fragment GlobalPage on Page {
+  id
+  title
+  slug
+  version {
+    id
+  }
+}

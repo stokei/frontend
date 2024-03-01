@@ -11,6 +11,7 @@ interface ReadableProps {}
 
 export const Readable = ({
   data,
+  onRedirect,
   ...props
 }: BaseComponentReadable<ReadableProps>) => {
   const dataProps = useDataToProps({ data, props });
@@ -71,7 +72,11 @@ export const Readable = ({
               <Container>
                 <SimpleGrid columns={[1, 1, 2, 4]} spacing="5">
                   {catalogItems?.map(({ product }) => (
-                    <CatalogItem key={product?.id} product={product} />
+                    <CatalogItem
+                      key={product?.id}
+                      product={product}
+                      onRedirect={onRedirect}
+                    />
                   ))}
                 </SimpleGrid>
               </Container>

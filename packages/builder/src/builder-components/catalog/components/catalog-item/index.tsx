@@ -25,9 +25,10 @@ import { SelectPrice } from "../../../../components/select-price";
 
 export interface CatalogItemProps {
   readonly product?: BuilderComponentCatalogItemProductFragment;
+  readonly onRedirect: (url: string) => void;
 }
 
-export const CatalogItem = ({ product }: CatalogItemProps) => {
+export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
   const [currentPrice, setCurrentPrice] = useState<
     PriceComponentFragment | undefined | null
   >();
@@ -55,9 +56,10 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
     }
   }, [product?.defaultPrice]);
 
-  const goToProductDetails = useCallback(() => {
-    window.location.assign(productURL);
-  }, [productURL]);
+  const goToProductDetails = useCallback(
+    () => onRedirect(productURL),
+    [onRedirect, productURL]
+  );
 
   const onChoosePrice = useCallback((price?: PriceComponentFragment) => {
     setCurrentPrice(price || null);

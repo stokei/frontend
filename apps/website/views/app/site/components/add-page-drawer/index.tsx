@@ -1,4 +1,4 @@
-import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
+import { useAPIErrors, useCurrentApp, useSite, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { AppLayout } from "@/views/app/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +8,9 @@ import {
   Card,
   CardBody,
   Container,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
   Form,
   FormControl,
   FormErrorMessage,
@@ -22,13 +25,21 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreatePageMutation } from "../../graphql/create-page.mutation.graphql.generated";
-import { Navbar } from "../navbar";
 
-export const AddPagePage = () => {
+interface AddPageDrawerProps {
+  isOpenDrawer?: boolean;
+  onCloseDrawer: () => void;
+}
+
+export const AddPageDrawer = ({
+  onCloseDrawer,
+  isOpenDrawer,
+}: AddPageDrawerProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
   const { currentApp } = useCurrentApp();
+  const { siteId } = useSite();
 
   const [{ fetching: isLoadingCreatePage }, onExecuteCreatePageMutation] =
     useCreatePageMutation();
@@ -40,6 +51,7 @@ export const AddPagePage = () => {
   });
 
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors, isValid },
@@ -53,7 +65,7 @@ export const AddPagePage = () => {
       const response = await onExecuteCreatePageMutation({
         input: {
           title,
-          parent: currentApp?.id || "",
+          parent: siteId || "",
         },
       });
       if (!!response?.data?.createPage) {
@@ -82,60 +94,45 @@ export const AddPagePage = () => {
     }
   };
 
+  const onClose = () => {
+    reset();
+    onCloseDrawer();
+  };
+
   return (
-    <AppLayout>
-      <Navbar />
-      <Container paddingY="5">
-        <Stack
-          width="full"
-          direction="column"
-          spacing="4"
-          align="center"
-          justify="center"
-        >
-          <Title marginBottom="5" textAlign="center" lineHeight="shorter">
-            {translate.formatMessage({ id: "addPage" })}
-          </Title>
-          <Card
-            width={["full", "full", "500px", "500px"]}
-            background="background.50"
-          >
-            <CardBody>
-              <Form onSubmit={handleSubmit(onSubmit)}>
-                <Stack spacing="4">
-                  <FormControl isInvalid={!!errors?.title}>
-                    <Label htmlFor="title">
-                      {translate.formatMessage({ id: "title" })}
-                    </Label>
-                    <InputGroup>
-                      <Input
-                        id="title"
-                        placeholder={translate.formatMessage({
-                          id: "title",
-                        })}
-                        {...register("title")}
-                      />
-                    </InputGroup>
-                    <FormErrorMessage>
-                      {errors?.title?.message}
-                    </FormErrorMessage>
-                  </FormControl>
-                  <Box width="full" paddingBottom="4">
-                    <Button
-                      width="full"
-                      isLoading={isLoadingCreatePage}
-                      isDisabled={!isValid}
-                      type="submit"
-                    >
-                      {translate.formatMessage({ id: "add" })}
-                    </Button>
-                  </Box>
-                </Stack>
-              </Form>
-            </CardBody>
-          </Card>
-        </Stack>
-      </Container>
-    </AppLayout>
+    <Drawer isOpen={!!isOpenDrawer} onClose={onClose}>
+      <DrawerHeader>{translate.formatMessage({ id: "addPage" })}</DrawerHeader>
+      <DrawerBody>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Stack spacing="4">
+            <FormControl isInvalid={!!errors?.title}>
+              <Label htmlFor="title">
+                {translate.formatMessage({ id: "title" })}
+              </Label>
+              <InputGroup>
+                <Input
+                  id="title"
+                  placeholder={translate.formatMessage({
+                    id: "title",
+                  })}
+                  {...register("title")}
+                />
+              </InputGroup>
+              <FormErrorMessage>{errors?.title?.message}</FormErrorMessage>
+            </FormControl>
+            <Box width="full" paddingBottom="4">
+              <Button
+                width="full"
+                isLoading={isLoadingCreatePage}
+                isDisabled={!isValid}
+                type="submit"
+              >
+                {translate.formatMessage({ id: "add" })}
+              </Button>
+            </Box>
+          </Stack>
+        </Form>
+      </DrawerBody>
+    </Drawer>
   );
 };

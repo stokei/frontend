@@ -1,4 +1,4 @@
-import * as Types from '../../../../../../services/graphql/stokei/index';
+import * as Types from '../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
 import { SitePagesPageFragmentDoc } from './pages.query.graphql.generated';

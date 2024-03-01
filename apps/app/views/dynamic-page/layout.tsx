@@ -3,14 +3,14 @@ import { Navbar } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 import { Loading } from "./loading";
 
-export interface LandingPageLayoutProps {
+export interface DynamicPageLayoutProps {
   isLoading?: boolean;
 }
 
-export const LandingPageLayout = ({
+export const DynamicPageLayout = ({
   isLoading,
   children,
-}: PropsWithChildren<LandingPageLayoutProps>) => {
+}: PropsWithChildren<DynamicPageLayoutProps>) => {
   return (
     <>
       <Navbar>
