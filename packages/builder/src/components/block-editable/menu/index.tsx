@@ -11,8 +11,8 @@ export const BlockEditableMenu = ({
 }: PropsWithChildren<BlockEditableMenuProps>) => {
   return (
     <Stack
-      top={direction === "top" ? "20" : undefined}
-      bottom={direction === "bottom" ? "20" : undefined}
+      top={direction === "top" ? "-10" : undefined}
+      bottom={direction === "bottom" ? "-10" : undefined}
       position="absolute"
       direction="row"
     >
