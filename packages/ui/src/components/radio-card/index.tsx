@@ -13,17 +13,23 @@ export const RadioCard: React.FC<RadioCardProps> = forwardRef(
   ({ id, children, ...props }, ref) => {
     return (
       <Box
-        as="label"
         width="full"
+        height="fit-content"
         cursor="pointer"
         rounded="md"
-        borderWidth="2px"
         paddingX={5}
         paddingY={3}
         role="radio"
+        borderWidth="2px"
         borderColor={props?.isChecked ? "primary.500" : undefined}
       >
-        <Stack width="full" direction="row" spacing="5">
+        <Stack
+          width="full"
+          height="fit-content"
+          direction="row"
+          spacing="5"
+          align="center"
+        >
           <Radio id={id} ref={ref} {...props} />
           {children}
         </Stack>
