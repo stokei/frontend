@@ -106,7 +106,7 @@ export const PaymentMethodManagement: FC<PaymentMethodManagementProps> = ({
   );
 
   return (
-    <Box width="full" flexDirection="column">
+    <Box width="full" height="fit-content" flexDirection="column">
       <CreateCreditCardModal
         isOpen={isOpenCreatePaymentMethodModal}
         onClose={onCloseCreatePaymentMethodModal}
@@ -131,12 +131,14 @@ export const PaymentMethodManagement: FC<PaymentMethodManagementProps> = ({
           ) : (
             <>
               <RadioGroup
+                height="fit-content"
                 onChange={onChangePaymentMethod}
                 value={selectedPaymentMethod?.id || ""}
               >
-                <Stack direction="column" spacing="4">
+                <Stack height="fit-content" direction="column" spacing="4">
                   {paymentMethods.map((currentPaymentMethod) => (
                     <RadioCard
+                      height="fit-content"
                       key={currentPaymentMethod.id}
                       id={"payment-method-" + currentPaymentMethod?.id}
                       value={currentPaymentMethod?.id}

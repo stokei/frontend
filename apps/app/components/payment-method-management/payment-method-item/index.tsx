@@ -13,7 +13,7 @@ export const PaymentMethodItem: FC<PaymentMethodItemProps> = ({
 }) => {
   const translate = useTranslations();
   return (
-    <Stack direction="row" spacing="4" align="center">
+    <Stack height="fit-content" direction="row" spacing="4" align="center">
       <Image
         width="12"
         height="fit-content"
@@ -21,9 +21,10 @@ export const PaymentMethodItem: FC<PaymentMethodItemProps> = ({
         fallbackSrc={getCardFlagURL()}
         alt={paymentMethod?.cardBrand || ""}
       />
-      <Box width="full" align="center" justify="flex-end">
+      <Box width="full" height="fit-content" align="center" justify="flex-end">
         <Stack
-          width="auto"
+          width="fit-content"
+          height="fit-content"
           direction="column"
           spacing="2"
           align="flex-end"
@@ -33,7 +34,12 @@ export const PaymentMethodItem: FC<PaymentMethodItemProps> = ({
             **** **** **** {paymentMethod?.lastFourCardNumber}
           </Text>
           {paymentMethod?.cardExpiryMonth && paymentMethod?.cardExpiryYear && (
-            <Stack width="auto" direction="row" spacing="2" align="center">
+            <Stack
+              width="fit-content"
+              direction="row"
+              spacing="2"
+              align="center"
+            >
               <Text fontSize="sm">
                 {translate.formatMessage({ id: "validUntil" })}:
               </Text>
