@@ -298,26 +298,31 @@ export const CheckoutPage = () => {
               <StepItem
                 title={translate.formatMessage({ id: "products" })}
                 stepIndex={CheckoutStep.PRODUCTS}
+                isCompleted={activeSteps?.[CheckoutStep.ADDRESS]}
               />
               <StepItem
                 title={translate.formatMessage({ id: "address" })}
                 stepIndex={CheckoutStep.ADDRESS}
                 isDisabled={!activeSteps?.[CheckoutStep.ADDRESS]}
+                isCompleted={activeSteps?.[CheckoutStep.ACCOUNT]}
               />
               <StepItem
                 title={translate.formatMessage({ id: "account" })}
                 stepIndex={CheckoutStep.ACCOUNT}
                 isDisabled={!activeSteps?.[CheckoutStep.ACCOUNT]}
+                isCompleted={activeSteps?.[CheckoutStep.PAYMENT_METHOD]}
               />
               <StepItem
                 title={translate.formatMessage({ id: "paymentMethod" })}
                 stepIndex={CheckoutStep.PAYMENT_METHOD}
                 isDisabled={!activeSteps?.[CheckoutStep.PAYMENT_METHOD]}
+                isCompleted={activeSteps?.[CheckoutStep.SUMMARY]}
               />
               <StepItem
                 title={translate.formatMessage({ id: "summary" })}
                 stepIndex={CheckoutStep.SUMMARY}
                 isDisabled={!activeSteps?.[CheckoutStep.SUMMARY]}
+                isCompleted={activeSteps?.[CheckoutStep.PAYMENT]}
               />
               <StepItem
                 title={translate.formatMessage({ id: "payment" })}

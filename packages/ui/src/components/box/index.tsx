@@ -3,10 +3,10 @@ import {
   FlexProps as ChakraFlexProps,
   forwardRef,
 } from "@chakra-ui/react";
-import { ForwardedRef, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 export interface BoxProps extends ChakraFlexProps {
-  readonly ref?: ForwardedRef<any>;
+  readonly ref?: any;
 }
 export const Box = forwardRef<PropsWithChildren<BoxProps>, "div">(
   ({ children, ...props }, ref) => (
