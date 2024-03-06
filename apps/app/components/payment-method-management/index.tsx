@@ -106,7 +106,12 @@ export const PaymentMethodManagement: FC<PaymentMethodManagementProps> = ({
   );
 
   return (
-    <Box width="full" height="fit-content" flexDirection="column">
+    <Box
+      width="full"
+      position="relative"
+      height="fit-content"
+      flexDirection="column"
+    >
       <CreateCreditCardModal
         isOpen={isOpenCreatePaymentMethodModal}
         onClose={onCloseCreatePaymentMethodModal}
@@ -131,7 +136,6 @@ export const PaymentMethodManagement: FC<PaymentMethodManagementProps> = ({
           ) : (
             <>
               <RadioGroup
-                height="fit-content"
                 onChange={onChangePaymentMethod}
                 value={selectedPaymentMethod?.id || ""}
               >

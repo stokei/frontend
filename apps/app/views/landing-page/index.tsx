@@ -23,7 +23,7 @@ export const LandingPage: FC<LandingPageProps> = () => {
   });
 
   const sortedItems = useMemo(
-    () => dataSortedItems?.sortedItems,
+    () => dataSortedItems?.sortedItems?.items || [],
     [dataSortedItems]
   );
 
@@ -33,7 +33,7 @@ export const LandingPage: FC<LandingPageProps> = () => {
         <Loading />
       ) : (
         <>
-          {sortedItems?.items?.map((sortedItem) => (
+          {sortedItems?.map((sortedItem) => (
             <SortedItemFactory key={sortedItem?.id} sortedItem={sortedItem} />
           ))}
         </>
