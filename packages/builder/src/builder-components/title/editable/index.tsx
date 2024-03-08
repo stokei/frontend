@@ -12,7 +12,7 @@ export const Editable = ({
 }: BaseComponentEditable<EditableProps>) => {
   const dataProps = useDataToProps({ data, props });
   return (
-    <BlockEditable>
+    <BlockEditable id={props?.id}>
       <Title {...dataProps}>
         {dataProps?.highlight ? (
           <Highlight query={dataProps?.highlight}>

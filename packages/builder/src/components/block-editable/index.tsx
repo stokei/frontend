@@ -1,11 +1,13 @@
-import { Box, BoxProps, useDisclosure } from "@stokei/ui";
-import { useOnClickOutside } from "@stokei/ui/src/hooks/use-on-click-outside";
+import { Box, BoxProps, useDisclosure, useOutsideClick } from "@stokei/ui";
 import { PropsWithChildren, useRef } from "react";
 import { BlockEditableMenu } from "./menu";
 
-interface BlockEditableProps {}
+interface BlockEditableProps {
+  readonly id: string;
+}
 
 export const BlockEditable = ({
+  id,
   children,
 }: PropsWithChildren<BlockEditableProps>) => {
   const blockRef = useRef<any>();
@@ -15,17 +17,24 @@ export const BlockEditable = ({
     onClose: onClickOutside,
   } = useDisclosure();
 
-  useOnClickOutside(blockRef, () => onClickOutside());
+  useOutsideClick({
+    ref: blockRef,
+    handler(e) {
+      onClickOutside();
+    },
+  });
 
   const clickedProps: BoxProps = isClicked
     ? {
-        borderWidth: "thin",
+        rounded: "sm",
+        borderWidth: "2px",
         borderColor: "primary.500",
       }
     : {};
 
   return (
     <Box
+      id={id}
       ref={blockRef}
       flexDirection="column"
       onClick={onClick}
@@ -34,7 +43,6 @@ export const BlockEditable = ({
     >
       {isClicked && <BlockEditableMenu direction="top" />}
       {children}
-      {isClicked && <BlockEditableMenu direction="bottom" />}
     </Box>
   );
 };

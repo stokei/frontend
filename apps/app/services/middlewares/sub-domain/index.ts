@@ -33,13 +33,13 @@ export const withSubDomain = async ({
     slug = site?.slug || "";
     app = site?.app;
 
-    if (url.pathname.startsWith("/app/" + slug)) {
+    if (url.pathname.startsWith("/site/" + slug)) {
       url.href = url.href
-        .replace("/app/" + slug, "/")
+        .replace("/site/" + slug, "/")
         .replace(url.hostname, domain);
       isRedirect = true;
     } else {
-      url.pathname = url.pathname.replace("/", "/app/" + slug + "/");
+      url.pathname = url.pathname.replace("/", "/site/" + slug + "/");
     }
   } catch (error) {
     slug = "";

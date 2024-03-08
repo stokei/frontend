@@ -1,4 +1,4 @@
-import { Button, Stack } from "@stokei/ui";
+import { Button, ButtonGroup, IconButton, Stack } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 
 interface BlockEditableMenuProps {
@@ -11,12 +11,17 @@ export const BlockEditableMenu = ({
 }: PropsWithChildren<BlockEditableMenuProps>) => {
   return (
     <Stack
-      top={direction === "top" ? "-10" : undefined}
-      bottom={direction === "bottom" ? "-10" : undefined}
-      position="absolute"
+      width="full"
       direction="row"
+      spacing="1"
+      padding="1"
+      borderBottomWidth="2px"
+      borderColor="primary.500"
     >
-      <Button>Menu</Button>
+      <ButtonGroup spacing="1" variant="ghost">
+        <IconButton name="move" />
+        <IconButton name="trash" />
+      </ButtonGroup>
     </Stack>
   );
 };

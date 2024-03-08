@@ -93,6 +93,7 @@ import {
   RxCaretUp,
 } from "react-icons/rx";
 import { TbApps } from "react-icons/tb";
+import { IoIosMove } from "react-icons/io";
 
 import {
   RiCheckboxBlankCircleLine,
@@ -203,3 +204,4 @@ export const SiteIcon = MdOutlineWeb;
 export const PageIcon = MdOutlineWebAsset;
 export const ClockIcon = AiOutlineClockCircle;
 export const WarningIcon = AiOutlineWarning;
+export const MoveIcon = IoIosMove;

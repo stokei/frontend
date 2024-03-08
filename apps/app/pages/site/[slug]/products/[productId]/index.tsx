@@ -7,7 +7,7 @@ import {
   ProductPageProductFragment,
 } from "@/views/product/graphql/product.query.graphql.generated";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
-import { getAppSlugFromContext } from "@/utils/get-app-slug-from-context";
+import { getSiteSlugFromContext } from "@/utils/get-site-slug-from-context";
 import { getSiteBySlug } from "@/services/graphql/queries/get-app-by-slug";
 
 interface Props {
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const cookies = context?.req?.cookies;
-  const slug = getAppSlugFromContext(context);
+  const slug = getSiteSlugFromContext(context);
   const site = await getSiteBySlug({
     slug,
     cookies,

@@ -7,7 +7,7 @@ interface EditableProps {}
 
 export const Editable = (props: BaseComponentEditable<EditableProps>) => {
   return (
-    <BlockEditable>
+    <BlockEditable id={props?.id}>
       <Spacer {...props} />
     </BlockEditable>
   );

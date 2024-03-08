@@ -1,4 +1,4 @@
-import { APP_SLUG_COOKIE_KEY } from "@/constants/cookies-keys";
+import { SITE_SLUG_COOKIE_KEY } from "@/constants/cookies-keys";
 import {
   MiddlewareAppResponse,
   MiddlewareResponse,
@@ -17,14 +17,14 @@ export const withLocalDomain = async ({
   const { pathname } = nextUrl;
   let isRedirect = false;
   const pathnameListParams = pathname.split("/");
-  const hasRouteApp = pathnameListParams[1] === "app";
+  const hasRouteSite = pathnameListParams[1] === "site";
   let slug = pathnameListParams[2];
   let app: MiddlewareAppResponse | undefined;
   let site: MiddlewareSiteResponse | undefined;
 
   try {
-    if (!hasRouteApp && cookies?.[APP_SLUG_COOKIE_KEY]) {
-      slug = cookies?.[APP_SLUG_COOKIE_KEY];
+    if (!hasRouteSite && cookies?.[SITE_SLUG_COOKIE_KEY]) {
+      slug = cookies?.[SITE_SLUG_COOKIE_KEY];
     }
     if (!!slug) {
       const stokeiClient = createAPIClient({ cookies });
@@ -44,8 +44,8 @@ export const withLocalDomain = async ({
       app = site?.app;
 
       if (!!app) {
-        if (!url.pathname.startsWith("/app/" + slug)) {
-          url.pathname = url.pathname.replace("/", "/app/" + slug + "/");
+        if (!url.pathname.startsWith("/site/" + slug)) {
+          url.pathname = url.pathname.replace("/", "/site/" + slug + "/");
           isRedirect = true;
         }
       } else {

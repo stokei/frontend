@@ -106,6 +106,7 @@ export const icons = {
   page: IconComponent.PageIcon,
   clock: IconComponent.ClockIcon,
   warning: IconComponent.WarningIcon,
+  move: IconComponent.MoveIcon,
 };
 
 export type IconName = keyof typeof icons;

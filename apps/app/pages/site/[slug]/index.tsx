@@ -1,7 +1,7 @@
 import { createAxiosAPIClient } from "@/services/axios/client";
 import { GetVersionResponse, Version } from "@/services/axios/models/version";
 import { getSiteBySlug } from "@/services/graphql/queries/get-app-by-slug";
-import { getAppSlugFromContext } from "@/utils/get-app-slug-from-context";
+import { getSiteSlugFromContext } from "@/utils/get-site-slug-from-context";
 import { DynamicPage } from "@/views/dynamic-page";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 
@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const cookies = context?.req?.cookies;
-  const slug = getAppSlugFromContext(context);
+  const slug = getSiteSlugFromContext(context);
   const site = await getSiteBySlug({
     slug,
     cookies,
