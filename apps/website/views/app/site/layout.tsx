@@ -67,6 +67,14 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
           >
             {translate.formatMessage({ id: "about" })}
           </SidebarNavLink>
+          <SidebarNavLink
+            leftIcon="about"
+            as={NextLink}
+            href={baseSiteRoutes.home}
+            isActive={router.asPath === baseSiteRoutes.home}
+          >
+            {translate.formatMessage({ id: "components" })}
+          </SidebarNavLink>
           <SidebarGroup isActive={!!router.asPath?.match(baseSiteRoutes.pages)}>
             <SidebarGroupButton leftIcon="page">
               {translate.formatMessage({ id: "pages" })}

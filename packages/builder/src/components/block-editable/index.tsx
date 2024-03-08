@@ -19,9 +19,7 @@ export const BlockEditable = ({
 
   useOutsideClick({
     ref: blockRef,
-    handler(e) {
-      onClickOutside();
-    },
+    handler: onClickOutside,
   });
 
   const clickedProps: BoxProps = isClicked
@@ -41,7 +39,7 @@ export const BlockEditable = ({
       position="relative"
       {...clickedProps}
     >
-      {isClicked && <BlockEditableMenu direction="top" />}
+      {isClicked && <BlockEditableMenu />}
       {children}
     </Box>
   );

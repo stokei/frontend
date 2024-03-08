@@ -1,12 +1,9 @@
 import { Button, ButtonGroup, IconButton, Stack } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 
-interface BlockEditableMenuProps {
-  direction: "bottom" | "top";
-}
+interface BlockEditableMenuProps {}
 
 export const BlockEditableMenu = ({
-  direction,
   ...props
 }: PropsWithChildren<BlockEditableMenuProps>) => {
   return (
