@@ -1,6 +1,5 @@
 import { useCurrentApp, useSite, useTranslations } from "@/hooks";
 import { Badge, SidebarNavLink } from "@stokei/ui";
-import NextLink from "next/link";
 
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
@@ -23,7 +22,6 @@ export const PageItem = ({ page }: PageItemProps) => {
 
   return (
     <SidebarNavLink
-      as={NextLink}
       href={editPageURL}
       isTruncated
       badge={

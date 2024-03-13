@@ -16,6 +16,7 @@ export const DynamicPage = ({ version }: DynamicPageProps) => {
         <BuilderComponent
           id={component?.id}
           key={component?.id}
+          order={component?.order}
           type={component?.type}
           builderType={ComponentBuilderType.BLOCK_READABLE}
           components={component?.components}

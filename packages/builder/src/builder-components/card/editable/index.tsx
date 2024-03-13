@@ -11,7 +11,7 @@ export const Editable = ({
   ...props
 }: BaseComponentEditable<EditableProps>) => {
   return (
-    <BlockEditable id={props?.id}>
+    <BlockEditable {...props}>
       <Card {...props}>
         <CardBody>{children}</CardBody>
       </Card>

@@ -64,11 +64,7 @@ export const SidebarNavLink = forwardRef(
           justify="space-between"
           align="center"
         >
-          <Text
-            width="full"
-            color={activeStyle?.color}
-            isTruncated={props?.isTruncated}
-          >
+          <Text width="full" color="inherit" isTruncated={props?.isTruncated}>
             {children}
           </Text>
           {badge}

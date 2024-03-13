@@ -28,7 +28,7 @@ export const Sidebar = ({
         width="280px"
         minWidth="280px"
         height="full"
-        position="fixed"
+        position="absolute"
         overflowY="auto"
       >
         <SidebarUI

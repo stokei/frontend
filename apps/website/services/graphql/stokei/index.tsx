@@ -399,6 +399,7 @@ export type CompleteAccountConfigurationInput = {
 
 export type Component = {
   __typename?: 'Component';
+  acceptTypes: ComponentType;
   app?: Maybe<App>;
   components?: Maybe<Array<Component>>;
   createdAt?: Maybe<Scalars['String']>;

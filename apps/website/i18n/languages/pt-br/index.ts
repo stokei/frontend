@@ -1,5 +1,8 @@
 export const ptBRMessages = {
   me: "Eu",
+  component: "Componente",
+  components: "Componentes",
+  metadata: "Metadados",
   internationalPayment: "Pagamento internacional",
   menu: "Menu",
   addSite: "Adicionar site",

@@ -1,14 +1,29 @@
-import { Box, BoxProps, useDisclosure, useOutsideClick } from "@stokei/ui";
+import {
+  Box,
+  BoxProps,
+  Draggable,
+  DraggableTrigger,
+  Droppable,
+  useDisclosure,
+  useOutsideClick,
+} from "@stokei/ui";
 import { PropsWithChildren, useRef } from "react";
 import { BlockEditableMenu } from "./menu";
+import { ComponentType } from "../../services/graphql/stokei";
 
 interface BlockEditableProps {
   readonly id: string;
+  readonly type: ComponentType;
+  readonly acceptTypes?: ComponentType[];
+  readonly onRemove?: () => void;
 }
 
 export const BlockEditable = ({
   id,
+  type,
+  acceptTypes,
   children,
+  onRemove,
 }: PropsWithChildren<BlockEditableProps>) => {
   const blockRef = useRef<any>();
   const {
@@ -31,16 +46,20 @@ export const BlockEditable = ({
     : {};
 
   return (
-    <Box
-      id={id}
-      ref={blockRef}
-      flexDirection="column"
-      onClick={onClick}
-      position="relative"
-      {...clickedProps}
-    >
-      {isClicked && <BlockEditableMenu />}
-      {children}
-    </Box>
+    <Droppable id={id} acceptTypes={acceptTypes}>
+      <Draggable id={id} type={type}>
+        <Box
+          id={id}
+          ref={blockRef}
+          flexDirection="column"
+          onClick={onClick}
+          position="relative"
+          {...clickedProps}
+        >
+          {isClicked && <BlockEditableMenu onRemove={onRemove} />}
+          {children}
+        </Box>
+      </Draggable>
+    </Droppable>
   );
 };

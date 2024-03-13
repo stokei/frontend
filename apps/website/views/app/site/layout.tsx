@@ -6,6 +6,7 @@ import { useCurrentApp, useSite, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
   Box,
+  DragAndDropProvider,
   Loading,
   SidebarBody,
   SidebarGroup,
@@ -18,8 +19,8 @@ import {
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
-import { PagesList } from "./components/pages-list";
 import { AddPageDrawer } from "./components/add-page-drawer";
+import { PagesList } from "./components/pages-list";
 
 const SiteLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
@@ -59,6 +60,7 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
           >
             {translate.formatMessage({ id: "home" })}
           </SidebarNavLink>
+
           <SidebarNavLink
             leftIcon="about"
             as={NextLink}
@@ -67,15 +69,8 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
           >
             {translate.formatMessage({ id: "about" })}
           </SidebarNavLink>
-          <SidebarNavLink
-            leftIcon="about"
-            as={NextLink}
-            href={baseSiteRoutes.home}
-            isActive={router.asPath === baseSiteRoutes.home}
-          >
-            {translate.formatMessage({ id: "components" })}
-          </SidebarNavLink>
-          <SidebarGroup isActive={!!router.asPath?.match(baseSiteRoutes.pages)}>
+
+          <SidebarGroup>
             <SidebarGroupButton leftIcon="page">
               {translate.formatMessage({ id: "pages" })}
             </SidebarGroupButton>
@@ -92,6 +87,7 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
               <PagesList />
             </SidebarGroupPanel>
           </SidebarGroup>
+
           <SidebarNavLink
             leftIcon="domain"
             as={NextLink}

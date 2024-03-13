@@ -21,14 +21,21 @@ import { ComponentBuilderType } from "../../types/component-builder-type";
 
 export interface BuilderComponentData {
   id: string;
+  order: number;
   data?: any;
   type: ComponentType;
+  acceptTypes?: ComponentType[];
   components?: BuilderComponentData[];
 }
 
 interface BuilderComponentProps extends BuilderComponentData {
   builderType: ComponentBuilderType;
   onRedirect: (route: string) => void;
+  onRemove?: (
+    componentId: string,
+    componentOrder: number,
+    componentType: ComponentType
+  ) => void;
 }
 
 const getComponent = ({
@@ -65,8 +72,10 @@ const getComponent = ({
 export const BuilderComponent = ({
   builderType,
   type,
+  acceptTypes,
   components,
   onRedirect,
+  onRemove,
   ...props
 }: PropsWithChildren<BuilderComponentProps>) => {
   const Component = useMemo(
@@ -81,12 +90,22 @@ export const BuilderComponent = ({
     return <></>;
   }
   return (
-    <Component onRedirect={onRedirect} {...props}>
+    <Component
+      onRedirect={onRedirect}
+      type={type}
+      builderType={builderType}
+      acceptTypes={acceptTypes}
+      onRemove={
+        onRemove ? () => onRemove(props?.id, props?.order, type) : undefined
+      }
+      {...props}
+    >
       {components?.map((component) => (
         <BuilderComponent
           key={component?.id}
           builderType={builderType}
           onRedirect={onRedirect}
+          onRemove={onRemove}
           {...component}
         />
       ))}

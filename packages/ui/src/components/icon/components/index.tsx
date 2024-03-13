@@ -91,8 +91,9 @@ import {
   RxCaretLeft,
   RxCaretRight,
   RxCaretUp,
+  RxComponent1,
 } from "react-icons/rx";
-import { TbApps } from "react-icons/tb";
+import { TbApps, TbSeo } from "react-icons/tb";
 import { IoIosMove } from "react-icons/io";
 
 import {
@@ -205,3 +206,5 @@ export const PageIcon = MdOutlineWebAsset;
 export const ClockIcon = AiOutlineClockCircle;
 export const WarningIcon = AiOutlineWarning;
 export const MoveIcon = IoIosMove;
+export const ComponentIcon = RxComponent1;
+export const MetadataIcon = TbSeo;

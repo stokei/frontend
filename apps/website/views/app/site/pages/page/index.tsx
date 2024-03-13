@@ -1,20 +1,21 @@
-import { useTranslations } from "@/hooks";
+import { useComponentsTree, usePage } from "@/hooks";
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { GlobalPageFragment } from "@/services/graphql/queries/get-page-by-id/page.query.graphql.generated";
 import { BuilderComponent, ComponentBuilderType } from "@stokei/builder";
-import { Box, Container, Stack, Text } from "@stokei/ui";
+import { Box, Container, Text } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { SiteLayout } from "../../layout";
 import { Navbar } from "./components/navbar";
+import { PageLayout } from "./layout";
+import { UpdatePageTitleForm } from "./components/update-page-title-form";
 
 export interface SitePageProps {
   version: GetVersionResponse;
   page: GlobalPageFragment;
 }
 
-const SitePage = ({ version, page }: SitePageProps) => {
+const SitePage = () => {
   const router = useRouter();
-  const translate = useTranslations();
+  const { componentsTree } = useComponentsTree();
 
   return (
     <Container paddingY="5">
@@ -29,7 +30,7 @@ const SitePage = ({ version, page }: SitePageProps) => {
         roundedTop="md"
         background="background.50"
       >
-        <Text fontWeight="bold">{page?.title}</Text>
+        <UpdatePageTitleForm />
       </Box>
       <Box
         flexDirection="column"
@@ -39,15 +40,20 @@ const SitePage = ({ version, page }: SitePageProps) => {
         background="background.50"
       >
         <Container paddingY="5">
-          {version?.components?.map((component) => (
+          {componentsTree?.map((component) => (
             <BuilderComponent
               id={component?.id}
               key={component?.id}
+              order={component?.order}
               type={component?.type}
+              acceptTypes={component?.acceptTypes}
               builderType={ComponentBuilderType.BLOCK_EDITABLE}
               components={component?.components}
               data={component?.data}
               onRedirect={router.push}
+              onRemove={(componentId, order, type) =>
+                console.log({ componentId, order, type })
+              }
             />
           ))}
         </Container>
@@ -58,10 +64,10 @@ const SitePage = ({ version, page }: SitePageProps) => {
 
 const SitePageWithLayout = (props: SitePageProps) => {
   return (
-    <SiteLayout>
+    <PageLayout {...props}>
       <Navbar />
-      <SitePage {...props} />
-    </SiteLayout>
+      <SitePage />
+    </PageLayout>
   );
 };
 

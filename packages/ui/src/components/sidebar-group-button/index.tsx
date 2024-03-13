@@ -78,7 +78,7 @@ export const SidebarGroupButton = ({
     >
       {leftIcon && <Icon name={leftIcon} marginRight="4" />}
       <Stack as="span" direction="row" spacing="5" justify="space-between">
-        <Text color={activeStyle?.color}>{children}</Text>
+        <Text color="inherit">{children}</Text>
         {badge}
       </Stack>
     </Button>

@@ -3,8 +3,10 @@ import { AxiosInstance } from "axios";
 
 export interface GetVersionComponent {
   id: string;
+  order: number;
   data?: any;
   type: ComponentType;
+  acceptTypes?: ComponentType[];
   components?: GetVersionComponent[];
 }
 export interface GetVersionResponse {
