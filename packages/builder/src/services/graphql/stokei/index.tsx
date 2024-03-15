@@ -635,6 +635,7 @@ export type CreateColorInput = {
 
 export type CreateComponentInput = {
   data?: InputMaybe<Scalars['JSON']>;
+  order: Scalars['Float'];
   parent: Scalars['String'];
   type: ComponentType;
 };
@@ -752,6 +753,7 @@ export type CreateOrUpdateColorInput = {
 export type CreateOrUpdateComponentInput = {
   data?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
+  order: Scalars['Float'];
   parent: Scalars['String'];
   type: ComponentType;
 };

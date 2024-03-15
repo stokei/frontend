@@ -128,6 +128,8 @@ export * from "./portal";
 export * from "./progress";
 export * from "./rating";
 export * from "./switch";
+export * from "./sortable-item";
+export * from "./sortable-item-trigger";
 export * from "./select";
 export * from "./select-input";
 export * from "./select-tag-list";

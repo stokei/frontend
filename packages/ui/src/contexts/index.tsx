@@ -3,5 +3,7 @@ export * from "./draggable";
 export * from "./select";
 export * from "./sidebar-group";
 export * from "./steps";
+export * from "./sortable";
+export * from "./sortable-item";
 export * from "./stokei";
 export * from "./video-player";

@@ -2,7 +2,7 @@ import {
   GetVersionComponent,
   GetVersionResponse,
 } from "@/services/axios/models/version";
-import { DragAndDropProvider } from "@stokei/ui";
+import { DragAndDropProvider, arrayMove } from "@stokei/ui";
 import {
   PropsWithChildren,
   createContext,
@@ -19,6 +19,7 @@ export interface ComponentsTreeComponent extends GetVersionComponent {}
 
 export interface ComponentsTreeProviderValues {
   readonly componentsTree: ComponentsTreeComponent[];
+  readonly onRemoveComponent: (componentId: string) => void;
 }
 
 export const ComponentsTreeContext = createContext(
@@ -73,37 +74,63 @@ export const ComponentsTreeProvider = ({
 
   const addComponent = useCallback((newComponent: ComponentsTreeComponent) => {
     setComponentsTree((currentComponentsTree) => {
-      // FAZER ISSO FUNCIONAR
       const mapper = (
-        component: ComponentsTreeComponent,
-        index: number
-      ): ComponentsTreeComponent => {
-        if (component.parent === newComponent.parent) {
-          const newComponents = component.components?.splice(
-            index + 1,
-            0,
-            newComponent
-          );
-          return {
+        newComponent: ComponentsTreeComponent,
+        components: ComponentsTreeComponent[]
+      ): ComponentsTreeComponent[] => {
+        return components.map((component) => {
+          const isParentComponent = component.parent === newComponent.parent;
+          if (!isParentComponent) {
+            return component;
+          }
+          const newComponents = component.components
+            ? [...component.components]
+            : [];
+          newComponents?.splice(newComponent.order - 1, 0, newComponent);
+          const updatedComponent: ComponentsTreeComponent = {
             ...component,
-            order: index,
-            components: newComponents,
+            components: newComponents?.map((comp, index) => ({
+              ...comp,
+              order: index + 1,
+            })),
           };
-        }
-        return {
-          ...component,
-          order: index,
-          components: component?.components?.map((currentComponent, position) =>
-            mapper(currentComponent, position)
-          ),
-        };
+          return updatedComponent;
+        });
       };
 
-      return currentComponentsTree?.map((component, index) =>
-        mapper(component, index)
-      );
+      return mapper(newComponent, currentComponentsTree || []);
     });
   }, []);
+
+  const removeComponent = useCallback(
+    (componentId: string, components: ComponentsTreeComponent[]) => {
+      return components.reduce<ComponentsTreeComponent[]>(
+        (previousComponents, component) => {
+          const isRemovedComponent = component.id === componentId;
+          if (isRemovedComponent) {
+            return previousComponents;
+          }
+          const updatedComponent: ComponentsTreeComponent = {
+            ...component,
+            components: component.components?.length
+              ? removeComponent(componentId, component.components)
+              : undefined,
+          };
+          return [...previousComponents, updatedComponent];
+        },
+        []
+      );
+    },
+    []
+  );
+
+  const onRemoveComponent = useCallback(
+    (componentId: string) =>
+      setComponentsTree((currentTree) =>
+        removeComponent(componentId, currentTree)
+      ),
+    [removeComponent]
+  );
 
   const onDragEnd = useCallback(
     (activeComponentId: string, overComponentId: string) => {
@@ -113,6 +140,7 @@ export const ComponentsTreeProvider = ({
         addComponent({
           ...activeComponent,
           parent: overComponent?.id,
+          order: overComponent?.order,
         });
       }
     },
@@ -122,19 +150,44 @@ export const ComponentsTreeProvider = ({
   const values = useMemo(
     () => ({
       componentsTree: componentsTreeMapped,
+      onRemoveComponent,
     }),
-    [componentsTreeMapped]
+    [componentsTreeMapped, onRemoveComponent]
   );
 
   return (
     <ComponentsTreeContext.Provider value={values}>
       <DragAndDropProvider
-        onDragEnd={({ active, over }) => {
-          console.log({ active, over });
-          onDragEnd(
-            active?.data?.current?.id + "",
-            over?.data?.current?.id + ""
-          );
+        onDragEnd={(event) => {
+          const { active, over } = event;
+
+          const isEqualOverAndActive =
+            over && active && active?.id === over?.id;
+          if (isEqualOverAndActive) {
+            return;
+          }
+          const activeContainer = active?.data?.current?.sortable;
+          // setComponentsGroups((currentComponentsGroups) => {
+          //   const newComponentsGroups = [...currentComponentsGroups];
+          //   const newComponentGroup =
+          //     newComponentsGroups[componentsGroupPosition];
+          //   const oldComponentIndex = newComponentGroup.components.findIndex(
+          //     (component) => component.id === active.id
+          //   );
+          //   const newComponentIndex = newComponentGroup.components.findIndex(
+          //     (component) => component.id === over.id
+          //   );
+
+          //   newComponentsGroups[componentsGroupPosition] = {
+          //     ...newComponentGroup,
+          //     components: arrayMove(
+          //       newComponentGroup.components,
+          //       oldComponentIndex,
+          //       newComponentIndex
+          //     ),
+          //   };
+          //   return newComponentsGroups;
+          // });
         }}
       >
         {children}

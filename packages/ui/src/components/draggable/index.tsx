@@ -1,10 +1,10 @@
 import { useDraggable } from "@dnd-kit/core";
-import { Box, BoxProps } from "../box";
-import { PropsWithChildren } from "react";
-import { CSS } from "@dnd-kit/utilities";
+import { PropsWithChildren, useEffect } from "react";
 import { DraggableProvider } from "../../contexts";
+import { useDragAndDropContext } from "../../hooks";
+import { Box, BoxProps } from "../box";
 
-export interface DraggableProps<TData = any> {
+export interface DraggableProps<TData = any> extends BoxProps {
   id: string;
   type: string;
   isDisabled?: boolean;
@@ -18,27 +18,35 @@ export const Draggable = ({
   data,
   ...props
 }: PropsWithChildren<DraggableProps>) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    id,
+    data: {
+      ...data,
       id,
-      data: {
-        ...data,
-        id,
-        type,
-      },
-      disabled: !!isDisabled,
-    });
+      type,
+    },
+    disabled: !!isDisabled,
+  });
+
+  const { setDragOverlayElement } = useDragAndDropContext();
+
+  useEffect(() => {
+    if (isDragging) {
+      setDragOverlayElement(children);
+    } else {
+      setDragOverlayElement(undefined);
+    }
+  }, [children, isDragging, setDragOverlayElement]);
 
   const draggingStyle: BoxProps = isDragging
     ? {
-        position: "fixed",
-        zIndex: "9999",
-        shadow: "md",
-        rounded: "md",
-        transform: CSS.Translate.toString(transform),
+        opacity: ".3",
       }
     : {};
 
+  if (!children) {
+    return <></>;
+  }
   return (
     <Box ref={setNodeRef} flexDirection="column" {...draggingStyle}>
       <DraggableProvider listeners={listeners} attributes={attributes}>

@@ -2,20 +2,22 @@ import { DraggableAttributes } from "@dnd-kit/core";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { PropsWithChildren, createContext } from "react";
 
-export interface DraggableContextProps {
+export interface SortableItemContextProps {
   readonly listeners?: SyntheticListenerMap;
   readonly attributes?: DraggableAttributes;
 }
 
-export const DraggableContext = createContext({} as DraggableContextProps);
+export const SortableItemContext = createContext(
+  {} as SortableItemContextProps
+);
 
-export const DraggableProvider = ({
+export const SortableItemProvider = ({
   children,
   ...props
-}: PropsWithChildren<DraggableContextProps>) => {
+}: PropsWithChildren<SortableItemContextProps>) => {
   return (
-    <DraggableContext.Provider value={props}>
+    <SortableItemContext.Provider value={props}>
       {children}
-    </DraggableContext.Provider>
+    </SortableItemContext.Provider>
   );
 };

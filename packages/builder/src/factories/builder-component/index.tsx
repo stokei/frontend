@@ -15,6 +15,7 @@ import {
   Title,
   Video,
 } from "../../builder-components";
+import { TreeSortable } from "../../components/tree-sortable";
 import { ComponentType } from "../../services/graphql/stokei";
 import { BaseComponent } from "../../types/base-component";
 import { ComponentBuilderType } from "../../types/component-builder-type";
@@ -100,15 +101,17 @@ export const BuilderComponent = ({
       }
       {...props}
     >
-      {components?.map((component) => (
-        <BuilderComponent
-          key={component?.id}
-          builderType={builderType}
-          onRedirect={onRedirect}
-          onRemove={onRemove}
-          {...component}
-        />
-      ))}
+      <TreeSortable items={components || []}>
+        {components?.map((component) => (
+          <BuilderComponent
+            key={component?.id}
+            builderType={builderType}
+            onRedirect={onRedirect}
+            onRemove={onRemove}
+            {...component}
+          />
+        ))}
+      </TreeSortable>
     </Component>
   );
 };
