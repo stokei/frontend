@@ -166,7 +166,34 @@ export const ComponentsTreeProvider = ({
           if (isEqualOverAndActive) {
             return;
           }
-          const activeContainer = active?.data?.current?.sortable;
+          const activeItem = getComponent(active?.id + "");
+          const overItem = getComponent(over?.id + "");
+          if (!activeItem || !overItem) {
+            return;
+          }
+          console.log({
+            activeItem,
+            overItem,
+          });
+          setComponentsTree((tree) => {
+            const mapper = (
+              treeItems: ComponentsTreeComponent[]
+            ): ComponentsTreeComponent[] => {
+              return treeItems.map((treeItem) => {
+                if (treeItem.id === overItem.id) {
+                  return {
+                    ...treeItem,
+                    components: arrayMove(treeItem.components || [], 0, 0),
+                  };
+                }
+                return {
+                  ...treeItem,
+                  components: mapper(treeItem.components || []),
+                };
+              });
+            };
+            return mapper(tree);
+          });
           // setComponentsGroups((currentComponentsGroups) => {
           //   const newComponentsGroups = [...currentComponentsGroups];
           //   const newComponentGroup =

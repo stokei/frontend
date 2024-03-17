@@ -48,23 +48,23 @@ export const BlockEditable = ({
     : {};
 
   return (
-    // <Droppable id={id} acceptTypes={acceptTypes}>
-    //   <Draggable id={id} type={type}>
-    <SortableItem id={id} type={type}>
-      <Box
-        width="full"
-        id={id}
-        ref={blockRef}
-        flexDirection="column"
-        onClick={onClick}
-        position="relative"
-        {...clickedProps}
-      >
-        {isClicked && <BlockEditableMenu onRemove={onRemove} />}
-        {children}
-      </Box>
-    </SortableItem>
-    //   </Draggable>
-    // </Droppable>
+    <Droppable id={id} acceptTypes={acceptTypes}>
+      <Draggable id={id} type={type}>
+        {/* <SortableItem id={id} type={type}> */}
+        <Box
+          width="full"
+          id={id}
+          ref={blockRef}
+          flexDirection="column"
+          onClick={onClick}
+          position="relative"
+          {...clickedProps}
+        >
+          {isClicked && <BlockEditableMenu onRemove={onRemove} />}
+          {children}
+        </Box>
+        {/* </SortableItem> */}
+      </Draggable>
+    </Droppable>
   );
 };

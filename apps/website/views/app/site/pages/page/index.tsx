@@ -1,11 +1,7 @@
 import { useComponentsTree } from "@/hooks";
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { GlobalPageFragment } from "@/services/graphql/queries/get-page-by-id/page.query.graphql.generated";
-import {
-  BuilderComponent,
-  ComponentBuilderType,
-  TreeSortable,
-} from "@stokei/builder";
+import { BuilderComponent, ComponentBuilderType } from "@stokei/builder";
 import { Box, Container } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { Navbar } from "./components/navbar";
@@ -44,22 +40,20 @@ const SitePage = () => {
         background="background.50"
       >
         <Container paddingY="5">
-          <TreeSortable items={componentsTree}>
-            {componentsTree?.map((component) => (
-              <BuilderComponent
-                id={component?.id}
-                key={component?.id}
-                order={component?.order}
-                type={component?.type}
-                acceptTypes={component?.acceptTypes}
-                builderType={ComponentBuilderType.BLOCK_EDITABLE}
-                components={component?.components}
-                data={component?.data}
-                onRedirect={router.push}
-                onRemove={onRemoveComponent}
-              />
-            ))}
-          </TreeSortable>
+          {componentsTree?.map((component) => (
+            <BuilderComponent
+              id={component?.id}
+              key={component?.id}
+              order={component?.order}
+              type={component?.type}
+              acceptTypes={component?.acceptTypes}
+              builderType={ComponentBuilderType.BLOCK_EDITABLE}
+              components={component?.components}
+              data={component?.data}
+              onRedirect={router.push}
+              onRemove={onRemoveComponent}
+            />
+          ))}
         </Container>
       </Box>
     </Container>

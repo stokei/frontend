@@ -1,9 +1,16 @@
-import { useSortable } from "@dnd-kit/sortable";
+import {
+  AnimateLayoutChanges,
+  defaultAnimateLayoutChanges,
+  useSortable,
+} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { PropsWithChildren, useEffect } from "react";
 import { useSortableContext } from "../../hooks";
 import { Box, BoxProps } from "../box";
 import { SortableItemProvider } from "../../contexts/sortable-item";
+
+const animateLayoutChanges: AnimateLayoutChanges = (args) =>
+  defaultAnimateLayoutChanges({ ...args, wasDragging: true });
 
 export interface SortableItemProps<TData = any> extends BoxProps {
   id: string;
@@ -34,6 +41,7 @@ export const SortableItem = ({
       type,
     },
     disabled: !!isDisabled,
+    animateLayoutChanges,
   });
 
   const { setDragOverlayElement } = useSortableContext();
@@ -47,7 +55,7 @@ export const SortableItem = ({
   }, [children, isDragging, setDragOverlayElement]);
 
   const style: BoxProps = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition,
   };
 
@@ -55,7 +63,12 @@ export const SortableItem = ({
     return <></>;
   }
   return (
-    <Box ref={setNodeRef} flexDirection="column" {...style}>
+    <Box
+      ref={setNodeRef}
+      height="fit-content"
+      flexDirection="column"
+      {...style}
+    >
       <SortableItemProvider listeners={listeners} attributes={attributes}>
         {children}
       </SortableItemProvider>
