@@ -23,7 +23,7 @@ export const Droppable = ({
       id,
       acceptTypes: acceptTypes || [],
     },
-    disabled: !!isDisabled,
+    disabled: !!isDisabled || !acceptTypes?.length,
   });
 
   const isValidType = !!acceptTypes?.includes(active?.data?.current?.type);

@@ -50,7 +50,6 @@ export const BlockEditable = ({
   return (
     <Droppable id={id} acceptTypes={acceptTypes}>
       <Draggable id={id} type={type}>
-        {/* <SortableItem id={id} type={type}> */}
         <Box
           width="full"
           id={id}
@@ -63,7 +62,6 @@ export const BlockEditable = ({
           {isClicked && <BlockEditableMenu onRemove={onRemove} />}
           {children}
         </Box>
-        {/* </SortableItem> */}
       </Draggable>
     </Droppable>
   );

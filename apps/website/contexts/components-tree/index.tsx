@@ -168,22 +168,29 @@ export const ComponentsTreeProvider = ({
           }
           const activeItem = getComponent(active?.id + "");
           const overItem = getComponent(over?.id + "");
-          if (!activeItem || !overItem) {
-            return;
-          }
           console.log({
             activeItem,
             overItem,
           });
+          if (!activeItem || !overItem) {
+            return;
+          }
           setComponentsTree((tree) => {
             const mapper = (
               treeItems: ComponentsTreeComponent[]
             ): ComponentsTreeComponent[] => {
               return treeItems.map((treeItem) => {
+                console.log({ treeItem, overItem });
                 if (treeItem.id === overItem.id) {
+                  const newComponents = treeItem.components
+                    ? [activeItem, ...treeItem.components]
+                    : [];
+                  console.log({ newComponents });
+                  // const index = 0;
+                  // newComponents.splice(index, 0, activeItem);
                   return {
                     ...treeItem,
-                    components: arrayMove(treeItem.components || [], 0, 0),
+                    components: newComponents,
                   };
                 }
                 return {
