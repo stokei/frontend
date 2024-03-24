@@ -56,7 +56,7 @@ const SitePage = () => {
                 components={component?.components}
                 data={component?.data}
                 onRedirect={router.push}
-                onRemove={onRemoveComponent}
+                onRemove={(componentId) => onRemoveComponent({ componentId })}
               />
             ))}
           </TreeSortable>
