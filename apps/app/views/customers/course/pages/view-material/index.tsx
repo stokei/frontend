@@ -4,14 +4,12 @@ import { useCurrentAccount } from "@/hooks/use-current-account";
 import { getProductURL } from "@/utils";
 import { Box, Container, Image, Markdown, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { CourseLayout } from "../../layout";
 import { Navbar } from "./components/navbar";
 import { useGetCustomersCoursePageMaterialQuery } from "./graphql/material.query.graphql.generated";
 
-interface MaterialViewPageProps {}
-
-export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
+export const MaterialViewPage = () => {
   const { currentAccount } = useCurrentAccount();
   const translate = useTranslations();
   const router = useRouter();

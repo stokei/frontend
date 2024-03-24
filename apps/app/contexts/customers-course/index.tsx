@@ -5,7 +5,6 @@ import {
 } from "@/views/customers/course/graphql/course.query.graphql.generated";
 import { useRouter } from "next/router";
 import {
-  FC,
   PropsWithChildren,
   createContext,
   useEffect,
@@ -26,9 +25,9 @@ export const CustomersCourseContext = createContext(
   {} as CustomersCourseProviderValues
 );
 
-export const CustomersCourseProvider: FC<
-  PropsWithChildren<CustomersCourseProviderProps>
-> = ({ children }) => {
+export const CustomersCourseProvider = ({
+  children,
+}: PropsWithChildren<CustomersCourseProviderProps>) => {
   const router = useRouter();
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
 

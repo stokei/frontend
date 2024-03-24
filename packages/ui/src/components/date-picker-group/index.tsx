@@ -4,9 +4,9 @@ import { Stack } from "../stack";
 
 export interface DatePickerGroupProps {}
 
-export const DatePickerGroup: React.FC<
-  PropsWithChildren<DatePickerGroupProps>
-> = ({ children }) => {
+export const DatePickerGroup = ({
+  children,
+}: PropsWithChildren<DatePickerGroupProps>) => {
   const cleanChildren = useMemo(
     () => Children?.toArray(children)?.filter((child) => !!child),
     [children]

@@ -6,6 +6,7 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "lint": {},
+    "codegen:generate:watch": {},
     "dev": {
       "cache": false,
       "outputs": ["dist/**", "build/**"]

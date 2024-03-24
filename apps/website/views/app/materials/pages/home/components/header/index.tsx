@@ -2,17 +2,13 @@ import { useCurrentApp, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { Button, Icon, Spacer, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
 
 interface HeaderProps {
   readonly onOpenFilters: () => void;
   readonly materialsTotalCount: number;
 }
 
-export const Header: FC<HeaderProps> = ({
-  materialsTotalCount,
-  onOpenFilters,
-}) => {
+export const Header = ({ materialsTotalCount, onOpenFilters }: HeaderProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();

@@ -16,7 +16,7 @@ import {
   useTags,
   UseTagsTagItem,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useStoreFilters } from "../hooks/use-filters";
 import { StoreLayout } from "../layout";
 import { Header } from "./components/header";
@@ -26,9 +26,7 @@ import { useGetStoreCatalogItemsQuery } from "./graphql/catalog-items.query.grap
 import { useGetStoreCatalogsQuery } from "./graphql/catalogs.query.graphql.generated";
 import { useGetStoreProductsQuery } from "./graphql/products.query.graphql.generated";
 
-interface HomePageProps {}
-
-export const HomePage: FC<HomePageProps> = () => {
+export const HomePage = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const { filters, onChangeFilter } = useStoreFilters();

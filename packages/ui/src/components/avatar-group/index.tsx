@@ -5,7 +5,6 @@ import {
 
 export interface AvatarGroupProps extends ChakraAvatarGroupProps {}
 
-export const AvatarGroup: React.FC<AvatarGroupProps> = ({
-  children,
-  ...props
-}) => <ChakraAvatarGroup {...props}>{children}</ChakraAvatarGroup>;
+export const AvatarGroup = ({ children, ...props }: AvatarGroupProps) => (
+  <ChakraAvatarGroup {...props}>{children}</ChakraAvatarGroup>
+);

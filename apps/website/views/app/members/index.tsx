@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AddMemberDrawer } from "./components/add-member-drawer";
 import { Header } from "./components/header";
 import { MembersFilters } from "./components/members-filters";
@@ -21,9 +21,7 @@ import { AppMemberFragment } from "./graphql/member.fragment.graphql.generated";
 import { useGetAppMembersQuery } from "./graphql/members.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface MembersPageProps {}
-
-export const MembersPage: FC<MembersPageProps> = () => {
+export const MembersPage = () => {
   const { currentPage, onChangePage } = usePagination();
   const [members, setMembers] = useState<AppMemberFragment[]>([]);
   const [filteredNameQuery, setFilteredNameQuery] = useState<string>();

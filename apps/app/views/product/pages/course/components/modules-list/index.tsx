@@ -1,6 +1,6 @@
 import { OrderBy } from "@/services/graphql/stokei";
 import { Accordion, Box } from "@stokei/ui";
-import { FC } from "react";
+
 import { useGetModulesQuery } from "../../graphql/modules.query.graphql.generated";
 import { ModuleItem } from "../module-item";
 import { ModuleLoading } from "../module-loading";
@@ -9,7 +9,7 @@ interface ModulesListProps {
   readonly courseId?: string;
 }
 
-export const ModulesList: FC<ModulesListProps> = ({ courseId }) => {
+export const ModulesList = ({ courseId }: ModulesListProps) => {
   const [{ fetching: isLoading, data: dataModules }] = useGetModulesQuery({
     variables: {
       where: {

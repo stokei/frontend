@@ -12,9 +12,10 @@ export interface ChoiseEditableProps {
   onChange: () => void;
 }
 
-export const ChoiseEditable: React.FC<
-  PropsWithChildren<ChoiseEditableProps>
-> = ({ onChange, children }) => {
+export const ChoiseEditable = ({
+  onChange,
+  children,
+}: PropsWithChildren<ChoiseEditableProps>) => {
   return (
     <Card>
       <CardBody>

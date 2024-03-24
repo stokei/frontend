@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface StatLabelProps extends ChakraStatLabelProps {}
-export const StatLabel: React.FC<StatLabelProps> = ({ children, ...props }) => (
+export const StatLabel = ({ children, ...props }: StatLabelProps) => (
   <ChakraStatLabel {...props}>{children}</ChakraStatLabel>
 );

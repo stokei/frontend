@@ -31,9 +31,8 @@ export interface SelectContextProps {
 
 export const SelectContext = React.createContext({} as SelectContextValues);
 
-export const SelectProvider: React.FC<
-  PropsWithChildren<SelectContextProps>
-> = ({
+export const SelectProvider = ({
+  value,
   children,
   isOpenList,
   isLoading,
@@ -43,8 +42,7 @@ export const SelectProvider: React.FC<
   onCloseList,
   onChooseItem,
   onRemoveChooseItem,
-  value,
-}) => {
+}: PropsWithChildren<SelectContextProps>) => {
   const isMultiple = useMemo(() => value && Array.isArray(value), [value]);
   const hasValue = useMemo(() => {
     if (typeof value === "undefined") {

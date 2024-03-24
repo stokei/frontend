@@ -81,6 +81,24 @@ export const routesApp = (data: { appId?: string }) => {
       home: baseURL + "/products",
       add: baseURL + "/products/add",
     },
+    sites: {
+      home: baseURL + "/sites",
+      add: baseURL + "/sites/add",
+    },
+    site: ({ site }: { site: string }) => {
+      const baseSiteURL = baseURL + "/sites/" + site;
+      return {
+        home: baseSiteURL,
+        pages: baseSiteURL + "/pages",
+        domains: baseSiteURL + "/domains",
+        page: ({ page }: { page: string }) => {
+          const basePageURL = baseSiteURL + "/pages/" + page;
+          return {
+            home: basePageURL,
+          };
+        },
+      };
+    },
     orders: {
       home: baseURL + "/orders",
       order: ({ order }: { order?: string }) => baseURL + "/orders/" + order,
@@ -104,7 +122,6 @@ export const routesApp = (data: { appId?: string }) => {
       home: baseURL + "/settings",
       billing: baseURL + "/settings/billing",
       website: baseURL + "/settings/website",
-      domains: baseURL + "/settings/domains",
     },
   };
 };

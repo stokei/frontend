@@ -2,7 +2,7 @@ import { useTranslations } from "@/hooks";
 import { BillingScheme } from "@/services/graphql/stokei";
 import { getI18nKeyFromRecurringInterval } from "@/utils";
 import { Stack, StackProps, Text } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { PriceComponentFragment } from "./price.fragment.graphql.generated";
 
 export interface PriceProps extends StackProps {
@@ -12,7 +12,7 @@ export interface PriceProps extends StackProps {
   readonly withUnitDescription?: boolean;
   readonly withRecurring?: boolean;
 }
-export const Price: FC<PriceProps> = ({
+export const Price = ({
   price,
   size,
   justify,
@@ -20,7 +20,7 @@ export const Price: FC<PriceProps> = ({
   withUnitDescription,
   withPriceAndUnitDirectionColumn,
   ...props
-}) => {
+}: PriceProps) => {
   const translate = useTranslations();
 
   const priceAmount = useMemo(() => {

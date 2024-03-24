@@ -9,7 +9,7 @@ import {
   SelectItem,
   SelectList,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { StatusSelectItemContent } from "../status-select-item-content";
 
 interface SelectFilterStatusProps {
@@ -18,11 +18,11 @@ interface SelectFilterStatusProps {
   readonly onRemoveChooseCurrentStatus: (value: InvoiceStatusFilter) => void;
 }
 
-export const SelectFilterStatus: FC<SelectFilterStatusProps> = ({
+export const SelectFilterStatus = ({
   currentStatus,
   onChooseCurrentStatus,
   onRemoveChooseCurrentStatus,
-}) => {
+}: SelectFilterStatusProps) => {
   const translate = useTranslations();
 
   return (

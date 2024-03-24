@@ -1,0 +1,11 @@
+query BuilderComponentCatalog($catalog: String!) {
+  catalog(id: $catalog) {
+    ...BuilderComponentCatalog
+  }
+}
+
+fragment BuilderComponentCatalog on Catalog {
+  id
+  title
+  subtitle
+}

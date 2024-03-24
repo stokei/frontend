@@ -11,7 +11,7 @@ import {
   DrawerHeader,
   Stack,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useFilters } from "../../hooks/use-filters";
 import { SelectFilterStatus } from "../select-filter-status";
 import { SelectCoupons } from "@/components/select-coupons";
@@ -28,7 +28,7 @@ interface OrderFiltersProps {
   readonly onClearFilters: () => void;
 }
 
-export const OrderFilters: FC<OrderFiltersProps> = ({
+export const OrderFilters = ({
   isOpen,
   statusFilter,
   customersFilter,
@@ -37,7 +37,7 @@ export const OrderFilters: FC<OrderFiltersProps> = ({
   onChooseFilterCustomers,
   onChooseFilterCoupons,
   onChooseFilterStatus,
-}) => {
+}: OrderFiltersProps) => {
   const {
     status,
     coupons,

@@ -12,15 +12,16 @@ export interface ChoiseEditableSummaryProps {
   onChange: () => void;
 }
 
-export const ChoiseEditableSummary: React.FC<
-  PropsWithChildren<ChoiseEditableSummaryProps>
-> = ({ onChange, children }) => {
+export const ChoiseEditableSummary = ({
+  onChange,
+  children,
+}: PropsWithChildren<ChoiseEditableSummaryProps>) => {
   return (
     <Card>
       <CardBody>
         <Stack direction="row" spacing="5" align="center">
           <Box flexDirection="column" flex="1">
-            {children}
+            <>{children}</>
           </Box>
           <ButtonGroup>
             <IconButton variant="ghost" name="edit" onClick={onChange} />

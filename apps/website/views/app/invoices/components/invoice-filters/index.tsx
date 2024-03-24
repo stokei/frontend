@@ -1,7 +1,7 @@
 import { SelectMembers } from "@/components/select-members";
 import { InvoiceStatusFilter } from "@/interfaces/invoice-status-filter";
 import { Card, CardBody, Stack } from "@stokei/ui";
-import { FC } from "react";
+
 import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { SelectFilterStatus } from "../select-filter-status";
 
@@ -14,14 +14,14 @@ interface InvoiceFiltersProps {
   readonly onRemoveChooseCurrentStatus: (value: InvoiceStatusFilter) => void;
 }
 
-export const InvoiceFilters: FC<InvoiceFiltersProps> = ({
+export const InvoiceFilters = ({
   currentStatus,
   currentCustomers,
   onChooseCurrentCustomer,
   onRemoveChooseCurrentCustomer,
   onChooseCurrentStatus,
   onRemoveChooseCurrentStatus,
-}) => {
+}: InvoiceFiltersProps) => {
   return (
     <Card background="background.50">
       <CardBody>

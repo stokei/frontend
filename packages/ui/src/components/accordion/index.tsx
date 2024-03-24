@@ -4,7 +4,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface AccordionProps extends ChakraAccordionProps {}
-export const Accordion: React.FC<AccordionProps> = ({ children, ...props }) => (
+export const Accordion = ({ children, ...props }: AccordionProps) => (
   <ChakraAccordion allowToggle rounded="lg" {...props}>
     {children}
   </ChakraAccordion>

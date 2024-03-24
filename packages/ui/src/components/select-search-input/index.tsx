@@ -16,8 +16,18 @@ export interface SelectSearchInputProps extends InputProps {
   readonly item?: (value: any) => ReactNode;
 }
 
-export const SelectSearchInput: React.FC<SelectSearchInputProps> = forwardRef(
-  ({ children, onFocus, size, rightIcon, item, ...props }, ref) => {
+export const SelectSearchInput = forwardRef(
+  (
+    {
+      children,
+      onFocus,
+      size,
+      rightIcon,
+      item,
+      ...props
+    }: SelectSearchInputProps,
+    ref
+  ) => {
     const {
       value,
       onOpenList,

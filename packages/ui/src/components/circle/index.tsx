@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface CircleProps extends ChakraCircleProps {}
-export const Circle: React.FC<CircleProps> = ({ children, ...props }) => (
+export const Circle = ({ children, ...props }: CircleProps) => (
   <ChakraCircle {...props}>{children}</ChakraCircle>
 );

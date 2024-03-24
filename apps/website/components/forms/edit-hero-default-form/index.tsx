@@ -14,7 +14,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEditHeroDefaultFormUpdateHeroMutation } from "./graphql/update-hero.mutation.graphql.generated";
@@ -29,7 +29,7 @@ interface EditHeroDefaultFormProps {
   readonly hero: EditHeroDefaultFormHero;
 }
 
-export const EditHeroDefaultForm: FC<EditHeroDefaultFormProps> = ({ hero }) => {
+export const EditHeroDefaultForm = ({ hero }: EditHeroDefaultFormProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

@@ -1,15 +1,13 @@
 import { useGetCatalogPageCatalogQuery } from "@/views/app/catalog/graphql/catalog.query.graphql.generated";
 import { Container, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { CatalogLayout } from "../layout";
 import { EditCatalog } from "./components/edit-catalog";
 import { Navbar } from "./components/navbar";
 import { Loading } from "./loading";
 
-interface CatalogPageProps {}
-
-export const CatalogPage: FC<CatalogPageProps> = () => {
+export const CatalogPage = () => {
   const router = useRouter();
   const catalogId = useMemo(
     () => router?.query?.catalogId?.toString() || "",

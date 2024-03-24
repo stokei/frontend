@@ -4,7 +4,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface ModalBodyProps extends ChakraModalBodyProps {}
-export const ModalBody: React.FC<ModalBodyProps> = ({ children, ...props }) => (
+export const ModalBody = ({ children, ...props }: ModalBodyProps) => (
   <ChakraModalBody paddingY="5" {...props}>
     {children}
   </ChakraModalBody>

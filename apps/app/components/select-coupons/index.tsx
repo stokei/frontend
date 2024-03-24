@@ -14,7 +14,7 @@ import {
   TagLabel,
   useDebounce,
 } from "@stokei/ui";
-import { FC, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -31,12 +31,12 @@ interface SelectCouponsProps {
   readonly onRemoveChooseCoupon: (value?: AppCouponFragment) => void;
 }
 
-export const SelectCoupons: FC<SelectCouponsProps> = ({
+export const SelectCoupons = ({
   label,
   value,
   onChooseCoupon,
   onRemoveChooseCoupon,
-}) => {
+}: SelectCouponsProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

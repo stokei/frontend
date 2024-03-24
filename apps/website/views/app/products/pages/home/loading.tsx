@@ -7,11 +7,8 @@ import {
   SkeletonText,
   Stack,
 } from "@stokei/ui";
-import { FC } from "react";
 
-export interface LoadingProps {}
-
-export const Loading: FC<LoadingProps> = () => {
+export const Loading = () => {
   return (
     <SimpleGrid columns={[1, 1, 2, 3]} spacing="5">
       {Array.from({ length: 6 }).map((_, i) => (

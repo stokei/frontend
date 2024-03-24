@@ -1,16 +1,12 @@
 import { useTranslations } from "@/hooks";
 import { Button, Icon, Spacer, Stack, Title } from "@stokei/ui";
-import { FC } from "react";
 
 interface HeaderProps {
   readonly productsTotalCount: number;
   readonly onOpenFilters: () => void;
 }
 
-export const Header: FC<HeaderProps> = ({
-  productsTotalCount,
-  onOpenFilters,
-}) => {
+export const Header = ({ productsTotalCount, onOpenFilters }: HeaderProps) => {
   const translate = useTranslations();
 
   return (

@@ -7,10 +7,8 @@ import {
 export interface SwitchProps extends ChakraSwitchProps {
   readonly ref?: any;
 }
-export const Switch: React.FC<SwitchProps> = forwardRef(
-  ({ children, ...props }, ref) => (
-    <ChakraSwitch colorScheme="primary" ref={ref} {...props}>
-      {children}
-    </ChakraSwitch>
-  )
-);
+export const Switch = forwardRef(({ children, ...props }: SwitchProps, ref) => (
+  <ChakraSwitch colorScheme="primary" ref={ref} {...props}>
+    {children}
+  </ChakraSwitch>
+));

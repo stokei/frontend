@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { Modal, ModalBody, ModalHeader } from "@stokei/ui";
-import { FC } from "react";
+
 import { AddressManagementAddressFragment } from "../graphql/addresses.query.graphql.generated";
 import { CreateAddressForm } from "../create-address-form";
 
@@ -10,11 +10,11 @@ interface CreateAddressModalProps {
   readonly onSuccess: (address: AddressManagementAddressFragment) => void;
 }
 
-export const CreateAddressModal: FC<CreateAddressModalProps> = ({
+export const CreateAddressModal = ({
   isOpen,
   onClose,
   onSuccess,
-}) => {
+}: CreateAddressModalProps) => {
   const translate = useTranslations();
   return (
     <Modal isOpen={!!isOpen} onClose={onClose}>

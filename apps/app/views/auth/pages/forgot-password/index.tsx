@@ -6,13 +6,11 @@ import {
   FormForgotPasswordOnSubmitData,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForgotPasswordMutation } from "./graphql/forgot-password.mutation.graphql.generated";
 import { AuthLayout } from "../../layout";
 
-interface ForgotPasswordPageProps {}
-
-export const ForgotPasswordPage: FC<ForgotPasswordPageProps> = () => {
+export const ForgotPasswordPage = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

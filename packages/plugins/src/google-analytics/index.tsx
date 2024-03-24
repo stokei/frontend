@@ -4,9 +4,7 @@ export interface GoogleAnalyticsProps {
   readonly googleKey: string;
 }
 
-export const GoogleAnalytics: React.FC<GoogleAnalyticsProps> = ({
-  googleKey,
-}) => {
+export const GoogleAnalytics = ({ googleKey }: GoogleAnalyticsProps) => {
   if (!googleKey) {
     return <></>;
   }

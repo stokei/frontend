@@ -16,7 +16,7 @@ import {
   Label,
   Stack,
 } from "@stokei/ui";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { getOnlyNumbers } from "@stokei/utils";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,10 +30,10 @@ interface CreateCreditCardFormProps {
   ) => void;
 }
 
-export const CreateCreditCardForm: FC<CreateCreditCardFormProps> = ({
+export const CreateCreditCardForm = ({
   address,
   onSuccess,
-}) => {
+}: CreateCreditCardFormProps) => {
   const [expirationDate, setExpirationDate] = useState(new Date());
   const [document, setDocument] = useState("");
   const [documentType, setDocumentType] = useState<DocumentType>(

@@ -8,7 +8,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AdminCoursePageCourseInstructorFragment } from "../../graphql/course-instructors.query.graphql.generated";
 import { InstructorItem } from "../instructor-item";
 import { useTranslations } from "@/hooks";
@@ -25,12 +25,12 @@ interface InstructorsListProps {
   ) => void;
 }
 
-export const InstructorsList: FC<InstructorsListProps> = ({
+export const InstructorsList = ({
   courseId,
   instructors,
   onSuccessAddCourseInstructor,
   onSuccessRemoveCourseInstructor,
-}) => {
+}: InstructorsListProps) => {
   const {
     isOpen: isOpenAddCourseInstructorDrawer,
     onClose: onCloseAddCourseInstructorDrawer,

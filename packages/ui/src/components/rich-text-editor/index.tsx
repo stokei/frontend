@@ -11,9 +11,12 @@ export interface RichTextEditorProps {
   onChange: (value: string) => void;
 }
 
-export const RichTextEditor: React.FC<
-  PropsWithChildren<RichTextEditorProps>
-> = ({ id, onChange, defaultValue, ...props }) => {
+export const RichTextEditor = ({
+  id,
+  onChange,
+  defaultValue,
+  ...props
+}: PropsWithChildren<RichTextEditorProps>) => {
   const [isLoading, setIsLoading] = useState(true);
   const editor = useEditor({
     extensions: [StarterKit],

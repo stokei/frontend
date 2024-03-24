@@ -5,6 +5,6 @@ import {
 
 export interface FormControlProps extends ChakraFormControlProps {}
 
-export const FormControl: React.FC<FormControlProps> = ({ ...props }) => (
+export const FormControl = ({ ...props }: FormControlProps) => (
   <ChakraFormControl colorScheme="primary" {...props} />
 );

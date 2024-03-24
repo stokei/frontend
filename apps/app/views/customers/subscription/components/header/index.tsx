@@ -1,7 +1,7 @@
 import { useTranslations } from "@/hooks";
 import { getSubscriptionContractStatusColor } from "@/utils/get-subscription-contract-status-color";
 import { Badge, Stack, Text, Title } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { SubscriptionPageSubscriptionContractFragment } from "../../graphql/subscription-contract.query.graphql.generated";
 import { Customer } from "../../interfaces/customer";
 import { Product } from "../../interfaces/product";
@@ -12,11 +12,11 @@ interface HeaderProps {
   readonly product?: Product;
 }
 
-export const Header: FC<HeaderProps> = ({
+export const Header = ({
   subscriptionContract,
   customer,
   product,
-}) => {
+}: HeaderProps) => {
   const translate = useTranslations();
 
   const statusColor = useMemo(

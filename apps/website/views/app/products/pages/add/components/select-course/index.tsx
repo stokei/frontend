@@ -26,10 +26,10 @@ export interface SelectCurseProps {
   productParent?: ProductParent;
   onChangeProductParent: (parent?: ProductParent) => void;
 }
-export const SelectCurse: React.FC<SelectCurseProps> = ({
+export const SelectCurse = ({
   productParent,
   onChangeProductParent,
-}) => {
+}: SelectCurseProps) => {
   const [courseQuery, setCourseQuery] = useState<string>("");
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();

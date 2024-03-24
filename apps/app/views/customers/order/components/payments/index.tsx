@@ -11,7 +11,7 @@ import {
   TableRow,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { OrderPageOrderFragment } from "../../graphql/order.query.graphql.generated";
 import { PaymentItem } from "../payment-item";
 
@@ -19,7 +19,7 @@ interface PaymentsProps {
   readonly order?: OrderPageOrderFragment;
 }
 
-export const Payments: FC<PaymentsProps> = ({ order }) => {
+export const Payments = ({ order }: PaymentsProps) => {
   const translate = useTranslations();
 
   return (

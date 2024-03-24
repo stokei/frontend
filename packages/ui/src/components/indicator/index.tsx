@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface IndicatorProps extends ChakraIndicatorProps {}
-export const Indicator: React.FC<IndicatorProps> = ({ children, ...props }) => (
+export const Indicator = ({ children, ...props }: IndicatorProps) => (
   <ChakraIndicator {...props}>{children}</ChakraIndicator>
 );

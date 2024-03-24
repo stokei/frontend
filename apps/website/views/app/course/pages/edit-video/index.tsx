@@ -27,7 +27,7 @@ import {
   VideoUploaderOnSuccessData,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";
@@ -38,13 +38,12 @@ import { useGetAdminCoursePageModuleEditVideoQuery } from "./graphql/module.quer
 import { useUpdateVideoMutation } from "./graphql/update-video.mutation.graphql.generated";
 import { useGetAdminCoursePageEditVideoQuery } from "./graphql/video.query.graphql.generated";
 
-interface EditVideoPageProps {}
 interface Poster {
   id: string;
   previewURL: string;
 }
 
-export const EditVideoPage: FC<EditVideoPageProps> = () => {
+export const EditVideoPage = () => {
   const [videoUploadIsCompleted, setVideoUploadIsCompleted] =
     useState<boolean>(false);
   const [videoDuration, setVideoDuration] = useState<number>(0);

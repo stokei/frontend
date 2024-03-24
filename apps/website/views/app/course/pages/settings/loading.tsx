@@ -6,11 +6,8 @@ import {
   SkeletonText,
   Stack,
 } from "@stokei/ui";
-import { FC } from "react";
 
-export interface LoadingProps {}
-
-export const Loading: FC<LoadingProps> = () => {
+export const Loading = () => {
   return (
     <Card background="background.50">
       <CardHeader padding="0">

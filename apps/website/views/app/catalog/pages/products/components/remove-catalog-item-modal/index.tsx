@@ -11,7 +11,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AdminCatalogPageCatalogItemFragment } from "../../graphql/catalog-items.query.graphql.generated";
 import { useRemoveCatalogItemMutation } from "../../graphql/remove-catalog-item.mutation.graphql.generated";
 
@@ -24,12 +24,12 @@ interface RemoveCatalogItemModalProps {
   ) => void;
 }
 
-export const RemoveCatalogItemModal: FC<RemoveCatalogItemModalProps> = ({
+export const RemoveCatalogItemModal = ({
   catalogItem,
   isOpenModal,
   onCloseModal,
   onCatalogItemRemoved,
-}) => {
+}: RemoveCatalogItemModalProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

@@ -1,15 +1,13 @@
 import { Container, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { useGetProductPageProductQuery } from "../../graphql/product.query.graphql.generated";
 import { ProductLayout } from "../../layout";
 import { Navbar } from "./components/navbar";
 import { ProductInformation } from "./components/product-information";
 import { Loading } from "./loading";
 
-interface ProductPageProps {}
-
-export const ProductPage: FC<ProductPageProps> = () => {
+export const ProductPage = () => {
   const router = useRouter();
 
   const productId = useMemo(

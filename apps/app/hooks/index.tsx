@@ -5,6 +5,5 @@ export * from "./use-current-app";
 export * from "./use-customers-course";
 export * from "./use-poolling";
 export * from "./use-sidebar";
-export * from "./use-shopping-cart";
 export * from "./use-pagination";
 export * from "./use-translations";

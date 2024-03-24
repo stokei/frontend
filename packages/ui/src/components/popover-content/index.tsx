@@ -8,9 +8,10 @@ import { PropsWithChildren } from "react";
 export interface PopoverContentProps extends ChakraPopoverContentProps {
   readonly ref?: any;
 }
-export const PopoverContent: React.FC<PropsWithChildren<PopoverContentProps>> =
-  forwardRef(({ children, ...props }, ref) => (
+export const PopoverContent = forwardRef(
+  ({ children, ...props }: PropsWithChildren<PopoverContentProps>, ref) => (
     <ChakraPopoverContent ref={ref} {...props}>
       {children}
     </ChakraPopoverContent>
-  ));
+  )
+);

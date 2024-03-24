@@ -15,7 +15,7 @@ import {
   Label,
   Stack,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -26,12 +26,12 @@ interface CatalogFiltersProps {
   readonly onChangeFilteredCatalogQuery: (value?: string) => void;
 }
 
-export const CatalogFilters: FC<CatalogFiltersProps> = ({
+export const CatalogFilters = ({
   isOpen,
   filteredCatalogQuery,
   onClose,
   onChangeFilteredCatalogQuery,
-}) => {
+}: CatalogFiltersProps) => {
   const translate = useTranslations();
 
   const validationSchema = z.object({

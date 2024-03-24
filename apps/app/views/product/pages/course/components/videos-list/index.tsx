@@ -1,5 +1,5 @@
 import { Stack } from "@stokei/ui";
-import { FC } from "react";
+
 import {
   CoursePageModuleFragment,
   CoursePageModuleVideoFragment,
@@ -11,10 +11,7 @@ interface VideosListProps {
   readonly videos?: CoursePageModuleFragment["videos"];
 }
 
-export const VideosList: FC<VideosListProps> = ({
-  videos,
-  onOpenPreviewModal,
-}) => {
+export const VideosList = ({ videos, onOpenPreviewModal }: VideosListProps) => {
   return (
     <Stack direction="column" spacing="2">
       {videos?.items?.map((video) => (

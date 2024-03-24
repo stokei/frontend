@@ -4,11 +4,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface TableRowProps extends ChakraTableRowProps {}
-export const TableRow: React.FC<TableRowProps> = ({
-  children,
-  onClick,
-  ...props
-}) => (
+export const TableRow = ({ children, onClick, ...props }: TableRowProps) => (
   <ChakraTableRow
     onClick={onClick}
     _hover={

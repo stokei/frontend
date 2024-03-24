@@ -4,10 +4,10 @@ import {
 } from "@chakra-ui/react";
 
 export interface ScaleFadeTransitionProps extends ChakraScaleFadeProps {}
-export const ScaleFadeTransition: React.FC<ScaleFadeTransitionProps> = ({
+export const ScaleFadeTransition = ({
   children,
   ...props
-}) => (
+}: ScaleFadeTransitionProps) => (
   <ChakraScaleFade initialScale={0.9} {...props}>
     {children}
   </ChakraScaleFade>

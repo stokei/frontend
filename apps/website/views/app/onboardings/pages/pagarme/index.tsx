@@ -29,7 +29,7 @@ import {
 } from "@stokei/ui";
 import { getOnlyNumbers } from "@stokei/utils";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Navbar } from "./components/navbar";
@@ -38,9 +38,7 @@ import { SectionContent } from "./components/section-content";
 import { SectionInformation } from "./components/section-information";
 import { useCreateAppPagarmeAccountMutation } from "./graphql/create-app-pagarme-account.mutation.graphql.generated";
 
-interface OnboardingPagarmePageProps {}
-
-export const OnboardingPagarmePage: FC<OnboardingPagarmePageProps> = () => {
+export const OnboardingPagarmePage = () => {
   const [documentType, setDocumentType] = useState<DocumentType>(
     DocumentType.Cpf
   );

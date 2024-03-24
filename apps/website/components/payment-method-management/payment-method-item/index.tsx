@@ -1,16 +1,16 @@
 import { useTranslations } from "@/hooks";
 import { getCardFlagURL } from "@/utils";
 import { Box, Image, Stack, Text } from "@stokei/ui";
-import { FC } from "react";
+
 import { PaymentMethodManagementPaymentMethodCardFragment } from "../graphql/payment-methods.query.graphql.generated";
 
 interface PaymentMethodItemProps {
   readonly paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment | null;
 }
 
-export const PaymentMethodItem: FC<PaymentMethodItemProps> = ({
+export const PaymentMethodItem = ({
   paymentMethod,
-}) => {
+}: PaymentMethodItemProps) => {
   const translate = useTranslations();
   return (
     <Stack direction="row" spacing="4" align="center">

@@ -11,7 +11,6 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
 
 const questionsAndAwnsers: { question: I18nKey; answer: I18nKey }[] = [
   {
@@ -28,9 +27,7 @@ const questionsAndAwnsers: { question: I18nKey; answer: I18nKey }[] = [
   },
 ];
 
-interface CommonQuestionsProps {}
-
-export const CommonQuestions: FC<CommonQuestionsProps> = () => {
+export const CommonQuestions = () => {
   const translate = useTranslations();
   return (
     <Container paddingY="16" align="center" justify="center">

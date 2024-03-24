@@ -21,9 +21,7 @@ export interface CreateAccountFormProps {
   onSuccess?: () => void;
 }
 
-export const CreateAccountForm: React.FC<CreateAccountFormProps> = ({
-  onSuccess,
-}) => {
+export const CreateAccountForm = ({ onSuccess }: CreateAccountFormProps) => {
   const [document, setDocument] = useState("");
   const [documentType, setDocumentType] = useState<DocumentType>(
     DocumentType.Cpf

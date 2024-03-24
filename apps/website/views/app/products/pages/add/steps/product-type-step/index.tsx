@@ -10,7 +10,7 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
 interface ProductTypeStepProps {
   productType: ProductType;
@@ -18,11 +18,11 @@ interface ProductTypeStepProps {
   onNextStep: () => void;
 }
 
-export const ProductTypeStep: FC<ProductTypeStepProps> = ({
+export const ProductTypeStep = ({
   productType,
   onNextStep,
   onChangeProductType,
-}) => {
+}: ProductTypeStepProps) => {
   const translate = useTranslations();
   const isFormDisabled = useMemo(() => !productType, [productType]);
 

@@ -10,7 +10,7 @@ import {
   Pagination,
   Stack,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import {
   AppSubscriptionContractsByItemMaterialProductMaterialFragment,
   useGetAppSubscriptionContractsByItemMaterialsQuery,
@@ -20,9 +20,7 @@ import { MaterialsList } from "./components/materials-list";
 import { Navbar } from "./components/navbar";
 import { Loading } from "./loading";
 
-interface MaterialsHomePageProps {}
-
-export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
+export const MaterialsHomePage = () => {
   const { currentAccount } = useCurrentAccount();
   const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();

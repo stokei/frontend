@@ -1,0 +1,28 @@
+query GetSitesHomePageSites(
+  $where: WhereDataFindAllSitesInput
+  $orderBy: OrderByDataFindAllSitesInput
+  $page: PaginationInput
+) {
+  sites(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...SitesHomePageSite
+    }
+  }
+}
+
+fragment SitesHomePageSite on Site {
+  id
+  name
+  slug
+  logo {
+    file {
+      url
+    }
+  }
+}

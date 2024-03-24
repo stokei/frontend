@@ -102,8 +102,13 @@ export const icons = {
   close: IconComponent.CloseIcon,
   view: IconComponent.ViewIcon,
   coupon: IconComponent.CouponIcon,
+  site: IconComponent.SiteIcon,
+  page: IconComponent.PageIcon,
   clock: IconComponent.ClockIcon,
   warning: IconComponent.WarningIcon,
+  move: IconComponent.MoveIcon,
+  component: IconComponent.ComponentIcon,
+  metadata: IconComponent.MetadataIcon,
 };
 
 export type IconName = keyof typeof icons;
@@ -112,6 +117,6 @@ export interface IconProps extends ChakraIconProps {
   readonly name: IconName;
 }
 
-export const Icon: React.FC<IconProps> = ({ children, ...props }) => (
+export const Icon = ({ children, ...props }: IconProps) => (
   <ChakraIcon {...props} as={icons[props.name] as any} />
 );

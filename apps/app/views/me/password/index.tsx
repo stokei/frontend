@@ -1,13 +1,11 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { Container, FormUpdateOwnPassword, useToast } from "@stokei/ui";
-import { FC } from "react";
+
 import { MeLayout } from "../layout";
 import { Navbar } from "./components/navbar";
 import { useUpdateOwnPasswordMutation } from "./graphql/update-own-password.mutation.graphql.generated";
 
-interface MePasswordPageProps {}
-
-export const MePasswordPage: FC<MePasswordPageProps> = () => {
+export const MePasswordPage = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

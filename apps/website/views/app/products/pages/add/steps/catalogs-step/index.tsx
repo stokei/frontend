@@ -12,7 +12,6 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
 
 interface CatalogsStepProps {
   catalogs: SelectCatalogValue[];
@@ -22,13 +21,13 @@ interface CatalogsStepProps {
   onNextStep: () => void;
 }
 
-export const CatalogsStep: FC<CatalogsStepProps> = ({
+export const CatalogsStep = ({
   catalogs,
   onChooseCatalog,
   onRemoveCatalog,
   onNextStep,
   onPreviousStep,
-}) => {
+}: CatalogsStepProps) => {
   const translate = useTranslations();
 
   return (

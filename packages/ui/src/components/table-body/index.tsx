@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface TableBodyProps extends ChakraTableBodyProps {}
-export const TableBody: React.FC<TableBodyProps> = ({ children, ...props }) => (
+export const TableBody = ({ children, ...props }: TableBodyProps) => (
   <ChakraTableBody {...props}>{children}</ChakraTableBody>
 );

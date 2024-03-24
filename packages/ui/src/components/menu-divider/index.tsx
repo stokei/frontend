@@ -5,7 +5,6 @@ import {
 
 export interface MenuDividerProps extends ChakraMenuDividerProps {}
 
-export const MenuDivider: React.FC<MenuDividerProps> = ({
-  children,
-  ...props
-}) => <ChakraMenuDivider {...props}>{children}</ChakraMenuDivider>;
+export const MenuDivider = ({ children, ...props }: MenuDividerProps) => (
+  <ChakraMenuDivider {...props}>{children}</ChakraMenuDivider>
+);

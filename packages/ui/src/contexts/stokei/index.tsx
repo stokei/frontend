@@ -44,9 +44,7 @@ export interface StokeiUIContextProps {
 
 export const StokeiUIContext = React.createContext({} as StokeiUIContextValues);
 
-export const StokeiUIProvider: React.FC<
-  PropsWithChildren<StokeiUIContextProps>
-> = ({
+export const StokeiUIProvider = ({
   children,
   config,
   appId,
@@ -54,7 +52,7 @@ export const StokeiUIProvider: React.FC<
   language,
   accountAccessToken,
   accountRefreshToken,
-}) => {
+}: PropsWithChildren<StokeiUIContextProps>) => {
   const themeData = useMemo(() => theme(config), [config]);
 
   const getHexdecimalColor = useCallback(

@@ -10,7 +10,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AdminCoursePageModuleFragment } from "../../graphql/modules.query.graphql.generated";
 import { useRemoveModuleMutation } from "../../graphql/remove-module.mutation.graphql.generated";
 
@@ -21,12 +21,12 @@ interface RemoveModuleModalProps {
   onSuccessRemoveModule: (module: AdminCoursePageModuleFragment) => void;
 }
 
-export const RemoveModuleModal: FC<RemoveModuleModalProps> = ({
+export const RemoveModuleModal = ({
   moduleId,
   isOpenModal,
   onCloseModal,
   onSuccessRemoveModule,
-}) => {
+}: RemoveModuleModalProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

@@ -30,7 +30,7 @@ export interface InputPhoneProps {
   onChangeCountryCode: (countryCode: string) => void;
 }
 
-export const InputPhone: React.FC<InputPhoneProps> = ({
+export const InputPhone = ({
   id,
   number,
   areaCode,
@@ -41,7 +41,7 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
   onChangeAreaCode,
   onChangeCountryCode,
   ...props
-}) => {
+}: InputPhoneProps) => {
   const translate = useTranslations();
 
   const getPhoneCode = (countryCodeValue: string) => {

@@ -1,6 +1,5 @@
 import { useTranslations } from "@/hooks";
 import { Select, SelectInput, SelectItem, SelectList, Text } from "@stokei/ui";
-import { FC } from "react";
 
 export enum DiscountType {
   AMOUNT = "AMOUNT",
@@ -12,10 +11,10 @@ interface SelectDiscountTypeProps {
   readonly onChange: (value: DiscountType) => void;
 }
 
-export const SelectDiscountType: FC<SelectDiscountTypeProps> = ({
+export const SelectDiscountType = ({
   value,
   onChange,
-}) => {
+}: SelectDiscountTypeProps) => {
   const translate = useTranslations();
 
   return (

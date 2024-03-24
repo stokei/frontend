@@ -7,11 +7,11 @@ export interface RatingProps extends BoxProps {
   readonly maxRating?: number;
 }
 
-export const Rating: React.FC<PropsWithChildren<RatingProps>> = ({
+export const Rating = ({
   rating,
   maxRating = 5,
   ...props
-}) => {
+}: PropsWithChildren<RatingProps>) => {
   const ratingFixed = useMemo(() => rating?.toFixed(1), [rating]);
   const roundedRating = useMemo(() => Math.round(rating * 2) / 2, [rating]);
 

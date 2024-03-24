@@ -5,7 +5,7 @@ import {
 
 export interface LoadingProps extends ChakraSpinnerProps {}
 
-export const Loading: React.FC<LoadingProps> = ({ children, ...props }) => (
+export const Loading = ({ children, ...props }: LoadingProps) => (
   <ChakraSpinner
     color="primary.500"
     emptyColor="gray.200"

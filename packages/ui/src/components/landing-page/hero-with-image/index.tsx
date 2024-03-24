@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { HeroTitleContent, HeroTitleContentProps } from "../hero-title-content";
 import { Container } from "../../container";
 import { Hero } from "../../hero";
@@ -10,7 +9,7 @@ interface HeroWithImageProps extends HeroTitleContentProps {
   readonly orientation?: "left" | "right";
 }
 
-export const HeroWithImage: FC<HeroWithImageProps> = ({
+export const HeroWithImage = ({
   imageURL,
   title,
   subtitle,
@@ -19,7 +18,7 @@ export const HeroWithImage: FC<HeroWithImageProps> = ({
   ctaText,
   onCTA,
   orientation = "left",
-}) => {
+}: HeroWithImageProps) => {
   return (
     <Container>
       <Hero

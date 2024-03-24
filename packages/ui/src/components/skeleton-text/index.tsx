@@ -5,7 +5,6 @@ import {
 
 export interface SkeletonTextProps extends ChakraSkeletonTextProps {}
 
-export const SkeletonText: React.FC<SkeletonTextProps> = ({
-  children,
-  ...props
-}) => <ChakraSkeletonText {...props}>{children}</ChakraSkeletonText>;
+export const SkeletonText = ({ children, ...props }: SkeletonTextProps) => (
+  <ChakraSkeletonText {...props}>{children}</ChakraSkeletonText>
+);

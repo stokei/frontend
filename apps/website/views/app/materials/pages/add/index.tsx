@@ -26,15 +26,13 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Navbar } from "./components/navbar";
 import { useCreateMaterialMutation } from "./graphql/create-material.mutation.graphql.generated";
 
-interface AddMaterialPageProps {}
-
-export const AddMaterialPage: FC<AddMaterialPageProps> = () => {
+export const AddMaterialPage = () => {
   const [fileId, setFileId] = useState<string>("");
   const router = useRouter();
   const translate = useTranslations();

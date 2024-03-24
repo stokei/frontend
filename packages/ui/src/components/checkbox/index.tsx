@@ -6,8 +6,6 @@ import {
 
 export interface CheckboxProps extends ChakraCheckboxProps {}
 
-export const Checkbox: React.FC<CheckboxProps> = forwardRef(
-  ({ ...props }, ref) => (
-    <ChakraCheckbox ref={ref} colorScheme="primary" {...props} />
-  )
-);
+export const Checkbox = forwardRef(({ ...props }: CheckboxProps, ref) => (
+  <ChakraCheckbox ref={ref} colorScheme="primary" {...props} />
+));

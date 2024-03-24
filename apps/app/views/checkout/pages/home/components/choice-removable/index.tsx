@@ -12,9 +12,10 @@ export interface ChoiseRemovableProps {
   onRemove: () => void;
 }
 
-export const ChoiseRemovable: React.FC<
-  PropsWithChildren<ChoiseRemovableProps>
-> = ({ onRemove, children }) => {
+export const ChoiseRemovable = ({
+  onRemove,
+  children,
+}: PropsWithChildren<ChoiseRemovableProps>) => {
   return (
     <Card>
       <CardBody>

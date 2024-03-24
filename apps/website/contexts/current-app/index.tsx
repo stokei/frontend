@@ -1,5 +1,5 @@
 import { CurrentGlobalAppQuery } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
-import { createContext, FC, PropsWithChildren, useMemo } from "react";
+import { createContext, PropsWithChildren, useMemo } from "react";
 
 export interface CurrentAppProviderProps {
   readonly currentApp?: CurrentApp;
@@ -13,9 +13,10 @@ export interface CurrentAppProviderValues {
 
 export const CurrentAppContext = createContext({} as CurrentAppProviderValues);
 
-export const CurrentAppProvider: FC<
-  PropsWithChildren<CurrentAppProviderProps>
-> = ({ currentApp, children }) => {
+export const CurrentAppProvider = ({
+  currentApp,
+  children,
+}: PropsWithChildren<CurrentAppProviderProps>) => {
   const hasPaymentIntegrations = useMemo(
     () =>
       !!currentApp?.isIntegratedWithPagarme ||

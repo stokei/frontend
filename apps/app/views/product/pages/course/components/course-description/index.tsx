@@ -1,14 +1,11 @@
 import { useTranslations } from "@/hooks";
 import { Markdown, Stack, Title } from "@stokei/ui";
-import { FC } from "react";
 
 export interface CourseDescriptionProps {
   readonly description?: string;
 }
 
-export const CourseDescription: FC<CourseDescriptionProps> = ({
-  description,
-}) => {
+export const CourseDescription = ({ description }: CourseDescriptionProps) => {
   const translate = useTranslations();
   return (
     <Stack direction="column" spacing="4">

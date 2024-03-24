@@ -5,7 +5,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface ListProps extends ChakraListProps {}
-export const List: React.FC<ListProps> = ({ children, ...props }) => {
+export const List = ({ children, ...props }: ListProps) => {
   return (
     <ChakraList spacing="2" {...props}>
       {children}

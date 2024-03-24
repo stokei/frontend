@@ -14,12 +14,12 @@ export interface StepsContextProps {
 
 export const StepsContext = React.createContext({} as StepsContextValues);
 
-export const StepsProvider: React.FC<PropsWithChildren<StepsContextProps>> = ({
+export const StepsProvider = ({
   orientation,
   currentStep,
   onChangeStep,
   children,
-}) => {
+}: PropsWithChildren<StepsContextProps>) => {
   const configValues: StepsContextValues = useMemo(
     () => ({
       orientation,

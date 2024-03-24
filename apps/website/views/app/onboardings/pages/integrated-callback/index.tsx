@@ -9,12 +9,10 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { Navbar } from "../../components/navbar";
 
-interface IntegratedCallbackPageProps {}
-
-export const IntegratedCallbackPage: FC<IntegratedCallbackPageProps> = () => {
+export const IntegratedCallbackPage = () => {
   const translate = useTranslations();
   return (
     <AppLayout>

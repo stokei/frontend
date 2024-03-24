@@ -1,12 +1,12 @@
 import { Stack, Text } from "@stokei/ui";
-import { FC } from "react";
+
 import { AddressManagementAddressFragment } from "../graphql/addresses.query.graphql.generated";
 
 interface AddressItemProps {
   readonly address?: AddressManagementAddressFragment | null;
 }
 
-export const AddressItem: FC<AddressItemProps> = ({ address }) => {
+export const AddressItem = ({ address }: AddressItemProps) => {
   return (
     <Stack direction="column" spacing="0">
       <Text fontWeight="bold">

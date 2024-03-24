@@ -1,10 +1,7 @@
 import { AppLogo, NavbarUserInformation } from "@/components";
 import { Navbar as NavbarUI } from "@stokei/ui";
-import { FC } from "react";
 
-interface NavbarProps {}
-
-export const Navbar: FC<NavbarProps> = () => {
+export const Navbar = () => {
   return (
     <NavbarUI
       align="center"

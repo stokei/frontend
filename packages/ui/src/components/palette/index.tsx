@@ -14,11 +14,7 @@ export interface PaletteProps extends BoxProps {
   readonly size?: PaletteSize;
 }
 
-export const Palette: React.FC<PaletteProps> = ({
-  label,
-  isShowValue,
-  ...props
-}) => {
+export const Palette = ({ label, isShowValue, ...props }: PaletteProps) => {
   const color = props?.color || "primary";
 
   const listColorsValue: IColorHue[] = [

@@ -1,13 +1,12 @@
 import { useTranslations } from "@/hooks";
 import { useCreateFileDownloadURL } from "@/hooks/create-file-download-url";
 import { Box, Button, Icon } from "@stokei/ui";
-import { FC } from "react";
 
 interface DownloadFileButtonProps {
   fileId: string;
 }
 
-export const DownloadFileButton: FC<DownloadFileButtonProps> = ({ fileId }) => {
+export const DownloadFileButton = ({ fileId }: DownloadFileButtonProps) => {
   const translate = useTranslations();
 
   const {

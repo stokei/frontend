@@ -17,7 +17,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useGetAdminCatalogPageCatalogItemsQuery } from "../../graphql/catalog-items.query.graphql.generated";
 import { AddCatalogItemDrawer } from "../add-catalog-item-drawer";
 import { ProductItem } from "../product-item";
@@ -26,7 +26,7 @@ interface ProductsProps {
   catalog?: CatalogPageCatalogFragment;
 }
 
-export const Products: FC<ProductsProps> = ({ catalog }) => {
+export const Products = ({ catalog }: ProductsProps) => {
   const [productNameQuery, setProductNameQuery] = useState("");
   const translate = useTranslations();
 

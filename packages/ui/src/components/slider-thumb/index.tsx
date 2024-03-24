@@ -5,8 +5,8 @@ import {
 } from "@chakra-ui/react";
 
 export interface SliderThumbProps extends ChakraSliderThumbProps {}
-export const SliderThumb: React.FC<SliderThumbProps> = forwardRef(
-  ({ children, ...props }, ref) => (
+export const SliderThumb = forwardRef(
+  ({ children, ...props }: SliderThumbProps, ref) => (
     <ChakraSliderThumb {...props} ref={ref}>
       {children}
     </ChakraSliderThumb>

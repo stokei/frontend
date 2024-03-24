@@ -19,7 +19,7 @@ import {
   Text,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUpdatePriceMutation } from "../../graphql/update-price.mutation.graphql.generated";
@@ -31,12 +31,12 @@ interface UpdatePriceDrawerProps {
   onSuccess?: (price: PriceComponentFragment) => void;
 }
 
-export const UpdatePriceDrawer: FC<UpdatePriceDrawerProps> = ({
+export const UpdatePriceDrawer = ({
   price,
   isOpenDrawer,
   onSuccess,
   onCloseDrawer,
-}) => {
+}: UpdatePriceDrawerProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { onShowToast } = useToast();

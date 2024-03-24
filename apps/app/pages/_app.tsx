@@ -13,11 +13,7 @@ import noImage from "@/assets/no-image.png";
 
 import { BASE_URL_HEADER_NAME } from "@/constants/base-url-header-name";
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
-import {
-  CurrentAccountProvider,
-  CurrentAppProvider,
-  ShoppingCartProvider,
-} from "@/contexts";
+import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
 import { enUSMessages, ptBRMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
 import {
@@ -35,6 +31,7 @@ import { Router } from "next/router";
 import { useMemo } from "react";
 import { GoogleAnalytics } from "@stokei/plugins";
 import { GOOGLE_ANALYTICS_KEY } from "@/environments";
+import { ShoppingCartProvider } from "@stokei/builder";
 
 const messages: Messages = {
   "pt-BR": {
@@ -58,8 +55,8 @@ function MyApp({
   pageProps,
   appId,
   cookies,
-  baseURL,
   currentApp,
+  currentSite,
   currentAccount,
   themeColors,
   router,
@@ -74,7 +71,7 @@ function MyApp({
   );
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
-      <CurrentAppProvider baseURL={baseURL} currentApp={currentApp}>
+      <CurrentAppProvider currentApp={currentApp} currentSite={currentSite}>
         <CurrentAccountProvider currentAccount={currentAccount}>
           <StokeiUIProvider
             config={{
@@ -127,11 +124,12 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
       {
         slug,
       },
-      { requestPolicy: "cache-and-network" }
+      { requestPolicy: "network-only" }
     )
     .toPromise();
 
-  const currentAppData = currentApp?.data?.currentApp;
+  const currentSiteData = currentApp?.data?.site;
+  const currentAppData = currentSiteData?.app;
   const appId = currentAppData?.id;
   let currentAccount;
   if (currentAppData) {
@@ -144,7 +142,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
         .query<CurrentAccountQuery>(
           CurrentAccountDocument,
           {},
-          { requestPolicy: "cache-and-network" }
+          { requestPolicy: "network-only" }
         )
         .toPromise();
     } catch (error) {}
@@ -156,11 +154,10 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
     appId,
     baseURL,
     cookies,
+    currentSite: currentSiteData,
     currentApp: currentAppData,
     currentAccount: currentAccountData,
-    themeColors: formatAppColorsToThemeColors(
-      currentApp?.data?.currentApp?.colors?.items
-    ),
+    themeColors: formatAppColorsToThemeColors(currentAppData?.colors?.items),
   };
 };
 

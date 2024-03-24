@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { ProductLayout } from "../../layout";
 import { AddFeatureDrawer } from "./components/add-feature-drawer";
 import { FeaturesList } from "./components/features-list";
@@ -19,9 +19,7 @@ import { Navbar } from "./components/navbar";
 import { useGetProductPageFeaturesQuery } from "./graphql/features.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface FeaturesPageProps {}
-
-export const FeaturesPage: FC<FeaturesPageProps> = () => {
+export const FeaturesPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();

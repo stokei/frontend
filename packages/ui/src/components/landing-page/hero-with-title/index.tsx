@@ -1,18 +1,15 @@
-import { FC } from "react";
 import { HeroTitleContent, HeroTitleContentProps } from "../hero-title-content";
 import { Container } from "../../container";
 import { Hero } from "../../hero";
 
-interface HeroWithTitleProps extends HeroTitleContentProps {}
-
-export const HeroWithTitle: FC<HeroWithTitleProps> = ({
+export const HeroWithTitle = ({
   title,
   subtitle,
   titleHighlight,
   subtitleHighlight,
   ctaText,
   onCTA,
-}) => {
+}: HeroTitleContentProps) => {
   return (
     <Container>
       <Hero>

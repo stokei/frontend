@@ -14,7 +14,7 @@ import {
   TagLabel,
   useDebounce,
 } from "@stokei/ui";
-import { FC, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -31,12 +31,12 @@ interface SelectProductsProps {
   readonly onRemoveChooseCurrentProduct: (value?: AppProductFragment) => void;
 }
 
-export const SelectProducts: FC<SelectProductsProps> = ({
+export const SelectProducts = ({
   label,
   currentProducts,
   onChooseCurrentProduct,
   onRemoveChooseCurrentProduct,
-}) => {
+}: SelectProductsProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

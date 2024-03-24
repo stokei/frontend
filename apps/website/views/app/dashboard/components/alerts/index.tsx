@@ -10,11 +10,9 @@ import {
   Stack,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
-interface AlertsProps {}
-
-export const Alerts: FC<AlertsProps> = () => {
+export const Alerts = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp, hasPaymentIntegrations } = useCurrentApp();

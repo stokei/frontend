@@ -8,11 +8,9 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
-export interface HeaderProps {}
-
-export const Header: FC<HeaderProps> = () => {
+export const Header = () => {
   const translate = useTranslations();
 
   const firstDayMonth = useMemo(() => {

@@ -1,11 +1,8 @@
 import { NavbarUserInformation, SidebarOpenButton } from "@/components";
 import { useTranslations } from "@/hooks";
 import { Navbar as NavbarUI, Title } from "@stokei/ui";
-import { FC } from "react";
 
-interface NavbarProps {}
-
-export const Navbar: FC<NavbarProps> = () => {
+export const Navbar = () => {
   const translate = useTranslations();
   return (
     <NavbarUI

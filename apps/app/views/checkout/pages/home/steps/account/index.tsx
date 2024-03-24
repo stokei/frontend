@@ -17,10 +17,10 @@ export interface AccountStepProps {
   onNextStep: () => void;
 }
 
-export const AccountStep: React.FC<AccountStepProps> = ({
+export const AccountStep = ({
   onNextStep,
   onPreviousStep,
-}) => {
+}: AccountStepProps) => {
   const [userDataStep, setUserDataStep] = useState<AccountStepUserDataStep>(
     AccountStepUserDataStep.SHOW_DATA
   );

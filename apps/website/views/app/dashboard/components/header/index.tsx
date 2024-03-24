@@ -8,12 +8,10 @@ import {
   StatNumber,
   Text,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { useGetMembersTotalQuery } from "../../graphql/members.query.graphql.generated";
 
-interface HeaderProps {}
-
-export const Header: FC<HeaderProps> = () => {
+export const Header = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

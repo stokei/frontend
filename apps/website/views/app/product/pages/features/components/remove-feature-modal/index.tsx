@@ -11,7 +11,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { ProductPageFeatureFragment } from "../../graphql/features.query.graphql.generated";
 import { useProductPageRemoveFeatureMutation } from "../../graphql/remove-feature.mutation.graphql.generated";
 
@@ -22,12 +22,12 @@ interface RemoveFeatureModalProps {
   onSuccess: () => void;
 }
 
-export const RemoveFeatureModal: FC<RemoveFeatureModalProps> = ({
+export const RemoveFeatureModal = ({
   feature,
   isOpenModal,
   onSuccess,
   onCloseModal,
-}) => {
+}: RemoveFeatureModalProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

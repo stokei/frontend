@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { HeroTitleContent, HeroTitleContentProps } from "../hero-title-content";
 import { Container } from "../../container";
 import { Hero } from "../../hero";
@@ -7,7 +6,7 @@ interface HeroWithBackgroundImageProps extends HeroTitleContentProps {
   readonly imageURL: string;
 }
 
-export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
+export const HeroWithBackgroundImage = ({
   imageURL,
   title,
   subtitle,
@@ -15,7 +14,7 @@ export const HeroWithBackgroundImage: FC<HeroWithBackgroundImageProps> = ({
   subtitleHighlight,
   ctaText,
   onCTA,
-}) => {
+}: HeroWithBackgroundImageProps) => {
   return (
     <Hero
       justify="center"

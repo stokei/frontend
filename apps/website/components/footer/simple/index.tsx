@@ -1,10 +1,9 @@
 import { DEFAULT_APP_NAME } from "@/constants/default-app-info";
 import { useTranslations } from "@/hooks";
 import { Box, Footer, FooterProps, Text } from "@stokei/ui";
-import { FC } from "react";
 
 export interface SimpleFooterProps extends FooterProps {}
-export const SimpleFooter: FC<SimpleFooterProps> = ({ ...props }) => {
+export const SimpleFooter = ({ ...props }: SimpleFooterProps) => {
   const translate = useTranslations();
 
   return (

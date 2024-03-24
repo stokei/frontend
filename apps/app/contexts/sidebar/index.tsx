@@ -1,5 +1,5 @@
 import { useDisclosure } from "@stokei/ui";
-import { createContext, FC, PropsWithChildren, useMemo } from "react";
+import { createContext, PropsWithChildren, useMemo } from "react";
 
 export interface SidebarProviderProps {}
 
@@ -10,9 +10,9 @@ export interface SidebarProviderValues {
 
 export const SidebarContext = createContext({} as SidebarProviderValues);
 
-export const SidebarProvider: FC<PropsWithChildren<SidebarProviderProps>> = ({
+export const SidebarProvider = ({
   children,
-}) => {
+}: PropsWithChildren<SidebarProviderProps>) => {
   const { isOpen: isOpenSidebar, onToggle: onToggleSidebar } = useDisclosure();
   const values: SidebarProviderValues = useMemo(
     () => ({

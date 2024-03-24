@@ -34,7 +34,7 @@ export interface ImageUploaderProps extends Omit<StackProps, "onError"> {
   readonly onRemoveFile?: () => void;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({
+export const ImageUploader = ({
   id,
   accept,
   uploadURL,
@@ -43,7 +43,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   onError,
   onRemoveFile,
   ...props
-}) => {
+}: ImageUploaderProps) => {
   const [file, setFile] = useState<any>();
   const { language } = useStokeiUI();
   const translate = useTranslations();

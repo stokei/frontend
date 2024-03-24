@@ -3,10 +3,9 @@ import { STOKEI_WEBSITE_URL } from "@/constants/stokei-urls";
 import { useTranslations } from "@/hooks";
 import { Box, Footer, FooterProps, Link, Text } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC } from "react";
 
 export interface SimpleFooterProps extends FooterProps {}
-export const SimpleFooter: FC<SimpleFooterProps> = ({ ...props }) => {
+export const SimpleFooter = ({ ...props }: SimpleFooterProps) => {
   const translate = useTranslations();
 
   return (

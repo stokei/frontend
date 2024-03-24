@@ -2,11 +2,8 @@ import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { Box, Button, Icon, Stack, Text } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
 
-interface PaymentSuccessfullyProps {}
-
-export const PaymentSuccessfully: FC<PaymentSuccessfullyProps> = () => {
+export const PaymentSuccessfully = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { homePageURL } = useCurrentAccount();

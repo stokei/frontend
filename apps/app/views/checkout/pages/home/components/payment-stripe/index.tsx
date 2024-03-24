@@ -17,9 +17,7 @@ export interface PaymentStripeProps {
   stripe?: CreateCheckoutPageCheckoutFragment["stripe"];
 }
 
-const PaymentStripe: React.FC<PaymentStripeProps> = ({
-  stripe: stripeProp,
-}) => {
+const PaymentStripe = ({ stripe: stripeProp }: PaymentStripeProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const clientSecret = stripeProp?.clientSecret;
@@ -70,7 +68,7 @@ const PaymentStripe: React.FC<PaymentStripeProps> = ({
   );
 };
 
-const PaymentStripeWithContext: React.FC<PaymentStripeProps> = (props) => {
+const PaymentStripeWithContext = (props: PaymentStripeProps) => {
   const { currentApp } = useCurrentApp();
 
   const stripe = useMemo(() => {

@@ -20,7 +20,7 @@ import {
   Title,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Section } from "../../../../components/section";
 import { SectionContent } from "../../../../components/section-content";
 import { SectionInformation } from "../../../../components/section-information";
@@ -33,7 +33,7 @@ interface PricesProps {
   productId?: string;
 }
 
-export const Prices: FC<PricesProps> = ({ productId }) => {
+export const Prices = ({ productId }: PricesProps) => {
   const [isFirstPrice, setIsFirstPrice] = useState<boolean>(false);
   const [prices, setPrices] = useState<PriceComponentFragment[]>([]);
   const translate = useTranslations();

@@ -9,13 +9,11 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { AuthLayout } from "../../layout";
 import { useSignUpMutation } from "./graphql/signup.mutation.graphql.generated";
 
-interface SignUpPageProps {}
-
-export const SignUpPage: FC<SignUpPageProps> = () => {
+export const SignUpPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

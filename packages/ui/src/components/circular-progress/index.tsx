@@ -5,10 +5,10 @@ import {
 
 export interface CircularProgressProps extends ChakraCircularProgressProps {}
 
-export const CircularProgress: React.FC<CircularProgressProps> = ({
+export const CircularProgress = ({
   children,
   ...props
-}) => (
+}: CircularProgressProps) => (
   <ChakraCircularProgress color="primary.500" {...props}>
     {children}
   </ChakraCircularProgress>

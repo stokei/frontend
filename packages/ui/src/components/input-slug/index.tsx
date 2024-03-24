@@ -18,8 +18,8 @@ const maskSlug = (value: string): string => {
   return "";
 };
 
-export const InputSlug: React.FC<InputSlugProps> = forwardRef(
-  ({ onChange, ...props }, ref) => {
+export const InputSlug = forwardRef(
+  ({ onChange, ...props }: InputSlugProps, ref) => {
     return (
       <InputGroup>
         <InputLeftAddon>

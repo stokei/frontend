@@ -1,7 +1,7 @@
 import { Box, BoxProps } from "../box";
 
 export interface HeroMediaProps extends BoxProps {}
-export const HeroMedia: React.FC<HeroMediaProps> = ({ children, ...props }) => (
+export const HeroMedia = ({ children, ...props }: HeroMediaProps) => (
   <Box
     width={["full", "full", "50%", "50%"]}
     flex="1"

@@ -14,7 +14,7 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { SubscriptionPageSubscriptionContractFragment } from "../../graphql/subscription-contract.query.graphql.generated";
 import { Customer } from "../../interfaces/customer";
 import { Product } from "../../interfaces/product";
@@ -25,9 +25,11 @@ interface SubscriptionContractDetailsProps {
   readonly product?: Product;
 }
 
-export const SubscriptionContractDetails: FC<
-  SubscriptionContractDetailsProps
-> = ({ subscriptionContract, customer, product }) => {
+export const SubscriptionContractDetails = ({
+  subscriptionContract,
+  customer,
+  product,
+}: SubscriptionContractDetailsProps) => {
   const translate = useTranslations();
 
   const isRecurringSubscriptionContract = useMemo(

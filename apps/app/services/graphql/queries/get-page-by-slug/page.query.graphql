@@ -1,0 +1,8 @@
+query GetPageBySlug($slug: String!, $site: String!) {
+  page(slug: $slug, site: $site) {
+    id
+    version {
+      id
+    }
+  }
+}

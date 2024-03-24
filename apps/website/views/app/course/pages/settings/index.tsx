@@ -20,7 +20,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";
@@ -29,9 +29,7 @@ import { useGetAdminSettingsCoursePageCourseQuery } from "./graphql/course.query
 import { useAdminSettingsCoursePageUpdateCourseMutation } from "./graphql/update-course.mutation.graphql.generated";
 import { Loading } from "./loading";
 
-interface CourseSettingsPageProps {}
-
-export const CourseSettingsPage: FC<CourseSettingsPageProps> = () => {
+export const CourseSettingsPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

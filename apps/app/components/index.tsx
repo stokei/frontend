@@ -1,6 +1,5 @@
 export * from "./app-logo";
 export * from "./card-input";
-export * from "./catalog";
 export * from "./catalog-item";
 export * from "./download-file-button";
 export * from "./footer";
@@ -9,4 +8,3 @@ export * from "./price";
 export * from "./select-price";
 export * from "./sidebar";
 export * from "./sidebar-open-button";
-export * from "./sorted-item-factory";

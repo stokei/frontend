@@ -26,7 +26,7 @@ export interface PaymentMethodStepProps {
   onNextStep: () => void;
 }
 
-export const PaymentMethodStep: React.FC<PaymentMethodStepProps> = ({
+export const PaymentMethodStep = ({
   address,
   paymentMethod,
   paymentMethodType,
@@ -34,7 +34,7 @@ export const PaymentMethodStep: React.FC<PaymentMethodStepProps> = ({
   onChoosePaymentMethodType,
   onNextStep,
   onPreviousStep,
-}) => {
+}: PaymentMethodStepProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const addressIsBR = address?.country?.toLowerCase() === "br";

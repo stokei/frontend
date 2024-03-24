@@ -15,7 +15,7 @@ import {
   Label,
   Stack,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -26,12 +26,12 @@ interface CourseFiltersProps {
   readonly onChangeFilteredCourseQuery: (value?: string) => void;
 }
 
-export const CourseFilters: FC<CourseFiltersProps> = ({
+export const CourseFilters = ({
   isOpen,
   onClose,
   filteredCourseQuery,
   onChangeFilteredCourseQuery,
-}) => {
+}: CourseFiltersProps) => {
   const translate = useTranslations();
 
   const validationSchema = z.object({

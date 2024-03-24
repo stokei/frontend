@@ -9,8 +9,8 @@ export interface CheckboxCardProps extends CheckboxProps {
   readonly ref?: ForwardedRef<any>;
 }
 
-export const CheckboxCard: React.FC<CheckboxCardProps> = forwardRef(
-  ({ id, children, ...props }, ref) => {
+export const CheckboxCard = forwardRef(
+  ({ id, children, ...props }: CheckboxCardProps, ref) => {
     return (
       <Box
         as="label"

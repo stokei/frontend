@@ -1,13 +1,12 @@
 import { AppCouponFragment } from "@/components/select-coupons/graphql/coupons.query.graphql.generated";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { Stack, Text } from "@stokei/ui";
-import { FC } from "react";
 
 interface CouponItemProps {
   readonly coupon?: AppCouponFragment;
 }
 
-export const CouponItem: FC<CouponItemProps> = ({ coupon }) => {
+export const CouponItem = ({ coupon }: CouponItemProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

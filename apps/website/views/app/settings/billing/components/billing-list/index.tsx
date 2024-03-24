@@ -11,12 +11,10 @@ import {
   TableRow,
   Text,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { useGetAppBillingQuery } from "../../graphql/billing.query.graphql.generated";
 
-export interface BillingListProps {}
-
-export const BillingList: FC<BillingListProps> = () => {
+export const BillingList = () => {
   const translate = useTranslations();
 
   const [{ data: dataBilling, fetching: isLoadingBilling }] =

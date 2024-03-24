@@ -1,1 +1,1 @@
-export const APP_SLUG_COOKIE_KEY: string = "x-app-slug";
+export const SITE_SLUG_COOKIE_KEY: string = "x-site-slug";

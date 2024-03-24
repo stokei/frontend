@@ -2,7 +2,6 @@ import { SelectMembers } from "@/components/select-members";
 import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { Button, ButtonGroup, Stack, Title } from "@stokei/ui";
-import { FC } from "react";
 
 interface StudentStepProps {
   student?: AppAccountFragment;
@@ -10,11 +9,11 @@ interface StudentStepProps {
   onNextStep: () => void;
 }
 
-export const StudentStep: FC<StudentStepProps> = ({
+export const StudentStep = ({
   student,
   onNextStep,
   onChooseStudent,
-}) => {
+}: StudentStepProps) => {
   const translate = useTranslations();
 
   return (

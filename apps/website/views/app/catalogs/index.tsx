@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AddCatalogDrawer } from "./components/add-catalog-drawer";
 import { CatalogFilters } from "./components/catalog-filters";
 import { CatalogsList } from "./components/catalogs-list";
@@ -20,9 +20,7 @@ import { Navbar } from "./components/navbar";
 import { useGetAdminCatalogsPageCatalogsQuery } from "./graphql/catalogs.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface CatalogsPageProps {}
-
-export const CatalogsPage: FC<CatalogsPageProps> = () => {
+export const CatalogsPage = () => {
   const [filteredCatalogQuery, setFilteredCatalogQuery] = useState<string>();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();

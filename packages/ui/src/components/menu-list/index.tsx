@@ -5,6 +5,6 @@ import {
 
 export interface MenuListProps extends ChakraMenuListProps {}
 
-export const MenuList: React.FC<MenuListProps> = ({ children, ...props }) => (
+export const MenuList = ({ children, ...props }: MenuListProps) => (
   <ChakraMenuList {...props}>{children}</ChakraMenuList>
 );

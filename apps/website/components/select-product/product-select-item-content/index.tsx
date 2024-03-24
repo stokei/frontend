@@ -1,14 +1,14 @@
 import { Avatar, Box, Stack, Text } from "@stokei/ui";
-import { FC } from "react";
+
 import { AppProductFragment } from "../graphql/products.query.graphql.generated";
 
 interface ProductSelectItemContentProps {
   readonly product?: AppProductFragment;
 }
 
-export const ProductSelectItemContent: FC<ProductSelectItemContentProps> = ({
+export const ProductSelectItemContent = ({
   product,
-}) => {
+}: ProductSelectItemContentProps) => {
   return (
     <Stack direction="row" spacing="2" align="center">
       <Avatar

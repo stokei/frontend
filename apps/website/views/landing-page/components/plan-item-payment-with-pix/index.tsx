@@ -19,11 +19,8 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
 
-interface PlanItemPaymentWithPixProps {}
-
-export const PlanItemPaymentWithPix: FC<PlanItemPaymentWithPixProps> = () => {
+export const PlanItemPaymentWithPix = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const pagarmeGateway =

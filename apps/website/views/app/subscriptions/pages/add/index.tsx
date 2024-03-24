@@ -19,18 +19,14 @@ import {
   StepPanels,
   Steps,
 } from "@stokei/ui";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar } from "./components/navbar";
 import { PeriodStep } from "./steps/period";
 import { ProductStep } from "./steps/product";
 import { ReviewStep } from "./steps/review";
 import { StudentStep } from "./steps/student";
 
-interface AddSubscriptionContractPageProps {}
-
-export const AddSubscriptionContractPage: FC<
-  AddSubscriptionContractPageProps
-> = () => {
+export const AddSubscriptionContractPage = () => {
   const [currentStep, setCurrentStep] = useState<AddSubscriptionContractStep>(
     AddSubscriptionContractStep.STUDENT
   );

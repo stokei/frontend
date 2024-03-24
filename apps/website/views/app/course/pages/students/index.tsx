@@ -1,7 +1,7 @@
 import { usePagination, useTranslations } from "@/hooks";
 import { Container, Pagination, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Navbar } from "./components/navbar";
 import { StudentsList } from "./components/students-list";
 import {
@@ -11,9 +11,7 @@ import {
 import { CourseLayout } from "../../layout";
 import { Loading } from "../../loading";
 
-interface CourseStudentsPageProps {}
-
-export const CourseStudentsPage: FC<CourseStudentsPageProps> = () => {
+export const CourseStudentsPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();

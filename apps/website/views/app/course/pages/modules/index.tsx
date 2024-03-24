@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CourseLayout } from "../../layout";
 import { AddModuleDrawer } from "./components/add-module";
 import { ModuleLoading } from "./components/module-loading";
@@ -27,9 +27,7 @@ import { VideoPreviewModal } from "./components/video-preview-modal";
 import { RemoveModuleModal } from "./components/remove-module-modal";
 import { EditModuleDrawer } from "./components/edit-module";
 
-interface CourseModulesPageProps {}
-
-export const CourseModulesPage: FC<CourseModulesPageProps> = () => {
+export const CourseModulesPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const [modalVideoPreview, setModalVideoPreview] =

@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface MenuProps extends ChakraMenuProps {}
-export const Menu: React.FC<MenuProps> = ({ children, ...props }) => (
+export const Menu = ({ children, ...props }: MenuProps) => (
   <ChakraMenu {...props}>{children}</ChakraMenu>
 );

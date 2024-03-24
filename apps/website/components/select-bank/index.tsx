@@ -13,7 +13,7 @@ import {
   TagLabel,
   useDebounce,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { BankSelectItem } from "./bank-select-item";
@@ -31,12 +31,12 @@ interface SelectBankProps {
   readonly onRemoveChooseBank: (value?: Bank) => void;
 }
 
-export const SelectBank: FC<SelectBankProps> = ({
+export const SelectBank = ({
   label,
   bank,
   onChooseBank,
   onRemoveChooseBank,
-}) => {
+}: SelectBankProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [banks, setBanks] = useState<Bank[]>([]);
   const translate = useTranslations();

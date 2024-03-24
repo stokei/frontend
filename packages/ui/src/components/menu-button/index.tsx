@@ -5,7 +5,6 @@ import {
 
 export interface MenuButtonProps extends ChakraMenuButtonProps {}
 
-export const MenuButton: React.FC<MenuButtonProps> = ({
-  children,
-  ...props
-}) => <ChakraMenuButton {...props}>{children}</ChakraMenuButton>;
+export const MenuButton = ({ children, ...props }: MenuButtonProps) => (
+  <ChakraMenuButton {...props}>{children}</ChakraMenuButton>
+);

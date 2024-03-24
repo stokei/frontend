@@ -5,7 +5,7 @@ import {
 
 export interface HighlightProps extends ChakraHighlightProps {}
 
-export const Highlight: React.FC<HighlightProps> = ({ ...props }) => (
+export const Highlight = ({ ...props }: HighlightProps) => (
   <ChakraHighlight
     styles={{ color: "primary.500", whiteSpace: "wrap" }}
     {...props}

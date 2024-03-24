@@ -1,17 +1,6 @@
-import {
-  Box,
-  Card,
-  CardBody,
-  Container,
-  Skeleton,
-  SkeletonText,
-  Stack,
-} from "@stokei/ui";
-import { FC } from "react";
+import { Box, Container, Skeleton, Stack } from "@stokei/ui";
 
-export interface LoadingProps {}
-
-export const Loading: FC<LoadingProps> = () => {
+export const Loading = () => {
   return (
     <Container paddingY="10" align="center">
       <Box

@@ -4,7 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface SliderTrackProps extends ChakraSliderTrackProps {}
-export const SliderTrack: React.FC<SliderTrackProps> = ({
-  children,
-  ...props
-}) => <ChakraSliderTrack {...props}>{children}</ChakraSliderTrack>;
+export const SliderTrack = ({ children, ...props }: SliderTrackProps) => (
+  <ChakraSliderTrack {...props}>{children}</ChakraSliderTrack>
+);

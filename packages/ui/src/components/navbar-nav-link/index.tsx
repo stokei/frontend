@@ -8,12 +8,12 @@ export interface NavbarNavLinkProps extends LinkProps {
   readonly isActive?: boolean;
 }
 
-export const NavbarNavLink: React.FC<NavbarNavLinkProps> = ({
+export const NavbarNavLink = ({
   children,
   icon,
   isActive,
   ...props
-}) => {
+}: NavbarNavLinkProps) => {
   const hoverStyle = {
     background: "primary.50",
   };

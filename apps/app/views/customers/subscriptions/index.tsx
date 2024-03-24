@@ -4,7 +4,7 @@ import { SubscriptionContractStatusFilter } from "@/interfaces/subscription-cont
 import { OrderBy } from "@/services/graphql/stokei";
 import { CustomerLayout } from "@/views/customers/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar } from "./components/navbar";
 import { SubscriptionContractFilters } from "./components/subscription-contract-filters";
 import { SubscriptionContractsList } from "./components/subscription-contracts-list";
@@ -14,11 +14,7 @@ import {
 } from "./graphql/subscription-contracts.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface SubscriptionContractsPageProps {}
-
-export const SubscriptionContractsPage: FC<
-  SubscriptionContractsPageProps
-> = () => {
+export const SubscriptionContractsPage = () => {
   const [currentStatus, setCurrentStatus] =
     useState<SubscriptionContractStatusFilter>(
       SubscriptionContractStatusFilter.All

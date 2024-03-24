@@ -1,0 +1,18 @@
+query GetBuilderComponentVideo($id: String!) {
+  video(id: $id) {
+    ...BuilderComponentVideo
+  }
+}
+
+fragment BuilderComponentVideo on Video {
+  id
+  poster {
+    file {
+      url
+    }
+  }
+  file {
+    filename
+    url
+  }
+}

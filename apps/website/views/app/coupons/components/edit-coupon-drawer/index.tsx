@@ -18,7 +18,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { getOnlyLettersAndNumbers } from "@stokei/utils";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CouponPageCouponFragment } from "../../graphql/coupons.query.graphql.generated";
@@ -32,12 +32,12 @@ interface EditCouponDrawerProps {
   onSuccess?: (coupon?: CouponPageCouponFragment) => void;
 }
 
-export const EditCouponDrawer: FC<EditCouponDrawerProps> = ({
+export const EditCouponDrawer = ({
   coupon,
   onSuccess,
   isOpenDrawer,
   onCloseDrawer,
-}) => {
+}: EditCouponDrawerProps) => {
   const [discountType, setDiscountType] = useState<DiscountType>(
     DiscountType.AMOUNT
   );

@@ -6,14 +6,14 @@ import {
   Drawer,
   DrawerBody,
 } from "@stokei/ui";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 interface SidebarProps extends SidebarUIProps {}
 
-export const Sidebar: FC<PropsWithChildren<SidebarProps>> = ({
+export const Sidebar = ({
   children,
   ...props
-}) => {
+}: PropsWithChildren<SidebarProps>) => {
   const { isOpenSidebar, onToggleSidebar } = useSidebar();
   return (
     <Box

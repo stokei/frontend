@@ -5,9 +5,9 @@ import {
 
 export interface FormErrorMessageProps extends ChakraFormErrorMessageProps {}
 
-export const FormErrorMessage: React.FC<FormErrorMessageProps> = ({
+export const FormErrorMessage = ({
   children,
   ...props
-}) => {
+}: FormErrorMessageProps) => {
   return <ChakraFormErrorMessage {...props}>{children}</ChakraFormErrorMessage>;
 };

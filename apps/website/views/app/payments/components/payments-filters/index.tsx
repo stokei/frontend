@@ -11,7 +11,7 @@ import {
   DrawerHeader,
   Stack,
 } from "@stokei/ui";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { SelectFilterStatus } from "../select-filter-status";
 
 interface PaymentFiltersProps {
@@ -25,7 +25,7 @@ interface PaymentFiltersProps {
   readonly onRemoveCurrentStatus: () => void;
 }
 
-export const PaymentFilters: FC<PaymentFiltersProps> = ({
+export const PaymentFilters = ({
   isOpen,
   currentStatus,
   currentPayers,
@@ -34,7 +34,7 @@ export const PaymentFilters: FC<PaymentFiltersProps> = ({
   onChooseCurrentPayers,
   onChooseCurrentStatus,
   onRemoveCurrentStatus,
-}) => {
+}: PaymentFiltersProps) => {
   const [status, setStatus] = useState<PaymentStatusFilter>(currentStatus);
   const [payers, setPayers] = useState<AppAccountFragment[]>(
     currentPayers || []

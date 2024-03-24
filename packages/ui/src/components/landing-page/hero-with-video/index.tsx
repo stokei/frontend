@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { HeroTitleContent, HeroTitleContentProps } from "../hero-title-content";
 import { Container } from "../../container";
 import { Hero } from "../../hero";
@@ -10,7 +9,7 @@ interface HeroWithVideoProps extends HeroTitleContentProps {
   readonly videoFilename?: string;
 }
 
-export const HeroWithVideo: FC<HeroWithVideoProps> = ({
+export const HeroWithVideo = ({
   videoURL,
   videoFilename,
   title,
@@ -19,7 +18,7 @@ export const HeroWithVideo: FC<HeroWithVideoProps> = ({
   subtitleHighlight,
   ctaText,
   onCTA,
-}) => {
+}: HeroWithVideoProps) => {
   return (
     <Container>
       <Hero>

@@ -1,16 +1,14 @@
 import { AppLayout } from "@/views/app/layout";
 import { Container, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { EditMaterialForm } from "./components/edit-material-form";
 import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
 import { useGetAppMaterialQuery } from "./graphql/material.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface MaterialViewPageProps {}
-
-export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
+export const MaterialViewPage = () => {
   const router = useRouter();
 
   const materialId = useMemo(

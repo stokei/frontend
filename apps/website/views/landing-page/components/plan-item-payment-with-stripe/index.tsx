@@ -19,13 +19,8 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
 
-interface PlanItemPaymentWithStripeProps {}
-
-export const PlanItemPaymentWithStripe: FC<
-  PlanItemPaymentWithStripeProps
-> = () => {
+export const PlanItemPaymentWithStripe = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const paymentGateway =

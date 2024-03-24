@@ -1,6 +1,6 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { Stack, Text } from "@stokei/ui";
-import { FC } from "react";
+
 import { CheckoutPageCouponFragment } from "../../graphql/coupon.query.graphql.generated";
 import { ChoiseRemovable } from "../choice-removable";
 
@@ -9,7 +9,7 @@ interface CouponItemProps {
   readonly onRemoveCoupon: () => void;
 }
 
-export const CouponItem: FC<CouponItemProps> = ({ coupon, onRemoveCoupon }) => {
+export const CouponItem = ({ coupon, onRemoveCoupon }: CouponItemProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

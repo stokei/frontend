@@ -4,11 +4,11 @@ export interface FooterLinkProps extends LinkProps {
   readonly isActive?: boolean;
 }
 
-export const FooterLink: React.FC<FooterLinkProps> = ({
+export const FooterLink = ({
   children,
   isActive,
   ...props
-}) => {
+}: FooterLinkProps) => {
   const hoverStyle = {
     color: "primary.900",
     background: "background.200",

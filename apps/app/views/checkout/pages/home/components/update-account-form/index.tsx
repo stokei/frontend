@@ -22,10 +22,10 @@ export interface UpdateAccountFormProps {
   onSuccess?: () => void;
 }
 
-export const UpdateAccountForm: React.FC<UpdateAccountFormProps> = ({
+export const UpdateAccountForm = ({
   onCancel,
   onSuccess,
-}) => {
+}: UpdateAccountFormProps) => {
   const [document, setDocument] = useState("");
   const [documentType, setDocumentType] = useState<DocumentType>(
     DocumentType.Cpf

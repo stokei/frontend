@@ -1,7 +1,7 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { useShoppingCart, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { routes } from "@/routes";
 import {
@@ -16,9 +16,10 @@ import {
   Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
 import { Features } from "../../pages/generic/components/features";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface CheckoutInfoProps {
   readonly product?: ProductPageProductFragment;
@@ -28,13 +29,13 @@ export interface CheckoutInfoProps {
   readonly prices?: ProductPageProductFragment["prices"];
 }
 
-export const CheckoutInfo: FC<CheckoutInfoProps> = ({
+export const CheckoutInfo = ({
   product,
   avatarURL,
   features,
   defaultPrice,
   prices,
-}) => {
+}: CheckoutInfoProps) => {
   const [currentPrice, setCurrentPrice] =
     useState<PriceComponentFragment | null>();
 

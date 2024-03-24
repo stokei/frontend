@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface DrawerProps extends ChakraDrawerProps {}
-export const Drawer: React.FC<DrawerProps> = ({ children, ...props }) => (
+export const Drawer = ({ children, ...props }: DrawerProps) => (
   <ChakraDrawer size={["xs", "xs", "md", "md"]} {...props}>
     <ChakraDrawerOverlay />
     <ChakraDrawerContent background="background.50">

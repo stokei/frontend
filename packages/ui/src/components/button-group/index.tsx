@@ -4,9 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface ButtonGroupProps extends ChakraButtonGroupProps {}
-export const ButtonGroup: React.FC<ButtonGroupProps> = ({
-  children,
-  ...props
-}) => {
+export const ButtonGroup = ({ children, ...props }: ButtonGroupProps) => {
   return <ChakraButtonGroup {...props}>{children}</ChakraButtonGroup>;
 };

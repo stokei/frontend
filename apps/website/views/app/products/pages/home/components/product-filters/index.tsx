@@ -24,7 +24,7 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -37,14 +37,14 @@ interface ProductFiltersProps {
   readonly onChangeCurrentProductType: (value: ProductType) => void;
 }
 
-export const ProductFilters: FC<ProductFiltersProps> = ({
+export const ProductFilters = ({
   isOpen,
   onClose,
   filteredProductQuery,
   onChangeFilteredProductQuery,
   currentProductType,
   onChangeCurrentProductType,
-}) => {
+}: ProductFiltersProps) => {
   const [productType, setProductType] = useState<ProductType>(ProductType.ALL);
   const translate = useTranslations();
 

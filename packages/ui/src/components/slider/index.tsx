@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface SliderProps extends ChakraSliderProps {}
-export const Slider: React.FC<SliderProps> = ({ children, ...props }) => (
+export const Slider = ({ children, ...props }: SliderProps) => (
   <ChakraSlider {...props}>{children}</ChakraSlider>
 );

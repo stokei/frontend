@@ -2,12 +2,10 @@ import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
 import { OrderBy } from "@/services/graphql/stokei";
 import { useSubscriptionPageInvoicesQuery } from "@/views/app/subscription/graphql/invoices.query.graphql.generated";
 import { Card, CardBody, Pagination, Stack, Title } from "@stokei/ui";
-import { FC } from "react";
+
 import { InvoicesList } from "../invoices-list";
 
-export interface InvoicesProps {}
-
-export const Invoices: FC<InvoicesProps> = () => {
+export const Invoices = () => {
   const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();

@@ -15,7 +15,7 @@ import {
   Textarea,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useProductPageCreateFeatureMutation } from "../../graphql/create-feature.mutation.graphql.generated";
@@ -27,12 +27,12 @@ interface AddFeatureDrawerProps {
   onSuccess?: () => void;
 }
 
-export const AddFeatureDrawer: FC<AddFeatureDrawerProps> = ({
+export const AddFeatureDrawer = ({
   productId,
   isOpenDrawer,
   onSuccess,
   onCloseDrawer,
-}) => {
+}: AddFeatureDrawerProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

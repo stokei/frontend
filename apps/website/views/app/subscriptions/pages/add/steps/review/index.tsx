@@ -21,7 +21,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { useCreateSubscriptionContractMutation } from "../../graphql/create-subscription-contract.mutation.graphql.generated";
 
 interface ReviewStepProps {
@@ -35,7 +35,7 @@ interface ReviewStepProps {
   onPreviousStep: () => void;
 }
 
-export const ReviewStep: FC<ReviewStepProps> = ({
+export const ReviewStep = ({
   subscriptionType,
   product,
   student,
@@ -44,7 +44,7 @@ export const ReviewStep: FC<ReviewStepProps> = ({
   recurringInterval,
   recurringIntervalCount,
   onPreviousStep,
-}) => {
+}: ReviewStepProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();

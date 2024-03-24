@@ -24,9 +24,11 @@ export interface RichTextEditorSelectTextProps {
   editor: Editor;
 }
 
-export const RichTextEditorSelectText: React.FC<
-  PropsWithChildren<RichTextEditorSelectTextProps>
-> = ({ id, editor, ...props }) => {
+export const RichTextEditorSelectText = ({
+  id,
+  editor,
+  ...props
+}: PropsWithChildren<RichTextEditorSelectTextProps>) => {
   const translate = useTranslations();
   const [value, setValue] = useState<RichTextEditorSelectTextValue>(
     RichTextEditorSelectTextValue.PARAGRAPH

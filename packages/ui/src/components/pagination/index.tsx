@@ -12,7 +12,7 @@ export interface PaginationProps extends Omit<ButtonGroupProps, "children"> {
   onChangePage: (page: number) => void;
 }
 
-export const Pagination: React.FC<PaginationProps> = ({
+export const Pagination = ({
   currentPage,
   onChangePage,
   totalPages,
@@ -21,7 +21,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   nextPage,
   previousPage,
   ...props
-}) => {
+}: PaginationProps) => {
   return (
     <ButtonGroup
       isAttached

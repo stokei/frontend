@@ -15,7 +15,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useCancelSubscriptionContractMutation } from "../../graphql/cancel-subscription-contract.mutation.graphql.generated";
 
 export interface CancelSubscriptionContractModalCustomer {
@@ -37,9 +37,13 @@ interface CancelSubscriptionContractModalProps {
   readonly product?: CancelSubscriptionContractModalProduct;
 }
 
-export const CancelSubscriptionContractModal: FC<
-  CancelSubscriptionContractModalProps
-> = ({ subscriptionContractId, customer, product, isOpen, onClose }) => {
+export const CancelSubscriptionContractModal = ({
+  subscriptionContractId,
+  customer,
+  product,
+  isOpen,
+  onClose,
+}: CancelSubscriptionContractModalProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

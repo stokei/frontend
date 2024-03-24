@@ -17,7 +17,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useAdminCatalogPageUpdateCatalogMutation } from "../../graphql/update-catalog.mutation.graphql.generated";
@@ -26,7 +26,7 @@ interface EditCatalogProps {
   catalog?: CatalogPageCatalogFragment;
 }
 
-export const EditCatalog: FC<EditCatalogProps> = ({ catalog }) => {
+export const EditCatalog = ({ catalog }: EditCatalogProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

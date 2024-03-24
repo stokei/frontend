@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "./components/header";
 import { ProductFilters } from "./components/product-filters";
 import { ProductsList } from "./components/products-list";
@@ -24,9 +24,7 @@ import { Loading } from "./loading";
 import { StokeiApiIdPrefix } from "@/constants/stokei-api-id-prefix";
 import { ProductType } from "@/constants/product-type";
 
-interface ProductsPageProps {}
-
-export const ProductsPage: FC<ProductsPageProps> = () => {
+export const ProductsPage = () => {
   const translate = useTranslations();
   const [currentProductType, setCurrentProductType] = useState<ProductType>(
     ProductType.ALL

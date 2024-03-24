@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { Box, Card, CardBody, Label, Stack, Text, Title } from "@stokei/ui";
-import { FC } from "react";
+
 import { OrderPageOrderFragment } from "../../graphql/order.query.graphql.generated";
 import { CouponItem } from "../coupon-item";
 
@@ -13,7 +13,7 @@ interface OrderDetailsProps {
   readonly order?: OrderPageOrderFragment;
 }
 
-export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
+export const OrderDetails = ({ order }: OrderDetailsProps) => {
   const translate = useTranslations();
 
   return (

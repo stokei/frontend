@@ -6,7 +6,7 @@ import {
   SelectInput,
   SelectList,
 } from "@stokei/ui";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { PriceComponentFragment } from "../price/price.fragment.graphql.generated";
 import { PriceSelectItem } from "./price-select-item";
 import { PriceSelectItemContent } from "./price-select-item-content";
@@ -22,7 +22,7 @@ interface SelectPriceProps {
   readonly onRemoveChooseCurrentPrice: (value?: PriceComponentFragment) => void;
 }
 
-export const SelectPrice: FC<SelectPriceProps> = ({
+export const SelectPrice = ({
   label,
   prices,
   currentPrice,
@@ -31,7 +31,7 @@ export const SelectPrice: FC<SelectPriceProps> = ({
   size,
   onChooseCurrentPrice,
   onRemoveChooseCurrentPrice,
-}) => {
+}: SelectPriceProps) => {
   const translate = useTranslations();
 
   const onChooseItem = useCallback(

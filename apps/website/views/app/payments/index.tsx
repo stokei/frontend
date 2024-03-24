@@ -11,7 +11,7 @@ import {
   Stack,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
 import { PaymentFilters } from "./components/payments-filters";
@@ -19,9 +19,7 @@ import { PaymentsList } from "./components/payments-list";
 import { useGetAppPaymentsQuery } from "./graphql/payments.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface PaymentsPageProps {}
-
-export const PaymentsPage: FC<PaymentsPageProps> = () => {
+export const PaymentsPage = () => {
   const [customers, setPayers] = useState<AppAccountFragment[]>([]);
   const [status, setStatus] = useState<PaymentStatusFilter>(
     PaymentStatusFilter.All

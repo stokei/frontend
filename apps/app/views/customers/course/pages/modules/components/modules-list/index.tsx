@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { CustomersCoursePageModuleFragment } from "../../graphql/modules.query.graphql.generated";
 import { ModuleItem } from "../module-item";
 
@@ -6,7 +5,7 @@ interface ModulesListProps {
   readonly modules?: CustomersCoursePageModuleFragment[];
 }
 
-export const ModulesList: FC<ModulesListProps> = ({ modules }) => {
+export const ModulesList = ({ modules }: ModulesListProps) => {
   return (
     <>
       {modules?.map((module, position) => (

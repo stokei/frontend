@@ -19,7 +19,7 @@ import {
   VideoPlayer,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Navbar } from "../../components/navbar";
 import { CourseLayout } from "../../layout";
 import { ModuleLoading } from "./components/module-loading";
@@ -27,9 +27,7 @@ import { ModulesList } from "./components/modules-list";
 import { useGetCustomersCoursePageVideoModulesQuery } from "./graphql/modules.query.graphql.generated";
 import { useGetCustomersCoursePageVideoQuery } from "./graphql/video.query.graphql.generated";
 
-interface CourseVideoPageProps {}
-
-const CourseVideoPage: FC<CourseVideoPageProps> = () => {
+const CourseVideoPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { course } = useCustomersCourse();

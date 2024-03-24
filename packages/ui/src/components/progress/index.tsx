@@ -5,7 +5,7 @@ import {
 
 export interface ProgressProps extends ChakraProgressProps {}
 
-export const Progress: React.FC<ProgressProps> = ({ children, ...props }) => (
+export const Progress = ({ children, ...props }: ProgressProps) => (
   <ChakraProgress colorScheme="primary" {...props}>
     {children}
   </ChakraProgress>

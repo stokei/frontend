@@ -4,7 +4,7 @@ import {
   CurrentGlobalAppQuery,
 } from "../current-app/current-app.query.graphql.generated";
 
-export const getAppBySlug = async ({
+export const getSiteBySlug = async ({
   cookies,
   slug,
 }: {
@@ -23,5 +23,5 @@ export const getAppBySlug = async ({
       { requestPolicy: "cache-and-network" }
     )
     .toPromise();
-  return currentApp?.data?.currentApp;
+  return currentApp?.data?.site;
 };

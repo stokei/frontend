@@ -16,9 +16,7 @@ export interface PaymentMethodProps {
   paymentMethod: PaymentMethodComponentFragment;
 }
 
-export const PaymentMethod: React.FC<PaymentMethodProps> = ({
-  paymentMethod,
-}) => {
+export const PaymentMethod = ({ paymentMethod }: PaymentMethodProps) => {
   const translate = useTranslations();
 
   const paymentMethodData: PaymentMethodData = useMemo(() => {

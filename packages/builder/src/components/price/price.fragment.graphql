@@ -1,0 +1,32 @@
+fragment PriceComponent on Price {
+  id
+  parent
+  type
+  nickname
+  fromAmount
+  amount
+  discountPercent
+  unit
+  active
+  isDefault
+  currency {
+    id
+    symbol
+    minorUnit
+  }
+  billingScheme
+  tiersMode
+  tiers {
+    items {
+      id
+      amount
+      upTo
+      infinite
+    }
+  }
+  recurring {
+    usageType
+    intervalCount
+    interval
+  }
+}

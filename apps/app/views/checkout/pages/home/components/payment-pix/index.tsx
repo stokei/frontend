@@ -1,5 +1,5 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { usePoolling, useShoppingCart, useTranslations } from "@/hooks";
+import { usePoolling, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import { OrderStatus } from "@/services/graphql/stokei";
 import {
@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { CreateCheckoutPageCheckoutFragment } from "../../graphql/create-checkout.mutation.graphql.generated";
 import { useGetCheckoutPageOrderQuery } from "../../graphql/payment.query.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface PaymentPixProps {
   pix?: CreateCheckoutPageCheckoutFragment["pix"];
@@ -29,11 +30,7 @@ export interface PaymentPixProps {
   totalAmount?: number;
 }
 
-export const PaymentPix: React.FC<PaymentPixProps> = ({
-  pix,
-  orderId,
-  totalAmount,
-}) => {
+export const PaymentPix = ({ pix, orderId, totalAmount }: PaymentPixProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

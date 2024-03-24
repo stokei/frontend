@@ -1,17 +1,17 @@
 import { OrderStatusFilter } from "@/interfaces/order-status-filter";
 import { getOrderStatusColor } from "@/utils/get-order-status-color";
 import { Box, Stack, Text } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
 interface StatusSelectItemContentProps {
   readonly status?: OrderStatusFilter;
   readonly content?: string;
 }
 
-export const StatusSelectItemContent: FC<StatusSelectItemContentProps> = ({
+export const StatusSelectItemContent = ({
   status,
   content,
-}) => {
+}: StatusSelectItemContentProps) => {
   const statusColor = useMemo(() => getOrderStatusColor(status), [status]);
 
   return (

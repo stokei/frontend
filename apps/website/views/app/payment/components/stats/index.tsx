@@ -9,14 +9,14 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { PaymentPagePaymentFragment } from "../../graphql/payment.query.graphql.generated";
 
 interface StatsProps {
   readonly payment?: PaymentPagePaymentFragment;
 }
 
-export const Stats: FC<StatsProps> = ({ payment }) => {
+export const Stats = ({ payment }: StatsProps) => {
   const translate = useTranslations();
 
   const statusColor = useMemo(

@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface TagLabelProps extends ChakraTagLabelProps {}
-export const TagLabel: React.FC<TagLabelProps> = ({ children, ...props }) => (
+export const TagLabel = ({ children, ...props }: TagLabelProps) => (
   <ChakraTagLabel {...props}>{children}</ChakraTagLabel>
 );

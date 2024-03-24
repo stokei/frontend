@@ -14,7 +14,7 @@ import {
   StepPanels,
   Steps,
 } from "@stokei/ui";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { ProductParent } from "./@types/product-parent";
 import { ProductPayload } from "./@types/product-payload";
 import { Navbar } from "./components/navbar";
@@ -24,9 +24,7 @@ import { ProductInformationStep } from "./steps/product-information-step";
 import { ProductTypeStep } from "./steps/product-type-step";
 import { SummaryStep } from "./steps/summary";
 
-interface AddProductPageProps {}
-
-export const AddProductPage: FC<AddProductPageProps> = () => {
+export const AddProductPage = () => {
   const [productType, setProductType] = useState<ProductType>(
     ProductType.COURSE
   );

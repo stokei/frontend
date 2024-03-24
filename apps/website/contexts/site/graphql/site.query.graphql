@@ -1,0 +1,48 @@
+query GetSitePageSite($site: String!) {
+  site(id: $site) {
+    ...SitePageSite
+  }
+}
+
+fragment SitePageSite on Site {
+  id
+  name
+  slug
+  stokeiDomain {
+    id
+    name
+    url
+    free
+    active
+    status
+    createdAt
+    activatedAt
+  }
+  defaultDomain {
+    id
+    name
+    url
+    free
+    active
+    status
+    createdAt
+    activatedAt
+  }
+  homePage {
+    id
+    slug
+    version {
+      id
+    }
+  }
+  favicon {
+    file {
+      url
+    }
+  }
+  logo {
+    file {
+      url
+    }
+  }
+}

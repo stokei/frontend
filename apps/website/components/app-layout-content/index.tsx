@@ -1,12 +1,12 @@
 import { Box, BoxProps } from "@stokei/ui";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 interface AppLayoutContentProps extends BoxProps {}
 
-export const AppLayoutContent: FC<PropsWithChildren<AppLayoutContentProps>> = ({
+export const AppLayoutContent = ({
   children,
   ...props
-}) => {
+}: PropsWithChildren<AppLayoutContentProps>) => {
   return (
     <Box
       minHeight="100vh"

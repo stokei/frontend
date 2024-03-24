@@ -4,10 +4,10 @@ import { Button } from "../button";
 import { Collapse } from "../collapse";
 
 export interface ReadMoreProps {}
-export const ReadMore: React.FC<PropsWithChildren<ReadMoreProps>> = ({
+export const ReadMore = ({
   children,
   ...props
-}) => {
+}: PropsWithChildren<ReadMoreProps>) => {
   const translate = useTranslations();
   const [isShow, setIsShow] = useState(false);
   const handleToggle = () => setIsShow(!isShow);

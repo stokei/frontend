@@ -9,8 +9,8 @@ export interface PortalProps extends ChakraPortalProps {
   readonly ref?: ForwardedRef<any>;
 }
 
-export const Portal: React.FC<PortalProps> = forwardRef(
-  ({ children, containerRef, ...props }, ref) => (
+export const Portal = forwardRef(
+  ({ children, containerRef, ...props }: PortalProps, ref) => (
     <ChakraPortal {...props} containerRef={containerRef || (ref as any)}>
       {children}
     </ChakraPortal>

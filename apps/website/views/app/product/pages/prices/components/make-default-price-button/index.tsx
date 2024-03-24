@@ -1,6 +1,6 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { Icon, MenuItem, useToast } from "@stokei/ui";
-import { FC } from "react";
+
 import { useUpdateProductMutation } from "../../../../graphql/update-product.mutation.graphql.generated";
 
 interface MakeDefaultPriceButtonProps {
@@ -9,11 +9,11 @@ interface MakeDefaultPriceButtonProps {
   onSuccess?: () => void;
 }
 
-export const MakeDefaultPriceButton: FC<MakeDefaultPriceButtonProps> = ({
+export const MakeDefaultPriceButton = ({
   priceId,
   productId,
   onSuccess,
-}) => {
+}: MakeDefaultPriceButtonProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
