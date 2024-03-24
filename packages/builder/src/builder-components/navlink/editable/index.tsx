@@ -1,5 +1,4 @@
-import { HeroContent } from "@stokei/ui";
-
+import { NavbarNavLink } from "@stokei/ui";
 import { BlockEditable } from "../../../components/block-editable";
 import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { useDataToProps } from "../hooks/use-data-to-props";
@@ -13,7 +12,7 @@ export const Editable = ({
   const dataProps = useDataToProps({ data, props });
   return (
     <BlockEditable {...props}>
-      <HeroContent {...dataProps} />
+      <NavbarNavLink {...dataProps} />
     </BlockEditable>
   );
 };

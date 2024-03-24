@@ -426,6 +426,7 @@ export enum ComponentType {
   Image = 'IMAGE',
   Menu = 'MENU',
   MenuItem = 'MENU_ITEM',
+  Navbar = 'NAVBAR',
   Navlink = 'NAVLINK',
   Space = 'SPACE',
   Stack = 'STACK',

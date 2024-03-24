@@ -16,8 +16,26 @@ interface BlockEditableProps {
   readonly order: number;
   readonly type: ComponentType;
   readonly acceptTypes?: ComponentType[];
+  readonly components?: BlockEditableProps[];
   readonly onRemove?: () => void;
 }
+
+const SortableOrDnDComponent = ({
+  hasSortable,
+  children,
+  ...props
+}: PropsWithChildren<{ hasSortable: boolean } & BlockEditableProps>) => {
+  if (!hasSortable) {
+    return (
+      <Droppable id={props?.id} acceptTypes={props?.acceptTypes}>
+        <Draggable id={props?.id} type={props?.type}>
+          {children}
+        </Draggable>
+      </Droppable>
+    );
+  }
+  return <SortableItem {...props}>{children}</SortableItem>;
+};
 
 export const BlockEditable = ({
   id,
@@ -25,7 +43,9 @@ export const BlockEditable = ({
   order,
   acceptTypes,
   children,
+  components,
   onRemove,
+  ...props
 }: PropsWithChildren<BlockEditableProps>) => {
   const blockRef = useRef<any>();
   const {
@@ -48,21 +68,26 @@ export const BlockEditable = ({
     : {};
 
   return (
-    <Droppable id={id} acceptTypes={acceptTypes}>
-      <Draggable id={id} type={type}>
-        <Box
-          width="full"
-          id={id}
-          ref={blockRef}
-          flexDirection="column"
-          onClick={onClick}
-          position="relative"
-          {...clickedProps}
-        >
-          {isClicked && <BlockEditableMenu onRemove={onRemove} />}
-          {children}
-        </Box>
-      </Draggable>
-    </Droppable>
+    <SortableOrDnDComponent
+      hasSortable
+      id={id}
+      type={type}
+      order={order}
+      acceptTypes={acceptTypes}
+      {...props}
+    >
+      <Box
+        width="full"
+        // id={id}
+        ref={blockRef}
+        flexDirection="column"
+        onClick={onClick}
+        position="relative"
+        {...clickedProps}
+      >
+        {isClicked && <BlockEditableMenu onRemove={onRemove} />}
+        {children}
+      </Box>
+    </SortableOrDnDComponent>
   );
 };

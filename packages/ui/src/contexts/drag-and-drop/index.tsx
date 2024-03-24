@@ -17,7 +17,7 @@ export interface DragAndDropContextValues {
   setDragOverlayElement: (element: ReactNode) => void;
 }
 
-export const DragAndDropContext = createContext({} as any);
+export const DragAndDropContext = createContext({} as DragAndDropContextValues);
 
 export const DragAndDropProvider = ({
   children,

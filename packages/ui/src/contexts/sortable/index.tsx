@@ -1,4 +1,4 @@
-import { DndContextProps, DragOverlay } from "@dnd-kit/core";
+import { DragOverlay } from "@dnd-kit/core";
 import {
   SortableContext as DnDSortableContext,
   SortableContextProps as DnDSortableContextProps,
@@ -28,7 +28,7 @@ export interface SortableContextValues {
   setDragOverlayElement: (element: ReactNode) => void;
 }
 
-export const SortableContext = createContext({} as any);
+export const SortableContext = createContext({} as SortableContextValues);
 
 const sortingStrategies: Record<SortableStrategy, any> = {
   [SortableStrategy.MULTIPLE_CONTAINER]: rectSortingStrategy,

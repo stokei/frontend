@@ -1,6 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
+import { PropsWithChildren } from "react";
 import { Box, BoxProps } from "../box";
-import { PropsWithChildren, useMemo } from "react";
 
 export interface DroppableProps<TData = any> {
   id: string;
@@ -16,7 +16,7 @@ export const Droppable = ({
   children,
   ...props
 }: PropsWithChildren<DroppableProps>) => {
-  const { setNodeRef, isOver, active, over } = useDroppable({
+  const { setNodeRef, isOver, active } = useDroppable({
     id,
     data: {
       ...data,

@@ -6,6 +6,8 @@ export * from "./grid-item";
 export * from "./hero";
 export * from "./hero-content";
 export * from "./hero-media";
+export * from "./navbar";
+export * from "./navlink";
 export * from "./space";
 export * from "./stack";
 export * from "./image";

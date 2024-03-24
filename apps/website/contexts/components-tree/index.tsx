@@ -17,10 +17,36 @@ export interface ComponentsTreeProviderProps {
 
 export interface ComponentsTreeComponent extends GetVersionComponent {}
 
+export type UpdateCallback = (
+  component: ComponentsTreeComponent
+) => ComponentsTreeComponent;
+
+export type AddedCallback = (component: ComponentsTreeComponent) => void;
+export type InvalidCallback = (component: ComponentsTreeComponent) => void;
+
 export interface ComponentsTreeProviderValues {
-  readonly componentsTree: ComponentsTreeComponent[];
-  readonly onRemoveComponent: (componentId: string) => void;
+  readonly components: ComponentsTreeComponent[];
+  readonly onRemoveComponent: (data: { componentId: string }) => void;
+  readonly onUpdateComponent: (data: {
+    componentId: string;
+    updateCallback: UpdateCallback;
+  }) => void;
 }
+
+const createComponentMap = (
+  components: ComponentsTreeComponent[]
+): Map<string, ComponentsTreeComponent> => {
+  const map = new Map<string, ComponentsTreeComponent>();
+  components.forEach((component) => {
+    map.set(component.id, component);
+    if (!!component?.components?.length) {
+      createComponentMap(component.components).forEach((subComponent, id) => {
+        map.set(id, subComponent);
+      });
+    }
+  });
+  return map;
+};
 
 export const ComponentsTreeContext = createContext(
   {} as ComponentsTreeProviderValues
@@ -30,79 +56,37 @@ export const ComponentsTreeProvider = ({
   version,
   children,
 }: PropsWithChildren<ComponentsTreeProviderProps>) => {
-  const [componentsTree, setComponentsTree] = useState(version?.components);
+  const [components, setComponents] = useState<ComponentsTreeComponent[]>(
+    version?.components
+  );
+  const [componentMap, setComponentMap] = useState<
+    Map<string, ComponentsTreeComponent>
+  >(createComponentMap(version?.components));
 
-  const componentsTreeMapped = useMemo(() => {
-    const mapper = (
-      component: ComponentsTreeComponent,
-      index: number
-    ): ComponentsTreeComponent => {
-      return {
-        ...component,
-        order: index,
-        components: component?.components?.map((currentComponent, position) =>
-          mapper(currentComponent, position)
-        ),
-      };
-    };
-
-    return componentsTree?.map((component, index) => mapper(component, index));
-  }, [componentsTree]);
-
-  const getComponentByList = useCallback(
+  const updateComponentInTree = useCallback(
     (
-      componentIdToGet: string,
-      components: GetVersionComponent[]
-    ): GetVersionComponent | undefined => {
-      for (const component of components) {
-        if (component?.id === componentIdToGet) {
-          return component;
+      components: ComponentsTreeComponent[],
+      componentId: string,
+      updateCallback: UpdateCallback
+    ): ComponentsTreeComponent[] => {
+      return components.map((component) => {
+        if (component.id === componentId) {
+          return updateCallback(component);
         }
-        if (!component.components?.length) {
-          continue;
-        }
-        return getComponentByList(componentIdToGet, component.components);
-      }
+        return {
+          ...component,
+          components: updateComponentInTree(
+            component.components || [],
+            componentId,
+            updateCallback
+          ),
+        };
+      });
     },
     []
   );
 
-  const getComponent = useCallback(
-    (componentId: string) => getComponentByList(componentId, componentsTree),
-    [componentsTree, getComponentByList]
-  );
-
-  const addComponent = useCallback((newComponent: ComponentsTreeComponent) => {
-    setComponentsTree((currentComponentsTree) => {
-      const mapper = (
-        newComponent: ComponentsTreeComponent,
-        components: ComponentsTreeComponent[]
-      ): ComponentsTreeComponent[] => {
-        return components.map((component) => {
-          const isParentComponent = component.parent === newComponent.parent;
-          if (!isParentComponent) {
-            return component;
-          }
-          const newComponents = component.components
-            ? [...component.components]
-            : [];
-          newComponents?.splice(newComponent.order - 1, 0, newComponent);
-          const updatedComponent: ComponentsTreeComponent = {
-            ...component,
-            components: newComponents?.map((comp, index) => ({
-              ...comp,
-              order: index + 1,
-            })),
-          };
-          return updatedComponent;
-        });
-      };
-
-      return mapper(newComponent, currentComponentsTree || []);
-    });
-  }, []);
-
-  const removeComponent = useCallback(
+  const removeComponentInTree = useCallback(
     (componentId: string, components: ComponentsTreeComponent[]) => {
       return components.reduce<ComponentsTreeComponent[]>(
         (previousComponents, component) => {
@@ -113,7 +97,7 @@ export const ComponentsTreeProvider = ({
           const updatedComponent: ComponentsTreeComponent = {
             ...component,
             components: component.components?.length
-              ? removeComponent(componentId, component.components)
+              ? removeComponentInTree(componentId, component.components)
               : undefined,
           };
           return [...previousComponents, updatedComponent];
@@ -124,35 +108,156 @@ export const ComponentsTreeProvider = ({
     []
   );
 
+  const getComponentById = useCallback(
+    (componentId: string): ComponentsTreeComponent | undefined => {
+      return componentMap.get(componentId);
+    },
+    [componentMap]
+  );
+
+  const onAddComponent = useCallback(
+    ({
+      overId,
+      newComponent,
+      overIndex,
+      onAdded,
+      onInvalid,
+    }: {
+      overId: string;
+      newComponent: ComponentsTreeComponent;
+      overIndex: number;
+      onAdded?: AddedCallback;
+      onInvalid?: InvalidCallback;
+    }) => {
+      setComponents((prevComponents) => {
+        const updatedComponents = updateComponentInTree(
+          prevComponents,
+          overId,
+          (over) => {
+            const isValidType = over?.acceptTypes?.includes(newComponent.type);
+            if (!isValidType) {
+              onInvalid?.(newComponent);
+              return over;
+            }
+            newComponent.parent = over.id;
+            newComponent.order = overIndex;
+            const newComponents = [...(over.components || [])];
+            newComponents.splice(overIndex, 0, newComponent);
+            const componentUpdated = {
+              ...over,
+              components: newComponents,
+            };
+            onAdded?.(componentUpdated);
+            return componentUpdated;
+          }
+        );
+        setComponentMap(createComponentMap(updatedComponents));
+        return updatedComponents;
+      });
+    },
+    [updateComponentInTree]
+  );
+
+  const onUpdateComponent = useCallback(
+    ({
+      componentId,
+      updateCallback,
+    }: {
+      componentId: string;
+      updateCallback: UpdateCallback;
+    }) => {
+      setComponents((prevComponents) => {
+        const updatedComponents = updateComponentInTree(
+          prevComponents,
+          componentId,
+          updateCallback
+        );
+        setComponentMap(createComponentMap(updatedComponents));
+        return updatedComponents;
+      });
+    },
+    [updateComponentInTree]
+  );
+
   const onRemoveComponent = useCallback(
-    (componentId: string) =>
-      setComponentsTree((currentTree) =>
-        removeComponent(componentId, currentTree)
-      ),
-    [removeComponent]
+    ({ componentId }: { componentId: string }) =>
+      setComponents((prevComponents) => {
+        const updatedComponents = removeComponentInTree(
+          componentId,
+          prevComponents
+        );
+        setComponentMap(createComponentMap(updatedComponents));
+        return updatedComponents;
+      }),
+    [removeComponentInTree]
   );
 
   const onDragEnd = useCallback(
-    (activeComponentId: string, overComponentId: string) => {
-      const activeComponent = getComponent(activeComponentId);
-      const overComponent = getComponent(overComponentId);
+    async (
+      activeComponentId: string,
+      overComponentId: string,
+      overIndex: number
+    ) => {
+      const activeComponent = getComponentById(activeComponentId);
+      const overComponent = getComponentById(overComponentId);
       if (activeComponent && overComponent) {
-        addComponent({
-          ...activeComponent,
-          parent: overComponent?.id,
-          order: overComponent?.order,
+        onRemoveComponent({
+          componentId: activeComponent.id,
         });
+        let added = false;
+        const existsAcceptTypes = !!overComponent.acceptTypes?.length;
+
+        const addComponentAgain = () =>
+          onAddComponent({
+            overId: activeComponent.parent,
+            newComponent: activeComponent,
+            overIndex: activeComponent.order,
+          });
+        const addActiveComponentToParentBecauseTheOverComponentIsSimilarToActiveComponent =
+          (): Promise<boolean> => {
+            return new Promise((resolve) => {
+              onAddComponent({
+                overId: overComponent.parent,
+                newComponent: activeComponent,
+                overIndex,
+                onAdded: (componentAdded) => resolve(!!componentAdded),
+                onInvalid: () => resolve(false),
+              });
+            });
+          };
+        const addActiveComponent = (): Promise<boolean> => {
+          return new Promise((resolve) => {
+            onAddComponent({
+              overId: overComponentId,
+              newComponent: activeComponent,
+              overIndex: overIndex,
+              onAdded: (componentAdded) => resolve(!!componentAdded),
+              onInvalid: () => resolve(false),
+            });
+          });
+        };
+
+        if (!existsAcceptTypes) {
+          added =
+            await addActiveComponentToParentBecauseTheOverComponentIsSimilarToActiveComponent();
+        } else {
+          added = await addActiveComponent();
+        }
+        if (!added) {
+          addComponentAgain();
+        }
       }
     },
-    [addComponent, getComponent]
+    [getComponentById, onAddComponent, onRemoveComponent]
   );
 
   const values = useMemo(
     () => ({
-      componentsTree: componentsTreeMapped,
+      components,
+      onUpdateComponent,
       onRemoveComponent,
     }),
-    [componentsTreeMapped, onRemoveComponent]
+    [components, onRemoveComponent, onUpdateComponent]
   );
 
   return (
@@ -160,68 +265,19 @@ export const ComponentsTreeProvider = ({
       <DragAndDropProvider
         onDragEnd={(event) => {
           const { active, over } = event;
-
           const isEqualOverAndActive =
             over && active && active?.id === over?.id;
           if (isEqualOverAndActive) {
             return;
           }
-          const activeItem = getComponent(active?.id + "");
-          const overItem = getComponent(over?.id + "");
-          console.log({
-            activeItem,
-            overItem,
-          });
-          if (!activeItem || !overItem) {
+          if (!active?.id || !over?.id) {
             return;
           }
-          setComponentsTree((tree) => {
-            const mapper = (
-              treeItems: ComponentsTreeComponent[]
-            ): ComponentsTreeComponent[] => {
-              return treeItems.map((treeItem) => {
-                console.log({ treeItem, overItem });
-                if (treeItem.id === overItem.id) {
-                  const newComponents = treeItem.components
-                    ? [activeItem, ...treeItem.components]
-                    : [];
-                  console.log({ newComponents });
-                  // const index = 0;
-                  // newComponents.splice(index, 0, activeItem);
-                  return {
-                    ...treeItem,
-                    components: newComponents,
-                  };
-                }
-                return {
-                  ...treeItem,
-                  components: mapper(treeItem.components || []),
-                };
-              });
-            };
-            return mapper(tree);
-          });
-          // setComponentsGroups((currentComponentsGroups) => {
-          //   const newComponentsGroups = [...currentComponentsGroups];
-          //   const newComponentGroup =
-          //     newComponentsGroups[componentsGroupPosition];
-          //   const oldComponentIndex = newComponentGroup.components.findIndex(
-          //     (component) => component.id === active.id
-          //   );
-          //   const newComponentIndex = newComponentGroup.components.findIndex(
-          //     (component) => component.id === over.id
-          //   );
-
-          //   newComponentsGroups[componentsGroupPosition] = {
-          //     ...newComponentGroup,
-          //     components: arrayMove(
-          //       newComponentGroup.components,
-          //       oldComponentIndex,
-          //       newComponentIndex
-          //     ),
-          //   };
-          //   return newComponentsGroups;
-          // });
+          onDragEnd(
+            active?.id + "",
+            over?.id + "",
+            over?.data?.current?.sortable?.index || 0
+          );
         }}
       >
         {children}

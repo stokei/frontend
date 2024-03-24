@@ -1,4 +1,10 @@
-import { ButtonGroup, DraggableTrigger, IconButton, Stack } from "@stokei/ui";
+import {
+  ButtonGroup,
+  DraggableTrigger,
+  IconButton,
+  SortableItemTrigger,
+  Stack,
+} from "@stokei/ui";
 import { PropsWithChildren } from "react";
 
 interface BlockEditableMenuProps {
@@ -19,9 +25,11 @@ export const BlockEditableMenu = ({
       borderColor="primary.500"
     >
       <ButtonGroup spacing="1" variant="ghost">
-        <DraggableTrigger>
-          <IconButton name="move" colorScheme="text" />
-        </DraggableTrigger>
+        <SortableItemTrigger>
+          <DraggableTrigger>
+            <IconButton name="move" colorScheme="text" />
+          </DraggableTrigger>
+        </SortableItemTrigger>
         {onRemove && (
           <IconButton name="trash" onClick={onRemove} colorScheme="text" />
         )}

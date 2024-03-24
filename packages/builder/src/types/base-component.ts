@@ -6,6 +6,7 @@ export type BaseComponent<Props = {}> = PropsWithChildren<Props> & {
   order: number;
   type: ComponentType;
   acceptTypes?: ComponentType[];
+  components?: BaseComponent<Props>[];
   data?: any;
   onRedirect: (route: string) => void;
 };

@@ -14,10 +14,13 @@ import {
   Text,
   Title,
   Video,
+  Navbar,
+  Navlink,
 } from "../../builder-components";
 import { ComponentType } from "../../services/graphql/stokei";
 import { BaseComponent } from "../../types/base-component";
 import { ComponentBuilderType } from "../../types/component-builder-type";
+import { TreeSortable } from "../../components";
 
 export interface BuilderComponentData {
   id: string;
@@ -48,7 +51,8 @@ const getComponent = ({
   const components: Record<ComponentType, BaseComponent | undefined> = {
     [ComponentType.Header]: undefined,
     [ComponentType.Footer]: undefined,
-    [ComponentType.Navlink]: undefined,
+    [ComponentType.Navlink]: Navlink[builderType],
+    [ComponentType.Navbar]: Navbar[builderType],
     [ComponentType.Menu]: undefined,
     [ComponentType.MenuItem]: undefined,
     [ComponentType.Hero]: Hero[builderType],
@@ -100,15 +104,17 @@ export const BuilderComponent = ({
       }
       {...props}
     >
-      {components?.map((component) => (
-        <BuilderComponent
-          key={component?.id}
-          builderType={builderType}
-          onRedirect={onRedirect}
-          onRemove={onRemove}
-          {...component}
-        />
-      ))}
+      <TreeSortable items={components || []}>
+        {components?.map((component) => (
+          <BuilderComponent
+            key={component?.id}
+            builderType={builderType}
+            onRedirect={onRedirect}
+            onRemove={onRemove}
+            {...component}
+          />
+        ))}
+      </TreeSortable>
     </Component>
   );
 };

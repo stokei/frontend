@@ -1,26 +1,26 @@
-import {
-  AnimateLayoutChanges,
-  defaultAnimateLayoutChanges,
-  useSortable,
-} from "@dnd-kit/sortable";
+import { AnimateLayoutChanges, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useEffect, useRef } from "react";
+import { SortableItemProvider } from "../../contexts/sortable-item";
 import { useSortableContext } from "../../hooks";
 import { Box, BoxProps } from "../box";
-import { SortableItemProvider } from "../../contexts/sortable-item";
 
-const animateLayoutChanges: AnimateLayoutChanges = (args) =>
-  defaultAnimateLayoutChanges({ ...args, wasDragging: true });
+const animateLayoutChanges: AnimateLayoutChanges = ({
+  isSorting,
+  wasDragging,
+}) => (isSorting || wasDragging ? false : true);
 
 export interface SortableItemProps<TData = any> extends BoxProps {
   id: string;
   type: string;
+  acceptTypes?: string[];
   isDisabled?: boolean;
   data?: TData;
 }
 export const SortableItem = ({
   id,
   type,
+  acceptTypes,
   isDisabled,
   children,
   data,
@@ -33,6 +33,8 @@ export const SortableItem = ({
     transform,
     transition,
     isDragging,
+    isOver,
+    active,
   } = useSortable({
     id,
     data: {
@@ -46,6 +48,8 @@ export const SortableItem = ({
 
   const { setDragOverlayElement } = useSortableContext();
 
+  const isValidType = !!acceptTypes?.includes(active?.data?.current?.type);
+
   useEffect(() => {
     if (isDragging) {
       setDragOverlayElement(children);
@@ -54,11 +58,21 @@ export const SortableItem = ({
     }
   }, [children, isDragging, setDragOverlayElement]);
 
+  const droppableStyle: BoxProps =
+    isOver && isValidType
+      ? {
+          background: "blue",
+        }
+      : {};
+
   const style: BoxProps = {
     transform: CSS.Translate.toString(transform),
     transition,
+    ...(isDragging && {
+      opacity: ".5",
+    }),
+    ...droppableStyle,
   };
-
   if (!children) {
     return <></>;
   }

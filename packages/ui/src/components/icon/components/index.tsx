@@ -94,12 +94,12 @@ import {
   RxComponent1,
 } from "react-icons/rx";
 import { TbApps, TbSeo } from "react-icons/tb";
-import { IoIosMove } from "react-icons/io";
 
 import {
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
   RiCoupon3Line,
+  RiDraggable,
   RiErrorWarningFill,
   RiPictureInPicture2Line,
   RiPictureInPictureExitLine,
@@ -205,6 +205,6 @@ export const SiteIcon = MdOutlineWeb;
 export const PageIcon = MdOutlineWebAsset;
 export const ClockIcon = AiOutlineClockCircle;
 export const WarningIcon = AiOutlineWarning;
-export const MoveIcon = IoIosMove;
+export const MoveIcon = RiDraggable;
 export const ComponentIcon = RxComponent1;
 export const MetadataIcon = TbSeo;

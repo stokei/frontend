@@ -1,7 +1,7 @@
 import { Hero } from "@stokei/ui";
 
-import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { BlockEditable } from "../../../components/block-editable";
+import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { useDataToProps } from "../hooks/use-data-to-props";
 
 interface EditableProps {}

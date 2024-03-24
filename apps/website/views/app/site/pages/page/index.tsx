@@ -1,7 +1,11 @@
 import { useComponentsTree } from "@/hooks";
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { GlobalPageFragment } from "@/services/graphql/queries/get-page-by-id/page.query.graphql.generated";
-import { BuilderComponent, ComponentBuilderType } from "@stokei/builder";
+import {
+  BuilderComponent,
+  ComponentBuilderType,
+  TreeSortable,
+} from "@stokei/builder";
 import { Box, Container } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { Navbar } from "./components/navbar";
@@ -15,7 +19,7 @@ export interface SitePageProps {
 
 const SitePage = () => {
   const router = useRouter();
-  const { componentsTree, onRemoveComponent } = useComponentsTree();
+  const { components, onRemoveComponent } = useComponentsTree();
 
   return (
     <Container paddingY="5">
@@ -40,20 +44,22 @@ const SitePage = () => {
         background="background.50"
       >
         <Container paddingY="5">
-          {componentsTree?.map((component) => (
-            <BuilderComponent
-              id={component?.id}
-              key={component?.id}
-              order={component?.order}
-              type={component?.type}
-              acceptTypes={component?.acceptTypes}
-              builderType={ComponentBuilderType.BLOCK_EDITABLE}
-              components={component?.components}
-              data={component?.data}
-              onRedirect={router.push}
-              onRemove={onRemoveComponent}
-            />
-          ))}
+          <TreeSortable items={components || []}>
+            {components?.map((component) => (
+              <BuilderComponent
+                id={component?.id}
+                key={component?.id}
+                order={component?.order}
+                type={component?.type}
+                acceptTypes={component?.acceptTypes}
+                builderType={ComponentBuilderType.BLOCK_EDITABLE}
+                components={component?.components}
+                data={component?.data}
+                onRedirect={router.push}
+                onRemove={onRemoveComponent}
+              />
+            ))}
+          </TreeSortable>
         </Container>
       </Box>
     </Container>
