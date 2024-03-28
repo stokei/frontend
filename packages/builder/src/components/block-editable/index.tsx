@@ -1,8 +1,6 @@
 import {
   Box,
   BoxProps,
-  Draggable,
-  Droppable,
   SortableItem,
   useDisclosure,
   useOutsideClick,
@@ -19,23 +17,6 @@ interface BlockEditableProps {
   readonly components?: BlockEditableProps[];
   readonly onRemove?: () => void;
 }
-
-const SortableOrDnDComponent = ({
-  hasSortable,
-  children,
-  ...props
-}: PropsWithChildren<{ hasSortable: boolean } & BlockEditableProps>) => {
-  if (!hasSortable) {
-    return (
-      <Droppable id={props?.id} acceptTypes={props?.acceptTypes}>
-        <Draggable id={props?.id} type={props?.type}>
-          {children}
-        </Draggable>
-      </Droppable>
-    );
-  }
-  return <SortableItem {...props}>{children}</SortableItem>;
-};
 
 export const BlockEditable = ({
   id,
@@ -68,8 +49,7 @@ export const BlockEditable = ({
     : {};
 
   return (
-    <SortableOrDnDComponent
-      hasSortable
+    <SortableItem
       id={id}
       type={type}
       order={order}
@@ -83,11 +63,13 @@ export const BlockEditable = ({
         flexDirection="column"
         onClick={onClick}
         position="relative"
+        height="auto"
+        maxHeight="auto"
         {...clickedProps}
       >
         {isClicked && <BlockEditableMenu onRemove={onRemove} />}
         {children}
       </Box>
-    </SortableOrDnDComponent>
+    </SortableItem>
   );
 };

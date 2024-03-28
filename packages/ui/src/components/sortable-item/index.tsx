@@ -48,8 +48,6 @@ export const SortableItem = ({
 
   const { setDragOverlayElement } = useSortableContext();
 
-  const isValidType = !!acceptTypes?.includes(active?.data?.current?.type);
-
   useEffect(() => {
     if (isDragging) {
       setDragOverlayElement(children);
@@ -58,19 +56,15 @@ export const SortableItem = ({
     }
   }, [children, isDragging, setDragOverlayElement]);
 
-  const droppableStyle: BoxProps =
-    isOver && isValidType
-      ? {
-          background: "blue",
-        }
-      : {};
+  const droppableStyle: BoxProps = isOver
+    ? {
+        background: "primary.100",
+      }
+    : {};
 
   const style: BoxProps = {
     transform: CSS.Translate.toString(transform),
     transition,
-    ...(isDragging && {
-      opacity: ".5",
-    }),
     ...droppableStyle,
   };
   if (!children) {
@@ -81,6 +75,9 @@ export const SortableItem = ({
       ref={setNodeRef}
       height="fit-content"
       flexDirection="column"
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+      }}
       {...style}
     >
       <SortableItemProvider listeners={listeners} attributes={attributes}>

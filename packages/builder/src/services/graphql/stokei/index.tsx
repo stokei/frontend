@@ -413,6 +413,7 @@ export type Component = {
 };
 
 export enum ComponentType {
+  Block = 'BLOCK',
   Button = 'BUTTON',
   Card = 'CARD',
   Catalog = 'CATALOG',
