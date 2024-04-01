@@ -24,6 +24,7 @@ import { PropsWithChildren } from "react";
 import { AddPageDrawer } from "../../components/add-page-drawer";
 import { PagesList } from "../../components/pages-list";
 import { ComponentsMenu } from "./components/components-menu";
+import { VersionsList } from "./components/versions-list";
 
 export interface PageLayoutProps {
   version: GetVersionResponse;
@@ -91,6 +92,15 @@ const PageLayout = ({ children, page }: PropsWithChildren<PageLayoutProps>) => {
                 {translate.formatMessage({ id: "add" })}
               </SidebarNavLink>
               <PagesList />
+            </SidebarGroupPanel>
+          </SidebarGroup>
+
+          <SidebarGroup>
+            <SidebarGroupButton leftIcon="version">
+              {translate.formatMessage({ id: "versions" })}
+            </SidebarGroupButton>
+            <SidebarGroupPanel>
+              <VersionsList />
             </SidebarGroupPanel>
           </SidebarGroup>
         </SidebarBody>

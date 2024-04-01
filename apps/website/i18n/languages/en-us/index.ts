@@ -10,6 +10,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   addSite: "Add site",
   site: "Site",
   sites: "Sites",
+  version: "Version",
+  versions: "Versions",
   addPage: "Add page",
   page: "Page",
   pages: "Pages",

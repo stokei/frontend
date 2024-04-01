@@ -1,21 +1,21 @@
+import { BuilderProvider, builderTranslationsMessages } from "@stokei/builder";
 import {
   StokeiGraphQLClientProvider,
-  enUSMessages as enUSMessagesStokeiGraphQL,
-  ptBRMessages as ptBRMessagesStokeiGraphQL,
+  stokeiAPITranslationsMessages,
 } from "@stokei/graphql";
-import { Messages, TranslationsProvider } from "@stokei/translations";
+import { GoogleAnalytics } from "@stokei/plugins";
+import { TranslationsProvider, mergeTranslations } from "@stokei/translations";
 import {
   LoadingTransition,
   StokeiUIProvider,
   uiTranslationsMessages,
 } from "@stokei/ui";
-import { GoogleAnalytics } from "@stokei/plugins";
 import { getAppIdFromNextRouter } from "@stokei/utils";
-import { BuilderProvider } from "@stokei/builder";
 
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
-import { enUSMessages, ptBRMessages } from "@/i18n";
+import { GOOGLE_ANALYTICS_KEY } from "@/environments";
+import { translationsMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
 import {
   CurrentAccountDocument,
@@ -30,20 +30,13 @@ import "@stokei/ui/src/styles/css/global.css";
 import Head from "next/head";
 import { Router } from "next/router";
 import { useMemo } from "react";
-import { GOOGLE_ANALYTICS_KEY } from "@/environments";
 
-const messages: Messages = {
-  "pt-BR": {
-    ...uiTranslationsMessages["pt-BR"],
-    ...ptBRMessagesStokeiGraphQL,
-    ...ptBRMessages,
-  },
-  "en-US": {
-    ...uiTranslationsMessages["en-US"],
-    ...enUSMessagesStokeiGraphQL,
-    ...enUSMessages,
-  },
-};
+const messages = mergeTranslations([
+  uiTranslationsMessages,
+  builderTranslationsMessages,
+  stokeiAPITranslationsMessages,
+  translationsMessages,
+]);
 
 Router.events.on("routeChangeStart", () => LoadingTransition.start());
 Router.events.on("routeChangeError", () => LoadingTransition.done());

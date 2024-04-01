@@ -2,6 +2,7 @@ import {
   GetVersionComponent,
   GetVersionResponse,
 } from "@/services/axios/models/version";
+import { ComponentType } from "@/services/graphql/stokei";
 import { DragAndDropProvider, arrayMove } from "@stokei/ui";
 import {
   PropsWithChildren,
@@ -69,6 +70,9 @@ export const ComponentsTreeProvider = ({
       componentId: string,
       updateCallback: UpdateCallback
     ): ComponentsTreeComponent[] => {
+      if (!componentId) {
+        return components;
+      }
       return components.map((component) => {
         if (component.id === componentId) {
           return updateCallback(component);
@@ -88,6 +92,9 @@ export const ComponentsTreeProvider = ({
 
   const removeComponentInTree = useCallback(
     (componentId: string, components: ComponentsTreeComponent[]) => {
+      if (!componentId) {
+        return components;
+      }
       return components.reduce<ComponentsTreeComponent[]>(
         (previousComponents, component) => {
           const isRemovedComponent = component.id === componentId;
@@ -180,75 +187,35 @@ export const ComponentsTreeProvider = ({
   );
 
   const onRemoveComponent = useCallback(
-    ({ componentId }: { componentId: string }) =>
+    ({ componentId }: { componentId: string }) => {
+      let currentComponent = getComponentById(componentId);
+      if (!currentComponent) {
+        return;
+      }
+      const isBlockComponent = (type: ComponentType) =>
+        type === ComponentType.Block;
+      if (!isBlockComponent(currentComponent.type)) {
+        const parentComponent = getComponentById(currentComponent.parent);
+        if (parentComponent) {
+          const parentIsBlockComponent = isBlockComponent(parentComponent.type);
+          const isLastParentComponent =
+            parentComponent.components?.length === 1;
+          if (parentIsBlockComponent && isLastParentComponent) {
+            currentComponent = parentComponent;
+          }
+        }
+      }
+
       setComponents((prevComponents) => {
         const updatedComponents = removeComponentInTree(
-          componentId,
+          currentComponent?.id || "",
           prevComponents
         );
         setComponentMap(createComponentMap(updatedComponents));
         return updatedComponents;
-      }),
-    [removeComponentInTree]
-  );
-
-  const onDragEnd = useCallback(
-    async (
-      activeComponentId: string,
-      overComponentId: string,
-      overIndex: number
-    ) => {
-      const activeComponent = getComponentById(activeComponentId);
-      const overComponent = getComponentById(overComponentId);
-      if (activeComponent && overComponent) {
-        onRemoveComponent({
-          componentId: activeComponent.id,
-        });
-        let added = false;
-        const existsAcceptTypes = !!overComponent.acceptTypes?.length;
-
-        const addComponentAgain = () =>
-          onAddComponent({
-            overId: activeComponent.parent,
-            newComponent: activeComponent,
-            overIndex: activeComponent.order,
-          });
-        const addActiveComponentToParentBecauseTheOverComponentIsSimilarToActiveComponent =
-          (): Promise<boolean> => {
-            return new Promise((resolve) => {
-              onAddComponent({
-                overId: overComponent.parent,
-                newComponent: activeComponent,
-                overIndex,
-                onAdded: (componentAdded) => resolve(!!componentAdded),
-                onInvalid: () => resolve(false),
-              });
-            });
-          };
-        const addActiveComponent = (): Promise<boolean> => {
-          return new Promise((resolve) => {
-            onAddComponent({
-              overId: overComponentId,
-              newComponent: activeComponent,
-              overIndex: overIndex,
-              onAdded: (componentAdded) => resolve(!!componentAdded),
-              onInvalid: () => resolve(false),
-            });
-          });
-        };
-
-        if (!existsAcceptTypes) {
-          added =
-            await addActiveComponentToParentBecauseTheOverComponentIsSimilarToActiveComponent();
-        } else {
-          added = await addActiveComponent();
-        }
-        if (!added) {
-          addComponentAgain();
-        }
-      }
+      });
     },
-    [getComponentById, onAddComponent, onRemoveComponent]
+    [getComponentById, removeComponentInTree]
   );
 
   const values = useMemo(
@@ -273,10 +240,12 @@ export const ComponentsTreeProvider = ({
           if (!active?.id || !over?.id) {
             return;
           }
-          onDragEnd(
-            active?.id + "",
-            over?.id + "",
-            over?.data?.current?.sortable?.index || 0
+          setComponents((prevComponents) =>
+            arrayMove(
+              prevComponents,
+              active?.data?.current?.sortable?.index,
+              over?.data?.current?.sortable?.index
+            )
           );
         }}
       >

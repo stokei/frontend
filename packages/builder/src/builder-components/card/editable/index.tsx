@@ -1,7 +1,7 @@
-import { Card, CardBody } from "@stokei/ui";
+import { Card } from "@stokei/ui";
 
-import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { BlockEditable } from "../../../components/block-editable";
+import { BaseComponentEditable } from "../../../types/base-component-editable";
 
 interface EditableProps {}
 
@@ -12,9 +12,7 @@ export const Editable = ({
 }: BaseComponentEditable<EditableProps>) => {
   return (
     <BlockEditable {...props}>
-      <Card {...props}>
-        <CardBody>{children}</CardBody>
-      </Card>
+      <Card {...props}>{children}</Card>
     </BlockEditable>
   );
 };

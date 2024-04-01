@@ -109,6 +109,7 @@ export const icons = {
   move: IconComponent.MoveIcon,
   component: IconComponent.ComponentIcon,
   metadata: IconComponent.MetadataIcon,
+  version: IconComponent.VersionIcon,
 };
 
 export type IconName = keyof typeof icons;

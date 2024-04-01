@@ -1,7 +1,11 @@
 import { PropsWithChildren, ReactNode, useMemo } from "react";
 import {
+  Block,
   Button,
   Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Catalog,
   Grid,
   GridItem,
@@ -9,18 +13,17 @@ import {
   HeroContent,
   HeroMedia,
   Image,
+  Navbar,
+  Navlink,
   Space,
   Stack,
   Text,
   Title,
   Video,
-  Navbar,
-  Navlink,
 } from "../../builder-components";
 import { ComponentType } from "../../services/graphql/stokei";
 import { BaseComponent } from "../../types/base-component";
 import { ComponentBuilderType } from "../../types/component-builder-type";
-import { TreeSortable } from "../../components";
 
 export interface BuilderComponentData {
   id: string;
@@ -51,6 +54,7 @@ const getComponent = ({
   const components: Record<ComponentType, BaseComponent | undefined> = {
     [ComponentType.Header]: undefined,
     [ComponentType.Footer]: undefined,
+    [ComponentType.Block]: Block[builderType],
     [ComponentType.Navlink]: Navlink[builderType],
     [ComponentType.Navbar]: Navbar[builderType],
     [ComponentType.Menu]: undefined,
@@ -61,6 +65,9 @@ const getComponent = ({
     [ComponentType.Button]: Button[builderType],
     [ComponentType.Catalog]: Catalog[builderType],
     [ComponentType.Card]: Card[builderType],
+    [ComponentType.CardBody]: CardBody[builderType],
+    [ComponentType.CardFooter]: CardFooter[builderType],
+    [ComponentType.CardHeader]: CardHeader[builderType],
     [ComponentType.Grid]: Grid[builderType],
     [ComponentType.GridItem]: GridItem[builderType],
     [ComponentType.Image]: Image[builderType],
@@ -104,17 +111,15 @@ export const BuilderComponent = ({
       }
       {...props}
     >
-      <TreeSortable items={components || []}>
-        {components?.map((component) => (
-          <BuilderComponent
-            key={component?.id}
-            builderType={builderType}
-            onRedirect={onRedirect}
-            onRemove={onRemove}
-            {...component}
-          />
-        ))}
-      </TreeSortable>
+      {components?.map((component) => (
+        <BuilderComponent
+          key={component?.id}
+          builderType={builderType}
+          onRedirect={onRedirect}
+          onRemove={onRemove}
+          {...component}
+        />
+      ))}
     </Component>
   );
 };

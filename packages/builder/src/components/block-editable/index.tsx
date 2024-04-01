@@ -1,10 +1,4 @@
-import {
-  Box,
-  BoxProps,
-  SortableItem,
-  useDisclosure,
-  useOutsideClick,
-} from "@stokei/ui";
+import { Box, BoxProps, useDisclosure, useOutsideClick } from "@stokei/ui";
 import { PropsWithChildren, useRef } from "react";
 import { ComponentType } from "../../services/graphql/stokei";
 import { BlockEditableMenu } from "./menu";
@@ -16,16 +10,14 @@ interface BlockEditableProps {
   readonly acceptTypes?: ComponentType[];
   readonly components?: BlockEditableProps[];
   readonly onRemove?: () => void;
+  readonly hasSortable?: boolean;
 }
 
 export const BlockEditable = ({
   id,
-  type,
-  order,
-  acceptTypes,
   children,
-  components,
   onRemove,
+  hasSortable,
   ...props
 }: PropsWithChildren<BlockEditableProps>) => {
   const blockRef = useRef<any>();
@@ -49,27 +41,20 @@ export const BlockEditable = ({
     : {};
 
   return (
-    <SortableItem
-      id={id}
-      type={type}
-      order={order}
-      acceptTypes={acceptTypes}
-      {...props}
+    <Box
+      width="full"
+      ref={blockRef}
+      flexDirection="column"
+      onClick={onClick}
+      position="relative"
+      height="auto"
+      maxHeight="auto"
+      {...clickedProps}
     >
-      <Box
-        width="full"
-        // id={id}
-        ref={blockRef}
-        flexDirection="column"
-        onClick={onClick}
-        position="relative"
-        height="auto"
-        maxHeight="auto"
-        {...clickedProps}
-      >
-        {isClicked && <BlockEditableMenu onRemove={onRemove} />}
-        {children}
-      </Box>
-    </SortableItem>
+      {isClicked && (
+        <BlockEditableMenu hasSortable={hasSortable} onRemove={onRemove} />
+      )}
+      {children}
+    </Box>
   );
 };

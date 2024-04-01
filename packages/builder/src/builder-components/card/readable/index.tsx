@@ -1,4 +1,4 @@
-import { Card, CardBody } from "@stokei/ui";
+import { Card } from "@stokei/ui";
 
 import { BaseComponentReadable } from "../../../types/base-component-readable";
 
@@ -9,9 +9,5 @@ export const Readable = ({
   children,
   ...props
 }: BaseComponentReadable<ReadableProps>) => {
-  return (
-    <Card {...props}>
-      <CardBody>{children}</CardBody>
-    </Card>
-  );
+  return <Card {...props}>{children}</Card>;
 };

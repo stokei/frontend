@@ -3,7 +3,7 @@ import { Stack, StackProps } from "../stack";
 export interface HeroContentProps extends StackProps {}
 export const HeroContent = ({ children, ...props }: HeroContentProps) => (
   <Stack
-    width="fit-content"
+    width="full"
     flex="1"
     direction="column"
     spacing="5"

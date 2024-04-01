@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  addYourComponentHere: "Adicione seu component aqui.",
   login: "Faça login",
   signUp: "Cadastre-se",
   each: "a cada",

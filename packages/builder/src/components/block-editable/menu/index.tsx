@@ -1,6 +1,5 @@
 import {
   ButtonGroup,
-  DraggableTrigger,
   IconButton,
   SortableItemTrigger,
   Stack,
@@ -9,10 +8,12 @@ import { PropsWithChildren } from "react";
 
 interface BlockEditableMenuProps {
   readonly onRemove?: () => void;
+  readonly hasSortable?: boolean;
 }
 
 export const BlockEditableMenu = ({
   onRemove,
+  hasSortable = false,
   ...props
 }: PropsWithChildren<BlockEditableMenuProps>) => {
   return (
@@ -23,13 +24,16 @@ export const BlockEditableMenu = ({
       padding="1"
       borderBottomWidth="2px"
       borderColor="primary.500"
+      justifyContent="space-between"
     >
       <ButtonGroup spacing="1" variant="ghost">
-        <SortableItemTrigger>
-          <DraggableTrigger>
+        {hasSortable && (
+          <SortableItemTrigger>
             <IconButton name="move" colorScheme="text" />
-          </DraggableTrigger>
-        </SortableItemTrigger>
+          </SortableItemTrigger>
+        )}
+      </ButtonGroup>
+      <ButtonGroup spacing="1" variant="ghost">
         {onRemove && (
           <IconButton name="trash" onClick={onRemove} colorScheme="text" />
         )}

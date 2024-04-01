@@ -1,6 +1,8 @@
 import { HeroContent } from "@stokei/ui";
 
+import { Children } from "react";
 import { BlockEditable } from "../../../components/block-editable";
+import { DropComponentHere } from "../../../components/drop-component-here";
 import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { useDataToProps } from "../hooks/use-data-to-props";
 
@@ -13,7 +15,13 @@ export const Editable = ({
   const dataProps = useDataToProps({ data, props });
   return (
     <BlockEditable {...props}>
-      <HeroContent {...dataProps} />
+      <HeroContent {...dataProps}>
+        {Children.count(dataProps?.children) > 0 ? (
+          dataProps?.children
+        ) : (
+          <DropComponentHere />
+        )}
+      </HeroContent>
     </BlockEditable>
   );
 };

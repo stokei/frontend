@@ -8,6 +8,8 @@ export const ptBRMessages = {
   addSite: "Adicionar site",
   site: "Site",
   sites: "Sites",
+  version: "Versão",
+  versions: "Versões",
   addPage: "Adicionar página",
   page: "Página",
   pages: "Páginas",
