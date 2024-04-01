@@ -1,7 +1,7 @@
 import * as Types from '../../../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
-import { SitePagesPageFragmentDoc } from '../../../graphql/pages.query.graphql.generated';
+import { SitePagesPageFragmentDoc } from '../../pages/graphql/pages.query.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type UpdatePageMutationVariables = Types.Exact<{
@@ -9,7 +9,7 @@ export type UpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdatePageMutation = { __typename?: 'Mutation', updatePage: { __typename?: 'Page', id: string, parent: string, title: string, slug: string } };
+export type UpdatePageMutation = { __typename?: 'Mutation', updatePage: { __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', name: string } | null } };
 
 
 export const UpdatePageDocument = gql`

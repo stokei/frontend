@@ -14,8 +14,9 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const cookies = context?.req?.cookies;
   const pageId = getParamFromContext("pageId", context);
+  const versionId = getParamFromContext("versionId", context);
   const appId = getParamFromContext("appId", context);
-  if (!pageId) {
+  if (!pageId || !versionId) {
     return {
       notFound: true,
     };
@@ -24,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (
     pageId,
     cookies,
   });
-  if (!page?.version?.id) {
+  if (!page) {
     return {
       notFound: true,
     };
@@ -36,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const versionModel = new Version(client?.apiClient);
   let version;
   try {
-    version = await versionModel?.getVersion(page?.version?.id);
+    version = await versionModel?.getVersion(versionId);
   } catch (error) {}
   if (!version) {
     return {

@@ -6,21 +6,14 @@ import { useCurrentApp, useSite, useTranslations } from "@/hooks";
 import { routes } from "@/routes";
 import {
   Box,
-  DragAndDropProvider,
   Loading,
   SidebarBody,
-  SidebarGroup,
-  SidebarGroupButton,
-  SidebarGroupPanel,
   SidebarHeader,
   SidebarNavLink,
-  useDisclosure,
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
-import { AddPageDrawer } from "./components/add-page-drawer";
-import { PagesList } from "./components/pages-list";
 
 const SiteLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
@@ -31,11 +24,6 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
   const baseSiteRoutes = routes
     .app({ appId: currentApp?.id })
     .site({ site: siteId || "" });
-  const {
-    isOpen: isOpenAddPageDrawer,
-    onClose: onCloseAddPageDrawer,
-    onOpen: onOpenAddPageDrawer,
-  } = useDisclosure();
 
   if (isLoadingSite) {
     return <Loading />;
@@ -43,10 +31,6 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
 
   return (
     <Box width="full" flexDirection="row">
-      <AddPageDrawer
-        isOpenDrawer={isOpenAddPageDrawer}
-        onCloseDrawer={onCloseAddPageDrawer}
-      />
       <Sidebar>
         <SidebarHeader>
           <AppLogo />
@@ -70,23 +54,14 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
             {translate.formatMessage({ id: "about" })}
           </SidebarNavLink>
 
-          <SidebarGroup>
-            <SidebarGroupButton leftIcon="page">
-              {translate.formatMessage({ id: "pages" })}
-            </SidebarGroupButton>
-            <SidebarGroupPanel>
-              <SidebarNavLink
-                leftIcon="plus"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onOpenAddPageDrawer();
-                }}
-              >
-                {translate.formatMessage({ id: "add" })}
-              </SidebarNavLink>
-              <PagesList />
-            </SidebarGroupPanel>
-          </SidebarGroup>
+          <SidebarNavLink
+            leftIcon="page"
+            as={NextLink}
+            href={baseSiteRoutes.pages}
+            isActive={router.asPath === baseSiteRoutes.pages}
+          >
+            {translate.formatMessage({ id: "pages" })}
+          </SidebarNavLink>
 
           <SidebarNavLink
             leftIcon="domain"

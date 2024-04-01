@@ -857,7 +857,7 @@ export type CreateSubscriptionContractItemInput = {
 };
 
 export type CreateVersionInput = {
-  name: Scalars['String'];
+  name?: InputMaybe<Scalars['String']>;
   parent: Scalars['String'];
 };
 
@@ -1400,6 +1400,7 @@ export type Mutation = {
   updateProduct: Product;
   updateSite: Site;
   updateSubscriptionContract: SubscriptionContract;
+  updateVersion: Version;
   updateVideo: Video;
 };
 
@@ -1876,6 +1877,11 @@ export type MutationUpdateSiteArgs = {
 
 export type MutationUpdateSubscriptionContractArgs = {
   input: UpdateSubscriptionContractInput;
+};
+
+
+export type MutationUpdateVersionArgs = {
+  input: UpdateVersionInput;
 };
 
 
@@ -3840,6 +3846,10 @@ export type UpdateDataSubscriptionContractInput = {
   defaultStripePaymentMethod?: InputMaybe<Scalars['String']>;
 };
 
+export type UpdateDataVersionInput = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type UpdateDataVideoInput = {
   description?: InputMaybe<Scalars['String']>;
   duration?: InputMaybe<Scalars['Float']>;
@@ -3897,6 +3907,11 @@ export type UpdateSiteInput = {
 export type UpdateSubscriptionContractInput = {
   data: UpdateDataSubscriptionContractInput;
   where: UpdateWhereSubscriptionContractInput;
+};
+
+export type UpdateVersionInput = {
+  data: UpdateDataVersionInput;
+  where: UpdateWhereVersionInput;
 };
 
 export type UpdateVideoInput = {
@@ -3974,6 +3989,10 @@ export type UpdateWhereSiteInput = {
 
 export type UpdateWhereSubscriptionContractInput = {
   subscriptionContract: Scalars['String'];
+};
+
+export type UpdateWhereVersionInput = {
+  version: Scalars['String'];
 };
 
 export type UpdateWhereVideoInput = {

@@ -1,4 +1,4 @@
-import * as Types from '../../../../services/graphql/stokei/index';
+import * as Types from '../../../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
@@ -10,9 +10,9 @@ export type GetSitePagesQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetSitePagesQuery = { __typename?: 'Query', pages: { __typename?: 'Pages', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Page', id: string, parent: string, title: string, slug: string }> | null } };
+export type GetSitePagesQuery = { __typename?: 'Query', pages: { __typename?: 'Pages', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', name: string } | null }> | null } };
 
-export type SitePagesPageFragment = { __typename?: 'Page', id: string, parent: string, title: string, slug: string };
+export type SitePagesPageFragment = { __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', name: string } | null };
 
 export const SitePagesPageFragmentDoc = gql`
     fragment SitePagesPage on Page {
@@ -20,6 +20,9 @@ export const SitePagesPageFragmentDoc = gql`
   parent
   title
   slug
+  version {
+    name
+  }
 }
     `;
 export const GetSitePagesDocument = gql`

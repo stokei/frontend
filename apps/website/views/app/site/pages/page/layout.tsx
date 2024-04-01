@@ -16,13 +16,10 @@ import {
   SidebarGroupPanel,
   SidebarHeader,
   SidebarNavLink,
-  useDisclosure,
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
-import { AddPageDrawer } from "../../components/add-page-drawer";
-import { PagesList } from "../../components/pages-list";
 import { ComponentsMenu } from "./components/components-menu";
 import { VersionsList } from "./components/versions-list";
 
@@ -31,18 +28,13 @@ export interface PageLayoutProps {
   page: GlobalPageFragment;
 }
 
-const PageLayout = ({ children, page }: PropsWithChildren<PageLayoutProps>) => {
+const PageLayout = ({ children }: PropsWithChildren<PageLayoutProps>) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { siteId, isLoadingSite } = useSite();
   const baseRoutes = routes.app({ appId: currentApp?.id });
   const baseSiteRoutes = baseRoutes.site({ site: siteId || "" });
-  const {
-    isOpen: isOpenAddPageDrawer,
-    onClose: onCloseAddPageDrawer,
-    onOpen: onOpenAddPageDrawer,
-  } = useDisclosure();
 
   if (isLoadingSite) {
     return <Loading />;
@@ -50,10 +42,6 @@ const PageLayout = ({ children, page }: PropsWithChildren<PageLayoutProps>) => {
 
   return (
     <Box width="full" flexDirection="row">
-      <AddPageDrawer
-        isOpenDrawer={isOpenAddPageDrawer}
-        onCloseDrawer={onCloseAddPageDrawer}
-      />
       <Sidebar>
         <SidebarHeader>
           <AppLogo />
@@ -62,10 +50,18 @@ const PageLayout = ({ children, page }: PropsWithChildren<PageLayoutProps>) => {
           <SidebarNavLink
             leftIcon="back"
             as={NextLink}
-            href={baseSiteRoutes.home}
-            isActive={router.asPath === baseSiteRoutes.home}
+            href={baseSiteRoutes.pages}
           >
             {translate.formatMessage({ id: "back" })}
+          </SidebarNavLink>
+
+          <SidebarNavLink
+            leftIcon="page"
+            as={NextLink}
+            href={baseSiteRoutes.pages}
+            isActive={router.asPath === baseSiteRoutes.pages}
+          >
+            {translate.formatMessage({ id: "pages" })}
           </SidebarNavLink>
 
           <SidebarGroup>
@@ -74,24 +70,6 @@ const PageLayout = ({ children, page }: PropsWithChildren<PageLayoutProps>) => {
             </SidebarGroupButton>
             <SidebarGroupPanel>
               <ComponentsMenu />
-            </SidebarGroupPanel>
-          </SidebarGroup>
-
-          <SidebarGroup>
-            <SidebarGroupButton leftIcon="page">
-              {translate.formatMessage({ id: "pages" })}
-            </SidebarGroupButton>
-            <SidebarGroupPanel>
-              <SidebarNavLink
-                leftIcon="plus"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onOpenAddPageDrawer();
-                }}
-              >
-                {translate.formatMessage({ id: "add" })}
-              </SidebarNavLink>
-              <PagesList />
             </SidebarGroupPanel>
           </SidebarGroup>
 

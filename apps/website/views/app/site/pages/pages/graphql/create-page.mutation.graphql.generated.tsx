@@ -1,4 +1,4 @@
-import * as Types from '../../../../services/graphql/stokei/index';
+import * as Types from '../../../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
 import { SitePagesPageFragmentDoc } from './pages.query.graphql.generated';
@@ -9,7 +9,7 @@ export type CreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreatePageMutation = { __typename?: 'Mutation', createPage: { __typename?: 'Page', id: string, parent: string, title: string, slug: string } };
+export type CreatePageMutation = { __typename?: 'Mutation', createPage: { __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', name: string } | null } };
 
 
 export const CreatePageDocument = gql`

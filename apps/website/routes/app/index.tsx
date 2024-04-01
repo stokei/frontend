@@ -91,8 +91,8 @@ export const routesApp = (data: { appId?: string }) => {
         home: baseSiteURL,
         pages: baseSiteURL + "/pages",
         domains: baseSiteURL + "/domains",
-        page: ({ page }: { page: string }) => {
-          const basePageURL = baseSiteURL + "/pages/" + page;
+        page: ({ page, version }: { page: string; version?: string }) => {
+          const basePageURL = baseSiteURL + "/pages/" + page + "/" + version;
           return {
             home: basePageURL,
           };

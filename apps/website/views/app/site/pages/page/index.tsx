@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { Navbar } from "./components/navbar";
 import { UpdatePageTitleForm } from "./components/update-page-title-form";
 import { PageLayout } from "./layout";
+import { UpdateVersionNameForm } from "./components/update-version-name-form";
 
 export interface SitePageProps {
   version: GetVersionResponse;
@@ -23,6 +24,9 @@ const SitePage = () => {
 
   return (
     <Container paddingY="5">
+      <Box width="full" flexDirection="column">
+        <UpdateVersionNameForm />
+      </Box>
       <Box
         width="fit-content"
         minWidth="60"
