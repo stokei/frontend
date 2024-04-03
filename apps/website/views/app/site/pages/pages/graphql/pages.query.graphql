@@ -22,6 +22,7 @@ fragment SitePagesPage on Page {
   title
   slug
   version {
+    id
     name
   }
 }

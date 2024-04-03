@@ -54,10 +54,7 @@ export const PageItem = ({ page }: PageItemProps) => {
         return;
       }
     } catch (error) {
-      onShowToast({
-        title: translate.formatMessage({ id: "sorryAnErrorOccurred" }),
-        status: "error",
-      });
+      onShowAPIError({ message: "sorryAnErrorOccurred" });
       return;
     }
     const editPageURL = routes

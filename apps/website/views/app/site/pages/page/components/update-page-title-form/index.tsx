@@ -53,10 +53,7 @@ export const UpdatePageTitleForm = () => {
         );
       }
     } catch (error) {
-      onShowToast({
-        title: translate.formatMessage({ id: "sorryAnErrorOccurred" }),
-        status: "error",
-      });
+      onShowAPIError({ message: "sorryAnErrorOccurred" });
     }
   };
 

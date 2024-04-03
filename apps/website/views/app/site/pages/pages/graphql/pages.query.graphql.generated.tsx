@@ -10,9 +10,9 @@ export type GetSitePagesQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetSitePagesQuery = { __typename?: 'Query', pages: { __typename?: 'Pages', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', name: string } | null }> | null } };
+export type GetSitePagesQuery = { __typename?: 'Query', pages: { __typename?: 'Pages', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', id: string, name: string } | null }> | null } };
 
-export type SitePagesPageFragment = { __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', name: string } | null };
+export type SitePagesPageFragment = { __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', id: string, name: string } | null };
 
 export const SitePagesPageFragmentDoc = gql`
     fragment SitePagesPage on Page {
@@ -21,6 +21,7 @@ export const SitePagesPageFragmentDoc = gql`
   title
   slug
   version {
+    id
     name
   }
 }

@@ -9,7 +9,7 @@ export type CreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreatePageMutation = { __typename?: 'Mutation', createPage: { __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', name: string } | null } };
+export type CreatePageMutation = { __typename?: 'Mutation', createPage: { __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', id: string, name: string } | null } };
 
 
 export const CreatePageDocument = gql`

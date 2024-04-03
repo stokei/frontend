@@ -24,7 +24,7 @@ const SitePage = () => {
 
   return (
     <Container paddingY="5">
-      <Box width="full" flexDirection="column">
+      <Box width="full" flexDirection="column" marginBottom="5">
         <UpdateVersionNameForm />
       </Box>
       <Box
