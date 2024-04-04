@@ -1,33 +1,33 @@
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { secondsToTime } from "../../utils/seconds-to-time";
+import {
+  FormatDate,
+  FormatDateTime,
+  FormatMessage,
+  FormatMoney,
+  FormatMoneyToNumber,
+  FormatNumber,
+  FormatTime,
+  Translations,
+} from "./types";
 
-export const useTranslations = <TKeys = string>() => {
+export const useTranslations = <TKeys = string>(): Translations<TKeys> => {
   const intl = useIntl();
 
-  const formatMessage = useCallback(
-    ({ id }: { id: TKeys }, values?: Record<string, any>) => {
+  const formatMessage: FormatMessage<TKeys> = useCallback(
+    ({ id }, values) => {
       try {
         return intl.formatMessage({ id: id as any }, values);
       } catch (error) {
         return "";
       }
     },
-    []
+    [intl]
   );
 
-  const formatMoney = useCallback(
-    ({
-      currency,
-      amount,
-      minorUnit,
-      showSymbol = false,
-    }: {
-      currency: string;
-      amount: number;
-      minorUnit?: number;
-      showSymbol?: boolean;
-    }) => {
+  const formatMoney: FormatMoney = useCallback(
+    ({ currency, amount, minorUnit, showSymbol = false }) => {
       const valueAmount = amount ? amount / Math.pow(10, minorUnit || 0) : 0;
       try {
         return new Intl.NumberFormat(intl.locale, {
@@ -40,10 +40,10 @@ export const useTranslations = <TKeys = string>() => {
         return "0";
       }
     },
-    []
+    [intl]
   );
 
-  const formatMoneyToNumber = useCallback((money: string) => {
+  const formatMoneyToNumber: FormatMoneyToNumber = useCallback((money) => {
     if (!money) {
       return 0;
     }
@@ -51,20 +51,20 @@ export const useTranslations = <TKeys = string>() => {
     return justNumbers ? parseFloat(justNumbers) : 0;
   }, []);
 
-  const formatNumber = useCallback((value: number) => {
-    if (!value) {
-      return 0;
-    }
-    return intl.formatNumber(value, {
-      unitDisplay: "long",
-    });
-  }, []);
+  const formatNumber: FormatNumber = useCallback(
+    (value) => {
+      if (!value) {
+        return "0";
+      }
+      return intl.formatNumber(value, {
+        unitDisplay: "long",
+      });
+    },
+    [intl]
+  );
 
-  const formatDateTime = useCallback(
-    (
-      time: Parameters<Intl.DateTimeFormat["format"]>[0] | string,
-      options?: Intl.DateTimeFormatOptions & { format?: string }
-    ) => {
+  const formatDateTime: FormatDateTime = useCallback(
+    (time, options) => {
       try {
         if (typeof time === "number") {
           if (time <= 0) {
@@ -73,63 +73,44 @@ export const useTranslations = <TKeys = string>() => {
         }
         return intl.formatTime(time, options);
       } catch (error) {
-        return;
+        return "";
       }
     },
-    []
+    [intl]
   );
 
-  const formatDate = useCallback(
-    (
-      date: Parameters<Intl.DateTimeFormat["format"]>[0] | string,
-      options?: Intl.DateTimeFormatOptions & {
-        format?: string;
-        fullDate?: boolean;
-      }
-    ) => {
+  const formatDate: FormatDate = useCallback(
+    (date, options) => {
       if (!date) {
-        return;
+        return "";
       }
       try {
         const dateString = intl.formatDate(date, options);
         const timeString = options?.fullDate ? formatDateTime(date) : "";
         return `${dateString} ${timeString}`;
       } catch (error) {
-        return undefined;
+        return "";
       }
     },
-    []
+    [intl, formatDateTime]
   );
 
-  const formatTime = useCallback((seconds: number) => {
+  const formatTime: FormatTime = useCallback((seconds) => {
     try {
       return secondsToTime(seconds);
     } catch (error) {
-      return;
+      return "";
     }
   }, []);
 
-  const values = useMemo(
-    () => ({
-      locale: intl.locale,
-      formatNumber,
-      formatMessage,
-      formatMoney,
-      formatDate,
-      formatTime,
-      formatDateTime,
-      formatMoneyToNumber,
-    }),
-    [
-      formatNumber,
-      formatMessage,
-      formatMoney,
-      formatDate,
-      formatTime,
-      formatDateTime,
-      formatMoneyToNumber,
-    ]
-  );
-
-  return values;
+  return {
+    locale: intl.locale,
+    formatNumber,
+    formatMessage,
+    formatMoney,
+    formatDate,
+    formatTime,
+    formatDateTime,
+    formatMoneyToNumber,
+  };
 };

@@ -1,0 +1,5 @@
+mutation RemoveComponent($input: RemoveComponentInput!) {
+  removeComponent(input: $input) {
+    id
+  }
+}

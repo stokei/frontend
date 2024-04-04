@@ -1,5 +1,9 @@
 export const ptBRMessages = {
+  cancel: "Cancelar",
   addYourComponentHere: "Adicione seu component aqui.",
+  removeComponent: "Remover componente",
+  wouldYouReallyLikeToRemoveComponent:
+    "Você realmente gostaria de remover o componente?",
   login: "Faça login",
   signUp: "Cadastre-se",
   each: "a cada",

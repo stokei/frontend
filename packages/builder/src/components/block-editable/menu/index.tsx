@@ -16,6 +16,8 @@ export const BlockEditableMenu = ({
   hasSortable = false,
   ...props
 }: PropsWithChildren<BlockEditableMenuProps>) => {
+  const hasRemoveButton = !!onRemove;
+
   return (
     <Stack
       width="full"
@@ -34,7 +36,7 @@ export const BlockEditableMenu = ({
         )}
       </ButtonGroup>
       <ButtonGroup spacing="1" variant="ghost">
-        {onRemove && (
+        {hasRemoveButton && (
           <IconButton name="trash" onClick={onRemove} colorScheme="text" />
         )}
       </ButtonGroup>

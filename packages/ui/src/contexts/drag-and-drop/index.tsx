@@ -1,7 +1,10 @@
 import {
   DndContext,
   DndContextProps,
+  DragEndEvent,
+  DragOverEvent,
   DragOverlay,
+  DragStartEvent,
   KeyboardSensor,
   PointerSensor,
   closestCenter,
@@ -10,6 +13,10 @@ import {
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { PropsWithChildren, ReactNode, createContext, useState } from "react";
+
+export type DragAndDropDragStartEvent = DragStartEvent;
+export type DragAndDropDragOverEvent = DragOverEvent;
+export type DragAndDropDragEndEvent = DragEndEvent;
 
 export type DragAndDropContextProps = DndContextProps;
 

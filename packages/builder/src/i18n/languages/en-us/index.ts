@@ -1,7 +1,11 @@
 import { I18nKey } from "../../../types/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
+  cancel: "Cancel",
   addYourComponentHere: "Add your component here",
+  removeComponent: "Remove component",
+  wouldYouReallyLikeToRemoveComponent:
+    "Would you really like to remove component?",
   login: "Log in",
   signUp: "Sign up",
   each: "each",

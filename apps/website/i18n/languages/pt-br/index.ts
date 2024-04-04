@@ -1,5 +1,7 @@
 export const ptBRMessages = {
   me: "Eu",
+  publish: "Publicar",
+  hero: "Hero",
   heros: "Heros",
   saving: "Salvando",
   component: "Componente",

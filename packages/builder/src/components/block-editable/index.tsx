@@ -2,6 +2,7 @@ import { Box, BoxProps, useDisclosure, useOutsideClick } from "@stokei/ui";
 import { PropsWithChildren, useRef } from "react";
 import { ComponentType } from "../../services/graphql/stokei";
 import { BlockEditableMenu } from "./menu";
+import { RemoveComponentConfirmationModal } from "./remove-component-confirmation-modal";
 
 interface BlockEditableProps {
   readonly id: string;
@@ -21,6 +22,12 @@ export const BlockEditable = ({
   ...props
 }: PropsWithChildren<BlockEditableProps>) => {
   const blockRef = useRef<any>();
+  const {
+    isOpen: isOpenRemoveComponentConfirmationModal,
+    onClose: onCloseRemoveComponentConfirmationModal,
+    onOpen: onOpenRemoveComponentConfirmationModal,
+  } = useDisclosure();
+
   const {
     isOpen: isClicked,
     onOpen: onClick,
@@ -51,8 +58,18 @@ export const BlockEditable = ({
       maxHeight="auto"
       {...clickedProps}
     >
+      {!!onRemove && (
+        <RemoveComponentConfirmationModal
+          isOpen={isOpenRemoveComponentConfirmationModal}
+          onRemove={onRemove}
+          onCancel={onCloseRemoveComponentConfirmationModal}
+        />
+      )}
       {isClicked && (
-        <BlockEditableMenu hasSortable={hasSortable} onRemove={onRemove} />
+        <BlockEditableMenu
+          hasSortable={hasSortable}
+          onRemove={onOpenRemoveComponentConfirmationModal}
+        />
       )}
       {children}
     </Box>
