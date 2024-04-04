@@ -1,3 +1,4 @@
+import { useCreateComponentsTree } from "@/hooks/use-create-components-tree";
 import {
   GetVersionComponent,
   GetVersionResponse,
@@ -8,9 +9,14 @@ import {
   PropsWithChildren,
   createContext,
   useCallback,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
+import { useUpdateComponentMutation } from "./graphql/update-component.mutation.graphql.generated";
+import { useRunMultipleRequests } from "@/hooks/use-run-multiple-requests";
+import { useUpdateComponentsOrderMutation } from "./graphql/update-components-order.mutation.graphql.generated";
 
 export interface ComponentsTreeProviderProps {
   version: GetVersionResponse;
@@ -27,6 +33,7 @@ export type InvalidCallback = (component: ComponentsTreeComponent) => void;
 
 export interface ComponentsTreeProviderValues {
   readonly components: ComponentsTreeComponent[];
+  readonly isSavingComponents: boolean;
   readonly onRemoveComponent: (data: { componentId: string }) => void;
   readonly onUpdateComponent: (data: {
     componentId: string;
@@ -63,6 +70,39 @@ export const ComponentsTreeProvider = ({
   const [componentMap, setComponentMap] = useState<
     Map<string, ComponentsTreeComponent>
   >(createComponentMap(version?.components));
+
+  const [isSavingComponents, setIsSavingComponents] = useState<boolean>(false);
+  const [isActiveUpdateComponentOrders, setIsActiveUpdateComponentOrders] =
+    useState<boolean>(false);
+
+  const { onCreateComponentsTree } = useCreateComponentsTree();
+
+  const [{}, onExecuteUpdateComponentsOrder] =
+    useUpdateComponentsOrderMutation();
+
+  const onUpdateComponetOrders = useCallback(
+    async (currentComponents: ComponentsTreeComponent[]) => {
+      setIsSavingComponents(true);
+      try {
+        const response = await onExecuteUpdateComponentsOrder({
+          input: {
+            components: currentComponents?.map(({ id }) => id),
+          },
+        });
+        if (response?.data?.updateComponentsOrder?.length) {
+          setIsActiveUpdateComponentOrders(false);
+        }
+      } catch (error) {}
+      setIsSavingComponents(false);
+    },
+    [onExecuteUpdateComponentsOrder]
+  );
+
+  useEffect(() => {
+    if (isActiveUpdateComponentOrders) {
+      onUpdateComponetOrders(components);
+    }
+  }, [components, isActiveUpdateComponentOrders, onUpdateComponetOrders]);
 
   const updateComponentInTree = useCallback(
     (
@@ -221,16 +261,17 @@ export const ComponentsTreeProvider = ({
   const values = useMemo(
     () => ({
       components,
+      isSavingComponents,
       onUpdateComponent,
       onRemoveComponent,
     }),
-    [components, onRemoveComponent, onUpdateComponent]
+    [components, isSavingComponents, onRemoveComponent, onUpdateComponent]
   );
 
   return (
     <ComponentsTreeContext.Provider value={values}>
       <DragAndDropProvider
-        onDragEnd={(event) => {
+        onDragEnd={async (event) => {
           const { active, over } = event;
           const isEqualOverAndActive =
             over && active && active?.id === over?.id;
@@ -240,13 +281,52 @@ export const ComponentsTreeProvider = ({
           if (!active?.id || !over?.id) {
             return;
           }
-          setComponents((prevComponents) =>
-            arrayMove(
+          const isNewItem = !!active?.data?.current?.isNew;
+          if (isNewItem) {
+            const overItem = getComponentById(over?.id + "");
+            if (!overItem) {
+              return;
+            }
+            const activeTreeWithNewParent = active?.data?.current?.tree?.map(
+              (treeItem: any) => ({
+                ...treeItem,
+                parent: overItem?.parent + "",
+              })
+            );
+            const newComponentTree = await onCreateComponentsTree({
+              tree: activeTreeWithNewParent,
+            });
+            if (!newComponentTree?.length) {
+              return;
+            }
+            setComponents((prevComponents) => {
+              const currentComponents = [...prevComponents];
+              currentComponents.splice(
+                over?.data?.current?.sortable?.index,
+                0,
+                ...newComponentTree
+              );
+              const componentsWithNewOrder = currentComponents?.map(
+                (oldComponent, index) => ({ ...oldComponent, order: index })
+              );
+              return componentsWithNewOrder;
+            });
+            setIsActiveUpdateComponentOrders(true);
+            return;
+          }
+
+          setComponents((prevComponents) => {
+            const currentComponents = arrayMove(
               prevComponents,
               active?.data?.current?.sortable?.index,
               over?.data?.current?.sortable?.index
-            )
-          );
+            );
+            const componentsWithNewOrder = currentComponents?.map(
+              (oldComponent, index) => ({ ...oldComponent, order: index })
+            );
+            return componentsWithNewOrder;
+          });
+          setIsActiveUpdateComponentOrders(true);
         }}
       >
         {children}

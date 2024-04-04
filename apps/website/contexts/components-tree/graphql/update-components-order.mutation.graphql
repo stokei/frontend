@@ -1,0 +1,5 @@
+mutation UpdateComponentsOrder($input: UpdateComponentsOrderInput!) {
+  updateComponentsOrder(input: $input) {
+    id
+  }
+}

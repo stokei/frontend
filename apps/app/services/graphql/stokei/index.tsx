@@ -3759,6 +3759,8 @@ export type UpdateDataColorInput = {
 
 export type UpdateDataComponentInput = {
   data?: InputMaybe<Scalars['JSON']>;
+  order?: InputMaybe<Scalars['Float']>;
+  parent?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateDataCouponInput = {

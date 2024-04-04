@@ -12,6 +12,7 @@ import { Navbar } from "./components/navbar";
 import { UpdatePageTitleForm } from "./components/update-page-title-form";
 import { PageLayout } from "./layout";
 import { UpdateVersionNameForm } from "./components/update-version-name-form";
+import { Teste } from "./teste";
 
 export interface SitePageProps {
   version: GetVersionResponse;

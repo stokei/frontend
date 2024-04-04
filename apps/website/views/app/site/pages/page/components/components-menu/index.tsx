@@ -29,104 +29,86 @@ interface ComponentGroup {
   components: Component[];
 }
 
+const defaultComponentsGroups = [
+  {
+    title: "heros",
+    components: [
+      {
+        id: ComponentType.Hero + "-1",
+        avatar: "",
+        parent: "",
+        order: 1,
+        type: ComponentType.Hero,
+        acceptTypes: [],
+        name: "hero",
+        data: {
+          isNew: true,
+          tree: [
+            {
+              parent: "",
+              type: ComponentType.Block,
+              components: [
+                {
+                  parent: "",
+                  type: ComponentType.Hero,
+                  components: [
+                    {
+                      parent: "",
+                      type: ComponentType.HeroContent,
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Title,
+                          data: {
+                            value: "New hero",
+                          },
+                          components: [],
+                        },
+                      ],
+                    },
+                    {
+                      parent: "",
+                      type: ComponentType.HeroMedia,
+                      components: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  },
+];
+
 export const ComponentsMenu = () => {
   const translate = useTranslations();
   const [componentsGroups, setComponentsGroups] = useState<ComponentGroup[]>(
-    () => [
-      {
-        title: translate.formatMessage({ id: "title" }),
-        components: [
-          {
-            id: "ComponentType-1",
-            avatar: "",
-            parent: "",
-            order: 1,
-            type: ComponentType.Button,
-            acceptTypes: [ComponentType.Button],
-            name: translate.formatMessage({ id: "home" }),
-          },
-          {
-            id: "ComponentType-2",
-            avatar: "",
-            parent: "",
-            order: 2,
-            type: ComponentType.Catalog,
-            acceptTypes: [ComponentType.Catalog],
-            name: translate.formatMessage({ id: "catalog" }),
-          },
-          {
-            id: "ComponentType-3",
-            avatar: "",
-            parent: "",
-            order: 2,
-            type: ComponentType.Title,
-            acceptTypes: [ComponentType.Title],
-            name: translate.formatMessage({ id: "title" }),
-          },
-        ],
-      },
-      {
-        title: translate.formatMessage({ id: "title" }),
-        components: [
-          {
-            id: "ComponentType-4",
-            avatar: "",
-            parent: "",
-            order: 1,
-            type: ComponentType.Button,
-            acceptTypes: [ComponentType.Button],
-            name: translate.formatMessage({ id: "cancel" }),
-          },
-          {
-            id: "ComponentType-5",
-            avatar: "",
-            parent: "",
-            order: 2,
-            type: ComponentType.Catalog,
-            acceptTypes: [ComponentType.Catalog],
-            name: translate.formatMessage({ id: "sale" }),
-          },
-          {
-            id: "ComponentType-6",
-            avatar: "",
-            parent: "",
-            order: 2,
-            type: ComponentType.Title,
-            acceptTypes: [ComponentType.Title],
-            name: translate.formatMessage({ id: "close" }),
-          },
-        ],
-      },
-      {
-        title: translate.formatMessage({ id: "title" }),
-        components: [],
-      },
-      {
-        title: translate.formatMessage({ id: "title" }),
-        components: [],
-      },
-    ]
+    () => defaultComponentsGroups
   );
 
   return (
     <>
       {componentsGroups?.map((componentsGroup, componentsGroupPosition) => (
         <SidebarGroup key={componentsGroupPosition}>
-          <SidebarGroupButton>{componentsGroup.title}</SidebarGroupButton>
+          <SidebarGroupButton>
+            {translate.formatMessage({ id: componentsGroup.title as any })}
+          </SidebarGroupButton>
           <SidebarGroupPanel withDivider={false}>
             <Stack direction="column" spacing="5" paddingLeft="5">
               <TreeSortable items={componentsGroup.components}>
                 {componentsGroup.components?.map((component) => (
-                  <SortableItem
-                    key={component.id}
-                    id={component.id}
-                    type={component.type}
-                  >
+                  <SortableItem key={component.id} {...component}>
                     <SortableItemTrigger>
                       <Card>
                         <CardBody>
                           <Stack direction="column" spacing="5">
-                            <Text>{component.name}</Text>
+                            <Text>
+                              {translate.formatMessage({
+                                id: component.name as any,
+                              })}
+                            </Text>
                           </Stack>
                         </CardBody>
                       </Card>

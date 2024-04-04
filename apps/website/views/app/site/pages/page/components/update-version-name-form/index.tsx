@@ -45,7 +45,6 @@ export const UpdateVersionNameForm = () => {
           title: translate.formatMessage({ id: "updatedSuccessfully" }),
           status: "success",
         });
-        router.reload();
         return;
       }
 
