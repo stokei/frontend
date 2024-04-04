@@ -1386,6 +1386,7 @@ export type Mutation = {
   updateCatalog: Catalog;
   updateColor: Color;
   updateComponent: Component;
+  updateComponentsOrder: Array<Component>;
   updateCoupon: Coupon;
   updateCourse: Course;
   updateCurrency: Currency;
@@ -1812,6 +1813,11 @@ export type MutationUpdateColorArgs = {
 
 export type MutationUpdateComponentArgs = {
   input: UpdateComponentInput;
+};
+
+
+export type MutationUpdateComponentsOrderArgs = {
+  input: UpdateComponentsOrderInput;
 };
 
 
@@ -3703,6 +3709,10 @@ export type UpdateColorInput = {
 export type UpdateComponentInput = {
   data: UpdateDataComponentInput;
   where: UpdateWhereComponentInput;
+};
+
+export type UpdateComponentsOrderInput = {
+  components: Array<Scalars['String']>;
 };
 
 export type UpdateCouponInput = {
