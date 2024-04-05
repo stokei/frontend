@@ -8,15 +8,18 @@ import { PropsWithChildren } from "react";
 
 interface BlockEditableMenuProps {
   readonly onRemove?: () => void;
+  readonly onUpdate?: () => void;
   readonly hasSortable?: boolean;
 }
 
 export const BlockEditableMenu = ({
   onRemove,
+  onUpdate,
   hasSortable = false,
   ...props
 }: PropsWithChildren<BlockEditableMenuProps>) => {
   const hasRemoveButton = !!onRemove;
+  const hasUpdateButton = !!onUpdate;
 
   return (
     <Stack
@@ -38,6 +41,9 @@ export const BlockEditableMenu = ({
       <ButtonGroup spacing="1" variant="ghost">
         {hasRemoveButton && (
           <IconButton name="trash" onClick={onRemove} colorScheme="text" />
+        )}
+        {hasUpdateButton && (
+          <IconButton name="edit" onClick={onUpdate} colorScheme="text" />
         )}
       </ButtonGroup>
     </Stack>

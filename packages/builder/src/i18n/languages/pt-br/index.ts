@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  required: "Obrigatório",
   cancel: "Cancelar",
   addYourComponentHere: "Adicione seu component aqui.",
   removeComponent: "Remover componente",

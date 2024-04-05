@@ -11,14 +11,16 @@ interface BlockEditableProps {
   readonly acceptTypes?: ComponentType[];
   readonly components?: BlockEditableProps[];
   readonly onRemove?: () => void;
+  readonly onUpdate?: () => void;
   readonly hasSortable?: boolean;
 }
 
 export const BlockEditable = ({
   id,
   children,
-  onRemove,
   hasSortable,
+  onRemove,
+  onUpdate,
   ...props
 }: PropsWithChildren<BlockEditableProps>) => {
   const blockRef = useRef<any>();
@@ -68,6 +70,7 @@ export const BlockEditable = ({
       {isClicked && (
         <BlockEditableMenu
           hasSortable={hasSortable}
+          onUpdate={onUpdate}
           onRemove={onOpenRemoveComponentConfirmationModal}
         />
       )}
