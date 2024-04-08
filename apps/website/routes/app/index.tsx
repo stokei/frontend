@@ -88,7 +88,7 @@ export const routesApp = (data: { appId?: string }) => {
     site: ({ site }: { site: string }) => {
       const baseSiteURL = baseURL + "/sites/" + site;
       return {
-        home: baseSiteURL,
+        home: baseSiteURL + "/pages",
         pages: baseSiteURL + "/pages",
         domains: baseSiteURL + "/domains",
         page: ({ page, version }: { page: string; version?: string }) => {
@@ -125,7 +125,6 @@ export const routesApp = (data: { appId?: string }) => {
     settings: {
       home: baseURL + "/settings",
       billing: baseURL + "/settings/billing",
-      website: baseURL + "/settings/website",
     },
   };
 };

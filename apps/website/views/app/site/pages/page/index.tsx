@@ -1,4 +1,4 @@
-import { useComponentsTree } from "@/hooks";
+import { useComponentsTree, usePage } from "@/hooks";
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { GlobalPageFragment } from "@/services/graphql/queries/get-page-by-id/page.query.graphql.generated";
 import {
@@ -14,6 +14,8 @@ import { Navbar } from "./components/navbar";
 import { UpdatePageTitleForm } from "./components/update-page-title-form";
 import { PageLayout } from "./layout";
 import { ComponentType } from "@/services/graphql/stokei";
+import { CreateVersionAlert } from "./components/create-version-alert";
+import { NavbarMock } from "./components/navbar-mock";
 
 export interface SitePageProps {
   version: GetVersionResponse;
@@ -22,12 +24,14 @@ export interface SitePageProps {
 
 const SitePage = () => {
   const router = useRouter();
+  const { isProductionVersion } = usePage();
   const { components, onRemoveComponent, onUpdateComponent } =
     useComponentsTree();
 
   return (
     <Container paddingY="5">
       <Stack direction="column" spacing="5">
+        {isProductionVersion && <CreateVersionAlert />}
         <Header />
         <Box width="full" flexDirection="column">
           <Box
@@ -49,21 +53,29 @@ const SitePage = () => {
             rounded="md"
             roundedTopLeft="unset"
             background="background.50"
+            overflow="hidden"
           >
-            <Container paddingY="5">
+            <NavbarMock />
+            {isProductionVersion ? (
+              <>
+                {components?.map((component) => (
+                  <BuilderComponent
+                    {...component}
+                    key={component.id}
+                    builderType={ComponentBuilderType.BLOCK_READABLE}
+                    onRedirect={router.push}
+                  />
+                ))}
+              </>
+            ) : (
               <TreeSortable items={components || []}>
                 {components?.length ? (
                   <>
                     {components?.map((component) => (
                       <BuilderComponent
-                        id={component?.id}
-                        key={component?.id}
-                        order={component?.order}
-                        type={component?.type}
-                        acceptTypes={component?.acceptTypes}
+                        {...component}
+                        key={component.id}
                         builderType={ComponentBuilderType.BLOCK_EDITABLE}
-                        components={component?.components}
-                        data={component?.data}
                         onRedirect={router.push}
                         onRemove={() =>
                           onRemoveComponent({ componentId: component?.id })
@@ -73,7 +85,10 @@ const SitePage = () => {
                             componentId: component?.id,
                             updateCallback: (currentComponentToUpdate) => ({
                               ...currentComponentToUpdate,
-                              data,
+                              data: {
+                                ...currentComponentToUpdate,
+                                ...data,
+                              },
                             }),
                           })
                         }
@@ -92,7 +107,7 @@ const SitePage = () => {
                   </SortableItem>
                 )}
               </TreeSortable>
-            </Container>
+            )}
           </Box>
         </Box>
       </Stack>

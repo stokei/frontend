@@ -3,8 +3,12 @@ import { I18nKey } from "../../../types/i18n-key";
 export const enUSMessages: Record<I18nKey, string> = {
   required: "Required",
   cancel: "Cancel",
+  save: "Save",
+  title: "Title",
+  text: "Text",
   addYourComponentHere: "Add your component here",
   removeComponent: "Remove component",
+  updateComponent: "Update component",
   wouldYouReallyLikeToRemoveComponent:
     "Would you really like to remove component?",
   login: "Log in",

@@ -3,6 +3,10 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
   publish: "Publish",
+  published: "Published",
+  createNewVersion: "Create new version",
+  thisPageIsInItsMostRecentVersionToMakeChangesClickOnCreateNewVersion:
+    "This page is in its most recent version. To make changes, click on 'Create new version'.",
   hero: "Hero",
   heros: "Heros",
   saving: "Saving",

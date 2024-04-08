@@ -18,6 +18,7 @@ export interface PageProviderValues {
   version?: GetVersionResponse;
   page?: GlobalPageFragment;
   pageId: string;
+  isProductionVersion: boolean;
   onChangePage: (currentPage: GlobalPageFragment) => void;
   onChangeVersion: (currentVersion: GetVersionResponse) => void;
 }
@@ -37,6 +38,11 @@ export const PageProvider = ({
 
   const pageId = router.query?.pageId?.toString() || "";
 
+  const isProductionVersion = useMemo(
+    () => page?.version?.id === version?.id,
+    [page?.version?.id, version?.id]
+  );
+
   const onChangePage = useCallback(
     (currentPage: GlobalPageFragment) => setPage(currentPage),
     []
@@ -51,10 +57,11 @@ export const PageProvider = ({
       version,
       page,
       pageId,
+      isProductionVersion,
       onChangePage,
       onChangeVersion,
     }),
-    [onChangePage, onChangeVersion, page, pageId, version]
+    [isProductionVersion, onChangePage, onChangeVersion, page, pageId, version]
   );
 
   return <PageContext.Provider value={values}>{children}</PageContext.Provider>;

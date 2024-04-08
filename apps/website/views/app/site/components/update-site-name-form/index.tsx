@@ -1,4 +1,4 @@
-import { useAPIErrors, usePage, useTranslations } from "@/hooks";
+import { useAPIErrors, useSite, useTranslations } from "@/hooks";
 import {
   Editable,
   EditableControls,
@@ -7,37 +7,37 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useEffect, useState } from "react";
-import { useUpdateVersionMutation } from "../../graphql/update-version.mutation.graphql.generated";
+import { useUpdateSiteMutation } from "../../graphql/update-site.mutation.graphql.generated";
 
-export const UpdateVersionNameForm = () => {
-  const { version } = usePage();
+export const UpdateSiteNameForm = () => {
+  const { site } = useSite();
   const [name, setName] = useState("");
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
 
-  const [{ fetching: isLoadingUpdateVersion }, onExecuteUpdateVersionMutation] =
-    useUpdateVersionMutation();
+  const [{ fetching: isLoadingUpdateSite }, onExecuteUpdateSiteMutation] =
+    useUpdateSiteMutation();
 
   useEffect(() => {
-    if (version?.name) {
-      setName(version?.name);
+    if (site?.name) {
+      setName(site?.name);
     }
-  }, [version?.name]);
+  }, [site?.name]);
 
   const onSubmit = async () => {
     try {
-      const response = await onExecuteUpdateVersionMutation({
+      const response = await onExecuteUpdateSiteMutation({
         input: {
           data: {
             name,
           },
           where: {
-            version: version?.id || "",
+            site: site?.id || "",
           },
         },
       });
-      if (!!response?.data?.updateVersion) {
+      if (!!response?.data?.updateSite) {
         onShowToast({
           title: translate.formatMessage({ id: "updatedSuccessfully" }),
           status: "success",
@@ -58,7 +58,7 @@ export const UpdateVersionNameForm = () => {
   return (
     <Editable value={name} onSubmit={onSubmit} onChange={setName}>
       <EditablePreview />
-      <EditableInput id="version-name" isLoading={isLoadingUpdateVersion} />
+      <EditableInput id="site-name" />
       <EditableControls />
     </Editable>
   );

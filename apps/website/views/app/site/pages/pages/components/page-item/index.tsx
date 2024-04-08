@@ -1,24 +1,8 @@
-import {
-  useAPIErrors,
-  useCurrentApp,
-  usePage,
-  useSite,
-  useTranslations,
-} from "@/hooks";
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  Stack,
-  Text,
-  Title,
-  useToast,
-} from "@stokei/ui";
+import { useCurrentApp, useSite, useTranslations } from "@/hooks";
+import { Badge, Button, Card, CardBody, Stack, Text, Title } from "@stokei/ui";
 
 import { routes } from "@/routes";
 import { useRouter } from "next/router";
-import { useCreateVersionMutation } from "../../graphql/create-version.mutation.graphql.generated";
 import { SitePagesPageFragment } from "../../graphql/pages.query.graphql.generated";
 
 export interface PageItemProps {
@@ -29,38 +13,13 @@ export const PageItem = ({ page }: PageItemProps) => {
   const router = useRouter();
   const { site } = useSite();
   const { currentApp } = useCurrentApp();
-  const { onShowToast } = useToast();
-  const { onShowAPIError } = useAPIErrors();
   const translate = useTranslations();
-  const [{ fetching: isLoadingCreateVersion }, onExecuteCreateVersion] =
-    useCreateVersionMutation();
 
   const onGoToEditPage = async () => {
-    let version = "";
-    try {
-      const response = await onExecuteCreateVersion({
-        input: {
-          parent: page?.id || "",
-        },
-      });
-      if (!!response?.data?.createVersion) {
-        version = response?.data?.createVersion?.id;
-      }
-
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-        return;
-      }
-    } catch (error) {
-      onShowAPIError({ message: "sorryAnErrorOccurred" });
-      return;
-    }
     const editPageURL = routes
       .app({ appId: currentApp?.id })
       .site({ site: site?.id || "" })
-      .page({ page: page?.id, version }).home;
+      .page({ page: page?.id, version: page?.version?.id }).home;
     router.push(editPageURL);
   };
   return (
@@ -87,11 +46,7 @@ export const PageItem = ({ page }: PageItemProps) => {
           {page?.id === site?.homePage?.id ? (
             <Badge>{translate.formatMessage({ id: "home" })}</Badge>
           ) : undefined}
-          <Button
-            onClick={onGoToEditPage}
-            variant="ghost"
-            isLoading={isLoadingCreateVersion}
-          >
+          <Button onClick={onGoToEditPage} variant="ghost">
             {translate.formatMessage({ id: "edit" })}
           </Button>
         </Stack>

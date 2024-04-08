@@ -6,9 +6,8 @@ import {
   EditablePreview,
   useToast,
 } from "@stokei/ui";
-import { z } from "zod";
-import { useUpdatePageMutation } from "../../graphql/update-page.mutation.graphql.generated";
 import { useEffect, useState } from "react";
+import { useUpdatePageMutation } from "../../graphql/update-page.mutation.graphql.generated";
 
 export const UpdatePageTitleForm = () => {
   const { page, pageId, onChangePage } = usePage();
@@ -60,7 +59,7 @@ export const UpdatePageTitleForm = () => {
   return (
     <Editable value={title} onSubmit={onSubmit} onChange={setTitle}>
       <EditablePreview />
-      <EditableInput id="page-title" />
+      <EditableInput id="page-title" isLoading={isLoadingUpdatePage} />
       <EditableControls />
     </Editable>
   );

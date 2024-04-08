@@ -14,6 +14,7 @@ import {
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
+import { UpdateSiteNameForm } from "./components/update-site-name-form";
 
 const SiteLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
@@ -21,9 +22,7 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
   const { currentApp } = useCurrentApp();
   const { siteId, isLoadingSite } = useSite();
   const baseRoutes = routes.app({ appId: currentApp?.id });
-  const baseSiteRoutes = routes
-    .app({ appId: currentApp?.id })
-    .site({ site: siteId || "" });
+  const baseSiteRoutes = baseRoutes.site({ site: siteId || "" });
 
   if (isLoadingSite) {
     return <Loading />;
@@ -36,22 +35,17 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
           <AppLogo />
         </SidebarHeader>
         <SidebarBody paddingX="0">
-          <SidebarNavLink
-            leftIcon="home"
-            as={NextLink}
-            href={baseRoutes.home}
-            isActive={router.asPath === baseRoutes.home}
-          >
-            {translate.formatMessage({ id: "home" })}
-          </SidebarNavLink>
+          <Box padding="5" paddingTop="0" flexDirection="column">
+            <UpdateSiteNameForm />
+          </Box>
 
           <SidebarNavLink
-            leftIcon="about"
+            leftIcon="back"
             as={NextLink}
-            href={baseSiteRoutes.home}
-            isActive={router.asPath === baseSiteRoutes.home}
+            href={baseRoutes.sites.home}
+            isActive={router.asPath === baseRoutes.sites.home}
           >
-            {translate.formatMessage({ id: "about" })}
+            {translate.formatMessage({ id: "back" })}
           </SidebarNavLink>
 
           <SidebarNavLink

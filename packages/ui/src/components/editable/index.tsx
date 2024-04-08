@@ -8,7 +8,7 @@ export type EditableProps = ChakraEditableProps;
 export const Editable = ({ children, ...props }: EditableProps) => {
   return (
     <ChakraEditable
-      width="full"
+      width="fit-content"
       colorScheme="primary"
       isPreviewFocusable={false}
       selectAllOnFocus={false}

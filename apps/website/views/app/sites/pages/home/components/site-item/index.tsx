@@ -1,6 +1,6 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { Card, CardBody, CardHeader, Image, Link, Title } from "@stokei/ui";
+import { Card, CardBody, Image, Link, Stack, Title } from "@stokei/ui";
 import NextLink from "next/link";
 
 import { routes } from "@/routes";
@@ -20,17 +20,17 @@ export const SiteItem = ({ site }: SiteItemProps) => {
 
   return (
     <Link width="full" as={NextLink} href={editSiteURL}>
-      <Card background="background.50" overflow="hidden">
-        <CardHeader position="relative" padding="0">
-          <Image
-            width="full"
-            src={site?.logo?.file?.url || ""}
-            fallbackSrc={defaultNoImage.src}
-            alt={translate.formatMessage({ id: "course" })}
-          />
-        </CardHeader>
+      <Card width="full" background="background.50">
         <CardBody>
-          <Title size="md">{site?.name}</Title>
+          <Stack direction="row" spacing="5" align="center">
+            <Image
+              width="20"
+              src={site?.logo?.file?.url || ""}
+              fallbackSrc={defaultNoImage.src}
+              alt={translate.formatMessage({ id: "site" })}
+            />
+            <Title fontSize="medium">{site?.name}</Title>
+          </Stack>
         </CardBody>
       </Card>
     </Link>

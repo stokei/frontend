@@ -2,9 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Button,
-  Card,
-  CardBody,
-  Container,
   Drawer,
   DrawerBody,
   DrawerHeader,
@@ -15,27 +12,24 @@ import {
   InputGroup,
   Label,
   Stack,
-  Title,
-  useToast,
 } from "@stokei/ui";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useTranslations } from "../../../../hooks/use-translations";
-import { useAPIErrors } from "@stokei/graphql";
 
-interface AddPageDrawerProps {
-  isOpenDrawer?: boolean;
-  onCloseDrawer: () => void;
+interface UpdateTitleDrawerProps {
+  isOpen?: boolean;
+  onUpdate?: (data?: any) => void;
+  onClose: () => void;
 }
 
-export const AddPageDrawer = ({
-  onCloseDrawer,
-  isOpenDrawer,
-}: AddPageDrawerProps) => {
+export const UpdateTitleDrawer = ({
+  onClose,
+  onUpdate,
+  isOpen,
+}: UpdateTitleDrawerProps) => {
   const translate = useTranslations();
-  const { onShowToast } = useToast();
-  const { onShowAPIError } = useAPIErrors();
 
   const validationSchema = z.object({
     title: z.string().min(1, {
@@ -54,44 +48,22 @@ export const AddPageDrawer = ({
   });
 
   const onSubmit = async ({ title }: z.infer<typeof validationSchema>) => {
-    try {
-      const response = await onExecuteCreatePageMutation({
-        input: {
-          title,
-          parent: siteId || "",
-        },
-      });
-      if (!!response?.data?.createPage) {
-        onShowToast({
-          title: translate.formatMessage({ id: "createdSuccessfully" }),
-          status: "success",
-        });
-        return window.location.assign(
-          routes
-            .app({ appId: currentApp?.id })
-            .site({ site: response?.data?.createPage?.parent })
-            .page({ page: response?.data?.createPage?.id }).home
-        );
-      }
-
-      if (!!response.error?.graphQLErrors?.length) {
-        response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
-        );
-      }
-    } catch (error) {
-      onShowAPIError({ message: "sorryAnErrorOccurred" });
-    }
+    onUpdate?.({
+      value: title,
+    });
+    onClose();
   };
 
-  const onClose = () => {
+  const onCloseWithReset = () => {
     reset();
-    onCloseDrawer();
+    onClose();
   };
 
   return (
-    <Drawer isOpen={!!isOpenDrawer} onClose={onClose}>
-      <DrawerHeader>{translate.formatMessage({ id: "addPage" })}</DrawerHeader>
+    <Drawer isOpen={!!isOpen} onClose={onCloseWithReset}>
+      <DrawerHeader>
+        {translate.formatMessage({ id: "updateComponent" })}
+      </DrawerHeader>
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing="4">
@@ -111,13 +83,8 @@ export const AddPageDrawer = ({
               <FormErrorMessage>{errors?.title?.message}</FormErrorMessage>
             </FormControl>
             <Box width="full" paddingBottom="4">
-              <Button
-                width="full"
-                isLoading={isLoadingCreatePage}
-                isDisabled={!isValid}
-                type="submit"
-              >
-                {translate.formatMessage({ id: "add" })}
+              <Button width="full" isDisabled={!isValid} type="submit">
+                {translate.formatMessage({ id: "save" })}
               </Button>
             </Box>
           </Stack>

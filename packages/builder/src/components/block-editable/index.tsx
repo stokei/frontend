@@ -11,7 +11,7 @@ interface BlockEditableProps {
   readonly acceptTypes?: ComponentType[];
   readonly components?: BlockEditableProps[];
   readonly onRemove?: () => void;
-  readonly onUpdate?: () => void;
+  readonly onUpdate?: (data?: any) => void;
   readonly hasSortable?: boolean;
 }
 

@@ -1,0 +1,5 @@
+mutation UpdateSite($input: UpdateSiteInput!) {
+  updateSite(input: $input) {
+    ...SitePageSite
+  }
+}

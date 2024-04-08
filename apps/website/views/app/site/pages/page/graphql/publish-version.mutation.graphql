@@ -1,0 +1,5 @@
+mutation PublishVersion($input: PublishVersionInput!) {
+  publishVersion(input: $input) {
+    id
+  }
+}

@@ -66,7 +66,10 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
   }, []);
 
   return (
-    <Card background="background.50">
+    <Card
+      minWidth={["full", "full", "300px", "300px"]}
+      background="background.50"
+    >
       <CardHeader
         position="relative"
         padding="0"

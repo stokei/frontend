@@ -1,6 +1,10 @@
 export const ptBRMessages = {
   me: "Eu",
   publish: "Publicar",
+  published: "Publicado",
+  createNewVersion: "Criar nova versão",
+  thisPageIsInItsMostRecentVersionToMakeChangesClickOnCreateNewVersion:
+    "Esta página está na sua versão mais recente. Para fazer alterações, clique em 'Criar nova versão'.",
   hero: "Hero",
   heros: "Heros",
   saving: "Salvando",

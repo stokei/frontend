@@ -42,9 +42,6 @@ export const SettingsHomePage = () => {
     name: z.string().min(1, {
       message: translate.formatMessage({ id: "nameIsRequired" }),
     }),
-    slug: z.string().min(1, {
-      message: translate.formatMessage({ id: "required" }),
-    }),
   });
 
   const {
@@ -69,18 +66,16 @@ export const SettingsHomePage = () => {
     if (currentApp) {
       reset({
         name: currentApp?.name || "",
-        slug: currentApp?.slug || "",
       });
     }
   }, [currentApp, reset]);
 
-  const onSubmit = async ({ name, slug }: z.infer<typeof validationSchema>) => {
+  const onSubmit = async ({ name }: z.infer<typeof validationSchema>) => {
     try {
       const response = await onUpdateApp({
         input: {
           data: {
             name,
-            slug,
             logo: logoId,
           },
         },
@@ -127,19 +122,6 @@ export const SettingsHomePage = () => {
                     />
                   </InputGroup>
                   <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors?.slug}>
-                  <Label htmlFor="slug">
-                    {translate.formatMessage({ id: "slug" })}
-                  </Label>
-                  <InputSlug
-                    id="slug"
-                    placeholder={translate.formatMessage({
-                      id: "slugPlaceholder",
-                    })}
-                    {...register("slug")}
-                  />
-                  <FormErrorMessage>{errors?.slug?.message}</FormErrorMessage>
                 </FormControl>
                 <FormControl>
                   <Label htmlFor="app-image">
