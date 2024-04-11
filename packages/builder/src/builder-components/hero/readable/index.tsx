@@ -10,9 +10,5 @@ export const Readable = ({
   ...props
 }: BaseComponentReadable<ReadableProps>) => {
   const dataProps = useDataToProps({ data, props });
-  return (
-    <Container>
-      <Hero {...dataProps} />
-    </Container>
-  );
+  return <Hero {...dataProps} />;
 };

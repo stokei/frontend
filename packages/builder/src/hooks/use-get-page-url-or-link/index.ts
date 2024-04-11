@@ -8,7 +8,7 @@ export interface UseGetPageURLOrLink {
 }
 
 export const useGetPage = ({ link, pageId }: UseGetPageURLOrLink) => {
-  const { getCustomPageURL } = useBuilder();
+  const { routes } = useBuilder();
   const [{ fetching: isLoading, data: dataGetPage }] = useGetPageQuery({
     pause: !pageId,
     variables: {
@@ -22,12 +22,12 @@ export const useGetPage = ({ link, pageId }: UseGetPageURLOrLink) => {
     () =>
       window.location.assign(
         link ||
-          getCustomPageURL({
-            pageId: pageId || "",
+          routes.customPage({
+            page: pageId || "",
             slug: page?.slug || "",
           })
       ),
-    [getCustomPageURL, link, page?.slug, pageId]
+    [routes, link, page?.slug, pageId]
   );
 
   return {

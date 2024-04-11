@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@stokei/ui";
 
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import {
   AdminCoursePageModuleFragment,
@@ -43,7 +43,7 @@ export const ModuleItem = ({
 
   const goToAddVideoPage = () => {
     router.push(
-      routes
+      websiteRoutes
         .app({ appId: currentApp?.id })
         .course({ course: module.parent })
         .modules.addVideo({ module: module.id })

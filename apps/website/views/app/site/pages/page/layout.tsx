@@ -1,10 +1,14 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
 import { SidebarLayoutContent } from "@/components/sidebar-layout-content";
-import { ComponentsTreeProvider, SidebarProvider } from "@/contexts";
+import {
+  ComponentsTreeProvider,
+  PageBuilderProvider,
+  SidebarProvider,
+} from "@/contexts";
 import { PageProvider } from "@/contexts/page";
 import { SiteProvider } from "@/contexts/site";
 import { useCurrentApp, useSite, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { GlobalPageFragment } from "@/services/graphql/queries/get-page-by-id/page.query.graphql.generated";
 import {
@@ -33,7 +37,7 @@ const PageLayout = ({ children }: PropsWithChildren<PageLayoutProps>) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { siteId, isLoadingSite } = useSite();
-  const baseRoutes = routes.app({ appId: currentApp?.id });
+  const baseRoutes = websiteRoutes.app({ appId: currentApp?.id });
   const baseSiteRoutes = baseRoutes.site({ site: siteId || "" });
 
   if (isLoadingSite) {
@@ -98,9 +102,11 @@ const LayoutWithProviders = (props: PropsWithChildren<PageLayoutProps>) => {
     <SiteProvider>
       <SidebarProvider>
         <PageProvider {...props}>
-          <ComponentsTreeProvider version={props?.version}>
-            <PageLayout {...props} />
-          </ComponentsTreeProvider>
+          <PageBuilderProvider>
+            <ComponentsTreeProvider version={props?.version}>
+              <PageLayout {...props} />
+            </ComponentsTreeProvider>
+          </PageBuilderProvider>
         </PageProvider>
       </SidebarProvider>
     </SiteProvider>

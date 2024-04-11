@@ -3,7 +3,7 @@ import { Price } from "@/components/price";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   Box,
   Button,
@@ -65,7 +65,7 @@ export const CheckoutInfo = ({
   }, [defaultPrice, priceURLParamId, prices?.items]);
 
   const onRedirectToCheckout = async () => {
-    const checkoutURL = routes.checkout.home;
+    const checkoutURL = appRoutes.checkout.home;
     onAddOrUpdateShoppingCartItem({
       price: currentPrice,
       product: {
@@ -76,7 +76,7 @@ export const CheckoutInfo = ({
     });
     if (!isAuthenticated) {
       await router.push({
-        pathname: routes.auth.login,
+        pathname: appRoutes.auth.login,
         query: {
           redirectTo: checkoutURL,
         },

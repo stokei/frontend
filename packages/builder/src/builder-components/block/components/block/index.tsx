@@ -1,11 +1,12 @@
-import { Box, Container, Text } from "@stokei/ui";
+import { Box, Container } from "@stokei/ui";
 import { Children, PropsWithChildren } from "react";
+import { DropComponentHere } from "../../../../components/drop-component-here";
 
 interface BlockProps extends PropsWithChildren {}
 
 export const Block = ({ children, ...props }: BlockProps) => {
   return (
-    <Container>
+    <Container paddingY="5">
       <Box
         as="section"
         width="full"
@@ -14,7 +15,7 @@ export const Block = ({ children, ...props }: BlockProps) => {
         justifyContent="center"
         {...props}
       >
-        {Children.count(children) > 0 ? children : <Text>Add component</Text>}
+        {Children.count(children) > 0 ? children : <DropComponentHere />}
       </Box>
     </Container>
   );

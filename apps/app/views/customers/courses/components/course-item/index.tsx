@@ -13,7 +13,7 @@ import {
 
 import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { CustomersCoursePageCourseFragment } from "../../graphql/courses.query.graphql.generated";
 
@@ -58,7 +58,7 @@ export const CourseItem = ({ course }: CourseItemProps) => {
                 width="full"
                 onClick={() =>
                   window.location.assign(
-                    routes.customers.course({ course: course?.id }).home
+                    appRoutes.customers.course({ course: course?.id }).home
                   )
                 }
               >

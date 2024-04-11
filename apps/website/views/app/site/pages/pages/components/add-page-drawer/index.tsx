@@ -1,5 +1,5 @@
 import { useAPIErrors, useCurrentApp, useSite, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AppLayout } from "@/views/app/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -74,7 +74,7 @@ export const AddPageDrawer = ({
           status: "success",
         });
         return window.location.assign(
-          routes
+          websiteRoutes
             .app({ appId: currentApp?.id })
             .site({ site: response?.data?.createPage?.parent })
             .page({ page: response?.data?.createPage?.id }).home

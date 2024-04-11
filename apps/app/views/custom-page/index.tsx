@@ -2,16 +2,16 @@ import { GetVersionResponse } from "@/services/axios/models/version";
 import { BuilderComponent, ComponentBuilderType } from "@stokei/builder";
 import { useRouter } from "next/router";
 
-import { DynamicPageLayout } from "./layout";
+import { CustomPageLayout } from "./layout";
 
-interface DynamicPageProps {
+interface CustomPageProps {
   version: GetVersionResponse;
 }
 
-export const DynamicPage = ({ version }: DynamicPageProps) => {
+export const CustomPage = ({ version }: CustomPageProps) => {
   const router = useRouter();
   return (
-    <DynamicPageLayout>
+    <CustomPageLayout>
       {version?.components?.map((component) => (
         <BuilderComponent
           id={component?.id}
@@ -24,6 +24,6 @@ export const DynamicPage = ({ version }: DynamicPageProps) => {
           onRedirect={router.push}
         />
       ))}
-    </DynamicPageLayout>
+    </CustomPageLayout>
   );
 };

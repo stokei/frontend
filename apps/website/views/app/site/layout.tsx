@@ -3,7 +3,7 @@ import { SidebarLayoutContent } from "@/components/sidebar-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { SiteProvider } from "@/contexts/site";
 import { useCurrentApp, useSite, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Box,
   Loading,
@@ -21,7 +21,7 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { siteId, isLoadingSite } = useSite();
-  const baseRoutes = routes.app({ appId: currentApp?.id });
+  const baseRoutes = websiteRoutes.app({ appId: currentApp?.id });
   const baseSiteRoutes = baseRoutes.site({ site: siteId || "" });
 
   if (isLoadingSite) {

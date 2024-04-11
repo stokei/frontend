@@ -1,4 +1,4 @@
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 
 export interface GetDashboardHomePageURLData {
   readonly redirectTo?: string;
@@ -11,5 +11,5 @@ export const getDashboardHomePageURL = ({
   if (!!redirectTo) {
     return redirectTo;
   }
-  return routes.customers.home;
+  return appRoutes.customers.home;
 };

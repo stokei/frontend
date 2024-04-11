@@ -1,6 +1,6 @@
 import { Bank, SelectBank } from "@/components/select-bank";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   PagarmeAccountType,
   PagarmeBankAccountType,
@@ -130,7 +130,8 @@ export const OnboardingPagarmePage = () => {
         });
 
         return router.push(
-          routes.app({ appId: currentApp?.id }).onboardings.pagarme.callback
+          websiteRoutes.app({ appId: currentApp?.id }).onboardings.pagarme
+            .callback
         );
       }
 

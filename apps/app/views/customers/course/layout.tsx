@@ -2,7 +2,7 @@ import { AppLogo, Footer, Sidebar } from "@/components";
 import { CustomerCourseLayoutContent } from "@/components/customer-course-layout-content";
 import { CustomersCourseProvider, SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ export const CourseLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const translate = useTranslations();
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);
-  const baseRoute = routes.customers.course({ course: courseId || "" });
+  const baseRoute = appRoutes.customers.course({ course: courseId || "" });
 
   const isActiveRoute = useCallback(
     (route: string) => router.asPath?.startsWith(route),
@@ -36,8 +36,8 @@ export const CourseLayout = ({ children }: PropsWithChildren) => {
               <SidebarNavLink
                 as={NextLink}
                 leftIcon="home"
-                href={routes.customers.home}
-                isActive={router.asPath === routes.customers.home}
+                href={appRoutes.customers.home}
+                isActive={router.asPath === appRoutes.customers.home}
               >
                 {translate.formatMessage({ id: "home" })}
               </SidebarNavLink>

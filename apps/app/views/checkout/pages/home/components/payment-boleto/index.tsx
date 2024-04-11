@@ -1,6 +1,6 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   Box,
   Button,
@@ -90,7 +90,7 @@ export const PaymentBoleto = ({ boleto, totalAmount }: PaymentBoletoProps) => {
       <ButtonGroup justifyContent="flex-end">
         <Button
           variant="ghost"
-          onClick={() => router.push(routes.customers.home)}
+          onClick={() => router.push(appRoutes.customers.home)}
         >
           {translate.formatMessage({ id: "goToHomePage" })}
         </Button>

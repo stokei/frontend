@@ -1,5 +1,5 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { getProductURL } from "@/utils";
 import { getOrderStatusColor } from "@/utils/get-order-status-color";
 import {
@@ -59,7 +59,9 @@ export const OrderItem = ({ order, hasCoupon }: OrderItemProps) => {
 
   const goToOrderPage = () => {
     router.push(
-      routes.app({ appId: currentApp?.id }).orders.order({ order: order?.id })
+      websiteRoutes
+        .app({ appId: currentApp?.id })
+        .orders.order({ order: order?.id })
     );
   };
 

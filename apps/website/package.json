@@ -17,6 +17,7 @@
     "@stokei/builder": "*",
     "@stokei/graphql": "*",
     "@stokei/plugins": "*",
+    "@stokei/routes": "*",
     "@stokei/translations": "*",
     "@stokei/ui": "*",
     "@stokei/utils": "*",

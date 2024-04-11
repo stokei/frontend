@@ -9,7 +9,7 @@ import { SITE_SLUG_COOKIE_KEY } from "./constants/cookies-keys";
 import { RoleName } from "./constants/role-names";
 import { STOKEI_APP_NOT_FOUND_URL } from "./constants/stokei-urls";
 import { DOMAIN } from "./environments";
-import { routes } from "./routes";
+import { appRoutes } from "@stokei/routes";
 import { createAPIClient } from "./services/graphql/client";
 import {
   CurrentAccountDocument,
@@ -98,8 +98,8 @@ export async function middleware(request: NextRequest) {
 
     const currentAccount = currentAccountResponse?.data?.me;
     const isAuth = !!currentAccount;
-    const authURL = baseURL + routes.auth.login;
-    const customersDashboardURL = baseURL + routes.customers.home;
+    const authURL = baseURL + appRoutes.auth.login;
+    const customersDashboardURL = baseURL + appRoutes.customers.home;
     if (!!app) {
       const privateRoutesRegex = /\/site\/.*\/(admins|customers)/;
       const adminDashboardRegex = /\/site\/.*\/admins/;

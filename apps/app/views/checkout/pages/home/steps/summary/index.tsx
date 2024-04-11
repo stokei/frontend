@@ -2,7 +2,7 @@ import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { PaymentMethodType } from "@/services/graphql/stokei";
 import {
   Button,
@@ -81,7 +81,7 @@ export const SummaryStep = ({
                 <Stack direction="column" spacing="1">
                   <Link
                     as={NextLink}
-                    href={routes.product.home({
+                    href={appRoutes.product.home({
                       product: shoppingCartItem?.product?.id,
                     })}
                   >

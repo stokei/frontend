@@ -1,5 +1,5 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Button, Icon, Spacer, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
 
@@ -12,7 +12,9 @@ export const Header = ({ totalCount }: HeaderProps) => {
   const { currentApp, hasPaymentIntegrations } = useCurrentApp();
   const translate = useTranslations();
   const onGoToAddProductsPage = () => {
-    return router.push(routes.app({ appId: currentApp?.id || "" }).sites.add);
+    return router.push(
+      websiteRoutes.app({ appId: currentApp?.id || "" }).sites.add
+    );
   };
   return (
     <Stack

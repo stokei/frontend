@@ -3,7 +3,7 @@ import { AppLayoutContent } from "@/components/app-layout-content";
 import { BadgeNew } from "@/components/badge-new";
 import { SidebarProvider } from "@/contexts";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Box,
   SidebarBody,
@@ -23,7 +23,7 @@ export const AppLayout = ({ children }: PropsWithChildren<AppLayoutProps>) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
-  const baseRoutes = routes.app({ appId: currentApp?.id });
+  const baseRoutes = websiteRoutes.app({ appId: currentApp?.id });
 
   const isActiveRoute = useCallback(
     (route: string) => !!router.asPath?.match(route),

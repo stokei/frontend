@@ -2,7 +2,7 @@ import { useCurrentApp, usePage, useSite, useTranslations } from "@/hooks";
 import { Badge, SidebarNavLink } from "@stokei/ui";
 
 import { PageVersionFragment } from "../../graphql/versions.query.graphql.generated";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 
 export interface VersionItemProps {
@@ -16,7 +16,7 @@ export const VersionItem = ({ version }: VersionItemProps) => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
 
-  const versionURL = routes
+  const versionURL = websiteRoutes
     .app({ appId: currentApp?.id })
     .site({ site: site?.id || "" })
     .page({ page: page?.id || "", version: version?.id }).home;

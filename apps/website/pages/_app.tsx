@@ -1,4 +1,8 @@
-import { BuilderProvider, builderTranslationsMessages } from "@stokei/builder";
+import {
+  BuilderProvider,
+  BuilderProviderRoutes,
+  builderTranslationsMessages,
+} from "@stokei/builder";
 import {
   StokeiGraphQLClientProvider,
   stokeiAPITranslationsMessages,
@@ -26,11 +30,11 @@ import {
   CurrentGlobalAppQuery,
 } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 import { formatAppColorsToThemeColors } from "@/utils";
+import { appRoutes } from "@stokei/routes";
 import "@stokei/ui/src/styles/css/global.css";
 import Head from "next/head";
-import { Router, useRouter } from "next/router";
+import { Router } from "next/router";
 import { useMemo } from "react";
-import { routes } from "@/routes";
 
 const messages = mergeTranslations([
   uiTranslationsMessages,
@@ -52,7 +56,6 @@ function MyApp({
   currentAccount,
   themeColors,
 }: any) {
-  const router = useRouter();
   const stokeiGraphQLClient = useMemo(
     () =>
       createAPIClient({
@@ -61,46 +64,37 @@ function MyApp({
       }),
     [appId, cookies]
   );
+
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
-      <BuilderProvider
-        getCustomPageURL={({ pageId }) =>
-          routes
-            .app({ appId })
-            .site({ site: router.query?.siteId?.toString() || "" })
-            .page({ page: pageId }).home
-        }
-        stokeiGraphQLApi={stokeiGraphQLClient?.api}
-      >
-        <CurrentAppProvider currentApp={currentApp}>
-          <CurrentAccountProvider currentAccount={currentAccount}>
-            <StokeiUIProvider
-              config={{
-                colors: themeColors,
-              }}
-              appId={appId}
-              accountId={currentAccount?.id}
-              accountAccessToken={stokeiGraphQLClient?.accessToken}
-              accountRefreshToken={stokeiGraphQLClient?.refreshToken}
+      <CurrentAppProvider currentApp={currentApp}>
+        <CurrentAccountProvider currentAccount={currentAccount}>
+          <StokeiUIProvider
+            config={{
+              colors: themeColors,
+            }}
+            appId={appId}
+            accountId={currentAccount?.id}
+            accountAccessToken={stokeiGraphQLClient?.accessToken}
+            accountRefreshToken={stokeiGraphQLClient?.refreshToken}
+          >
+            <TranslationsProvider
+              language={DEFAULT_LANGUAGE}
+              messages={messages}
             >
-              <TranslationsProvider
-                language={DEFAULT_LANGUAGE}
-                messages={messages}
-              >
-                <Head>
-                  <title>{currentApp?.name}</title>
-                  <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                  />
-                </Head>
-                <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
-                <Component {...pageProps} />
-              </TranslationsProvider>
-            </StokeiUIProvider>
-          </CurrentAccountProvider>
-        </CurrentAppProvider>
-      </BuilderProvider>
+              <Head>
+                <title>{currentApp?.name}</title>
+                <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1"
+                />
+              </Head>
+              <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
+              <Component {...pageProps} />
+            </TranslationsProvider>
+          </StokeiUIProvider>
+        </CurrentAccountProvider>
+      </CurrentAppProvider>
     </StokeiGraphQLClientProvider>
   );
 }

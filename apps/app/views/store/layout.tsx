@@ -1,5 +1,5 @@
 import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { Box, Navbar } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 
@@ -15,7 +15,7 @@ export const StoreLayout = ({
         background="background.50"
         borderBottomWidth="thin"
       >
-        <NavbarLogo href={routes.home} />
+        <NavbarLogo href={appRoutes.home} />
         <NavbarUserInformation />
       </Navbar>
       <Box flex="1" flexDirection="column">

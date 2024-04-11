@@ -16,7 +16,7 @@ import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components/price";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { SortedItemComponentCatalogItemProductFragment } from "../sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
 
@@ -50,7 +50,7 @@ export const CatalogItem = ({
 
   const productURL = useMemo(() => {
     if (productId) {
-      return routes.app({ appId: currentApp?.id }).product({
+      return websiteRoutes.app({ appId: currentApp?.id }).product({
         product: productId || "",
       }).home;
     }

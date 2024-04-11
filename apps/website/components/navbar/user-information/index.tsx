@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Avatar,
   Button,
@@ -42,7 +42,7 @@ export const NavbarUserInformation = (props: NavbarUserInformationProps) => {
             onClose={onToggleDrawer}
           />
           <Stack spacing="4" direction="row" justify="flex-end" align="center">
-            <NavbarNavLink href={routes.apps.home} icon="home" />
+            <NavbarNavLink href={websiteRoutes.apps.home} icon="home" />
             <Avatar
               cursor="pointer"
               size="sm"
@@ -58,7 +58,7 @@ export const NavbarUserInformation = (props: NavbarUserInformationProps) => {
             variant="ghost"
             onClick={() =>
               router.push({
-                pathname: routes.auth.login,
+                pathname: websiteRoutes.auth.login,
                 query: {
                   redirectTo,
                 },
@@ -70,7 +70,7 @@ export const NavbarUserInformation = (props: NavbarUserInformationProps) => {
           <Button
             onClick={() =>
               router.push({
-                pathname: routes.auth.signUp,
+                pathname: websiteRoutes.auth.signUp,
                 query: {
                   redirectTo,
                 },

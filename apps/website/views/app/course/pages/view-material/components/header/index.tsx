@@ -1,5 +1,5 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Box, Button, Icon, Stack, useDisclosure } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
@@ -27,8 +27,9 @@ export const Header = ({ material }: HeaderProps) => {
 
   const onGoToMaterialsPage = useCallback(() => {
     return router.push(
-      routes.app({ appId: currentApp?.id || "" }).course({ course: courseId })
-        .materials.home
+      websiteRoutes
+        .app({ appId: currentApp?.id || "" })
+        .course({ course: courseId }).materials.home
     );
   }, [courseId, currentApp?.id, router]);
 

@@ -10,7 +10,7 @@ import {
 import { AuthLayout } from "../../layout";
 import { useChangePasswordMutation } from "./graphql/change-password.mutation.graphql.generated";
 import { useRouter } from "next/router";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 
 interface ChangePasswordPageProps {
   readonly code: string;
@@ -42,7 +42,7 @@ export const ChangePasswordPage = ({ code }: ChangePasswordPageProps) => {
           title: translate.formatMessage({ id: "updateSuccessfully" }),
           status: "success",
         });
-        router.push(routes.home);
+        router.push(appRoutes.home);
         return;
       }
 

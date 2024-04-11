@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { useShoppingCart } from "@stokei/builder";
 import { Button, ButtonGroup, Loading, Stack, Text, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
@@ -42,7 +42,10 @@ export const ProductsStep = ({ onNextStep }: ProductsStepProps) => {
     }));
   }, [dataProducts?.products?.items, shoppingCartItems]);
 
-  const goToStore = useCallback(() => router.push(routes.store.home), [router]);
+  const goToStore = useCallback(
+    () => router.push(appRoutes.store.home),
+    [router]
+  );
 
   return (
     <Stack direction="column" spacing="10">

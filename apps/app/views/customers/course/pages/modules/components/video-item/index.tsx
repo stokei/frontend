@@ -1,6 +1,6 @@
 import posterImage from "@/assets/no-image.png";
 import { useCustomersCourse, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   Badge,
   Box,
@@ -25,7 +25,7 @@ export const VideoItem = ({ video }: VideoItemProps) => {
 
   const viewVideoURL = useMemo(
     () =>
-      routes.customers.course({ course: course?.id }).video({
+      appRoutes.customers.course({ course: course?.id }).video({
         video: video?.id || "",
       }),
     [course, video]

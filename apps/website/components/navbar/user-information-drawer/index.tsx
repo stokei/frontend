@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { onLogout } from "@/utils";
 import {
   Avatar,
@@ -51,13 +51,13 @@ export const NavbarUserInformationDrawer = ({
         <Stack direction="column" spacing="2">
           <NavbarUserInformationDrawerButton
             leftIcon={<Icon name="home" />}
-            onClick={() => onRedirectToURLAndCloseModal(routes.home)}
+            onClick={() => onRedirectToURLAndCloseModal(websiteRoutes.home)}
           >
             {translate.formatMessage({ id: "home" })}
           </NavbarUserInformationDrawerButton>
           <NavbarUserInformationDrawerButton
             leftIcon={<Icon name="user" />}
-            onClick={() => onRedirectToURLAndCloseModal(routes.me.home)}
+            onClick={() => onRedirectToURLAndCloseModal(websiteRoutes.me.home)}
           >
             {translate.formatMessage({ id: "profile" })}
           </NavbarUserInformationDrawerButton>

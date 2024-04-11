@@ -5,7 +5,7 @@ import createYourProductsImage from "@/assets/create-your-product.png";
 import startSellImage from "@/assets/start-sell.svg";
 import stokeiDashboardImage from "@/assets/stokei-dashboard.svg";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { HeroWithImage } from "@stokei/ui";
 import { useRouter } from "next/router";
 
@@ -19,7 +19,7 @@ export const LandingPage = () => {
   const translate = useTranslations();
 
   const goToSignUp = () => {
-    return router.push(routes.auth.signUp);
+    return router.push(websiteRoutes.auth.signUp);
   };
 
   return (

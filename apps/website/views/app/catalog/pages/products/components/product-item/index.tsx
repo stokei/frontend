@@ -1,6 +1,6 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { getProductAvatarURL } from "@/utils/get-product-avatar-url";
 import {
   ButtonGroup,
@@ -49,7 +49,7 @@ export const ProductItem = ({
       />
       <Link
         href={
-          routes
+          websiteRoutes
             .app({ appId: currentApp?.id })
             .product({ product: catalogItem?.product.id || "" }).home
         }

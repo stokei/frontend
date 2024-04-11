@@ -9,7 +9,7 @@ import {
   HeroWithTitle,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 
 export interface SortedItemFactoryProps {
   readonly sortedItem?: SortedItemComponentFragment | null;
@@ -21,7 +21,7 @@ export const SortedItemFactory = ({
 }: SortedItemFactoryProps) => {
   const router = useRouter();
   const type = sortedItem?.item?.__typename;
-  const goToSignUp = () => router.push(routes.auth.signUp);
+  const goToSignUp = () => router.push(websiteRoutes.auth.signUp);
 
   if (type === "Catalog") {
     return (

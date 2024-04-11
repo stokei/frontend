@@ -1,5 +1,5 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { AccountStatus } from "@/services/graphql/stokei";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
@@ -39,7 +39,7 @@ export const LoginPage = () => {
         const data = response.data.login;
         if (data.account.status === AccountStatus.ConfigurationPending) {
           router.push(
-            routes.auth.completeAccountConfiguration({
+            appRoutes.auth.completeAccountConfiguration({
               account: data.account.id,
             })
           );
@@ -54,7 +54,7 @@ export const LoginPage = () => {
         });
 
         return window.location.assign(
-          redirectToWhenLoginSuccessfully || routes.customers.home
+          redirectToWhenLoginSuccessfully || appRoutes.customers.home
         );
       }
 
@@ -78,11 +78,11 @@ export const LoginPage = () => {
           <FormLogin
             isLoading={isLoadingLogin}
             onRedirectToForgotPasswordURL={() =>
-              router.push(routes.auth.forgotPassword)
+              router.push(appRoutes.auth.forgotPassword)
             }
             onRedirectToSignUpURL={() =>
               router.push({
-                pathname: routes.auth.signUp,
+                pathname: appRoutes.auth.signUp,
                 query: {
                   redirectTo: redirectToWhenLoginSuccessfully,
                 },

@@ -5,7 +5,7 @@ import {
   useSite,
   useTranslations,
 } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { useToast } from "@stokei/ui";
 import { useCallback } from "react";
 import { useCreateVersionMutation } from "../../graphql/create-version.mutation.graphql.generated";
@@ -34,7 +34,7 @@ export const useCreateNewVersion = () => {
           status: "success",
         });
         return window.location.assign(
-          routes
+          websiteRoutes
             .app({ appId: currentApp?.id })
             .site({
               site: siteId,

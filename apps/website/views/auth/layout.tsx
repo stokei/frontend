@@ -1,5 +1,5 @@
 import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Navbar } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 
@@ -11,7 +11,7 @@ export const AuthLayout = ({
   return (
     <>
       <Navbar>
-        <NavbarLogo href={routes.home} />
+        <NavbarLogo href={websiteRoutes.home} />
         <NavbarUserInformation />
       </Navbar>
       {children}

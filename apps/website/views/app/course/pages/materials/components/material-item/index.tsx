@@ -10,7 +10,7 @@ import {
   Title,
 } from "@stokei/ui";
 
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { CourseMaterialFragment } from "../../graphql/materials.query.graphql.generated";
 
@@ -27,7 +27,7 @@ export const MaterialItem = ({ material }: MaterialItemProps) => {
 
   const goToEditMaterial = () =>
     router.push(
-      routes
+      websiteRoutes
         .app({ appId: currentApp?.id })
         .course({ course: courseId })
         .material({ material: material?.id }).home

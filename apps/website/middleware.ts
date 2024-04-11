@@ -5,7 +5,7 @@ import {
 } from "@stokei/graphql";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { routes } from "./routes";
+import { websiteRoutes } from "@stokei/routes";
 import { createAPIClient } from "./services/graphql/client";
 import {
   CurrentAccountDocument,
@@ -62,7 +62,7 @@ export async function middleware(request: NextRequest) {
     const currentApp = currentAppResponse?.data?.currentApp;
     const currentAccount = currentAccountResponse?.data?.me;
     const isAuth = !!currentAccount;
-    const authURL = routes.auth.login;
+    const authURL = websiteRoutes.auth.login;
     if (!!currentApp) {
       if (isPrivateRoute) {
         if (!isAuth) {

@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { SubscriptionContractType } from "@/services/graphql/stokei";
 import { getProductURL } from "@/utils";
 import { getSubscriptionContractStatusColor } from "@/utils/get-subscription-contract-status-color";
@@ -103,7 +103,7 @@ export const SubscriptionContractItem = ({
   const goToSubscriptionContractPage = useCallback(
     () =>
       router.push(
-        routes.customers.subscriptions.subscription({
+        appRoutes.customers.subscriptions.subscription({
           subscription: subscriptionContract?.id,
         })
       ),

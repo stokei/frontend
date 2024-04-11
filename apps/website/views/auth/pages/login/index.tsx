@@ -1,5 +1,5 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
   Box,
@@ -44,7 +44,7 @@ export const LoginPage = () => {
           status: "success",
         });
         return window.location.assign(
-          redirectToWhenLoginSuccessfully || routes.apps.home
+          redirectToWhenLoginSuccessfully || websiteRoutes.apps.home
         );
       }
 
@@ -68,11 +68,11 @@ export const LoginPage = () => {
           <FormLogin
             isLoading={isLoadingLogin}
             onRedirectToForgotPasswordURL={() =>
-              router.push(routes.auth.forgotPassword)
+              router.push(websiteRoutes.auth.forgotPassword)
             }
             onRedirectToSignUpURL={() =>
               router.push({
-                pathname: routes.auth.signUp,
+                pathname: websiteRoutes.auth.signUp,
                 query: {
                   redirectTo: redirectToWhenLoginSuccessfully,
                 },

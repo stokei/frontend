@@ -1,6 +1,6 @@
 import { PaymentMethod } from "@/components/payment-method";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { getPaymentStatusColor } from "@/utils/get-payment-status-color";
 import {
   Avatar,
@@ -31,7 +31,7 @@ export const PaymentItem = ({ payment }: PaymentItemProps) => {
 
   const goToPaymentDetails = () =>
     router.push(
-      routes
+      websiteRoutes
         .app({ appId: currentApp?.id })
         .payments.payment({ payment: payment?.id })
     );

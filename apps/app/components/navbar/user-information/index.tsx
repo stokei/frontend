@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   Avatar,
   Button,
@@ -40,7 +40,7 @@ export const NavbarUserInformation = ({
       {...props}
     >
       <ShoppingCartMenu />
-      <NavbarNavLink icon="store" as={NextLink} href={routes.store.home}>
+      <NavbarNavLink icon="store" as={NextLink} href={appRoutes.store.home}>
         {translate.formatMessage({ id: "store" })}
       </NavbarNavLink>
       {!!currentAccount ? (
@@ -72,7 +72,7 @@ export const NavbarUserInformation = ({
             variant="ghost"
             onClick={() =>
               router.push({
-                pathname: routes.auth.login,
+                pathname: appRoutes.auth.login,
                 query: {
                   redirectTo,
                 },
@@ -85,7 +85,7 @@ export const NavbarUserInformation = ({
             display={["none", "none", "block", "block"]}
             onClick={() =>
               router.push({
-                pathname: routes.auth.signUp,
+                pathname: appRoutes.auth.signUp,
                 query: {
                   redirectTo,
                 },

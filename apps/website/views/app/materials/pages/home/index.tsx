@@ -1,5 +1,5 @@
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import {
@@ -63,7 +63,7 @@ export const MaterialsHomePage = () => {
   );
 
   const goToAddMaterial = () =>
-    router.push(routes.app({ appId: currentApp?.id }).materials.add);
+    router.push(websiteRoutes.app({ appId: currentApp?.id }).materials.add);
 
   return (
     <AppLayout>

@@ -4,7 +4,7 @@ import { getSiteBySlug } from "@/services/graphql/queries/get-app-by-slug";
 import { getPageBySlug } from "@/services/graphql/queries/get-page-by-slug";
 import { getSiteSlugFromContext } from "@/utils/get-site-slug-from-context";
 import { getPageSlugFromContext } from "@/utils/get-page-slug-from-context";
-import { DynamicPage } from "@/views/dynamic-page";
+import { CustomPage } from "@/views/custom-page";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Page: NextPage<Props> = ({ version }) => {
-  return <DynamicPage version={version} />;
+  return <CustomPage version={version} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async (

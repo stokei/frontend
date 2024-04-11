@@ -1,6 +1,6 @@
 import posterImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Badge,
   Box,
@@ -28,7 +28,7 @@ export const VideoItem = ({ video }: VideoItemProps) => {
 
   const editVideoURL = useMemo(
     () =>
-      routes
+      websiteRoutes
         .app({ appId: currentApp?.id })
         .course({ course: courseId })
         .modules.editVideo({

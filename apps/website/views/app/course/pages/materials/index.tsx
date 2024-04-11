@@ -1,5 +1,5 @@
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { OrderBy } from "@/services/graphql/stokei";
 import {
   Button,
@@ -56,7 +56,7 @@ export const MaterialsHomePage = () => {
 
   const goToAddMaterial = () =>
     router.push(
-      routes.app({ appId: currentApp?.id }).course({ course: courseId })
+      websiteRoutes.app({ appId: currentApp?.id }).course({ course: courseId })
         .materials.add
     );
 

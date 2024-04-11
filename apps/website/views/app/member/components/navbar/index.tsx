@@ -1,5 +1,5 @@
 import { NavbarLogo, NavbarUserInformation } from "@/components";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Navbar as NavbarUI } from "@stokei/ui";
 
 export const Navbar = () => {
@@ -9,7 +9,7 @@ export const Navbar = () => {
       background="background.50"
       borderBottomWidth="thin"
     >
-      <NavbarLogo href={routes.home} />
+      <NavbarLogo href={websiteRoutes.home} />
       <NavbarUserInformation />
     </NavbarUI>
   );

@@ -51,6 +51,7 @@ export const SelectInput = forwardRef(
     const themeInput: any = useStyleConfig("Input", props);
     return (
       <Button
+        width="full"
         __css={themeInput?.field}
         height="fit-content"
         h="fit-content"

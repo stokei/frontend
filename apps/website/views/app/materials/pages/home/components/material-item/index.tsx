@@ -13,7 +13,7 @@ import {
 } from "@stokei/ui";
 import NextLink from "next/link";
 
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AppMaterialFragment } from "../../graphql/materials.query.graphql.generated";
 import { useRouter } from "next/router";
 
@@ -28,8 +28,9 @@ export const MaterialItem = ({ material }: MaterialItemProps) => {
 
   const goToEditMaterial = () =>
     router.push(
-      routes.app({ appId: currentApp?.id }).material({ material: material?.id })
-        .home
+      websiteRoutes
+        .app({ appId: currentApp?.id })
+        .material({ material: material?.id }).home
     );
 
   return (

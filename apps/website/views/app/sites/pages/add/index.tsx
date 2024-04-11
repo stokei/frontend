@@ -1,5 +1,5 @@
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -67,7 +67,7 @@ export const AddSitePage = () => {
           status: "success",
         });
         return window.location.assign(
-          routes
+          websiteRoutes
             .app({ appId: currentApp?.id })
             .site({ site: response?.data?.createSite?.id }).home
         );

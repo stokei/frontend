@@ -14,7 +14,7 @@ import {
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { NavbarUserInformationDrawerButton } from "../user-information-drawer-button";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 
 export interface NavbarUserInformationDrawerProps {
   isOpen?: boolean;
@@ -57,13 +57,13 @@ export const NavbarUserInformationDrawer = ({
           </NavbarUserInformationDrawerButton>
           <NavbarUserInformationDrawerButton
             leftIcon={<Icon name="store" />}
-            onClick={() => onRedirectToURLAndCloseModal(routes.store.home)}
+            onClick={() => onRedirectToURLAndCloseModal(appRoutes.store.home)}
           >
             {translate.formatMessage({ id: "store" })}
           </NavbarUserInformationDrawerButton>
           <NavbarUserInformationDrawerButton
             leftIcon={<Icon name="user" />}
-            onClick={() => onRedirectToURLAndCloseModal(routes.me.home)}
+            onClick={() => onRedirectToURLAndCloseModal(appRoutes.me.home)}
           >
             {translate.formatMessage({ id: "profile" })}
           </NavbarUserInformationDrawerButton>

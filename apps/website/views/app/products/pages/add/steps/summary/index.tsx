@@ -1,7 +1,7 @@
 import { ChoiseEditableSummary } from "@/components/choice-editable-summary";
 import { AppCatalogFragment } from "@/components/select-catalogs/graphql/catalogs.query.graphql.generated";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Button,
   ButtonGroup,
@@ -61,7 +61,7 @@ export const SummaryStep = ({
           status: "success",
         });
         router.push(
-          routes
+          websiteRoutes
             .app({ appId: currentApp?.id })
             .product({ product: response.data.createProduct.id }).home
         );

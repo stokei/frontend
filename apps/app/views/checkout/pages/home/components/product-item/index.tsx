@@ -4,7 +4,7 @@ import defaultNoImage from "@/assets/no-image.png";
 import { SelectPrice } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   Button,
   ButtonGroup,
@@ -57,7 +57,7 @@ export const ProductItem = ({ product, price }: ProductItemProps) => {
             />
             <Link
               as={NextLink}
-              href={routes.product.home({
+              href={appRoutes.product.home({
                 product: product?.id || "",
               })}
             >

@@ -1,6 +1,6 @@
 import pagarmeImage from "@/assets/pagarme.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Box,
   Button,
@@ -26,7 +26,8 @@ export const PagarmeOnboarding = () => {
 
   const goToPagarmeOnboarding = () => {
     router.push(
-      routes.app({ appId: currentApp?.id || "" }).onboardings.pagarme.home
+      websiteRoutes.app({ appId: currentApp?.id || "" }).onboardings.pagarme
+        .home
     );
   };
 

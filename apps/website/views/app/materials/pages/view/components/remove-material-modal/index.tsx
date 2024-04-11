@@ -1,5 +1,5 @@
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Button,
   ButtonGroup,
@@ -39,7 +39,7 @@ export const RemoveMaterialModal = ({
 
   const onGoToMaterialsPage = useCallback(() => {
     return router.push(
-      routes.app({ appId: currentApp?.id || "" }).materials.home
+      websiteRoutes.app({ appId: currentApp?.id || "" }).materials.home
     );
   }, [currentApp?.id, router]);
 

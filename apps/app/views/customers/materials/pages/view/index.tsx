@@ -1,7 +1,7 @@
 import { DownloadFileButton } from "@/components";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { SubscriptionContractStatus } from "@/services/graphql/stokei";
 import { getProductURL } from "@/utils";
 import { CustomerLayout } from "@/views/customers/layout";
@@ -71,7 +71,7 @@ export const MaterialViewPage = () => {
       return;
     } else {
       if (dataGetMaterials?.subscriptionContractsByItem?.totalCount === 0) {
-        router.push(routes.notFound);
+        router.push(appRoutes.notFound);
       }
     }
   }, [dataGetMaterials, errorGetMaterials, router]);

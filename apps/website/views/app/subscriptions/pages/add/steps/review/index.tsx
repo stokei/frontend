@@ -3,7 +3,7 @@ import { MemberSelectItemContent } from "@/components/select-members/member-sele
 import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
 import { ProductSelectItemContent } from "@/components/select-product/product-select-item-content";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   IntervalType,
   SubscriptionContractType,
@@ -96,9 +96,11 @@ export const ReviewStep = ({
           status: "success",
         });
         router.push(
-          routes.app({ appId: currentApp?.id }).subscriptions.subscription({
-            subscription: response.data.createSubscriptionContract.id,
-          })
+          websiteRoutes
+            .app({ appId: currentApp?.id })
+            .subscriptions.subscription({
+              subscription: response.data.createSubscriptionContract.id,
+            })
         );
         return;
       }

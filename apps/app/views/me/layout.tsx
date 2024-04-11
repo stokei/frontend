@@ -2,7 +2,7 @@ import { AppLogo, Footer, Sidebar } from "@/components";
 import { MeLayoutContent } from "@/components/me-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { removeRouteSitePrefix } from "@/utils/remove-route-site-prefix";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
@@ -35,16 +35,16 @@ export const MeLayout = ({ children }: PropsWithChildren<MeLayoutProps>) => {
             <SidebarNavLink
               leftIcon="user"
               as={NextLink}
-              href={routes.me.account}
-              isActive={isActiveHome(routes.me.account)}
+              href={appRoutes.me.account}
+              isActive={isActiveHome(appRoutes.me.account)}
             >
               {translate.formatMessage({ id: "account" })}
             </SidebarNavLink>
             <SidebarNavLink
               leftIcon="password"
               as={NextLink}
-              href={routes.me.password}
-              isActive={isActiveRoute(routes.me.password)}
+              href={appRoutes.me.password}
+              isActive={isActiveRoute(appRoutes.me.password)}
             >
               {translate.formatMessage({ id: "password" })}
             </SidebarNavLink>

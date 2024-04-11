@@ -3,7 +3,7 @@ import { BadgeNew } from "@/components/badge-new";
 import { CustomerLayoutContent } from "@/components/customer-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { removeRouteSitePrefix } from "@/utils/remove-route-site-prefix";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
@@ -34,8 +34,8 @@ export const CustomerLayout = ({ children }: PropsWithChildren) => {
             <SidebarNavLink
               as={NextLink}
               leftIcon="store"
-              href={routes.store.home}
-              isActive={isActiveHome(routes.store.home)}
+              href={appRoutes.store.home}
+              isActive={isActiveHome(appRoutes.store.home)}
               badge={<BadgeNew />}
             >
               {translate.formatMessage({ id: "store" })}
@@ -43,32 +43,32 @@ export const CustomerLayout = ({ children }: PropsWithChildren) => {
             <SidebarNavLink
               as={NextLink}
               leftIcon="course"
-              href={routes.customers.courses}
-              isActive={isActiveRoute(routes.customers.courses)}
+              href={appRoutes.customers.courses}
+              isActive={isActiveRoute(appRoutes.customers.courses)}
             >
               {translate.formatMessage({ id: "courses" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
               leftIcon="material"
-              href={routes.customers.materials}
-              isActive={isActiveRoute(routes.customers.materials)}
+              href={appRoutes.customers.materials}
+              isActive={isActiveRoute(appRoutes.customers.materials)}
             >
               {translate.formatMessage({ id: "materials" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
               leftIcon="order"
-              href={routes.customers.orders.home}
-              isActive={isActiveRoute(routes.customers.orders.home)}
+              href={appRoutes.customers.orders.home}
+              isActive={isActiveRoute(appRoutes.customers.orders.home)}
             >
               {translate.formatMessage({ id: "orders" })}
             </SidebarNavLink>
             <SidebarNavLink
               as={NextLink}
               leftIcon="subscription"
-              href={routes.customers.subscriptions.home}
-              isActive={isActiveRoute(routes.customers.subscriptions.home)}
+              href={appRoutes.customers.subscriptions.home}
+              isActive={isActiveRoute(appRoutes.customers.subscriptions.home)}
             >
               {translate.formatMessage({ id: "subscriptions" })}
             </SidebarNavLink>

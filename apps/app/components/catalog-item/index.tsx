@@ -19,7 +19,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import defaultNoImage from "@/assets/no-image.png";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { useShoppingCart } from "@stokei/builder";
 import { useRouter } from "next/router";
 import { SelectPrice } from "../select-price";
@@ -52,7 +52,7 @@ export const CatalogItem = ({
 
   const productURL = useMemo(
     () =>
-      routes.product.home({
+      appRoutes.product.home({
         product: productId || "",
         price: currentPrice?.id,
       }),

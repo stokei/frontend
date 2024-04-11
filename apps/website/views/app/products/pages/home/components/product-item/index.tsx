@@ -16,7 +16,7 @@ import NextLink from "next/link";
 import { useMemo } from "react";
 
 import { Price } from "@/components";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AdminProductPageProductFragment } from "../../graphql/products.query.graphql.generated";
 
 export interface ProductItemProps {
@@ -27,7 +27,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 
-  const editProductURL = routes
+  const editProductURL = websiteRoutes
     .app({ appId: currentApp?.id })
     .product({ product: product?.id }).home;
 

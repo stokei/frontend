@@ -1,10 +1,13 @@
 import { BaseComponentReadable } from "../../../types/base-component-readable";
 import { Block } from "../components/block";
+import { useDataToProps } from "../hooks/use-data-to-props";
 
 interface ReadableProps {}
 
 export const Readable = ({
-  children,
+  data,
+  ...props
 }: BaseComponentReadable<ReadableProps>) => {
-  return <Block>{children}</Block>;
+  const dataProps = useDataToProps({ data, props });
+  return <Block {...dataProps} />;
 };

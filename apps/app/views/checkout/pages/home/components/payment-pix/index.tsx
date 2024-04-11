@@ -1,6 +1,6 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { usePoolling, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { OrderStatus } from "@/services/graphql/stokei";
 import {
   Box,
@@ -60,7 +60,7 @@ export const PaymentPix = ({ pix, orderId, totalAmount }: PaymentPixProps) => {
         status: "success",
         title: translate.formatMessage({ id: "paid" }),
       });
-      router.push(routes.checkout.callback);
+      router.push(appRoutes.checkout.callback);
     }
   }, [dataGetCheckoutPageOrder?.order?.status, onShowToast, router, translate]);
 
@@ -162,7 +162,7 @@ export const PaymentPix = ({ pix, orderId, totalAmount }: PaymentPixProps) => {
       </ListOrdered>
 
       <ButtonGroup justifyContent="flex-end">
-        <Button onClick={() => router.push(routes.customers.home)}>
+        <Button onClick={() => router.push(appRoutes.customers.home)}>
           {translate.formatMessage({ id: "goToHomePage" })}
         </Button>
       </ButtonGroup>

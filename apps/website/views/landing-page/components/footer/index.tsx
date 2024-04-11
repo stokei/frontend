@@ -6,7 +6,7 @@ import {
 } from "@/constants/default-app-info";
 import { STOKEI_CONTACT_EMAIL } from "@/constants/stokei-emails";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Button,
   ButtonGroup,
@@ -44,11 +44,11 @@ export const Footer = () => {
         <ButtonGroup>
           <Button
             variant="ghost"
-            onClick={() => router.push(routes.auth.login)}
+            onClick={() => router.push(websiteRoutes.auth.login)}
           >
             {translate.formatMessage({ id: "login" })}
           </Button>
-          <Button onClick={() => router.push(routes.auth.signUp)}>
+          <Button onClick={() => router.push(websiteRoutes.auth.signUp)}>
             {translate.formatMessage({ id: "signUp" })}
           </Button>
         </ButtonGroup>

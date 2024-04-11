@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  seeAllProducts: "Ver todos produtos",
   required: "Obrigatório",
   cancel: "Cancelar",
   save: "Salvar",

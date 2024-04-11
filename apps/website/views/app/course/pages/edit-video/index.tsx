@@ -1,7 +1,7 @@
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
 import { useUploadVideo } from "@/hooks/use-upload-video";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -142,8 +142,8 @@ export const EditVideoPage = () => {
 
   const goToModulesPage = () => {
     router.push(
-      routes.app({ appId: currentApp?.id }).course({ course: courseId }).modules
-        .home
+      websiteRoutes.app({ appId: currentApp?.id }).course({ course: courseId })
+        .modules.home
     );
   };
 

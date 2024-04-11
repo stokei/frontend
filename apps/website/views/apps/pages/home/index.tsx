@@ -1,6 +1,6 @@
 import { usePagination, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import {
@@ -58,7 +58,7 @@ export const AppsPage = () => {
   }, [dataApps]);
 
   const goToAddApp = () => {
-    router.push(routes.apps.add);
+    router.push(websiteRoutes.apps.add);
   };
 
   return (

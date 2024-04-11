@@ -12,7 +12,7 @@ import {
 import NextLink from "next/link";
 import { useMemo } from "react";
 
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AppStatus } from "@/services/graphql/stokei";
 import { getAppStatusColor } from "@/utils";
 import { AdminAppPageAppFragment } from "../../graphql/apps.query.graphql.generated";
@@ -37,7 +37,7 @@ export const AppItem = ({ app }: AppItemProps) => {
   }, [app?.status, translate]);
 
   const goToEditAppURL = () =>
-    window?.location?.assign(routes.app({ appId: app?.id }).home);
+    window?.location?.assign(websiteRoutes.app({ appId: app?.id }).home);
 
   return (
     <Card

@@ -1,7 +1,7 @@
 import { STOKEI_API_FILE_UPLOAD_URL } from "@/environments";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AppLayout } from "@/views/app/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -76,7 +76,7 @@ export const AddMaterialPage = () => {
 
   const goToMaterialsPage = () => {
     router.push(
-      routes.app({ appId: currentApp?.id }).course({ course: courseId })
+      websiteRoutes.app({ appId: currentApp?.id }).course({ course: courseId })
         .materials.home
     );
   };

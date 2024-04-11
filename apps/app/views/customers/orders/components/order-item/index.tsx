@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { getProductURL } from "@/utils";
 import { getOrderStatusColor } from "@/utils/get-order-status-color";
 import {
@@ -34,7 +34,7 @@ export const OrderItem = ({ order, hasCoupon }: OrderItemProps) => {
   const orderItems = useMemo(() => order?.items?.items, [order]);
 
   const goToOrderPage = () => {
-    router.push(routes.customers.orders.order({ order: order?.id }));
+    router.push(appRoutes.customers.orders.order({ order: order?.id }));
   };
 
   return (

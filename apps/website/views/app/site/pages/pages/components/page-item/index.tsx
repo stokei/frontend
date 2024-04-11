@@ -1,7 +1,7 @@
 import { useCurrentApp, useSite, useTranslations } from "@/hooks";
 import { Badge, Button, Card, CardBody, Stack, Text, Title } from "@stokei/ui";
 
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { SitePagesPageFragment } from "../../graphql/pages.query.graphql.generated";
 
@@ -16,7 +16,7 @@ export const PageItem = ({ page }: PageItemProps) => {
   const translate = useTranslations();
 
   const onGoToEditPage = async () => {
-    const editPageURL = routes
+    const editPageURL = websiteRoutes
       .app({ appId: currentApp?.id })
       .site({ site: site?.id || "" })
       .page({ page: page?.id, version: page?.version?.id }).home;

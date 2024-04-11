@@ -13,7 +13,7 @@ import {
 
 import defaultNoImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { AppCourseFragment } from "../../graphql/course.fragment.graphql.generated";
 
@@ -59,7 +59,7 @@ export const CourseItem = ({ course }: CourseItemProps) => {
                 width="full"
                 onClick={() =>
                   router.push(
-                    routes
+                    websiteRoutes
                       .app({ appId: currentApp?.id })
                       .course({ course: course?.id }).home
                   )

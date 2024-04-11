@@ -1,6 +1,7 @@
 import { useComponentsTree, usePage } from "@/hooks";
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { GlobalPageFragment } from "@/services/graphql/queries/get-page-by-id/page.query.graphql.generated";
+import { ComponentType } from "@/services/graphql/stokei";
 import {
   BuilderComponent,
   ComponentBuilderType,
@@ -9,13 +10,11 @@ import {
 } from "@stokei/builder";
 import { Box, Container, SortableItem, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
+import { CreateVersionAlert } from "./components/create-version-alert";
 import { Header } from "./components/header";
 import { Navbar } from "./components/navbar";
 import { UpdatePageTitleForm } from "./components/update-page-title-form";
 import { PageLayout } from "./layout";
-import { ComponentType } from "@/services/graphql/stokei";
-import { CreateVersionAlert } from "./components/create-version-alert";
-import { NavbarMock } from "./components/navbar-mock";
 
 export interface SitePageProps {
   version: GetVersionResponse;
@@ -55,7 +54,6 @@ const SitePage = () => {
             background="background.50"
             overflow="hidden"
           >
-            <NavbarMock />
             {isProductionVersion ? (
               <>
                 {components?.map((component) => (

@@ -1,4 +1,4 @@
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   CustomerCoursePageCourseFragment,
   useGetCustomerCoursePageCourseQuery,
@@ -46,7 +46,7 @@ export const CustomersCourseProvider = ({
       (e) => (e.extensions?.response as any)?.statusCode === 403
     );
     if (!!studentIsUnauthorized) {
-      router.push(routes.notFound);
+      router.push(appRoutes.notFound);
     }
   }, [errorGetCourse, router]);
 

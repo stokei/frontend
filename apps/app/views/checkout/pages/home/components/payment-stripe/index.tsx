@@ -11,7 +11,7 @@ import { CreateCheckoutPageCheckoutFragment } from "../../graphql/create-checkou
 import { loadStripe } from "@stripe/stripe-js";
 import { STRIPE_PUBLISHABLE_KEY } from "@/environments";
 import { useMemo, useState } from "react";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 
 export interface PaymentStripeProps {
   stripe?: CreateCheckoutPageCheckoutFragment["stripe"];
@@ -43,8 +43,8 @@ const PaymentStripe = ({ stripe: stripeProp }: PaymentStripeProps) => {
       clientSecret,
       confirmParams: {
         return_url: new URL(
-          routes.checkout.callback,
-          window.location.href.replace(routes.checkout.home, "")
+          appRoutes.checkout.callback,
+          window.location.href.replace(appRoutes.checkout.home, "")
         ).toString(),
       },
     });

@@ -1,5 +1,5 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Alert,
   AlertDescription,
@@ -18,7 +18,10 @@ export const OnboardingAlerts = () => {
   const { currentApp, hasPaymentIntegrations } = useCurrentApp();
 
   const goToStripeOnboarding = useCallback(
-    () => router.push(routes.app({ appId: currentApp?.id }).onboardings.home),
+    () =>
+      router.push(
+        websiteRoutes.app({ appId: currentApp?.id }).onboardings.home
+      ),
     [currentApp?.id, router]
   );
 

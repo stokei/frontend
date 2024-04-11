@@ -3,7 +3,7 @@ import { useCurrentApp, useTranslations } from "@/hooks";
 import { Card, CardBody, Image, Link, Stack, Title } from "@stokei/ui";
 import NextLink from "next/link";
 
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { SitesHomePageSiteFragment } from "../../graphql/sites.query.graphql.generated";
 
 export interface SiteItemProps {
@@ -14,7 +14,7 @@ export const SiteItem = ({ site }: SiteItemProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 
-  const editSiteURL = routes
+  const editSiteURL = websiteRoutes
     .app({ appId: currentApp?.id })
     .site({ site: site?.id }).home;
 

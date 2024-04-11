@@ -2,7 +2,7 @@ import { createAxiosAPIClient } from "@/services/axios/client";
 import { GetVersionResponse, Version } from "@/services/axios/models/version";
 import { getSiteBySlug } from "@/services/graphql/queries/get-app-by-slug";
 import { getSiteSlugFromContext } from "@/utils/get-site-slug-from-context";
-import { DynamicPage } from "@/views/dynamic-page";
+import { CustomPage } from "@/views/custom-page";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Page: NextPage<Props> = ({ version }) => {
-  return <DynamicPage version={version} />;
+  return <CustomPage version={version} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async (

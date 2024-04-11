@@ -3,7 +3,7 @@ import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/p
 import { CheckoutStep } from "@/constants/checkout-steps";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   CreateOrderItemInput,
   PaymentMethodType,
@@ -126,7 +126,7 @@ export const CheckoutPage = () => {
   const onCreateOrder = useCallback(async () => {
     if (!isAuthenticated) {
       router.push({
-        pathname: routes.auth.login,
+        pathname: appRoutes.auth.login,
         query: { redirectTo: router.asPath },
       });
       return;
@@ -190,7 +190,7 @@ export const CheckoutPage = () => {
           const checkout = response.data.createCheckout;
           if (paymentMethodType === PaymentMethodType.Card) {
             if (checkout.card) {
-              return router.push(routes.checkout.callback);
+              return router.push(appRoutes.checkout.callback);
             } else {
               return onShowAPIError({
                 message: translate.formatMessage({ id: "somethingWentWrong" }),
@@ -232,7 +232,7 @@ export const CheckoutPage = () => {
   const onGoToAddressStep = () => {
     if (!isAuthenticated) {
       router.push({
-        pathname: routes.auth.login,
+        pathname: appRoutes.auth.login,
         query: { redirectTo: router.asPath },
       });
       return;

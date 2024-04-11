@@ -18,7 +18,11 @@ import NextLink from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { PriceComponentFragment } from "../../../../components/price/price.fragment.graphql.generated";
-import { useShoppingCart, useTranslations } from "../../../../hooks";
+import {
+  useBuilder,
+  useShoppingCart,
+  useTranslations,
+} from "../../../../hooks";
 import defaultNoImage from "../../../../assets/no-image.png";
 import { BuilderComponentCatalogItemProductFragment } from "../../graphql/catalog-items.query.graphql.generated";
 import { SelectPrice } from "../../../../components/select-price";
@@ -29,6 +33,7 @@ export interface CatalogItemProps {
 }
 
 export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
+  const { routes } = useBuilder();
   const [currentPrice, setCurrentPrice] = useState<
     PriceComponentFragment | undefined | null
   >();
@@ -46,8 +51,8 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
   );
   const productURL = useMemo(
     () =>
-      `/products/${product?.id}${currentPrice?.id ? "?price=" + currentPrice?.id : ""}`,
-    [currentPrice?.id, product?.id]
+      routes.product({ product: product?.id || "", price: currentPrice?.id }),
+    [currentPrice?.id, product?.id, routes]
   );
 
   useEffect(() => {
@@ -66,10 +71,7 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
   }, []);
 
   return (
-    <Card
-      minWidth={["full", "full", "300px", "300px"]}
-      background="background.50"
-    >
+    <Card background="background.50">
       <CardHeader
         position="relative"
         padding="0"
@@ -105,7 +107,7 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
                   .join(", ")}
               </Description>
             )}
-            <Box>
+            <Box width="full">
               {!!product?.prices?.items?.length && (
                 <SelectPrice
                   size="lg"

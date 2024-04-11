@@ -1,5 +1,5 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Box,
   Button,
@@ -24,8 +24,9 @@ export const CatalogItem = ({ catalog }: CatalogItemProps) => {
 
   const goToCatalog = () => {
     router.push(
-      routes.app({ appId: currentApp?.id }).catalog({ catalog: catalog?.id })
-        .home
+      websiteRoutes
+        .app({ appId: currentApp?.id })
+        .catalog({ catalog: catalog?.id }).home
     );
   };
 

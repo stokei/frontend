@@ -2,23 +2,24 @@ import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
 import { Navbar } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 import { Loading } from "./loading";
+import { PageBuilderProvider } from "@/contexts";
 
-export interface DynamicPageLayoutProps {
+export interface CustomPageLayoutProps {
   isLoading?: boolean;
 }
 
-export const DynamicPageLayout = ({
+export const CustomPageLayout = ({
   isLoading,
   children,
-}: PropsWithChildren<DynamicPageLayoutProps>) => {
+}: PropsWithChildren<CustomPageLayoutProps>) => {
   return (
-    <>
+    <PageBuilderProvider>
       <Navbar>
         <NavbarLogo />
         <NavbarUserInformation />
       </Navbar>
       {isLoading ? <Loading /> : <>{children}</>}
       <Footer />
-    </>
+    </PageBuilderProvider>
   );
 };
