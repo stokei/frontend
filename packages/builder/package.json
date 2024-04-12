@@ -18,10 +18,10 @@
     "@graphql-codegen/typescript": "^2.8.6",
     "@graphql-codegen/typescript-operations": "^2.5.11",
     "@graphql-codegen/typescript-urql": "^3.7.3",
+    "@stokei/graphql": "*",
     "@stokei/routes": "*",
     "@stokei/translations": "*",
     "@stokei/tsconfig": "*",
-    "@stokei/graphql": "*",
     "@stokei/ui": "*",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.0.10",
@@ -32,7 +32,10 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
     "graphql-tag": "^2.12.6",
-    "urql": "^4.0.5"
+    "react-hook-form": "^7.47.0",
+    "urql": "^4.0.5",
+    "zod": "^3.22.4"
   }
 }

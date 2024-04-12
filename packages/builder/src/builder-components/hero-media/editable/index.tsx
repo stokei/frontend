@@ -8,6 +8,7 @@ interface EditableProps {}
 
 export const Editable = ({
   data,
+  onUpdate,
   ...props
 }: BaseComponentEditable<EditableProps>) => {
   const dataProps = useDataToProps({ data, props });

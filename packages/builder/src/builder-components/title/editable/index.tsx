@@ -20,8 +20,13 @@ export const Editable = ({
 
   const dataProps = useDataToProps({ data, props });
   return (
-    <BlockEditable {...props} onUpdate={onOpenUpdateTitleDrawer}>
+    <BlockEditable
+      {...props}
+      isUpdating={isOpenUpdateTitleDrawer}
+      onUpdate={onOpenUpdateTitleDrawer}
+    >
       <UpdateTitleDrawer
+        currentData={data}
         isOpen={isOpenUpdateTitleDrawer}
         onUpdate={onUpdate}
         onClose={onCloseUpdateTitleDrawer}

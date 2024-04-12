@@ -17,26 +17,26 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useTranslations } from "../../../../hooks/use-translations";
-import { TitleData } from "../../hooks/use-data-to-props";
+import { TextData } from "../../hooks/use-data-to-props";
 import { useEffect } from "react";
 
-interface UpdateTitleDrawerProps {
-  currentData?: TitleData;
+interface UpdateTextDrawerProps {
+  currentData?: TextData;
   isOpen?: boolean;
-  onUpdate?: (data?: TitleData) => void;
+  onUpdate?: (data?: TextData) => void;
   onClose: () => void;
 }
 
-export const UpdateTitleDrawer = ({
+export const UpdateTextDrawer = ({
   isOpen,
   currentData,
   onClose,
   onUpdate,
-}: UpdateTitleDrawerProps) => {
+}: UpdateTextDrawerProps) => {
   const translate = useTranslations();
 
   const validationSchema = z.object({
-    title: z.string().min(1, {
+    text: z.string().min(1, {
       message: translate.formatMessage({ id: "required" }),
     }),
   });
@@ -54,14 +54,14 @@ export const UpdateTitleDrawer = ({
   useEffect(() => {
     if (currentData) {
       reset({
-        title: currentData?.value || "",
+        text: currentData?.value || "",
       });
     }
   }, [currentData, reset]);
 
-  const onSubmit = async ({ title }: z.infer<typeof validationSchema>) => {
+  const onSubmit = async ({ text }: z.infer<typeof validationSchema>) => {
     onUpdate?.({
-      value: title,
+      value: text,
     });
     onClose();
   };
@@ -79,20 +79,20 @@ export const UpdateTitleDrawer = ({
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing="4">
-            <FormControl isInvalid={!!errors?.title}>
-              <Label htmlFor="title">
-                {translate.formatMessage({ id: "title" })}
+            <FormControl isInvalid={!!errors?.text}>
+              <Label htmlFor="text">
+                {translate.formatMessage({ id: "text" })}
               </Label>
               <InputGroup>
                 <Input
-                  id="title"
+                  id="text"
                   placeholder={translate.formatMessage({
-                    id: "title",
+                    id: "text",
                   })}
-                  {...register("title")}
+                  {...register("text")}
                 />
               </InputGroup>
-              <FormErrorMessage>{errors?.title?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors?.text?.message}</FormErrorMessage>
             </FormControl>
             <Box width="full" paddingBottom="4">
               <Button width="full" isDisabled={!isValid} type="submit">

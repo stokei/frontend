@@ -1,5 +1,6 @@
 import {
   ButtonGroup,
+  DraggableTrigger,
   IconButton,
   SortableItemTrigger,
   Stack,
@@ -34,7 +35,9 @@ export const BlockEditableMenu = ({
       <ButtonGroup spacing="1" variant="ghost">
         {hasSortable && (
           <SortableItemTrigger>
-            <IconButton name="move" colorScheme="text" />
+            <DraggableTrigger>
+              <IconButton name="move" colorScheme="text" />
+            </DraggableTrigger>
           </SortableItemTrigger>
         )}
       </ButtonGroup>

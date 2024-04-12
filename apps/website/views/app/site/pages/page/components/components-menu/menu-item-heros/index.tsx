@@ -1,20 +1,17 @@
 import { ComponentType } from "@/services/graphql/stokei";
-import { ComponentGroup } from "../../components/components-menu/types";
-import { I18nKey } from "@/interfaces/i18n-key";
-import { FormatMessage } from "@stokei/translations";
+import { useTranslations } from "@stokei/translations";
+import { useMemo } from "react";
+import { MenuItem } from "../menu-item";
+import { Component } from "../types";
 
-export interface GetDefaultComponentsGroups {
-  formatMessage: FormatMessage<I18nKey>;
-}
+export const MenuItemHeros = () => {
+  const translate = useTranslations();
 
-export const getDefaultComponentsGroups = ({
-  formatMessage,
-}: GetDefaultComponentsGroups): ComponentGroup[] => [
-  {
-    title: formatMessage({ id: "heros" }),
-    components: [
+  const components = useMemo<Component[]>(() => {
+    return [
       {
         id: ComponentType.Hero + "-with-text",
+        title: "Douglas",
         avatar: "",
         parent: "",
         order: 1,
@@ -39,7 +36,7 @@ export const getDefaultComponentsGroups = ({
                           parent: "",
                           type: ComponentType.Title,
                           data: {
-                            value: formatMessage({ id: "title" }),
+                            value: translate.formatMessage({ id: "title" }),
                           },
                           components: [],
                         },
@@ -47,7 +44,9 @@ export const getDefaultComponentsGroups = ({
                           parent: "",
                           type: ComponentType.Text,
                           data: {
-                            value: formatMessage({ id: "description" }),
+                            value: translate.formatMessage({
+                              id: "description",
+                            }),
                           },
                           components: [],
                         },
@@ -65,6 +64,15 @@ export const getDefaultComponentsGroups = ({
           ],
         },
       },
-    ],
-  },
-];
+    ];
+  }, [translate]);
+
+  return (
+    <MenuItem
+      group={{
+        title: translate.formatMessage({ id: "heros" }),
+        components,
+      }}
+    />
+  );
+};

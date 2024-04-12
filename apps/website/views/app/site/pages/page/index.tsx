@@ -56,10 +56,11 @@ const SitePage = () => {
           >
             {isProductionVersion ? (
               <>
-                {components?.map((component) => (
+                {components?.map((component, index) => (
                   <BuilderComponent
                     {...component}
                     key={component.id}
+                    index={index}
                     builderType={ComponentBuilderType.BLOCK_READABLE}
                     onRedirect={router.push}
                   />
@@ -69,25 +70,20 @@ const SitePage = () => {
               <TreeSortable items={components || []}>
                 {components?.length ? (
                   <>
-                    {components?.map((component) => (
+                    {components?.map((component, index) => (
                       <BuilderComponent
                         {...component}
                         key={component.id}
+                        index={index}
                         builderType={ComponentBuilderType.BLOCK_EDITABLE}
                         onRedirect={router.push}
-                        onRemove={() =>
-                          onRemoveComponent({ componentId: component?.id })
+                        onRemove={(componentId) =>
+                          onRemoveComponent({ componentId })
                         }
-                        onUpdate={(data: any) =>
+                        onUpdate={(componentId, data: any) =>
                           onUpdateComponent({
-                            componentId: component?.id,
-                            updateCallback: (currentComponentToUpdate) => ({
-                              ...currentComponentToUpdate,
-                              data: {
-                                ...currentComponentToUpdate,
-                                ...data,
-                              },
-                            }),
+                            componentId,
+                            updateData: data,
                           })
                         }
                       />

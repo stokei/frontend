@@ -42,7 +42,7 @@ export interface ComponentsTreeProviderValues {
   readonly onRemoveComponent: (data: { componentId: string }) => void;
   readonly onUpdateComponent: (data: {
     componentId: string;
-    updateCallback: UpdateCallback;
+    updateData: any;
   }) => void;
 }
 
@@ -84,6 +84,7 @@ export const ComponentsTreeProvider = ({
 
   const [{}, onExecuteUpdateComponentsOrder] =
     useUpdateComponentsOrderMutation();
+  const [{}, onExecuteUpdateComponent] = useUpdateComponentMutation();
   const [{}, onExecuteRemoveComponent] = useRemoveComponentMutation();
 
   const onUpdateComponetOrders = useCallback(
@@ -169,29 +170,47 @@ export const ComponentsTreeProvider = ({
   );
 
   const onUpdateComponent = useCallback(
-    ({
+    async ({
       componentId,
-      updateCallback,
+      updateData,
     }: {
       componentId: string;
-      updateCallback: UpdateCallback;
+      updateData: any;
     }) => {
       setComponents((prevComponents) => {
         const updatedComponents = updateComponentInTree(
           prevComponents,
           componentId,
-          updateCallback
+          (oldComponent) => ({
+            ...oldComponent,
+            data: { ...oldComponent?.data, ...updateData },
+          })
         );
         setComponentMap(createComponentMap(updatedComponents));
         return updatedComponents;
       });
+      try {
+        const currentComponent = getComponentById(componentId);
+        if (!currentComponent) {
+          return;
+        }
+        await onExecuteUpdateComponent({
+          input: {
+            data: {
+              data: updateData,
+            },
+            where: {
+              component: currentComponent?.id || "",
+            },
+          },
+        });
+      } catch (error) {}
     },
-    [updateComponentInTree]
+    [getComponentById, onExecuteUpdateComponent, updateComponentInTree]
   );
 
   const onRemoveComponent = useCallback(
     async ({ componentId }: { componentId: string }) => {
-      console.log({ componentId });
       let currentComponent = getComponentById(componentId);
       if (!currentComponent) {
         return;
@@ -281,6 +300,12 @@ export const ComponentsTreeProvider = ({
 
   const onAddExistingActiveItem = useCallback(
     async ({ over, active }: DragAndDropDragEndEvent) => {
+      const activeItem = getComponentById(active?.id + "");
+      const overItem = getComponentById(over?.id + "");
+      if (!overItem || !activeItem) {
+        return;
+      }
+
       setComponents((prevComponents) => {
         const currentComponents = arrayMove(
           prevComponents,
@@ -295,7 +320,7 @@ export const ComponentsTreeProvider = ({
       });
       setIsActiveUpdateComponentOrders(true);
     },
-    []
+    [getComponentById]
   );
 
   const onDragEnd = useCallback(

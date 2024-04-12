@@ -13,12 +13,13 @@ interface BlockEditableProps {
   readonly onRemove?: () => void;
   readonly onUpdate?: (data?: any) => void;
   readonly hasSortable?: boolean;
+  readonly isUpdating?: boolean;
 }
 
 export const BlockEditable = ({
-  id,
   children,
   hasSortable,
+  isUpdating,
   onRemove,
   onUpdate,
   ...props
@@ -39,6 +40,7 @@ export const BlockEditable = ({
   useOutsideClick({
     ref: blockRef,
     handler: onClickOutside,
+    enabled: !isUpdating,
   });
 
   const clickedProps: BoxProps = isClicked

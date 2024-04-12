@@ -35,10 +35,11 @@ export interface BuilderComponentData {
 }
 
 interface BuilderComponentProps extends BuilderComponentData {
+  index: number;
   builderType: ComponentBuilderType;
   onRedirect: (route: string) => void;
-  onRemove?: () => void;
-  onUpdate?: (data: any) => void;
+  onRemove?: (componentId: string) => void;
+  onUpdate?: (componentId: string, data: any) => void;
 }
 
 const getComponent = ({
@@ -78,6 +79,7 @@ const getComponent = ({
 };
 
 export const BuilderComponent = ({
+  id,
   builderType,
   type,
   acceptTypes,
@@ -100,17 +102,20 @@ export const BuilderComponent = ({
   }
   return (
     <Component
+      id={id}
       onRedirect={onRedirect}
       type={type}
       builderType={builderType}
       acceptTypes={acceptTypes}
-      onRemove={onRemove}
-      onUpdate={onUpdate}
+      onRemove={() => onRemove?.(id)}
+      onUpdate={(updateData: any) => onUpdate?.(id, updateData)}
       {...props}
     >
-      {components?.map((component) => (
+      {components?.map((component, index) => (
         <BuilderComponent
           {...component}
+          index={index}
+          id={component?.id}
           key={component?.id}
           builderType={builderType}
           onRedirect={onRedirect}

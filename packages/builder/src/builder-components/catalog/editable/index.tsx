@@ -7,6 +7,7 @@ interface EditableProps {}
 
 export const Editable = ({
   data,
+  onUpdate,
   onRedirect,
   ...props
 }: BaseComponentEditable<EditableProps>) => {

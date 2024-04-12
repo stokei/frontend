@@ -1,4 +1,4 @@
-import { SortableItem } from "@stokei/ui";
+import { Draggable, Droppable, SortableItem } from "@stokei/ui";
 import { BlockEditable } from "../../../components/block-editable";
 import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { Block } from "../components/block";
@@ -8,15 +8,18 @@ interface EditableProps {}
 
 export const Editable = ({
   data,
+  onUpdate,
   children,
   ...props
 }: BaseComponentEditable<EditableProps>) => {
   const dataProps = useDataToProps({ data, props });
   return (
-    <SortableItem {...props}>
-      <BlockEditable hasSortable {...props}>
-        <Block {...dataProps}>{children}</Block>
-      </BlockEditable>
-    </SortableItem>
+    <Droppable {...props}>
+      <Draggable {...props}>
+        <BlockEditable hasSortable {...props}>
+          <Block {...dataProps}>{children}</Block>
+        </BlockEditable>
+      </Draggable>
+    </Droppable>
   );
 };

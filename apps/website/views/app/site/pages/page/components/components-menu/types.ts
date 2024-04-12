@@ -1,7 +1,8 @@
 import { ComponentsTreeComponent } from "@/contexts";
 
 export interface Component extends ComponentsTreeComponent {
-  avatar: string;
+  avatar?: string;
+  title?: string;
 }
 
 export interface ComponentGroup {
