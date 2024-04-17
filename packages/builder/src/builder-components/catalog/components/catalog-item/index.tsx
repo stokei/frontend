@@ -24,7 +24,7 @@ import {
   useTranslations,
 } from "../../../../hooks";
 import defaultNoImage from "../../../../assets/no-image.png";
-import { BuilderComponentCatalogItemProductFragment } from "../../graphql/catalog-items.query.graphql.generated";
+import { BuilderComponentCatalogItemProductFragment } from "../../graphql/catalog.query.graphql.generated";
 import { SelectPrice } from "../../../../components/select-price";
 
 export interface CatalogItemProps {

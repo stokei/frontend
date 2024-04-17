@@ -421,6 +421,8 @@ export enum ComponentType {
   CardHeader = 'CARD_HEADER',
   Catalog = 'CATALOG',
   Footer = 'FOOTER',
+  FormLogin = 'FORM_LOGIN',
+  FormSignup = 'FORM_SIGNUP',
   Grid = 'GRID',
   GridItem = 'GRID_ITEM',
   Header = 'HEADER',
@@ -2412,10 +2414,17 @@ export type Page = {
   parent: Scalars['String'];
   slug: Scalars['String'];
   title: Scalars['String'];
+  type: PageType;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
+  url?: Maybe<Scalars['String']>;
   version?: Maybe<Version>;
 };
+
+export enum PageType {
+  Default = 'DEFAULT',
+  External = 'EXTERNAL'
+}
 
 export type Pages = {
   __typename?: 'Pages';
@@ -3529,10 +3538,12 @@ export type Site = {
   favicon?: Maybe<Image>;
   homePage?: Maybe<Page>;
   id: Scalars['ID'];
+  loginPage?: Maybe<Page>;
   logo?: Maybe<Image>;
   name: Scalars['String'];
   pages?: Maybe<Pages>;
   parent: Scalars['String'];
+  signUpPage?: Maybe<Page>;
   slug: Scalars['String'];
   stokeiDomain?: Maybe<Domain>;
   updatedAt?: Maybe<Scalars['String']>;

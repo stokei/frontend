@@ -73,6 +73,8 @@ const getComponent = ({
     [ComponentType.Text]: Text[builderType],
     [ComponentType.Title]: Title[builderType],
     [ComponentType.Space]: Space[builderType],
+    [ComponentType.FormLogin]: undefined,
+    [ComponentType.FormSignup]: undefined
   };
   return components[componentType] as ReactNode;
 };
