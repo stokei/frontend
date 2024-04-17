@@ -21,12 +21,14 @@ export interface VideoPlayerProps extends BoxProps {
   readonly id: string;
   readonly src: string;
   readonly filename: string;
+  readonly isLoading?: boolean;
 }
 
 export const VideoPlayer = ({
   id,
   src,
   filename,
+  isLoading,
   ...props
 }: VideoPlayerProps) => {
   const playerRef = useRef<any>(null);

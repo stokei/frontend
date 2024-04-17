@@ -3,6 +3,7 @@ import { GetVersionResponse, Version } from "@/services/axios/models/version";
 import { getSiteBySlug } from "@/services/graphql/queries/get-app-by-slug";
 import { getSiteSlugFromContext } from "@/utils/get-site-slug-from-context";
 import { CustomPage } from "@/views/custom-page";
+import { appRoutes } from "@stokei/routes";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 
 interface Props {
@@ -24,7 +25,10 @@ export const getServerSideProps: GetServerSideProps = async (
   });
   if (!site?.homePage?.version?.id) {
     return {
-      notFound: true,
+      redirect: {
+        destination: appRoutes.auth.login,
+        permanent: false,
+      },
     };
   }
   const client = createAxiosAPIClient({
@@ -35,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (
   let version;
   try {
     version = await versionModel?.getVersion(site?.homePage?.version?.id);
-  } catch (error) {}
+  } catch (error) { }
   if (!version) {
     return {
       notFound: true,

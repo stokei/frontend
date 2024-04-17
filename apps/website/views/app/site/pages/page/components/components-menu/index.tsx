@@ -4,8 +4,8 @@ import { MenuItemHeros } from "./menu-item-heros";
 export const ComponentsMenu = () => {
   return (
     <>
-      <MenuItemHeros />
       <MenuItemCatalogs />
+      <MenuItemHeros />
     </>
   );
 };

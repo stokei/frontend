@@ -6,6 +6,7 @@ import { getSiteSlugFromContext } from "@/utils/get-site-slug-from-context";
 import { getPageSlugFromContext } from "@/utils/get-page-slug-from-context";
 import { CustomPage } from "@/views/custom-page";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
+import { appRoutes } from "@stokei/routes";
 
 interface Props {
   version: GetVersionResponse;
@@ -26,7 +27,10 @@ export const getServerSideProps: GetServerSideProps = async (
   });
   if (!site?.homePage?.version?.id) {
     return {
-      notFound: true,
+      redirect: {
+        destination: appRoutes.auth.login,
+        permanent: false,
+      },
     };
   }
   const pageSlug = getPageSlugFromContext(context);
@@ -53,7 +57,7 @@ export const getServerSideProps: GetServerSideProps = async (
   let version;
   try {
     version = await versionModel?.getVersion(page?.version?.id);
-  } catch (error) {}
+  } catch (error) { }
   if (!version) {
     return {
       notFound: true,

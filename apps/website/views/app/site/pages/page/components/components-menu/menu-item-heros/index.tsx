@@ -1,8 +1,13 @@
 import { ComponentType } from "@/services/graphql/stokei";
-import { useTranslations } from "@stokei/translations";
 import { useMemo } from "react";
+import heroWithTextImg from "@/assets/hero-with-text.svg";
+import heroWithImageLeftImg from "@/assets/hero-with-image-left.svg";
+import heroWithImageRightImg from "@/assets/hero-with-image-right.svg";
+import heroWithVideoLeftImg from "@/assets/hero-with-video-left.svg";
+import heroWithVideoRightImg from "@/assets/hero-with-video-right.svg";
 import { MenuItem } from "../menu-item";
 import { Component } from "../types";
+import { useTranslations } from "@/hooks";
 
 export const MenuItemHeros = () => {
   const translate = useTranslations();
@@ -11,10 +16,118 @@ export const MenuItemHeros = () => {
     return [
       {
         id: ComponentType.Hero + "-with-text",
-        title: "Douglas",
-        avatar: "",
+        avatar: heroWithTextImg.src,
         parent: "",
-        order: 1,
+        order: 0,
+        type: ComponentType.Hero,
+        acceptTypes: [],
+        data: {
+          isNew: true,
+          tree: [
+            {
+              parent: "",
+              type: ComponentType.Block,
+              components: [
+                {
+                  parent: "",
+                  type: ComponentType.Hero,
+                  components: [
+                    {
+                      parent: "",
+                      type: ComponentType.HeroContent,
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Title,
+                          data: {
+                            value: translate.formatMessage({ id: "title" }),
+                          },
+                          components: [],
+                        },
+                        {
+                          parent: "",
+                          type: ComponentType.Text,
+                          data: {
+                            value: translate.formatMessage({
+                              id: "description",
+                            }),
+                          },
+                          components: [],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        id: ComponentType.Hero + "-with-image-left",
+        avatar: heroWithImageLeftImg.src,
+        parent: "",
+        order: 0,
+        type: ComponentType.Hero,
+        acceptTypes: [],
+        data: {
+          isNew: true,
+          tree: [
+            {
+              parent: "",
+              type: ComponentType.Block,
+              components: [
+                {
+                  parent: "",
+                  type: ComponentType.Hero,
+                  components: [
+                    {
+                      parent: "",
+                      type: ComponentType.HeroMedia,
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Image,
+                          components: [],
+                        }
+                      ],
+                    },
+                    {
+                      parent: "",
+                      type: ComponentType.HeroContent,
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Title,
+                          data: {
+                            value: translate.formatMessage({ id: "title" }),
+                          },
+                          components: [],
+                        },
+                        {
+                          parent: "",
+                          type: ComponentType.Text,
+                          data: {
+                            value: translate.formatMessage({
+                              id: "description",
+                            }),
+                          },
+                          components: [],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        id: ComponentType.Hero + "-with-image-right",
+        avatar: heroWithImageRightImg.src,
+        parent: "",
+        order: 0,
         type: ComponentType.Hero,
         acceptTypes: [],
         data: {
@@ -55,7 +168,133 @@ export const MenuItemHeros = () => {
                     {
                       parent: "",
                       type: ComponentType.HeroMedia,
-                      components: [],
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Image,
+                          components: [],
+                        }
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        id: ComponentType.Hero + "-with-video-left",
+        avatar: heroWithVideoLeftImg.src,
+        parent: "",
+        order: 0,
+        type: ComponentType.Hero,
+        acceptTypes: [],
+        data: {
+          isNew: true,
+          tree: [
+            {
+              parent: "",
+              type: ComponentType.Block,
+              components: [
+                {
+                  parent: "",
+                  type: ComponentType.Hero,
+                  components: [
+                    {
+                      parent: "",
+                      type: ComponentType.HeroMedia,
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Video,
+                          components: [],
+                        }
+                      ],
+                    },
+                    {
+                      parent: "",
+                      type: ComponentType.HeroContent,
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Title,
+                          data: {
+                            value: translate.formatMessage({ id: "title" }),
+                          },
+                          components: [],
+                        },
+                        {
+                          parent: "",
+                          type: ComponentType.Text,
+                          data: {
+                            value: translate.formatMessage({
+                              id: "description",
+                            }),
+                          },
+                          components: [],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        id: ComponentType.Hero + "-with-video-right",
+        avatar: heroWithVideoRightImg.src,
+        parent: "",
+        order: 0,
+        type: ComponentType.Hero,
+        acceptTypes: [],
+        data: {
+          isNew: true,
+          tree: [
+            {
+              parent: "",
+              type: ComponentType.Block,
+              components: [
+                {
+                  parent: "",
+                  type: ComponentType.Hero,
+                  components: [
+                    {
+                      parent: "",
+                      type: ComponentType.HeroContent,
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Title,
+                          data: {
+                            value: translate.formatMessage({ id: "title" }),
+                          },
+                          components: [],
+                        },
+                        {
+                          parent: "",
+                          type: ComponentType.Text,
+                          data: {
+                            value: translate.formatMessage({
+                              id: "description",
+                            }),
+                          },
+                          components: [],
+                        },
+                      ],
+                    },
+                    {
+                      parent: "",
+                      type: ComponentType.HeroMedia,
+                      components: [
+                        {
+                          parent: "",
+                          type: ComponentType.Video,
+                          components: [],
+                        }
+                      ],
                     },
                   ],
                 },
@@ -70,7 +309,7 @@ export const MenuItemHeros = () => {
   return (
     <MenuItem
       group={{
-        title: translate.formatMessage({ id: "heros" }),
+        title: translate.formatMessage({ id: "headlineSections" }),
         components,
       }}
     />

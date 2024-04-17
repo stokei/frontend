@@ -1,16 +1,17 @@
-import { Container, Pagination, Stack, useDisclosure } from "@stokei/ui";
+import { Container, NotFound, NotFoundIcon, NotFoundSubtitle, Pagination, Stack, useDisclosure } from "@stokei/ui";
 
 import { SiteLayout } from "../../layout";
 import { Navbar } from "./components/navbar";
 import { Header } from "./components/header";
 import { PagesList } from "./components/pages-list";
 import { AddPageDrawer } from "./components/add-page-drawer";
-import { usePagination, useSite } from "@/hooks";
+import { usePagination, useSite, useTranslations } from "@/hooks";
 import { OrderBy } from "@/services/graphql/stokei";
 import { useGetSitePagesQuery } from "./graphql/pages.query.graphql.generated";
 import { useMemo } from "react";
 
 const SitePages = () => {
+  const translate = useTranslations();
   const { currentPage, onChangePage } = usePagination();
   const {
     isOpen: isOpenAddPageDrawer,
@@ -51,10 +52,19 @@ const SitePages = () => {
       />
       <Stack direction="column" spacing="5">
         <Header
-          totalCount={dataGetPages?.pages?.totalPages || 0}
+          totalCount={dataGetPages?.pages?.totalCount || 0}
           onAddPage={onOpenAddPageDrawer}
         />
-        <PagesList pages={pages} />
+        {!pages?.length ? (
+          <NotFound>
+            <NotFoundIcon name="page" />
+            <NotFoundSubtitle>
+              {translate.formatMessage({ id: "pagesNotFound" })}
+            </NotFoundSubtitle>
+          </NotFound>
+        ) : (
+          <PagesList pages={pages} />
+        )}
         {dataGetPages?.pages?.totalPages &&
           dataGetPages?.pages?.totalPages > 1 && (
             <Pagination

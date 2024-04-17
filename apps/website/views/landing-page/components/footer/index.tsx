@@ -8,6 +8,7 @@ import { STOKEI_CONTACT_EMAIL } from "@/constants/stokei-emails";
 import { useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
 import {
+  Box,
   Button,
   ButtonGroup,
   Container,
@@ -27,7 +28,11 @@ export const Footer = () => {
         justify="space-between"
         spacing="5"
       >
-        <Stack direction="column" spacing="5">
+        <Stack
+          width="fit-content"
+          direction="column"
+          spacing="5"
+        >
           <AppLogo />
           <Stack direction="column" spacing="0">
             <Text>{DEFAULT_APP_SOCIAL_NAME}</Text>

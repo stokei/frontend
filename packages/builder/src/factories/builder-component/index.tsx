@@ -35,7 +35,6 @@ export interface BuilderComponentData {
 }
 
 interface BuilderComponentProps extends BuilderComponentData {
-  index: number;
   builderType: ComponentBuilderType;
   onRedirect: (route: string) => void;
   onRemove?: (componentId: string) => void;
@@ -114,7 +113,6 @@ export const BuilderComponent = ({
       {components?.map((component, index) => (
         <BuilderComponent
           {...component}
-          index={index}
           id={component?.id}
           key={component?.id}
           builderType={builderType}

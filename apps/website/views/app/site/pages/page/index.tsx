@@ -1,14 +1,13 @@
-import { useComponentsTree, usePage } from "@/hooks";
+import { useComponentsTree, usePage, useTranslations } from "@/hooks";
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { GlobalPageFragment } from "@/services/graphql/queries/get-page-by-id/page.query.graphql.generated";
 import { ComponentType } from "@/services/graphql/stokei";
 import {
   BuilderComponent,
   ComponentBuilderType,
-  DropComponentHere,
-  TreeSortable,
+  DropComponentHere
 } from "@stokei/builder";
-import { Box, Container, SortableItem, Stack } from "@stokei/ui";
+import { Box, Container, Droppable, NotFound, NotFoundIcon, NotFoundSubtitle, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { CreateVersionAlert } from "./components/create-version-alert";
 import { Header } from "./components/header";
@@ -23,6 +22,7 @@ export interface SitePageProps {
 
 const SitePage = () => {
   const router = useRouter();
+  const translate = useTranslations();
   const { isProductionVersion } = usePage();
   const { components, onRemoveComponent, onUpdateComponent } =
     useComponentsTree();
@@ -56,25 +56,36 @@ const SitePage = () => {
           >
             {isProductionVersion ? (
               <>
-                {components?.map((component, index) => (
-                  <BuilderComponent
-                    {...component}
-                    key={component.id}
-                    index={index}
-                    builderType={ComponentBuilderType.BLOCK_READABLE}
-                    onRedirect={router.push}
-                  />
-                ))}
-              </>
-            ) : (
-              <TreeSortable items={components || []}>
                 {components?.length ? (
                   <>
-                    {components?.map((component, index) => (
+                    {components?.map((component) => (
                       <BuilderComponent
                         {...component}
                         key={component.id}
-                        index={index}
+                        builderType={ComponentBuilderType.BLOCK_READABLE}
+                        onRedirect={router.push}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <Container paddingY="5">
+                    <NotFound>
+                      <NotFoundIcon name="component" />
+                      <NotFoundSubtitle>
+                        {translate.formatMessage({ id: "componentsNotFound" })}
+                      </NotFoundSubtitle>
+                    </NotFound>
+                  </Container>
+                )}
+              </>
+            ) : (
+              <>
+                {components?.length ? (
+                  <>
+                    {components?.map((component) => (
+                      <BuilderComponent
+                        {...component}
+                        key={component.id}
                         builderType={ComponentBuilderType.BLOCK_EDITABLE}
                         onRedirect={router.push}
                         onRemove={(componentId) =>
@@ -90,17 +101,17 @@ const SitePage = () => {
                     ))}
                   </>
                 ) : (
-                  <SortableItem
+                  <Droppable
                     id="empty-item"
-                    type={ComponentType.Block}
+                    acceptTypes={[ComponentType.Block]}
                     data={{
                       isEmpty: true,
                     }}
                   >
                     <DropComponentHere />
-                  </SortableItem>
+                  </Droppable>
                 )}
-              </TreeSortable>
+              </>
             )}
           </Box>
         </Box>

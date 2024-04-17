@@ -27,7 +27,7 @@ export interface ComponentsTreeProviderProps {
   version: GetVersionResponse;
 }
 
-export interface ComponentsTreeComponent extends GetVersionComponent {}
+export interface ComponentsTreeComponent extends GetVersionComponent { }
 
 export type UpdateCallback = (
   component: ComponentsTreeComponent
@@ -82,10 +82,10 @@ export const ComponentsTreeProvider = ({
 
   const { onCreateComponentsTree } = useCreateComponentsTree();
 
-  const [{}, onExecuteUpdateComponentsOrder] =
+  const [{ }, onExecuteUpdateComponentsOrder] =
     useUpdateComponentsOrderMutation();
-  const [{}, onExecuteUpdateComponent] = useUpdateComponentMutation();
-  const [{}, onExecuteRemoveComponent] = useRemoveComponentMutation();
+  const [{ }, onExecuteUpdateComponent] = useUpdateComponentMutation();
+  const [{ }, onExecuteRemoveComponent] = useRemoveComponentMutation();
 
   const onUpdateComponetOrders = useCallback(
     async (currentComponents: ComponentsTreeComponent[]) => {
@@ -99,7 +99,7 @@ export const ComponentsTreeProvider = ({
         if (response?.data?.updateComponentsOrder?.length) {
           setIsActiveUpdateComponentOrders(false);
         }
-      } catch (error) {}
+      } catch (error) { }
       setIsSavingComponents(false);
     },
     [onExecuteUpdateComponentsOrder]
@@ -204,7 +204,7 @@ export const ComponentsTreeProvider = ({
             },
           },
         });
-      } catch (error) {}
+      } catch (error) { }
     },
     [getComponentById, onExecuteUpdateComponent, updateComponentInTree]
   );
@@ -245,7 +245,8 @@ export const ComponentsTreeProvider = ({
             },
           },
         });
-      } catch (error) {}
+      } catch (error) { }
+      setIsActiveUpdateComponentOrders(true);
     },
     [getComponentById, onExecuteRemoveComponent, removeComponentInTree]
   );
@@ -280,13 +281,14 @@ export const ComponentsTreeProvider = ({
         setComponentMap(createComponentMap(updatedComponents));
         return;
       }
+      const overItem = getComponentById(over?.id + "");
+      if (!overItem) {
+        return;
+      }
+
       setComponents((prevComponents) => {
         const currentComponents = [...prevComponents];
-        currentComponents.splice(
-          over?.data?.current?.sortable?.index,
-          0,
-          ...newComponentTree
-        );
+        currentComponents.splice(overItem.order, 0, ...newComponentTree);
         const componentsWithNewOrder = currentComponents?.map(
           (oldComponent, index) => ({ ...oldComponent, order: index })
         );
@@ -309,8 +311,8 @@ export const ComponentsTreeProvider = ({
       setComponents((prevComponents) => {
         const currentComponents = arrayMove(
           prevComponents,
-          active?.data?.current?.sortable?.index,
-          over?.data?.current?.sortable?.index
+          activeItem?.order,
+          overItem?.order
         );
         const componentsWithNewOrder = currentComponents?.map(
           (oldComponent, index) => ({ ...oldComponent, order: index })

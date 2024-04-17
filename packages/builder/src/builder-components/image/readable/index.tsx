@@ -3,7 +3,7 @@ import { Image, Skeleton } from "@stokei/ui";
 import { BaseComponentReadable } from "../../../types/base-component-readable";
 import { useDataToProps } from "../hooks/use-data-to-props";
 
-interface ReadableProps {}
+interface ReadableProps { }
 
 export const Readable = ({
   data,
@@ -13,5 +13,5 @@ export const Readable = ({
   if (dataProps?.isLoading) {
     return <Skeleton height="20" />;
   }
-  return <Image {...dataProps} alt="" />;
+  return <Image {...dataProps} alt={dataProps.alt} />;
 };

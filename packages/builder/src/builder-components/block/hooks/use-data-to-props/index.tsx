@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 
-interface Data {
+export interface BlockData {
   backgroundColor?: string;
 }
 
@@ -8,7 +8,7 @@ export const useDataToProps = ({
   data,
   props,
 }: {
-  data: Data;
+  data: BlockData;
   props: PropsWithChildren<any>;
 }) => {
   return {

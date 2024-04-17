@@ -1,11 +1,14 @@
 import { useMemo } from "react";
 import { useGetBuilderComponentVideoQuery } from "../../graphql/video.query.graphql.generated";
 
-interface Data {
+const videoDemoURL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+
+export interface VideoData {
   video?: string;
+  filename?: string;
 }
 
-export const useDataToProps = ({ data, props }: { data: Data; props: any }) => {
+export const useDataToProps = ({ data, props }: { data: VideoData; props: any }) => {
   const [{ data: dataGetVideo, fetching: isLoading }] =
     useGetBuilderComponentVideoQuery({
       pause: !data?.video,
@@ -16,7 +19,7 @@ export const useDataToProps = ({ data, props }: { data: Data; props: any }) => {
 
   const video = useMemo(() => dataGetVideo?.video, [dataGetVideo?.video]);
 
-  const src = video?.file?.url || "";
+  const src = video?.file?.url || videoDemoURL;
   const filename = video?.file?.filename || "";
   const poster = video?.poster?.file?.url || "";
   return {

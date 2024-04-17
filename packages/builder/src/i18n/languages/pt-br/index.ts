@@ -1,4 +1,7 @@
 export const ptBRMessages = {
+  primaryColor: "Cor primária",
+  textColor: "Cor do texto",
+  backgroundColor: "Cor de fundo",
   seeAllProducts: "Ver todos produtos",
   required: "Obrigatório",
   cancel: "Cancelar",

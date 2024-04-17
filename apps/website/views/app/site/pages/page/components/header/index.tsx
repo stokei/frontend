@@ -1,13 +1,15 @@
-import { usePage, useTranslations } from "@/hooks";
-import { Box, Button, Spacer, Stack } from "@stokei/ui";
-import { UpdateVersionNameForm } from "../update-version-name-form";
-import { useCallback } from "react";
+import { usePage, useSite, useTranslations } from "@/hooks";
+import { appRoutes } from "@stokei/routes";
+import { Button, Link, Stack } from "@stokei/ui";
+import { useCallback, useMemo } from "react";
 import { useCreateNewVersion } from "../../hooks/use-create-new-version";
 import { usePublishVersion } from "../../hooks/use-publish-version";
+import { UpdateVersionNameForm } from "../update-version-name-form";
 
 export const Header = () => {
   const translate = useTranslations();
-  const { isProductionVersion, version } = usePage();
+  const { site } = useSite();
+  const { isProductionVersion, version, page } = usePage();
   const { isLoading: isLoadingCreateNewVersion, onCreateNewVersion } =
     useCreateNewVersion();
   const { isLoading: isLoadingPublishVersion, onPublishVersion } =
@@ -20,6 +22,10 @@ export const Header = () => {
     return onPublishVersion(version?.id || "");
   }, [isProductionVersion, onCreateNewVersion, onPublishVersion, version?.id]);
 
+  const pageViewURL = useMemo(() => {
+    return (site?.defaultDomain?.url || "") + appRoutes.customPage({ slug: page?.slug || "" }).home;
+  }, [page?.slug, site])
+
   return (
     <Stack
       align={["flex-start", "flex-start", "center", "center"]}
@@ -28,7 +34,22 @@ export const Header = () => {
       spacing="2"
     >
       <UpdateVersionNameForm />
-      <Box flexDirection="column">
+      <Stack
+        width="fit-content"
+        align="center"
+        direction="row"
+        spacing="5"
+      >
+        {isProductionVersion && (
+          <Link
+            target="_blank"
+            href={pageViewURL}
+          >
+            {translate.formatMessage({
+              id: "viewPage",
+            })}
+          </Link>
+        )}
         <Button
           isLoading={isLoadingCreateNewVersion || isLoadingPublishVersion}
           onClick={onCreateNewVersionOrPublishVersion}
@@ -37,7 +58,7 @@ export const Header = () => {
             id: isProductionVersion ? "createNewVersion" : "publish",
           })}
         </Button>
-      </Box>
+      </Stack>
     </Stack>
   );
 };

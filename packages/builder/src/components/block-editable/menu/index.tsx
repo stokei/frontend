@@ -2,21 +2,20 @@ import {
   ButtonGroup,
   DraggableTrigger,
   IconButton,
-  SortableItemTrigger,
-  Stack,
+  Stack
 } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 
 interface BlockEditableMenuProps {
   readonly onRemove?: () => void;
   readonly onUpdate?: () => void;
-  readonly hasSortable?: boolean;
+  readonly hasDnD?: boolean;
 }
 
 export const BlockEditableMenu = ({
   onRemove,
   onUpdate,
-  hasSortable = false,
+  hasDnD,
   ...props
 }: PropsWithChildren<BlockEditableMenuProps>) => {
   const hasRemoveButton = !!onRemove;
@@ -33,12 +32,10 @@ export const BlockEditableMenu = ({
       justifyContent="space-between"
     >
       <ButtonGroup spacing="1" variant="ghost">
-        {hasSortable && (
-          <SortableItemTrigger>
-            <DraggableTrigger>
-              <IconButton name="move" colorScheme="text" />
-            </DraggableTrigger>
-          </SortableItemTrigger>
+        {hasDnD && (
+          <DraggableTrigger>
+            <IconButton name="move" colorScheme="text" />
+          </DraggableTrigger>
         )}
       </ButtonGroup>
       <ButtonGroup spacing="1" variant="ghost">

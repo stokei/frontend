@@ -59,7 +59,6 @@ export const SitesPage = () => {
 
       <Container paddingY="5">
         <Stack direction="column" spacing="5">
-          <OnboardingAlerts />
           <Header totalCount={dataSites?.sites?.totalCount || 0} />
 
           {isLoading ? (

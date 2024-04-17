@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  somethingWentWrong: "Algum erro ocorreu.",
   slugAlreadyExists: "Identificador de URL já existe",
   componentNotFound: "Componente não encontrado",
   componentsNotFound: "Componentes não encontrados",

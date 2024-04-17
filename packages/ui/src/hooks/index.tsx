@@ -1,5 +1,6 @@
 export * from "./use-active-steps";
 export * from "./use-clipboard";
+export * from "./use-color-value";
 export * from "./use-debounce";
 export * from "./use-drag-and-drop-context";
 export * from "./use-disclosure";

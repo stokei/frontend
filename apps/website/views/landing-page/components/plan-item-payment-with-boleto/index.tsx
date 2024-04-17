@@ -1,4 +1,3 @@
-import { PagarmeImage } from "@/components/pagarme-image";
 import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
@@ -66,8 +65,6 @@ export const PlanItemPaymentWithBoleto = () => {
               )}
             </ListItem>
           </List>
-
-          <PagarmeImage width="12" />
         </Stack>
       </CardBody>
       <CardFooter background="background.200">

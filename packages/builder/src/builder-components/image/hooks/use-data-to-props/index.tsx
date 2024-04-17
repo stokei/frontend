@@ -2,12 +2,12 @@ import defaultImage from "../../../../assets/no-image.png";
 import { useMemo } from "react";
 import { useGetBuilderComponentImageQuery } from "../../graphql/image.query.graphql.generated";
 
-interface Data {
+export interface ImageData {
   image?: string;
   alt?: string;
 }
 
-export const useDataToProps = ({ data, props }: { data: Data; props: any }) => {
+export const useDataToProps = ({ data, props }: { data: ImageData; props: any }) => {
   const [{ data: dataGetImage, fetching: isLoading }] =
     useGetBuilderComponentImageQuery({
       pause: !data?.image,

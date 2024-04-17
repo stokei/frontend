@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Button,
+  ColorPicker,
   Drawer,
   DrawerBody,
   DrawerHeader,
@@ -12,6 +13,7 @@ import {
   InputGroup,
   Label,
   Stack,
+  useColorValue,
 } from "@stokei/ui";
 
 import { useForm } from "react-hook-form";
@@ -34,6 +36,10 @@ export const UpdateTitleDrawer = ({
   onUpdate,
 }: UpdateTitleDrawerProps) => {
   const translate = useTranslations();
+
+  const [color, setColor] = useColorValue({
+    defaultColor: currentData?.color || "heading.500"
+  });
 
   const validationSchema = z.object({
     title: z.string().min(1, {
@@ -62,6 +68,7 @@ export const UpdateTitleDrawer = ({
   const onSubmit = async ({ title }: z.infer<typeof validationSchema>) => {
     onUpdate?.({
       value: title,
+      color
     });
     onClose();
   };
@@ -93,6 +100,14 @@ export const UpdateTitleDrawer = ({
                 />
               </InputGroup>
               <FormErrorMessage>{errors?.title?.message}</FormErrorMessage>
+            </FormControl>
+            <FormControl>
+              <Label>
+                {translate.formatMessage({ id: "backgroundColor" })}
+              </Label>
+              <InputGroup>
+                <ColorPicker color={color} onChange={setColor} />
+              </InputGroup>
             </FormControl>
             <Box width="full" paddingBottom="4">
               <Button width="full" isDisabled={!isValid} type="submit">

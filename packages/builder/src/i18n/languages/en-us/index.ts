@@ -1,6 +1,9 @@
-import { I18nKey } from "../../../types/i18n-key";
+import { I18nKeyWithoutOtherTranslations } from "../../../types/i18n-key";
 
-export const enUSMessages: Record<I18nKey, string> = {
+export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
+  primaryColor: "Primary color",
+  textColor: "Text color",
+  backgroundColor: "Background color",
   seeAllProducts: "See all products",
   required: "Required",
   cancel: "Cancel",

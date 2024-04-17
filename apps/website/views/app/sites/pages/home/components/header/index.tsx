@@ -9,7 +9,7 @@ interface HeaderProps {
 
 export const Header = ({ totalCount }: HeaderProps) => {
   const router = useRouter();
-  const { currentApp, hasPaymentIntegrations } = useCurrentApp();
+  const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const onGoToAddProductsPage = () => {
     return router.push(
@@ -29,7 +29,6 @@ export const Header = ({ totalCount }: HeaderProps) => {
       <Button
         leftIcon={<Icon name="plus" />}
         onClick={onGoToAddProductsPage}
-        isDisabled={!hasPaymentIntegrations}
       >
         {translate.formatMessage({ id: "add" })}
       </Button>

@@ -4,9 +4,11 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
   publish: "Publish",
   published: "Published",
+  headlineSections: "Headline sections",
   createNewVersion: "Create new version",
+  viewPage: "View page",
   thisPageIsInItsMostRecentVersionToMakeChangesClickOnCreateNewVersion:
-    "This page is in its most recent version. To make changes, click on 'Create new version'.",
+    "This page is in its latest version. To make changes, click on 'Create new version' or update any version you wish and publish it.",
   hero: "Hero",
   heros: "Heros",
   saving: "Saving",

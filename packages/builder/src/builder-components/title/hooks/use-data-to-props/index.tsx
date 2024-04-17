@@ -1,6 +1,7 @@
 export interface TitleData {
   highlight?: string;
   value?: string;
+  color?: string;
 }
 
 export const useDataToProps = ({
@@ -12,6 +13,7 @@ export const useDataToProps = ({
 }) => {
   return {
     children: data?.value || "",
+    color: data?.color,
     highlight: data?.highlight,
   };
 };

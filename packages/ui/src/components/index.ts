@@ -41,6 +41,7 @@ export * from "./checkbox-group";
 export * from "./circular-progress";
 export * from "./circular-progress-label";
 export * from "./container";
+export * from "./color-picker";
 export * from "./date-picker";
 export * from "./date-picker-group";
 export * from "./divider";
