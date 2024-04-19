@@ -7,6 +7,8 @@ import {
   CardFooter,
   CardHeader,
   Catalog,
+  FormLogin,
+  FormSignup,
   Grid,
   GridItem,
   Hero,
@@ -73,8 +75,8 @@ const getComponent = ({
     [ComponentType.Text]: Text[builderType],
     [ComponentType.Title]: Title[builderType],
     [ComponentType.Space]: Space[builderType],
-    [ComponentType.FormLogin]: undefined,
-    [ComponentType.FormSignup]: undefined
+    [ComponentType.FormLogin]: FormLogin[builderType],
+    [ComponentType.FormSignup]: FormSignup[builderType]
   };
   return components[componentType] as ReactNode;
 };

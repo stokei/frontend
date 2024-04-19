@@ -10,6 +10,20 @@ query CurrentGlobalApp($slug: String!) {
         id
       }
     }
+    loginPage {
+      id
+      slug
+      version {
+        id
+      }
+    }
+    signUpPage {
+      id
+      slug
+      version {
+        id
+      }
+    }
     favicon {
       file {
         url

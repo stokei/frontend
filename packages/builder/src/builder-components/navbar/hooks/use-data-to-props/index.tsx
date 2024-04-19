@@ -1,9 +1,9 @@
-interface Data {
-  text?: string;
-}
+import { PropsWithChildren } from "react";
 
-export const useDataToProps = ({ data, props }: { data: Data; props: any }) => {
+interface NavbarData { }
+
+export const useDataToProps = ({ data, props }: { data: NavbarData; props: PropsWithChildren }) => {
   return {
-    children: data?.text || "Button",
+    children: props?.children,
   };
 };

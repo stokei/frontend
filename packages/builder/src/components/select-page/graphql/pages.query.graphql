@@ -1,0 +1,28 @@
+query GetSitePages(
+  $where: WhereDataFindAllPagesInput
+  $orderBy: OrderByDataFindAllPagesInput
+  $page: PaginationInput
+) {
+  pages(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...SitePage
+    }
+  }
+}
+
+fragment SitePage on Page {
+  id
+  parent
+  title
+  slug
+  version {
+    id
+    name
+  }
+}

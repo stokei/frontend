@@ -6,7 +6,7 @@ import { PropsWithChildren, useMemo } from "react";
 
 export const PageBuilderProvider = ({ children }: PropsWithChildren) => {
   const stokeiGraphQLClient = useStokeiGraphQLClient();
-  const { site } = useSite();
+  const { site, siteId } = useSite();
 
   const routes = useMemo<BuilderProviderRoutes>(() => {
     const mergeAppBaseURL = (route: string) =>
@@ -25,7 +25,7 @@ export const PageBuilderProvider = ({ children }: PropsWithChildren) => {
   }, [site?.defaultDomain?.url]);
 
   return (
-    <BuilderProvider routes={routes} stokeiGraphQLApi={stokeiGraphQLClient}>
+    <BuilderProvider siteId={siteId} routes={routes} stokeiGraphQLApi={stokeiGraphQLClient}>
       {children}
     </BuilderProvider>
   );

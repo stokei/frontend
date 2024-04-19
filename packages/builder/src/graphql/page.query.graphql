@@ -1,6 +1,7 @@
 query GetPage($page: String!) {
   page(id: $page) {
     id
+    title
     slug
     parent
     app {

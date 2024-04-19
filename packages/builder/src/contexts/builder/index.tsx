@@ -8,11 +8,13 @@ export type BuilderProviderRoutes = {
 };
 
 export interface BuilderProviderProps {
+  readonly siteId: string;
   readonly stokeiGraphQLApi: any;
   readonly routes: BuilderProviderRoutes;
 }
 
 export interface BuilderProviderValues {
+  readonly siteId: string;
   readonly stokeiGraphQLApi: any;
   readonly routes: BuilderProviderRoutes;
 }
@@ -20,16 +22,18 @@ export interface BuilderProviderValues {
 export const BuilderContext = createContext({} as BuilderProviderValues);
 
 export const BuilderProvider = ({
+  siteId,
   stokeiGraphQLApi,
   children,
   routes,
 }: PropsWithChildren<BuilderProviderProps>) => {
   const values: BuilderProviderValues = useMemo(
     () => ({
+      siteId,
       routes,
       stokeiGraphQLApi,
     }),
-    [routes, stokeiGraphQLApi]
+    [routes, siteId, stokeiGraphQLApi]
   );
 
   return (

@@ -1,4 +1,8 @@
 export const ptBRMessages = {
+  loginSuccessfully: "Login efetuado com successo!",
+  signUpSuccessfully: "Cadastro efetuado com successo!",
+  page: "Página",
+  pages: "Páginas",
   primaryColor: "Cor primária",
   textColor: "Cor do texto",
   backgroundColor: "Cor de fundo",

@@ -1,6 +1,6 @@
-import { Navbar } from "@stokei/ui";
 import { BlockEditable } from "../../../components/block-editable";
 import { BaseComponentEditable } from "../../../types/base-component-editable";
+import { Login } from "../components/login";
 import { useDataToProps } from "../hooks/use-data-to-props";
 
 interface EditableProps { }
@@ -13,7 +13,7 @@ export const Editable = ({
   const dataProps = useDataToProps({ data, props });
   return (
     <BlockEditable {...props}>
-      <Navbar {...dataProps} />
+      <Login isBlockEditable {...dataProps} />
     </BlockEditable>
   );
 };

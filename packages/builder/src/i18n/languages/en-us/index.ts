@@ -1,6 +1,10 @@
 import { I18nKeyWithoutOtherTranslations } from "../../../types/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
+  loginSuccessfully: "Login successfully!",
+  signUpSuccessfully: "Sign up successfully!",
+  page: "Page",
+  pages: "Pages",
   primaryColor: "Primary color",
   textColor: "Text color",
   backgroundColor: "Background color",

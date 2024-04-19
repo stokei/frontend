@@ -1,3 +1,4 @@
+import { useCurrentApp } from "@/hooks";
 import { BuilderProvider, BuilderProviderRoutes } from "@stokei/builder";
 import { useStokeiGraphQLClient } from "@stokei/graphql";
 import { appRoutes } from "@stokei/routes";
@@ -12,8 +13,10 @@ const builderRoutes: BuilderProviderRoutes = {
 
 export const PageBuilderProvider = ({ children }: PropsWithChildren) => {
   const stokeiGraphQLClient = useStokeiGraphQLClient();
+  const { currentSite } = useCurrentApp();
   return (
     <BuilderProvider
+      siteId={currentSite?.id || ""}
       routes={builderRoutes}
       stokeiGraphQLApi={stokeiGraphQLClient}
     >

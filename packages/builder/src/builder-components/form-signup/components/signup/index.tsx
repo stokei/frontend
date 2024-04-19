@@ -1,23 +1,24 @@
-import { useAPIErrors, useTranslations } from "@/hooks";
-import { appRoutes } from "@stokei/routes";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
+import { appRoutes, websiteRoutes } from "@stokei/routes";
 import {
   Box,
-  Container,
   FormSignUp,
   FormSignUpOnSubmitData,
-  useToast,
+  useToast
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { AuthLayout } from "../../layout";
 import { useSignUpMutation } from "./graphql/signup.mutation.graphql.generated";
+import { useTranslations } from "../../../../hooks";
 
-export const SignUpPage = () => {
+interface SignUpProps {
+  isBlockEditable?: boolean;
+}
+
+export const SignUp = ({ isBlockEditable }: SignUpProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
-  const { onShowAPIError } = useAPIErrors();
 
   const [{ fetching: isLoadingSignUp }, onSignUp] = useSignUpMutation();
 
@@ -54,38 +55,26 @@ export const SignUpPage = () => {
           redirectToWhenSignUpSuccessfully || appRoutes.customers.home
         );
       }
-
       if (!!response.error?.graphQLErrors?.length) {
         response.error.graphQLErrors.map((error) =>
-          onShowAPIError({ message: error?.message })
+          onShowToast({
+            title: error?.message,
+            status: "error",
+          })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
-    <AuthLayout>
-      <Container
-        display="flex"
-        paddingY="5"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Box width="full" maxWidth={["full", "full", "400px", "400px"]}>
-          <FormSignUp
-            isLoading={isLoadingSignUp}
-            onRedirectToLoginURL={() =>
-              router.push({
-                pathname: appRoutes.auth.login,
-                query: {
-                  redirectTo: redirectToWhenSignUpSuccessfully,
-                },
-              })
-            }
-            onSubmit={onSubmit}
-          />
-        </Box>
-      </Container>
-    </AuthLayout>
+    <Box width="full" maxWidth={["full", "full", "400px", "400px"]}>
+      <FormSignUp
+        isLoading={isLoadingSignUp}
+        onRedirectToLoginURL={() =>
+          window.location.assign(appRoutes.auth.login)
+        }
+        onSubmit={!isBlockEditable ? onSubmit : () => { }}
+      />
+    </Box>
   );
 };

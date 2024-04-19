@@ -7,10 +7,11 @@ import heroWithVideoLeftImg from "@/assets/hero-with-video-left.svg";
 import heroWithVideoRightImg from "@/assets/hero-with-video-right.svg";
 import { MenuItem } from "../menu-item";
 import { Component } from "../types";
-import { useTranslations } from "@/hooks";
+import { useSite, useTranslations } from "@/hooks";
 
 export const MenuItemHeros = () => {
   const translate = useTranslations();
+  const { site } = useSite();
 
   const components = useMemo<Component[]>(() => {
     return [
@@ -50,6 +51,17 @@ export const MenuItemHeros = () => {
                           data: {
                             value: translate.formatMessage({
                               id: "description",
+                            }),
+                          },
+                          components: [],
+                        },
+                        {
+                          parent: "",
+                          type: ComponentType.Button,
+                          data: {
+                            pageId: site?.signUpPage?.id,
+                            text: translate.formatMessage({
+                              id: "signUp",
                             }),
                           },
                           components: [],
@@ -114,6 +126,17 @@ export const MenuItemHeros = () => {
                           },
                           components: [],
                         },
+                        {
+                          parent: "",
+                          type: ComponentType.Button,
+                          data: {
+                            pageId: site?.signUpPage?.id,
+                            text: translate.formatMessage({
+                              id: "signUp",
+                            }),
+                          },
+                          components: [],
+                        },
                       ],
                     },
                   ],
@@ -159,6 +182,17 @@ export const MenuItemHeros = () => {
                           data: {
                             value: translate.formatMessage({
                               id: "description",
+                            }),
+                          },
+                          components: [],
+                        },
+                        {
+                          parent: "",
+                          type: ComponentType.Button,
+                          data: {
+                            pageId: site?.signUpPage?.id,
+                            text: translate.formatMessage({
+                              id: "signUp",
                             }),
                           },
                           components: [],
@@ -234,6 +268,17 @@ export const MenuItemHeros = () => {
                           },
                           components: [],
                         },
+                        {
+                          parent: "",
+                          type: ComponentType.Button,
+                          data: {
+                            pageId: site?.signUpPage?.id,
+                            text: translate.formatMessage({
+                              id: "signUp",
+                            }),
+                          },
+                          components: [],
+                        },
                       ],
                     },
                   ],
@@ -283,6 +328,17 @@ export const MenuItemHeros = () => {
                           },
                           components: [],
                         },
+                        {
+                          parent: "",
+                          type: ComponentType.Button,
+                          data: {
+                            pageId: site?.signUpPage?.id,
+                            text: translate.formatMessage({
+                              id: "signUp",
+                            }),
+                          },
+                          components: [],
+                        },
                       ],
                     },
                     {
@@ -304,7 +360,7 @@ export const MenuItemHeros = () => {
         },
       },
     ];
-  }, [translate]);
+  }, [site?.signUpPage?.id, translate]);
 
   return (
     <MenuItem
