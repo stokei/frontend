@@ -12,10 +12,11 @@ import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
 import { useTranslations } from "../../../../hooks";
 
 interface LoginProps {
+  title?: string;
   isBlockEditable?: boolean;
 }
 
-export const Login = ({ isBlockEditable }: LoginProps) => {
+export const Login = ({ isBlockEditable, title }: LoginProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -61,17 +62,20 @@ export const Login = ({ isBlockEditable }: LoginProps) => {
   };
 
   return (
-    <Box width="full" maxWidth={["full", "full", "400px", "400px"]}>
-      <FormLogin
-        isLoading={isLoadingLogin}
-        onRedirectToForgotPasswordURL={() =>
-          window.location.assign(appRoutes.auth.forgotPassword)
-        }
-        onRedirectToSignUpURL={() =>
-          window.location.assign(appRoutes.auth.signUp)
-        }
-        onSubmit={!isBlockEditable ? onSubmit : () => { }}
-      />
+    <Box width="full" align="center" justify="center">
+      <Box width="full" maxWidth={["full", "full", "500px", "500px"]}>
+        <FormLogin
+          title={title}
+          isLoading={isLoadingLogin}
+          onRedirectToForgotPasswordURL={() =>
+            window.location.assign(appRoutes.auth.forgotPassword)
+          }
+          onRedirectToSignUpURL={() =>
+            window.location.assign(appRoutes.auth.signUp)
+          }
+          onSubmit={!isBlockEditable ? onSubmit : () => { }}
+        />
+      </Box>
     </Box>
   );
 };

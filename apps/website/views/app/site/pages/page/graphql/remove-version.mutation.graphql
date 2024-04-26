@@ -1,0 +1,5 @@
+mutation RemoveVersion($input: RemoveVersionInput!) {
+  removeVersion(input: $input) {
+    id
+  }
+}

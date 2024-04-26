@@ -91,6 +91,7 @@ export const routesApp = (data: { appId?: string }) => {
         home: baseSiteURL + "/pages",
         pages: baseSiteURL + "/pages",
         domains: baseSiteURL + "/domains",
+        metadata: baseSiteURL + "/metadata",
         page: ({ page, version }: { page: string; version?: string }) => {
           const basePageURL =
             baseSiteURL +
@@ -125,6 +126,7 @@ export const routesApp = (data: { appId?: string }) => {
     settings: {
       home: baseURL + "/settings",
       billing: baseURL + "/settings/billing",
+      colors: baseURL + "/settings/colors",
     },
   };
 };

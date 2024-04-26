@@ -94,6 +94,7 @@ import {
   RxComponent1,
 } from "react-icons/rx";
 import { TbApps, TbSeo, TbVersions } from "react-icons/tb";
+import { IoIosColorFilter } from "react-icons/io";
 
 import {
   RiCheckboxBlankCircleLine,
@@ -209,3 +210,4 @@ export const MoveIcon = RiDraggable;
 export const ComponentIcon = RxComponent1;
 export const MetadataIcon = TbSeo;
 export const VersionIcon = TbVersions;
+export const ColorIcon = IoIosColorFilter;

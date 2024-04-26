@@ -5,7 +5,7 @@ import { BlockEditable } from "../../../components/block-editable";
 import { useDataToProps } from "../hooks/use-data-to-props";
 import { UpdateTitleDrawer } from "../components/update-title-drawer";
 
-interface EditableProps {}
+interface EditableProps { }
 
 export const Editable = ({
   data,
@@ -26,6 +26,7 @@ export const Editable = ({
       onUpdate={onOpenUpdateTitleDrawer}
     >
       <UpdateTitleDrawer
+        id={props?.id}
         currentData={data}
         isOpen={isOpenUpdateTitleDrawer}
         onUpdate={onUpdate}

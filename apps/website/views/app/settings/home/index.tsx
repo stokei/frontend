@@ -1,6 +1,7 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentApp } from "@/hooks/use-current-app";
 import { useUploadImage } from "@/hooks/use-upload-image";
+import { AppLayout } from "@/views/app/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -14,26 +15,22 @@ import {
   ImageUploader,
   Input,
   InputGroup,
-  InputSlug,
   Label,
   Stack,
   Title,
-  useToast,
+  useToast
 } from "@stokei/ui";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { AppLayout } from "@/views/app/layout";
 import { Navbar } from "./components/navbar";
 import { useUpdateAppMutation } from "./graphql/update-app.mutation.graphql.generated";
 
-export const SettingsHomePage = () => {
-  const router = useRouter();
+export const HomePage = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
-  const { currentApp } = useCurrentApp();
+  const { currentApp, onReloadCurrentApp } = useCurrentApp();
 
   const [{ fetching: isLoadingUpdateApp }, onUpdateApp] =
     useUpdateAppMutation();
@@ -81,12 +78,11 @@ export const SettingsHomePage = () => {
         },
       });
       if (!!response?.data?.updateApp) {
-        onShowToast({
-          title: translate.formatMessage({ id: "appUpdatedSuccessfully" }),
+        await onReloadCurrentApp();
+        return onShowToast({
+          title: translate.formatMessage({ id: "updatedSuccessfully" }),
           status: "success",
         });
-        router.reload();
-        return;
       }
 
       if (!!response.error?.graphQLErrors?.length) {
@@ -94,7 +90,7 @@ export const SettingsHomePage = () => {
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -142,7 +138,7 @@ export const SettingsHomePage = () => {
                     uploadURL={logoUploadURL}
                     previewURL={currentApp?.logo?.file?.url || ""}
                     onSuccess={onCompleteLogoUpload}
-                    onError={() => {}}
+                    onError={() => { }}
                   />
                 </FormControl>
                 <ButtonGroup justifyContent="flex-end">

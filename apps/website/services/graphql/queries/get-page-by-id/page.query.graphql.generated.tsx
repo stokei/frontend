@@ -8,15 +8,16 @@ export type GetPageByIdQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetPageByIdQuery = { __typename?: 'Query', page: { __typename?: 'Page', id: string, title: string, slug: string, version?: { __typename?: 'Version', id: string } | null } };
+export type GetPageByIdQuery = { __typename?: 'Query', page: { __typename?: 'Page', id: string, title: string, slug: string, canRemove?: boolean | null, version?: { __typename?: 'Version', id: string } | null } };
 
-export type GlobalPageFragment = { __typename?: 'Page', id: string, title: string, slug: string, version?: { __typename?: 'Version', id: string } | null };
+export type GlobalPageFragment = { __typename?: 'Page', id: string, title: string, slug: string, canRemove?: boolean | null, version?: { __typename?: 'Version', id: string } | null };
 
 export const GlobalPageFragmentDoc = gql`
     fragment GlobalPage on Page {
   id
   title
   slug
+  canRemove
   version {
     id
   }

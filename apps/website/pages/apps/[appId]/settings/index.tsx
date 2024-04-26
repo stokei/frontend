@@ -1,10 +1,10 @@
-import { SettingsHomePage } from "@/views/app/settings/home";
+import { HomePage } from "@/views/app/settings/home";
 import { NextPage } from "next";
 
-interface Props {}
+interface Props { }
 
 const Page: NextPage<Props> = () => {
-  return <SettingsHomePage />;
+  return <HomePage />;
 };
 
 export default Page;

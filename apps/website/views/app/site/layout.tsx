@@ -65,6 +65,24 @@ const SiteLayout = ({ children }: PropsWithChildren) => {
           >
             {translate.formatMessage({ id: "domains" })}
           </SidebarNavLink>
+
+          <SidebarNavLink
+            leftIcon="color"
+            as={NextLink}
+            href={baseRoutes.settings.colors}
+            isActive={router.asPath === baseRoutes.settings.colors}
+          >
+            {translate.formatMessage({ id: "colors" })}
+          </SidebarNavLink>
+
+          <SidebarNavLink
+            leftIcon="metadata"
+            as={NextLink}
+            href={baseSiteRoutes.metadata}
+            isActive={router.asPath === baseSiteRoutes.metadata}
+          >
+            {translate.formatMessage({ id: "metadata" })}
+          </SidebarNavLink>
         </SidebarBody>
       </Sidebar>
       <SidebarLayoutContent>

@@ -24,6 +24,7 @@ import { BlockData } from "../../hooks/use-data-to-props";
 import { useEffect, useState } from "react";
 
 interface UpdateBlockDrawerProps {
+  id: string;
   currentData?: BlockData;
   isOpen?: boolean;
   onUpdate?: (data?: BlockData) => void;
@@ -31,6 +32,7 @@ interface UpdateBlockDrawerProps {
 }
 
 export const UpdateBlockDrawer = ({
+  id,
   isOpen,
   currentData,
   onClose,
@@ -65,11 +67,11 @@ export const UpdateBlockDrawer = ({
                 {translate.formatMessage({ id: "backgroundColor" })}
               </Label>
               <InputGroup>
-                <ColorPicker color={backgroundColor} onChange={setBackgroundColor} />
+                <ColorPicker id={id + "background-color"} color={backgroundColor} onChange={setBackgroundColor} />
               </InputGroup>
             </FormControl>
             <Box width="full" paddingBottom="4">
-              <Button width="full" type="submit" isDisabled={!backgroundColor}>
+              <Button width="full" type="submit">
                 {translate.formatMessage({ id: "save" })}
               </Button>
             </Box>

@@ -23,6 +23,7 @@ import { TextData } from "../../hooks/use-data-to-props";
 import { useEffect } from "react";
 
 interface UpdateTextDrawerProps {
+  id: string
   currentData?: TextData;
   isOpen?: boolean;
   onUpdate?: (data?: TextData) => void;
@@ -30,6 +31,7 @@ interface UpdateTextDrawerProps {
 }
 
 export const UpdateTextDrawer = ({
+  id,
   isOpen,
   currentData,
   onClose,
@@ -103,10 +105,10 @@ export const UpdateTextDrawer = ({
             </FormControl>
             <FormControl>
               <Label>
-                {translate.formatMessage({ id: "backgroundColor" })}
+                {translate.formatMessage({ id: "textColor" })}
               </Label>
               <InputGroup>
-                <ColorPicker color={color} onChange={setColor} />
+                <ColorPicker id={id + "text-color"} color={color} onChange={setColor} />
               </InputGroup>
             </FormControl>
             <Box width="full" paddingBottom="4">

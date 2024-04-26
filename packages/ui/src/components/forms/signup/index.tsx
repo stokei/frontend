@@ -28,12 +28,14 @@ export interface FormSignUpOnSubmitData {
 }
 
 export interface FormSignUpProps {
+  title?: string;
   isLoading?: boolean;
   onRedirectToLoginURL: () => void;
   onSubmit: (data: FormSignUpOnSubmitData) => void;
 }
 
 export const FormSignUp = ({
+  title,
   isLoading,
   onRedirectToLoginURL,
   onSubmit,
@@ -72,7 +74,7 @@ export const FormSignUp = ({
   return (
     <Stack width="full" direction="column" spacing="4">
       <Title marginBottom="5" textAlign="center" lineHeight="shorter">
-        {translate.formatMessage({ id: "signUp" })}
+        {title || translate.formatMessage({ id: "signUp" })}
       </Title>
       <Card background="background.50">
         <CardBody>
@@ -159,6 +161,7 @@ export const FormSignUp = ({
                 width="full"
                 spacing="2"
                 justifyContent="center"
+                align="center"
               >
                 <Text>{translate.formatMessage({ id: "alreadyAUser" })}</Text>
                 <Button variant="link" onClick={onRedirectToLoginURL}>

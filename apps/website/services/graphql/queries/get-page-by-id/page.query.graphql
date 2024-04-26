@@ -8,6 +8,7 @@ fragment GlobalPage on Page {
   id
   title
   slug
+  canRemove
   version {
     id
   }

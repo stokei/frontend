@@ -34,7 +34,8 @@ import { appRoutes } from "@stokei/routes";
 import "@stokei/ui/src/styles/css/global.css";
 import Head from "next/head";
 import { Router } from "next/router";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useCurrentApp } from "@/hooks";
 
 const messages = mergeTranslations([
   uiTranslationsMessages,
@@ -46,6 +47,43 @@ const messages = mergeTranslations([
 Router.events.on("routeChangeStart", () => LoadingTransition.start());
 Router.events.on("routeChangeError", () => LoadingTransition.done());
 Router.events.on("routeChangeComplete", () => LoadingTransition.done());
+
+const Providers = ({
+  appId,
+  stokeiGraphQLClient,
+  currentAccount,
+  themeColors,
+  children,
+}: any) => {
+  const { currentApp } = useCurrentApp();
+  const [currentColors, setCurrentColors] = useState(() => themeColors);
+
+  useEffect(() => {
+    setCurrentColors(formatAppColorsToThemeColors(
+      currentApp?.colors?.items
+    )
+    )
+  }, [currentApp]);
+
+  return (
+    <StokeiUIProvider
+      config={{
+        colors: currentColors,
+      }}
+      appId={appId}
+      accountId={currentAccount?.id}
+      accountAccessToken={stokeiGraphQLClient?.accessToken}
+      accountRefreshToken={stokeiGraphQLClient?.refreshToken}
+    >
+      <TranslationsProvider
+        language={DEFAULT_LANGUAGE}
+        messages={messages}
+      >
+        {children}
+      </TranslationsProvider>
+    </StokeiUIProvider>
+  )
+}
 
 function MyApp({
   Component,
@@ -69,30 +107,22 @@ function MyApp({
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
       <CurrentAppProvider currentApp={currentApp}>
         <CurrentAccountProvider currentAccount={currentAccount}>
-          <StokeiUIProvider
-            config={{
-              colors: themeColors,
-            }}
+          <Providers
             appId={appId}
-            accountId={currentAccount?.id}
-            accountAccessToken={stokeiGraphQLClient?.accessToken}
-            accountRefreshToken={stokeiGraphQLClient?.refreshToken}
+            stokeiGraphQLClient={stokeiGraphQLClient}
+            currentAccount={currentAccount}
+            themeColors={themeColors}
           >
-            <TranslationsProvider
-              language={DEFAULT_LANGUAGE}
-              messages={messages}
-            >
-              <Head>
-                <title>{currentApp?.name}</title>
-                <meta
-                  name="viewport"
-                  content="width=device-width, initial-scale=1"
-                />
-              </Head>
-              <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
-              <Component {...pageProps} />
-            </TranslationsProvider>
-          </StokeiUIProvider>
+            <Head>
+              <title>{currentApp?.name}</title>
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+              />
+            </Head>
+            <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
+            <Component {...pageProps} />
+          </Providers>
         </CurrentAccountProvider>
       </CurrentAppProvider>
     </StokeiGraphQLClientProvider>
@@ -123,7 +153,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
         { requestPolicy: "network-only" }
       )
       .toPromise();
-  } catch (error) {}
+  } catch (error) { }
 
   const currentAppData = currentApp?.data?.currentApp;
   const currentAccountData = currentAccount?.data?.me;

@@ -1378,6 +1378,7 @@ export type Mutation = {
   removePhone: Phone;
   removeSite: Site;
   removeSortedItem: SortedItem;
+  removeVersion: Version;
   removeVideo: Video;
   removeVideoAuthor: VideoAuthor;
   signUp: AuthResponse;
@@ -1765,6 +1766,11 @@ export type MutationRemoveSiteArgs = {
 
 export type MutationRemoveSortedItemArgs = {
   input: RemoveSortedItemInput;
+};
+
+
+export type MutationRemoveVersionArgs = {
+  input: RemoveVersionInput;
 };
 
 
@@ -2406,6 +2412,7 @@ export enum PagarmeBankAccountType {
 export type Page = {
   __typename?: 'Page';
   app?: Maybe<App>;
+  canRemove?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   drafVersion?: Maybe<Version>;
@@ -3391,6 +3398,10 @@ export type RemoveSortedItemInput = {
   where: RemoveWhereSortedItemInput;
 };
 
+export type RemoveVersionInput = {
+  where: RemoveWhereVersionInput;
+};
+
 export type RemoveVideoAuthorInput = {
   where: RemoveWhereVideoAuthorInput;
 };
@@ -3485,6 +3496,10 @@ export type RemoveWhereSiteInput = {
 
 export type RemoveWhereSortedItemInput = {
   sortedItem: Scalars['String'];
+};
+
+export type RemoveWhereVersionInput = {
+  version: Scalars['String'];
 };
 
 export type RemoveWhereVideoAuthorInput = {
@@ -3859,8 +3874,10 @@ export type UpdateDataProductInput = {
 export type UpdateDataSiteInput = {
   favicon?: InputMaybe<Scalars['String']>;
   homePage?: InputMaybe<Scalars['String']>;
+  loginPage?: InputMaybe<Scalars['String']>;
   logo?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  signUpPage?: InputMaybe<Scalars['String']>;
   slug?: InputMaybe<Scalars['String']>;
 };
 

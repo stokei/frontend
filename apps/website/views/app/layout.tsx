@@ -17,7 +17,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useMemo } from "react";
 
-export interface AppLayoutProps {}
+export interface AppLayoutProps { }
 
 export const AppLayout = ({ children }: PropsWithChildren<AppLayoutProps>) => {
   const router = useRouter();
@@ -200,6 +200,14 @@ export const AppLayout = ({ children }: PropsWithChildren<AppLayoutProps>) => {
                   isActive={router.asPath === baseRoutes.settings.billing}
                 >
                   {translate.formatMessage({ id: "billing" })}
+                </SidebarNavLink>
+                <SidebarNavLink
+                  leftIcon="color"
+                  as={NextLink}
+                  href={baseRoutes.settings.colors}
+                  isActive={router.asPath === baseRoutes.settings.colors}
+                >
+                  {translate.formatMessage({ id: "colors" })}
                 </SidebarNavLink>
                 <SidebarNavLink
                   leftIcon="onboarding"

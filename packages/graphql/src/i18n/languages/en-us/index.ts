@@ -32,6 +32,7 @@ export const enUSMessages: Record<I18nKey, string> = {
   addressesNotFound: "Addresses not found",
   appAdminNotFound: "App admin not found",
   appAdminUnauthorizedRemove: "App admin unauthorized remove",
+  pageUnauthorizedRemove: "Page unauthorized remove",
   appAdminsNotFound: "App admins not found",
   appInstructorNotFound: "App instructor not found",
   appInstructorsNotFound: "App instructors not found",

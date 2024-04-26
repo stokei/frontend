@@ -1,5 +1,12 @@
-export interface FormLoginData { }
+import { useTranslations } from "../../../../hooks";
+
+export interface FormLoginData {
+  title?: string
+}
 
 export const useDataToProps = ({ data, props }: { data: FormLoginData; props: any }) => {
-  return {};
+  const translate = useTranslations();
+  return {
+    title: data?.title || translate.formatMessage({ id: 'signInToYourAccount' })
+  };
 };

@@ -11,6 +11,7 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import dateFnsPortuguese from "date-fns/locale/pt-BR";
 import dateFnsEnglish from "date-fns/locale/en-US";
 import {
+  IColor,
   IColorHue,
   IColorName,
   Language,
@@ -31,6 +32,7 @@ export interface StokeiUIContextValues {
     colorName: IColorName,
     colorHue: IColorHue
   ) => string;
+  readonly getColorByHexdecimal: (colorValue: string, colorName?: IColorName) => IColor | undefined
 }
 
 export interface StokeiUIContextProps {
@@ -61,6 +63,26 @@ export const StokeiUIProvider = ({
     },
     [themeData]
   );
+  const getColorByHexdecimal = useCallback(
+    (colorValue: string, colorName?: IColorName): IColor | undefined => {
+      if (!colorValue) {
+        return
+      }
+      for (const currentColorName in themeData?.colors) {
+        const hues = themeData?.colors[currentColorName];
+        if (colorName && currentColorName !== colorName) {
+          continue;
+        }
+        for (const hue in hues) {
+          if (hues[hue] === colorValue) {
+            return `${currentColorName}.${hue}` as IColor;
+          }
+        }
+      }
+      return;
+    },
+    [themeData]
+  );
 
   const stokeiConfig = useMemo(
     () => ({
@@ -70,15 +92,9 @@ export const StokeiUIProvider = ({
       accountAccessToken,
       accountRefreshToken,
       getHexdecimalColor,
+      getColorByHexdecimal
     }),
-    [
-      appId,
-      accountId,
-      language,
-      accountAccessToken,
-      accountRefreshToken,
-      getHexdecimalColor,
-    ]
+    [appId, accountId, language, accountAccessToken, accountRefreshToken, getHexdecimalColor, getColorByHexdecimal]
   );
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import { Navbar } from "@stokei/ui";
 import { PropsWithChildren } from "react";
 import { Loading } from "./loading";
 import { PageBuilderProvider } from "@/contexts";
+import { appRoutes } from "@stokei/routes";
 
 export interface CustomPageLayoutProps {
   isLoading?: boolean;
@@ -15,7 +16,7 @@ export const CustomPageLayout = ({
   return (
     <PageBuilderProvider>
       <Navbar>
-        <NavbarLogo />
+        <NavbarLogo href={appRoutes.home} />
         <NavbarUserInformation />
       </Navbar>
       {isLoading ? <Loading /> : <>{children}</>}

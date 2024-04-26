@@ -82,14 +82,14 @@ function MyApp({
               messages={messages}
             >
               <Head>
-                <title>{currentApp?.name}</title>
+                <title>{currentSite?.name}</title>
                 <meta
                   name="viewport"
                   content="width=device-width, initial-scale=1"
                 />
                 <link
                   rel="icon"
-                  href={currentApp?.icon?.file?.url || noImage?.src}
+                  href={currentSite?.icon?.file?.url || noImage?.src}
                 />
               </Head>
               <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
@@ -140,7 +140,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
           { requestPolicy: "network-only" }
         )
         .toPromise();
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const currentAccountData = currentAccount?.data?.me;

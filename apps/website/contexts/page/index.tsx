@@ -1,3 +1,4 @@
+import { useSite } from "@/hooks";
 import { GetVersionResponse } from "@/services/axios/models/version";
 import { GlobalPageFragment } from "@/services/graphql/queries/get-page-by-id/page.query.graphql.generated";
 import { useRouter } from "next/router";
@@ -19,6 +20,9 @@ export interface PageProviderValues {
   page?: GlobalPageFragment;
   pageId: string;
   isProductionVersion: boolean;
+  isHomePage: boolean;
+  isLoginPage: boolean;
+  isSignUpPage: boolean;
   onChangePage: (currentPage: GlobalPageFragment) => void;
   onChangeVersion: (currentVersion: GetVersionResponse) => void;
 }
@@ -31,6 +35,7 @@ export const PageProvider = ({
   children,
 }: PropsWithChildren<PageProviderProps>) => {
   const router = useRouter();
+  const { site } = useSite();
   const [version, setVersion] = useState<GetVersionResponse | undefined>(
     versionProp
   );
@@ -41,6 +46,18 @@ export const PageProvider = ({
   const isProductionVersion = useMemo(
     () => page?.version?.id === version?.id,
     [page?.version?.id, version?.id]
+  );
+  const isHomePage = useMemo(
+    () => !!(site?.homePage?.id && page?.id === site?.homePage?.id),
+    [page?.id, site?.homePage?.id]
+  );
+  const isLoginPage = useMemo(
+    () => !!(site?.loginPage?.id && page?.id === site?.loginPage?.id),
+    [page?.id, site?.loginPage?.id]
+  );
+  const isSignUpPage = useMemo(
+    () => !!(site?.signUpPage?.id && page?.id === site?.signUpPage?.id),
+    [page?.id, site?.signUpPage?.id]
   );
 
   const onChangePage = useCallback(
@@ -58,10 +75,13 @@ export const PageProvider = ({
       page,
       pageId,
       isProductionVersion,
+      isHomePage,
+      isLoginPage,
+      isSignUpPage,
       onChangePage,
       onChangeVersion,
     }),
-    [isProductionVersion, onChangePage, onChangeVersion, page, pageId, version]
+    [isHomePage, isLoginPage, isProductionVersion, isSignUpPage, onChangePage, onChangeVersion, page, pageId, version]
   );
 
   return <PageContext.Provider value={values}>{children}</PageContext.Provider>;

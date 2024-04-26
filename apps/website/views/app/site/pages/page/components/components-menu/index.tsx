@@ -1,4 +1,5 @@
 import { MenuItemCatalogs } from "./menu-item-catalogs";
+import { MenuItemForms } from "./menu-item-forms";
 import { MenuItemHeros } from "./menu-item-heros";
 
 export const ComponentsMenu = () => {
@@ -6,6 +7,7 @@ export const ComponentsMenu = () => {
     <>
       <MenuItemCatalogs />
       <MenuItemHeros />
+      <MenuItemForms />
     </>
   );
 };

@@ -31,6 +31,7 @@ export const ptBRMessages = {
   appAdminNotFound: "Administrador do aplicação não encontrado",
   appAdminUnauthorizedRemove:
     "Remoção não autorizada do administrador do aplicação",
+  pageUnauthorizedRemove: "Remoção não autorizada da página",
   appAdminsNotFound: "Administradores de aplicações não encontrados",
   appInstructorNotFound: "Instrutor de aplicação não encontrado",
   appInstructorsNotFound: "Instrutores do aplicação não encontrados",

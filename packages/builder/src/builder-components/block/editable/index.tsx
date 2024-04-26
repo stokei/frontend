@@ -28,6 +28,7 @@ export const Editable = ({
       onUpdate={onOpenUpdateBlockDrawer}
     >
       <UpdateBlockDrawer
+        id={props?.id}
         currentData={data}
         isOpen={isOpenUpdateBlockDrawer}
         onUpdate={onUpdate}

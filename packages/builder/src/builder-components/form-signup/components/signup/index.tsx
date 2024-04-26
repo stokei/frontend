@@ -12,10 +12,11 @@ import { useSignUpMutation } from "./graphql/signup.mutation.graphql.generated";
 import { useTranslations } from "../../../../hooks";
 
 interface SignUpProps {
+  title?: string;
   isBlockEditable?: boolean;
 }
 
-export const SignUp = ({ isBlockEditable }: SignUpProps) => {
+export const SignUp = ({ isBlockEditable, title }: SignUpProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -67,14 +68,17 @@ export const SignUp = ({ isBlockEditable }: SignUpProps) => {
   };
 
   return (
-    <Box width="full" maxWidth={["full", "full", "400px", "400px"]}>
-      <FormSignUp
-        isLoading={isLoadingSignUp}
-        onRedirectToLoginURL={() =>
-          window.location.assign(appRoutes.auth.login)
-        }
-        onSubmit={!isBlockEditable ? onSubmit : () => { }}
-      />
+    <Box width="full" align="center" justify="center">
+      <Box width="full" maxWidth={["full", "full", "500px", "500px"]}>
+        <FormSignUp
+          title={title}
+          isLoading={isLoadingSignUp}
+          onRedirectToLoginURL={() =>
+            window.location.assign(appRoutes.auth.login)
+          }
+          onSubmit={!isBlockEditable ? onSubmit : () => { }}
+        />
+      </Box>
     </Box>
   );
 };

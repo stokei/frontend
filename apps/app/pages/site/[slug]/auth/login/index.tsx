@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (
   if (!site?.loginPage?.version?.id) {
     return {
       redirect: {
-        destination: appRoutes.auth.login,
+        destination: appRoutes.home,
         permanent: false,
       },
     };

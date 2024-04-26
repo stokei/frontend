@@ -84,7 +84,7 @@ export const SelectItem = forwardRef(
         </Stack>
         {isActive && (
           <Box>
-            <Icon name="check" color="success.500" fontSize="lg" />
+            <Icon name="check" color="green.500" fontSize="lg" />
           </Box>
         )}
       </Stack>

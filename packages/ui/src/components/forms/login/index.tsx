@@ -26,6 +26,7 @@ export interface FormLoginOnSubmitData {
 }
 
 export interface FormLoginProps {
+  title?: string;
   isLoading?: boolean;
   onRedirectToForgotPasswordURL: () => void;
   onRedirectToSignUpURL: () => void;
@@ -34,6 +35,7 @@ export interface FormLoginProps {
 
 export const FormLogin = ({
   isLoading,
+  title,
   onSubmit,
   onRedirectToSignUpURL,
   onRedirectToForgotPasswordURL,
@@ -66,7 +68,7 @@ export const FormLogin = ({
   return (
     <Stack width="full" direction="column" spacing="4">
       <Title marginBottom="5" textAlign="center" lineHeight="shorter">
-        {translate.formatMessage({ id: "signInToYourAccount" })}
+        {title || translate.formatMessage({ id: "signInToYourAccount" })}
       </Title>
       <Card background="background.50">
         <CardBody>

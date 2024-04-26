@@ -5,7 +5,7 @@ import { BaseComponentEditable } from "../../../types/base-component-editable";
 import { useDataToProps } from "../hooks/use-data-to-props";
 import { UpdateTextDrawer } from "../components/update-text-drawer";
 
-interface EditableProps {}
+interface EditableProps { }
 
 export const Editable = ({
   data,
@@ -26,6 +26,7 @@ export const Editable = ({
       onUpdate={onOpenUpdateTextDrawer}
     >
       <UpdateTextDrawer
+        id={props?.id}
         currentData={data}
         isOpen={isOpenUpdateTextDrawer}
         onUpdate={onUpdate}

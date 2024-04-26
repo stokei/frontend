@@ -110,6 +110,7 @@ export const icons = {
   component: IconComponent.ComponentIcon,
   metadata: IconComponent.MetadataIcon,
   version: IconComponent.VersionIcon,
+  color: IconComponent.ColorIcon,
 };
 
 export type IconName = keyof typeof icons;

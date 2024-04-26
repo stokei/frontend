@@ -23,6 +23,7 @@ import { TitleData } from "../../hooks/use-data-to-props";
 import { useEffect } from "react";
 
 interface UpdateTitleDrawerProps {
+  id: string;
   currentData?: TitleData;
   isOpen?: boolean;
   onUpdate?: (data?: TitleData) => void;
@@ -30,6 +31,7 @@ interface UpdateTitleDrawerProps {
 }
 
 export const UpdateTitleDrawer = ({
+  id,
   isOpen,
   currentData,
   onClose,
@@ -103,10 +105,10 @@ export const UpdateTitleDrawer = ({
             </FormControl>
             <FormControl>
               <Label>
-                {translate.formatMessage({ id: "backgroundColor" })}
+                {translate.formatMessage({ id: "textColor" })}
               </Label>
               <InputGroup>
-                <ColorPicker color={color} onChange={setColor} />
+                <ColorPicker id={id + "title-color"} color={color} onChange={setColor} />
               </InputGroup>
             </FormControl>
             <Box width="full" paddingBottom="4">
