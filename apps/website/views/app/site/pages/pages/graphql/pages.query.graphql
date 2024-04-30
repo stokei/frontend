@@ -20,6 +20,8 @@ fragment SitePagesPage on Page {
   id
   parent
   title
+  url
+  type
   slug
   version {
     id

@@ -29,6 +29,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   total: "Total",
   subtotal: "Subtotal",
   buy: "Buy",
+  buyNow: "Buy now",
   clear: "Clear",
   price: "Price",
   unavailable: "Unavailable",

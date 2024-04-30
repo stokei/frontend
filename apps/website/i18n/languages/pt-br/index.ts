@@ -1,5 +1,8 @@
 export const ptBRMessages = {
   me: "Eu",
+  external: "Externa",
+  link: "Caminho",
+  linkPlaceholder: "https://meulink.com",
   makeHomePage: "Tornar na página inical",
   makeLoginPage: "Tornar na página de login",
   makeSignUpPage: "Tornar na página de cadastro",

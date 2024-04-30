@@ -1,9 +1,13 @@
 import { useAPIErrors, usePage, useTranslations } from "@/hooks";
 import {
+  Box,
   Editable,
   EditableControls,
   EditableInput,
   EditablePreview,
+  Label,
+  Stack,
+  Text,
   useToast,
 } from "@stokei/ui";
 import { useEffect, useState } from "react";
@@ -56,10 +60,13 @@ export const UpdateVersionNameForm = () => {
   };
 
   return (
-    <Editable value={name} onSubmit={onSubmit} onChange={setName}>
-      <EditablePreview />
-      <EditableInput id="version-name" isLoading={isLoadingUpdateVersion} />
-      <EditableControls />
-    </Editable>
+    <Stack width="fit-content" direction="row" align="center" spacing="2">
+      <Text fontWeight="bold">{translate.formatMessage({ id: 'version' })}:</Text>
+      <Editable value={name} onSubmit={onSubmit} onChange={setName}>
+        <EditablePreview />
+        <EditableInput id="version-name" isLoading={isLoadingUpdateVersion} />
+        <EditableControls />
+      </Editable>
+    </Stack>
   );
 };

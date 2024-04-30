@@ -1,6 +1,5 @@
-import { useAPIErrors, useCurrentApp, useSite, useTranslations } from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { websiteRoutes } from "@stokei/routes";
 import {
   Box,
   Button,
@@ -18,39 +17,36 @@ import {
   useToast
 } from "@stokei/ui";
 
+import { PageType } from "@/services/graphql/stokei";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCreatePageMutation } from "../../graphql/create-page.mutation.graphql.generated";
-import { useState } from "react";
-import { PageType } from "@/services/graphql/stokei";
-import { SelectPageType } from "@/views/app/site/components/select-page-type";
+import { useUpdatePageMutation } from "../../../page/graphql/update-page.mutation.graphql.generated";
+import { SitePagesPageFragment } from "../../graphql/pages.query.graphql.generated";
 
-interface AddPageDrawerProps {
+interface UpdatePageDrawerProps {
+  page?: SitePagesPageFragment;
   isOpenDrawer?: boolean;
   onCloseDrawer: () => void;
-  onSuccess: () => void;
 }
 
-export const AddPageDrawer = ({
-  onSuccess,
+export const UpdatePageDrawer = ({
+  page,
   onCloseDrawer,
   isOpenDrawer,
-}: AddPageDrawerProps) => {
-  const [pageType, setPageType] = useState<PageType>(PageType.Default);
+}: UpdatePageDrawerProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
-  const { currentApp } = useCurrentApp();
-  const { siteId } = useSite();
 
-  const [{ fetching: isLoadingCreatePage }, onExecuteCreatePageMutation] =
-    useCreatePageMutation();
+  const [{ fetching: isLoadingUpdatePage }, onExecuteUpdatePageMutation] =
+    useUpdatePageMutation();
 
   const validationSchema = z.object({
     title: z.string().min(1, {
       message: translate.formatMessage({ id: "required" }),
     }),
-    url: z.string().optional(),
+    url: z.string(),
   });
 
   const {
@@ -63,37 +59,35 @@ export const AddPageDrawer = ({
     resolver: zodResolver(validationSchema),
   });
 
-  const onClose = () => {
-    reset();
-    onCloseDrawer();
-  };
+  useEffect(() => {
+    if (page) {
+      reset({
+        title: page?.title,
+        url: page?.url || ""
+      });
+    }
+  }, [page, reset]);
 
   const onSubmit = async ({ title, url }: z.infer<typeof validationSchema>) => {
     try {
-      const response = await onExecuteCreatePageMutation({
+      const response = await onExecuteUpdatePageMutation({
         input: {
-          title,
-          parent: siteId || "",
-          type: pageType,
-          url
+          where: {
+            page: page?.id || "",
+          },
+          data: {
+            title,
+            url
+          }
         },
       });
-      if (!!response?.data?.createPage) {
+      if (!!response?.data?.updatePage) {
         onShowToast({
-          title: translate.formatMessage({ id: "createdSuccessfully" }),
+          title: translate.formatMessage({ id: "updatedSuccessfully" }),
           status: "success",
         });
-        if (pageType !== PageType.External) {
-          onSuccess?.();
-          return window.location.assign(
-            websiteRoutes
-              .app({ appId: currentApp?.id })
-              .site({ site: response?.data?.createPage?.parent })
-              .page({ page: response?.data?.createPage?.id }).home
-          );
-        }
-        onClose();
-        return onSuccess?.();
+        onCloseDrawer();
+        return
       }
 
       if (!!response.error?.graphQLErrors?.length) {
@@ -107,7 +101,7 @@ export const AddPageDrawer = ({
   };
 
   return (
-    <Drawer isOpen={!!isOpenDrawer} onClose={onClose}>
+    <Drawer isOpen={!!isOpenDrawer} onClose={onCloseDrawer}>
       <DrawerHeader>{translate.formatMessage({ id: "addPage" })}</DrawerHeader>
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -127,18 +121,7 @@ export const AddPageDrawer = ({
               </InputGroup>
               <FormErrorMessage>{errors?.title?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={!pageType}>
-              <Label htmlFor="page-type">
-                {translate.formatMessage({ id: "type" })}
-              </Label>
-              <SelectPageType
-                id="page-type"
-                value={pageType}
-                onChange={setPageType}
-              />
-              <FormErrorMessage>{errors?.url?.message}</FormErrorMessage>
-            </FormControl>
-            {pageType === PageType.External && (
+            {page?.type === PageType.External && (
               <FormControl isInvalid={!!errors?.url}>
                 <Label htmlFor="url">
                   {translate.formatMessage({ id: "link" })}
@@ -158,11 +141,11 @@ export const AddPageDrawer = ({
             <Box width="full" paddingBottom="4">
               <Button
                 width="full"
-                isLoading={isLoadingCreatePage}
+                isLoading={isLoadingUpdatePage}
                 isDisabled={!isValid}
                 type="submit"
               >
-                {translate.formatMessage({ id: "add" })}
+                {translate.formatMessage({ id: "save" })}
               </Button>
             </Box>
           </Stack>

@@ -61,14 +61,24 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
     }
   }, [product?.defaultPrice]);
 
-  const goToProductDetails = useCallback(
-    () => onRedirect(productURL),
-    [onRedirect, productURL]
-  );
-
   const onChoosePrice = useCallback((price?: PriceComponentFragment) => {
     setCurrentPrice(price || null);
   }, []);
+
+  const onAddToCart = useCallback(() =>
+    onAddOrUpdateShoppingCartItem({
+      price: currentPrice,
+      product: {
+        id: product?.id || "",
+        name: product?.name || "",
+        avatarURL: product?.avatar?.file?.url || "",
+      },
+    })
+    , [currentPrice, onAddOrUpdateShoppingCartItem, product?.avatar?.file?.url, product?.id, product?.name]);
+  const onBuy = useCallback(async () => {
+    await onAddToCart();
+    window.open(routes.checkout(), "_blank")
+  }, [onAddToCart, routes]);
 
   return (
     <Card background="background.50">
@@ -119,32 +129,29 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
                 />
               )}
             </Box>
-            <ButtonGroup>
+            <Stack direction="column" spacing="2">
+              {isAvailable && (
+                <Button
+                  width="full"
+                  onClick={onBuy}
+                >
+                  {translate.formatMessage({
+                    id: "buyNow"
+                  })}
+                </Button>
+              )}
               <Button
                 width="full"
                 isDisabled={!isAvailable}
                 leftIcon={<Icon name="cart" />}
-                onClick={() =>
-                  onAddOrUpdateShoppingCartItem({
-                    price: currentPrice,
-                    product: {
-                      id: product?.id || "",
-                      name: product?.name || "",
-                      avatarURL: product?.avatar?.file?.url || "",
-                    },
-                  })
-                }
+                onClick={onAddToCart}
+                variant="outline"
               >
                 {translate.formatMessage({
                   id: isAvailable ? "addToCart" : "unavailable",
                 })}
               </Button>
-              <IconButton
-                name="view"
-                variant="ghost"
-                onClick={goToProductDetails}
-              />
-            </ButtonGroup>
+            </Stack>
           </Stack>
         </Stack>
       </CardBody>

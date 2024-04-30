@@ -9,7 +9,7 @@ export type RemovePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type RemovePageMutation = { __typename?: 'Mutation', removePage: { __typename?: 'Page', id: string, parent: string, title: string, slug: string, version?: { __typename?: 'Version', id: string, name: string } | null } };
+export type RemovePageMutation = { __typename?: 'Mutation', removePage: { __typename?: 'Page', id: string, parent: string, title: string, url?: string | null, type: Types.PageType, slug: string, version?: { __typename?: 'Version', id: string, name: string } | null } };
 
 
 export const RemovePageDocument = gql`

@@ -8,7 +8,7 @@ export type GetPageQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', page: { __typename?: 'Page', id: string, title: string, slug: string, parent: string, app?: { __typename?: 'App', id: string } | null } };
+export type GetPageQuery = { __typename?: 'Query', page: { __typename?: 'Page', id: string, title: string, type: Types.PageType, url?: string | null, slug: string, parent: string, app?: { __typename?: 'App', id: string } | null } };
 
 
 export const GetPageDocument = gql`
@@ -16,6 +16,8 @@ export const GetPageDocument = gql`
   page(id: $page) {
     id
     title
+    type
+    url
     slug
     parent
     app {

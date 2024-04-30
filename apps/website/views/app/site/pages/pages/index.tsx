@@ -20,7 +20,7 @@ const SitePages = () => {
   } = useDisclosure();
 
   const { siteId } = useSite();
-  const [{ data: dataGetPages }] = useGetSitePagesQuery({
+  const [{ data: dataGetPages }, onReloadPages] = useGetSitePagesQuery({
     pause: !siteId,
     variables: {
       page: {
@@ -49,6 +49,7 @@ const SitePages = () => {
       <AddPageDrawer
         isOpenDrawer={isOpenAddPageDrawer}
         onCloseDrawer={onCloseAddPageDrawer}
+        onSuccess={() => onReloadPages({ requestPolicy: 'network-only' })}
       />
       <Stack direction="column" spacing="5">
         <Header

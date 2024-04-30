@@ -11,7 +11,7 @@ import { MakeHomePageButton } from "./make-home-page-button";
 import { MakeSignUpPageButton } from "./make-signup-page-button";
 
 const buttonProps: ButtonProps = {
-  size: "sm",
+  variant: 'ghost',
   rightIcon: <Icon name="caretDown" />,
 };
 

@@ -65,20 +65,22 @@ export const DomainItem = ({ domain, onDomainRemoved }: DomainItemProps) => {
               {domain.name}
             </Link>
 
-            {isFreeDomain ? (
-              <Badge colorScheme="yellow">
-                {translate.formatMessage({
-                  id: "free",
-                })}
-              </Badge>
-            ) : undefined}
-            {isDefaultDomain ? (
-              <Badge colorScheme="gray">
-                {translate.formatMessage({
-                  id: "default",
-                })}
-              </Badge>
-            ) : undefined}
+            <Stack direction="row" spacing="2">
+              {isFreeDomain ? (
+                <Badge colorScheme="yellow">
+                  {translate.formatMessage({
+                    id: "free",
+                  })}
+                </Badge>
+              ) : undefined}
+              {isDefaultDomain ? (
+                <Badge colorScheme="gray">
+                  {translate.formatMessage({
+                    id: "default",
+                  })}
+                </Badge>
+              ) : undefined}
+            </Stack>
           </Stack>
 
           {canRemoveDomain && (

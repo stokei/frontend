@@ -777,6 +777,8 @@ export type CreateOrderItemInput = {
 export type CreatePageInput = {
   parent: Scalars['String'];
   title: Scalars['String'];
+  type?: InputMaybe<PageType>;
+  url?: InputMaybe<Scalars['String']>;
 };
 
 export type CreatePaymentMethodCardInput = {
@@ -3855,6 +3857,7 @@ export type UpdateDataModuleInput = {
 
 export type UpdateDataPageInput = {
   title?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateDataPriceInput = {

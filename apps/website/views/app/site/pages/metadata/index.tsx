@@ -97,64 +97,61 @@ const MetadataPage = () => {
   };
 
   return (
-    <SiteLayout>
-      <Navbar />
-      <Container paddingY="5">
-        <Card background="background.50">
-          <CardBody>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Stack direction="column" spacing="5">
-                <Title fontSize="lg">
-                  {translate.formatMessage({ id: "informations" })}
-                </Title>
-                <FormControl isInvalid={!!errors?.name}>
-                  <Label htmlFor="name">
-                    {translate.formatMessage({ id: "name" })}
-                  </Label>
-                  <InputGroup>
-                    <Input
-                      id="name"
-                      placeholder={translate.formatMessage({
-                        id: "namePlaceholder",
-                      })}
-                      {...register("name")}
-                    />
-                  </InputGroup>
-                  <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-                </FormControl>
-                <FormControl>
-                  <Label htmlFor="app-image">
-                    {translate.formatMessage({ id: "logo" })}
-                  </Label>
-                  {!logoUploadURL && (
-                    <Button
-                      variant="outline"
-                      onClick={onStartLogoUpload}
-                      isLoading={isLoadingStartLogoUpload}
-                      marginBottom="5"
-                    >
-                      {translate.formatMessage({ id: "addLogo" })}
-                    </Button>
-                  )}
-                  <ImageUploader
-                    id="app-logo"
-                    uploadURL={logoUploadURL}
-                    previewURL={site?.logo?.file?.url || ""}
-                    onSuccess={onCompleteLogoUpload}
-                    onError={() => { }}
+    <Container paddingY="5">
+      <Card background="background.50">
+        <CardBody>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Stack direction="column" spacing="5">
+              <Title fontSize="lg">
+                {translate.formatMessage({ id: "informations" })}
+              </Title>
+              <FormControl isInvalid={!!errors?.name}>
+                <Label htmlFor="name">
+                  {translate.formatMessage({ id: "name" })}
+                </Label>
+                <InputGroup>
+                  <Input
+                    id="name"
+                    placeholder={translate.formatMessage({
+                      id: "namePlaceholder",
+                    })}
+                    {...register("name")}
                   />
-                </FormControl>
-                <ButtonGroup justifyContent="flex-end">
-                  <Button type="submit" isLoading={isLoadingUpdateSite}>
-                    {translate.formatMessage({ id: "save" })}
+                </InputGroup>
+                <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl>
+                <Label htmlFor="app-image">
+                  {translate.formatMessage({ id: "logo" })}
+                </Label>
+                {!logoUploadURL && (
+                  <Button
+                    variant="outline"
+                    onClick={onStartLogoUpload}
+                    isLoading={isLoadingStartLogoUpload}
+                    marginBottom="5"
+                  >
+                    {translate.formatMessage({ id: "addLogo" })}
                   </Button>
-                </ButtonGroup>
-              </Stack>
-            </Form>
-          </CardBody>
-        </Card>
-      </Container>
-    </SiteLayout>
+                )}
+                <ImageUploader
+                  id="app-logo"
+                  uploadURL={logoUploadURL}
+                  previewURL={site?.logo?.file?.url || ""}
+                  onSuccess={onCompleteLogoUpload}
+                  onError={() => { }}
+                />
+              </FormControl>
+              <ButtonGroup justifyContent="flex-end">
+                <Button type="submit" isLoading={isLoadingUpdateSite}>
+                  {translate.formatMessage({ id: "save" })}
+                </Button>
+              </ButtonGroup>
+            </Stack>
+          </Form>
+        </CardBody>
+      </Card>
+    </Container>
   );
 };
 

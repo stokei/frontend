@@ -4,12 +4,14 @@ import { Box, BoxProps } from "../box";
 
 export interface DroppableProps<TData = any> {
   id: string;
+  height?: BoxProps["height"];
   acceptTypes?: string[];
   isDisabled?: boolean;
   data?: TData;
 }
 export const Droppable = ({
   id,
+  height,
   acceptTypes,
   data,
   isDisabled,
@@ -31,15 +33,15 @@ export const Droppable = ({
   const activeStyle: BoxProps =
     isOver && isValidType
       ? {
-          background: "background.300",
-        }
+        background: "background.300",
+      }
       : {};
 
   return (
     <Box
       ref={setNodeRef}
       width="full"
-      height="fit-content"
+      height={height || "fit-content"}
       flexDirection="column"
       {...activeStyle}
     >

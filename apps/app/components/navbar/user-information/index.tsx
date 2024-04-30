@@ -8,6 +8,7 @@ import {
   NavbarNavLink,
   Stack,
   StackProps,
+  Text,
   useDisclosure,
 } from "@stokei/ui";
 import NextLink from "next/link";
@@ -16,7 +17,7 @@ import { useMemo } from "react";
 import { ShoppingCartMenu } from "@stokei/builder";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
-export interface NavbarUserInformationProps extends StackProps {}
+export interface NavbarUserInformationProps extends StackProps { }
 export const NavbarUserInformation = ({
   ...props
 }: NavbarUserInformationProps) => {
@@ -41,7 +42,13 @@ export const NavbarUserInformation = ({
     >
       <ShoppingCartMenu />
       <NavbarNavLink icon="store" as={NextLink} href={appRoutes.store.home}>
-        {translate.formatMessage({ id: "store" })}
+        <Text
+          display={["none", "none", "block", "block"]}
+          color="inherit"
+          fontSize="inherit"
+        >
+          {translate.formatMessage({ id: "store" })}
+        </Text>
       </NavbarNavLink>
       {!!currentAccount ? (
         <>

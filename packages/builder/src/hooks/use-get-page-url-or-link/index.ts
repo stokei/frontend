@@ -18,17 +18,19 @@ export const useGetPage = ({ link, pageId }: UseGetPageURLOrLink) => {
 
   const page = useMemo(() => dataGetPage?.page, [dataGetPage?.page]);
 
-  const onGoToPageURLOrLink = useCallback(
-    () =>
-      window.location.assign(
-        link ||
-          routes.customPage({
-            page: pageId || "",
-            slug: page?.slug || "",
-          })
-      ),
-    [routes, link, page?.slug, pageId]
-  );
+  const onGoToPageURLOrLink = useCallback(() => {
+    let url = link;
+    if (!url && page?.url) {
+      url = page?.url;
+    } else {
+      url = routes.customPage({
+        page: page?.id || "",
+        slug: page?.slug || "",
+      });
+    }
+
+    return window.open(url, "_blank");
+  }, [link, page, routes]);
 
   return {
     page,

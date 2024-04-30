@@ -5,6 +5,7 @@ import { appRoutes } from "@stokei/routes";
 import { PropsWithChildren } from "react";
 
 const builderRoutes: BuilderProviderRoutes = {
+  checkout: () => appRoutes.checkout.home,
   customPage: ({ slug }) => appRoutes.customPage({ slug }).home,
   product: ({ product, price }) => appRoutes.product.home({ product, price }),
   store: ({ catalog }) =>

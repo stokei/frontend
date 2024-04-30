@@ -27,14 +27,6 @@ export const ColorsPage = () => {
             <ColorUpdateItem colorType={ColorType.Heading} />
             <ColorUpdateItem colorType={ColorType.Text} />
           </ColorUpdateGroup>
-
-          <ColorUpdateGroup>
-            <ColorUpdateTitle title={translate.formatMessage({ id: "alertColors" })} />
-            <ColorUpdateItem colorType={ColorType.Success} />
-            <ColorUpdateItem colorType={ColorType.Error} />
-            <ColorUpdateItem colorType={ColorType.Warning} />
-            <ColorUpdateItem colorType={ColorType.Info} />
-          </ColorUpdateGroup>
         </Stack>
       </Container>
     </AppLayout>

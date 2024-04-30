@@ -1,6 +1,7 @@
-import { Stack } from "@stokei/ui";
+import { ButtonGroup, Stack } from "@stokei/ui";
 import { ActionsMenu } from "../actions-menu";
 import { UpdateVersionNameForm } from "../update-version-name-form";
+import { PublishVersionButton } from "./publish-version-button";
 
 export const Header = () => {
   return (
@@ -11,7 +12,10 @@ export const Header = () => {
       spacing="2"
     >
       <UpdateVersionNameForm />
-      <ActionsMenu />
+      <ButtonGroup>
+        <ActionsMenu />
+        <PublishVersionButton />
+      </ButtonGroup>
     </Stack>
   );
 };

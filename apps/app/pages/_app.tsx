@@ -89,7 +89,7 @@ function MyApp({
                 />
                 <link
                   rel="icon"
-                  href={currentSite?.icon?.file?.url || noImage?.src}
+                  href={currentSite?.favicon?.file?.url || currentSite?.logo?.file?.url || noImage?.src}
                 />
               </Head>
               <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />

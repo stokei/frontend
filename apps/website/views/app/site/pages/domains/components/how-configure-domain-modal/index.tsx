@@ -45,6 +45,9 @@ export const HowConfigureDomainModal = ({
             {translate.formatMessage({
               id: "domain",
             })}
+            <Text as="span" marginLeft="1">
+              (example.com)
+            </Text>
           </Title>
           <Table>
             <TableHeader>
@@ -72,6 +75,9 @@ export const HowConfigureDomainModal = ({
             {translate.formatMessage({
               id: "subdomain",
             })}
+            <Text as="span" marginLeft="1">
+              (subdomain.example.com)
+            </Text>
           </Title>
           <Table>
             <TableHeader>

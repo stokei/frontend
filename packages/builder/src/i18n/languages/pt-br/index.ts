@@ -28,6 +28,7 @@ export const ptBRMessages = {
   subtotal: "Subtotal",
   price: "Preço",
   buy: "Comprar",
+  buyNow: "Comprar agora",
   clear: "Limpar",
   unavailable: "Indisponível",
   shoppingCart: "Carrinho de compras",

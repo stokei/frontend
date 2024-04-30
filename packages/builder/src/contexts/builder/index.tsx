@@ -2,6 +2,7 @@ import { createContext, PropsWithChildren, useMemo } from "react";
 import { StokeiGraphQLClientProvider } from "@stokei/graphql";
 
 export type BuilderProviderRoutes = {
+  checkout: () => string;
   customPage: (data: { page: string; slug: string }) => string;
   product: (data: { product: string; price?: string }) => string;
   store: (data: { catalog: string }) => string;

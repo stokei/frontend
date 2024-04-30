@@ -69,6 +69,7 @@ export const UpdateButtonDrawer = ({
   const onSubmit = async ({ text }: z.infer<typeof validationSchema>) => {
     onUpdate?.({
       text,
+      pageId: page?.id
     });
     onClose();
   };

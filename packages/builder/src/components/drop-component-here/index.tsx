@@ -7,6 +7,7 @@ export const DropComponentHere = () => {
   return (
     <Box
       width="full"
+      height="full"
       align="center"
       justify="center"
       padding="5"

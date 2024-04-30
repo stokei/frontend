@@ -1,7 +1,5 @@
 import {
-  BuilderProvider,
-  BuilderProviderRoutes,
-  builderTranslationsMessages,
+  builderTranslationsMessages
 } from "@stokei/builder";
 import {
   StokeiGraphQLClientProvider,
@@ -19,6 +17,7 @@ import { getAppIdFromNextRouter } from "@stokei/utils";
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
 import { GOOGLE_ANALYTICS_KEY } from "@/environments";
+import { useCurrentApp } from "@/hooks";
 import { translationsMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
 import {
@@ -30,12 +29,10 @@ import {
   CurrentGlobalAppQuery,
 } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 import { formatAppColorsToThemeColors } from "@/utils";
-import { appRoutes } from "@stokei/routes";
 import "@stokei/ui/src/styles/css/global.css";
 import Head from "next/head";
 import { Router } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { useCurrentApp } from "@/hooks";
 
 const messages = mergeTranslations([
   uiTranslationsMessages,

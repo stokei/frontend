@@ -13,6 +13,7 @@ export const PageBuilderProvider = ({ children }: PropsWithChildren) => {
       `${site?.defaultDomain?.url || ""}${route || ""}`;
 
     return {
+      checkout: () => mergeAppBaseURL(appRoutes.checkout.home),
       customPage: ({ slug }) =>
         mergeAppBaseURL(appRoutes.customPage({ slug }).home),
       product: ({ product, price }) =>

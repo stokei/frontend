@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SitePageFragment } from "../../components/select-page/graphql/pages.query.graphql.generated";
 
 export interface UseSelectPageValueData {
@@ -13,6 +13,14 @@ export const useSelectPageValue = (
   const [value, setValue] = useState<SitePageFragment | undefined>(
     () => data?.defaultValue
   );
+
+  useEffect(() => {
+    if (data?.defaultValue) {
+      setValue((oldValue) =>
+        oldValue?.id !== data?.defaultValue?.id ? data?.defaultValue : oldValue
+      );
+    }
+  }, [data?.defaultValue]);
 
   return [value, setValue];
 };

@@ -1,9 +1,11 @@
 import { useCurrentApp, useSite, useTranslations } from "@/hooks";
-import { Badge, Button, Card, CardBody, Stack, Text, Title } from "@stokei/ui";
+import { Badge, Button, Card, CardBody, Stack, Text, Title, useDisclosure } from "@stokei/ui";
 
 import { websiteRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { SitePagesPageFragment } from "../../graphql/pages.query.graphql.generated";
+import { UpdatePageDrawer } from "../update-page-drawer";
+import { PageType } from "@/services/graphql/stokei";
 
 export interface PageItemProps {
   readonly page: SitePagesPageFragment;
@@ -14,13 +16,21 @@ export const PageItem = ({ page }: PageItemProps) => {
   const { site } = useSite();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
+  const {
+    isOpen: isOpenUpdatePageDrawer,
+    onClose: onCloseUpdatePageDrawer,
+    onOpen: onOpenUpdatePageDrawer,
+  } = useDisclosure();
 
   const isHomePage = !!site?.homePage?.id && page?.id === site?.homePage?.id;
   const isLoginPage = !!site?.loginPage?.id && page?.id === site?.loginPage?.id;
   const isSignUpPage = !!site?.signUpPage?.id && page?.id === site?.signUpPage?.id;
   const existsDefaultPage = isHomePage || isLoginPage || isSignUpPage
 
-  const onGoToEditPage = async () => {
+  const onUpdatePageOrGoToEditPage = async () => {
+    if (page?.type === PageType.External) {
+      return onOpenUpdatePageDrawer();
+    }
     const editPageURL = websiteRoutes
       .app({ appId: currentApp?.id })
       .site({ site: site?.id || "" })
@@ -30,6 +40,11 @@ export const PageItem = ({ page }: PageItemProps) => {
   return (
     <Card>
       <CardBody>
+        <UpdatePageDrawer
+          page={page}
+          isOpenDrawer={isOpenUpdatePageDrawer}
+          onCloseDrawer={onCloseUpdatePageDrawer}
+        />
         <Stack
           align={["flex-start", "flex-start", "center", "center"]}
           justify={[
@@ -63,7 +78,7 @@ export const PageItem = ({ page }: PageItemProps) => {
               </Stack>
             )}
           </Stack>
-          <Button onClick={onGoToEditPage} variant="ghost">
+          <Button onClick={onUpdatePageOrGoToEditPage} variant="ghost">
             {translate.formatMessage({ id: "edit" })}
           </Button>
         </Stack>
