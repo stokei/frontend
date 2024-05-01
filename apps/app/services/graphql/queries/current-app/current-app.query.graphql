@@ -1,5 +1,5 @@
-query CurrentGlobalApp($slug: String!) {
-  site(slug: $slug) {
+query CurrentGlobalApp($slug: String, $site: String) {
+  site(slug: $slug, id: $site) {
     id
     name
     slug

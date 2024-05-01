@@ -1,5 +1,4 @@
-import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { websiteRoutes } from "@stokei/routes";
+import { useAPIErrors, useSite, useTranslations } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -18,9 +17,8 @@ import {
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { AppDomainFragment } from "../../graphql/domains.query.graphql.generated";
 import { useCreateDomainMutation } from "../../graphql/create-domain.mutation.graphql.generated";
-import { useRouter } from "next/router";
+import { AppDomainFragment } from "../../graphql/domains.query.graphql.generated";
 
 interface AddDomainDrawerProps {
   isOpenDrawer?: boolean;
@@ -33,8 +31,7 @@ export const AddDomainDrawer = ({
   isOpenDrawer,
   onCloseDrawer,
 }: AddDomainDrawerProps) => {
-  const router = useRouter();
-  const { currentApp } = useCurrentApp();
+  const { siteId } = useSite();
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
@@ -61,7 +58,7 @@ export const AddDomainDrawer = ({
     try {
       const response = await createDomain({
         input: {
-          parent: currentApp?.id || "",
+          parent: siteId || "",
           name,
           language: "pt-BR",
         },
@@ -79,7 +76,7 @@ export const AddDomainDrawer = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (

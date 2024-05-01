@@ -45,7 +45,6 @@ export const withCustomDomain = async ({
       )
       .toPromise();
     const domainModel = currentDomain?.data?.domain;
-
     const currentSiteResponse = await stokeiClient.api
       .query(
         CurrentGlobalAppDocument,

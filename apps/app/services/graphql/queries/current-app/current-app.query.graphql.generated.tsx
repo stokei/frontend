@@ -4,7 +4,8 @@ import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CurrentGlobalAppQueryVariables = Types.Exact<{
-  slug: Types.Scalars['String'];
+  slug?: Types.InputMaybe<Types.Scalars['String']>;
+  site?: Types.InputMaybe<Types.Scalars['String']>;
 }>;
 
 
@@ -12,8 +13,8 @@ export type CurrentGlobalAppQuery = { __typename?: 'Query', site: { __typename?:
 
 
 export const CurrentGlobalAppDocument = gql`
-    query CurrentGlobalApp($slug: String!) {
-  site(slug: $slug) {
+    query CurrentGlobalApp($slug: String, $site: String) {
+  site(slug: $slug, id: $site) {
     id
     name
     slug
@@ -82,6 +83,6 @@ export const CurrentGlobalAppDocument = gql`
 }
     `;
 
-export function useCurrentGlobalAppQuery(options: Omit<Urql.UseQueryArgs<CurrentGlobalAppQueryVariables>, 'query'>) {
+export function useCurrentGlobalAppQuery(options?: Omit<Urql.UseQueryArgs<CurrentGlobalAppQueryVariables>, 'query'>) {
   return Urql.useQuery<CurrentGlobalAppQuery, CurrentGlobalAppQueryVariables>({ query: CurrentGlobalAppDocument, ...options });
 };
