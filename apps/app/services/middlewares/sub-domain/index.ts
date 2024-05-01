@@ -25,9 +25,15 @@ export const withSubDomain = async ({
   try {
     const stokeiClient = createAPIClient({ cookies });
     const currentSiteResponse = await stokeiClient.api
-      .query<CurrentGlobalAppQuery>(CurrentGlobalAppDocument, {
-        slug,
-      })
+      .query<CurrentGlobalAppQuery>(
+        CurrentGlobalAppDocument,
+        {
+          slug,
+        },
+        {
+          requestPolicy: "network-only",
+        }
+      )
       .toPromise();
     site = currentSiteResponse?.data?.site;
     slug = site?.slug || "";

@@ -35,7 +35,7 @@ export const withLocalDomain = async ({
             slug,
           },
           {
-            requestPolicy: "cache-and-network",
+            requestPolicy: "network-only",
           }
         )
         .toPromise();

@@ -34,16 +34,28 @@ export const withCustomDomain = async ({
       cookies,
     });
     const currentDomain = await stokeiClient.api
-      .query(currentAppDomainQuery, {
-        domain,
-      })
+      .query(
+        currentAppDomainQuery,
+        {
+          domain,
+        },
+        {
+          requestPolicy: "network-only",
+        }
+      )
       .toPromise();
     const domainModel = currentDomain?.data?.domain;
 
     const currentSiteResponse = await stokeiClient.api
-      .query(CurrentGlobalAppDocument, {
-        site: domainModel?.parent,
-      })
+      .query(
+        CurrentGlobalAppDocument,
+        {
+          site: domainModel?.parent,
+        },
+        {
+          requestPolicy: "network-only",
+        }
+      )
       .toPromise();
     site = currentSiteResponse?.data?.site;
     slug = site?.slug || "";
