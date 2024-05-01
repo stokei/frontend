@@ -5,7 +5,7 @@ import {
 } from "@stokei/graphql";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { routes } from "./routes";
+import { websiteRoutes } from "@stokei/routes";
 import { createAPIClient } from "./services/graphql/client";
 import {
   CurrentAccountDocument,
@@ -36,6 +36,11 @@ export async function middleware(request: NextRequest) {
       request.cookies.get(REFRESH_TOKEN_HEADER_NAME)?.value || "",
   };
   try {
+    const privateRoutesRegex = /\/(apps|app).*/;
+    const isPrivateRoute = !!nextUrl.pathname?.match(privateRoutesRegex);
+    if (!isPrivateRoute) {
+      return NextResponse.next();
+    }
     const stokeiClient = createAPIClient({
       cookies,
     });
@@ -57,10 +62,8 @@ export async function middleware(request: NextRequest) {
     const currentApp = currentAppResponse?.data?.currentApp;
     const currentAccount = currentAccountResponse?.data?.me;
     const isAuth = !!currentAccount;
-    const authURL = routes.auth.login;
+    const authURL = websiteRoutes.auth.login;
     if (!!currentApp) {
-      const privateRoutesRegex = /\/(apps|app).*/;
-      const isPrivateRoute = !!nextUrl.pathname?.match(privateRoutesRegex);
       if (isPrivateRoute) {
         if (!isAuth) {
           return NextResponse.redirect(baseURL + authURL);

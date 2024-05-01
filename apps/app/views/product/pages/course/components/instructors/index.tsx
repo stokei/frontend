@@ -1,13 +1,13 @@
 import { useTranslations } from "@/hooks";
 import { Avatar, Stack, Text, Title } from "@stokei/ui";
-import { FC } from "react";
+
 import { ProductPageCourseInstructorFragment } from "../../graphql/course.query.graphql.generated";
 
 export interface InstructorsProps {
   readonly instructors?: ProductPageCourseInstructorFragment[];
 }
 
-export const Instructors: FC<InstructorsProps> = ({ instructors }) => {
+export const Instructors = ({ instructors }: InstructorsProps) => {
   const translate = useTranslations();
   return (
     <Stack direction="column" spacing="4">

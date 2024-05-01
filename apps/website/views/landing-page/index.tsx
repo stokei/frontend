@@ -5,23 +5,21 @@ import createYourProductsImage from "@/assets/create-your-product.png";
 import startSellImage from "@/assets/start-sell.svg";
 import stokeiDashboardImage from "@/assets/stokei-dashboard.svg";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { HeroWithImage } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
+
 import { CommonQuestions } from "./components/common-questions";
 import { Contact } from "./components/contact";
 import { Plans } from "./components/plans";
 import { LandingPageLayout } from "./layout";
 
-interface LandingPageProps {}
-
-export const LandingPage: FC<LandingPageProps> = () => {
+export const LandingPage = () => {
   const router = useRouter();
   const translate = useTranslations();
 
   const goToSignUp = () => {
-    return router.push(routes.auth.signUp);
+    return router.push(websiteRoutes.auth.signUp);
   };
 
   return (

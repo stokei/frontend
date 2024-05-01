@@ -11,15 +11,13 @@ import { CreateCheckoutPageCheckoutFragment } from "../../graphql/create-checkou
 import { loadStripe } from "@stripe/stripe-js";
 import { STRIPE_PUBLISHABLE_KEY } from "@/environments";
 import { useMemo, useState } from "react";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 
 export interface PaymentStripeProps {
   stripe?: CreateCheckoutPageCheckoutFragment["stripe"];
 }
 
-const PaymentStripe: React.FC<PaymentStripeProps> = ({
-  stripe: stripeProp,
-}) => {
+const PaymentStripe = ({ stripe: stripeProp }: PaymentStripeProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const clientSecret = stripeProp?.clientSecret;
@@ -45,8 +43,8 @@ const PaymentStripe: React.FC<PaymentStripeProps> = ({
       clientSecret,
       confirmParams: {
         return_url: new URL(
-          routes.checkout.callback,
-          window.location.href.replace(routes.checkout.home, "")
+          appRoutes.checkout.callback,
+          window.location.href.replace(appRoutes.checkout.home, "")
         ).toString(),
       },
     });
@@ -70,7 +68,7 @@ const PaymentStripe: React.FC<PaymentStripeProps> = ({
   );
 };
 
-const PaymentStripeWithContext: React.FC<PaymentStripeProps> = (props) => {
+const PaymentStripeWithContext = (props: PaymentStripeProps) => {
   const { currentApp } = useCurrentApp();
 
   const stripe = useMemo(() => {

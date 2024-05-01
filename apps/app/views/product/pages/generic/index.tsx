@@ -1,5 +1,5 @@
 import { Container, Stack } from "@stokei/ui";
-import { FC } from "react";
+
 import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
 import { CheckoutInfo } from "../../components/checkout-info";
 import { Features } from "./components/features";
@@ -11,9 +11,7 @@ interface GenericProductPageProps {
   readonly product: ProductPageProductFragment;
 }
 
-export const GenericProductPage: FC<GenericProductPageProps> = ({
-  product,
-}) => {
+export const GenericProductPage = ({ product }: GenericProductPageProps) => {
   return (
     <GenericProductLayout>
       <Container paddingY="10" background="black.500">

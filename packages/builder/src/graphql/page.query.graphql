@@ -1,0 +1,13 @@
+query GetPage($page: String!) {
+  page(id: $page) {
+    id
+    title
+    type
+    url
+    slug
+    parent
+    app {
+      id
+    }
+  }
+}

@@ -1,2 +1,8 @@
-export * from "./en-us";
-export * from "./pt-br";
+import { Messages } from "@stokei/translations";
+import { enUSMessages } from "./en-us";
+import { ptBRMessages } from "./pt-br";
+
+export const stokeiAPITranslationsMessages: Messages = {
+  "en-US": enUSMessages,
+  "pt-BR": ptBRMessages,
+};

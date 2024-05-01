@@ -12,14 +12,12 @@ import {
   Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Navbar } from "./components/navbar";
 import { useGetAdminCoursePageCourseQuery } from "./graphql/course.query.graphql.generated";
 import { CourseLayout } from "../../layout";
 
-interface CourseAboutPageProps {}
-
-export const CourseAboutPage: FC<CourseAboutPageProps> = () => {
+export const CourseAboutPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const courseId = useMemo(() => router?.query?.courseId?.toString(), [router]);

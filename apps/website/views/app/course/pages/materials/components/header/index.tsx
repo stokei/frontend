@@ -1,20 +1,19 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Button, Icon, Spacer, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
 
 interface HeaderProps {
   readonly materialsTotalCount: number;
 }
 
-export const Header: FC<HeaderProps> = ({ materialsTotalCount }) => {
+export const Header = ({ materialsTotalCount }: HeaderProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const onGoToAddMaterialsPage = () => {
     return router.push(
-      routes.app({ appId: currentApp?.id || "" }).materials.add
+      websiteRoutes.app({ appId: currentApp?.id || "" }).materials.add
     );
   };
   return (

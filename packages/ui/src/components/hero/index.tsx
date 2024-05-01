@@ -1,7 +1,7 @@
 import { Stack, StackProps } from "../stack";
 
 export interface HeroProps extends StackProps {}
-export const Hero: React.FC<HeroProps> = ({ children, ...props }) => (
+export const Hero = ({ children, ...props }: HeroProps) => (
   <Stack
     width="full"
     paddingY={["20", "20", "24", "24"]}

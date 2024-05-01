@@ -10,7 +10,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AppPaymentFragment } from "../../graphql/payments.query.graphql.generated";
 import { PaymentItem } from "../payment-item";
 
@@ -18,7 +18,7 @@ interface PaymentsListProps {
   payments?: AppPaymentFragment[];
 }
 
-export const PaymentsList: FC<PaymentsListProps> = ({ payments }) => {
+export const PaymentsList = ({ payments }: PaymentsListProps) => {
   const translate = useTranslations();
   return (
     <>

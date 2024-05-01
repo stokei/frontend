@@ -1,20 +1,24 @@
 import {
+  builderTranslationsMessages
+} from "@stokei/builder";
+import {
   StokeiGraphQLClientProvider,
-  enUSMessages as enUSMessagesStokeiGraphQL,
-  ptBRMessages as ptBRMessagesStokeiGraphQL,
+  stokeiAPITranslationsMessages,
 } from "@stokei/graphql";
-import { Messages, TranslationsProvider } from "@stokei/translations";
+import { GoogleAnalytics } from "@stokei/plugins";
+import { TranslationsProvider, mergeTranslations } from "@stokei/translations";
 import {
   LoadingTransition,
   StokeiUIProvider,
   uiTranslationsMessages,
 } from "@stokei/ui";
-import { GoogleAnalytics } from "@stokei/plugins";
 import { getAppIdFromNextRouter } from "@stokei/utils";
 
 import { DEFAULT_LANGUAGE } from "@/constants/default-language";
 import { CurrentAccountProvider, CurrentAppProvider } from "@/contexts";
-import { enUSMessages, ptBRMessages } from "@/i18n";
+import { GOOGLE_ANALYTICS_KEY } from "@/environments";
+import { useCurrentApp } from "@/hooks";
+import { translationsMessages } from "@/i18n";
 import { createAPIClient } from "@/services/graphql/client";
 import {
   CurrentAccountDocument,
@@ -28,25 +32,55 @@ import { formatAppColorsToThemeColors } from "@/utils";
 import "@stokei/ui/src/styles/css/global.css";
 import Head from "next/head";
 import { Router } from "next/router";
-import { useMemo } from "react";
-import { GOOGLE_ANALYTICS_KEY } from "@/environments";
+import { useEffect, useMemo, useState } from "react";
 
-const messages: Messages = {
-  "pt-BR": {
-    ...uiTranslationsMessages["pt-BR"],
-    ...ptBRMessagesStokeiGraphQL,
-    ...ptBRMessages,
-  },
-  "en-US": {
-    ...uiTranslationsMessages["en-US"],
-    ...enUSMessagesStokeiGraphQL,
-    ...enUSMessages,
-  },
-};
+const messages = mergeTranslations([
+  uiTranslationsMessages,
+  builderTranslationsMessages,
+  stokeiAPITranslationsMessages,
+  translationsMessages,
+]);
 
 Router.events.on("routeChangeStart", () => LoadingTransition.start());
 Router.events.on("routeChangeError", () => LoadingTransition.done());
 Router.events.on("routeChangeComplete", () => LoadingTransition.done());
+
+const Providers = ({
+  appId,
+  stokeiGraphQLClient,
+  currentAccount,
+  themeColors,
+  children,
+}: any) => {
+  const { currentApp } = useCurrentApp();
+  const [currentColors, setCurrentColors] = useState(() => themeColors);
+
+  useEffect(() => {
+    setCurrentColors(formatAppColorsToThemeColors(
+      currentApp?.colors?.items
+    )
+    )
+  }, [currentApp]);
+
+  return (
+    <StokeiUIProvider
+      config={{
+        colors: currentColors,
+      }}
+      appId={appId}
+      accountId={currentAccount?.id}
+      accountAccessToken={stokeiGraphQLClient?.accessToken}
+      accountRefreshToken={stokeiGraphQLClient?.refreshToken}
+    >
+      <TranslationsProvider
+        language={DEFAULT_LANGUAGE}
+        messages={messages}
+      >
+        {children}
+      </TranslationsProvider>
+    </StokeiUIProvider>
+  )
+}
 
 function MyApp({
   Component,
@@ -65,34 +99,27 @@ function MyApp({
       }),
     [appId, cookies]
   );
+
   return (
     <StokeiGraphQLClientProvider value={stokeiGraphQLClient?.api}>
       <CurrentAppProvider currentApp={currentApp}>
         <CurrentAccountProvider currentAccount={currentAccount}>
-          <StokeiUIProvider
-            config={{
-              colors: themeColors,
-            }}
+          <Providers
             appId={appId}
-            accountId={currentAccount?.id}
-            accountAccessToken={stokeiGraphQLClient?.accessToken}
-            accountRefreshToken={stokeiGraphQLClient?.refreshToken}
+            stokeiGraphQLClient={stokeiGraphQLClient}
+            currentAccount={currentAccount}
+            themeColors={themeColors}
           >
-            <TranslationsProvider
-              language={DEFAULT_LANGUAGE}
-              messages={messages}
-            >
-              <Head>
-                <title>{currentApp?.name}</title>
-                <meta
-                  name="viewport"
-                  content="width=device-width, initial-scale=1"
-                />
-              </Head>
-              <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
-              <Component {...pageProps} />
-            </TranslationsProvider>
-          </StokeiUIProvider>
+            <Head>
+              <title>{currentApp?.name}</title>
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+              />
+            </Head>
+            <GoogleAnalytics googleKey={GOOGLE_ANALYTICS_KEY} />
+            <Component {...pageProps} />
+          </Providers>
         </CurrentAccountProvider>
       </CurrentAppProvider>
     </StokeiGraphQLClientProvider>
@@ -123,7 +150,7 @@ MyApp.getInitialProps = async ({ router, ctx }: any) => {
         { requestPolicy: "network-only" }
       )
       .toPromise();
-  } catch (error) {}
+  } catch (error) { }
 
   const currentAppData = currentApp?.data?.currentApp;
   const currentAccountData = currentAccount?.data?.me;

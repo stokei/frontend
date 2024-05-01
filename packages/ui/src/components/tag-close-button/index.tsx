@@ -4,7 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface TagCloseButtonProps extends ChakraTagCloseButtonProps {}
-export const TagCloseButton: React.FC<TagCloseButtonProps> = ({
-  children,
-  ...props
-}) => <ChakraTagCloseButton {...props}>{children}</ChakraTagCloseButton>;
+export const TagCloseButton = ({ children, ...props }: TagCloseButtonProps) => (
+  <ChakraTagCloseButton {...props}>{children}</ChakraTagCloseButton>
+);

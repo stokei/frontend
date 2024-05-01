@@ -1,21 +1,21 @@
 import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { Navbar } from "@stokei/ui";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { Loading } from "./loading";
 
 export interface CheckoutLayoutProps {
   isLoading?: boolean;
 }
 
-export const CheckoutLayout: FC<PropsWithChildren<CheckoutLayoutProps>> = ({
+export const CheckoutLayout = ({
   isLoading,
   children,
-}) => {
+}: PropsWithChildren<CheckoutLayoutProps>) => {
   return (
     <>
       <Navbar>
-        <NavbarLogo href={routes.home} />
+        <NavbarLogo href={appRoutes.home} />
         <NavbarUserInformation />
       </Navbar>
       {isLoading ? <Loading /> : <>{children}</>}

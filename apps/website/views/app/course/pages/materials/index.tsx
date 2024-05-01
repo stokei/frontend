@@ -1,5 +1,5 @@
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { OrderBy } from "@/services/graphql/stokei";
 import {
   Button,
@@ -11,7 +11,7 @@ import {
   Stack,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { CourseLayout } from "../../layout";
 import { Header } from "./components/header";
 import { MaterialsList } from "./components/materials-list";
@@ -19,9 +19,7 @@ import { Navbar } from "./components/navbar";
 import { useGetCourseMaterialsQuery } from "./graphql/materials.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface MaterialsHomePageProps {}
-
-export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
+export const MaterialsHomePage = () => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const { currentPage, onChangePage } = usePagination();
@@ -58,7 +56,7 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
 
   const goToAddMaterial = () =>
     router.push(
-      routes.app({ appId: currentApp?.id }).course({ course: courseId })
+      websiteRoutes.app({ appId: currentApp?.id }).course({ course: courseId })
         .materials.add
     );
 

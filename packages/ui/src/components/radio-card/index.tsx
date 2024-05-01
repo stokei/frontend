@@ -5,11 +5,11 @@ import { Radio, RadioProps } from "../radio";
 
 export interface RadioCardProps extends RadioProps {
   readonly id: string;
-  readonly ref?: ForwardedRef<any>;
+  readonly ref?: any;
 }
 
-export const RadioCard: React.FC<RadioCardProps> = forwardRef(
-  ({ id, children, ...props }, ref) => {
+export const RadioCard = forwardRef(
+  ({ id, children, ...props }: RadioCardProps, ref) => {
     const { getInputProps, getRadioProps } = useRadio(props);
 
     const input = getInputProps();

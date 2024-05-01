@@ -1,6 +1,6 @@
 import posterImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Badge,
   Box,
@@ -12,14 +12,14 @@ import {
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, memo, useMemo } from "react";
+import { useMemo } from "react";
 import { AdminCoursePageModuleVideoFragment } from "../../graphql/modules.query.graphql.generated";
 
 interface VideoItemProps {
   readonly video?: AdminCoursePageModuleVideoFragment;
 }
 
-export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
+export const VideoItem = ({ video }: VideoItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -28,7 +28,7 @@ export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
 
   const editVideoURL = useMemo(
     () =>
-      routes
+      websiteRoutes
         .app({ appId: currentApp?.id })
         .course({ course: courseId })
         .modules.editVideo({
@@ -74,6 +74,4 @@ export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
       </Stack>
     </Link>
   );
-});
-
-VideoItem.displayName = "VideoItem";
+};

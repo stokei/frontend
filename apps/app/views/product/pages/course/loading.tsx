@@ -7,11 +7,8 @@ import {
   SkeletonText,
   Stack,
 } from "@stokei/ui";
-import { FC } from "react";
 
-export interface LoadingProps {}
-
-export const Loading: FC<LoadingProps> = () => {
+export const Loading = () => {
   return (
     <Stack direction="column" spacing="5">
       <Container paddingY="10" background="black.500">

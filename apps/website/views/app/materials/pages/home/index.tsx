@@ -1,5 +1,5 @@
 import { useCurrentApp, usePagination, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import {
@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Header } from "./components/header";
 import { MaterialFilters } from "./components/material-filters";
 import { MaterialsList } from "./components/materials-list";
@@ -21,9 +21,7 @@ import { Navbar } from "./components/navbar";
 import { useGetAppMaterialsQuery } from "./graphql/materials.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface MaterialsHomePageProps {}
-
-export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
+export const MaterialsHomePage = () => {
   const [filteredMaterialQuery, setFilteredMaterialQuery] = useState<string>();
   const router = useRouter();
   const { currentApp } = useCurrentApp();
@@ -65,7 +63,7 @@ export const MaterialsHomePage: FC<MaterialsHomePageProps> = () => {
   );
 
   const goToAddMaterial = () =>
-    router.push(routes.app({ appId: currentApp?.id }).materials.add);
+    router.push(websiteRoutes.app({ appId: currentApp?.id }).materials.add);
 
   return (
     <AppLayout>

@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { FooterProps as UIFooterProps } from "@stokei/ui";
 import { SimpleFooter } from "./simple";
 
@@ -9,6 +8,6 @@ export enum FooterVariant {
 export interface FooterProps extends UIFooterProps {
   readonly variant?: FooterVariant;
 }
-export const Footer: FC<FooterProps> = ({ variant, ...props }) => {
+export const Footer = ({ variant, ...props }: FooterProps) => {
   return <SimpleFooter {...props} />;
 };

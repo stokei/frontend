@@ -19,14 +19,12 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Navbar } from "./components/navbar";
 import { useGetCurrentAppFinancialQuery } from "./graphql/app.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface FinancialPageProps {}
-
-export const FinancialPage: FC<FinancialPageProps> = () => {
+export const FinancialPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const [{ fetching: isLoading, data: dataGetCurrentAppFinancial }] =

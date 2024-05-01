@@ -1,19 +1,12 @@
-import { APP_ID_HEADER_NAME } from "@stokei/graphql";
-import { MiddlewareResponse } from "@/interfaces/middleware-response";
+import { SITE_SLUG_COOKIE_KEY } from "@/constants/cookies-keys";
+import {
+  MiddlewareAppResponse,
+  MiddlewareResponse,
+  MiddlewareSiteResponse,
+} from "@/interfaces/middleware-response";
 import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
-import { gql } from "urql";
-import { APP_SLUG_COOKIE_KEY } from "@/constants/cookies-keys";
-
-const currentAppQuery = gql`
-  query CurrentAppLocalDomain($slug: String!) {
-    currentApp: app(slug: $slug) {
-      id
-      slug
-      name
-    }
-  }
-`;
+import { CurrentGlobalAppDocument } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 
 export const withLocalDomain = async ({
   cookies,
@@ -24,25 +17,35 @@ export const withLocalDomain = async ({
   const { pathname } = nextUrl;
   let isRedirect = false;
   const pathnameListParams = pathname.split("/");
-  const hasRouteApp = pathnameListParams[1] === "app";
+  const hasRouteSite = pathnameListParams[1] === "site";
   let slug = pathnameListParams[2];
-  let app: any;
+  let app: MiddlewareAppResponse | undefined;
+  let site: MiddlewareSiteResponse | undefined;
 
   try {
-    if (!hasRouteApp && cookies?.[APP_SLUG_COOKIE_KEY]) {
-      slug = cookies?.[APP_SLUG_COOKIE_KEY];
+    if (!hasRouteSite && cookies?.[SITE_SLUG_COOKIE_KEY]) {
+      slug = cookies?.[SITE_SLUG_COOKIE_KEY];
     }
     if (!!slug) {
       const stokeiClient = createAPIClient({ cookies });
-      const currentAppResponse = await stokeiClient.api
-        .query<{ currentApp: any }>(currentAppQuery, {
-          slug,
-        })
+      const currentSiteResponse = await stokeiClient.api
+        .query(
+          CurrentGlobalAppDocument,
+          {
+            slug,
+          },
+          {
+            requestPolicy: "cache-and-network",
+          }
+        )
         .toPromise();
-      if (!!currentAppResponse?.data?.currentApp) {
-        app = currentAppResponse?.data?.currentApp;
-        if (!url.pathname.startsWith("/app/" + slug)) {
-          url.pathname = url.pathname.replace("/", "/app/" + slug + "/");
+      site = currentSiteResponse?.data?.site;
+      slug = site?.slug || "";
+      app = site?.app;
+
+      if (!!app) {
+        if (!url.pathname.startsWith("/site/" + slug)) {
+          url.pathname = url.pathname.replace("/", "/site/" + slug + "/");
           isRedirect = true;
         }
       } else {
@@ -54,7 +57,8 @@ export const withLocalDomain = async ({
   }
   return {
     slug,
-    appId: app?.id,
+    site,
+    app,
     isRedirect,
     url,
   };

@@ -1,14 +1,14 @@
 import { Avatar, Box, Stack, Text } from "@stokei/ui";
-import { FC } from "react";
+
 import { AppAccountFragment } from "../graphql/accounts.query.graphql.generated";
 
 interface MemberSelectItemContentProps {
   readonly member?: AppAccountFragment;
 }
 
-export const MemberSelectItemContent: FC<MemberSelectItemContentProps> = ({
+export const MemberSelectItemContent = ({
   member,
-}) => {
+}: MemberSelectItemContentProps) => {
   return (
     <Stack direction="row" spacing="4" align="center">
       <Avatar

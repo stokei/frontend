@@ -6,17 +6,17 @@ import {
   FormChangePasswordOnSubmitData,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AuthLayout } from "../../layout";
 import { useChangePasswordMutation } from "./graphql/change-password.mutation.graphql.generated";
 import { useRouter } from "next/router";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 
 interface ChangePasswordPageProps {
   readonly code: string;
 }
 
-export const ChangePasswordPage: FC<ChangePasswordPageProps> = ({ code }) => {
+export const ChangePasswordPage = ({ code }: ChangePasswordPageProps) => {
   const translate = useTranslations();
   const router = useRouter();
   const { onShowToast } = useToast();
@@ -42,7 +42,7 @@ export const ChangePasswordPage: FC<ChangePasswordPageProps> = ({ code }) => {
           title: translate.formatMessage({ id: "updateSuccessfully" }),
           status: "success",
         });
-        router.push(routes.home);
+        router.push(websiteRoutes.home);
         return;
       }
 

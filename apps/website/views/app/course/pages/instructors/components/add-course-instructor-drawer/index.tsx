@@ -10,7 +10,7 @@ import {
   Stack,
   useToast,
 } from "@stokei/ui";
-import { FC, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useCreateCourseInstructorMutation } from "../../graphql/create-course-instructor.mutation.graphql.generated";
 import { AdminCoursePageCourseInstructorFragment } from "../../graphql/course-instructors.query.graphql.generated";
 
@@ -27,12 +27,12 @@ interface AddCourseInstructorDrawerProps {
   ) => void;
 }
 
-export const AddCourseInstructorDrawer: FC<AddCourseInstructorDrawerProps> = ({
+export const AddCourseInstructorDrawer = ({
   courseId,
   isOpenDrawer,
   onCloseDrawer,
   onSuccessAddCourseInstructor,
-}) => {
+}: AddCourseInstructorDrawerProps) => {
   const [instructors, setInstructors] = useState<AppAccountFragment[]>([]);
   const translate = useTranslations();
   const { onShowToast } = useToast();

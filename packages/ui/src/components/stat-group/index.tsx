@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface StatGroupProps extends ChakraStatGroupProps {}
-export const StatGroup: React.FC<StatGroupProps> = ({ children, ...props }) => (
+export const StatGroup = ({ children, ...props }: StatGroupProps) => (
   <ChakraStatGroup {...props}>{children}</ChakraStatGroup>
 );

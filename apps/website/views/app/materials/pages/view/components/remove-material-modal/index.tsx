@@ -1,5 +1,5 @@
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Button,
   ButtonGroup,
@@ -13,7 +13,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { AppMaterialFragment } from "../../../home/graphql/materials.query.graphql.generated";
 import { useRemoveMaterialMutation } from "../../graphql/remove-material.mutation.graphql.generated";
 
@@ -23,11 +23,11 @@ interface RemoveMaterialModalProps {
   onCloseModal: () => void;
 }
 
-export const RemoveMaterialModal: FC<RemoveMaterialModalProps> = ({
+export const RemoveMaterialModal = ({
   material,
   isOpenModal,
   onCloseModal,
-}) => {
+}: RemoveMaterialModalProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -39,7 +39,7 @@ export const RemoveMaterialModal: FC<RemoveMaterialModalProps> = ({
 
   const onGoToMaterialsPage = useCallback(() => {
     return router.push(
-      routes.app({ appId: currentApp?.id || "" }).materials.home
+      websiteRoutes.app({ appId: currentApp?.id || "" }).materials.home
     );
   }, [currentApp?.id, router]);
 

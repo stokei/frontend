@@ -5,7 +5,6 @@ import {
 
 export interface AvatarBadgeProps extends ChakraAvatarBadgeProps {}
 
-export const AvatarBadge: React.FC<AvatarBadgeProps> = ({
-  children,
-  ...props
-}) => <ChakraAvatarBadge {...props}>{children}</ChakraAvatarBadge>;
+export const AvatarBadge = ({ children, ...props }: AvatarBadgeProps) => (
+  <ChakraAvatarBadge {...props}>{children}</ChakraAvatarBadge>
+);

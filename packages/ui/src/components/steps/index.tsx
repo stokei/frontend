@@ -6,13 +6,13 @@ export interface StepsProps extends StackProps {
   readonly currentStep: any;
   readonly onChangeStep: (stepIndex: any) => void;
 }
-export const Steps: React.FC<StepsProps> = ({
+export const Steps = ({
   orientation,
   children,
   currentStep,
   onChangeStep,
   ...props
-}) => (
+}: StepsProps) => (
   <StepsProvider
     orientation={orientation}
     currentStep={currentStep}

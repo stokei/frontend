@@ -1,5 +1,5 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
   Box,
@@ -9,13 +9,11 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { AuthLayout } from "../../layout";
 import { useSignUpMutation } from "./graphql/signup.mutation.graphql.generated";
 
-interface SignUpPageProps {}
-
-export const SignUpPage: FC<SignUpPageProps> = () => {
+export const SignUpPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -53,7 +51,7 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
           status: "success",
         });
         return window.location.assign(
-          redirectToWhenSignUpSuccessfully || routes.apps.home
+          redirectToWhenSignUpSuccessfully || websiteRoutes.apps.home
         );
       }
 
@@ -78,7 +76,7 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
             isLoading={isLoadingSignUp}
             onRedirectToLoginURL={() =>
               router.push({
-                pathname: routes.auth.login,
+                pathname: websiteRoutes.auth.login,
                 query: {
                   redirectTo: redirectToWhenSignUpSuccessfully,
                 },

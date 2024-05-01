@@ -1,11 +1,8 @@
 import { STOKEI_CONTACT_EMAIL } from "@/constants/stokei-emails";
 import { useTranslations } from "@/hooks";
 import { Container, Stack, Text, Title } from "@stokei/ui";
-import { FC } from "react";
 
-interface ContactProps {}
-
-export const Contact: FC<ContactProps> = () => {
+export const Contact = () => {
   const translate = useTranslations();
   return (
     <Container background="background.50" paddingY="16">

@@ -1,0 +1,5 @@
+mutation UseUploadImageUpdateFile($input: UpdateFileInput!) {
+  updateFile(input: $input) {
+    ...UseUploadImageFile
+  }
+}

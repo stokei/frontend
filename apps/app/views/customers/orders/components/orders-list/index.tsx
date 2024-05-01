@@ -10,7 +10,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { AppOrderFragment } from "../../graphql/orders.query.graphql.generated";
 import { OrderItem } from "../order-item";
 
@@ -18,7 +18,7 @@ interface OrdersListProps {
   orders?: AppOrderFragment[];
 }
 
-export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
+export const OrdersList = ({ orders }: OrdersListProps) => {
   const translate = useTranslations();
   const hasCoupon = !!orders?.some((order) => !!order?.coupon);
   return (

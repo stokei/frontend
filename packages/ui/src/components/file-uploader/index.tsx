@@ -34,7 +34,7 @@ export interface FileUploaderProps extends Omit<StackProps, "onError"> {
   readonly onRemoveFile?: () => void;
 }
 
-export const FileUploader: React.FC<FileUploaderProps> = ({
+export const FileUploader = ({
   id,
   accept,
   uploadURL,
@@ -43,7 +43,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
   onError,
   onRemoveFile,
   ...props
-}) => {
+}: FileUploaderProps) => {
   const [file, setFile] = useState<any>();
   const { language, appId, accountAccessToken, accountRefreshToken } =
     useStokeiUI();

@@ -1,0 +1,5 @@
+mutation CreateOrUpdateColor($input: CreateOrUpdateColorInput!) {
+  createOrUpdateColor(input: $input) {
+    id
+  }
+}

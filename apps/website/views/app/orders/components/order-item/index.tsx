@@ -1,5 +1,5 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { getProductURL } from "@/utils";
 import { getOrderStatusColor } from "@/utils/get-order-status-color";
 import {
@@ -13,7 +13,7 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, memo, useMemo } from "react";
+import { useMemo } from "react";
 import { AppOrderFragment } from "../../graphql/orders.query.graphql.generated";
 import { CouponItem } from "../coupon-item";
 
@@ -28,7 +28,7 @@ export interface OrderItemProps {
   readonly hasCoupon?: boolean;
 }
 
-export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
+export const OrderItem = ({ order, hasCoupon }: OrderItemProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -59,7 +59,9 @@ export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
 
   const goToOrderPage = () => {
     router.push(
-      routes.app({ appId: currentApp?.id }).orders.order({ order: order?.id })
+      websiteRoutes
+        .app({ appId: currentApp?.id })
+        .orders.order({ order: order?.id })
     );
   };
 
@@ -124,6 +126,4 @@ export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
       </TableCell>
     </TableRow>
   );
-});
-
-OrderItem.displayName = "OrderItem";
+};

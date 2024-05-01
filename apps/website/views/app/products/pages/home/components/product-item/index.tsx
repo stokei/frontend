@@ -13,21 +13,21 @@ import {
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo, useMemo } from "react";
+import { useMemo } from "react";
 
 import { Price } from "@/components";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AdminProductPageProductFragment } from "../../graphql/products.query.graphql.generated";
 
 export interface ProductItemProps {
   readonly product: AdminProductPageProductFragment;
 }
 
-export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
+export const ProductItem = ({ product }: ProductItemProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 
-  const editProductURL = routes
+  const editProductURL = websiteRoutes
     .app({ appId: currentApp?.id })
     .product({ product: product?.id }).home;
 
@@ -83,6 +83,4 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product }) => {
       </Card>
     </Link>
   );
-});
-
-ProductItem.displayName = "ProductItem";
+};

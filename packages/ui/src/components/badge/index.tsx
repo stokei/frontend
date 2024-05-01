@@ -5,7 +5,7 @@ import {
 
 export interface BadgeProps extends ChakraBadgeProps {}
 
-export const Badge: React.FC<BadgeProps> = ({ children, ...props }) => (
+export const Badge = ({ children, ...props }: BadgeProps) => (
   <ChakraBadge
     width="fit-content"
     height="fit-content"

@@ -10,7 +10,7 @@ import {
   Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Header } from "./components/header";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
@@ -21,11 +21,7 @@ import { Customer } from "./interfaces/customer";
 import { Product } from "./interfaces/product";
 import { Loading } from "./loading";
 
-interface SubscriptionContractPageProps {}
-
-export const SubscriptionContractPage: FC<
-  SubscriptionContractPageProps
-> = () => {
+export const SubscriptionContractPage = () => {
   const router = useRouter();
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();

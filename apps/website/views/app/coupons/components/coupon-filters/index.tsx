@@ -19,7 +19,7 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useFilters } from "../../hooks/use-filters";
 import { DiscountType } from "../select-discount-type";
 
@@ -32,14 +32,14 @@ interface CouponFiltersProps {
   readonly onChangeActiveFilter: (value?: boolean) => void;
 }
 
-export const CouponFilters: FC<CouponFiltersProps> = ({
+export const CouponFilters = ({
   isOpen,
   codeFilter,
   activeFilter,
   onClose,
   onChangeCodeFilter,
   onChangeActiveFilter,
-}) => {
+}: CouponFiltersProps) => {
   const translate = useTranslations();
   const {
     codeFilter: code,

@@ -1,0 +1,41 @@
+{
+  "name": "@stokei/builder",
+  "version": "0.0.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "codegen:generate": "graphql-codegen --config codegen.ts",
+    "codegen:generate:watch": "graphql-codegen --config codegen.ts --watch",
+    "lint": "eslint \"**/*.ts*\"",
+    "lint:fix": "eslint \"**/*.ts*\" --fix"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.16.2",
+    "@graphql-codegen/client-preset": "^1.2.4",
+    "@graphql-codegen/import-types-preset": "^2.2.6",
+    "@graphql-codegen/near-operation-file-preset": "^2.5.0",
+    "@graphql-codegen/typescript": "^2.8.6",
+    "@graphql-codegen/typescript-operations": "^2.5.11",
+    "@graphql-codegen/typescript-urql": "^3.7.3",
+    "@stokei/graphql": "*",
+    "@stokei/routes": "*",
+    "@stokei/translations": "*",
+    "@stokei/tsconfig": "*",
+    "@stokei/ui": "*",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.0.10",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "next": "^14.1.0",
+    "react": "^18.2.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
+    "graphql-tag": "^2.12.6",
+    "react-hook-form": "^7.47.0",
+    "urql": "^4.0.5",
+    "zod": "^3.22.4"
+  }
+}

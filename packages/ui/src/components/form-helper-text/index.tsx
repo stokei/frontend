@@ -3,8 +3,9 @@ import { PropsWithChildren } from "react";
 
 export interface FormHelperTextProps {}
 
-export const FormHelperText: React.FC<
-  PropsWithChildren<FormHelperTextProps>
-> = ({ children, ...props }) => {
+export const FormHelperText = ({
+  children,
+  ...props
+}: PropsWithChildren<FormHelperTextProps>) => {
   return <ChakraFormHelperText {...props}>{children}</ChakraFormHelperText>;
 };

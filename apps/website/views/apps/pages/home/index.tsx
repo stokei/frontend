@@ -1,6 +1,6 @@
 import { usePagination, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import {
@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AppsList } from "./components/apps-list";
 import { Navbar } from "./components/navbar";
 import {
@@ -23,9 +23,7 @@ import {
 } from "./graphql/apps.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface AppsPageProps {}
-
-export const AppsPage: FC<AppsPageProps> = () => {
+export const AppsPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const [apps, setApps] = useState<AdminAppPageAppFragment[]>([]);
@@ -60,7 +58,7 @@ export const AppsPage: FC<AppsPageProps> = () => {
   }, [dataApps]);
 
   const goToAddApp = () => {
-    router.push(routes.apps.add);
+    router.push(websiteRoutes.apps.add);
   };
 
   return (

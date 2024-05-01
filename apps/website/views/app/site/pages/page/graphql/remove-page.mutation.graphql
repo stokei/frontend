@@ -1,0 +1,5 @@
+mutation RemovePage($input: RemovePageInput!) {
+  removePage(input: $input) {
+    ...SitePagesPage
+  }
+}

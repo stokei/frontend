@@ -21,14 +21,16 @@ export interface VideoPlayerProps extends BoxProps {
   readonly id: string;
   readonly src: string;
   readonly filename: string;
+  readonly isLoading?: boolean;
 }
 
-export const VideoPlayer: React.FC<VideoPlayerProps> = ({
+export const VideoPlayer = ({
   id,
   src,
   filename,
+  isLoading,
   ...props
-}) => {
+}: VideoPlayerProps) => {
   const playerRef = useRef<any>(null);
 
   const videoContainerID = id + "-video-container";

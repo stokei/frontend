@@ -1,6 +1,6 @@
 import { PaymentMethod } from "@/components/payment-method";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { getPaymentStatusColor } from "@/utils/get-payment-status-color";
 import {
   Avatar,
@@ -12,14 +12,14 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, memo, useMemo } from "react";
+import { useMemo } from "react";
 import { AppPaymentFragment } from "../../graphql/payments.query.graphql.generated";
 
 export interface PaymentItemProps {
   readonly payment?: AppPaymentFragment;
 }
 
-export const PaymentItem: FC<PaymentItemProps> = memo(({ payment }) => {
+export const PaymentItem = ({ payment }: PaymentItemProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -31,7 +31,7 @@ export const PaymentItem: FC<PaymentItemProps> = memo(({ payment }) => {
 
   const goToPaymentDetails = () =>
     router.push(
-      routes
+      websiteRoutes
         .app({ appId: currentApp?.id })
         .payments.payment({ payment: payment?.id })
     );
@@ -95,6 +95,4 @@ export const PaymentItem: FC<PaymentItemProps> = memo(({ payment }) => {
       </TableCell>
     </TableRow>
   );
-});
-
-PaymentItem.displayName = "PaymentItem";
+};

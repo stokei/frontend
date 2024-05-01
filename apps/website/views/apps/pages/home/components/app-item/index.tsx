@@ -10,9 +10,9 @@ import {
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo, useMemo } from "react";
+import { useMemo } from "react";
 
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AppStatus } from "@/services/graphql/stokei";
 import { getAppStatusColor } from "@/utils";
 import { AdminAppPageAppFragment } from "../../graphql/apps.query.graphql.generated";
@@ -21,7 +21,7 @@ export interface AppItemProps {
   readonly app: AdminAppPageAppFragment;
 }
 
-export const AppItem: FC<AppItemProps> = memo(({ app }) => {
+export const AppItem = ({ app }: AppItemProps) => {
   const translate = useTranslations();
 
   const appStatus = useMemo(() => {
@@ -37,7 +37,7 @@ export const AppItem: FC<AppItemProps> = memo(({ app }) => {
   }, [app?.status, translate]);
 
   const goToEditAppURL = () =>
-    window?.location?.assign(routes.app({ appId: app?.id }).home);
+    window?.location?.assign(websiteRoutes.app({ appId: app?.id }).home);
 
   return (
     <Card
@@ -68,6 +68,4 @@ export const AppItem: FC<AppItemProps> = memo(({ app }) => {
       </CardHeader>
     </Card>
   );
-});
-
-AppItem.displayName = "AppItem";
+};

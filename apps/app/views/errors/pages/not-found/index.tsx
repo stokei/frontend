@@ -6,12 +6,10 @@ import {
   NotFoundSubtitle,
   NotFoundTitle,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { ErrorLayout } from "../../layout";
 
-interface NotFoundPageProps {}
-
-export const NotFoundPage: FC<NotFoundPageProps> = () => {
+export const NotFoundPage = () => {
   const translate = useTranslations();
 
   return (

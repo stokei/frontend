@@ -1,7 +1,7 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { Menu, MenuButton, MenuList } from "@stokei/ui";
-import { FC, memo } from "react";
+
 import { ActionsButton } from "../actions-button";
 import { ActivatePriceButton } from "../activate-price-button";
 import { DeactivatePriceButton } from "../deactivate-price-button";
@@ -16,13 +16,13 @@ interface ActionsMenuProps {
   onSuccessPriceDeactivated: (price?: PriceComponentFragment) => void;
 }
 
-export const ActionsMenu: FC<ActionsMenuProps> = ({
+export const ActionsMenu = ({
   price,
   isDefaultPrice,
   onSuccessPriceUpdated,
   onSuccessPriceActivated,
   onSuccessPriceDeactivated,
-}) => {
+}: ActionsMenuProps) => {
   const translate = useTranslations();
 
   return (

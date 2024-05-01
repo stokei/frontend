@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface TooltipProps extends ChakraTooltipProps {}
-export const Tooltip: React.FC<TooltipProps> = ({ children, ...props }) => (
+export const Tooltip = ({ children, ...props }: TooltipProps) => (
   <ChakraTooltip {...props}>{children}</ChakraTooltip>
 );

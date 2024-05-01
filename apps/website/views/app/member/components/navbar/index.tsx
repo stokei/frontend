@@ -1,18 +1,15 @@
 import { NavbarLogo, NavbarUserInformation } from "@/components";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Navbar as NavbarUI } from "@stokei/ui";
-import { FC } from "react";
 
-interface NavbarProps {}
-
-export const Navbar: FC<NavbarProps> = () => {
+export const Navbar = () => {
   return (
     <NavbarUI
       align="center"
       background="background.50"
       borderBottomWidth="thin"
     >
-      <NavbarLogo href={routes.home} />
+      <NavbarLogo href={websiteRoutes.home} />
       <NavbarUserInformation />
     </NavbarUI>
   );

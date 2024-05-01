@@ -1,4 +1,3 @@
-import { PagarmeImage } from "@/components/pagarme-image";
 import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
@@ -19,13 +18,8 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
 
-interface PlanItemPaymentWithBoletoProps {}
-
-export const PlanItemPaymentWithBoleto: FC<
-  PlanItemPaymentWithBoletoProps
-> = () => {
+export const PlanItemPaymentWithBoleto = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const paymentGateway =
@@ -71,8 +65,6 @@ export const PlanItemPaymentWithBoleto: FC<
               )}
             </ListItem>
           </List>
-
-          <PagarmeImage width="12" />
         </Stack>
       </CardBody>
       <CardFooter background="background.200">

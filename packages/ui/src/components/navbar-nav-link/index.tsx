@@ -1,19 +1,17 @@
 import { Icon, IconName } from "../icon";
 import { Link, LinkProps } from "../link";
-import { Text } from "../text";
-import { Stack } from "../stack";
 
 export interface NavbarNavLinkProps extends LinkProps {
   readonly icon?: IconName;
   readonly isActive?: boolean;
 }
 
-export const NavbarNavLink: React.FC<NavbarNavLinkProps> = ({
+export const NavbarNavLink = ({
   children,
   icon,
   isActive,
   ...props
-}) => {
+}: NavbarNavLinkProps) => {
   const hoverStyle = {
     background: "primary.50",
   };

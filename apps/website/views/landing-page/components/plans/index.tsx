@@ -9,7 +9,7 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { PlanItem } from "../plan-item";
 import { useGetLandingPageProductsQuery } from "../../graphql/products.query.graphql.generated";
 import { OrderBy } from "@/services/graphql/stokei";
@@ -19,9 +19,7 @@ import { PlanItemPaymentWithBoleto } from "../plan-item-payment-with-boleto";
 import { PlanItemPaymentWithPix } from "../plan-item-payment-with-pix";
 import { PlanItemPaymentWithStripe } from "../plan-item-payment-with-stripe";
 
-interface PlansProps {}
-
-export const Plans: FC<PlansProps> = () => {
+export const Plans = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const [{ fetching: isLoading, data: dataPlans }] =

@@ -10,11 +10,10 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, memo } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { CustomersCoursePageCourseFragment } from "../../graphql/courses.query.graphql.generated";
 
@@ -22,7 +21,7 @@ export interface CourseItemProps {
   readonly course?: CustomersCoursePageCourseFragment;
 }
 
-export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
+export const CourseItem = ({ course }: CourseItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
 
@@ -59,7 +58,7 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
                 width="full"
                 onClick={() =>
                   window.location.assign(
-                    routes.customers.course({ course: course?.id }).home
+                    appRoutes.customers.course({ course: course?.id }).home
                   )
                 }
               >
@@ -71,6 +70,4 @@ export const CourseItem: FC<CourseItemProps> = memo(({ course }) => {
       </CardBody>
     </Card>
   );
-});
-
-CourseItem.displayName = "CourseItem";
+};

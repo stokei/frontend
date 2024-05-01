@@ -9,16 +9,21 @@ export interface SidebarGroupContextValues {
 
 export interface SidebarGroupContextProps {
   readonly isActive: boolean;
+  readonly startActive?: boolean;
 }
 
 export const SidebarGroupContext = React.createContext(
   {} as SidebarGroupContextValues
 );
 
-export const SidebarGroupProvider: React.FC<
-  PropsWithChildren<SidebarGroupContextProps>
-> = ({ isActive, children }) => {
-  const { isOpen, onToggle, onOpen } = useDisclosure();
+export const SidebarGroupProvider = ({
+  startActive,
+  isActive,
+  children,
+}: PropsWithChildren<SidebarGroupContextProps>) => {
+  const { isOpen, onToggle, onOpen } = useDisclosure({
+    startOpen: !!startActive,
+  });
 
   const configValues: SidebarGroupContextValues = useMemo(
     () => ({

@@ -5,7 +5,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface CardProps extends ChakraCardProps {}
-export const Card: React.FC<CardProps> = ({ children, ...props }) => {
+export const Card = ({ children, ...props }: CardProps) => {
   return (
     <ChakraCard width="full" variant="outline" size="md" {...props}>
       {children}

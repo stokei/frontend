@@ -16,7 +16,7 @@ import {
   VideoUploaderOnSuccessData,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEditHeroWithVideoFormUpdateHeroMutation } from "./graphql/update-hero.mutation.graphql.generated";
@@ -38,9 +38,7 @@ interface EditHeroWithVideoFormProps {
   readonly hero: EditHeroWithVideoFormHero;
 }
 
-export const EditHeroWithVideoForm: FC<EditHeroWithVideoFormProps> = ({
-  hero,
-}) => {
+export const EditHeroWithVideoForm = ({ hero }: EditHeroWithVideoFormProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

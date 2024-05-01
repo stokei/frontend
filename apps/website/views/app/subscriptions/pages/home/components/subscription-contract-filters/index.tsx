@@ -12,7 +12,7 @@ import {
   DrawerHeader,
   Stack,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { SelectFilterStatus } from "../select-filter-status";
 import { SelectFilterSubscriptionType } from "../select-filter-subscription-type";
 
@@ -37,9 +37,7 @@ interface SubscriptionContractFiltersProps {
   readonly onResetCurrentCustomer: () => void;
 }
 
-export const SubscriptionContractFilters: FC<
-  SubscriptionContractFiltersProps
-> = ({
+export const SubscriptionContractFilters = ({
   isOpen,
   onClose,
   currentStatus,
@@ -52,7 +50,7 @@ export const SubscriptionContractFilters: FC<
   onRemoveChooseCurrentStatus,
   onChooseCurrentSubscriptionType,
   onRemoveChooseCurrentSubscriptionType,
-}) => {
+}: SubscriptionContractFiltersProps) => {
   const translate = useTranslations();
 
   const onClean = () => {

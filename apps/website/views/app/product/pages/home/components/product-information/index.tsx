@@ -17,7 +17,7 @@ import {
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Section } from "../../../../components/section";
@@ -30,9 +30,9 @@ interface ProductInformationProps {
   currentProduct?: ProductPageProductFragment;
 }
 
-export const ProductInformation: FC<ProductInformationProps> = ({
+export const ProductInformation = ({
   currentProduct,
-}) => {
+}: ProductInformationProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

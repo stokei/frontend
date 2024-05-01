@@ -1,5 +1,5 @@
 import { Accordion, Box } from "@stokei/ui";
-import { FC } from "react";
+
 import {
   AdminCoursePageModuleFragment,
   AdminCoursePageModuleVideoFragment,
@@ -14,11 +14,11 @@ interface ModulesListProps {
   readonly onOpenEditModule: (module?: AdminCoursePageModuleFragment) => void;
 }
 
-export const ModulesList: FC<ModulesListProps> = ({
+export const ModulesList = ({
   modules,
   onOpenEditModule,
   onOpenConfirmRemoveModuleModal,
-}) => {
+}: ModulesListProps) => {
   return (
     <>
       {modules?.map((module, position) => (

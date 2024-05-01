@@ -5,6 +5,6 @@ import {
 
 export interface InputGroupProps extends ChakraInputGroupProps {}
 
-export const InputGroup: React.FC<InputGroupProps> = ({ ...props }) => (
+export const InputGroup = ({ ...props }: InputGroupProps) => (
   <ChakraInputGroup isolation="unset" {...props} />
 );

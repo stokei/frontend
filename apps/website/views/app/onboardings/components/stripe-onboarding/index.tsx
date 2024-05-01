@@ -11,12 +11,10 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { FC, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useCreateAppStripeOnboardingMutation } from "../../graphql/create-app-stripe-oboarding.mutation.graphql.generated";
 
-interface StripeOnboardingProps {}
-
-export const StripeOnboarding: FC<StripeOnboardingProps> = () => {
+export const StripeOnboarding = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { onShowAPIError } = useAPIErrors();

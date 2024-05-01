@@ -1,8 +1,8 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Box, Button, Icon, Stack, useDisclosure } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { AppMaterialFragment } from "../../../home/graphql/materials.query.graphql.generated";
 import { RemoveMaterialModal } from "../remove-material-modal";
 
@@ -10,7 +10,7 @@ interface HeaderProps {
   material?: AppMaterialFragment;
 }
 
-export const Header: FC<HeaderProps> = ({ material }) => {
+export const Header = ({ material }: HeaderProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -22,7 +22,7 @@ export const Header: FC<HeaderProps> = ({ material }) => {
 
   const onGoToMaterialsPage = useCallback(() => {
     return router.push(
-      routes.app({ appId: currentApp?.id || "" }).materials.home
+      websiteRoutes.app({ appId: currentApp?.id || "" }).materials.home
     );
   }, [currentApp?.id, router]);
 

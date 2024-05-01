@@ -1,0 +1,12 @@
+query GetBuilderComponentImage($id: String!) {
+  image(id: $id) {
+    ...BuilderComponentImage
+  }
+}
+
+fragment BuilderComponentImage on Image {
+  id
+  file {
+    url
+  }
+}

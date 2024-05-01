@@ -1,16 +1,14 @@
 import { AppLayout } from "@/views/app/layout";
 import { Container, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { Navbar } from "./components/navbar";
 import { PaymentDetails } from "./components/payment-details";
 import { Stats } from "./components/stats";
 import { useGetPaymentPagePaymentQuery } from "./graphql/payment.query.graphql.generated";
 import { Loading as LoadingPage } from "./loading";
 
-interface PaymentPageProps {}
-
-export const PaymentPage: FC<PaymentPageProps> = () => {
+export const PaymentPage = () => {
   const router = useRouter();
   const paymentId = useMemo(
     () => router?.query?.paymentId?.toString(),

@@ -1,5 +1,5 @@
 import { ProductType } from "@/constants/product-type";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 
@@ -31,7 +31,7 @@ export const useStoreFilters = () => {
         delete (filters as any).slug;
       }
       return router.replace({
-        pathname: routes.store.home,
+        pathname: appRoutes.store.home,
         query: {
           ...filters,
           ...newFilters,
@@ -42,7 +42,7 @@ export const useStoreFilters = () => {
   );
 
   const onClearFilter = useCallback(() => {
-    return router.replace(routes.store.home);
+    return router.replace(appRoutes.store.home);
   }, [router]);
 
   return {

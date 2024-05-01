@@ -11,12 +11,21 @@ import { Text } from "../text";
 
 export interface SelectInputProps extends Omit<ButtonProps, "rightIcon"> {
   readonly rightIcon?: IconName;
+  readonly placeholder?: string;
   readonly item: (value: any) => ReactNode;
 }
 
-export const SelectInput: React.FC<SelectInputProps> = forwardRef(
+export const SelectInput = forwardRef(
   (
-    { children, onClick, size, rightIcon, item, placeholder, ...props },
+    {
+      children,
+      onClick,
+      size,
+      rightIcon,
+      item,
+      placeholder,
+      ...props
+    }: SelectInputProps,
     ref
   ) => {
     const {
@@ -42,6 +51,7 @@ export const SelectInput: React.FC<SelectInputProps> = forwardRef(
     const themeInput: any = useStyleConfig("Input", props);
     return (
       <Button
+        width="full"
         __css={themeInput?.field}
         height="fit-content"
         h="fit-content"

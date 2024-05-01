@@ -1,6 +1,6 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { Badge, Button, Card, CardBody, Stack, Text } from "@stokei/ui";
-import { FC } from "react";
+
 import { CouponPageCouponFragment } from "../../graphql/coupons.query.graphql.generated";
 
 interface CouponItemProps {
@@ -8,10 +8,10 @@ interface CouponItemProps {
   onOpenEditCouponDrawer: () => void;
 }
 
-export const CouponItem: FC<CouponItemProps> = ({
+export const CouponItem = ({
   coupon,
   onOpenEditCouponDrawer,
-}) => {
+}: CouponItemProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 

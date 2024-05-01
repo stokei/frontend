@@ -1,0 +1,6 @@
+mutation UpdateVersion($input: UpdateVersionInput!) {
+  updateVersion(input: $input) {
+    id
+    name
+  }
+}

@@ -10,8 +10,11 @@ export interface SidebarNavLinkProps extends LinkProps {
   readonly isActive?: boolean;
 }
 
-export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
-  ({ children, isActive, leftIcon, badge, ...props }, ref) => {
+export const SidebarNavLink = forwardRef(
+  (
+    { children, isActive, leftIcon, badge, ...props }: SidebarNavLinkProps,
+    ref
+  ) => {
     const [activeStyle, setActiveStyle] = useState<any>({});
 
     const hoverStyle = useMemo(
@@ -56,13 +59,14 @@ export const SidebarNavLink: React.FC<SidebarNavLinkProps> = forwardRef(
       >
         {leftIcon && <Icon name={leftIcon} marginRight="4" />}
         <Stack
-          as="span"
           direction="row"
           spacing="5"
           justify="space-between"
           align="center"
         >
-          <Text color={activeStyle?.color}>{children}</Text>
+          <Text width="full" color="inherit" isTruncated={props?.isTruncated}>
+            {children}
+          </Text>
           {badge}
         </Stack>
       </Link>

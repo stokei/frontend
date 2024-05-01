@@ -1,6 +1,6 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { usePoolling, useShoppingCart, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { usePoolling, useTranslations } from "@/hooks";
+import { appRoutes } from "@stokei/routes";
 import { OrderStatus } from "@/services/graphql/stokei";
 import {
   Box,
@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { CreateCheckoutPageCheckoutFragment } from "../../graphql/create-checkout.mutation.graphql.generated";
 import { useGetCheckoutPageOrderQuery } from "../../graphql/payment.query.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface PaymentPixProps {
   pix?: CreateCheckoutPageCheckoutFragment["pix"];
@@ -29,11 +30,7 @@ export interface PaymentPixProps {
   totalAmount?: number;
 }
 
-export const PaymentPix: React.FC<PaymentPixProps> = ({
-  pix,
-  orderId,
-  totalAmount,
-}) => {
+export const PaymentPix = ({ pix, orderId, totalAmount }: PaymentPixProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -63,7 +60,7 @@ export const PaymentPix: React.FC<PaymentPixProps> = ({
         status: "success",
         title: translate.formatMessage({ id: "paid" }),
       });
-      router.push(routes.checkout.callback);
+      router.push(appRoutes.checkout.callback);
     }
   }, [dataGetCheckoutPageOrder?.order?.status, onShowToast, router, translate]);
 
@@ -165,7 +162,7 @@ export const PaymentPix: React.FC<PaymentPixProps> = ({
       </ListOrdered>
 
       <ButtonGroup justifyContent="flex-end">
-        <Button onClick={() => router.push(routes.customers.home)}>
+        <Button onClick={() => router.push(appRoutes.customers.home)}>
           {translate.formatMessage({ id: "goToHomePage" })}
         </Button>
       </ButtonGroup>

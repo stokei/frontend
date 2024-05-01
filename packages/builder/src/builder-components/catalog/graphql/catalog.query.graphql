@@ -1,0 +1,87 @@
+query BuilderComponentCatalog($catalog: String!) {
+  catalog(id: $catalog) {
+    ...BuilderComponentCatalog
+  }
+}
+
+fragment BuilderComponentCatalog on Catalog {
+  id
+  title
+  subtitle
+  items {
+    ...BuilderComponentCatalogItem
+  }
+}
+
+fragment BuilderComponentCatalogItem on CatalogItem {
+  id
+  product {
+    ...BuilderComponentCatalogItemProduct
+  }
+}
+
+fragment BuilderComponentCatalogItemProduct on Product {
+  id
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  defaultPrice {
+    ...PriceComponent
+  }
+  prices {
+    totalCount
+    items {
+      ...PriceComponent
+    }
+  }
+  parent {
+    __typename
+    ...BuilderComponentCatalogItemProductCourse
+    ...BuilderComponentCatalogItemProductPlan
+    ...BuilderComponentCatalogItemProductMaterial
+  }
+}
+
+fragment BuilderComponentCatalogItemProductPlan on Plan {
+  planId: id
+  planName: name
+  features {
+    items {
+      id
+      name
+      description
+    }
+  }
+}
+
+fragment BuilderComponentCatalogItemProductCourse on Course {
+  courseId: id
+  courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
+  instructors {
+    items {
+      id
+      instructor {
+        fullname
+      }
+    }
+  }
+}
+
+fragment BuilderComponentCatalogItemProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}

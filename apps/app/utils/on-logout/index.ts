@@ -1,8 +1,8 @@
 import { removeAccessToken, removeRefreshToken } from "@stokei/graphql";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 
 export const onLogout = () => {
   removeAccessToken();
   removeRefreshToken();
-  window?.location?.assign?.(routes.home);
+  window?.location?.assign?.(appRoutes.home);
 };

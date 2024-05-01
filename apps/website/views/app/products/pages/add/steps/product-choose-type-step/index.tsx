@@ -1,7 +1,7 @@
 import { ProductType } from "@/constants/product-type";
 import { useTranslations } from "@/hooks";
 import { Button, ButtonGroup, Stack, Title } from "@stokei/ui";
-import { FC } from "react";
+
 import { ProductParent } from "../../@types/product-parent";
 import { SelectCurse } from "../../components/select-course";
 import { SelectMaterial } from "../../components/select-material";
@@ -14,13 +14,13 @@ interface ProductChooseTypeStepProps {
   onNextStep: () => void;
 }
 
-export const ProductChooseTypeStep: FC<ProductChooseTypeStepProps> = ({
+export const ProductChooseTypeStep = ({
   productType,
   productParent,
   onNextStep,
   onPreviousStep,
   onChangeProductParent,
-}) => {
+}: ProductChooseTypeStepProps) => {
   const translate = useTranslations();
 
   return (

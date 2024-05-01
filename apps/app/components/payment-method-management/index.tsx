@@ -11,7 +11,7 @@ import {
   Title,
   useDisclosure,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CreateCreditCardForm } from "./create-credit-card-form";
 import { CreateCreditCardModal } from "./create-credit-card-modal";
 import {
@@ -30,13 +30,13 @@ interface PaymentMethodManagementProps {
   ) => void;
 }
 
-export const PaymentMethodManagement: FC<PaymentMethodManagementProps> = ({
+export const PaymentMethodManagement = ({
   title,
   subtitle,
   address,
   selectedPaymentMethod,
   onChoosePaymentMethod,
-}) => {
+}: PaymentMethodManagementProps) => {
   const [paymentMethods, setPaymentMethods] = useState<
     PaymentMethodManagementPaymentMethodCardFragment[]
   >([]);

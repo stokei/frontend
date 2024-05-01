@@ -1,8 +1,8 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { Price } from "@/components";
 import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
-import { useShoppingCart, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { useTranslations } from "@/hooks";
+import { appRoutes } from "@stokei/routes";
 import { PaymentMethodType } from "@/services/graphql/stokei";
 import {
   Button,
@@ -22,6 +22,7 @@ import { CouponForm } from "../../components/coupon-form";
 import { CouponItem } from "../../components/coupon-item";
 import { PaymentMethod } from "../../components/payment-method";
 import { CheckoutPageCouponFragment } from "../../graphql/coupon.query.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface SummaryStepProps {
   totalAmount?: number;
@@ -38,7 +39,7 @@ export interface SummaryStepProps {
   onNextStep: () => void;
 }
 
-export const SummaryStep: React.FC<SummaryStepProps> = ({
+export const SummaryStep = ({
   coupon,
   paymentMethod,
   paymentMethodType,
@@ -51,7 +52,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
   onNextStep,
   onGoToPaymentMethod,
   onGoToProducts,
-}) => {
+}: SummaryStepProps) => {
   const translate = useTranslations();
   const { shoppingCartItems, subtotalAmount, promitionItemsAmount, currency } =
     useShoppingCart();
@@ -80,7 +81,7 @@ export const SummaryStep: React.FC<SummaryStepProps> = ({
                 <Stack direction="column" spacing="1">
                   <Link
                     as={NextLink}
-                    href={routes.product.home({
+                    href={appRoutes.product.home({
                       product: shoppingCartItem?.product?.id,
                     })}
                   >

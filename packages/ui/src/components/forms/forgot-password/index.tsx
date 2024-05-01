@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -28,10 +28,10 @@ export interface FormForgotPasswordProps {
   onSubmit: (data: FormForgotPasswordOnSubmitData) => void;
 }
 
-export const FormForgotPassword: FC<FormForgotPasswordProps> = ({
+export const FormForgotPassword = ({
   isLoading,
   onSubmit,
-}) => {
+}: FormForgotPasswordProps) => {
   const translate = useTranslations();
 
   const validationSchema = z.object({

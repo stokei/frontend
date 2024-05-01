@@ -1,23 +1,23 @@
 import posterImage from "@/assets/no-image.png";
 import { useCustomersCourse, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { Badge, Box, Image, Link, Stack, Text, Title } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo, useMemo } from "react";
+import { useMemo } from "react";
 import { CustomersCoursePageVideoFragment } from "../../graphql/video.query.graphql.generated";
 
 interface VideoItemProps {
   readonly video?: CustomersCoursePageVideoFragment;
 }
 
-export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
+export const VideoItem = ({ video }: VideoItemProps) => {
   const translate = useTranslations();
 
   const { course } = useCustomersCourse();
 
   const viewVideoURL = useMemo(
     () =>
-      routes.customers.course({ course: course?.id }).video({
+      appRoutes.customers.course({ course: course?.id }).video({
         video: video?.id || "",
       }),
     [course, video]
@@ -57,6 +57,4 @@ export const VideoItem: FC<VideoItemProps> = memo(({ video }) => {
       </Stack>
     </Link>
   );
-});
-
-VideoItem.displayName = "VideoItem";
+};

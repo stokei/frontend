@@ -24,7 +24,7 @@ import {
   Stack,
   Text,
 } from "@stokei/ui";
-import { FC, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { StoreCatalogFragment } from "../../graphql/catalogs.query.graphql.generated";
@@ -35,11 +35,11 @@ interface ProductFiltersProps {
   readonly onClose: () => void;
 }
 
-export const ProductFilters: FC<ProductFiltersProps> = ({
+export const ProductFilters = ({
   isOpen,
   catalogs,
   onClose,
-}) => {
+}: ProductFiltersProps) => {
   const [catalog, setCatalog] = useState<StoreCatalogFragment | undefined>();
   const translate = useTranslations();
   const { filters, onChangeFilter, onClearFilter } = useStoreFilters();

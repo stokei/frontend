@@ -1,17 +1,17 @@
 import { PaymentStatusFilter } from "@/interfaces/payment-status-filter";
 import { getPaymentStatusColor } from "@/utils/get-payment-status-color";
 import { Box, Stack, Text } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
 interface StatusSelectItemContentProps {
   readonly status?: PaymentStatusFilter;
   readonly content?: string;
 }
 
-export const StatusSelectItemContent: FC<StatusSelectItemContentProps> = ({
+export const StatusSelectItemContent = ({
   status,
   content,
-}) => {
+}: StatusSelectItemContentProps) => {
   const statusColor = useMemo(() => getPaymentStatusColor(status), [status]);
 
   return (

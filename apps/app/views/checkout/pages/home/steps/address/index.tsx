@@ -10,12 +10,12 @@ export interface AddressStepProps {
   onNextStep: () => void;
 }
 
-export const AddressStep: React.FC<AddressStepProps> = ({
+export const AddressStep = ({
   address,
   onChangeAddress,
   onNextStep,
   onPreviousStep,
-}) => {
+}: AddressStepProps) => {
   const translate = useTranslations();
 
   return (

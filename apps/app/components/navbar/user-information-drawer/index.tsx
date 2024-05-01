@@ -12,17 +12,18 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { NavbarUserInformationDrawerButton } from "../user-information-drawer-button";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 
 export interface NavbarUserInformationDrawerProps {
   isOpen?: boolean;
   onClose: () => void;
 }
-export const NavbarUserInformationDrawer: FC<
-  NavbarUserInformationDrawerProps
-> = ({ isOpen, onClose }) => {
+export const NavbarUserInformationDrawer = ({
+  isOpen,
+  onClose,
+}: NavbarUserInformationDrawerProps) => {
   const router = useRouter();
   const { currentAccount, homePageURL } = useCurrentAccount();
   const translate = useTranslations();
@@ -56,13 +57,13 @@ export const NavbarUserInformationDrawer: FC<
           </NavbarUserInformationDrawerButton>
           <NavbarUserInformationDrawerButton
             leftIcon={<Icon name="store" />}
-            onClick={() => onRedirectToURLAndCloseModal(routes.store.home)}
+            onClick={() => onRedirectToURLAndCloseModal(appRoutes.store.home)}
           >
             {translate.formatMessage({ id: "store" })}
           </NavbarUserInformationDrawerButton>
           <NavbarUserInformationDrawerButton
             leftIcon={<Icon name="user" />}
-            onClick={() => onRedirectToURLAndCloseModal(routes.me.home)}
+            onClick={() => onRedirectToURLAndCloseModal(appRoutes.me.home)}
           >
             {translate.formatMessage({ id: "profile" })}
           </NavbarUserInformationDrawerButton>

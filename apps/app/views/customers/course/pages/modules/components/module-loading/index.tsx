@@ -1,9 +1,6 @@
 import { Card, CardBody, Skeleton, SkeletonText, Stack } from "@stokei/ui";
-import { FC, memo } from "react";
 
-export interface ModuleLoadingProps {}
-
-export const ModuleLoading: FC<ModuleLoadingProps> = memo(() => {
+export const ModuleLoading = () => {
   return (
     <>
       {Array.from({ length: 3 }).map((_, i) => (
@@ -14,6 +11,4 @@ export const ModuleLoading: FC<ModuleLoadingProps> = memo(() => {
       ))}
     </>
   );
-});
-
-ModuleLoading.displayName = "ModuleLoading";
+};

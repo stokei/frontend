@@ -1,13 +1,13 @@
 import { Footer, NavbarLogo, NavbarUserInformation } from "@/components";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { Box, Navbar } from "@stokei/ui";
-import { FC, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 export interface StoreLayoutProps {}
 
-export const StoreLayout: FC<PropsWithChildren<StoreLayoutProps>> = ({
+export const StoreLayout = ({
   children,
-}) => {
+}: PropsWithChildren<StoreLayoutProps>) => {
   return (
     <Box flex="1" flexDirection="column">
       <Navbar
@@ -15,7 +15,7 @@ export const StoreLayout: FC<PropsWithChildren<StoreLayoutProps>> = ({
         background="background.50"
         borderBottomWidth="thin"
       >
-        <NavbarLogo href={routes.home} />
+        <NavbarLogo href={appRoutes.home} />
         <NavbarUserInformation />
       </Navbar>
       <Box flex="1" flexDirection="column">

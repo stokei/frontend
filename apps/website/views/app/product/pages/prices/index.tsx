@@ -1,13 +1,11 @@
 import { Container, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { ProductLayout } from "../../layout";
 import { Navbar } from "./components/navbar";
 import { Prices } from "./components/prices";
 
-interface PricesPageProps {}
-
-export const PricesPage: FC<PricesPageProps> = () => {
+export const PricesPage = () => {
   const router = useRouter();
 
   const productId = useMemo(

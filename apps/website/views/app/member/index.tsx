@@ -20,7 +20,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AppLayout } from "../layout";
@@ -28,9 +28,7 @@ import { Navbar } from "./components/navbar";
 import { useMemberPageGetMemberQuery } from "./graphql/member.query.graphql.generated";
 import { useMemberPageUpdateAccountMutation } from "./graphql/update-account.mutation.graphql.generated";
 
-interface MemberPageProps {}
-
-export const MemberPage: FC<MemberPageProps> = () => {
+export const MemberPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();

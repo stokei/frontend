@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Avatar,
   Button,
@@ -11,13 +11,11 @@ import {
   useDisclosure,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
 export interface NavbarUserInformationProps extends StackProps {}
-export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
-  ...props
-}) => {
+export const NavbarUserInformation = (props: NavbarUserInformationProps) => {
   const { isOpen: isOpenDrawer, onToggle: onToggleDrawer } = useDisclosure();
 
   const router = useRouter();
@@ -44,7 +42,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
             onClose={onToggleDrawer}
           />
           <Stack spacing="4" direction="row" justify="flex-end" align="center">
-            <NavbarNavLink href={routes.apps.home} icon="home" />
+            <NavbarNavLink href={websiteRoutes.apps.home} icon="home" />
             <Avatar
               cursor="pointer"
               size="sm"
@@ -60,7 +58,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
             variant="ghost"
             onClick={() =>
               router.push({
-                pathname: routes.auth.login,
+                pathname: websiteRoutes.auth.login,
                 query: {
                   redirectTo,
                 },
@@ -72,7 +70,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
           <Button
             onClick={() =>
               router.push({
-                pathname: routes.auth.signUp,
+                pathname: websiteRoutes.auth.signUp,
                 query: {
                   redirectTo,
                 },

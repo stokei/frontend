@@ -1,13 +1,13 @@
 import { DownloadFileButton } from "@/components";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { SubscriptionContractStatus } from "@/services/graphql/stokei";
 import { getProductURL } from "@/utils";
 import { CustomerLayout } from "@/views/customers/layout";
 import { Box, Container, Image, Markdown, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   AppSubscriptionContractsByItemMaterialFragment,
   AppSubscriptionContractsByItemMaterialProductMaterialFragment,
@@ -15,9 +15,7 @@ import {
 } from "../../graphql/subscription-contracts.query.graphql.generated";
 import { Navbar } from "./components/navbar";
 
-interface MaterialViewPageProps {}
-
-export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
+export const MaterialViewPage = () => {
   const [material, setMaterial] =
     useState<AppSubscriptionContractsByItemMaterialProductMaterialFragment>();
   const { currentAccount } = useCurrentAccount();
@@ -73,7 +71,7 @@ export const MaterialViewPage: FC<MaterialViewPageProps> = () => {
       return;
     } else {
       if (dataGetMaterials?.subscriptionContractsByItem?.totalCount === 0) {
-        router.push(routes.notFound);
+        router.push(appRoutes.notFound);
       }
     }
   }, [dataGetMaterials, errorGetMaterials, router]);

@@ -11,7 +11,7 @@ query GetCheckoutProducts(
     nextPage
     previousPage
     items {
-      ...SortedItemComponentCatalogItemProduct
+      ...CheckoutProduct
     }
   }
 }

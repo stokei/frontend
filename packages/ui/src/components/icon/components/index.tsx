@@ -83,19 +83,24 @@ import {
   MdOutlineFeaturedPlayList,
   MdOutlinePix,
   MdOutlineStorage,
+  MdOutlineWeb,
+  MdOutlineWebAsset,
 } from "react-icons/md";
 import {
   RxCaretDown,
   RxCaretLeft,
   RxCaretRight,
   RxCaretUp,
+  RxComponent1,
 } from "react-icons/rx";
-import { TbApps } from "react-icons/tb";
+import { TbApps, TbSeo, TbVersions } from "react-icons/tb";
+import { IoIosColorFilter } from "react-icons/io";
 
 import {
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
   RiCoupon3Line,
+  RiDraggable,
   RiErrorWarningFill,
   RiPictureInPicture2Line,
   RiPictureInPictureExitLine,
@@ -197,5 +202,12 @@ export const PixIcon = MdOutlinePix;
 export const CopyIcon = MdContentCopy;
 export const ViewIcon = BsArrowUpRightSquare;
 export const CouponIcon = RiCoupon3Line;
+export const SiteIcon = MdOutlineWeb;
+export const PageIcon = MdOutlineWebAsset;
 export const ClockIcon = AiOutlineClockCircle;
 export const WarningIcon = AiOutlineWarning;
+export const MoveIcon = RiDraggable;
+export const ComponentIcon = RxComponent1;
+export const MetadataIcon = TbSeo;
+export const VersionIcon = TbVersions;
+export const ColorIcon = IoIosColorFilter;

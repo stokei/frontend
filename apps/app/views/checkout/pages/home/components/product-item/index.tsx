@@ -1,11 +1,10 @@
-import { FC, memo, useCallback } from "react";
+import { useCallback } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { SelectPrice } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
-import { SortedItemComponentCatalogItemProductFragment } from "@/components/sorted-item-factory/graphql/sorted-item.fragment.graphql.generated";
-import { useShoppingCart, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { useTranslations } from "@/hooks";
+import { appRoutes } from "@stokei/routes";
 import {
   Button,
   ButtonGroup,
@@ -18,13 +17,15 @@ import {
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
+import { CheckoutProductFragment } from "@/views/checkout/graphql/product.query.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface ProductItemProps {
   readonly price?: PriceComponentFragment | null;
-  readonly product?: SortedItemComponentCatalogItemProductFragment | null;
+  readonly product?: CheckoutProductFragment | null;
 }
 
-export const ProductItem: FC<ProductItemProps> = memo(({ product, price }) => {
+export const ProductItem = ({ product, price }: ProductItemProps) => {
   const translate = useTranslations();
 
   const { onRemoveShoppingCartItem, onAddOrUpdateShoppingCartItem } =
@@ -56,7 +57,7 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product, price }) => {
             />
             <Link
               as={NextLink}
-              href={routes.product.home({
+              href={appRoutes.product.home({
                 product: product?.id || "",
               })}
             >
@@ -91,6 +92,4 @@ export const ProductItem: FC<ProductItemProps> = memo(({ product, price }) => {
       </CardBody>
     </Card>
   );
-});
-
-ProductItem.displayName = "ProductItem";
+};

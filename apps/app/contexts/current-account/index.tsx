@@ -6,7 +6,6 @@ import {
 import { getDashboardHomePageURL } from "@/utils";
 import {
   createContext,
-  FC,
   PropsWithChildren,
   useCallback,
   useEffect,
@@ -33,9 +32,10 @@ export const CurrentAccountContext = createContext(
   {} as CurrentAccountProviderValues
 );
 
-export const CurrentAccountProvider: FC<
-  PropsWithChildren<CurrentAccountProviderProps>
-> = ({ currentAccount: currentAccountProp, children }) => {
+export const CurrentAccountProvider = ({
+  currentAccount: currentAccountProp,
+  children,
+}: PropsWithChildren<CurrentAccountProviderProps>) => {
   const [currentAccount, setCurrentAccount] = useState<
     CurrentAccount | undefined
   >();

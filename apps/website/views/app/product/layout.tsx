@@ -2,21 +2,21 @@ import { AppLogo, Footer, Sidebar } from "@/components";
 import { AppProductLayoutContent } from "@/components/app-product-layout-content";
 import { SidebarProvider } from "@/contexts";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Box, SidebarBody, SidebarHeader, SidebarNavLink } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useCallback, useMemo } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 
 export interface ProductLayoutProps {}
 
-export const ProductLayout: FC<PropsWithChildren<ProductLayoutProps>> = ({
+export const ProductLayout = ({
   children,
-}) => {
+}: PropsWithChildren<ProductLayoutProps>) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
-  const baseAppRoutes = routes.app({ appId: currentApp?.id });
+  const baseAppRoutes = websiteRoutes.app({ appId: currentApp?.id });
   const productId = useMemo(
     () => router?.query?.productId?.toString() || "",
     [router]

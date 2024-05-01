@@ -4,10 +4,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface ModalHeaderProps extends ChakraModalHeaderProps {}
-export const ModalHeader: React.FC<ModalHeaderProps> = ({
-  children,
-  ...props
-}) => (
+export const ModalHeader = ({ children, ...props }: ModalHeaderProps) => (
   <ChakraModalHeader paddingBottom="0" {...props}>
     {children}
   </ChakraModalHeader>

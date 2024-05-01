@@ -1,24 +1,23 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Button, Icon, Spacer, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
 
 interface HeaderProps {
   readonly subscriptionContractTotalCount: number;
   readonly onOpenFilters: () => void;
 }
 
-export const Header: FC<HeaderProps> = ({
+export const Header = ({
   subscriptionContractTotalCount,
   onOpenFilters,
-}) => {
+}: HeaderProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const onGoToAddSubscriptionPage = () => {
     return router.push(
-      routes.app({ appId: currentApp?.id || "" }).subscriptions.add
+      websiteRoutes.app({ appId: currentApp?.id || "" }).subscriptions.add
     );
   };
   return (

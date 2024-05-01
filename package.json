@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "codegen:generate:watch": "turbo run codegen:generate:watch",
     "dev": "turbo run dev --parallel",
     "dev:app": "turbo run dev --scope=@stokei/app",
     "dev:website": "turbo run dev --scope=@stokei/website",
@@ -17,7 +18,7 @@
   "devDependencies": {
     "eslint-config-custom": "*",
     "prettier": "latest",
-    "turbo": "^1.6.3"
+    "turbo": "^1.13.2"
   },
   "engines": {
     "node": ">=14.0.0"

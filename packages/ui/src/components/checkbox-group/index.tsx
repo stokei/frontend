@@ -5,9 +5,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface CheckboxGroupProps extends ChakraCheckboxGroupProps {}
-export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
-  children,
-  ...props
-}) => {
+export const CheckboxGroup = ({ children, ...props }: CheckboxGroupProps) => {
   return <ChakraCheckboxGroup {...props}>{children}</ChakraCheckboxGroup>;
 };

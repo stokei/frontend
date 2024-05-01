@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface TabPanelsProps extends ChakraTabPanelsProps {}
-export const TabPanels: React.FC<TabPanelsProps> = ({ children, ...props }) => (
+export const TabPanels = ({ children, ...props }: TabPanelsProps) => (
   <ChakraTabPanels {...props}>{children}</ChakraTabPanels>
 );

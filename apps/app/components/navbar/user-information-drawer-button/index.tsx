@@ -1,10 +1,10 @@
 import { Button, ButtonProps } from "@stokei/ui";
-import { FC } from "react";
 
 export interface NavbarUserInformationDrawerButtonProps extends ButtonProps {}
-export const NavbarUserInformationDrawerButton: FC<
-  NavbarUserInformationDrawerButtonProps
-> = ({ children, ...props }) => {
+export const NavbarUserInformationDrawerButton = ({
+  children,
+  ...props
+}: NavbarUserInformationDrawerButtonProps) => {
   return (
     <Button
       paddingX="3"

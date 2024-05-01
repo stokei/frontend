@@ -1,0 +1,18 @@
+mutation UseUploadImageCreateImage($input: CreateImageInput!) {
+  createImage(input: $input) {
+    ...UseUploadImage
+  }
+}
+
+fragment UseUploadImageFile on File {
+  id
+  filename
+  url
+}
+
+fragment UseUploadImage on Image {
+  id
+  file {
+    ...UseUploadImageFile
+  }
+}

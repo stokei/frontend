@@ -17,7 +17,7 @@ import {
   Text,
   useDebounce,
 } from "@stokei/ui";
-import { FC, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -36,14 +36,14 @@ interface SelectMembersProps {
   readonly onRemoveChooseCurrentMember: (value?: AppAccountFragment) => void;
 }
 
-export const SelectMembers: FC<SelectMembersProps> = ({
+export const SelectMembers = ({
   label,
   isOptional,
   currentMembers,
   hasCurrentAccount = true,
   onChooseCurrentMember,
   onRemoveChooseCurrentMember,
-}) => {
+}: SelectMembersProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();

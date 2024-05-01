@@ -1,0 +1,22 @@
+query GetVersions(
+  $where: WhereDataFindAllVersionsInput
+  $orderBy: OrderByDataFindAllVersionsInput
+  $page: PaginationInput
+) {
+  versions(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...PageVersion
+    }
+  }
+}
+
+fragment PageVersion on Version {
+  id
+  name
+}

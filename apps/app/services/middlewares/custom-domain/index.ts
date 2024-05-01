@@ -1,6 +1,11 @@
-import { MiddlewareResponse } from "@/interfaces/middleware-response";
+import {
+  MiddlewareAppResponse,
+  MiddlewareResponse,
+  MiddlewareSiteResponse,
+} from "@/interfaces/middleware-response";
 import { WithDomainProps } from "@/interfaces/with-domain-props";
 import { createAPIClient } from "@/services/graphql/client";
+import { CurrentGlobalAppDocument } from "@/services/graphql/queries/current-app/current-app.query.graphql.generated";
 import { gql } from "urql";
 
 const currentAppDomainQuery = gql`
@@ -9,11 +14,6 @@ const currentAppDomainQuery = gql`
       id
       name
       parent
-      app {
-        id
-        slug
-        name
-      }
     }
   }
 `;
@@ -26,7 +26,8 @@ export const withCustomDomain = async ({
   const url = nextUrl.clone();
   const { pathname } = nextUrl;
   let slug;
-  let app: any;
+  let app: MiddlewareAppResponse | undefined;
+  let site: MiddlewareSiteResponse | undefined;
   let isRedirect = false;
   try {
     const stokeiClient = createAPIClient({
@@ -37,16 +38,25 @@ export const withCustomDomain = async ({
         domain,
       })
       .toPromise();
-    app = currentDomain?.data?.domain?.app;
-    slug = app?.slug;
+    const domainModel = currentDomain?.data?.domain;
+
+    const currentSiteResponse = await stokeiClient.api
+      .query(CurrentGlobalAppDocument, {
+        site: domainModel?.parent,
+      })
+      .toPromise();
+    site = currentSiteResponse?.data?.site;
+    slug = site?.slug || "";
+    app = site?.app;
+
     if (!!slug) {
-      if (pathname.startsWith("/app/" + slug)) {
+      if (pathname.startsWith("/site/" + slug)) {
         url.href = url.href
-          .replace("/app/" + slug, "/")
+          .replace("/site/" + slug, "/")
           .replace(url.hostname, domain);
         isRedirect = true;
       } else {
-        url.pathname = url.pathname.replace("/", "/app/" + slug + "/");
+        url.pathname = url.pathname.replace("/", "/site/" + slug + "/");
       }
     }
   } catch (error) {
@@ -54,7 +64,8 @@ export const withCustomDomain = async ({
   }
 
   return {
-    appId: app?.id,
+    site,
+    app,
     slug,
     isRedirect,
     url,

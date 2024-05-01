@@ -1,17 +1,30 @@
 query CurrentGlobalApp($slug: String!) {
-  currentApp: app(slug: $slug) {
+  site(slug: $slug) {
     id
     name
-    isStokei
-    isIntegratedWithPagarme
-    isIntegratedWithStripe
-    stripeAccount
-    currency {
+    slug
+    homePage {
       id
-      symbol
-      minorUnit
+      slug
+      version {
+        id
+      }
     }
-    icon {
+    loginPage {
+      id
+      slug
+      version {
+        id
+      }
+    }
+    signUpPage {
+      id
+      slug
+      version {
+        id
+      }
+    }
+    favicon {
       file {
         url
       }
@@ -21,11 +34,34 @@ query CurrentGlobalApp($slug: String!) {
         url
       }
     }
-    colors {
-      items {
-        color
-        themeMode
-        type
+    app {
+      id
+      name
+      isStokei
+      isIntegratedWithPagarme
+      isIntegratedWithStripe
+      stripeAccount
+      currency {
+        id
+        symbol
+        minorUnit
+      }
+      icon {
+        file {
+          url
+        }
+      }
+      logo {
+        file {
+          url
+        }
+      }
+      colors {
+        items {
+          color
+          themeMode
+          type
+        }
       }
     }
   }

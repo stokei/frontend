@@ -1,7 +1,7 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
 import { useUploadVideo } from "@/hooks/use-upload-video";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -26,7 +26,7 @@ import {
   VideoUploaderOnSuccessData,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CourseLayout } from "../../layout";
@@ -34,9 +34,7 @@ import { Loading } from "../../loading";
 import { Navbar } from "./components/navbar";
 import { useGetAdminCoursePageModuleQuery } from "./graphql/module.query.graphql.generated";
 
-interface AddVideoPageProps {}
-
-export const AddVideoPage: FC<AddVideoPageProps> = () => {
+export const AddVideoPage = () => {
   const [videoDuration, setVideoDuration] = useState<number>(0);
 
   const router = useRouter();
@@ -102,8 +100,8 @@ export const AddVideoPage: FC<AddVideoPageProps> = () => {
 
   const goToModulesPage = () => {
     router.push(
-      routes.app({ appId: currentApp?.id }).course({ course: courseId }).modules
-        .home
+      websiteRoutes.app({ appId: currentApp?.id }).course({ course: courseId })
+        .modules.home
     );
   };
 

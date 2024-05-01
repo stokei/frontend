@@ -1,10 +1,9 @@
 import stripeImage from "@/assets/stripe.png";
 import { useTranslations } from "@/hooks";
 import { Image, ImageProps } from "@stokei/ui";
-import { FC } from "react";
 
 export interface StripeImageProps extends ImageProps {}
-export const StripeImage: FC<StripeImageProps> = ({ ...props }) => {
+export const StripeImage = ({ ...props }: StripeImageProps) => {
   const translate = useTranslations();
   return (
     <Image

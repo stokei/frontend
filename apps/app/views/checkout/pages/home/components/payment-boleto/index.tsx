@@ -1,6 +1,6 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { useShoppingCart, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { useTranslations } from "@/hooks";
+import { appRoutes } from "@stokei/routes";
 import {
   Box,
   Button,
@@ -15,16 +15,14 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { CreateCheckoutPageCheckoutFragment } from "../../graphql/create-checkout.mutation.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
 export interface PaymentBoletoProps {
   boleto?: CreateCheckoutPageCheckoutFragment["boleto"];
   totalAmount?: number;
 }
 
-export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({
-  boleto,
-  totalAmount,
-}) => {
+export const PaymentBoleto = ({ boleto, totalAmount }: PaymentBoletoProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currency } = useShoppingCart();
@@ -92,7 +90,7 @@ export const PaymentBoleto: React.FC<PaymentBoletoProps> = ({
       <ButtonGroup justifyContent="flex-end">
         <Button
           variant="ghost"
-          onClick={() => router.push(routes.customers.home)}
+          onClick={() => router.push(appRoutes.customers.home)}
         >
           {translate.formatMessage({ id: "goToHomePage" })}
         </Button>

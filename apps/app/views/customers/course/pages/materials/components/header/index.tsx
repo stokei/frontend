@@ -1,12 +1,11 @@
 import { useTranslations } from "@/hooks";
 import { Stack, Title } from "@stokei/ui";
-import { FC } from "react";
 
 interface HeaderProps {
   readonly materialsTotalCount: number;
 }
 
-export const Header: FC<HeaderProps> = ({ materialsTotalCount }) => {
+export const Header = ({ materialsTotalCount }: HeaderProps) => {
   const translate = useTranslations();
 
   return (

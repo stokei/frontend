@@ -9,9 +9,8 @@ import {
   Stack,
   Title,
 } from "@stokei/ui";
-import { FC, memo } from "react";
 
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
 import { AppSubscriptionContractsByItemMaterialProductMaterialFragment } from "../../../../graphql/subscription-contracts.query.graphql.generated";
 
@@ -19,12 +18,12 @@ export interface MaterialItemProps {
   readonly material: AppSubscriptionContractsByItemMaterialProductMaterialFragment;
 }
 
-export const MaterialItem: FC<MaterialItemProps> = memo(({ material }) => {
+export const MaterialItem = ({ material }: MaterialItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
 
   const goToEditMaterial = () =>
-    router.push(routes.customers.material({ material: material?.id }));
+    router.push(appRoutes.customers.material({ material: material?.id }));
 
   return (
     <Card background="background.50" overflow="hidden">
@@ -48,6 +47,4 @@ export const MaterialItem: FC<MaterialItemProps> = memo(({ material }) => {
       </CardBody>
     </Card>
   );
-});
-
-MaterialItem.displayName = "MaterialItem";
+};

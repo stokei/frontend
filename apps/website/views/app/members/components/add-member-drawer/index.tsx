@@ -15,7 +15,7 @@ import {
   Stack,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateAccountMutation } from "../../graphql/create-account.mutation.graphql.generated";
@@ -27,11 +27,11 @@ interface AddMemberDrawerProps {
   onSuccess?: (course: AppMemberFragment) => void;
 }
 
-export const AddMemberDrawer: FC<AddMemberDrawerProps> = ({
+export const AddMemberDrawer = ({
   onSuccess,
   isOpenDrawer,
   onCloseDrawer,
-}) => {
+}: AddMemberDrawerProps) => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();

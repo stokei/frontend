@@ -1,21 +1,19 @@
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
-import { getI18nKeyFromRecurringInterval, getProductURL } from "@/utils";
+import { appRoutes } from "@stokei/routes";
+import { getProductURL } from "@/utils";
 import { getOrderStatusColor } from "@/utils/get-order-status-color";
 import {
   Avatar,
   AvatarGroup,
   Badge,
   Box,
-  Description,
-  Image,
   Stack,
   TableCell,
   TableRow,
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, memo, useMemo } from "react";
+import { useMemo } from "react";
 import { AppOrderFragment } from "../../graphql/orders.query.graphql.generated";
 import { CouponItem } from "../coupon-item";
 
@@ -24,7 +22,7 @@ export interface OrderItemProps {
   readonly hasCoupon?: boolean;
 }
 
-export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
+export const OrderItem = ({ order, hasCoupon }: OrderItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
 
@@ -36,7 +34,7 @@ export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
   const orderItems = useMemo(() => order?.items?.items, [order]);
 
   const goToOrderPage = () => {
-    router.push(routes.customers.orders.order({ order: order?.id }));
+    router.push(appRoutes.customers.orders.order({ order: order?.id }));
   };
 
   return (
@@ -89,6 +87,4 @@ export const OrderItem: FC<OrderItemProps> = memo(({ order, hasCoupon }) => {
       </TableCell>
     </TableRow>
   );
-});
-
-OrderItem.displayName = "OrderItem";
+};

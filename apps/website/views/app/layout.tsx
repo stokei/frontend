@@ -3,7 +3,7 @@ import { AppLayoutContent } from "@/components/app-layout-content";
 import { BadgeNew } from "@/components/badge-new";
 import { SidebarProvider } from "@/contexts";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Box,
   SidebarBody,
@@ -15,17 +15,15 @@ import {
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useCallback, useMemo } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 
-export interface AppLayoutProps {}
+export interface AppLayoutProps { }
 
-export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
-  children,
-}) => {
+export const AppLayout = ({ children }: PropsWithChildren<AppLayoutProps>) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
-  const baseRoutes = routes.app({ appId: currentApp?.id });
+  const baseRoutes = websiteRoutes.app({ appId: currentApp?.id });
 
   const isActiveRoute = useCallback(
     (route: string) => !!router.asPath?.match(route),
@@ -119,7 +117,7 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
               </SidebarGroupPanel>
             </SidebarGroup>
             <SidebarGroup isActive={isActiveProducts}>
-              <SidebarGroupButton leftIcon="product" badge={<BadgeNew />}>
+              <SidebarGroupButton leftIcon="product">
                 {translate.formatMessage({ id: "products" })}
               </SidebarGroupButton>
               <SidebarGroupPanel>
@@ -143,7 +141,6 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   as={NextLink}
                   leftIcon="coupon"
                   href={baseRoutes.coupons.home}
-                  badge={<BadgeNew />}
                   isActive={isActiveRoute(baseRoutes.coupons.home)}
                 >
                   {translate.formatMessage({ id: "coupons" })}
@@ -174,6 +171,15 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
             >
               {translate.formatMessage({ id: "members" })}
             </SidebarNavLink>
+            <SidebarNavLink
+              leftIcon="site"
+              as={NextLink}
+              href={baseRoutes.sites.home}
+              isActive={isActiveRoute(baseRoutes.sites.home)}
+              badge={<BadgeNew />}
+            >
+              {translate.formatMessage({ id: "sites" })}
+            </SidebarNavLink>
             <SidebarGroup isActive={isActiveSettings}>
               <SidebarGroupButton leftIcon="setting">
                 {translate.formatMessage({ id: "settings" })}
@@ -196,12 +202,12 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                   {translate.formatMessage({ id: "billing" })}
                 </SidebarNavLink>
                 <SidebarNavLink
-                  leftIcon="website"
+                  leftIcon="color"
                   as={NextLink}
-                  href={baseRoutes.settings.website}
-                  isActive={router.asPath === baseRoutes.settings.website}
+                  href={baseRoutes.settings.colors}
+                  isActive={router.asPath === baseRoutes.settings.colors}
                 >
-                  {translate.formatMessage({ id: "website" })}
+                  {translate.formatMessage({ id: "colors" })}
                 </SidebarNavLink>
                 <SidebarNavLink
                   leftIcon="onboarding"
@@ -211,21 +217,13 @@ export const AppLayout: FC<PropsWithChildren<AppLayoutProps>> = ({
                 >
                   {translate.formatMessage({ id: "onboardings" })}
                 </SidebarNavLink>
-                <SidebarNavLink
-                  leftIcon="domain"
-                  as={NextLink}
-                  href={baseRoutes.settings.domains}
-                  isActive={router.asPath === baseRoutes.settings.domains}
-                >
-                  {translate.formatMessage({ id: "domains" })}
-                </SidebarNavLink>
               </SidebarGroupPanel>
             </SidebarGroup>
           </SidebarBody>
         </Sidebar>
         <AppLayoutContent>
           <Box flex="1" flexDirection="column">
-            {children}
+            <>{children}</>
           </Box>
           <Footer />
         </AppLayoutContent>

@@ -9,7 +9,7 @@ export interface RadioProps extends ChakraRadioProps {
   readonly ref?: any;
 }
 
-export const Radio: React.FC<RadioProps> = forwardRef(({ ...props }, ref) => (
+export const Radio = forwardRef((props: RadioProps, ref) => (
   <ChakraRadio
     focusBorderColor="primary.500"
     colorScheme="primary"

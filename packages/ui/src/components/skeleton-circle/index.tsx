@@ -6,8 +6,9 @@ import { PropsWithChildren } from "react";
 
 export interface SkeletonCircleProps extends SkeletonProps {}
 
-export const SkeletonCircle: React.FC<
-  PropsWithChildren<SkeletonCircleProps>
-> = ({ children, ...props }) => (
+export const SkeletonCircle = ({
+  children,
+  ...props
+}: PropsWithChildren<SkeletonCircleProps>) => (
   <ChakraSkeletonCircle {...props}>{children}</ChakraSkeletonCircle>
 );

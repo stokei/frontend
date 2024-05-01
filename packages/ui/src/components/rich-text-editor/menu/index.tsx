@@ -10,9 +10,10 @@ export interface RichTextEditorMenuProps {
   editor: Editor | null;
 }
 
-export const RichTextEditorMenu: React.FC<
-  PropsWithChildren<RichTextEditorMenuProps>
-> = ({ id, editor }) => {
+export const RichTextEditorMenu = ({
+  id,
+  editor,
+}: PropsWithChildren<RichTextEditorMenuProps>) => {
   if (!editor) {
     return <></>;
   }

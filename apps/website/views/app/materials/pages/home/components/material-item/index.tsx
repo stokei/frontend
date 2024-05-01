@@ -12,9 +12,8 @@ import {
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { FC, memo } from "react";
 
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AppMaterialFragment } from "../../graphql/materials.query.graphql.generated";
 import { useRouter } from "next/router";
 
@@ -22,15 +21,16 @@ export interface MaterialItemProps {
   readonly material: AppMaterialFragment;
 }
 
-export const MaterialItem: FC<MaterialItemProps> = memo(({ material }) => {
+export const MaterialItem = ({ material }: MaterialItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 
   const goToEditMaterial = () =>
     router.push(
-      routes.app({ appId: currentApp?.id }).material({ material: material?.id })
-        .home
+      websiteRoutes
+        .app({ appId: currentApp?.id })
+        .material({ material: material?.id }).home
     );
 
   return (
@@ -55,6 +55,4 @@ export const MaterialItem: FC<MaterialItemProps> = memo(({ material }) => {
       </CardBody>
     </Card>
   );
-});
-
-MaterialItem.displayName = "MaterialItem";
+};

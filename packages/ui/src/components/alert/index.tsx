@@ -4,7 +4,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface AlertProps extends ChakraAlertProps {}
-export const Alert: React.FC<AlertProps> = ({ children, ...props }) => (
+export const Alert = ({ children, ...props }: AlertProps) => (
   <ChakraAlert rounded="md" {...props}>
     {children}
   </ChakraAlert>

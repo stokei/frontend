@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { useTranslations } from "../../../hooks";
 import { Button } from "../../button";
 import { ButtonGroup } from "../../button-group";
@@ -17,7 +16,7 @@ export interface HeroTitleContentProps {
   readonly onCTA?: () => void;
 }
 
-export const HeroTitleContent: FC<HeroTitleContentProps> = ({
+export const HeroTitleContent = ({
   textTheme = "light",
   title,
   titleHighlight,
@@ -25,7 +24,7 @@ export const HeroTitleContent: FC<HeroTitleContentProps> = ({
   subtitleHighlight,
   ctaText,
   onCTA,
-}) => {
+}: HeroTitleContentProps) => {
   const translate = useTranslations();
 
   return (

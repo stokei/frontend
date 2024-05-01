@@ -5,6 +5,6 @@ import {
 
 export interface WrapItemProps extends ChakraWrapItemProps {}
 
-export const WrapItem: React.FC<WrapItemProps> = ({ children, ...props }) => (
+export const WrapItem = ({ children, ...props }: WrapItemProps) => (
   <ChakraWrapItem {...props}>{children}</ChakraWrapItem>
 );

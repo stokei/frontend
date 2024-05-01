@@ -10,7 +10,7 @@ import {
   Text,
   useDisclosure,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import {
   CancelSubscriptionContractModal,
   CancelSubscriptionContractModalCustomer,
@@ -23,9 +23,11 @@ interface SubscriptionContractItemMenuProps {
   readonly product?: CancelSubscriptionContractModalProduct;
 }
 
-export const SubscriptionContractItemMenu: FC<
-  SubscriptionContractItemMenuProps
-> = ({ subscriptionContractId, customer, product }) => {
+export const SubscriptionContractItemMenu = ({
+  subscriptionContractId,
+  customer,
+  product,
+}: SubscriptionContractItemMenuProps) => {
   const {
     isOpen: isOpenCancelSubscriptionContractModal,
     onOpen: onOpenCancelSubscriptionContractModal,

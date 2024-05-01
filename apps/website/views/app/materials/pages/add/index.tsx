@@ -1,7 +1,7 @@
 import { STOKEI_API_FILE_UPLOAD_URL } from "@/environments";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AppLayout } from "@/views/app/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -26,15 +26,13 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Navbar } from "./components/navbar";
 import { useCreateMaterialMutation } from "./graphql/create-material.mutation.graphql.generated";
 
-interface AddMaterialPageProps {}
-
-export const AddMaterialPage: FC<AddMaterialPageProps> = () => {
+export const AddMaterialPage = () => {
   const [fileId, setFileId] = useState<string>("");
   const router = useRouter();
   const translate = useTranslations();
@@ -75,7 +73,7 @@ export const AddMaterialPage: FC<AddMaterialPageProps> = () => {
   }, [register]);
 
   const goToMaterialsPage = () => {
-    router.push(routes.app({ appId: currentApp?.id }).materials.home);
+    router.push(websiteRoutes.app({ appId: currentApp?.id }).materials.home);
   };
 
   const onSubmit = async ({

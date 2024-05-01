@@ -1,0 +1,5 @@
+mutation CreateVersion($input: CreateVersionInput!) {
+  createVersion(input: $input) {
+    id
+  }
+}

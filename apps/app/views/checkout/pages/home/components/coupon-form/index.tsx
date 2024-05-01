@@ -18,10 +18,7 @@ export interface CouponFormProps {
   onSuccess?: (coupon?: CheckoutPageCouponFragment) => void;
 }
 
-export const CouponForm: React.FC<CouponFormProps> = ({
-  coupon,
-  onSuccess,
-}) => {
+export const CouponForm = ({ coupon, onSuccess }: CouponFormProps) => {
   const [couponCode, setCouponCode] = useState("");
   const translate = useTranslations();
   const { onShowAPIError } = useAPIErrors();

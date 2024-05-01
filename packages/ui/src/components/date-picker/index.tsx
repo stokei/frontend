@@ -25,9 +25,18 @@ export interface DatePickerProps extends Omit<BoxProps, "onChange"> {
   onChange: (data: Date) => void;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = forwardRef(
+export const DatePicker = forwardRef(
   (
-    { id, isDisabled, value, minDate, maxDate, type, onChange, ...props },
+    {
+      id,
+      isDisabled,
+      value,
+      minDate,
+      maxDate,
+      type,
+      onChange,
+      ...props
+    }: DatePickerProps,
     ref
   ) => {
     const translate = useTranslations();

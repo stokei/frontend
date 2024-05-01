@@ -3,7 +3,7 @@ import { MemberSelectItemContent } from "@/components/select-members/member-sele
 import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
 import { ProductSelectItemContent } from "@/components/select-product/product-select-item-content";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   IntervalType,
   SubscriptionContractType,
@@ -21,7 +21,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { useCreateSubscriptionContractMutation } from "../../graphql/create-subscription-contract.mutation.graphql.generated";
 
 interface ReviewStepProps {
@@ -35,7 +35,7 @@ interface ReviewStepProps {
   onPreviousStep: () => void;
 }
 
-export const ReviewStep: FC<ReviewStepProps> = ({
+export const ReviewStep = ({
   subscriptionType,
   product,
   student,
@@ -44,7 +44,7 @@ export const ReviewStep: FC<ReviewStepProps> = ({
   recurringInterval,
   recurringIntervalCount,
   onPreviousStep,
-}) => {
+}: ReviewStepProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -96,9 +96,11 @@ export const ReviewStep: FC<ReviewStepProps> = ({
           status: "success",
         });
         router.push(
-          routes.app({ appId: currentApp?.id }).subscriptions.subscription({
-            subscription: response.data.createSubscriptionContract.id,
-          })
+          websiteRoutes
+            .app({ appId: currentApp?.id })
+            .subscriptions.subscription({
+              subscription: response.data.createSubscriptionContract.id,
+            })
         );
         return;
       }

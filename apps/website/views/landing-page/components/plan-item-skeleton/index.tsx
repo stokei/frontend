@@ -9,11 +9,8 @@ import {
   SkeletonText,
   Stack,
 } from "@stokei/ui";
-import { FC } from "react";
 
-interface PlanItemSkeletonProps {}
-
-export const PlanItemSkeleton: FC<PlanItemSkeletonProps> = () => {
+export const PlanItemSkeleton = () => {
   return (
     <Card background="background.50">
       <CardHeader>

@@ -1,5 +1,5 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -12,21 +12,18 @@ import {
   FormErrorMessage,
   Input,
   InputGroup,
-  InputSlug,
   Label,
   Stack,
   Title,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Navbar } from "./components/navbar";
 import { useCreateAppMutation } from "./graphql/create-app.mutation.graphql.generated";
 
-interface AddAppPageProps {}
-
-export const AddAppPage: FC<AddAppPageProps> = () => {
+export const AddAppPage = () => {
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
@@ -37,9 +34,6 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
   const validationSchema = z.object({
     name: z.string().min(1, {
       message: translate.formatMessage({ id: "nameIsRequired" }),
-    }),
-    slug: z.string().min(1, {
-      message: translate.formatMessage({ id: "required" }),
     }),
     email: z
       .string()
@@ -60,14 +54,12 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
 
   const onSubmit = async ({
     name,
-    slug,
     email,
   }: z.infer<typeof validationSchema>) => {
     try {
       const response = await onExecuteCreateAppMutation({
         input: {
           name,
-          slug,
           email,
           currency: "BRL",
           language: "pt-BR",
@@ -79,7 +71,7 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
           status: "success",
         });
         return window.location.assign(
-          routes.app({ appId: response?.data?.createApp?.id }).home
+          websiteRoutes.app({ appId: response?.data?.createApp?.id }).home
         );
       }
 
@@ -89,10 +81,7 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
         );
       }
     } catch (error) {
-      onShowToast({
-        title: translate.formatMessage({ id: "sorryAnErrorOccurred" }),
-        status: "error",
-      });
+      onShowAPIError({ message: "sorryAnErrorOccurred" });
     }
   };
 
@@ -131,19 +120,6 @@ export const AddAppPage: FC<AddAppPageProps> = () => {
                       />
                     </InputGroup>
                     <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-                  </FormControl>
-                  <FormControl isInvalid={!!errors?.slug}>
-                    <Label htmlFor="slug">
-                      {translate.formatMessage({ id: "slug" })}
-                    </Label>
-                    <InputSlug
-                      id="slug"
-                      placeholder={translate.formatMessage({
-                        id: "slugPlaceholder",
-                      })}
-                      {...register("slug")}
-                    />
-                    <FormErrorMessage>{errors?.slug?.message}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={!!errors?.email}>
                     <Label htmlFor="email">

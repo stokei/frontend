@@ -12,12 +12,12 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC, memo, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { RoleName } from "@/constants/role-names";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { AccountStatus } from "@/services/graphql/stokei";
 import { getAccountStatusColor } from "@/utils/get-account-status-color";
 import { useRouter } from "next/router";
@@ -27,7 +27,7 @@ export interface MemberItemProps {
   readonly appMember?: AppMemberFragment;
 }
 
-export const MemberItem: FC<MemberItemProps> = memo(({ appMember }) => {
+export const MemberItem = ({ appMember }: MemberItemProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { currentAccount } = useCurrentAccount();
@@ -82,11 +82,12 @@ export const MemberItem: FC<MemberItemProps> = memo(({ appMember }) => {
 
   const goToEditMember = () => {
     if (currentAccount?.id === appMember?.id) {
-      return router.push(routes.me.home);
+      return router.push(websiteRoutes.me.home);
     }
     return router.push(
-      routes.app({ appId: currentApp?.id }).member({ member: appMember?.id })
-        .home
+      websiteRoutes
+        .app({ appId: currentApp?.id })
+        .member({ member: appMember?.id }).home
     );
   };
 
@@ -151,6 +152,4 @@ export const MemberItem: FC<MemberItemProps> = memo(({ appMember }) => {
       </CardBody>
     </Card>
   );
-});
-
-MemberItem.displayName = "MemberItem";
+};

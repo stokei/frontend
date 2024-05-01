@@ -1,6 +1,6 @@
 import pagarmeImage from "@/assets/pagarme.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Box,
   Button,
@@ -12,11 +12,9 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
-interface PagarmeOnboardingProps {}
-
-export const PagarmeOnboarding: FC<PagarmeOnboardingProps> = () => {
+export const PagarmeOnboarding = () => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
   const router = useRouter();
@@ -28,7 +26,8 @@ export const PagarmeOnboarding: FC<PagarmeOnboardingProps> = () => {
 
   const goToPagarmeOnboarding = () => {
     router.push(
-      routes.app({ appId: currentApp?.id || "" }).onboardings.pagarme.home
+      websiteRoutes.app({ appId: currentApp?.id || "" }).onboardings.pagarme
+        .home
     );
   };
 

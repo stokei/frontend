@@ -1,24 +1,20 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Button, Icon, Spacer, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
 
 interface HeaderProps {
   readonly productsTotalCount: number;
   readonly onOpenFilters: () => void;
 }
 
-export const Header: FC<HeaderProps> = ({
-  productsTotalCount,
-  onOpenFilters,
-}) => {
+export const Header = ({ productsTotalCount, onOpenFilters }: HeaderProps) => {
   const router = useRouter();
   const { currentApp, hasPaymentIntegrations } = useCurrentApp();
   const translate = useTranslations();
   const onGoToAddProductsPage = () => {
     return router.push(
-      routes.app({ appId: currentApp?.id || "" }).products.add
+      websiteRoutes.app({ appId: currentApp?.id || "" }).products.add
     );
   };
   return (

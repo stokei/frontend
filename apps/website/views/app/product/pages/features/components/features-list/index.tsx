@@ -1,5 +1,5 @@
 import { Stack } from "@stokei/ui";
-import { FC } from "react";
+
 import { ProductPageFeatureFragment } from "../../graphql/features.query.graphql.generated";
 import { FeatureItem } from "../feature-item";
 
@@ -8,10 +8,10 @@ interface FeaturesListProps {
   readonly onRemovedFeatures: () => void;
 }
 
-export const FeaturesList: FC<FeaturesListProps> = ({
+export const FeaturesList = ({
   features,
   onRemovedFeatures,
-}) => {
+}: FeaturesListProps) => {
   return (
     <Stack direction="column" spacing="5">
       {features?.map((feature) => (

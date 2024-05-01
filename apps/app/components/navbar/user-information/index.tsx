@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   Avatar,
   Button,
@@ -8,18 +8,19 @@ import {
   NavbarNavLink,
   Stack,
   StackProps,
+  Text,
   useDisclosure,
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
-import { ShoppingCartMenu } from "../shopping-cart-menu";
+import { useMemo } from "react";
+import { ShoppingCartMenu } from "@stokei/builder";
 import { NavbarUserInformationDrawer } from "../user-information-drawer";
 
-export interface NavbarUserInformationProps extends StackProps {}
-export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
+export interface NavbarUserInformationProps extends StackProps { }
+export const NavbarUserInformation = ({
   ...props
-}) => {
+}: NavbarUserInformationProps) => {
   const { isOpen: isOpenDrawer, onToggle: onToggleDrawer } = useDisclosure();
 
   const router = useRouter();
@@ -40,8 +41,14 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
       {...props}
     >
       <ShoppingCartMenu />
-      <NavbarNavLink icon="store" as={NextLink} href={routes.store.home}>
-        {translate.formatMessage({ id: "store" })}
+      <NavbarNavLink icon="store" as={NextLink} href={appRoutes.store.home}>
+        <Text
+          display={["none", "none", "block", "block"]}
+          color="inherit"
+          fontSize="inherit"
+        >
+          {translate.formatMessage({ id: "store" })}
+        </Text>
       </NavbarNavLink>
       {!!currentAccount ? (
         <>
@@ -72,7 +79,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
             variant="ghost"
             onClick={() =>
               router.push({
-                pathname: routes.auth.login,
+                pathname: appRoutes.auth.login,
                 query: {
                   redirectTo,
                 },
@@ -85,7 +92,7 @@ export const NavbarUserInformation: FC<NavbarUserInformationProps> = ({
             display={["none", "none", "block", "block"]}
             onClick={() =>
               router.push({
-                pathname: routes.auth.signUp,
+                pathname: appRoutes.auth.signUp,
                 query: {
                   redirectTo,
                 },

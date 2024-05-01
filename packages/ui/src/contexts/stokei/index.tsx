@@ -11,6 +11,7 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import dateFnsPortuguese from "date-fns/locale/pt-BR";
 import dateFnsEnglish from "date-fns/locale/en-US";
 import {
+  IColor,
   IColorHue,
   IColorName,
   Language,
@@ -31,6 +32,7 @@ export interface StokeiUIContextValues {
     colorName: IColorName,
     colorHue: IColorHue
   ) => string;
+  readonly getColorByHexdecimal: (colorValue: string, colorName?: IColorName) => IColor | undefined
 }
 
 export interface StokeiUIContextProps {
@@ -44,9 +46,7 @@ export interface StokeiUIContextProps {
 
 export const StokeiUIContext = React.createContext({} as StokeiUIContextValues);
 
-export const StokeiUIProvider: React.FC<
-  PropsWithChildren<StokeiUIContextProps>
-> = ({
+export const StokeiUIProvider = ({
   children,
   config,
   appId,
@@ -54,12 +54,32 @@ export const StokeiUIProvider: React.FC<
   language,
   accountAccessToken,
   accountRefreshToken,
-}) => {
+}: PropsWithChildren<StokeiUIContextProps>) => {
   const themeData = useMemo(() => theme(config), [config]);
 
   const getHexdecimalColor = useCallback(
     (colorName: IColorName, colorHue: IColorHue) => {
       return themeData?.colors?.[colorName]?.[colorHue];
+    },
+    [themeData]
+  );
+  const getColorByHexdecimal = useCallback(
+    (colorValue: string, colorName?: IColorName): IColor | undefined => {
+      if (!colorValue) {
+        return
+      }
+      for (const currentColorName in themeData?.colors) {
+        const hues = themeData?.colors[currentColorName];
+        if (colorName && currentColorName !== colorName) {
+          continue;
+        }
+        for (const hue in hues) {
+          if (hues[hue] === colorValue) {
+            return `${currentColorName}.${hue}` as IColor;
+          }
+        }
+      }
+      return;
     },
     [themeData]
   );
@@ -72,15 +92,9 @@ export const StokeiUIProvider: React.FC<
       accountAccessToken,
       accountRefreshToken,
       getHexdecimalColor,
+      getColorByHexdecimal
     }),
-    [
-      appId,
-      accountId,
-      language,
-      accountAccessToken,
-      accountRefreshToken,
-      getHexdecimalColor,
-    ]
+    [appId, accountId, language, accountAccessToken, accountRefreshToken, getHexdecimalColor, getColorByHexdecimal]
   );
 
   useEffect(() => {

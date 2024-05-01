@@ -11,14 +11,12 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { Navbar } from "../../components/navbar";
 import { CourseLayout } from "../../layout";
 import { Loading } from "./loading";
 
-interface CourseAboutPageProps {}
-
-const CourseAboutPage: FC<CourseAboutPageProps> = () => {
+const CourseAboutPage = () => {
   const translate = useTranslations();
 
   const { course, isLoadingCourse } = useCustomersCourse();

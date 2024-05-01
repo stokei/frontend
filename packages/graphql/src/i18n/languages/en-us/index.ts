@@ -1,6 +1,16 @@
 import { I18nKey } from "../../../interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKey, string> = {
+  somethingWentWrong: "Something went wrong.",
+  slugAlreadyExists: "Slug already exists",
+  componentNotFound: "Component not found",
+  componentsNotFound: "Components not found",
+  pageNotFound: "Page not found",
+  pagesNotFound: "Pages not found",
+  siteNotFound: "Site not found",
+  sitesNotFound: "Sites not found",
+  versionNotFound: "Version not found",
+  versionsNotFound: "Versions not found",
   invalidToken: "Please, you must sign in to continue",
   amountOffNotFound: "Amount discount not found",
   percentOffNotFound: "Amount percent not found",
@@ -22,6 +32,7 @@ export const enUSMessages: Record<I18nKey, string> = {
   addressesNotFound: "Addresses not found",
   appAdminNotFound: "App admin not found",
   appAdminUnauthorizedRemove: "App admin unauthorized remove",
+  pageUnauthorizedRemove: "Page unauthorized remove",
   appAdminsNotFound: "App admins not found",
   appInstructorNotFound: "App instructor not found",
   appInstructorsNotFound: "App instructors not found",

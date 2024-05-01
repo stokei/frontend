@@ -3,15 +3,13 @@ import { useCurrentAccount } from "@/hooks/use-current-account";
 import { OrderBy } from "@/services/graphql/stokei";
 import { CustomerLayout } from "@/views/customers/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
-import { FC } from "react";
+
 import { Navbar } from "./components/navbar";
 import { OrdersList } from "./components/orders-list";
 import { useGetAppOrdersQuery } from "./graphql/orders.query.graphql.generated";
 import { Loading } from "./loading";
 
-interface OrdersPageProps {}
-
-export const OrdersPage: FC<OrdersPageProps> = () => {
+export const OrdersPage = () => {
   const { currentPage, onChangePage } = usePagination();
   const { currentApp } = useCurrentApp();
   const { currentAccount } = useCurrentAccount();

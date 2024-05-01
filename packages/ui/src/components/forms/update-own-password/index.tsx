@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -24,10 +24,10 @@ export interface FormUpdateOwnPasswordProps {
   onSubmit: () => void;
 }
 
-export const FormUpdateOwnPassword: FC<FormUpdateOwnPasswordProps> = ({
+export const FormUpdateOwnPassword = ({
   isLoading,
   onSubmit,
-}) => {
+}: FormUpdateOwnPasswordProps) => {
   const translate = useTranslations();
 
   return (

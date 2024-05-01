@@ -1,18 +1,7 @@
-import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components";
-import { useShoppingCart, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
-import {
-  Button,
-  ButtonGroup,
-  IconButton,
-  Image,
-  Link,
-  Loading,
-  Stack,
-  Text,
-  Title,
-} from "@stokei/ui";
+import { useTranslations } from "@/hooks";
+import { appRoutes } from "@stokei/routes";
+import { useShoppingCart } from "@stokei/builder";
+import { Button, ButtonGroup, Loading, Stack, Text, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import { ProductItem } from "../../components/product-item";
@@ -22,7 +11,7 @@ export interface ProductsStepProps {
   onNextStep: () => void;
 }
 
-export const ProductsStep: React.FC<ProductsStepProps> = ({ onNextStep }) => {
+export const ProductsStep = ({ onNextStep }: ProductsStepProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { isEmptyShoppingCart, shoppingCartItems } = useShoppingCart();
@@ -53,7 +42,10 @@ export const ProductsStep: React.FC<ProductsStepProps> = ({ onNextStep }) => {
     }));
   }, [dataProducts?.products?.items, shoppingCartItems]);
 
-  const goToStore = useCallback(() => router.push(routes.store.home), [router]);
+  const goToStore = useCallback(
+    () => router.push(appRoutes.store.home),
+    [router]
+  );
 
   return (
     <Stack direction="column" spacing="10">

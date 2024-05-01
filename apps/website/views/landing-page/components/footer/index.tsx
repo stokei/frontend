@@ -6,8 +6,9 @@ import {
 } from "@/constants/default-app-info";
 import { STOKEI_CONTACT_EMAIL } from "@/constants/stokei-emails";
 import { useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
+  Box,
   Button,
   ButtonGroup,
   Container,
@@ -16,11 +17,8 @@ import {
   Text,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
 
-interface FooterProps {}
-
-export const Footer: FC<FooterProps> = () => {
+export const Footer = () => {
   const router = useRouter();
   const translate = useTranslations();
   return (
@@ -30,7 +28,11 @@ export const Footer: FC<FooterProps> = () => {
         justify="space-between"
         spacing="5"
       >
-        <Stack direction="column" spacing="5">
+        <Stack
+          width="fit-content"
+          direction="column"
+          spacing="5"
+        >
           <AppLogo />
           <Stack direction="column" spacing="0">
             <Text>{DEFAULT_APP_SOCIAL_NAME}</Text>
@@ -47,11 +49,11 @@ export const Footer: FC<FooterProps> = () => {
         <ButtonGroup>
           <Button
             variant="ghost"
-            onClick={() => router.push(routes.auth.login)}
+            onClick={() => router.push(websiteRoutes.auth.login)}
           >
             {translate.formatMessage({ id: "login" })}
           </Button>
-          <Button onClick={() => router.push(routes.auth.signUp)}>
+          <Button onClick={() => router.push(websiteRoutes.auth.signUp)}>
             {translate.formatMessage({ id: "signUp" })}
           </Button>
         </ButtonGroup>

@@ -1,5 +1,5 @@
 import { useAPIErrors, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
 import {
   Box,
@@ -9,15 +9,11 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { AuthLayout } from "../../layout";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
 
-interface LoginPageProps {
-  readonly redirectTo?: string;
-}
-
-export const LoginPage: FC<LoginPageProps> = () => {
+export const LoginPage = () => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -48,7 +44,7 @@ export const LoginPage: FC<LoginPageProps> = () => {
           status: "success",
         });
         return window.location.assign(
-          redirectToWhenLoginSuccessfully || routes.apps.home
+          redirectToWhenLoginSuccessfully || websiteRoutes.apps.home
         );
       }
 
@@ -72,11 +68,11 @@ export const LoginPage: FC<LoginPageProps> = () => {
           <FormLogin
             isLoading={isLoadingLogin}
             onRedirectToForgotPasswordURL={() =>
-              router.push(routes.auth.forgotPassword)
+              router.push(websiteRoutes.auth.forgotPassword)
             }
             onRedirectToSignUpURL={() =>
               router.push({
-                pathname: routes.auth.signUp,
+                pathname: websiteRoutes.auth.signUp,
                 query: {
                   redirectTo: redirectToWhenLoginSuccessfully,
                 },

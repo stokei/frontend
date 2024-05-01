@@ -4,6 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface GridItemProps extends ChakraGridItemProps {}
-export const GridItem: React.FC<GridItemProps> = ({ children, ...props }) => (
+export const GridItem = ({ children, ...props }: GridItemProps) => (
   <ChakraGridItem {...props}>{children}</ChakraGridItem>
 );

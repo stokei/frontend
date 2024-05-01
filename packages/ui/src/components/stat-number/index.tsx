@@ -4,10 +4,7 @@ import {
 } from "@chakra-ui/react";
 
 export interface StatNumberProps extends ChakraStatNumberProps {}
-export const StatNumber: React.FC<StatNumberProps> = ({
-  children,
-  ...props
-}) => (
+export const StatNumber = ({ children, ...props }: StatNumberProps) => (
   <ChakraStatNumber fontSize="3xl" {...props}>
     {children}
   </ChakraStatNumber>

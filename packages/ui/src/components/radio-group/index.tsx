@@ -5,6 +5,6 @@ import {
 
 export interface RadioGroupProps extends ChakraRadioGroupProps {}
 
-export const RadioGroup: React.FC<RadioGroupProps> = ({ ...props }) => (
+export const RadioGroup = ({ ...props }: RadioGroupProps) => (
   <ChakraRadioGroup {...props} />
 );

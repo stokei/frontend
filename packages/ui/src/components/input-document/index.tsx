@@ -26,7 +26,7 @@ export interface InputDocumentProps {
   onChangeDocumentType: (documentType: DocumentType) => void;
 }
 
-export const InputDocument: React.FC<InputDocumentProps> = ({
+export const InputDocument = ({
   id,
   isLoading,
   document,
@@ -36,7 +36,7 @@ export const InputDocument: React.FC<InputDocumentProps> = ({
   onChangeDocument,
   onChangeDocumentType,
   ...props
-}) => {
+}: InputDocumentProps) => {
   const translate = useTranslations();
 
   const documentTypes = useMemo(

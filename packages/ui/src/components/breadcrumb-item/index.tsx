@@ -4,7 +4,6 @@ import {
 } from "@chakra-ui/react";
 
 export interface BreadcrumbItemProps extends ChakraBreadcrumbItemProps {}
-export const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({
-  children,
-  ...props
-}) => <ChakraBreadcrumbItem {...props}>{children}</ChakraBreadcrumbItem>;
+export const BreadcrumbItem = ({ children, ...props }: BreadcrumbItemProps) => (
+  <ChakraBreadcrumbItem {...props}>{children}</ChakraBreadcrumbItem>
+);

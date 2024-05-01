@@ -9,7 +9,7 @@ import {
   SelectItem,
   SelectList,
 } from "@stokei/ui";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { SubscriptionTypeSelectItemContent } from "../subscription-type-select-item-content";
 
 interface SelectFilterSubscriptionTypeProps {
@@ -22,13 +22,11 @@ interface SelectFilterSubscriptionTypeProps {
   ) => void;
 }
 
-export const SelectFilterSubscriptionType: FC<
-  SelectFilterSubscriptionTypeProps
-> = ({
+export const SelectFilterSubscriptionType = ({
   currentSubscriptionType,
   onChooseCurrentSubscriptionType,
   onRemoveChooseCurrentSubscriptionType,
-}) => {
+}: SelectFilterSubscriptionTypeProps) => {
   const translate = useTranslations();
   const content = useMemo(() => {
     if (currentSubscriptionType === SubscriptionContractTypeFilter.OneTime) {

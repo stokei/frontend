@@ -1,7 +1,7 @@
 import { ChoiseEditableSummary } from "@/components/choice-editable-summary";
 import { AppCatalogFragment } from "@/components/select-catalogs/graphql/catalogs.query.graphql.generated";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import {
   Button,
   ButtonGroup,
@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC } from "react";
+
 import { ProductParent } from "../../@types/product-parent";
 import { ProductPayload } from "../../@types/product-payload";
 import { useCreateProductMutation } from "../../graphql/create-product.mutation.graphql.generated";
@@ -27,12 +27,12 @@ interface SummaryStepProps {
   onPreviousStep: () => void;
 }
 
-export const SummaryStep: FC<SummaryStepProps> = ({
+export const SummaryStep = ({
   catalogs,
   productParent,
   productPayload,
   onPreviousStep,
-}) => {
+}: SummaryStepProps) => {
   const router = useRouter();
   const translate = useTranslations();
   const { onShowToast } = useToast();
@@ -61,7 +61,7 @@ export const SummaryStep: FC<SummaryStepProps> = ({
           status: "success",
         });
         router.push(
-          routes
+          websiteRoutes
             .app({ appId: currentApp?.id })
             .product({ product: response.data.createProduct.id }).home
         );

@@ -1,9 +1,8 @@
 import { authExchange } from "@urql/exchange-auth";
-import jwtDecode from "jwt-decode";
 import {
-  Exchange,
   cacheExchange,
   createClient,
+  Exchange,
   fetchExchange,
   ssrExchange,
 } from "urql";
@@ -13,8 +12,8 @@ import {
   REFRESH_TOKEN_HEADER_NAME,
 } from "../constants/tokens";
 import {
-  RefreshAccessMutationSchemaResponse,
   refreshAccessMutationSchema,
+  RefreshAccessMutationSchemaResponse,
 } from "../schemas";
 import {
   removeAccessToken,
@@ -32,14 +31,6 @@ export interface ClientConfig {
   readonly getRefreshToken: () => string | undefined;
   readonly onLogout?: () => void;
 }
-
-const tokenIsExpired = (token: string) => {
-  const currentToken = token?.split("Bearer ")?.pop();
-  const tokenDecoded = jwtDecode<{ exp: number }>(currentToken || "");
-  const now = new Date(Date.now()).getTime();
-  const isExpired = tokenDecoded?.exp * 1000 <= now;
-  return isExpired;
-};
 
 export const createGraphqlClient = (config: ClientConfig) => {
   const ssrCache = ssrExchange({ isClient: !config.isServerSide });

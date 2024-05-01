@@ -1,4 +1,3 @@
-import { StripeImage } from "@/components/stripe-image";
 import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
@@ -19,13 +18,8 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { FC } from "react";
 
-interface PlanItemPaymentWithStripeProps {}
-
-export const PlanItemPaymentWithStripe: FC<
-  PlanItemPaymentWithStripeProps
-> = () => {
+export const PlanItemPaymentWithStripe = () => {
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const paymentGateway =
@@ -72,8 +66,6 @@ export const PlanItemPaymentWithStripe: FC<
               )}
             </ListItem>
           </List>
-
-          <StripeImage width="12" />
         </Stack>
       </CardBody>
       <CardFooter background="background.200">

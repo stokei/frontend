@@ -1,5 +1,5 @@
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { routes } from "@/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -15,7 +15,7 @@ import {
   Stack,
   useToast,
 } from "@stokei/ui";
-import { FC } from "react";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AppCourseFragment } from "../../graphql/course.fragment.graphql.generated";
@@ -32,11 +32,11 @@ interface AddCourseDrawerProps {
   onSuccess?: (course: AppCourseFragment) => void;
 }
 
-export const AddCourseDrawer: FC<AddCourseDrawerProps> = ({
+export const AddCourseDrawer = ({
   onSuccess,
   isOpenDrawer,
   onCloseDrawer,
-}) => {
+}: AddCourseDrawerProps) => {
   const router = useRouter();
   const { currentApp } = useCurrentApp();
   const translate = useTranslations();
@@ -75,7 +75,7 @@ export const AddCourseDrawer: FC<AddCourseDrawerProps> = ({
           status: "success",
         });
         router.push(
-          routes.app({ appId: currentApp?.id }).course({
+          websiteRoutes.app({ appId: currentApp?.id }).course({
             course: response?.data?.createCourse?.id,
           }).home
         );

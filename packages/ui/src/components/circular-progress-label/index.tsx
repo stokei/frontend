@@ -6,10 +6,10 @@ import {
 export interface CircularProgressLabelProps
   extends ChakraCircularProgressLabelProps {}
 
-export const CircularProgressLabel: React.FC<CircularProgressLabelProps> = ({
+export const CircularProgressLabel = ({
   children,
   ...props
-}) => (
+}: CircularProgressLabelProps) => (
   <ChakraCircularProgressLabel color="primary.500" {...props}>
     {children}
   </ChakraCircularProgressLabel>

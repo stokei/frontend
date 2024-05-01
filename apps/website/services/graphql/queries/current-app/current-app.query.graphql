@@ -11,26 +11,6 @@ query CurrentGlobalApp {
     currentSubscriptionContract {
       id
     }
-    stokeiDomain {
-      id
-      name
-      url
-      free
-      active
-      status
-      createdAt
-      activatedAt
-    }
-    defaultDomain {
-      id
-      name
-      url
-      free
-      active
-      status
-      createdAt
-      activatedAt
-    }
     currency {
       id
       symbol

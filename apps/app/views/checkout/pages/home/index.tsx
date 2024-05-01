@@ -1,7 +1,9 @@
+import { AddressManagementAddressFragment } from "@/components/address-management/graphql/addresses.query.graphql.generated";
+import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
 import { CheckoutStep } from "@/constants/checkout-steps";
-import { useAPIErrors, useShoppingCart, useTranslations } from "@/hooks";
+import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { routes } from "@/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   CreateOrderItemInput,
   PaymentMethodType,
@@ -19,8 +21,10 @@ import {
   useActiveSteps,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CheckoutLayout } from "../../layout";
+import { useGetCheckoutPageApplyCouponToValueQuery } from "./graphql/apply-coupon-to-value.query.graphql.generated";
+import { CheckoutPageCouponFragment } from "./graphql/coupon.query.graphql.generated";
 import {
   CreateCheckoutPageCheckoutFragment,
   useCreateCheckoutMutation,
@@ -32,14 +36,9 @@ import { PaymentStep } from "./steps/payment";
 import { PaymentMethodStep } from "./steps/payment-method";
 import { ProductsStep } from "./steps/products";
 import { SummaryStep } from "./steps/summary";
-import { AddressManagementAddressFragment } from "@/components/address-management/graphql/addresses.query.graphql.generated";
-import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
-import { CheckoutPageCouponFragment } from "./graphql/coupon.query.graphql.generated";
-import { useGetCheckoutPageApplyCouponToValueQuery } from "./graphql/apply-coupon-to-value.query.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 
-interface CheckoutPageProps {}
-
-export const CheckoutPage: FC<CheckoutPageProps> = () => {
+export const CheckoutPage = () => {
   const { activeSteps, onActivateStep, onDeactivateStep } =
     useActiveSteps<CheckoutStep>({
       initialState: {
@@ -127,7 +126,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
   const onCreateOrder = useCallback(async () => {
     if (!isAuthenticated) {
       router.push({
-        pathname: routes.auth.login,
+        pathname: appRoutes.auth.login,
         query: { redirectTo: router.asPath },
       });
       return;
@@ -191,7 +190,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
           const checkout = response.data.createCheckout;
           if (paymentMethodType === PaymentMethodType.Card) {
             if (checkout.card) {
-              return router.push(routes.checkout.callback);
+              return router.push(appRoutes.checkout.callback);
             } else {
               return onShowAPIError({
                 message: translate.formatMessage({ id: "somethingWentWrong" }),
@@ -233,7 +232,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
   const onGoToAddressStep = () => {
     if (!isAuthenticated) {
       router.push({
-        pathname: routes.auth.login,
+        pathname: appRoutes.auth.login,
         query: { redirectTo: router.asPath },
       });
       return;

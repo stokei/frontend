@@ -1,6 +1,6 @@
 import { Container, Stack } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { CustomerLayout } from "../layout";
 import { Navbar } from "./components/navbar";
 import { OrderDetails } from "./components/order-details";
@@ -10,9 +10,7 @@ import { Stats } from "./components/stats";
 import { useGetOrderPageOrderQuery } from "./graphql/order.query.graphql.generated";
 import { Loading as LoadingPage } from "./loading";
 
-interface OrderPageProps {}
-
-export const OrderPage: FC<OrderPageProps> = () => {
+export const OrderPage = () => {
   const router = useRouter();
   const orderId = useMemo(
     () => router?.query?.orderId?.toString(),

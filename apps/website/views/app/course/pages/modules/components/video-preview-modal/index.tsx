@@ -1,6 +1,5 @@
 import { useTranslations } from "@/hooks";
 import { Modal, ModalBody, ModalHeader, Title, VideoPlayer } from "@stokei/ui";
-import { FC } from "react";
 
 export interface VideoPreviewModalProps {
   readonly isOpen?: boolean;
@@ -11,14 +10,14 @@ export interface VideoPreviewModalProps {
   readonly videoFilename: string;
 }
 
-export const VideoPreviewModal: FC<VideoPreviewModalProps> = ({
+export const VideoPreviewModal = ({
   isOpen,
   onClose,
   videoURL,
   videoId,
   videoName,
   videoFilename,
-}) => {
+}: VideoPreviewModalProps) => {
   const translate = useTranslations();
   return (
     <Modal isOpen={!!isOpen} onClose={onClose}>

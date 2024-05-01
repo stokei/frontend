@@ -1,12 +1,11 @@
 import defaultLogoURL from "@/assets/logo.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { AspectRatio, Image, ImageProps } from "@stokei/ui";
-import { FC } from "react";
 
-export interface AppLogoProps extends Omit<ImageProps, "src"> {}
-export const AppLogo: FC<AppLogoProps> = ({ ...props }) => {
+export interface AppLogoProps extends Omit<ImageProps, "src"> { }
+export const AppLogo = ({ ...props }: AppLogoProps) => {
   const translate = useTranslations();
-  const { currentApp } = useCurrentApp();
+  const { currentSite } = useCurrentApp();
 
   return (
     <AspectRatio
@@ -22,7 +21,7 @@ export const AppLogo: FC<AppLogoProps> = ({ ...props }) => {
       }}
     >
       <Image
-        src={currentApp?.logo?.file?.url || ""}
+        src={currentSite?.favicon?.file?.url || currentSite?.logo?.file?.url || ""}
         fallbackSrc={defaultLogoURL.src}
         alt={translate.formatMessage({ id: "home" })}
         objectFit="contain"
