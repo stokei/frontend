@@ -9,10 +9,6 @@ import {
 } from "@stokei/ui";
 import { PlanCalculator } from "../plan-calculator";
 import { PlanFree } from "../plan-free";
-import { PlanItemPaymentWithBoleto } from "../plan-item-payment-with-boleto";
-import { PlanItemPaymentWithCard } from "../plan-item-payment-with-card";
-import { PlanItemPaymentWithPix } from "../plan-item-payment-with-pix";
-import { PlanItemPaymentWithStripe } from "../plan-item-payment-with-stripe";
 
 export const Plans = () => {
   const translate = useTranslations();
@@ -60,10 +56,6 @@ export const Plans = () => {
         <SimpleGrid maxWidth="900px" columns={[1, 1, 2, 2]} spacing="5">
           <PlanFree />
           <PlanCalculator />
-          <PlanItemPaymentWithCard />
-          <PlanItemPaymentWithBoleto />
-          <PlanItemPaymentWithPix />
-          <PlanItemPaymentWithStripe />
         </SimpleGrid>
       </Stack>
     </Container>

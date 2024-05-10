@@ -141,17 +141,14 @@ export const AddPriceDrawer = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
-
-  useEffect(() => {
-    if (!isOpenDrawer) {
-      reset();
-    }
-  }, [isOpenDrawer, reset]);
 
   const onClose = () => {
     reset();
+    setType(PriceType.OneTime)
+    setInterval(IntervalType.Month)
+    setIntervalCount("")
     onCloseDrawer();
   };
 

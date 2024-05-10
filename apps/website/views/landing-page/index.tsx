@@ -13,6 +13,7 @@ import { CommonQuestions } from "./components/common-questions";
 import { Contact } from "./components/contact";
 import { Plans } from "./components/plans";
 import { LandingPageLayout } from "./layout";
+import { PaymentMethods } from "./components/payment-methods";
 
 export const LandingPage = () => {
   const router = useRouter();
@@ -42,17 +43,6 @@ export const LandingPage = () => {
         })}
         imageURL={createYourAppImage?.src}
       />
-      {/* <HeroWithImage
-        orientation="right"
-        title={translate.formatMessage({ id: "haveMoreThanOneWebsite" })}
-        titleHighlight={translate.formatMessage({
-          id: "turnYourKnowledgeIntoAProductHighlight",
-        })}
-        subtitle={translate.formatMessage({
-          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
-        })}
-        imageURL={stokeiDashboardImage?.src}
-      /> */}
       <HeroWithImage
         orientation="right"
         title={translate.formatMessage({ id: "chooseYourDomain" })}
@@ -88,6 +78,7 @@ export const LandingPage = () => {
         onCTA={goToSignUp}
       />
       <Plans />
+      <PaymentMethods />
       <CommonQuestions />
       <Contact />
     </LandingPageLayout>

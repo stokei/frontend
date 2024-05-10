@@ -2,7 +2,6 @@ import { PriceComponentFragment } from "@/components/price/price.fragment.graphq
 import { usePagination, useTranslations } from "@/hooks";
 import { OrderBy } from "@/services/graphql/stokei";
 import {
-  Box,
   Button,
   ButtonGroup,
   Loading,
@@ -11,23 +10,16 @@ import {
   NotFoundSubtitle,
   Pagination,
   Stack,
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
   Text,
   Title,
-  useDisclosure,
+  useDisclosure
 } from "@stokei/ui";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Section } from "../../../../components/section";
-import { SectionContent } from "../../../../components/section-content";
 import { SectionInformation } from "../../../../components/section-information";
 import { useGetProductPagePricesQuery } from "../../graphql/prices.query.graphql.generated";
 import { AddPriceDrawer } from "../add-price-drawer";
 import { PriceItem } from "../price-item";
-import { UpdatePriceDrawer } from "../update-price-drawer";
 
 interface PricesProps {
   productId?: string;

@@ -2,6 +2,15 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  monthly: "Monthly",
+  unlimitedAdmins: "Unlimited admins",
+  unlimitedInstructors: "Unlimited instructors",
+  unlimitedDomains: "Unlimited custom domains",
+  unlimitedProducts: "Unlimited products",
+  unlimitedSites: "Unlimited sites",
+  calculatePlanPrice: "Calculate the plan price",
+  storageAndVideoSecure: "Secure storage of the materials and videos",
+  allOfTheFreePlan: "All of the free plan",
   external: "External",
   link: "Link",
   linkPlaceholder: "https://mylink.com",
@@ -232,6 +241,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   kb: "kbyte",
   gb: "gbyte",
   min: "minute",
+  minutes: "Minutes",
   un: "unit",
   each: "each",
   per: "per",

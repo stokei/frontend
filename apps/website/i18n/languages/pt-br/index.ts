@@ -1,5 +1,15 @@
 export const ptBRMessages = {
   me: "Eu",
+  monthly: "Mensal",
+  unlimitedAdmins: "Administradores ilimitados",
+  unlimitedInstructors: "Instrutores ilimitados",
+  unlimitedDomains: "Domínios personalizados ilimitados",
+  unlimitedProducts: "Produtos ilimitados",
+  unlimitedSites: "Sites ilimitados",
+  calculatePlanPrice: "Calcule o valor aproximado da sua mensalidade",
+  storageAndVideoSecure:
+    "Armazenamento de materiais e videos de forma segura em nossa plataforma",
+  allOfTheFreePlan: "Tudo do plano gratuito",
   external: "Externa",
   link: "Caminho",
   linkPlaceholder: "https://meulink.com",
@@ -180,7 +190,7 @@ export const ptBRMessages = {
   addSubscription: "Adicionar assinatura",
   account: "Conta",
   new: "Novo",
-  free: "Grátis",
+  free: "Gratuito",
   howConfigureADomain: "Como configurar um domínio?",
   toAddTheDomainToYourApplicationYouNeedToAddTheFollowingDataToTheDomainsDns:
     "Para adicionar o domínio na sua aplicação, você precisa adicionar os seguintes dados no DNS do domínio:",
@@ -233,6 +243,7 @@ export const ptBRMessages = {
   kb: "kbyte",
   gb: "gbyte",
   min: "minuto",
+  minutes: "Minutos",
   un: "unidade",
   each: "a cada",
   per: "por",

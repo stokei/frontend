@@ -43,6 +43,7 @@ fragment LandingPageProductPlan on Plan {
   id
   name
   icon
+  type
 }
 
 fragment LandingPageProductFeature on Feature {
