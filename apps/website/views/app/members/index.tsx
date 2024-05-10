@@ -20,6 +20,7 @@ import { Navbar } from "./components/navbar";
 import { AppMemberFragment } from "./graphql/member.fragment.graphql.generated";
 import { useGetAppMembersQuery } from "./graphql/members.query.graphql.generated";
 import { Loading } from "./loading";
+import { OrderBy } from "@/services/graphql/stokei";
 
 export const MembersPage = () => {
   const { currentPage, onChangePage } = usePagination();
@@ -43,6 +44,9 @@ export const MembersPage = () => {
     {
       pause: !currentApp,
       variables: {
+        orderBy: {
+          firstname: OrderBy.Asc,
+        },
         page: {
           limit: 9,
           number: currentPage,
@@ -58,6 +62,11 @@ export const MembersPage = () => {
               {
                 lastname: {
                   search: filteredNameQuery,
+                },
+              },
+              {
+                email: {
+                  equals: filteredNameQuery,
                 },
               },
             ],

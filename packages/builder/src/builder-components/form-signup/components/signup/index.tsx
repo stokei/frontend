@@ -1,5 +1,5 @@
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
-import { appRoutes, websiteRoutes } from "@stokei/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   Box,
   FormSignUp,

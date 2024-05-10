@@ -1,5 +1,5 @@
 import { setAccessToken, setRefreshToken } from "@stokei/graphql";
-import { appRoutes, websiteRoutes } from "@stokei/routes";
+import { appRoutes } from "@stokei/routes";
 import {
   Box,
   FormLogin,
@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
 import { useTranslations } from "../../../../hooks";
+import { AccountStatus } from "../../../../services/graphql/stokei";
 
 interface LoginProps {
   title?: string;
@@ -45,9 +46,11 @@ export const Login = ({ isBlockEditable, title }: LoginProps) => {
           title: translate.formatMessage({ id: "loginSuccessfully" }),
           status: "success",
         });
-        return window.location.assign(
-          redirectToWhenLoginSuccessfully || websiteRoutes.apps.home
-        );
+        let url = redirectToWhenLoginSuccessfully || appRoutes.customers.home
+        if (data.account.status === AccountStatus.ConfigurationPending) {
+          url = appRoutes.auth.completeAccountConfiguration({ account: data.account.id })
+        }
+        return window.location.assign(url);
       }
 
       if (!!response.error?.graphQLErrors?.length) {

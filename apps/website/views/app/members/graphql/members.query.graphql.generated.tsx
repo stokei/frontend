@@ -6,6 +6,7 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type GetAppMembersQueryVariables = Types.Exact<{
   where?: Types.InputMaybe<Types.WhereDataFindAllAccountsInput>;
+  orderBy?: Types.InputMaybe<Types.OrderByDataFindAllAccountsInput>;
   page?: Types.InputMaybe<Types.PaginationInput>;
 }>;
 
@@ -14,8 +15,8 @@ export type GetAppMembersQuery = { __typename?: 'Query', accounts: { __typename?
 
 
 export const GetAppMembersDocument = gql`
-    query GetAppMembers($where: WhereDataFindAllAccountsInput, $page: PaginationInput) {
-  accounts(where: $where, page: $page) {
+    query GetAppMembers($where: WhereDataFindAllAccountsInput, $orderBy: OrderByDataFindAllAccountsInput, $page: PaginationInput) {
+  accounts(where: $where, page: $page, orderBy: $orderBy) {
     totalCount
     totalPages
     hasNextPage

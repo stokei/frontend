@@ -10,7 +10,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
     <CatalogItem
       productId={product?.id}
       name={product?.name}
-      avatar={product?.avatar?.file?.url || ""}
+      avatarURL={product?.avatar?.file?.url || ""}
       defaultPrice={product?.defaultPrice}
       prices={product?.prices?.items || []}
     />

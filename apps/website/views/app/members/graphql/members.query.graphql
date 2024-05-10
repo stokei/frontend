@@ -1,8 +1,9 @@
 query GetAppMembers(
   $where: WhereDataFindAllAccountsInput
+  $orderBy: OrderByDataFindAllAccountsInput
   $page: PaginationInput
 ) {
-  accounts(where: $where, page: $page) {
+  accounts(where: $where, page: $page, orderBy: $orderBy) {
     totalCount
     totalPages
     hasNextPage
