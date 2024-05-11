@@ -44,6 +44,7 @@ export const PlanInput = ({
           id={id + "-input"}
           value={value}
           isLoading={isLoading}
+          placeholder="0"
           onChange={e => {
             const convertedValue = getOnlyNumbers(e.target.value)
             e.target.value = convertedValue;

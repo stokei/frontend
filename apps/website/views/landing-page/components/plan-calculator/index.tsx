@@ -1,10 +1,11 @@
 import { StokeiApiIdPrefix } from "@/constants/stokei-api-id-prefix";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { PlanType } from "@/services/graphql/stokei";
-import { CardFooter, Stack, Text } from "@stokei/ui";
+import { Stack, Text } from "@stokei/ui";
 import { useMemo, useState } from "react";
 import { useGetLandingPageProductsQuery } from "../../graphql/products.query.graphql.generated";
 import { PlanItem } from "../plan-item";
+import { PlanItemBody } from "../plan-item/plan-item-body";
 import { PlanItemFeature } from "../plan-item/plan-item-feature";
 import { PlanItemFeatures } from "../plan-item/plan-item-features";
 import { PlanItemHeader } from "../plan-item/plan-item-header";
@@ -49,33 +50,36 @@ export const PlanCalculator = () => {
         subtitle={translate.formatMessage({ id: 'monthly' })}
         price={price}
       />
-      <PlanItemFeatures>
-        <PlanItemFeature
-          name={translate.formatMessage({ id: 'allOfTheFreePlan' })}
-        />
-        <PlanItemFeature
-          name={translate.formatMessage({ id: 'storageAndVideoSecure' })}
-        />
-      </PlanItemFeatures>
-      <CardFooter>
+
+      <PlanItemBody>
         <Stack direction="column" spacing="5">
-          <Text>{translate.formatMessage({ id: 'calculatePlanPrice' })}</Text>
-          <PlanInput
-            id="materials"
-            value={storageSize}
-            onChangeValue={setStorageSize}
-            isLoading={isLoading}
-            plan={storagePlan}
-          />
-          <PlanInput
-            id="videos"
-            value={videoMinutes}
-            onChangeValue={setVideoMinutes}
-            isLoading={isLoading}
-            plan={videoPlan}
-          />
+          <PlanItemFeatures>
+            <PlanItemFeature
+              name={translate.formatMessage({ id: 'allOfTheFreePlan' })}
+            />
+            <PlanItemFeature
+              name={translate.formatMessage({ id: 'storageAndVideoSecure' })}
+            />
+          </PlanItemFeatures>
+          <Stack direction="column" spacing="5">
+            <Text fontWeight="semibold">{translate.formatMessage({ id: 'calculatePlanPrice' })}</Text>
+            <PlanInput
+              id="materials"
+              value={storageSize}
+              onChangeValue={setStorageSize}
+              isLoading={isLoading}
+              plan={storagePlan}
+            />
+            <PlanInput
+              id="videos"
+              value={videoMinutes}
+              onChangeValue={setVideoMinutes}
+              isLoading={isLoading}
+              plan={videoPlan}
+            />
+          </Stack>
         </Stack>
-      </CardFooter>
+      </PlanItemBody>
     </PlanItem>
   );
 };

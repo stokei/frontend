@@ -14,7 +14,7 @@ export interface PriceProps extends StackProps {
 }
 export const Price = ({
   price,
-  size,
+  size = "md",
   justify,
   withRecurringLabel = true,
   withUnitDescription,

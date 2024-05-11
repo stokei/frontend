@@ -4,6 +4,7 @@ import { useTranslations } from "@/hooks";
 import { PriceType } from "@/services/graphql/stokei";
 import {
   Badge,
+  BadgeGroup,
   Card,
   CardBody,
   CardFooter,
@@ -60,7 +61,7 @@ export const PriceItem = ({
         <Price price={price} withUnitDescription />
       </CardBody>
       <CardFooter>
-        <Stack direction="row" spacing="5" align="center">
+        <BadgeGroup direction="row">
           {price?.active ? (
             <Badge colorScheme="green">
               {translate.formatMessage({
@@ -88,7 +89,7 @@ export const PriceItem = ({
               })}
             </Badge>
           )}
-        </Stack>
+        </BadgeGroup>
       </CardFooter>
     </Card>
   );

@@ -1,10 +1,13 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
+import { websiteRoutes } from "@stokei/routes";
 import {
+  Button,
   CardHeader,
   Stack,
   Text,
   Title
 } from "@stokei/ui";
+import { useRouter } from "next/router";
 
 interface PlanItemHeaderProps {
   readonly title: string;
@@ -15,6 +18,7 @@ interface PlanItemHeaderProps {
 export const PlanItemHeader = ({ title, subtitle, price }: PlanItemHeaderProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
+  const router = useRouter();
   return (
     <CardHeader>
       <Stack direction="column" spacing="2" justify="center" align="center">
@@ -45,6 +49,9 @@ export const PlanItemHeader = ({ title, subtitle, price }: PlanItemHeaderProps) 
             })}
           </Text>
         </Stack>
+        <Button onClick={() => router.push(websiteRoutes.auth.signUp)} marginY="5">
+          {translate.formatMessage({ id: 'freeSignUp' })}
+        </Button>
       </Stack>
     </CardHeader>
   );

@@ -4,17 +4,15 @@ import {
   Badge,
   Box,
   Card,
-  CardHeader,
-  Link,
+  CardBody,
   Stack,
-  Title,
+  Title
 } from "@stokei/ui";
-import NextLink from "next/link";
 import { useMemo } from "react";
 
-import { websiteRoutes } from "@stokei/routes";
 import { AppStatus } from "@/services/graphql/stokei";
 import { getAppStatusColor } from "@/utils";
+import { websiteRoutes } from "@stokei/routes";
 import { AdminAppPageAppFragment } from "../../graphql/apps.query.graphql.generated";
 
 export interface AppItemProps {
@@ -49,7 +47,7 @@ export const AppItem = ({ app }: AppItemProps) => {
         cursor: "pointer",
       }}
     >
-      <CardHeader>
+      <CardBody>
         <Stack direction="row" spacing="5" align="center">
           <Avatar size="lg" name={app?.name} src={app?.logo?.file?.url || ""} />
           <Stack direction="column" spacing="1">
@@ -65,7 +63,7 @@ export const AppItem = ({ app }: AppItemProps) => {
             </Box>
           </Stack>
         </Stack>
-      </CardHeader>
+      </CardBody>
     </Card>
   );
 };

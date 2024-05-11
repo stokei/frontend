@@ -24,6 +24,7 @@ export * from "./avatar";
 export * from "./avatar-badge";
 export * from "./avatar-group";
 export * from "./badge";
+export * from "./badge-group";
 export * from "./box";
 export * from "./button";
 export * from "./button-group";
