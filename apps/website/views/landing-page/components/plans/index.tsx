@@ -1,54 +1,20 @@
-import { useCurrentApp, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
 import {
-  Box,
   Container,
-  Divider,
   Highlight,
   SimpleGrid,
   Stack,
   Text,
-  Title,
+  Title
 } from "@stokei/ui";
-import { useMemo } from "react";
-import { PlanItem } from "../plan-item";
-import { useGetLandingPageProductsQuery } from "../../graphql/products.query.graphql.generated";
-import { OrderBy } from "@/services/graphql/stokei";
-import { PlanItemPaymentWithCard } from "../plan-item-payment-with-card";
-import { PlanItemSkeleton } from "../plan-item-skeleton";
-import { PlanItemPaymentWithBoleto } from "../plan-item-payment-with-boleto";
-import { PlanItemPaymentWithPix } from "../plan-item-payment-with-pix";
-import { PlanItemPaymentWithStripe } from "../plan-item-payment-with-stripe";
+import { PlanCalculator } from "../plan-calculator";
+import { PlanFree } from "../plan-free";
 
 export const Plans = () => {
   const translate = useTranslations();
-  const { currentApp } = useCurrentApp();
-  const [{ fetching: isLoading, data: dataPlans }] =
-    useGetLandingPageProductsQuery({
-      pause: !currentApp,
-      variables: {
-        where: {
-          AND: {
-            parent: {
-              startsWith: "plan_",
-            },
-            app: {
-              equals: currentApp?.id,
-            },
-          },
-        },
-        orderBy: {
-          name: OrderBy.Asc,
-        },
-      },
-    });
-
-  const products = useMemo(
-    () => dataPlans?.products?.items,
-    [dataPlans?.products?.items]
-  );
   return (
     <Container width="full" paddingY="6" minH="100vh">
-      <Stack spacing={4} direction="column">
+      <Stack spacing={4} direction="column" align="center" justify="center">
         <Stack
           p={5}
           alignItems="center"
@@ -87,36 +53,9 @@ export const Plans = () => {
             </Text>
           </Stack>
         </Stack>
-        <SimpleGrid columns={[1, 1, 2, 3]} spacing="5">
-          {isLoading ? (
-            <>
-              {Array.from({ length: 3 }).map((_, key) => (
-                <PlanItemSkeleton key={key} />
-              ))}
-            </>
-          ) : (
-            <>
-              {products?.map((product) => {
-                const icon =
-                  product?.parent?.__typename === "Plan" &&
-                  product?.parent?.icon;
-                const features = product?.features?.items;
-                return (
-                  <PlanItem
-                    key={product?.id}
-                    icon={icon ? (icon as any) : "app"}
-                    title={product?.name}
-                    features={features || []}
-                    price={product?.defaultPrice}
-                  />
-                );
-              })}
-              <PlanItemPaymentWithCard />
-              <PlanItemPaymentWithBoleto />
-              <PlanItemPaymentWithPix />
-              <PlanItemPaymentWithStripe />
-            </>
-          )}
+        <SimpleGrid maxWidth="900px" columns={[1, 1, 2, 2]} spacing="5">
+          <PlanFree />
+          <PlanCalculator />
         </SimpleGrid>
       </Stack>
     </Container>

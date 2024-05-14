@@ -60,7 +60,6 @@ const MetadataPage = () => {
 
   useEffect(() => {
     if (site) {
-      console.log({ site })
       reset({
         name: site?.name || "",
       });

@@ -3,6 +3,7 @@ import { convertEnumValueToCamelCase } from "@/utils";
 import { getDomainStatusColor } from "@/utils/get-domain-status-color";
 import {
   Badge,
+  BadgeGroup,
   ButtonGroup,
   Card,
   CardBody,
@@ -65,22 +66,27 @@ export const DomainItem = ({ domain, onDomainRemoved }: DomainItemProps) => {
               {domain.name}
             </Link>
 
-            <Stack direction="row" spacing="2">
-              {isFreeDomain ? (
+            <BadgeGroup direction="row">
+              <Badge colorScheme={getDomainStatusColor(domain.status)}>
+                {translate.formatMessage({
+                  id: convertEnumValueToCamelCase(domain.status) as any,
+                })}
+              </Badge>
+              {isFreeDomain && (
                 <Badge colorScheme="yellow">
                   {translate.formatMessage({
                     id: "free",
                   })}
                 </Badge>
-              ) : undefined}
-              {isDefaultDomain ? (
+              )}
+              {isDefaultDomain && (
                 <Badge colorScheme="gray">
                   {translate.formatMessage({
                     id: "default",
                   })}
                 </Badge>
-              ) : undefined}
-            </Stack>
+              )}
+            </BadgeGroup>
           </Stack>
 
           {canRemoveDomain && (
@@ -88,12 +94,6 @@ export const DomainItem = ({ domain, onDomainRemoved }: DomainItemProps) => {
               <IconButton name="trash" onClick={onOpenRemoveDomainModal} />
             </ButtonGroup>
           )}
-
-          <Badge colorScheme={getDomainStatusColor(domain.status)}>
-            {translate.formatMessage({
-              id: convertEnumValueToCamelCase(domain.status) as any,
-            })}
-          </Badge>
         </Stack>
       </CardBody>
     </Card>

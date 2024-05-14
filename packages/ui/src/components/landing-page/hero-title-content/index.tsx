@@ -30,7 +30,7 @@ export const HeroTitleContent = ({
   return (
     <HeroContent>
       {title && (
-        <HeroTitle color={textTheme === "dark" ? "white.500" : undefined}>
+        <HeroTitle color={textTheme === "dark" ? "white.500" : "heading.500"}>
           {titleHighlight ? (
             <Highlight query={titleHighlight}>{title}</Highlight>
           ) : (
@@ -39,7 +39,7 @@ export const HeroTitleContent = ({
         </HeroTitle>
       )}
       {subtitle && (
-        <HeroSubtitle color={textTheme === "dark" ? "white.500" : undefined}>
+        <HeroSubtitle color={textTheme === "dark" ? "white.500" : "text.500"}>
           {subtitleHighlight ? (
             <Highlight query={subtitleHighlight}>{subtitle}</Highlight>
           ) : (

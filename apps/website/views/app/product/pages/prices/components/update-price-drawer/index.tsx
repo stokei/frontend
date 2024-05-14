@@ -44,24 +44,17 @@ export const UpdatePriceDrawer = ({
 
   const validationSchema = z.object({
     amount: z.string().min(1, {
-      message: translate.formatMessage({ id: "amountIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
-    fromAmount: z.string(),
+    nickname: z.string().min(1, {
+      message: translate.formatMessage({ id: "required" }),
+    }),
+    fromAmount: z.string().optional(),
     automaticRenew: z.boolean().default(false),
   });
 
   const [{ fetching: isLoadingCreatePrice }, onUpdatePrice] =
     useUpdatePriceMutation();
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm<z.infer<typeof validationSchema>>({
-    mode: "all",
-    resolver: zodResolver(validationSchema),
-  });
 
   const convertAmountToMoney = useCallback(
     (value: string) => {
@@ -79,7 +72,28 @@ export const UpdatePriceDrawer = ({
     [currentApp, translate]
   );
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm<z.infer<typeof validationSchema>>({
+    mode: "all",
+    resolver: zodResolver(validationSchema),
+  });
+
+  useEffect(() => {
+    if (price) {
+      setValue("nickname", price.nickname || "");
+      setValue("automaticRenew", price.automaticRenew);
+      setValue("amount", convertAmountToMoney(price?.amount + ""));
+      setValue("fromAmount", convertAmountToMoney(price?.fromAmount + ""));
+    }
+  }, [convertAmountToMoney, price, setValue]);
+
   const onSubmit = async ({
+    nickname,
     amount,
     fromAmount,
     automaticRenew,
@@ -88,6 +102,7 @@ export const UpdatePriceDrawer = ({
       const response = await onUpdatePrice({
         input: {
           data: {
+            nickname,
             automaticRenew,
             fromAmount: fromAmount
               ? translate.formatMoneyToNumber(fromAmount)
@@ -113,31 +128,10 @@ export const UpdatePriceDrawer = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
-  useEffect(() => {
-    if (price) {
-      reset({
-        automaticRenew: price?.automaticRenew,
-        ...(price?.amount && {
-          amount: convertAmountToMoney(price?.amount + ""),
-        }),
-        ...(price?.fromAmount && {
-          fromAmount: convertAmountToMoney(price?.fromAmount + ""),
-        }),
-      });
-    }
-  }, [convertAmountToMoney, price, reset]);
-
-  useEffect(() => {
-    if (!isOpenDrawer) {
-      reset();
-    }
-  }, [isOpenDrawer, reset]);
-
   const onClose = () => {
-    reset();
     onCloseDrawer();
   };
 
@@ -149,7 +143,21 @@ export const UpdatePriceDrawer = ({
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing="5">
-            <Text fontWeight="bold">{price?.nickname || ""}</Text>
+            <FormControl isInvalid={!!errors?.nickname}>
+              <Label htmlFor="nickname">
+                {translate.formatMessage({ id: "name" })}
+              </Label>
+              <InputGroup>
+                <Input
+                  id="nickname"
+                  placeholder={translate.formatMessage({
+                    id: "namePlaceholder",
+                  })}
+                  {...register("nickname")}
+                />
+              </InputGroup>
+              <FormErrorMessage>{errors?.nickname?.message}</FormErrorMessage>
+            </FormControl>
 
             <FormControl isInvalid={!!errors?.fromAmount}>
               <Label htmlFor="fromAmount" isOptional>

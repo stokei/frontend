@@ -28,7 +28,6 @@ export const SelectPage = ({
 }: SelectPageProps) => {
   const { siteId } = useBuilder();
   const translate = useTranslations();
-  console.log({ value })
 
   const [{ data: dataGetPages, fetching: isLoadingGetPages }] = useGetSitePagesQuery({
     pause: !siteId,

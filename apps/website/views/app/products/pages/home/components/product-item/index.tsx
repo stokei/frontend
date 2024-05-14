@@ -37,7 +37,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
   );
 
   return (
-    <Link as={NextLink} href={editProductURL}>
+    <Link width="full" as={NextLink} href={editProductURL}>
       <Card background="background.50" overflow="hidden">
         <CardHeader position="relative" padding="0">
           <Image

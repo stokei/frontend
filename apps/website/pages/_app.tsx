@@ -56,10 +56,7 @@ const Providers = ({
   const [currentColors, setCurrentColors] = useState(() => themeColors);
 
   useEffect(() => {
-    setCurrentColors(formatAppColorsToThemeColors(
-      currentApp?.colors?.items
-    )
-    )
+    setCurrentColors(formatAppColorsToThemeColors(currentApp?.colors?.items))
   }, [currentApp]);
 
   return (

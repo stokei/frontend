@@ -1,93 +1,30 @@
-import createYourAppImage from "@/assets/create-your-app.png";
-import createYourDomainImage from "@/assets/create-your-domain.png";
-import createYourPricesImage from "@/assets/create-your-prices.png";
-import createYourProductsImage from "@/assets/create-your-product.png";
-import startSellImage from "@/assets/start-sell.svg";
-import stokeiDashboardImage from "@/assets/stokei-dashboard.svg";
-import { useTranslations } from "@/hooks";
-import { websiteRoutes } from "@stokei/routes";
-import { HeroWithImage } from "@stokei/ui";
-import { useRouter } from "next/router";
+import { Container } from "@stokei/ui";
 
 import { CommonQuestions } from "./components/common-questions";
 import { Contact } from "./components/contact";
+import { CreateYourAppHero } from "./components/heros/create-your-app";
+import { CreateYourDomainHero } from "./components/heros/create-your-domain";
+import { CreateYourPricesHero } from "./components/heros/create-your-prices";
+import { CreateYourProductHero } from "./components/heros/create-your-product";
+import { EndHero } from "./components/heros/end";
+import { PrimaryHero } from "./components/heros/primary";
+import { PaymentMethods } from "./components/payment-methods";
 import { Plans } from "./components/plans";
 import { LandingPageLayout } from "./layout";
 
 export const LandingPage = () => {
-  const router = useRouter();
-  const translate = useTranslations();
-
-  const goToSignUp = () => {
-    return router.push(websiteRoutes.auth.signUp);
-  };
-
   return (
     <LandingPageLayout>
-      <HeroWithImage
-        title={translate.formatMessage({ id: "turnYourKnowledgeIntoAProduct" })}
-        titleHighlight={translate.formatMessage({
-          id: "turnYourKnowledgeIntoAProductHighlight",
-        })}
-        subtitle={translate.formatMessage({
-          id: "thePlatformThatTransformsYourKnowledgeIntoOnlineCourses",
-        })}
-        imageURL={stokeiDashboardImage?.src}
-        onCTA={goToSignUp}
-      />
-      <HeroWithImage
-        title={translate.formatMessage({ id: "createYourApp" })}
-        subtitle={translate.formatMessage({
-          id: "anApplicationIsYourControlCenterForManagingProducts",
-        })}
-        imageURL={createYourAppImage?.src}
-      />
-      {/* <HeroWithImage
-        orientation="right"
-        title={translate.formatMessage({ id: "haveMoreThanOneWebsite" })}
-        titleHighlight={translate.formatMessage({
-          id: "turnYourKnowledgeIntoAProductHighlight",
-        })}
-        subtitle={translate.formatMessage({
-          id: "withStokeiYouCanTransformYourKnowledgeIntoOnlineCourses",
-        })}
-        imageURL={stokeiDashboardImage?.src}
-      /> */}
-      <HeroWithImage
-        orientation="right"
-        title={translate.formatMessage({ id: "chooseYourDomain" })}
-        titleHighlight={translate.formatMessage({
-          id: "turnYourKnowledgeIntoAProductHighlight",
-        })}
-        subtitle={translate.formatMessage({
-          id: "customizeYourExperienceChooseFromStokeiSFreeDomainOrAddYourOwnCustomDomain",
-        })}
-        imageURL={createYourDomainImage?.src}
-      />
-      <HeroWithImage
-        title={translate.formatMessage({ id: "createYourProducts" })}
-        subtitle={translate.formatMessage({
-          id: "startCreatingYourProductsWithHighQualityImagesAndChooseImpactfulNames",
-        })}
-        imageURL={createYourProductsImage?.src}
-      />
-      <HeroWithImage
-        orientation="right"
-        title={translate.formatMessage({ id: "createYourPrices" })}
-        subtitle={translate.formatMessage({
-          id: "setPricesThatMeetYourCustomersNeeds",
-        })}
-        imageURL={createYourPricesImage?.src}
-      />
-      <HeroWithImage
-        title={translate.formatMessage({ id: "startSell" })}
-        subtitle={translate.formatMessage({
-          id: "startYourSalesJourneyBySharingYourAppLinkRightNow",
-        })}
-        imageURL={startSellImage?.src}
-        onCTA={goToSignUp}
-      />
+      <Container>
+        <PrimaryHero />
+        <CreateYourAppHero />
+        <CreateYourDomainHero />
+        <CreateYourProductHero />
+        <CreateYourPricesHero />
+        <EndHero />
+      </Container>
       <Plans />
+      <PaymentMethods />
       <CommonQuestions />
       <Contact />
     </LandingPageLayout>

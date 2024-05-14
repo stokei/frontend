@@ -328,7 +328,6 @@ export const ComponentsTreeProvider = ({
   const onDragEnd = useCallback(
     async (event: DragAndDropDragEndEvent) => {
       const { active, over } = event;
-      console.log({ active, over })
       if (!active?.id || !over?.id) {
         return;
       }

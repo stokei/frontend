@@ -4,6 +4,7 @@ export interface HeroMediaProps extends BoxProps { }
 export const HeroMedia = ({ children, ...props }: HeroMediaProps) => (
   <Box
     flex="1"
+    width="full"
     height="full"
     flexDirection="column"
     justify="center"

@@ -13,6 +13,7 @@ import {
 } from "@stokei/ui";
 import { useMemo } from "react";
 import { useGetAppBillingQuery } from "../../graphql/billing.query.graphql.generated";
+import { convertEnumValueToCamelCase } from "@/utils";
 
 export const BillingList = () => {
   const translate = useTranslations();
@@ -32,6 +33,19 @@ export const BillingList = () => {
     });
     return itemsSorted;
   }, [billing?.items]);
+
+  const getPriceText = ({
+    priceAmount,
+    unit,
+    quantity
+  }: {
+    priceAmount: string,
+    quantity?: string,
+    unit?: string
+  }) => {
+    const unitText = unit && (translate.formatMessage({ id: convertEnumValueToCamelCase(unit) }) + (quantity && parseInt(quantity) > 1 && "s"));
+    return `${quantity} ${unitText || ""} x ${priceAmount}`
+  }
 
   return (
     <Card background="background.50">
@@ -69,9 +83,11 @@ export const BillingList = () => {
                           {item.price?.nickname}
                         </Text>
                         <Text fontSize="sm">
-                          {`${quantity} ${
-                            item.price?.unit || ""
-                          } x ${priceAmount}`}
+                          {getPriceText({
+                            priceAmount,
+                            quantity,
+                            unit: item.price?.unit || ""
+                          })}
                         </Text>
                       </Stack>
                     </TableCell>

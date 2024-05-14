@@ -5,7 +5,7 @@ import { Container, Stack, Text, Title } from "@stokei/ui";
 export const Contact = () => {
   const translate = useTranslations();
   return (
-    <Container background="background.50" paddingY="16">
+    <Container paddingY="16">
       <Stack direction="column" align="center" justify="center" spacing="8">
         <Title size="lg">
           {translate.formatMessage({ id: "doYouHaveALargeVolumeOfData" })}

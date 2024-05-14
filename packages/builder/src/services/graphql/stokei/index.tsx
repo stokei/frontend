@@ -3864,6 +3864,7 @@ export type UpdateDataPriceInput = {
   amount?: InputMaybe<Scalars['Int']>;
   automaticRenew?: InputMaybe<Scalars['Boolean']>;
   fromAmount?: InputMaybe<Scalars['Int']>;
+  nickname?: InputMaybe<Scalars['String']>;
   quantity?: InputMaybe<Scalars['Int']>;
 };
 
