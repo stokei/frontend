@@ -1,45 +1,53 @@
-import Chart from 'react-apexcharts';
+import { ApexOptions } from "apexcharts";
+import { Chart, ChartData } from "../chart";
+import { useMemo } from "react";
+import { IColorName } from "../../../interfaces";
 
-const defaultOptions = {
-    series: [{
-        name: "Desktops",
-        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-    }],
-    options: {
-        chart: {
-            height: 350,
-            type: 'line',
-            zoom: {
-                enabled: false
-            }
-        },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: 'straight'
-        },
-        title: {
-            text: 'Product Trends by Month',
-            align: 'left'
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5
-            },
-        },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-        }
-    },
-};
+export interface LineChartProps {
+    data: ChartData[];
+    colorScheme?: IColorName;
+}
+export const LineChart = ({
+    data,
+    colorScheme = "primary"
+}: LineChartProps) => {
+    const config = useMemo(() => {
+        const series = data?.map(({ value }) => value) as any;
+        const categories = data?.map(({ label }) => label);
+        return ({
+            series: [{ name: '', data: series }],
+            options: {
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                colors: [`var(--chakra-colors-${colorScheme}-500)`],
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight'
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    categories,
+                }
+            } as ApexOptions,
+        })
+    }, [colorScheme, data]);
 
-export const LineChart = ({ options = defaultOptions.options, series = defaultOptions.series }: any) => {
     return (
         <Chart
-            options={options}
-            series={series}
+            options={config.options}
+            series={config.series}
             type="line"
             width="100%"
             height="100%"

@@ -1,0 +1,10 @@
+query GetMetrics($startAt: String!, $endAt: String!) {
+  accessesFrequencyByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
+    label
+    value
+  }
+  accessesHoursByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
+    label
+    value
+  }
+}
