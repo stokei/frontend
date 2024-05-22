@@ -17,7 +17,7 @@ export const ChartAccessesFrequency = ({ data }: { data: ChartData[] }) => {
   return (
     <Card minHeight="80" maxHeight="300px" background="background.50">
       <CardBody>
-        <Title fontSize="large">{translate.formatMessage({ id: 'accessNotFound' })}</Title>
+        <Title fontSize="large">{translate.formatMessage({ id: 'accesses' })}</Title>
         <LineChart
           data={currentData}
         />

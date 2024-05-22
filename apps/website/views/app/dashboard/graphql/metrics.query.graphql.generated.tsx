@@ -9,7 +9,7 @@ export type GetMetricsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetMetricsQuery = { __typename?: 'Query', accessesFrequencyByPeriod: Array<{ __typename?: 'ChartData', label: string, value: string }>, accessesHoursByPeriod: Array<{ __typename?: 'ChartData', label: string, value: string }> };
+export type GetMetricsQuery = { __typename?: 'Query', accessesFrequencyByPeriod: Array<{ __typename?: 'ChartData', label: string, value: string }>, accessesHoursByPeriod: Array<{ __typename?: 'ChartData', label: string, value: string }>, ordersFrequencyByPeriod: Array<{ __typename?: 'ChartData', label: string, value: string }>, paymentMethodsMostUsedByPeriod: Array<{ __typename?: 'ChartData', label: string, value: string }>, productsBestSellerByPeriod: Array<{ __typename?: 'ProductBestSeller', quantity: number, product: { __typename?: 'Product', name: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } }> };
 
 
 export const GetMetricsDocument = gql`
@@ -21,6 +21,25 @@ export const GetMetricsDocument = gql`
   accessesHoursByPeriod(where: {startAt: $startAt, endAt: $endAt}) {
     label
     value
+  }
+  ordersFrequencyByPeriod(where: {status: PAID, startAt: $startAt, endAt: $endAt}) {
+    label
+    value
+  }
+  paymentMethodsMostUsedByPeriod(where: {startAt: $startAt, endAt: $endAt}) {
+    label
+    value
+  }
+  productsBestSellerByPeriod(where: {startAt: $startAt, endAt: $endAt}) {
+    quantity
+    product {
+      name
+      avatar {
+        file {
+          url
+        }
+      }
+    }
   }
 }
     `;

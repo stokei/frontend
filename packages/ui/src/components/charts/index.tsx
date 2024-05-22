@@ -1,2 +1,4 @@
-export * from './barchart'
-export * from './linechart'
+export * from './bar'
+export * from './donut'
+export * from './line'
+export * from './pie'

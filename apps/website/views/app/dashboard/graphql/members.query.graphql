@@ -1,8 +1,0 @@
-query GetMembersTotal(
-  $where: WhereDataFindAllAccountsInput
-  $page: PaginationInput
-) {
-  accounts(where: $where, page: $page) {
-    totalCount
-  }
-}

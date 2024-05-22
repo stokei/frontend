@@ -22,19 +22,6 @@ export const BarChart = ({
                         show: false
                     }
                 },
-                tooltip: {
-                    style: {
-                        fontSize: "12px",
-                        fontFamily: undefined
-                    },
-                    onDatasetHover: {
-                        style: {
-                            fontSize: "12px",
-                            fontFamily: undefined
-                        }
-                    },
-                    theme: "dark"
-                },
                 xaxis: {
                     categories,
                     show: false,

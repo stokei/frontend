@@ -20,6 +20,9 @@ export const LineChart = ({
                 chart: {
                     height: 350,
                     type: 'line',
+                    toolbar: {
+                        show: false
+                    },
                     zoom: {
                         enabled: false
                     }
@@ -33,8 +36,7 @@ export const LineChart = ({
                 },
                 grid: {
                     row: {
-                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                        opacity: 0.5
+                        colors: ['transparent']
                     },
                 },
                 xaxis: {

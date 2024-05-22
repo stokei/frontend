@@ -1,24 +1,24 @@
 import { useTranslations } from "@/hooks";
 import { ChartData } from "@/services/graphql/stokei";
 import {
-  BarChart,
   Card,
   CardBody,
+  LineChart,
   Title
 } from "@stokei/ui";
 import { useMemo } from "react";
 
-export const ChartAccessesHours = ({ data }: { data: ChartData[] }) => {
+export const ChartOrdersFrequency = ({ data }: { data: ChartData[] }) => {
   const translate = useTranslations();
   const currentData = useMemo(() => {
-    return data?.map((item) => ({ ...item, label: item.label ? `${item.label}h` : "" }));
-  }, [data]);
+    return data?.map((item) => ({ ...item, label: translate.formatDate(item.label) || "" }));
+  }, [data, translate]);
 
   return (
     <Card minHeight="80" maxHeight="300px" background="background.50">
       <CardBody>
-        <Title fontSize="large">{translate.formatMessage({ id: 'mostAccessedTimes' })}</Title>
-        <BarChart
+        <Title fontSize="large">{translate.formatMessage({ id: 'orders' })}</Title>
+        <LineChart
           data={currentData}
         />
       </CardBody>

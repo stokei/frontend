@@ -7,4 +7,25 @@ query GetMetrics($startAt: String!, $endAt: String!) {
     label
     value
   }
+  ordersFrequencyByPeriod(
+    where: { status: PAID, startAt: $startAt, endAt: $endAt }
+  ) {
+    label
+    value
+  }
+  paymentMethodsMostUsedByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
+    label
+    value
+  }
+  productsBestSellerByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
+    quantity
+    product {
+      name
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
 }

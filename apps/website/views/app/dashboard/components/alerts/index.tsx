@@ -30,37 +30,35 @@ export const Alerts = () => {
   }
 
   return (
-    <Container>
-      <Stack direction="column" spacing="5">
-        <Alert status="warning">
-          <AlertIcon />
-          <Stack
-            direction={["column", "column", "row", "row"]}
-            spacing="5"
-            justify={["center", "center", "space-between", "space-between"]}
-            align={["space-between", "space-between", "center", "center"]}
-          >
-            <Box flexDirection="column">
-              <AlertDescription>
-                {translate.formatMessage({
-                  id: "youDontHaveAnyPaymentGatewayYet",
-                })}
-              </AlertDescription>
-            </Box>
-            <Box>
-              <Button
-                variant="ghost"
-                colorScheme="black"
-                onClick={goToOnboarding}
-              >
-                {translate.formatMessage({
-                  id: "clickHereToConfigure",
-                })}
-              </Button>
-            </Box>
-          </Stack>
-        </Alert>
-      </Stack>
-    </Container>
+    <Stack direction="column" spacing="5">
+      <Alert status="warning">
+        <AlertIcon />
+        <Stack
+          direction={["column", "column", "row", "row"]}
+          spacing="5"
+          justify={["center", "center", "space-between", "space-between"]}
+          align={["space-between", "space-between", "center", "center"]}
+        >
+          <Box flexDirection="column">
+            <AlertDescription>
+              {translate.formatMessage({
+                id: "youDontHaveAnyPaymentGatewayYet",
+              })}
+            </AlertDescription>
+          </Box>
+          <Box>
+            <Button
+              variant="ghost"
+              colorScheme="black"
+              onClick={goToOnboarding}
+            >
+              {translate.formatMessage({
+                id: "clickHereToConfigure",
+              })}
+            </Button>
+          </Box>
+        </Stack>
+      </Alert>
+    </Stack>
   );
 };
