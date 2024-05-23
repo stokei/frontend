@@ -1,0 +1,32 @@
+query GetMetrics($startAt: String!, $endAt: String!) {
+  accessesFrequencyByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
+    label
+    value
+  }
+  accessesHoursByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
+    label
+    value
+  }
+  ordersFrequencyByPeriod(
+    where: { status: PAID, startAt: $startAt, endAt: $endAt }
+  ) {
+    label
+    value
+  }
+  paymentMethodsMostUsedByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
+    label
+    value
+  }
+  productsBestSellerByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
+    quantity
+    product {
+      id
+      name
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
+}

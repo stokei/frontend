@@ -1,6 +1,6 @@
 import { Stack, StackProps } from "../stack";
 
-export interface NotFoundProps extends StackProps {}
+export interface NotFoundProps extends StackProps { }
 export const NotFound = ({ children, ...props }: NotFoundProps) => (
   <Stack
     width="full"

@@ -45,7 +45,7 @@ export const MemberItem = ({ appMember }: MemberItemProps) => {
     };
     return {
       label: labels[appMember?.status || AccountStatus.Active],
-      colorSchema: getAccountStatusColor(appMember?.status),
+      colorScheme: getAccountStatusColor(appMember?.status),
     };
   }, [appMember?.status, translate]);
 
@@ -56,23 +56,23 @@ export const MemberItem = ({ appMember }: MemberItemProps) => {
         {
           label?: string;
           variant: string;
-          colorSchema: string;
+          colorScheme: string;
         }
       > = {
         [RoleName.ADMIN]: {
           label: translate.formatMessage({ id: "admin" }),
           variant: "subtle",
-          colorSchema: "blue",
+          colorScheme: "blue",
         },
         [RoleName.INSTRUCTOR]: {
           label: translate.formatMessage({ id: "instructor" }),
           variant: "subtle",
-          colorSchema: "red",
+          colorScheme: "red",
         },
         [RoleName.STUDENT]: {
           label: translate.formatMessage({ id: "student" }),
           variant: "subtle",
-          colorSchema: "yellow",
+          colorScheme: "yellow",
         },
       };
       return data[roleName];
@@ -108,7 +108,7 @@ export const MemberItem = ({ appMember }: MemberItemProps) => {
             <Box>
               <Badge
                 size="sm"
-                colorScheme={memeberStatus.colorSchema}
+                colorScheme={memeberStatus.colorScheme}
                 variant="subtle"
               >
                 {memeberStatus.label}
@@ -136,7 +136,7 @@ export const MemberItem = ({ appMember }: MemberItemProps) => {
               return (
                 <Tag
                   key={role.id}
-                  colorScheme={tagData.colorSchema}
+                  colorScheme={tagData.colorScheme}
                   variant={tagData.variant}
                   size="sm"
                 >

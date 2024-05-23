@@ -30,7 +30,7 @@ export const AppItem = ({ app }: AppItemProps) => {
     };
     return {
       label: labels[app?.status || AppStatus.Active],
-      colorSchema: getAppStatusColor(app?.status),
+      colorScheme: getAppStatusColor(app?.status),
     };
   }, [app?.status, translate]);
 
@@ -55,7 +55,7 @@ export const AppItem = ({ app }: AppItemProps) => {
             <Box>
               <Badge
                 size="sm"
-                colorScheme={appStatus.colorSchema}
+                colorScheme={appStatus.colorScheme}
                 variant="subtle"
               >
                 {appStatus.label}

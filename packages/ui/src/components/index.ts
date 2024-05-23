@@ -13,6 +13,7 @@ export * from "./alert-dialog-header";
 export * from "./alert-icon";
 export * from "./alert-title";
 export * from "./circle";
+export * from "./charts";
 export * from "./collapse";
 export * from "./copy-input";
 export * from "./read-more";

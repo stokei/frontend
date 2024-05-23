@@ -1,0 +1,32 @@
+import { useTranslations } from "@/hooks";
+import { ChartData } from "@/services/graphql/stokei";
+import {
+  Card,
+  CardBody,
+  LineChart,
+  Title
+} from "@stokei/ui";
+import { useMemo } from "react";
+import { ChartEmptyState } from "../empty-state";
+
+export const ChartAccessesFrequency = ({ data }: { data: ChartData[] }) => {
+  const translate = useTranslations();
+  const currentData = useMemo(() => {
+    return data?.map((item) => ({ ...item, label: translate.formatDate(item.label)?.replace('00:00:00', '12:00:00') || "" }));
+  }, [data, translate]);
+
+  return (
+    <Card minHeight="80" maxHeight="300px" background="background.50">
+      <CardBody>
+        <Title fontSize="large">{translate.formatMessage({ id: 'accesses' })}</Title>
+        {currentData?.length ? (
+          <LineChart
+            data={currentData}
+          />
+        ) : (
+          <ChartEmptyState />
+        )}
+      </CardBody>
+    </Card>
+  );
+};

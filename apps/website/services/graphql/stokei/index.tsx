@@ -318,6 +318,12 @@ export type ChangePasswordInput = {
   password: Scalars['String'];
 };
 
+export type ChartData = {
+  __typename?: 'ChartData';
+  label: Scalars['String'];
+  value: Scalars['String'];
+};
+
 export type Checkout = {
   __typename?: 'Checkout';
   boleto?: Maybe<CheckoutBoleto>;
@@ -1018,6 +1024,32 @@ export enum FileStatus {
   Error = 'ERROR',
   Pending = 'PENDING'
 }
+
+export type FindAccessesFrequencyByPeriodInput = {
+  endAt: Scalars['String'];
+  startAt: Scalars['String'];
+};
+
+export type FindAccessesHoursByPeriodInput = {
+  endAt: Scalars['String'];
+  startAt: Scalars['String'];
+};
+
+export type FindOrdersFrequencyByPeriodInput = {
+  endAt: Scalars['String'];
+  startAt: Scalars['String'];
+  status: OrderStatus;
+};
+
+export type FindPaymentMethodsMostUsedByPeriodInput = {
+  endAt: Scalars['String'];
+  startAt: Scalars['String'];
+};
+
+export type FindProductsBestSellerByPeriodInput = {
+  endAt: Scalars['String'];
+  startAt: Scalars['String'];
+};
 
 export type ForgotPasswordInput = {
   email: Scalars['String'];
@@ -2731,6 +2763,12 @@ export type Product = {
   updatedBy?: Maybe<Account>;
 };
 
+export type ProductBestSeller = {
+  __typename?: 'ProductBestSeller';
+  product: Product;
+  quantity: Scalars['Float'];
+};
+
 export type ProductParentUnion = App | Course | Material | Plan;
 
 export type Products = {
@@ -2755,6 +2793,8 @@ export type Query = {
   __typename?: 'Query';
   access: Access;
   accesses: Accesses;
+  accessesFrequencyByPeriod: Array<ChartData>;
+  accessesHoursByPeriod: Array<ChartData>;
   account: Account;
   accountByEmail: Account;
   accounts: Accounts;
@@ -2804,11 +2844,13 @@ export type Query = {
   orderItem: OrderItem;
   orderItems: OrderItems;
   orders: Orders;
+  ordersFrequencyByPeriod: Array<ChartData>;
   page: Page;
   pages: Pages;
   payment: Payment;
   paymentMethod: PaymentMethod;
   paymentMethods: PaymentMethods;
+  paymentMethodsMostUsedByPeriod: Array<ChartData>;
   payments: Payments;
   phone: Phone;
   phoneCodes: Array<PhoneCode>;
@@ -2819,6 +2861,7 @@ export type Query = {
   prices: Prices;
   product: Product;
   products: Products;
+  productsBestSellerByPeriod: Array<ProductBestSeller>;
   site: Site;
   sites: Sites;
   sortedItem: SortedItem;
@@ -2846,6 +2889,16 @@ export type QueryAccessesArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllAccessesInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllAccessesInput>;
+};
+
+
+export type QueryAccessesFrequencyByPeriodArgs = {
+  where: FindAccessesFrequencyByPeriodInput;
+};
+
+
+export type QueryAccessesHoursByPeriodArgs = {
+  where: FindAccessesHoursByPeriodInput;
 };
 
 
@@ -3126,6 +3179,11 @@ export type QueryOrdersArgs = {
 };
 
 
+export type QueryOrdersFrequencyByPeriodArgs = {
+  where: FindOrdersFrequencyByPeriodInput;
+};
+
+
 export type QueryPageArgs = {
   id?: InputMaybe<Scalars['String']>;
   site?: InputMaybe<Scalars['String']>;
@@ -3154,6 +3212,11 @@ export type QueryPaymentMethodsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPaymentMethodsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllPaymentMethodsInput>;
+};
+
+
+export type QueryPaymentMethodsMostUsedByPeriodArgs = {
+  where: FindPaymentMethodsMostUsedByPeriodInput;
 };
 
 
@@ -3209,6 +3272,11 @@ export type QueryProductsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllProductsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllProductsInput>;
+};
+
+
+export type QueryProductsBestSellerByPeriodArgs = {
+  where: FindProductsBestSellerByPeriodInput;
 };
 
 

@@ -1,6 +1,5 @@
 import { AppLogo, Footer, Sidebar } from "@/components";
 import { AppLayoutContent } from "@/components/app-layout-content";
-import { BadgeNew } from "@/components/badge-new";
 import { SidebarProvider } from "@/contexts";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
@@ -176,7 +175,6 @@ export const AppLayout = ({ children }: PropsWithChildren<AppLayoutProps>) => {
               as={NextLink}
               href={baseRoutes.sites.home}
               isActive={isActiveRoute(baseRoutes.sites.home)}
-              badge={<BadgeNew />}
             >
               {translate.formatMessage({ id: "sites" })}
             </SidebarNavLink>

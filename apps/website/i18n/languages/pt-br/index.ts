@@ -1,5 +1,9 @@
 export const ptBRMessages = {
   me: "Eu",
+  accesses: "Acessos",
+  mostAccessedTimes: "Horários mais acessados",
+  productsBestSeller: "Produtos mais vendidos",
+  mostUsedPaymentMethods: "Meios de pagamento mais usados",
   monthly: "Mensal",
   unlimitedAdmins: "Administradores ilimitados",
   unlimitedInstructors: "Instrutores ilimitados",
