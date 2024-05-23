@@ -4,7 +4,7 @@ import {
   CardBodyProps as ChakraCardBodyProps,
 } from "@chakra-ui/react";
 
-export interface CardBodyProps extends ChakraCardBodyProps {}
+export interface CardBodyProps extends ChakraCardBodyProps { }
 export const CardBody = ({ children, ...props }: CardBodyProps) => {
-  return <ChakraCardBody {...props}>{children}</ChakraCardBody>;
+  return <ChakraCardBody display="flex" flexDirection="column" {...props}>{children}</ChakraCardBody>;
 };

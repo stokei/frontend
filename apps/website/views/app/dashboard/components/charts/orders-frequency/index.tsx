@@ -7,6 +7,7 @@ import {
   Title
 } from "@stokei/ui";
 import { useMemo } from "react";
+import { ChartEmptyState } from "../empty-state";
 
 export const ChartOrdersFrequency = ({ data }: { data: ChartData[] }) => {
   const translate = useTranslations();
@@ -18,9 +19,14 @@ export const ChartOrdersFrequency = ({ data }: { data: ChartData[] }) => {
     <Card minHeight="80" maxHeight="300px" background="background.50">
       <CardBody>
         <Title fontSize="large">{translate.formatMessage({ id: 'orders' })}</Title>
-        <LineChart
-          data={currentData}
-        />
+        {currentData?.length ? (
+          <LineChart
+            data={currentData}
+          />
+        ) : (
+          <ChartEmptyState />
+        )}
+
       </CardBody>
     </Card>
   );

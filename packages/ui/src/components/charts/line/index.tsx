@@ -27,7 +27,13 @@ export const LineChart = ({
                         enabled: false
                     }
                 },
-                colors: [`var(--chakra-colors-${colorScheme}-500)`],
+                colors: [
+                    `var(--chakra-colors-${colorScheme}-500)`,
+                    'var(--chakra-colors-green-500)',
+                    'var(--chakra-colors-purple-500)',
+                    'var(--chakra-colors-blue-500)',
+                    'var(--chakra-colors-red-500)',
+                ],
                 dataLabels: {
                     enabled: false
                 },

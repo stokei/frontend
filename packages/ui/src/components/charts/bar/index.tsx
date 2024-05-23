@@ -22,6 +22,13 @@ export const BarChart = ({
                         show: false
                     }
                 },
+                colors: [
+                    `var(--chakra-colors-${colorScheme}-500)`,
+                    'var(--chakra-colors-green-500)',
+                    'var(--chakra-colors-purple-500)',
+                    'var(--chakra-colors-blue-500)',
+                    'var(--chakra-colors-red-500)',
+                ],
                 xaxis: {
                     categories,
                     show: false,
@@ -63,21 +70,6 @@ export const BarChart = ({
                         lines: {
                             show: false
                         }
-                    }
-                },
-                fill: {
-                    type: "gradient",
-                    gradient: {
-                        type: "vertical",
-                        colorStops: [
-                            [
-                                {
-                                    offset: 0,
-                                    color: `var(--chakra-colors-${colorScheme}-500)`,
-                                    opacity: 1
-                                }
-                            ]
-                        ]
                     }
                 },
                 dataLabels: {

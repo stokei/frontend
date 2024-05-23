@@ -31,6 +31,7 @@ export const PlanInput = ({
             width="fit-content"
             price={plan?.defaultPrice}
             size="md"
+            withUnitDescription
           />
         )}
       </Stack>

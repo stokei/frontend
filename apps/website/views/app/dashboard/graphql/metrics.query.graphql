@@ -20,6 +20,7 @@ query GetMetrics($startAt: String!, $endAt: String!) {
   productsBestSellerByPeriod(where: { startAt: $startAt, endAt: $endAt }) {
     quantity
     product {
+      id
       name
       avatar {
         file {

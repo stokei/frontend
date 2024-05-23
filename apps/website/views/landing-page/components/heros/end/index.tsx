@@ -30,7 +30,7 @@ export const EndHero = () => {
           onClick={() => router.push(websiteRoutes.auth.signUp)}
         >
           {translate.formatMessage({
-            id: "signUp",
+            id: "freeSignUp",
           })}
         </Button>
       </HeroContent>

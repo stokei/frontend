@@ -8,6 +8,7 @@ import {
   Title
 } from "@stokei/ui";
 import { useMemo } from "react";
+import { ChartEmptyState } from "../empty-state";
 
 export const ChartPaymentMethodsMostUsed = ({ data }: { data: ChartData[] }) => {
   const translate = useTranslations();
@@ -26,9 +27,13 @@ export const ChartPaymentMethodsMostUsed = ({ data }: { data: ChartData[] }) => 
     <Card minHeight="80" maxHeight="300px" background="background.50">
       <CardBody>
         <Title fontSize="large">{translate.formatMessage({ id: 'mostUsedPaymentMethods' })}</Title>
-        <DonutChart
-          data={currentData}
-        />
+        {currentData?.length ? (
+          <DonutChart
+            data={currentData}
+          />
+        ) : (
+          <ChartEmptyState />
+        )}
       </CardBody>
     </Card>
   );

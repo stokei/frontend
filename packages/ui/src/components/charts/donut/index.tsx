@@ -18,6 +18,12 @@ export const DonutChart = ({
                 chart: {
                     type: 'donut',
                 },
+                colors: [
+                    'var(--chakra-colors-green-500)',
+                    'var(--chakra-colors-purple-500)',
+                    'var(--chakra-colors-blue-500)',
+                    'var(--chakra-colors-red-500)',
+                ],
                 legend: {
                     position: 'bottom'
                 },

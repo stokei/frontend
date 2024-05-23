@@ -21,6 +21,12 @@ export const PieChart = ({
                 chart: {
                     type: 'pie',
                 },
+                colors: [
+                    'var(--chakra-colors-green-500)',
+                    'var(--chakra-colors-purple-500)',
+                    'var(--chakra-colors-blue-500)',
+                    'var(--chakra-colors-red-500)',
+                ],
                 responsive: [{
                     breakpoint: 480,
                     options: {

@@ -14,13 +14,15 @@ import { useGetMetricsQuery } from "./graphql/metrics.query.graphql.generated";
 import { ProductsBestSeller } from "./components/products-best-seller";
 
 export const DashboardPage = () => {
+  const today = useMemo(() => new Date(Date.now()), []);
   const [startAt, setStartAt] = useState(() => addMonths(-1, Date.now()));
-  const [endAt, setEndAt] = useState(() => new Date(Date.now()));
+  const [endAt, setEndAt] = useState(() => today);
 
   const translate = useTranslations();
 
   const [{ data: dataGetMetrics }] = useGetMetricsQuery({
     pause: !startAt || !endAt,
+    requestPolicy: 'network-only',
     variables: {
       startAt: convertToISODateString(startAt) || "",
       endAt: convertToISODateString(endAt) || "",
@@ -45,10 +47,12 @@ export const DashboardPage = () => {
                 <DatePicker
                   value={startAt}
                   onChange={setStartAt}
+                  maxDate={today}
                 />
                 <DatePicker
                   value={endAt}
                   onChange={setEndAt}
+                  maxDate={today}
                 />
               </DatePickerGroup>
             </CardBody>

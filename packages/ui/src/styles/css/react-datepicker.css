@@ -74,3 +74,10 @@
   top: inherit !important;
   font-size: inherit !important;
 }
+
+.react-datepicker__day--disabled,
+.react-datepicker__month-text--disabled,
+.react-datepicker__quarter-text--disabled,
+.react-datepicker__year-text--disabled {
+  color: var(--chakra-colors-text-200) !important;
+}
