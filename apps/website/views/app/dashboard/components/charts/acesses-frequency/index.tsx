@@ -12,7 +12,7 @@ import { ChartEmptyState } from "../empty-state";
 export const ChartAccessesFrequency = ({ data }: { data: ChartData[] }) => {
   const translate = useTranslations();
   const currentData = useMemo(() => {
-    return data?.map((item) => ({ ...item, label: translate.formatDate(item.label) || "" }));
+    return data?.map((item) => ({ ...item, label: translate.formatDate(item.label)?.replace('00:00:00', '12:00:00') || "" }));
   }, [data, translate]);
 
   return (
