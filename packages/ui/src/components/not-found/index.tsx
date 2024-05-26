@@ -8,6 +8,7 @@ export const NotFound = ({ children, ...props }: NotFoundProps) => (
     direction="column"
     align="center"
     justify="center"
+    paddingY="5"
     {...props}
   >
     {children}

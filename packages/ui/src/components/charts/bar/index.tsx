@@ -19,7 +19,13 @@ export const BarChart = ({
             options: {
                 chart: {
                     toolbar: {
-                        show: false
+                        show: true,
+                        tools: {
+                            download: false
+                        }
+                    },
+                    zoom: {
+                        enabled: true
                     }
                 },
                 colors: [
@@ -77,7 +83,7 @@ export const BarChart = ({
                 },
                 plotOptions: {
                     bar: {
-                        borderRadius: 10,
+                        borderRadius: 2,
                     }
                 }
             } as ApexOptions,

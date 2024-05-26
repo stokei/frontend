@@ -18,6 +18,9 @@ export const DonutChart = ({
                 chart: {
                     type: 'donut',
                 },
+                dataLabels: {
+                    enabled: false
+                },
                 colors: [
                     'var(--chakra-colors-green-500)',
                     'var(--chakra-colors-purple-500)',
@@ -37,7 +40,7 @@ export const DonutChart = ({
             series={config.series}
             type="donut"
             width="100%"
-            height="100%"
+            height="90%"
         />
     )
 }

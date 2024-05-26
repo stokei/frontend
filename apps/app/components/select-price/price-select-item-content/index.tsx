@@ -4,12 +4,10 @@ import { Stack } from "@stokei/ui";
 
 interface PriceSelectItemContentProps {
   readonly price?: PriceComponentFragment;
-  readonly size?: "md" | "lg";
 }
 
 export const PriceSelectItemContent = ({
   price,
-  size,
 }: PriceSelectItemContentProps) => {
   return (
     <Stack
@@ -19,7 +17,7 @@ export const PriceSelectItemContent = ({
       align="center"
       flexWrap="wrap"
     >
-      <Price price={price} size={size} />
+      <Price price={price} />
     </Stack>
   );
 };

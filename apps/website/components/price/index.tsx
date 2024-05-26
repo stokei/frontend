@@ -7,14 +7,12 @@ import { PriceComponentFragment } from "./price.fragment.graphql.generated";
 
 export interface PriceProps extends StackProps {
   price?: PriceComponentFragment | null;
-  size?: "md" | "lg";
   readonly withPriceAndUnitDirectionColumn?: boolean;
   readonly withUnitDescription?: boolean;
   readonly withRecurring?: boolean;
 }
 export const Price = ({
   price,
-  size,
   justify,
   withRecurring = true,
   withUnitDescription,
@@ -74,15 +72,39 @@ export const Price = ({
         : price?.unit,
     [price?.unit, translate, withUnitDescription]
   );
-
-  const unitFontSize = size === "lg" ? "lg" : "md";
+  const recurringText = useMemo(() => {
+    const text: string[] = [];
+    if (unitDescription) {
+      text.push(`${eachUnitDescription} ${unitDescription}`)
+    }
+    text.push(perUnitDescription);
+    if (price?.recurring?.intervalCount &&
+      price?.recurring?.intervalCount > 1) {
+      text.push(price?.recurring?.intervalCount + '');
+    }
+    text.push(
+      translate
+        .formatMessage({
+          id: priceRecurringIntervalTypeKey as any,
+        })
+        ?.toLowerCase()
+    );
+    return text.join(' ');
+  }, [
+    eachUnitDescription,
+    perUnitDescription,
+    price?.recurring?.intervalCount,
+    priceRecurringIntervalTypeKey,
+    translate,
+    unitDescription
+  ]);
 
   return (
     <Stack width="full" direction="column" spacing="1" {...props}>
       {fromPriceAmount && (
         <Stack direction="row" align="center" justify={justify}>
           <Text
-            fontSize={size === "lg" ? "md" : "sm"}
+            fontSize="sm"
             color="text.300"
             fontWeight="600"
             textDecoration="line-through"
@@ -108,7 +130,7 @@ export const Price = ({
             {price?.currency?.symbol}
           </Text>
           <Text
-            fontSize={size === "lg" ? "3xl" : "2xl"}
+            fontSize="xl"
             color="primary.500"
             fontWeight="900"
             lineHeight="shorter"
@@ -117,34 +139,9 @@ export const Price = ({
           </Text>
         </Stack>
         {priceRecurringIntervalTypeKey && (
-          <Stack direction="row" spacing="1">
-            {unitDescription && (
-              <>
-                <Text fontSize={unitFontSize} color="text.200">
-                  {eachUnitDescription}
-                </Text>
-                <Text fontSize={unitFontSize} color="text.200">
-                  {unitDescription}
-                </Text>
-              </>
-            )}
-            <Text fontSize={unitFontSize} color="text.200">
-              {perUnitDescription}
-            </Text>
-            {price?.recurring?.intervalCount &&
-              price?.recurring?.intervalCount > 1 && (
-                <Text fontSize={unitFontSize} color="text.200">
-                  {price?.recurring?.intervalCount}
-                </Text>
-              )}
-            <Text fontSize={unitFontSize} color="text.200">
-              {translate
-                .formatMessage({
-                  id: priceRecurringIntervalTypeKey as any,
-                })
-                ?.toLowerCase()}
-            </Text>
-          </Stack>
+          <Text fontSize="md" color="text.200">
+            {recurringText}
+          </Text>
         )}
       </Stack>
     </Stack>

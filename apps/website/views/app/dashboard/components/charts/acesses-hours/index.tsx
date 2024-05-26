@@ -1,32 +1,28 @@
 import { useTranslations } from "@/hooks";
 import { ChartData } from "@/services/graphql/stokei";
 import {
-  BarChart,
-  Card,
-  CardBody,
-  Title
+  BarChart
 } from "@stokei/ui";
 import { useMemo } from "react";
-import { ChartEmptyState } from "../empty-state";
+import { Section } from "../section";
 
-export const ChartAccessesHours = ({ data }: { data: ChartData[] }) => {
+export const ChartAccessesHours = ({ data, isLoading }: { data: ChartData[]; isLoading: boolean }) => {
   const translate = useTranslations();
   const currentData = useMemo(() => {
     return data?.map((item) => ({ ...item, label: item.label ? `${item.label}h` : "" }));
   }, [data]);
 
   return (
-    <Card minHeight="80" maxHeight="300px" background="background.50">
-      <CardBody>
-        <Title fontSize="large">{translate.formatMessage({ id: 'mostAccessedTimes' })}</Title>
-        {currentData?.length ? (
-          <BarChart
-            data={currentData}
-          />
-        ) : (
-          <ChartEmptyState />
-        )}
-      </CardBody>
-    </Card>
+    <Section
+      minHeight="80"
+      maxHeight="300px"
+      title={translate.formatMessage({ id: 'mostAccessedTimes' })}
+      isEmpty={!data.length}
+      isLoading={isLoading}
+    >
+      <BarChart
+        data={currentData}
+      />
+    </Section>
   );
 };

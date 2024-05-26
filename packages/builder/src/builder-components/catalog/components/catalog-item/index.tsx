@@ -120,7 +120,6 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
             <Box width="full">
               {!!product?.prices?.items?.length && (
                 <SelectPrice
-                  size="lg"
                   showLabel={false}
                   onChooseCurrentPrice={onChoosePrice}
                   onRemoveChooseCurrentPrice={onChoosePrice}

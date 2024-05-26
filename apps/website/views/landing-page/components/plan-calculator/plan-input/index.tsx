@@ -22,19 +22,9 @@ export const PlanInput = ({
   const translate = useTranslations();
   return (
     <Stack direction="column" spacing="2">
-      <Stack direction="row" spacing="2" justify="space-between" align="center">
-        <Title fontSize="large">
-          {plan?.name}
-        </Title>
-        {plan?.defaultPrice && (
-          <Price
-            width="fit-content"
-            price={plan?.defaultPrice}
-            size="md"
-            withUnitDescription
-          />
-        )}
-      </Stack>
+      <Title fontSize="large">
+        {plan?.name}
+      </Title>
       <InputGroup>
         <InputLeftAddon textTransform="capitalize">
           {plan?.defaultPrice?.unit ?
@@ -54,6 +44,13 @@ export const PlanInput = ({
           roundedLeft={0}
         />
       </InputGroup>
+      {plan?.defaultPrice && (
+        <Price
+          width="fit-content"
+          price={plan?.defaultPrice}
+          withUnitDescription
+        />
+      )}
     </Stack>
   );
 };

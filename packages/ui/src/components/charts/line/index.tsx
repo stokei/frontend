@@ -21,10 +21,13 @@ export const LineChart = ({
                     height: 350,
                     type: 'line',
                     toolbar: {
-                        show: false
+                        show: true,
+                        tools: {
+                            download: false
+                        }
                     },
                     zoom: {
-                        enabled: false
+                        enabled: true
                     }
                 },
                 colors: [
@@ -38,7 +41,8 @@ export const LineChart = ({
                     enabled: false
                 },
                 stroke: {
-                    curve: 'straight'
+                    curve: 'straight',
+                    width: 2,
                 },
                 grid: {
                     row: {

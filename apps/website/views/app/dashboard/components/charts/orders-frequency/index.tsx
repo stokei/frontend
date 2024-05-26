@@ -1,33 +1,28 @@
 import { useTranslations } from "@/hooks";
 import { ChartData } from "@/services/graphql/stokei";
 import {
-  Card,
-  CardBody,
-  LineChart,
-  Title
+  LineChart
 } from "@stokei/ui";
 import { useMemo } from "react";
-import { ChartEmptyState } from "../empty-state";
+import { Section } from "../section";
 
-export const ChartOrdersFrequency = ({ data }: { data: ChartData[] }) => {
+export const ChartOrdersFrequency = ({ data, isLoading }: { data: ChartData[]; isLoading: boolean }) => {
   const translate = useTranslations();
   const currentData = useMemo(() => {
-    return data?.map((item) => ({ ...item, label: translate.formatDate(item.label)?.replace('00:00:00', '12:00:00') || "" }));
+    return data?.map((item) => ({ ...item, label: translate.formatDate(item.label?.replace('00:00:00', '12:00:00')) || "" }));
   }, [data, translate]);
 
   return (
-    <Card minHeight="80" maxHeight="300px" background="background.50">
-      <CardBody>
-        <Title fontSize="large">{translate.formatMessage({ id: 'orders' })}</Title>
-        {currentData?.length ? (
-          <LineChart
-            data={currentData}
-          />
-        ) : (
-          <ChartEmptyState />
-        )}
-
-      </CardBody>
-    </Card>
+    <Section
+      minHeight="80"
+      maxHeight="300px"
+      title={translate.formatMessage({ id: 'orders' })}
+      isEmpty={!data.length}
+      isLoading={isLoading}
+    >
+      <LineChart
+        data={currentData}
+      />
+    </Section>
   );
 };

@@ -69,7 +69,6 @@ export const ProductItem = ({ product, price }: ProductItemProps) => {
 
           {!!product?.prices?.items?.length && (
             <SelectPrice
-              size="md"
               showLabel={false}
               onChooseCurrentPrice={onChoosePrice}
               onRemoveChooseCurrentPrice={onChoosePrice}

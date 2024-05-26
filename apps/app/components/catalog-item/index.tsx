@@ -118,7 +118,6 @@ export const CatalogItem = ({
             <Box>
               {!!prices?.length && (
                 <SelectPrice
-                  size="lg"
                   showLabel={false}
                   onChooseCurrentPrice={onChoosePrice}
                   onRemoveChooseCurrentPrice={onChoosePrice}

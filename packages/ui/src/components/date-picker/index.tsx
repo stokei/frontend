@@ -59,7 +59,12 @@ export const DatePicker = forwardRef(
       return configs?.[type || DatePickerType.DATE];
     }, [translate, type]);
     return (
-      <Box width="full" position="relative" {...props}>
+      <Box
+        width="full"
+        position="relative"
+        background="background.50"
+        {...props}
+      >
         <ReactDatePicker
           id={id}
           ref={ref as any}

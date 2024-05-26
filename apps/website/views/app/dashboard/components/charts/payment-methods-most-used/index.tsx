@@ -2,15 +2,12 @@ import { useTranslations } from "@/hooks";
 import { ChartData, PaymentMethodType } from "@/services/graphql/stokei";
 import { convertEnumValueToCamelCase } from "@/utils";
 import {
-  Card,
-  CardBody,
-  DonutChart,
-  Title
+  DonutChart
 } from "@stokei/ui";
 import { useMemo } from "react";
-import { ChartEmptyState } from "../empty-state";
+import { Section } from "../section";
 
-export const ChartPaymentMethodsMostUsed = ({ data }: { data: ChartData[] }) => {
+export const ChartPaymentMethodsMostUsed = ({ isLoading, data }: { data: ChartData[]; isLoading: boolean }) => {
   const translate = useTranslations();
   const currentData = useMemo(() => {
     return data?.map((item) => ({
@@ -24,17 +21,16 @@ export const ChartPaymentMethodsMostUsed = ({ data }: { data: ChartData[] }) => 
   }, [data, translate]);
 
   return (
-    <Card minHeight="80" maxHeight="300px" background="background.50">
-      <CardBody>
-        <Title fontSize="large">{translate.formatMessage({ id: 'mostUsedPaymentMethods' })}</Title>
-        {currentData?.length ? (
-          <DonutChart
-            data={currentData}
-          />
-        ) : (
-          <ChartEmptyState />
-        )}
-      </CardBody>
-    </Card>
+    <Section
+      minHeight="80"
+      maxHeight="300px"
+      title={translate.formatMessage({ id: 'paymentMethods' })}
+      isEmpty={!data.length}
+      isLoading={isLoading}
+    >
+      <DonutChart
+        data={currentData}
+      />
+    </Section>
   );
 };

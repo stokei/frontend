@@ -92,7 +92,7 @@ export const ShoppingCartDrawer = () => {
                           </Title>
                         </Link>
                       </Stack>
-                      <Price size="md" price={shoppingCartItem?.price} />
+                      <Price price={shoppingCartItem?.price} />
 
                       <ButtonGroup
                         justifyContent="space-between"

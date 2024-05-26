@@ -17,7 +17,6 @@ interface SelectPriceProps {
   readonly currentPrice?: PriceComponentFragment | null;
   readonly isLoading?: boolean;
   readonly showLabel?: boolean;
-  readonly size?: "md" | "lg";
   readonly onChooseCurrentPrice: (value?: PriceComponentFragment) => void;
   readonly onRemoveChooseCurrentPrice: (value?: PriceComponentFragment) => void;
 }
@@ -28,7 +27,6 @@ export const SelectPrice = ({
   currentPrice,
   isLoading,
   showLabel = true,
-  size,
   onChooseCurrentPrice,
   onRemoveChooseCurrentPrice,
 }: SelectPriceProps) => {
@@ -66,11 +64,11 @@ export const SelectPrice = ({
           placeholder={translate.formatMessage({
             id: "price",
           })}
-          item={(item) => <PriceSelectItemContent price={item} size={size} />}
+          item={(item) => <PriceSelectItemContent price={item} />}
         />
         <SelectList>
           {prices?.map((price) => (
-            <PriceSelectItem key={price.id} price={price} size={size} />
+            <PriceSelectItem key={price.id} price={price} />
           ))}
         </SelectList>
       </Select>
