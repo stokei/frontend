@@ -159,6 +159,7 @@ export * from "./slider-filled-track";
 export * from "./slider-mark";
 export * from "./slider-thumb";
 export * from "./slider-track";
+export * from "./selects";
 export * from "./stack";
 export * from "./stat";
 export * from "./stat-arrow";

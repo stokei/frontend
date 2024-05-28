@@ -16,6 +16,7 @@ export const Input = forwardRef(({ isLoading, ...props }: InputProps, ref) => (
     focusBorderColor="primary.500"
     colorScheme="primary"
     size="md"
+    background="background.50"
     {...props}
     ref={ref}
     errorBorderColor="error.500"

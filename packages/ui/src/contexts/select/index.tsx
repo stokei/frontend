@@ -2,46 +2,33 @@ import React, { PropsWithChildren, useMemo } from "react";
 
 export { ColorModeScript } from "@chakra-ui/react";
 
-export interface SelectContextValues {
-  readonly value: any;
+export interface SelectContextValues<TValue = any> {
+  readonly id: string;
+  readonly value: TValue;
   readonly hasValue: boolean;
-  readonly options?: string[];
-  readonly isOpenList?: boolean;
   readonly isLoading?: boolean;
   readonly isDisabled?: boolean;
   readonly isMultiple?: boolean;
-  readonly onOpenList: () => void;
-  readonly onToggleList: () => void;
-  readonly onCloseList: () => void;
-  readonly onChooseItem: (value: string) => void;
-  readonly onRemoveChooseItem: (value: string) => void;
+  readonly onChange: (value: TValue) => void;
 }
 
-export interface SelectContextProps {
-  readonly value: any;
-  readonly isOpenList?: boolean;
+export interface SelectContextProps<TValue = any> {
+  readonly id: string;
+  readonly value: TValue;
   readonly isLoading?: boolean;
   readonly isDisabled?: boolean;
-  readonly onOpenList: () => void;
-  readonly onToggleList: () => void;
-  readonly onCloseList: () => void;
-  readonly onChooseItem: (value: string) => void;
-  readonly onRemoveChooseItem: (value: string) => void;
+  readonly onChange: (value: TValue) => void;
 }
 
 export const SelectContext = React.createContext({} as SelectContextValues);
 
 export const SelectProvider = ({
+  id,
   value,
   children,
-  isOpenList,
   isLoading,
   isDisabled,
-  onOpenList,
-  onToggleList,
-  onCloseList,
-  onChooseItem,
-  onRemoveChooseItem,
+  onChange,
 }: PropsWithChildren<SelectContextProps>) => {
   const isMultiple = useMemo(() => value && Array.isArray(value), [value]);
   const hasValue = useMemo(() => {
@@ -60,31 +47,15 @@ export const SelectProvider = ({
 
   const configValues: SelectContextValues = useMemo(
     () => ({
+      id,
       value,
       hasValue,
       isMultiple,
-      isOpenList,
       isLoading,
       isDisabled,
-      onOpenList,
-      onCloseList,
-      onToggleList,
-      onChooseItem,
-      onRemoveChooseItem,
+      onChange,
     }),
-    [
-      value,
-      hasValue,
-      isMultiple,
-      isOpenList,
-      isLoading,
-      isDisabled,
-      onOpenList,
-      onCloseList,
-      onToggleList,
-      onChooseItem,
-      onRemoveChooseItem,
-    ]
+    [id, value, hasValue, isMultiple, isLoading, isDisabled, onChange]
   );
 
   return (

@@ -1041,6 +1041,11 @@ export type FindOrdersFrequencyByPeriodInput = {
   status: OrderStatus;
 };
 
+export type FindPaymentMethodsMostUsedByPeriodInput = {
+  endAt: Scalars['String'];
+  startAt: Scalars['String'];
+};
+
 export type FindProductsBestSellerByPeriodInput = {
   endAt: Scalars['String'];
   startAt: Scalars['String'];
@@ -2845,6 +2850,7 @@ export type Query = {
   payment: Payment;
   paymentMethod: PaymentMethod;
   paymentMethods: PaymentMethods;
+  paymentMethodsMostUsedByPeriod: Array<ChartData>;
   payments: Payments;
   phone: Phone;
   phoneCodes: Array<PhoneCode>;
@@ -3206,6 +3212,11 @@ export type QueryPaymentMethodsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPaymentMethodsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllPaymentMethodsInput>;
+};
+
+
+export type QueryPaymentMethodsMostUsedByPeriodArgs = {
+  where: FindPaymentMethodsMostUsedByPeriodInput;
 };
 
 

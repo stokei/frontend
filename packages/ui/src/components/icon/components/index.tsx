@@ -82,17 +82,20 @@ import {
   MdOutlineDomainVerification,
   MdOutlineFeaturedPlayList,
   MdOutlinePix,
+  MdOutlineRadioButtonUnchecked,
   MdOutlineStorage,
   MdOutlineWeb,
   MdOutlineWebAsset,
 } from "react-icons/md";
 import {
-  RxCaretDown,
-  RxCaretLeft,
-  RxCaretRight,
-  RxCaretUp,
   RxComponent1,
 } from "react-icons/rx";
+import {
+  PiCaretDownBold,
+  PiCaretLeftBold,
+  PiCaretRightBold,
+  PiCaretUpBold,
+} from 'react-icons/pi';
 import { TbApps, TbSeo, TbVersions } from "react-icons/tb";
 import { IoIosColorFilter } from "react-icons/io";
 
@@ -125,10 +128,10 @@ export const ArrowRightIcon = AiOutlineArrowRight;
 export const ArrowLeftIcon = AiOutlineArrowLeft;
 export const ArrowDownIcon = AiOutlineArrowDown;
 export const ArrowUpIcon = AiOutlineArrowUp;
-export const CaretRightIcon = RxCaretRight;
-export const CaretLeftIcon = RxCaretLeft;
-export const CaretDownIcon = RxCaretDown;
-export const CaretUpIcon = RxCaretUp;
+export const CaretRightIcon = PiCaretRightBold;
+export const CaretLeftIcon = PiCaretLeftBold;
+export const CaretDownIcon = PiCaretDownBold;
+export const CaretUpIcon = PiCaretUpBold;
 export const AboutIcon = AiOutlineInfoCircle;
 export const VideoIcon = BsPlayCircle;
 export const HomeIcon = AiOutlineHome;
@@ -139,6 +142,7 @@ export const DashboardIcon = BiLineChart;
 export const OrderIcon = AiOutlineShoppingCart;
 export const CartIcon = BsCart;
 export const CheckIcon = BsCheckCircleFill;
+export const UncheckIcon = MdOutlineRadioButtonUnchecked;
 export const StoreIcon = HiOutlineBuildingStorefront;
 export const SubscriptionIcon = LuFileSignature;
 export const AppIcon = TbApps;

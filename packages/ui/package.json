@@ -33,6 +33,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@headlessui/react": "^2.0.4",
     "@hookform/resolvers": "^2.9.10",
     "@tiptap/pm": "^2.0.3",
     "@tiptap/react": "^2.0.3",

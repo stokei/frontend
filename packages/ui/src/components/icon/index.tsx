@@ -14,6 +14,7 @@ export const icons = {
   email: IconComponent.EmailIcon,
   smile: IconComponent.SmileIcon,
   check: IconComponent.CheckIcon,
+  uncheck: IconComponent.UncheckIcon,
   user: IconComponent.UserIcon,
   back: IconComponent.BackIcon,
   menu: IconComponent.MenuIcon,
