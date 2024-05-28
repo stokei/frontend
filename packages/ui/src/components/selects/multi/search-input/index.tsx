@@ -7,10 +7,10 @@ import { Icon } from '../../../icon';
 import { InputRightElement } from '../../../input-right-element';
 import { Loading } from '../../../loading';
 
-export interface SingleSelectSearchInputProps extends Omit<InputProps, 'id'> {
+export interface MultiSelectSearchInputProps extends Omit<InputProps, 'id'> {
     isLoading?: boolean;
 }
-export const SingleSelectSearchInput = forwardRef(({ isLoading, ...props }: SingleSelectSearchInputProps, ref) => {
+export const MultiSelectSearchInput = forwardRef(({ isLoading, ...props }: MultiSelectSearchInputProps, ref) => {
     const translate = useTranslations();
     const { id, isLoading: isLoadingAll, isDisabled } = useSelect();
     const isLoadingComponent = !!isLoadingAll || !!isLoading;

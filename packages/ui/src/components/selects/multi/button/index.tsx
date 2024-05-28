@@ -8,14 +8,16 @@ import { Box } from '../../../box';
 import { Button, ButtonProps } from '../../../button';
 import { Icon } from '../../../icon';
 import { Text } from '../../../text';
+import { Tag } from '../../../tag';
+import { TagList } from '../../../tag-list';
 import { Loading } from '../../../loading';
 
-export interface SingleSelectButtonProps extends ButtonProps {
+export interface MultiSelectButtonProps extends ButtonProps {
     readonly placeholder: string;
     readonly item: (value: any) => ReactNode;
 }
 
-export const SingleSelectButton = ({ children, placeholder, item, ...props }: PropsWithChildren<SingleSelectButtonProps>) => {
+export const MultiSelectButton = ({ children, placeholder, item, ...props }: PropsWithChildren<MultiSelectButtonProps>) => {
     const {
         value,
         isDisabled,
@@ -53,7 +55,7 @@ export const SingleSelectButton = ({ children, placeholder, item, ...props }: Pr
                 justify="space-between"
             >
                 {hasValue && !!item ? (
-                    <Box
+                    <TagList
                         maxWidth="full"
                         flex="1"
                         height="full"
@@ -61,8 +63,12 @@ export const SingleSelectButton = ({ children, placeholder, item, ...props }: Pr
                         flexWrap="wrap"
                         cursor={isBlocked ? "not-allowed" : undefined}
                     >
-                        {item?.(value)}
-                    </Box>
+                        {value?.map((currentValue: any, key: number) => (
+                            <Tag key={key}>
+                                {item?.(currentValue)}
+                            </Tag>
+                        ))}
+                    </TagList>
                 ) : (
                     <>
                         {placeholder && (
