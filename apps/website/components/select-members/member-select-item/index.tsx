@@ -1,4 +1,4 @@
-import { SelectItem } from "@stokei/ui";
+import { MultiSelectOption } from "@stokei/ui";
 
 import { AppAccountFragment } from "../graphql/accounts.query.graphql.generated";
 import { MemberSelectItemContent } from "../member-select-item-content";
@@ -9,8 +9,8 @@ interface MemberSelectItemProps {
 
 export const MemberSelectItem = ({ member }: MemberSelectItemProps) => {
   return (
-    <SelectItem value={member}>
+    <MultiSelectOption value={member}>
       <MemberSelectItemContent member={member} />
-    </SelectItem>
+    </MultiSelectOption>
   );
 };

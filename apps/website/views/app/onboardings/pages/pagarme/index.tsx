@@ -140,7 +140,7 @@ export const OnboardingPagarmePage = () => {
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -231,8 +231,7 @@ export const OnboardingPagarmePage = () => {
                         <SelectBank
                           label={translate.formatMessage({ id: "bankCode" })}
                           bank={bank}
-                          onRemoveChooseBank={setBank}
-                          onChooseBank={setBank}
+                          onChange={setBank}
                         />
                       </FormControl>
 

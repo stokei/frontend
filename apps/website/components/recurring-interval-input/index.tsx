@@ -7,12 +7,13 @@ import {
   Input,
   InputGroup,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions,
   Stack,
-  Text,
+  Text
 } from "@stokei/ui";
 import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -87,13 +88,13 @@ export const RecurringIntervalInput = ({
             />
           </InputGroup>
         </Stack>
-        <Select
+        <SingleSelect
+          id="price-interval"
           value={interval}
-          onChooseItem={onChangeInterval}
-          onRemoveChooseItem={onChangeInterval}
+          onChange={onChangeInterval}
         >
-          <SelectInput
-            id="price-interval"
+          <SingleSelectButton
+            placeholder={translate.formatMessage({ id: 'recurring' })}
             item={(currentInterval) => (
               <Text>
                 {translate.formatMessage({
@@ -105,37 +106,39 @@ export const RecurringIntervalInput = ({
               </Text>
             )}
           />
-          <SelectList>
-            <SelectItem value={IntervalType.Day}>
-              <Text>
-                {translate.formatMessage({
-                  id: isPluralIntervalCount ? "days" : "day",
-                })}
-              </Text>
-            </SelectItem>
-            <SelectItem value={IntervalType.Week}>
-              <Text>
-                {translate.formatMessage({
-                  id: isPluralIntervalCount ? "weeks" : "week",
-                })}
-              </Text>
-            </SelectItem>
-            <SelectItem value={IntervalType.Month}>
-              <Text>
-                {translate.formatMessage({
-                  id: isPluralIntervalCount ? "months" : "month",
-                })}
-              </Text>
-            </SelectItem>
-            <SelectItem value={IntervalType.Year}>
-              <Text>
-                {translate.formatMessage({
-                  id: isPluralIntervalCount ? "years" : "year",
-                })}
-              </Text>
-            </SelectItem>
-          </SelectList>
-        </Select>
+          <SingleSelectCombobox>
+            <SingleSelectOptions>
+              <SingleSelectOption value={IntervalType.Day}>
+                <Text>
+                  {translate.formatMessage({
+                    id: isPluralIntervalCount ? "days" : "day",
+                  })}
+                </Text>
+              </SingleSelectOption>
+              <SingleSelectOption value={IntervalType.Week}>
+                <Text>
+                  {translate.formatMessage({
+                    id: isPluralIntervalCount ? "weeks" : "week",
+                  })}
+                </Text>
+              </SingleSelectOption>
+              <SingleSelectOption value={IntervalType.Month}>
+                <Text>
+                  {translate.formatMessage({
+                    id: isPluralIntervalCount ? "months" : "month",
+                  })}
+                </Text>
+              </SingleSelectOption>
+              <SingleSelectOption value={IntervalType.Year}>
+                <Text>
+                  {translate.formatMessage({
+                    id: isPluralIntervalCount ? "years" : "year",
+                  })}
+                </Text>
+              </SingleSelectOption>
+            </SingleSelectOptions>
+          </SingleSelectCombobox>
+        </SingleSelect>
       </Stack>
       <FormErrorMessage>{errors?.intervalCount?.message}</FormErrorMessage>
     </FormControl>

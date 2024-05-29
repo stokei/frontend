@@ -70,8 +70,7 @@ export const ProductItem = ({ product, price }: ProductItemProps) => {
           {!!product?.prices?.items?.length && (
             <SelectPrice
               showLabel={false}
-              onChooseCurrentPrice={onChoosePrice}
-              onRemoveChooseCurrentPrice={onChoosePrice}
+              onChange={onChoosePrice}
               prices={product?.prices?.items}
               currentPrice={price}
             />

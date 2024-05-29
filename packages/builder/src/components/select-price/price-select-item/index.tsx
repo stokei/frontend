@@ -1,5 +1,5 @@
+import { SingleSelectOption } from "@stokei/ui";
 import { PriceComponentFragment } from "../../price/price.fragment.graphql.generated";
-import { SelectItem } from "@stokei/ui";
 
 import { PriceSelectItemContent } from "../price-select-item-content";
 
@@ -9,9 +9,9 @@ interface PriceSelectItemProps {
 
 export const PriceSelectItem = ({ price }: PriceSelectItemProps) => {
   return (
-    <SelectItem value={price}>
+    <SingleSelectOption value={price}>
       <PriceSelectItemContent price={price} />
-    </SelectItem>
+    </SingleSelectOption>
   );
 };
 

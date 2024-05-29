@@ -1,12 +1,12 @@
-import { useTranslations } from "../../hooks";
 import {
   FormControl,
   Label,
-  Select,
-  SelectInput,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOptions
 } from "@stokei/ui";
-import { useCallback } from "react";
+import { useTranslations } from "../../hooks";
 import { PriceComponentFragment } from "../price/price.fragment.graphql.generated";
 import { PriceSelectItem } from "./price-select-item";
 import { PriceSelectItemContent } from "./price-select-item-content";
@@ -17,8 +17,7 @@ interface SelectPriceProps {
   readonly currentPrice?: PriceComponentFragment | null;
   readonly isLoading?: boolean;
   readonly showLabel?: boolean;
-  readonly onChooseCurrentPrice: (value?: PriceComponentFragment) => void;
-  readonly onRemoveChooseCurrentPrice: (value?: PriceComponentFragment) => void;
+  readonly onChange: (value?: PriceComponentFragment) => void;
 }
 
 export const SelectPrice = ({
@@ -27,23 +26,9 @@ export const SelectPrice = ({
   currentPrice,
   isLoading,
   showLabel = true,
-  onChooseCurrentPrice,
-  onRemoveChooseCurrentPrice,
+  onChange,
 }: SelectPriceProps) => {
   const translate = useTranslations();
-
-  const onChooseItem = useCallback(
-    (value?: PriceComponentFragment) => {
-      onChooseCurrentPrice?.(value);
-    },
-    [onChooseCurrentPrice]
-  );
-  const onRemoveChooseItem = useCallback(
-    (value?: PriceComponentFragment) => {
-      onRemoveChooseCurrentPrice?.(value);
-    },
-    [onRemoveChooseCurrentPrice]
-  );
 
   return (
     <FormControl flex="3">
@@ -52,26 +37,27 @@ export const SelectPrice = ({
           {label || translate.formatMessage({ id: "price" })}
         </Label>
       )}
-      <Select
+      <SingleSelect
+        id="price-select-search-input"
         isLoading={isLoading}
         value={currentPrice}
-        onChooseItem={onChooseItem}
-        onRemoveChooseItem={onRemoveChooseItem}
+        onChange={onChange}
         marginBottom="2"
       >
-        <SelectInput
-          id="price-select-search-input"
+        <SingleSelectButton
           placeholder={translate.formatMessage({
             id: "price",
           })}
           item={(item) => <PriceSelectItemContent price={item} />}
         />
-        <SelectList>
-          {prices?.map((price) => (
-            <PriceSelectItem key={price.id} price={price} />
-          ))}
-        </SelectList>
-      </Select>
+        <SingleSelectCombobox>
+          <SingleSelectOptions>
+            {prices?.map((price) => (
+              <PriceSelectItem key={price.id} price={price} />
+            ))}
+          </SingleSelectOptions>
+        </SingleSelectCombobox>
+      </SingleSelect>
     </FormControl>
   );
 };

@@ -104,8 +104,7 @@ export const UpdateButtonDrawer = ({
             </FormControl>
             <SelectPage
               value={page}
-              onChoose={setPage}
-              onRemoveChoose={setPage}
+              onChange={setPage}
             />
             <Box width="full" paddingBottom="4">
               <Button width="full" isDisabled={!isValid} type="submit">

@@ -1,7 +1,7 @@
-import { SelectItem } from "@stokei/ui";
+import { MultiSelectOption } from "@stokei/ui";
 
-import { AppCouponFragment } from "../graphql/coupons.query.graphql.generated";
 import { CouponSelectItemContent } from "../coupon-select-item-content";
+import { AppCouponFragment } from "../graphql/coupons.query.graphql.generated";
 
 interface CouponSelectItemProps {
   readonly coupon?: AppCouponFragment;
@@ -9,8 +9,8 @@ interface CouponSelectItemProps {
 
 export const CouponSelectItem = ({ coupon }: CouponSelectItemProps) => {
   return (
-    <SelectItem value={coupon}>
+    <MultiSelectOption value={coupon}>
       <CouponSelectItemContent coupon={coupon} />
-    </SelectItem>
+    </MultiSelectOption>
   );
 };

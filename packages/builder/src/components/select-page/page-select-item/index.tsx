@@ -1,7 +1,7 @@
-import { SelectItem } from "@stokei/ui";
+import { SingleSelectOption } from "@stokei/ui";
 
-import { PageSelectItemContent } from "../page-select-item-content";
 import { SitePageFragment } from "../graphql/pages.query.graphql.generated";
+import { PageSelectItemContent } from "../page-select-item-content";
 
 interface PageSelectItemProps {
   readonly page?: SitePageFragment;
@@ -9,9 +9,9 @@ interface PageSelectItemProps {
 
 export const PageSelectItem = ({ page }: PageSelectItemProps) => {
   return (
-    <SelectItem value={page}>
+    <SingleSelectOption value={page}>
       <PageSelectItemContent page={page} />
-    </SelectItem>
+    </SingleSelectOption>
   );
 };
 

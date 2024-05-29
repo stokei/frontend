@@ -2,30 +2,28 @@ import {
   Badge,
   Box,
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardHeader,
   Description,
   Icon,
-  IconButton,
   Image,
   Link,
   Stack,
-  Title,
+  Title
 } from "@stokei/ui";
 import NextLink from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import defaultNoImage from "../../../../assets/no-image.png";
 import { PriceComponentFragment } from "../../../../components/price/price.fragment.graphql.generated";
+import { SelectPrice } from "../../../../components/select-price";
 import {
   useBuilder,
   useShoppingCart,
   useTranslations,
 } from "../../../../hooks";
-import defaultNoImage from "../../../../assets/no-image.png";
 import { BuilderComponentCatalogItemProductFragment } from "../../graphql/catalog.query.graphql.generated";
-import { SelectPrice } from "../../../../components/select-price";
 
 export interface CatalogItemProps {
   readonly product?: BuilderComponentCatalogItemProductFragment;
@@ -121,8 +119,7 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
               {!!product?.prices?.items?.length && (
                 <SelectPrice
                   showLabel={false}
-                  onChooseCurrentPrice={onChoosePrice}
-                  onRemoveChooseCurrentPrice={onChoosePrice}
+                  onChange={onChoosePrice}
                   prices={product?.prices?.items}
                   currentPrice={currentPrice}
                 />

@@ -4,38 +4,33 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   FormControl,
   Label,
-  Select,
-  SelectList,
-  SelectSearchInput,
-  SelectTagItem,
-  SelectTagList,
-  Tag,
-  TagCloseButton,
-  TagLabel,
-  useDebounce,
+  MultiSelect,
+  MultiSelectButton,
+  MultiSelectCombobox,
+  MultiSelectOptions,
+  MultiSelectSearchInput,
+  useDebounce
 } from "@stokei/ui";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { CouponSelectItem } from "./coupon-select-item";
+import { CouponSelectItemContent } from "./coupon-select-item-content";
 import {
   AppCouponFragment,
   useGetAppCouponsQuery,
 } from "./graphql/coupons.query.graphql.generated";
-import { CouponSelectItem } from "./coupon-select-item";
-import { CouponSelectItemContent } from "./coupon-select-item-content";
 
 interface SelectCouponsProps {
   readonly label?: string;
   readonly value?: AppCouponFragment[];
-  readonly onChooseCoupon: (value?: AppCouponFragment) => void;
-  readonly onRemoveChooseCoupon: (value?: AppCouponFragment) => void;
+  readonly onChange: (value?: AppCouponFragment) => void;
 }
 
 export const SelectCoupons = ({
   label,
   value,
-  onChooseCoupon,
-  onRemoveChooseCoupon,
+  onChange,
 }: SelectCouponsProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -79,60 +74,35 @@ export const SelectCoupons = ({
     [dataGetCoupons?.coupons?.items]
   );
 
-  const onChooseItem = useCallback(
-    (value?: AppCouponFragment) => {
-      onChooseCoupon?.(value);
-    },
-    [onChooseCoupon]
-  );
-  const onRemoveChooseItem = useCallback(
-    (value?: AppCouponFragment) => {
-      onRemoveChooseCoupon?.(value);
-    },
-    [onRemoveChooseCoupon]
-  );
-
   return (
     <FormControl flex="3">
       <Label htmlFor="coupon-select-search-input">
         {label || translate.formatMessage({ id: "coupon" })}
       </Label>
-      <Select
+      <MultiSelect
+        id="coupon-select-search-input"
         isLoading={isLoadingGetCoupons}
         value={value}
-        onChooseItem={onChooseItem}
-        onRemoveChooseItem={onRemoveChooseItem}
+        onChange={onChange}
         marginBottom="2"
       >
-        <SelectSearchInput
-          id="coupon-select-search-input"
+        <MultiSelectButton
           placeholder={translate.formatMessage({
             id: "search",
           })}
-          {...register("searchCoupon")}
+          item={currentCoupon => <CouponSelectItemContent coupon={currentCoupon} />}
         />
-        <SelectList>
-          {coupons?.map((coupon) => (
-            <CouponSelectItem key={coupon.id} coupon={coupon} />
-          ))}
-        </SelectList>
-      </Select>
-      {!!value?.length && (
-        <SelectTagList>
-          {value?.map((currentCoupon) => (
-            <SelectTagItem key={currentCoupon.id}>
-              <Tag>
-                <TagLabel>
-                  <CouponSelectItemContent coupon={currentCoupon} />
-                </TagLabel>
-                <TagCloseButton
-                  onClick={() => onRemoveChooseCoupon(currentCoupon)}
-                />
-              </Tag>
-            </SelectTagItem>
-          ))}
-        </SelectTagList>
-      )}
+        <MultiSelectCombobox>
+          <MultiSelectOptions>
+            <MultiSelectSearchInput
+              {...register('searchCoupon')}
+            />
+            {coupons?.map((coupon) => (
+              <CouponSelectItem key={coupon.id} coupon={coupon} />
+            ))}
+          </MultiSelectOptions>
+        </MultiSelectCombobox>
+      </MultiSelect>
     </FormControl>
   );
 };

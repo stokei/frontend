@@ -4,27 +4,22 @@ import { Box, Card, CardBody, Stack } from "@stokei/ui";
 import { SelectFilterStatus } from "../select-filter-status";
 
 interface SubscriptionContractFiltersProps {
-  readonly currentStatus: SubscriptionContractStatusFilter;
-  readonly onChooseCurrentStatus: (
-    value: SubscriptionContractStatusFilter
-  ) => void;
-  readonly onRemoveChooseCurrentStatus: (
+  readonly value: SubscriptionContractStatusFilter;
+  readonly onChange: (
     value: SubscriptionContractStatusFilter
   ) => void;
 }
 
 export const SubscriptionContractFilters = ({
-  currentStatus,
-  onChooseCurrentStatus,
-  onRemoveChooseCurrentStatus,
+  value,
+  onChange,
 }: SubscriptionContractFiltersProps) => {
   return (
     <Stack direction="column" spacing="5">
       <Box width={["full", "full", "33%", "33%"]}>
         <SelectFilterStatus
-          currentStatus={currentStatus}
-          onChooseCurrentStatus={onChooseCurrentStatus}
-          onRemoveChooseCurrentStatus={onRemoveChooseCurrentStatus}
+          value={value}
+          onChange={onChange}
         />
       </Box>
     </Stack>

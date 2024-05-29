@@ -1,23 +1,18 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
+import { useCurrentAccount } from "@/hooks/use-current-account";
 import { OrderBy } from "@/services/graphql/stokei";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Avatar,
   FormControl,
   Label,
-  Select,
-  SelectList,
-  SelectSearchInput,
-  SelectTagItem,
-  SelectTagList,
-  Stack,
-  Tag,
-  TagCloseButton,
-  TagLabel,
-  Text,
-  useDebounce,
+  MultiSelect,
+  MultiSelectButton,
+  MultiSelectCombobox,
+  MultiSelectOptions,
+  MultiSelectSearchInput,
+  useDebounce
 } from "@stokei/ui";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -25,15 +20,14 @@ import {
   useGetAppAccountsQuery,
 } from "./graphql/accounts.query.graphql.generated";
 import { MemberSelectItem } from "./member-select-item";
-import { useCurrentAccount } from "@/hooks/use-current-account";
+import { MemberSelectItemContent } from "./member-select-item-content";
 
 interface SelectMembersProps {
   readonly label?: string;
   readonly isOptional?: boolean;
   readonly hasCurrentAccount?: boolean;
   readonly currentMembers?: AppAccountFragment[];
-  readonly onChooseCurrentMember: (value?: AppAccountFragment) => void;
-  readonly onRemoveChooseCurrentMember: (value?: AppAccountFragment) => void;
+  readonly onChange: (value?: AppAccountFragment) => void;
 }
 
 export const SelectMembers = ({
@@ -41,8 +35,7 @@ export const SelectMembers = ({
   isOptional,
   currentMembers,
   hasCurrentAccount = true,
-  onChooseCurrentMember,
-  onRemoveChooseCurrentMember,
+  onChange,
 }: SelectMembersProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -95,10 +88,10 @@ export const SelectMembers = ({
           ],
           ...(!hasCurrentAccount &&
             currentAccount?.id && {
-              NOT: {
-                ids: [currentAccount?.id],
-              },
-            }),
+            NOT: {
+              ids: [currentAccount?.id],
+            },
+          }),
         },
       },
     });
@@ -120,19 +113,6 @@ export const SelectMembers = ({
     ) as AppAccountFragment[];
   }, [currentAccount, dataGetMembers, hasCurrentAccount]);
 
-  const onChooseItem = useCallback(
-    (value?: AppAccountFragment) => {
-      onChooseCurrentMember?.(value);
-    },
-    [onChooseCurrentMember]
-  );
-  const onRemoveChooseItem = useCallback(
-    (value?: AppAccountFragment) => {
-      onRemoveChooseCurrentMember?.(value);
-    },
-    [onRemoveChooseCurrentMember]
-  );
-
   return (
     <FormControl flex="3">
       <Label
@@ -141,49 +121,32 @@ export const SelectMembers = ({
       >
         {label || translate.formatMessage({ id: "student" })}
       </Label>
-      <Select
+      <MultiSelect
+        id="member-invoice-filters-select-search-input"
         isLoading={isLoadingGetMembers}
         value={currentMembers}
-        onChooseItem={onChooseItem}
-        onRemoveChooseItem={onRemoveChooseItem}
+        onChange={onChange}
         marginBottom="2"
       >
-        <SelectSearchInput
-          id="member-invoice-filters-select-search-input"
+        <MultiSelectButton
           placeholder={translate.formatMessage({
             id: "search",
           })}
-          {...register("searchMember")}
+          item={(member) => (
+            <MemberSelectItemContent key={member.id} member={member} />
+          )}
         />
-        <SelectList>
-          {members?.map((member) => (
-            <MemberSelectItem key={member.id} member={member} />
-          ))}
-        </SelectList>
-      </Select>
-      {!!currentMembers?.length && (
-        <SelectTagList>
-          {currentMembers?.map((currentMember) => (
-            <SelectTagItem key={currentMember.id}>
-              <Tag>
-                <TagLabel>
-                  <Stack direction="row" spacing="4" align="center">
-                    <Avatar
-                      size="xs"
-                      src={currentMember?.avatar?.file?.url || ""}
-                      name={currentMember?.fullname}
-                    />
-                    <Text fontWeight="bold">{currentMember?.fullname}</Text>
-                  </Stack>
-                </TagLabel>
-                <TagCloseButton
-                  onClick={() => onRemoveChooseCurrentMember(currentMember)}
-                />
-              </Tag>
-            </SelectTagItem>
-          ))}
-        </SelectTagList>
-      )}
+        <MultiSelectCombobox>
+          <MultiSelectOptions>
+            <MultiSelectSearchInput
+              {...register('searchMember')}
+            />
+            {members?.map((member) => (
+              <MemberSelectItem key={member.id} member={member} />
+            ))}
+          </MultiSelectOptions>
+        </MultiSelectCombobox>
+      </MultiSelect>
     </FormControl>
   );
 };

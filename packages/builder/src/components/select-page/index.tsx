@@ -1,30 +1,28 @@
-import { useBuilder, useTranslations } from "../../hooks";
 import {
   FormControl,
   Label,
-  Select,
-  SelectInput,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOptions
 } from "@stokei/ui";
-import { useCallback } from "react";
+import { useBuilder, useTranslations } from "../../hooks";
+import { SitePageFragment, useGetSitePagesQuery } from "./graphql/pages.query.graphql.generated";
 import { PageSelectItem } from "./page-select-item";
 import { PageSelectItemContent } from "./page-select-item-content";
-import { SitePageFragment, useGetSitePagesQuery } from "./graphql/pages.query.graphql.generated";
 
 interface SelectPageProps {
   readonly label?: string;
   readonly value?: SitePageFragment | null;
   readonly showLabel?: boolean;
-  readonly onChoose: (value?: SitePageFragment) => void;
-  readonly onRemoveChoose: (value?: SitePageFragment) => void;
+  readonly onChange: (value?: SitePageFragment) => void;
 }
 
 export const SelectPage = ({
   label,
   value,
   showLabel = true,
-  onChoose,
-  onRemoveChoose,
+  onChange,
 }: SelectPageProps) => {
   const { siteId } = useBuilder();
   const translate = useTranslations();
@@ -42,19 +40,6 @@ export const SelectPage = ({
     }
   });
 
-  const onChooseItem = useCallback(
-    (value?: SitePageFragment) => {
-      onChoose?.(value);
-    },
-    [onChoose]
-  );
-  const onRemoveChooseItem = useCallback(
-    (value?: SitePageFragment) => {
-      onRemoveChoose?.(value);
-    },
-    [onRemoveChoose]
-  );
-
   return (
     <FormControl flex="3">
       {showLabel && (
@@ -62,26 +47,27 @@ export const SelectPage = ({
           {label || translate.formatMessage({ id: "page" })}
         </Label>
       )}
-      <Select
+      <SingleSelect
+        id="page-select-search-input"
         isLoading={isLoadingGetPages}
         value={value}
-        onChooseItem={onChooseItem}
-        onRemoveChooseItem={onRemoveChooseItem}
+        onChange={onChange}
         marginBottom="2"
       >
-        <SelectInput
-          id="page-select-search-input"
+        <SingleSelectButton
           placeholder={translate.formatMessage({
             id: "page",
           })}
           item={(item) => <PageSelectItemContent page={item} />}
         />
-        <SelectList>
-          {dataGetPages?.pages?.items?.map((page) => (
-            <PageSelectItem key={page.id} page={page} />
-          ))}
-        </SelectList>
-      </Select>
+        <SingleSelectCombobox>
+          <SingleSelectOptions>
+            {dataGetPages?.pages?.items?.map((page) => (
+              <PageSelectItem key={page.id} page={page} />
+            ))}
+          </SingleSelectOptions>
+        </SingleSelectCombobox>
+      </SingleSelect>
     </FormControl>
   );
 };

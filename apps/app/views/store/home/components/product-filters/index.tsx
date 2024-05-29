@@ -1,4 +1,3 @@
-import { ProductType } from "@/constants/product-type";
 import { useTranslations } from "@/hooks";
 import { useStoreFilters } from "@/views/store/hooks/use-filters";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,16 +12,16 @@ import {
   FormControl,
   FormErrorMessage,
   Icon,
-  IconName,
   Input,
   InputGroup,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions,
   Stack,
-  Text,
+  Text
 } from "@stokei/ui";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -130,13 +129,12 @@ export const ProductFilters = ({
               <Label htmlFor="catalogs">
                 {translate.formatMessage({ id: "catalogs" })}
               </Label>
-              <Select
+              <SingleSelect
+                id="catalogs"
                 value={catalog}
-                onChooseItem={setCatalog}
-                onRemoveChooseItem={setCatalog}
+                onChange={setCatalog}
               >
-                <SelectInput
-                  id="catalogs"
+                <SingleSelectButton
                   placeholder={translate.formatMessage({ id: "chooseCatalog" })}
                   item={(item) => (
                     <Stack direction="row" spacing="5" align="center">
@@ -145,17 +143,19 @@ export const ProductFilters = ({
                     </Stack>
                   )}
                 />
-                <SelectList>
-                  {catalogs?.map((catalogItem) => (
-                    <SelectItem key={catalogItem?.id} value={catalogItem}>
-                      <Stack direction="row" spacing="5" align="center">
-                        <Icon name="catalog" color="primary.500" />
-                        <Text>{catalogItem?.title}</Text>
-                      </Stack>
-                    </SelectItem>
-                  ))}
-                </SelectList>
-              </Select>
+                <SingleSelectCombobox>
+                  <SingleSelectOptions>
+                    {catalogs?.map((catalogItem) => (
+                      <SingleSelectOption key={catalogItem?.id} value={catalogItem}>
+                        <Stack direction="row" spacing="5" align="center">
+                          <Icon name="catalog" color="primary.500" />
+                          <Text>{catalogItem?.title}</Text>
+                        </Stack>
+                      </SingleSelectOption>
+                    ))}
+                  </SingleSelectOptions>
+                </SingleSelectCombobox>
+              </SingleSelect>
             </FormControl>
           </Stack>
         </DrawerBody>

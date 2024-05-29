@@ -4,15 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   FormControl,
   Label,
-  Select,
-  SelectList,
-  SelectSearchInput,
-  SelectTagItem,
-  SelectTagList,
-  Tag,
-  TagCloseButton,
-  TagLabel,
-  useDebounce,
+  MultiSelect,
+  MultiSelectButton,
+  MultiSelectCombobox,
+  MultiSelectOptions,
+  MultiSelectSearchInput,
+  useDebounce
 } from "@stokei/ui";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -29,15 +26,13 @@ export type SelectCatalogValue = AppCatalogFragment;
 interface SelectCatalogsProps {
   readonly label?: string;
   readonly catalogs?: SelectCatalogValue[];
-  readonly onChooseCatalog: (value: SelectCatalogValue) => void;
-  readonly onRemoveCatalog: (value: SelectCatalogValue) => void;
+  readonly onChange: (value: SelectCatalogValue) => void;
 }
 
 export const SelectCatalogs = ({
   label,
   catalogs,
-  onChooseCatalog,
-  onRemoveCatalog,
+  onChange,
 }: SelectCatalogsProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -90,40 +85,32 @@ export const SelectCatalogs = ({
       <Label htmlFor="catalog-select-search-input">
         {label || translate.formatMessage({ id: "catalogs" })}
       </Label>
-      <Select
+      <MultiSelect
+        id="catalog-select-search-input"
         isLoading={isLoadingGetCatalogs}
         value={catalogs}
-        onChooseItem={onChooseCatalog}
-        onRemoveChooseItem={onRemoveCatalog}
+        onChange={onChange}
         marginBottom="2"
       >
-        <SelectSearchInput
-          id="catalog-select-search-input"
+        <MultiSelectButton
           placeholder={translate.formatMessage({
             id: "title",
           })}
-          {...register("searchCatalog")}
+          item={(catalog) => (
+            <CatalogSelectItemContent key={catalog.id} catalog={catalog} />
+          )}
         />
-        <SelectList>
-          {catalogsList?.map((catalog) => (
-            <CatalogSelectItem key={catalog.id} catalog={catalog} />
-          ))}
-        </SelectList>
-      </Select>
-      {!!catalogs?.length && (
-        <SelectTagList>
-          {catalogs?.map((catalog) => (
-            <SelectTagItem key={catalog.id}>
-              <Tag>
-                <TagLabel>
-                  <CatalogSelectItemContent catalog={catalog} />
-                </TagLabel>
-                <TagCloseButton onClick={() => onRemoveCatalog(catalog)} />
-              </Tag>
-            </SelectTagItem>
-          ))}
-        </SelectTagList>
-      )}
+        <MultiSelectCombobox>
+          <MultiSelectOptions>
+            <MultiSelectSearchInput
+              {...register('searchCatalog')}
+            />
+            {catalogsList?.map((catalog) => (
+              <CatalogSelectItem key={catalog.id} catalog={catalog} />
+            ))}
+          </MultiSelectOptions>
+        </MultiSelectCombobox>
+      </MultiSelect>
     </FormControl>
   );
 };

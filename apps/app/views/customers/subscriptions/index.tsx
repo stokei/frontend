@@ -67,12 +67,9 @@ export const SubscriptionContractsPage = () => {
       <Stack direction="column" paddingY="5" spacing="5">
         <Container>
           <SubscriptionContractFilters
-            currentStatus={currentStatus}
-            onChooseCurrentStatus={(status) =>
+            value={currentStatus}
+            onChange={(status) =>
               setCurrentStatus(status || SubscriptionContractStatusFilter.All)
-            }
-            onRemoveChooseCurrentStatus={() =>
-              setCurrentStatus(SubscriptionContractStatusFilter.All)
             }
           />
         </Container>

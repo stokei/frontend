@@ -1,4 +1,4 @@
-import { SelectItem } from "@stokei/ui";
+import { SingleSelectOption } from "@stokei/ui";
 
 import { Bank } from "..";
 import { BankSelectItemContent } from "../bank-select-item-content";
@@ -9,8 +9,8 @@ interface BankSelectItemProps {
 
 export const BankSelectItem = ({ bank }: BankSelectItemProps) => {
   return (
-    <SelectItem value={bank}>
+    <SingleSelectOption value={bank}>
       <BankSelectItemContent bank={bank} />
-    </SelectItem>
+    </SingleSelectOption>
   );
 };

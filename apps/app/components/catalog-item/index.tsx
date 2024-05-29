@@ -119,8 +119,7 @@ export const CatalogItem = ({
               {!!prices?.length && (
                 <SelectPrice
                   showLabel={false}
-                  onChooseCurrentPrice={onChoosePrice}
-                  onRemoveChooseCurrentPrice={onChoosePrice}
+                  onChange={onChoosePrice}
                   prices={prices}
                   currentPrice={currentPrice}
                 />

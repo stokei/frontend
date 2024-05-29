@@ -3,17 +3,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   FormControl,
   Label,
-  Select,
-  SelectList,
-  SelectSearchInput,
-  SelectTagItem,
-  SelectTagList,
-  Tag,
-  TagCloseButton,
-  TagLabel,
-  useDebounce,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOptions,
+  SingleSelectSearchInput,
+  useDebounce
 } from "@stokei/ui";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { BankSelectItem } from "./bank-select-item";
@@ -27,15 +24,13 @@ export interface Bank {
 interface SelectBankProps {
   readonly label?: string;
   readonly bank?: Bank;
-  readonly onChooseBank: (value?: Bank) => void;
-  readonly onRemoveChooseBank: (value?: Bank) => void;
+  readonly onChange: (value?: Bank) => void;
 }
 
 export const SelectBank = ({
   label,
   bank,
-  onChooseBank,
-  onRemoveChooseBank,
+  onChange,
 }: SelectBankProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [banks, setBanks] = useState<Bank[]>([]);
@@ -77,56 +72,37 @@ export const SelectBank = ({
     );
   }, [banks, searchBankQueryText]);
 
-  const onChooseItem = useCallback(
-    (value?: Bank) => {
-      onChooseBank?.(value);
-    },
-    [onChooseBank]
-  );
-  const onRemoveChooseItem = useCallback(
-    (value?: Bank) => {
-      onRemoveChooseBank?.(value);
-    },
-    [onRemoveChooseBank]
-  );
-
   return (
     <FormControl flex="3">
       <Label htmlFor="bank-select-search-input">
         {label || translate.formatMessage({ id: "bankCode" })}
       </Label>
-      <Select
+      <SingleSelect
+        id="bank-select-search-input"
         isLoading={isLoading}
         value={bank}
-        onChooseItem={onChooseItem}
-        onRemoveChooseItem={onRemoveChooseItem}
+        onChange={onChange}
         marginBottom="2"
       >
-        <SelectSearchInput
-          id="bank-select-search-input"
+        <SingleSelectButton
           placeholder={translate.formatMessage({
             id: "search",
           })}
-          {...register("searchBank")}
+          item={(currentBank) => (
+            <BankSelectItemContent key={currentBank.code} bank={currentBank} />
+          )}
         />
-        <SelectList>
-          {banksFiltered?.map((currentBank) => (
-            <BankSelectItem key={currentBank.code} bank={currentBank} />
-          ))}
-        </SelectList>
-      </Select>
-      {!!bank && (
-        <SelectTagList>
-          <SelectTagItem>
-            <Tag>
-              <TagLabel>
-                <BankSelectItemContent bank={bank} />
-              </TagLabel>
-              <TagCloseButton onClick={() => onRemoveChooseBank()} />
-            </Tag>
-          </SelectTagItem>
-        </SelectTagList>
-      )}
+        <SingleSelectCombobox>
+          <SingleSelectOptions>
+            <SingleSelectSearchInput
+              {...register('searchBank')}
+            />
+            {banksFiltered?.map((currentBank) => (
+              <BankSelectItem key={currentBank.code} bank={currentBank} />
+            ))}
+          </SingleSelectOptions>
+        </SingleSelectCombobox>
+      </SingleSelect>
     </FormControl>
   );
 };

@@ -1,7 +1,7 @@
-import { SelectItem } from "@stokei/ui";
+import { MultiSelectOption } from "@stokei/ui";
 
-import { AppCatalogFragment } from "../graphql/catalogs.query.graphql.generated";
 import { CatalogSelectItemContent } from "../catalog-select-item-content";
+import { AppCatalogFragment } from "../graphql/catalogs.query.graphql.generated";
 
 interface CatalogSelectItemProps {
   readonly catalog?: AppCatalogFragment;
@@ -9,8 +9,8 @@ interface CatalogSelectItemProps {
 
 export const CatalogSelectItem = ({ catalog }: CatalogSelectItemProps) => {
   return (
-    <SelectItem value={catalog}>
+    <MultiSelectOption value={catalog}>
       <CatalogSelectItemContent catalog={catalog} />
-    </SelectItem>
+    </MultiSelectOption>
   );
 };
