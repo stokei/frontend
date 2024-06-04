@@ -8,19 +8,15 @@ import { SelectFilterStatus } from "../select-filter-status";
 interface InvoiceFiltersProps {
   readonly currentStatus: InvoiceStatusFilter;
   readonly currentCustomers?: AppAccountFragment[];
-  readonly onChooseCurrentCustomer: (value?: AppAccountFragment) => void;
-  readonly onRemoveChooseCurrentCustomer: (value?: AppAccountFragment) => void;
-  readonly onChooseCurrentStatus: (value: InvoiceStatusFilter) => void;
-  readonly onRemoveChooseCurrentStatus: (value: InvoiceStatusFilter) => void;
+  readonly onChangeCustomer: (value?: AppAccountFragment) => void;
+  readonly onChangeStatus: (value: InvoiceStatusFilter) => void;
 }
 
 export const InvoiceFilters = ({
   currentStatus,
   currentCustomers,
-  onChooseCurrentCustomer,
-  onRemoveChooseCurrentCustomer,
-  onChooseCurrentStatus,
-  onRemoveChooseCurrentStatus,
+  onChangeCustomer,
+  onChangeStatus,
 }: InvoiceFiltersProps) => {
   return (
     <Card background="background.50">
@@ -29,13 +25,11 @@ export const InvoiceFilters = ({
           <SelectMembers
             hasCurrentAccount={false}
             currentMembers={currentCustomers}
-            onChooseCurrentMember={onChooseCurrentCustomer}
-            onRemoveChooseCurrentMember={onRemoveChooseCurrentCustomer}
+            onChange={onChangeCustomer}
           />
           <SelectFilterStatus
-            currentStatus={currentStatus}
-            onChooseCurrentStatus={onChooseCurrentStatus}
-            onRemoveChooseCurrentStatus={onRemoveChooseCurrentStatus}
+            value={currentStatus}
+            onChange={onChangeStatus}
           />
         </Stack>
       </CardBody>

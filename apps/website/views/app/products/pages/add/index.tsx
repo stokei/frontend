@@ -28,7 +28,7 @@ export const AddProductPage = () => {
   const [productType, setProductType] = useState<ProductType>(
     ProductType.COURSE
   );
-  const { catalogs, onChooseCatalog, onRemoveCatalog } = useSelectCatalogs();
+  const { catalogs, onChooseCatalog } = useSelectCatalogs();
   const [productParent, setProductParent] = useState<ProductParent>();
   const [productPayload, setProductPayload] = useState<ProductPayload>();
   const [isEnabledProductStep, setIsEnabledProductStep] =
@@ -126,7 +126,6 @@ export const AddProductPage = () => {
                     <CatalogsStep
                       catalogs={catalogs}
                       onChooseCatalog={onChooseCatalog}
-                      onRemoveCatalog={onRemoveCatalog}
                       onNextStep={() => setCurrentStep(AddProductStep.SUMMARY)}
                       onPreviousStep={() =>
                         setCurrentStep(AddProductStep.PRODUCT_INFORMATION)

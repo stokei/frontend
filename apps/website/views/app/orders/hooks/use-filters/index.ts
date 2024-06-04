@@ -1,6 +1,7 @@
 import { AppCouponFragment } from "@/components/select-coupons/graphql/coupons.query.graphql.generated";
 import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { OrderStatusFilter } from "@/interfaces/order-status-filter";
+import { addOrRemoveItemFromArray } from "@stokei/utils";
 import { useCallback, useState } from "react";
 
 interface UseFiltersData {
@@ -26,43 +27,21 @@ export const useFilters = (data?: UseFiltersData) => {
     setCoupons([]);
   }, []);
 
-  const onChooseCustomer = useCallback((customer?: AppAccountFragment) => {
+  const onChangeCustomer = useCallback((customer?: AppAccountFragment) => {
     if (customer) {
-      setCustomers((currentCustomers) => [...currentCustomers, customer]);
+      setCustomers((currentCustomers) =>
+        addOrRemoveItemFromArray(currentCustomers, customer, "id")
+      );
     }
   }, []);
 
-  const onRemoveChooseCustomer = useCallback(
-    (customerRemoved?: AppAccountFragment) => {
-      if (customerRemoved) {
-        setCustomers((currentCustomers) =>
-          currentCustomers?.filter(
-            (customer) => customer?.id !== customerRemoved?.id
-          )
-        );
-      }
-    },
-    []
-  );
-
-  const onChooseCoupon = useCallback((customer?: AppCouponFragment) => {
-    if (customer) {
-      setCoupons((currentCoupons) => [...currentCoupons, customer]);
+  const onChangeCoupon = useCallback((coupon?: AppCouponFragment) => {
+    if (coupon) {
+      setCoupons((currentCoupons) =>
+        addOrRemoveItemFromArray(currentCoupons, coupon, "id")
+      );
     }
   }, []);
-
-  const onRemoveChooseCoupon = useCallback(
-    (customerRemoved?: AppCouponFragment) => {
-      if (customerRemoved) {
-        setCoupons((currentCoupons) =>
-          currentCoupons?.filter(
-            (customer) => customer?.id !== customerRemoved?.id
-          )
-        );
-      }
-    },
-    []
-  );
 
   return {
     status,
@@ -72,9 +51,7 @@ export const useFilters = (data?: UseFiltersData) => {
     setCoupons,
     setCustomers,
     onClearFilters,
-    onChooseCustomer,
-    onRemoveChooseCustomer,
-    onChooseCoupon,
-    onRemoveChooseCoupon,
+    onChangeCustomer,
+    onChangeCoupon,
   };
 };

@@ -45,9 +45,7 @@ export const SelectPrice = ({
         marginBottom="2"
       >
         <SingleSelectButton
-          placeholder={translate.formatMessage({
-            id: "price",
-          })}
+          placeholder={label || translate.formatMessage({ id: "price" })}
           item={(item) => <PriceSelectItemContent price={item} />}
         />
         <SingleSelectCombobox>

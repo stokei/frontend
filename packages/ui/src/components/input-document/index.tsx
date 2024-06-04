@@ -2,10 +2,13 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useTranslations } from "../../hooks";
 import { Box } from "../box";
 import { Input } from "../input";
-import { Select } from "../select";
-import { SelectInput } from "../select-input";
-import { SelectItem } from "../select-item";
-import { SelectList } from "../select-list";
+import {
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions
+} from "../selects";
 import { Stack } from "../stack";
 import { Text } from "../text";
 
@@ -82,15 +85,15 @@ export const InputDocument = ({
   return (
     <Stack direction="row" spacing="2" {...props}>
       <Box width="40">
-        <Select
+        <SingleSelect
+          id={id}
           isLoading={isLoading}
           value={documentType}
-          onChooseItem={onChangeDocumentType}
-          onRemoveChooseItem={onChangeDocumentType}
+          onChange={onChangeDocumentType}
           isDisabled={withDocumentTypeDisabled}
         >
-          <SelectInput
-            id={`${id || ""}-select-input`}
+          <SingleSelectButton
+            placeholder={documentTypes?.[0]}
             item={(item) => (
               <Text>
                 {translate.formatMessage({
@@ -99,18 +102,20 @@ export const InputDocument = ({
               </Text>
             )}
           />
-          <SelectList>
-            {documentTypes.map((documentTypeAllow) => (
-              <SelectItem key={documentTypeAllow} value={documentTypeAllow}>
-                <Text>
-                  {translate.formatMessage({
-                    id: documentTypeAllow?.toLowerCase() as any,
-                  })}
-                </Text>
-              </SelectItem>
-            ))}
-          </SelectList>
-        </Select>
+          <SingleSelectCombobox>
+            <SingleSelectOptions>
+              {documentTypes.map((documentTypeAllow) => (
+                <SingleSelectOption key={documentTypeAllow} value={documentTypeAllow}>
+                  <Text>
+                    {translate.formatMessage({
+                      id: documentTypeAllow?.toLowerCase() as any,
+                    })}
+                  </Text>
+                </SingleSelectOption>
+              ))}
+            </SingleSelectOptions>
+          </SingleSelectCombobox>
+        </SingleSelect>
       </Box>
       <Input
         id={id}

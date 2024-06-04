@@ -81,7 +81,7 @@ export const SelectCatalogs = ({
   );
 
   return (
-    <FormControl flex="3">
+    <FormControl>
       <Label htmlFor="catalog-select-search-input">
         {label || translate.formatMessage({ id: "catalogs" })}
       </Label>
@@ -93,9 +93,7 @@ export const SelectCatalogs = ({
         marginBottom="2"
       >
         <MultiSelectButton
-          placeholder={translate.formatMessage({
-            id: "title",
-          })}
+          placeholder={label || translate.formatMessage({ id: "catalogs" })}
           item={(catalog) => (
             <CatalogSelectItemContent key={catalog.id} catalog={catalog} />
           )}

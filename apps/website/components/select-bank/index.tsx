@@ -73,7 +73,7 @@ export const SelectBank = ({
   }, [banks, searchBankQueryText]);
 
   return (
-    <FormControl flex="3">
+    <FormControl>
       <Label htmlFor="bank-select-search-input">
         {label || translate.formatMessage({ id: "bankCode" })}
       </Label>
@@ -85,9 +85,7 @@ export const SelectBank = ({
         marginBottom="2"
       >
         <SingleSelectButton
-          placeholder={translate.formatMessage({
-            id: "search",
-          })}
+          placeholder={label || translate.formatMessage({ id: "bankCode" })}
           item={(currentBank) => (
             <BankSelectItemContent key={currentBank.code} bank={currentBank} />
           )}

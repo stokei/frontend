@@ -4,37 +4,36 @@ import { convertEnumValueToCamelCase } from "@/utils";
 import {
   FormControl,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions
 } from "@stokei/ui";
 
 import { StatusSelectItemContent } from "../status-select-item-content";
 
 interface SelectFilterStatusProps {
-  readonly status: PaymentStatusFilter;
-  readonly onChooseStatus: (value: PaymentStatusFilter) => void;
-  readonly onRemoveChooseStatus: (value: PaymentStatusFilter) => void;
+  readonly value: PaymentStatusFilter;
+  readonly onChange: (value: PaymentStatusFilter) => void;
 }
 
 export const SelectFilterStatus = ({
-  status,
-  onChooseStatus,
-  onRemoveChooseStatus,
+  value,
+  onChange,
 }: SelectFilterStatusProps) => {
   const translate = useTranslations();
 
   return (
     <FormControl flex="2">
       <Label>{translate.formatMessage({ id: "status" })}</Label>
-      <Select
-        value={status}
-        onChooseItem={onChooseStatus}
-        onRemoveChooseItem={onRemoveChooseStatus}
+      <SingleSelect
+        id="status-invoice-filters-select-input"
+        value={value}
+        onChange={onChange}
       >
-        <SelectInput
-          id="status-invoice-filters-select-input"
+        <SingleSelectButton
+          placeholder={translate.formatMessage({ id: "status" })}
           item={(status) => (
             <StatusSelectItemContent
               status={status}
@@ -44,39 +43,41 @@ export const SelectFilterStatus = ({
             />
           )}
         />
-        <SelectList>
-          <SelectItem value={PaymentStatusFilter.All}>
-            <StatusSelectItemContent
-              status={PaymentStatusFilter.All}
-              content={translate.formatMessage({ id: "all" })}
-            />
-          </SelectItem>
-          <SelectItem value={PaymentStatusFilter.Paid}>
-            <StatusSelectItemContent
-              status={PaymentStatusFilter.Paid}
-              content={translate.formatMessage({ id: "paid" })}
-            />
-          </SelectItem>
-          <SelectItem value={PaymentStatusFilter.Pending}>
-            <StatusSelectItemContent
-              status={PaymentStatusFilter.Pending}
-              content={translate.formatMessage({ id: "pending" })}
-            />
-          </SelectItem>
-          <SelectItem value={PaymentStatusFilter.PaymentError}>
-            <StatusSelectItemContent
-              status={PaymentStatusFilter.PaymentError}
-              content={translate.formatMessage({ id: "paymentError" })}
-            />
-          </SelectItem>
-          <SelectItem value={PaymentStatusFilter.Canceled}>
-            <StatusSelectItemContent
-              status={PaymentStatusFilter.Canceled}
-              content={translate.formatMessage({ id: "canceled" })}
-            />
-          </SelectItem>
-        </SelectList>
-      </Select>
+        <SingleSelectCombobox>
+          <SingleSelectOptions>
+            <SingleSelectOption value={PaymentStatusFilter.All}>
+              <StatusSelectItemContent
+                status={PaymentStatusFilter.All}
+                content={translate.formatMessage({ id: "all" })}
+              />
+            </SingleSelectOption>
+            <SingleSelectOption value={PaymentStatusFilter.Paid}>
+              <StatusSelectItemContent
+                status={PaymentStatusFilter.Paid}
+                content={translate.formatMessage({ id: "paid" })}
+              />
+            </SingleSelectOption>
+            <SingleSelectOption value={PaymentStatusFilter.Pending}>
+              <StatusSelectItemContent
+                status={PaymentStatusFilter.Pending}
+                content={translate.formatMessage({ id: "pending" })}
+              />
+            </SingleSelectOption>
+            <SingleSelectOption value={PaymentStatusFilter.PaymentError}>
+              <StatusSelectItemContent
+                status={PaymentStatusFilter.PaymentError}
+                content={translate.formatMessage({ id: "paymentError" })}
+              />
+            </SingleSelectOption>
+            <SingleSelectOption value={PaymentStatusFilter.Canceled}>
+              <StatusSelectItemContent
+                status={PaymentStatusFilter.Canceled}
+                content={translate.formatMessage({ id: "canceled" })}
+              />
+            </SingleSelectOption>
+          </SingleSelectOptions>
+        </SingleSelectCombobox>
+      </SingleSelect>
     </FormControl>
   );
 };

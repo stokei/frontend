@@ -4,6 +4,23 @@ query GetOrderPageOrder($orderId: String!) {
   }
 }
 
+fragment OrderPageOrderCoupon on Coupon {
+  id
+  code
+  active
+  amountOff
+  percentOff
+  recipient {
+    id
+    fullname
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+}
+
 fragment OrderPageOrder on Order {
   id
   currency {
@@ -12,7 +29,7 @@ fragment OrderPageOrder on Order {
     minorUnit
   }
   coupon {
-    ...AppCoupon
+    ...OrderPageOrderCoupon
   }
   items {
     items {

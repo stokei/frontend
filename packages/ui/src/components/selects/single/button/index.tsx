@@ -7,8 +7,8 @@ import { useSelect } from '../../../../hooks';
 import { Box } from '../../../box';
 import { Button, ButtonProps } from '../../../button';
 import { Icon } from '../../../icon';
-import { Text } from '../../../text';
 import { Loading } from '../../../loading';
+import { Text } from '../../../text';
 
 export interface SingleSelectButtonProps extends ButtonProps {
     readonly placeholder: string;

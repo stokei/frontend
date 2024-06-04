@@ -13,6 +13,7 @@ import {
 } from "@stokei/ui";
 import { useState } from "react";
 import { SelectFilterStatus } from "../select-filter-status";
+import { addOrRemoveItemFromArray } from "@stokei/utils";
 
 interface PaymentFiltersProps {
   readonly isOpen: boolean;
@@ -43,14 +44,7 @@ export const PaymentFilters = ({
   const translate = useTranslations();
   const onChoosePayer = (payer?: AppAccountFragment) => {
     if (payer) {
-      setPayers((currentPayers) => [...currentPayers, payer]);
-    }
-  };
-  const onRemoveChoosePayer = (payerRemoved?: AppAccountFragment) => {
-    if (payerRemoved) {
-      setPayers((currentPayers) =>
-        currentPayers?.filter((payer) => payer?.id !== payerRemoved?.id)
-      );
+      setPayers((currentPayers) => addOrRemoveItemFromArray(currentPayers, payer, "id"));
     }
   };
 
@@ -79,13 +73,11 @@ export const PaymentFilters = ({
           <SelectMembers
             hasCurrentAccount={false}
             currentMembers={payers}
-            onChooseCurrentMember={onChoosePayer}
-            onRemoveChooseCurrentMember={onRemoveChoosePayer}
+            onChange={onChoosePayer}
           />
           <SelectFilterStatus
-            status={status}
-            onChooseStatus={setStatus}
-            onRemoveChooseStatus={setStatus}
+            value={status}
+            onChange={setStatus}
           />
         </Stack>
       </DrawerBody>

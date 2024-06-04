@@ -4,47 +4,44 @@ import { convertEnumValueToCamelCase } from "@/utils";
 import {
   FormControl,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions
 } from "@stokei/ui";
 import { useMemo } from "react";
 import { SubscriptionTypeSelectItemContent } from "../subscription-type-select-item-content";
 
 interface SelectFilterSubscriptionTypeProps {
-  readonly currentSubscriptionType: SubscriptionContractTypeFilter;
-  readonly onChooseCurrentSubscriptionType: (
-    value: SubscriptionContractTypeFilter
-  ) => void;
-  readonly onRemoveChooseCurrentSubscriptionType: (
+  readonly value: SubscriptionContractTypeFilter;
+  readonly onChange: (
     value: SubscriptionContractTypeFilter
   ) => void;
 }
 
 export const SelectFilterSubscriptionType = ({
-  currentSubscriptionType,
-  onChooseCurrentSubscriptionType,
-  onRemoveChooseCurrentSubscriptionType,
+  value,
+  onChange,
 }: SelectFilterSubscriptionTypeProps) => {
   const translate = useTranslations();
   const content = useMemo(() => {
-    if (currentSubscriptionType === SubscriptionContractTypeFilter.OneTime) {
+    if (value === SubscriptionContractTypeFilter.OneTime) {
       return "lifelong";
     }
-    return convertEnumValueToCamelCase(currentSubscriptionType) || "all";
-  }, [currentSubscriptionType]);
+    return convertEnumValueToCamelCase(value) || "all";
+  }, [value]);
 
   return (
     <FormControl flex="2">
       <Label>{translate.formatMessage({ id: "type" })}</Label>
-      <Select
-        value={currentSubscriptionType}
-        onChooseItem={onChooseCurrentSubscriptionType}
-        onRemoveChooseItem={onRemoveChooseCurrentSubscriptionType}
+      <SingleSelect
+        id="type-invoice-filters-select-input"
+        value={value}
+        onChange={onChange}
       >
-        <SelectInput
-          id="type-invoice-filters-select-input"
+        <SingleSelectButton
+          placeholder={translate.formatMessage({ id: "type" })}
           item={(type) => (
             <SubscriptionTypeSelectItemContent
               type={type}
@@ -54,27 +51,29 @@ export const SelectFilterSubscriptionType = ({
             />
           )}
         />
-        <SelectList>
-          <SelectItem value={SubscriptionContractTypeFilter.All}>
-            <SubscriptionTypeSelectItemContent
-              type={SubscriptionContractTypeFilter.All}
-              content={translate.formatMessage({ id: "all" })}
-            />
-          </SelectItem>
-          <SelectItem value={SubscriptionContractTypeFilter.OneTime}>
-            <SubscriptionTypeSelectItemContent
-              type={SubscriptionContractTypeFilter.OneTime}
-              content={translate.formatMessage({ id: "lifelong" })}
-            />
-          </SelectItem>
-          <SelectItem value={SubscriptionContractTypeFilter.Recurring}>
-            <SubscriptionTypeSelectItemContent
-              type={SubscriptionContractTypeFilter.Recurring}
-              content={translate.formatMessage({ id: "recurring" })}
-            />
-          </SelectItem>
-        </SelectList>
-      </Select>
+        <SingleSelectCombobox>
+          <SingleSelectOptions>
+            <SingleSelectOption value={SubscriptionContractTypeFilter.All}>
+              <SubscriptionTypeSelectItemContent
+                type={SubscriptionContractTypeFilter.All}
+                content={translate.formatMessage({ id: "all" })}
+              />
+            </SingleSelectOption>
+            <SingleSelectOption value={SubscriptionContractTypeFilter.OneTime}>
+              <SubscriptionTypeSelectItemContent
+                type={SubscriptionContractTypeFilter.OneTime}
+                content={translate.formatMessage({ id: "lifelong" })}
+              />
+            </SingleSelectOption>
+            <SingleSelectOption value={SubscriptionContractTypeFilter.Recurring}>
+              <SubscriptionTypeSelectItemContent
+                type={SubscriptionContractTypeFilter.Recurring}
+                content={translate.formatMessage({ id: "recurring" })}
+              />
+            </SingleSelectOption>
+          </SingleSelectOptions>
+        </SingleSelectCombobox>
+      </SingleSelect>
     </FormControl>
   );
 };

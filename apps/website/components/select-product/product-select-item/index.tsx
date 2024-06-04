@@ -1,4 +1,4 @@
-import { SelectItem } from "@stokei/ui";
+import { MultiSelectOption } from "@stokei/ui";
 
 import { AppProductFragment } from "../graphql/products.query.graphql.generated";
 import { ProductSelectItemContent } from "../product-select-item-content";
@@ -9,8 +9,8 @@ interface ProductSelectItemProps {
 
 export const ProductSelectItem = ({ product }: ProductSelectItemProps) => {
   return (
-    <SelectItem value={product}>
+    <MultiSelectOption value={product}>
       <ProductSelectItemContent product={product} />
-    </SelectItem>
+    </MultiSelectOption>
   );
 };

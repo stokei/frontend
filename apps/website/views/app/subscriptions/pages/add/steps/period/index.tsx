@@ -14,12 +14,13 @@ import {
   DatePickerGroup,
   FormControl,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions,
   Stack,
-  Text,
+  Text
 } from "@stokei/ui";
 
 interface PeriodStepProps {
@@ -60,13 +61,13 @@ export const PeriodStep = ({
         <Label htmlFor="price-type">
           {translate.formatMessage({ id: "period" })}
         </Label>
-        <Select
+        <SingleSelect
+          id="price-type"
           value={subscriptionType}
-          onChooseItem={onChangeSubscriptionType}
-          onRemoveChooseItem={onChangeSubscriptionType}
+          onChange={onChangeSubscriptionType}
         >
-          <SelectInput
-            id="price-type"
+          <SingleSelectButton
+            placeholder={translate.formatMessage({ id: "period" })}
             item={(item) => (
               <Text>
                 {translate.formatMessage({
@@ -78,15 +79,17 @@ export const PeriodStep = ({
               </Text>
             )}
           />
-          <SelectList>
-            <SelectItem value={SubscriptionContractType.OneTime}>
-              <Text>{translate.formatMessage({ id: "lifelong" })}</Text>
-            </SelectItem>
-            <SelectItem value={SubscriptionContractType.Recurring}>
-              <Text>{translate.formatMessage({ id: "recurring" })}</Text>
-            </SelectItem>
-          </SelectList>
-        </Select>
+          <SingleSelectCombobox>
+            <SingleSelectOptions>
+              <SingleSelectOption value={SubscriptionContractType.OneTime}>
+                <Text>{translate.formatMessage({ id: "lifelong" })}</Text>
+              </SingleSelectOption>
+              <SingleSelectOption value={SubscriptionContractType.Recurring}>
+                <Text>{translate.formatMessage({ id: "recurring" })}</Text>
+              </SingleSelectOption>
+            </SingleSelectOptions>
+          </SingleSelectCombobox>
+        </SingleSelect>
       </FormControl>
 
       {isRecurring && (

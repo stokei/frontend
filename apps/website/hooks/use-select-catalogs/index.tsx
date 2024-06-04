@@ -1,29 +1,21 @@
 import { SelectCatalogValue } from "@/components/select-catalogs";
+import { addOrRemoveItemFromArray } from "@stokei/utils";
 import { useCallback, useState } from "react";
 
 export const useSelectCatalogs = () => {
   const [catalogs, setCatalogs] = useState<SelectCatalogValue[]>([]);
 
   const onChooseCatalog = useCallback(
-    (newCatalog: SelectCatalogValue) =>
-      setCatalogs((currentCatalogs) => [...currentCatalogs, newCatalog]),
+    (catalog: SelectCatalogValue) =>
+      setCatalogs((currentCatalogs) => addOrRemoveItemFromArray(currentCatalogs, catalog, 'id')),
     []
   );
-  const onRemoveCatalog = useCallback(
-    (catalogRemoved: SelectCatalogValue) =>
-      setCatalogs((currentCatalogs) =>
-        currentCatalogs.filter(
-          (currentCatalog) => catalogRemoved.id !== currentCatalog.id
-        )
-      ),
-    []
-  );
+
   const onResetCatalog = useCallback(() => setCatalogs([]), []);
 
   return {
     catalogs,
     onChooseCatalog,
-    onRemoveCatalog,
     onResetCatalog,
   };
 };

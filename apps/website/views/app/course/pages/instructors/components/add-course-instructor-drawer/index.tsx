@@ -13,6 +13,7 @@ import {
 import { useCallback, useState } from "react";
 import { useCreateCourseInstructorMutation } from "../../graphql/create-course-instructor.mutation.graphql.generated";
 import { AdminCoursePageCourseInstructorFragment } from "../../graphql/course-instructors.query.graphql.generated";
+import { addOrRemoveItemFromArray } from "@stokei/utils";
 
 export interface FormAddCourseInstructorOnSubmitData {
   instructor?: string;
@@ -74,7 +75,7 @@ export const AddCourseInstructorDrawer = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const onAddCourseInstructors = async () => {
@@ -85,21 +86,9 @@ export const AddCourseInstructorDrawer = ({
 
   const onChooseInstructor = useCallback((instructor?: AppAccountFragment) => {
     if (instructor) {
-      setInstructors((instructors) => [...instructors, instructor]);
+      setInstructors((instructors) => addOrRemoveItemFromArray(instructors, instructor, 'id'));
     }
   }, []);
-  const onRemoveChooseInstructor = useCallback(
-    (instructorRemoved?: AppAccountFragment) => {
-      if (instructorRemoved) {
-        setInstructors((instructors) =>
-          instructors?.filter(
-            (instructor) => instructor?.id !== instructorRemoved?.id
-          )
-        );
-      }
-    },
-    []
-  );
 
   return (
     <Drawer isOpen={!!isOpenDrawer} onClose={onCloseDrawer}>
@@ -112,8 +101,7 @@ export const AddCourseInstructorDrawer = ({
             <SelectMembers
               label={translate.formatMessage({ id: "instructor" })}
               currentMembers={instructors}
-              onChooseCurrentMember={onChooseInstructor}
-              onRemoveChooseCurrentMember={onRemoveChooseInstructor}
+              onChange={onChooseInstructor}
             />
             <Button
               type="submit"

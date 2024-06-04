@@ -2,7 +2,6 @@ import {
     ComboboxOptions
 } from '@headlessui/react';
 import { PropsWithChildren } from "react";
-import { useTranslations } from '../../../../hooks';
 import { Stack, StackProps } from '../../../stack';
 
 export interface SingleSelectComboboxProps extends StackProps { }
@@ -11,6 +10,8 @@ export const SingleSelectCombobox = ({ children, ...props }: PropsWithChildren<S
     return (
         <Stack
             as={ComboboxOptions}
+            position="absolute"
+            zIndex="popover"
             background="background.50"
             width="full"
             direction="column"
@@ -18,6 +19,8 @@ export const SingleSelectCombobox = ({ children, ...props }: PropsWithChildren<S
             rounded="sm"
             border="none"
             shadow="base"
+            overflowX="hidden"
+            overflowY="auto"
         >
             {children}
         </Stack>

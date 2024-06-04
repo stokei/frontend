@@ -5,6 +5,7 @@ import { InvoiceStatusFilter } from "@/interfaces/invoice-status-filter";
 import { OrderBy } from "@/services/graphql/stokei";
 import { AppLayout } from "@/views/app/layout";
 import { Card, CardBody, Container, Pagination, Stack } from "@stokei/ui";
+import { addOrRemoveItemFromArray } from "@stokei/utils";
 import { useCallback, useMemo, useState } from "react";
 import { InvoiceFilters } from "./components/invoice-filters";
 import { InvoicesList } from "./components/invoices-list";
@@ -72,20 +73,10 @@ export const InvoicesPage = () => {
       },
     });
 
-  const onChooseCurrentCustomer = useCallback(
+  const onChangeCustomer = useCallback(
     (customer?: AppAccountFragment) => {
       if (customer) {
-        setCurrentCustomers((customers) => [...customers, customer]);
-      }
-    },
-    []
-  );
-  const onRemoveChooseCurrentCustomer = useCallback(
-    (customerRemoved?: AppAccountFragment) => {
-      if (customerRemoved) {
-        setCurrentCustomers((customers) =>
-          customers?.filter((customer) => customer?.id !== customerRemoved?.id)
-        );
+        setCurrentCustomers((customers) => addOrRemoveItemFromArray(customers, customer, 'id'));
       }
     },
     []
@@ -99,13 +90,9 @@ export const InvoicesPage = () => {
           <InvoiceFilters
             currentStatus={currentStatus}
             currentCustomers={currentCustomers}
-            onChooseCurrentCustomer={onChooseCurrentCustomer}
-            onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
-            onChooseCurrentStatus={(status) =>
+            onChangeCustomer={onChangeCustomer}
+            onChangeStatus={(status) =>
               setCurrentStatus(status || InvoiceStatusFilter.All)
-            }
-            onRemoveChooseCurrentStatus={() =>
-              setCurrentStatus(InvoiceStatusFilter.All)
             }
           />
         </Container>

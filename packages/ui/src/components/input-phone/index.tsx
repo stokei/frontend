@@ -1,13 +1,8 @@
-import { useCallback } from "react";
 import { useTranslations } from "../../hooks";
-import { Box } from "../box";
 import { FormControl } from "../form-control";
 import { Input } from "../input";
 import { Label } from "../label";
-import { Select } from "../select";
-import { SelectInput } from "../select-input";
-import { SelectItem } from "../select-item";
-import { SelectList } from "../select-list";
+import { SingleSelect, SingleSelectButton, SingleSelectCombobox, SingleSelectOption, SingleSelectOptions } from "../selects";
 import { Stack } from "../stack";
 import { Text } from "../text";
 
@@ -60,15 +55,14 @@ export const InputPhone = ({
         <Label htmlFor={`${id}-country-code`}>
           {translate.formatMessage({ id: "country" })}
         </Label>
-        <Select
+        <SingleSelect
           id={`${id}-country-code`}
           value={countryCode || countryCodes?.[0]}
-          onChooseItem={(value) => onChangeCountryCode(value?.code)}
-          onRemoveChooseItem={(value) => onChangeCountryCode(value?.code)}
+          onChange={(value) => onChangeCountryCode(value?.code)}
           isDisabled={withCountryCodeDisabled}
         >
-          <SelectInput
-            id={`${id}-country-code`}
+          <SingleSelectButton
+            placeholder={translate.formatMessage({ id: "country" })}
             item={(code) => {
               const countryCodeItem = getPhoneCode(code);
               return (
@@ -79,20 +73,22 @@ export const InputPhone = ({
               );
             }}
           />
-          <SelectList>
-            {countryCodes?.map((currentCountryCode) => (
-              <SelectItem
-                key={currentCountryCode?.country + currentCountryCode?.code}
-                value={currentCountryCode}
-              >
-                <Stack direction="row" spacing="2">
-                  <Text>{currentCountryCode?.country}</Text>
-                  <Text>({currentCountryCode?.code})</Text>
-                </Stack>
-              </SelectItem>
-            ))}
-          </SelectList>
-        </Select>
+          <SingleSelectCombobox>
+            <SingleSelectOptions>
+              {countryCodes?.map((currentCountryCode) => (
+                <SingleSelectOption
+                  key={currentCountryCode?.country + currentCountryCode?.code}
+                  value={currentCountryCode}
+                >
+                  <Stack direction="row" spacing="2">
+                    <Text>{currentCountryCode?.country}</Text>
+                    <Text>({currentCountryCode?.code})</Text>
+                  </Stack>
+                </SingleSelectOption>
+              ))}
+            </SingleSelectOptions>
+          </SingleSelectCombobox>
+        </SingleSelect>
       </FormControl>
       <Stack direction="row" spacing="2">
         <FormControl width="40">

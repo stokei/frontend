@@ -27,9 +27,8 @@ export const ProductStep = ({
       </Title>
 
       <SelectProducts
-        currentProducts={product ? [product] : []}
-        onChooseCurrentProduct={onChooseProduct}
-        onRemoveChooseCurrentProduct={() => onChooseProduct(undefined)}
+        value={product ? [product] : []}
+        onChange={onChooseProduct}
       />
 
       <ButtonGroup width="full" justifyContent="space-between">

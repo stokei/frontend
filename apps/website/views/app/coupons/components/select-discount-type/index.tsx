@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { Select, SelectInput, SelectItem, SelectList, Text } from "@stokei/ui";
+import { SingleSelect, SingleSelectButton, SingleSelectCombobox, SingleSelectOption, SingleSelectOptions, Text } from "@stokei/ui";
 
 export enum DiscountType {
   AMOUNT = "AMOUNT",
@@ -18,8 +18,15 @@ export const SelectDiscountType = ({
   const translate = useTranslations();
 
   return (
-    <Select value={value} onChooseItem={onChange} onRemoveChooseItem={onChange}>
-      <SelectInput
+    <SingleSelect
+      id="discount-type"
+      value={value}
+      onChange={onChange}
+    >
+      <SingleSelectButton
+        placeholder={translate.formatMessage({
+          id: "discountType",
+        })}
         item={(item) => (
           <Text>
             {translate.formatMessage({
@@ -28,22 +35,24 @@ export const SelectDiscountType = ({
           </Text>
         )}
       />
-      <SelectList>
-        <SelectItem value={DiscountType.AMOUNT}>
-          <Text>
-            {translate.formatMessage({
-              id: "amountOff",
-            })}
-          </Text>
-        </SelectItem>
-        <SelectItem value={DiscountType.PERCENT}>
-          <Text>
-            {translate.formatMessage({
-              id: "percentOff",
-            })}
-          </Text>
-        </SelectItem>
-      </SelectList>
-    </Select>
+      <SingleSelectCombobox>
+        <SingleSelectOptions>
+          <SingleSelectOption value={DiscountType.AMOUNT}>
+            <Text>
+              {translate.formatMessage({
+                id: "amountOff",
+              })}
+            </Text>
+          </SingleSelectOption>
+          <SingleSelectOption value={DiscountType.PERCENT}>
+            <Text>
+              {translate.formatMessage({
+                id: "percentOff",
+              })}
+            </Text>
+          </SingleSelectOption>
+        </SingleSelectOptions>
+      </SingleSelectCombobox>
+    </SingleSelect>
   );
 };

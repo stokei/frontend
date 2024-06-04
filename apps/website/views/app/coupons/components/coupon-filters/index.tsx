@@ -12,16 +12,16 @@ import {
   Input,
   InputGroup,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions,
   Stack,
-  Text,
+  Text
 } from "@stokei/ui";
 import { useEffect } from "react";
 import { useFilters } from "../../hooks/use-filters";
-import { DiscountType } from "../select-discount-type";
 
 interface CouponFiltersProps {
   readonly isOpen: boolean;
@@ -101,13 +101,12 @@ export const CouponFilters = ({
               <Label htmlFor="status">
                 {translate.formatMessage({ id: "status" })}
               </Label>
-              <Select
+              <SingleSelect
                 id="status"
                 value={active}
-                onChooseItem={setActive}
-                onRemoveChooseItem={() => setActive(undefined)}
+                onChange={setActive}
               >
-                <SelectInput
+                <SingleSelectButton
                   placeholder={translate.formatMessage({ id: "status" })}
                   item={(item) => (
                     <Stack direction="row" spacing="2" align="center">
@@ -123,29 +122,31 @@ export const CouponFilters = ({
                     </Stack>
                   )}
                 />
-                <SelectList>
-                  <SelectItem value={true}>
-                    <Stack direction="row" spacing="2" align="center">
-                      <Circle size="2" background="green.500" />
-                      <Text>
-                        {translate.formatMessage({
-                          id: "active",
-                        })}
-                      </Text>
-                    </Stack>
-                  </SelectItem>
-                  <SelectItem value={false}>
-                    <Stack direction="row" spacing="2" align="center">
-                      <Circle size="2" background="gray.500" />
-                      <Text>
-                        {translate.formatMessage({
-                          id: "inactive",
-                        })}
-                      </Text>
-                    </Stack>
-                  </SelectItem>
-                </SelectList>
-              </Select>
+                <SingleSelectCombobox>
+                  <SingleSelectOptions>
+                    <SingleSelectOption value={true}>
+                      <Stack direction="row" spacing="2" align="center">
+                        <Circle size="2" background="green.500" />
+                        <Text>
+                          {translate.formatMessage({
+                            id: "active",
+                          })}
+                        </Text>
+                      </Stack>
+                    </SingleSelectOption>
+                    <SingleSelectOption value={false}>
+                      <Stack direction="row" spacing="2" align="center">
+                        <Circle size="2" background="gray.500" />
+                        <Text>
+                          {translate.formatMessage({
+                            id: "inactive",
+                          })}
+                        </Text>
+                      </Stack>
+                    </SingleSelectOption>
+                  </SingleSelectOptions>
+                </SingleSelectCombobox>
+              </SingleSelect>
             </FormControl>
           </Stack>
         </DrawerBody>

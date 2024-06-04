@@ -1,7 +1,6 @@
 import * as Types from '../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
-import { AppCouponFragmentDoc } from '../../../../components/select-coupons/graphql/coupons.query.graphql.generated';
 import { PaymentMethodComponentFragmentDoc } from '../../../../components/payment-method/graphql/payment-method.fragment.graphql.generated';
 import { PriceComponentFragmentDoc } from '../../../../components/price/price.fragment.graphql.generated';
 import * as Urql from 'urql';
@@ -13,12 +12,32 @@ export type GetOrderPageOrderQueryVariables = Types.Exact<{
 
 export type GetOrderPageOrderQuery = { __typename?: 'Query', order: { __typename?: 'Order', id: string, status: Types.OrderStatus, totalAmount: number, subtotalAmount: number, paidAt?: string | null, canceledAt?: string | null, updatedAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, coupon?: { __typename?: 'Coupon', id: string, code: string, active: boolean, amountOff?: number | null, percentOff?: number | null, recipient?: { __typename?: 'Account', id: string, fullname: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null } | null, items?: { __typename?: 'OrderItems', items?: Array<{ __typename?: 'OrderItem', id: string, totalAmount: number, subtotalAmount: number, createdAt?: string | null, product: { __typename?: 'Product', id: string, name: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }, recurring?: { __typename?: 'Recurring', interval?: Types.IntervalType | null, intervalCount: number } | null, price?: { __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null } | null }> | null } | null, payments?: { __typename?: 'Payments', items?: Array<{ __typename?: 'Payment', id: string, status: Types.PaymentStatus, totalAmount: number, subtotalAmount: number, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, type?: Types.PaymentMethodType | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } }> | null } | null } };
 
+export type OrderPageOrderCouponFragment = { __typename?: 'Coupon', id: string, code: string, active: boolean, amountOff?: number | null, percentOff?: number | null, recipient?: { __typename?: 'Account', id: string, fullname: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null };
+
 export type OrderPageOrderFragment = { __typename?: 'Order', id: string, status: Types.OrderStatus, totalAmount: number, subtotalAmount: number, paidAt?: string | null, canceledAt?: string | null, updatedAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, coupon?: { __typename?: 'Coupon', id: string, code: string, active: boolean, amountOff?: number | null, percentOff?: number | null, recipient?: { __typename?: 'Account', id: string, fullname: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null } | null, items?: { __typename?: 'OrderItems', items?: Array<{ __typename?: 'OrderItem', id: string, totalAmount: number, subtotalAmount: number, createdAt?: string | null, product: { __typename?: 'Product', id: string, name: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }, recurring?: { __typename?: 'Recurring', interval?: Types.IntervalType | null, intervalCount: number } | null, price?: { __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null } | null }> | null } | null, payments?: { __typename?: 'Payments', items?: Array<{ __typename?: 'Payment', id: string, status: Types.PaymentStatus, totalAmount: number, subtotalAmount: number, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, type?: Types.PaymentMethodType | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } }> | null } | null };
 
 export type OrderPagePaymentFragment = { __typename?: 'Payment', id: string, status: Types.PaymentStatus, totalAmount: number, subtotalAmount: number, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, createdAt?: string | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, type?: Types.PaymentMethodType | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } };
 
 export type OrderPageOrderItemFragment = { __typename?: 'OrderItem', id: string, totalAmount: number, subtotalAmount: number, createdAt?: string | null, product: { __typename?: 'Product', id: string, name: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null }, recurring?: { __typename?: 'Recurring', interval?: Types.IntervalType | null, intervalCount: number } | null, price?: { __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null } | null };
 
+export const OrderPageOrderCouponFragmentDoc = gql`
+    fragment OrderPageOrderCoupon on Coupon {
+  id
+  code
+  active
+  amountOff
+  percentOff
+  recipient {
+    id
+    fullname
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+}
+    `;
 export const OrderPageOrderItemFragmentDoc = gql`
     fragment OrderPageOrderItem on OrderItem {
   id
@@ -72,7 +91,7 @@ export const OrderPageOrderFragmentDoc = gql`
     minorUnit
   }
   coupon {
-    ...AppCoupon
+    ...OrderPageOrderCoupon
   }
   items {
     items {
@@ -93,7 +112,7 @@ export const OrderPageOrderFragmentDoc = gql`
   paymentErrorAt
   createdAt
 }
-    ${AppCouponFragmentDoc}
+    ${OrderPageOrderCouponFragmentDoc}
 ${OrderPageOrderItemFragmentDoc}
 ${OrderPagePaymentFragmentDoc}`;
 export const GetOrderPageOrderDocument = gql`

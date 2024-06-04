@@ -1,11 +1,14 @@
 import { Editor } from "@tiptap/react";
-import { PropsWithChildren, useState, useCallback, useEffect } from "react";
+import { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { useTranslations } from "../../../hooks";
 import { Box } from "../../box";
-import { Select } from "../../select";
-import { SelectInput } from "../../select-input";
-import { SelectItem } from "../../select-item";
-import { SelectList } from "../../select-list";
+import {
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions
+} from "../../selects";
 import { Text } from "../../text";
 import { Title } from "../../title";
 
@@ -132,51 +135,53 @@ export const RichTextEditorSelectText = ({
 
   return (
     <Box width="40">
-      <Select
+      <SingleSelect
+        id={id}
         value={value}
-        onChooseItem={onChangeValue}
-        onRemoveChooseItem={onChangeValue}
+        onChange={onChangeValue}
       >
-        <SelectInput
-          id={`${id}-input`}
+        <SingleSelectButton
+          placeholder={translate.formatMessage({ id: "font" })}
           item={(item) => <>{getComponentValue(item)}</>}
         />
-        <SelectList>
-          <SelectItem value={RichTextEditorSelectTextValue.PARAGRAPH}>
-            <Text>{translate.formatMessage({ id: "paragraph" })}</Text>
-          </SelectItem>
-          <SelectItem value={RichTextEditorSelectTextValue.HEADING_1}>
-            <Title fontSize="2xl">
-              {translate.formatMessage({ id: "title" })} 1
-            </Title>
-          </SelectItem>
-          <SelectItem value={RichTextEditorSelectTextValue.HEADING_2}>
-            <Title fontSize="xl">
-              {translate.formatMessage({ id: "title" })} 2
-            </Title>
-          </SelectItem>
-          <SelectItem value={RichTextEditorSelectTextValue.HEADING_3}>
-            <Title fontSize="lg">
-              {translate.formatMessage({ id: "title" })} 3
-            </Title>
-          </SelectItem>
-          <SelectItem value={RichTextEditorSelectTextValue.HEADING_4}>
-            <Title fontSize="md">
-              {translate.formatMessage({ id: "title" })} 4
-            </Title>
-          </SelectItem>
-          <SelectItem value={RichTextEditorSelectTextValue.HEADING_5}>
-            <Title fontSize="sm">
-              {translate.formatMessage({ id: "title" })} 5
-            </Title>
-          </SelectItem>
-          <SelectItem value={RichTextEditorSelectTextValue.HEADING_6}>
-            <Title fontSize="xs">
-              {translate.formatMessage({ id: "title" })} 6
-            </Title>
-          </SelectItem>
-        </SelectList>
-      </Select>
+        <SingleSelectCombobox>
+          <SingleSelectOptions>
+            <SingleSelectOption value={RichTextEditorSelectTextValue.PARAGRAPH}>
+              <Text>{translate.formatMessage({ id: "paragraph" })}</Text>
+            </SingleSelectOption>
+            <SingleSelectOption value={RichTextEditorSelectTextValue.HEADING_1}>
+              <Title fontSize="2xl">
+                {translate.formatMessage({ id: "title" })} 1
+              </Title>
+            </SingleSelectOption>
+            <SingleSelectOption value={RichTextEditorSelectTextValue.HEADING_2}>
+              <Title fontSize="xl">
+                {translate.formatMessage({ id: "title" })} 2
+              </Title>
+            </SingleSelectOption>
+            <SingleSelectOption value={RichTextEditorSelectTextValue.HEADING_3}>
+              <Title fontSize="lg">
+                {translate.formatMessage({ id: "title" })} 3
+              </Title>
+            </SingleSelectOption>
+            <SingleSelectOption value={RichTextEditorSelectTextValue.HEADING_4}>
+              <Title fontSize="md">
+                {translate.formatMessage({ id: "title" })} 4
+              </Title>
+            </SingleSelectOption>
+            <SingleSelectOption value={RichTextEditorSelectTextValue.HEADING_5}>
+              <Title fontSize="sm">
+                {translate.formatMessage({ id: "title" })} 5
+              </Title>
+            </SingleSelectOption>
+            <SingleSelectOption value={RichTextEditorSelectTextValue.HEADING_6}>
+              <Title fontSize="xs">
+                {translate.formatMessage({ id: "title" })} 6
+              </Title>
+            </SingleSelectOption>
+          </SingleSelectOptions>
+        </SingleSelectCombobox>
+      </SingleSelect>
     </Box>
   );
 };

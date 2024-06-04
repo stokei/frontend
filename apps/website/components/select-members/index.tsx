@@ -114,7 +114,7 @@ export const SelectMembers = ({
   }, [currentAccount, dataGetMembers, hasCurrentAccount]);
 
   return (
-    <FormControl flex="3">
+    <FormControl>
       <Label
         htmlFor="member-invoice-filters-select-search-input"
         isOptional={!!isOptional}
@@ -129,9 +129,7 @@ export const SelectMembers = ({
         marginBottom="2"
       >
         <MultiSelectButton
-          placeholder={translate.formatMessage({
-            id: "search",
-          })}
+          placeholder={label || translate.formatMessage({ id: "student" })}
           item={(member) => (
             <MemberSelectItemContent key={member.id} member={member} />
           )}

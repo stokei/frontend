@@ -23,6 +23,7 @@ import {
   useGetAppSubscriptionContractsQuery,
 } from "./graphql/subscription-contracts.query.graphql.generated";
 import { Loading } from "./loading";
+import { addOrRemoveItemFromArray } from "@stokei/utils";
 
 export const SubscriptionContractsPage = () => {
   const [currentCustomers, setCurrentCustomers] = useState<
@@ -111,17 +112,9 @@ export const SubscriptionContractsPage = () => {
   const onChooseCurrentCustomer = useCallback(
     (customer?: AppAccountFragment) => {
       if (customer) {
-        setCurrentCustomers((customers) => [...customers, customer]);
-      }
-    },
-    []
-  );
-  const onRemoveChooseCurrentCustomer = useCallback(
-    (customerRemoved?: AppAccountFragment) => {
-      if (customerRemoved) {
-        setCurrentCustomers((customers) =>
-          customers?.filter((customer) => customer?.id !== customerRemoved?.id)
-        );
+        setCurrentCustomers((customers) => addOrRemoveItemFromArray(customers, customer, "id"));
+      } else {
+        setCurrentCustomers([]);
       }
     },
     []
@@ -144,20 +137,13 @@ export const SubscriptionContractsPage = () => {
           currentCustomers={currentCustomers}
           onResetCurrentCustomer={onResetCurrentCustomer}
           onChooseCurrentCustomer={onChooseCurrentCustomer}
-          onRemoveChooseCurrentCustomer={onRemoveChooseCurrentCustomer}
           onChooseCurrentStatus={(status) =>
             setCurrentStatus(status || SubscriptionContractStatusFilter.All)
-          }
-          onRemoveChooseCurrentStatus={() =>
-            setCurrentStatus(SubscriptionContractStatusFilter.All)
           }
           onChooseCurrentSubscriptionType={(type) =>
             setCurrentSubscriptionType(
               type || SubscriptionContractTypeFilter.All
             )
-          }
-          onRemoveChooseCurrentSubscriptionType={() =>
-            setCurrentSubscriptionType(SubscriptionContractTypeFilter.All)
           }
         />
         <Container>

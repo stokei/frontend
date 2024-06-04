@@ -23,17 +23,12 @@ interface SubscriptionContractFiltersProps {
   readonly currentSubscriptionType: SubscriptionContractTypeFilter;
   readonly currentCustomers?: AppAccountFragment[];
   readonly onChooseCurrentCustomer: (value?: AppAccountFragment) => void;
-  readonly onRemoveChooseCurrentCustomer: (value?: AppAccountFragment) => void;
-  readonly onRemoveChooseCurrentSubscriptionType: (
+  readonly onChooseCurrentSubscriptionType: (
     value?: SubscriptionContractTypeFilter
   ) => void;
-  readonly onChooseCurrentSubscriptionType: (
-    value: SubscriptionContractTypeFilter
-  ) => void;
   readonly onChooseCurrentStatus: (
-    value: SubscriptionContractStatusFilter
+    value?: SubscriptionContractStatusFilter
   ) => void;
-  readonly onRemoveChooseCurrentStatus: () => void;
   readonly onResetCurrentCustomer: () => void;
 }
 
@@ -45,17 +40,15 @@ export const SubscriptionContractFilters = ({
   currentCustomers,
   onResetCurrentCustomer,
   onChooseCurrentCustomer,
-  onRemoveChooseCurrentCustomer,
   onChooseCurrentStatus,
-  onRemoveChooseCurrentStatus,
   onChooseCurrentSubscriptionType,
-  onRemoveChooseCurrentSubscriptionType,
 }: SubscriptionContractFiltersProps) => {
   const translate = useTranslations();
 
   const onClean = () => {
-    onRemoveChooseCurrentStatus();
-    onRemoveChooseCurrentSubscriptionType();
+    onChooseCurrentCustomer();
+    onChooseCurrentStatus();
+    onChooseCurrentSubscriptionType();
     onResetCurrentCustomer();
   };
 
@@ -67,20 +60,15 @@ export const SubscriptionContractFilters = ({
           <SelectMembers
             hasCurrentAccount={false}
             currentMembers={currentCustomers}
-            onChooseCurrentMember={onChooseCurrentCustomer}
-            onRemoveChooseCurrentMember={onRemoveChooseCurrentCustomer}
+            onChange={onChooseCurrentCustomer}
           />
           <SelectFilterSubscriptionType
-            currentSubscriptionType={currentSubscriptionType}
-            onChooseCurrentSubscriptionType={onChooseCurrentSubscriptionType}
-            onRemoveChooseCurrentSubscriptionType={
-              onRemoveChooseCurrentSubscriptionType
-            }
+            value={currentSubscriptionType}
+            onChange={onChooseCurrentSubscriptionType}
           />
           <SelectFilterStatus
-            currentStatus={currentStatus}
-            onChooseCurrentStatus={onChooseCurrentStatus}
-            onRemoveChooseCurrentStatus={onRemoveChooseCurrentStatus}
+            value={currentStatus}
+            onChange={onChooseCurrentStatus}
           />
         </Stack>
       </DrawerBody>

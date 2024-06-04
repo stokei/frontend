@@ -75,7 +75,7 @@ export const SelectCoupons = ({
   );
 
   return (
-    <FormControl flex="3">
+    <FormControl>
       <Label htmlFor="coupon-select-search-input">
         {label || translate.formatMessage({ id: "coupon" })}
       </Label>
@@ -87,9 +87,7 @@ export const SelectCoupons = ({
         marginBottom="2"
       >
         <MultiSelectButton
-          placeholder={translate.formatMessage({
-            id: "search",
-          })}
+          placeholder={label || translate.formatMessage({ id: "coupon" })}
           item={currentCoupon => <CouponSelectItemContent coupon={currentCoupon} />}
         />
         <MultiSelectCombobox>

@@ -23,16 +23,17 @@ import {
   InputGroup,
   InputLeftAddon,
   Label,
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions,
   Stack,
   Switch,
   Text,
-  useToast,
+  useToast
 } from "@stokei/ui";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreatePriceMutation } from "../../graphql/create-price.mutation.graphql.generated";
@@ -228,13 +229,13 @@ export const AddPriceDrawer = ({
               <Label htmlFor="price-type">
                 {translate.formatMessage({ id: "type" })}
               </Label>
-              <Select
+              <SingleSelect
+                id="price-type"
                 value={type}
-                onChooseItem={setType}
-                onRemoveChooseItem={setType}
+                onChange={setType}
               >
-                <SelectInput
-                  id="price-type"
+                <SingleSelectButton
+                  placeholder={translate.formatMessage({ id: "type" })}
                   item={(item) => (
                     <Text>
                       {translate.formatMessage({
@@ -246,15 +247,17 @@ export const AddPriceDrawer = ({
                     </Text>
                   )}
                 />
-                <SelectList>
-                  <SelectItem value={PriceType.OneTime}>
-                    <Text>{translate.formatMessage({ id: "lifelong" })}</Text>
-                  </SelectItem>
-                  <SelectItem value={PriceType.Recurring}>
-                    <Text>{translate.formatMessage({ id: "recurring" })}</Text>
-                  </SelectItem>
-                </SelectList>
-              </Select>
+                <SingleSelectCombobox>
+                  <SingleSelectOptions>
+                    <SingleSelectOption value={PriceType.OneTime}>
+                      <Text>{translate.formatMessage({ id: "lifelong" })}</Text>
+                    </SingleSelectOption>
+                    <SingleSelectOption value={PriceType.Recurring}>
+                      <Text>{translate.formatMessage({ id: "recurring" })}</Text>
+                    </SingleSelectOption>
+                  </SingleSelectOptions>
+                </SingleSelectCombobox>
+              </SingleSelect>
             </FormControl>
 
             {type === PriceType.Recurring && (

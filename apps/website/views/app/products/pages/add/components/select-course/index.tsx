@@ -3,24 +3,22 @@ import {
   Avatar,
   FormControl,
   Label,
-  Select,
-  SelectItem,
-  SelectList,
-  SelectSearchInput,
-  SelectTagItem,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions,
+  SingleSelectSearchInput,
   Stack,
-  Tag,
-  TagCloseButton,
-  TagLabel,
   Text,
-  useDebounce,
+  useDebounce
 } from "@stokei/ui";
-import React, { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { ProductParent } from "../../@types/product-parent";
 import {
   AddProductCourseSelectFragment,
   useGetAddProductCoursesSelectQuery,
 } from "../../graphql/courses.query.graphql.generated";
-import { ProductParent } from "../../@types/product-parent";
 
 export interface SelectCurseProps {
   productParent?: ProductParent;
@@ -79,50 +77,49 @@ export const SelectCurse = ({
         <Label htmlFor="select-couse">
           {translate.formatMessage({ id: "course" })}
         </Label>
-        <Select
+        <SingleSelect
+          id="select-couse"
           isLoading={isLoading}
           value={productParent}
-          onChooseItem={onChooseProductTypeItem}
-          onRemoveChooseItem={onChooseProductTypeItem}
+          onChange={onChooseProductTypeItem}
         >
-          <SelectSearchInput
-            id="select-couse"
-            onChange={(e) => setCourseQuery(e.target.value || "")}
+          <SingleSelectButton
+            placeholder={translate.formatMessage({ id: "course" })}
             item={(courseItem) => (
-              <Tag>
-                <TagLabel>
+              <Stack direction="row" spacing="4" align="center">
+                <Avatar
+                  size="sm"
+                  src={courseItem?.avatar?.file?.url || ""}
+                  name={courseItem?.name}
+                />
+                <Text fontWeight="bold">{courseItem?.name}</Text>
+              </Stack>
+            )}
+          />
+          <SingleSelectCombobox>
+            <SingleSelectSearchInput
+              value={courseQuery}
+              onChange={(e) => setCourseQuery(e.target.value || "")}
+            />
+            <SingleSelectOptions>
+              {courses?.map((course) => (
+                <SingleSelectOption
+                  key={course?.id}
+                  value={mapCourseToProductParent(course)}
+                >
                   <Stack direction="row" spacing="4" align="center">
                     <Avatar
                       size="sm"
-                      src={courseItem?.avatar?.file?.url || ""}
-                      name={courseItem?.name}
+                      src={course?.avatar?.file?.url || ""}
+                      name={course?.name}
                     />
-                    <Text fontWeight="bold">{courseItem?.name}</Text>
+                    <Text fontWeight="bold">{course?.name}</Text>
                   </Stack>
-                </TagLabel>
-                <TagCloseButton onClick={() => onChooseProductTypeItem()} />
-              </Tag>
-            )}
-          />
-
-          <SelectList>
-            {courses?.map((course) => (
-              <SelectItem
-                key={course?.id}
-                value={mapCourseToProductParent(course)}
-              >
-                <Stack direction="row" spacing="4" align="center">
-                  <Avatar
-                    size="sm"
-                    src={course?.avatar?.file?.url || ""}
-                    name={course?.name}
-                  />
-                  <Text fontWeight="bold">{course?.name}</Text>
-                </Stack>
-              </SelectItem>
-            ))}
-          </SelectList>
-        </Select>
+                </SingleSelectOption>
+              ))}
+            </SingleSelectOptions>
+          </SingleSelectCombobox>
+        </SingleSelect>
       </FormControl>
     </Stack>
   );

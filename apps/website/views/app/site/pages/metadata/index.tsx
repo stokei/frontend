@@ -13,6 +13,7 @@ import {
   ImageUploader,
   Input,
   InputGroup,
+  InputSlug,
   Label,
   Stack,
   Title,
@@ -38,6 +39,9 @@ const MetadataPage = () => {
     name: z.string().min(1, {
       message: translate.formatMessage({ id: "required" }),
     }),
+    slug: z.string().min(1, {
+      message: translate.formatMessage({ id: "required" }),
+    }),
   });
 
   const {
@@ -50,7 +54,7 @@ const MetadataPage = () => {
 
   const {
     register,
-    reset,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof validationSchema>>({
@@ -60,13 +64,12 @@ const MetadataPage = () => {
 
   useEffect(() => {
     if (site) {
-      reset({
-        name: site?.name || "",
-      });
+      setValue('name', site?.name || "");
+      setValue('slug', site?.slug || "");
     }
-  }, [site, reset]);
+  }, [setValue, site]);
 
-  const onSubmit = async ({ name }: z.infer<typeof validationSchema>) => {
+  const onSubmit = async ({ name, slug }: z.infer<typeof validationSchema>) => {
     try {
       const response = await onExecuteUpdateSite({
         input: {
@@ -75,6 +78,7 @@ const MetadataPage = () => {
           },
           data: {
             name,
+            slug,
             logo: logoId,
           },
         },
@@ -118,6 +122,20 @@ const MetadataPage = () => {
                   />
                 </InputGroup>
                 <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors?.slug}>
+                <Label htmlFor="slug">
+                  {translate.formatMessage({ id: "slug" })}
+                </Label>
+                <InputSlug
+                  id="slug"
+                  type="slug"
+                  placeholder={translate.formatMessage({
+                    id: "slugPlaceholder",
+                  })}
+                  {...register("slug")}
+                />
+                <FormErrorMessage>{errors?.slug?.message}</FormErrorMessage>
               </FormControl>
               <FormControl>
                 <Label htmlFor="app-image">

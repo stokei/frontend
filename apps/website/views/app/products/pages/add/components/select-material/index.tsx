@@ -3,18 +3,17 @@ import {
   Avatar,
   FormControl,
   Label,
-  Select,
-  SelectItem,
-  SelectList,
-  SelectSearchInput,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions,
+  SingleSelectSearchInput,
   Stack,
-  Tag,
-  TagCloseButton,
-  TagLabel,
   Text,
-  useDebounce,
+  useDebounce
 } from "@stokei/ui";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ProductParent } from "../../@types/product-parent";
 import {
   AddProductMaterialSelectFragment,
@@ -83,50 +82,50 @@ export const SelectMaterial = ({
         <Label htmlFor="select-couse">
           {translate.formatMessage({ id: "material" })}
         </Label>
-        <Select
+        <SingleSelect
+          id="select-couse"
           isLoading={isLoading}
           value={productParent}
-          onChooseItem={onChooseProductTypeItem}
-          onRemoveChooseItem={onChooseProductTypeItem}
+          onChange={onChooseProductTypeItem}
         >
-          <SelectSearchInput
-            id="select-couse"
-            onChange={(e) => setMaterialQuery(e.target.value || "")}
+          <SingleSelectButton
+            placeholder={translate.formatMessage({ id: "material" })}
             item={(materialItem) => (
-              <Tag>
-                <TagLabel>
-                  <Stack direction="row" spacing="4" align="center">
-                    <Avatar
-                      size="sm"
-                      src={materialItem?.avatar?.file?.url || ""}
-                      name={materialItem?.name}
-                    />
-                    <Text fontWeight="bold">{materialItem?.name}</Text>
-                  </Stack>
-                </TagLabel>
-                <TagCloseButton onClick={() => onChooseProductTypeItem()} />
-              </Tag>
+              <Stack direction="row" spacing="4" align="center">
+                <Avatar
+                  size="sm"
+                  src={materialItem?.avatar?.file?.url || ""}
+                  name={materialItem?.name}
+                />
+                <Text fontWeight="bold">{materialItem?.name}</Text>
+              </Stack>
             )}
           />
 
-          <SelectList>
-            {materials?.map((material) => (
-              <SelectItem
-                key={material?.id}
-                value={mapMaterialToProductParent(material)}
-              >
-                <Stack direction="row" spacing="4" align="center">
-                  <Avatar
-                    size="sm"
-                    src={material?.avatar?.file?.url || ""}
-                    name={material?.name}
-                  />
-                  <Text fontWeight="bold">{material?.name}</Text>
-                </Stack>
-              </SelectItem>
-            ))}
-          </SelectList>
-        </Select>
+          <SingleSelectCombobox>
+            <SingleSelectSearchInput
+              value={materialQuery}
+              onChange={(e) => setMaterialQuery(e.target.value || "")}
+            />
+            <SingleSelectOptions>
+              {materials?.map((material) => (
+                <SingleSelectOption
+                  key={material?.id}
+                  value={mapMaterialToProductParent(material)}
+                >
+                  <Stack direction="row" spacing="4" align="center">
+                    <Avatar
+                      size="sm"
+                      src={material?.avatar?.file?.url || ""}
+                      name={material?.name}
+                    />
+                    <Text fontWeight="bold">{material?.name}</Text>
+                  </Stack>
+                </SingleSelectOption>
+              ))}
+            </SingleSelectOptions>
+          </SingleSelectCombobox>
+        </SingleSelect>
       </FormControl>
     </Stack>
   );

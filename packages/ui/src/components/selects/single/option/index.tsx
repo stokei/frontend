@@ -58,7 +58,7 @@ export const SingleSelectOption = ({ value, children, ...props }: PropsWithChild
         >
             <Icon
                 name={isActive ? "check" : "uncheck"}
-                color={isActive ? "green.500" : "text.500"}
+                color={isActive ? "green.500" : "text.300"}
                 fontSize="lg"
             />
             <Stack flex="1" direction="column">

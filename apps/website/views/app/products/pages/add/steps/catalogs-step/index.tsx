@@ -16,7 +16,6 @@ import {
 interface CatalogsStepProps {
   catalogs: SelectCatalogValue[];
   onChooseCatalog: (value: SelectCatalogValue) => void;
-  onRemoveCatalog: (value: SelectCatalogValue) => void;
   onPreviousStep: () => void;
   onNextStep: () => void;
 }
@@ -24,7 +23,6 @@ interface CatalogsStepProps {
 export const CatalogsStep = ({
   catalogs,
   onChooseCatalog,
-  onRemoveCatalog,
   onNextStep,
   onPreviousStep,
 }: CatalogsStepProps) => {
@@ -55,8 +53,7 @@ export const CatalogsStep = ({
 
       <SelectCatalogs
         catalogs={catalogs}
-        onChooseCatalog={onChooseCatalog}
-        onRemoveCatalog={onRemoveCatalog}
+        onChange={onChooseCatalog}
       />
       <ButtonGroup width="full" justifyContent="space-between">
         <Button variant="ghost" onClick={onPreviousStep}>

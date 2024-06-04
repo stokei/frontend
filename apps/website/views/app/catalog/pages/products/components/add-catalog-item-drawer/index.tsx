@@ -13,6 +13,7 @@ import {
 } from "@stokei/ui";
 import { useCallback, useMemo, useState } from "react";
 import { useCreateCatalogItemMutation } from "../../graphql/create-catalog-item.mutation.graphql.generated";
+import { addOrRemoveItemFromArray } from "@stokei/utils";
 
 interface AddCatalogItemDrawerProps {
   catalogId: string;
@@ -81,19 +82,9 @@ export const AddCatalogItemDrawer = ({
     handlers: addCatalogItemsHandlers,
   });
 
-  const onChooseCurrentProduct = useCallback((product?: AppProductFragment) => {
+  const onChangeProduct = useCallback((product?: AppProductFragment) => {
     if (product) {
-      setProducts((currentProducts) => [...currentProducts, product]);
-    }
-  }, []);
-
-  const onRemoveCurrentProduct = useCallback((product?: AppProductFragment) => {
-    if (product) {
-      setProducts((currentProducts) =>
-        currentProducts?.filter(
-          (currentProduct) => currentProduct.id !== product?.id
-        )
-      );
+      setProducts((currentProducts) => addOrRemoveItemFromArray(currentProducts, product, 'id'));
     }
   }, []);
 
@@ -106,9 +97,8 @@ export const AddCatalogItemDrawer = ({
         <Form onSubmit={onSubmit}>
           <Stack direction="column" spacing="5">
             <SelectProducts
-              currentProducts={products}
-              onChooseCurrentProduct={onChooseCurrentProduct}
-              onRemoveChooseCurrentProduct={onRemoveCurrentProduct}
+              value={products}
+              onChange={onChangeProduct}
             />
 
             <Button

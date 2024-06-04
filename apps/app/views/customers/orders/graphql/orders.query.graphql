@@ -16,6 +16,23 @@ query GetAppOrders(
   }
 }
 
+fragment AppOrderCoupon on Coupon {
+  id
+  code
+  active
+  amountOff
+  percentOff
+  recipient {
+    id
+    fullname
+    avatar {
+      file {
+        url
+      }
+    }
+  }
+}
+
 fragment AppOrder on Order {
   id
   currency {
@@ -24,7 +41,7 @@ fragment AppOrder on Order {
     minorUnit
   }
   coupon {
-    ...AppCoupon
+    ...AppOrderCoupon
   }
   items {
     items {

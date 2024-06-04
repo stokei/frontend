@@ -5,6 +5,7 @@ export const enUSMessages: Record<I18nKey, string> = {
   monthAndYearFormat: "yyyy-MM",
   yearFormat: "yyyy",
   search: "Search",
+  font: "Font",
   transparent: "Transparent",
   background: "Background",
   brandColors: "Brand colors",

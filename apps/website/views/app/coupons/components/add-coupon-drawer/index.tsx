@@ -129,7 +129,7 @@ export const AddCouponDrawer = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const onClearForm = () => {
@@ -281,14 +281,6 @@ export const AddCouponDrawer = ({
                 </FormErrorMessage>
               </FormControl>
             )}
-
-            {/* <SelectMembers
-              isOptional
-              currentMembers={recipient ? [recipient] : []}
-              onChooseCurrentMember={setRecipient}
-              onRemoveChooseCurrentMember={setRecipient}
-              label={translate.formatMessage({ id: "recipient" })}
-            /> */}
 
             <Button
               type="submit"

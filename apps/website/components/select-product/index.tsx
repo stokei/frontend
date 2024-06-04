@@ -4,17 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   FormControl,
   Label,
-  Select,
-  SelectList,
-  SelectSearchInput,
-  SelectTagItem,
-  SelectTagList,
-  Tag,
-  TagCloseButton,
-  TagLabel,
-  useDebounce,
+  MultiSelect,
+  MultiSelectButton,
+  MultiSelectCombobox,
+  MultiSelectOptions,
+  MultiSelectSearchInput,
+  useDebounce
 } from "@stokei/ui";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -26,16 +23,14 @@ import { ProductSelectItemContent } from "./product-select-item-content";
 
 interface SelectProductsProps {
   readonly label?: string;
-  readonly currentProducts?: AppProductFragment[];
-  readonly onChooseCurrentProduct: (value?: AppProductFragment) => void;
-  readonly onRemoveChooseCurrentProduct: (value?: AppProductFragment) => void;
+  readonly value?: AppProductFragment[];
+  readonly onChange: (value?: AppProductFragment) => void;
 }
 
 export const SelectProducts = ({
   label,
-  currentProducts,
-  onChooseCurrentProduct,
-  onRemoveChooseCurrentProduct,
+  value,
+  onChange,
 }: SelectProductsProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
@@ -79,60 +74,34 @@ export const SelectProducts = ({
     [dataGetProducts?.products?.items]
   );
 
-  const onChooseItem = useCallback(
-    (value?: AppProductFragment) => {
-      onChooseCurrentProduct?.(value);
-    },
-    [onChooseCurrentProduct]
-  );
-  const onRemoveChooseItem = useCallback(
-    (value?: AppProductFragment) => {
-      onRemoveChooseCurrentProduct?.(value);
-    },
-    [onRemoveChooseCurrentProduct]
-  );
-
   return (
-    <FormControl flex="3">
+    <FormControl>
       <Label htmlFor="product-select-search-input">
         {label || translate.formatMessage({ id: "product" })}
       </Label>
-      <Select
+      <MultiSelect
+        id="product-select-search-input"
         isLoading={isLoadingGetProducts}
-        value={currentProducts}
-        onChooseItem={onChooseItem}
-        onRemoveChooseItem={onRemoveChooseItem}
-        marginBottom="2"
+        value={value}
+        onChange={onChange}
       >
-        <SelectSearchInput
-          id="product-select-search-input"
-          placeholder={translate.formatMessage({
-            id: "search",
-          })}
-          {...register("searchProduct")}
+        <MultiSelectButton
+          placeholder={label || translate.formatMessage({ id: "product" })}
+          item={(currentProduct) => (
+            <ProductSelectItemContent product={currentProduct} />
+          )}
         />
-        <SelectList>
-          {products?.map((product) => (
-            <ProductSelectItem key={product.id} product={product} />
-          ))}
-        </SelectList>
-      </Select>
-      {!!currentProducts?.length && (
-        <SelectTagList>
-          {currentProducts?.map((currentProduct) => (
-            <SelectTagItem key={currentProduct.id}>
-              <Tag>
-                <TagLabel>
-                  <ProductSelectItemContent product={currentProduct} />
-                </TagLabel>
-                <TagCloseButton
-                  onClick={() => onRemoveChooseCurrentProduct(currentProduct)}
-                />
-              </Tag>
-            </SelectTagItem>
-          ))}
-        </SelectTagList>
-      )}
+        <MultiSelectCombobox>
+          <MultiSelectOptions>
+            <MultiSelectSearchInput
+              {...register('searchProduct')}
+            />
+            {products?.map((product) => (
+              <ProductSelectItem key={product.id} product={product} />
+            ))}
+          </MultiSelectOptions>
+        </MultiSelectCombobox>
+      </MultiSelect>
     </FormControl>
   );
 };

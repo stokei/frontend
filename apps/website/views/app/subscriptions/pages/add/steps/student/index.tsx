@@ -27,8 +27,7 @@ export const StudentStep = ({
       <SelectMembers
         hasCurrentAccount={false}
         currentMembers={student ? [student] : []}
-        onChooseCurrentMember={onChooseStudent}
-        onRemoveChooseCurrentMember={() => onChooseStudent(undefined)}
+        onChange={onChooseStudent}
       />
 
       <ButtonGroup width="full" justifyContent="flex-end" isDisabled={!student}>

@@ -2,10 +2,11 @@ import { useTranslations } from "@/hooks";
 import { PageType } from "@/services/graphql/stokei";
 import { convertEnumValueToCamelCase } from "@/utils";
 import {
-  Select,
-  SelectInput,
-  SelectItem,
-  SelectList,
+  SingleSelect,
+  SingleSelectButton,
+  SingleSelectCombobox,
+  SingleSelectOption,
+  SingleSelectOptions,
   Text
 } from "@stokei/ui";
 
@@ -17,18 +18,21 @@ interface SelectPageTypeProps {
 export const SelectPageType = ({ id, value, onChange }: SelectPageTypeProps) => {
   const translate = useTranslations();
   return (
-    <Select id={id} value={value} onChooseItem={onChange} onRemoveChooseItem={onChange}>
-      <SelectInput
+    <SingleSelect id={id} value={value} onChange={onChange}>
+      <SingleSelectButton
+        placeholder={translate.formatMessage({ id: 'type' })}
         item={item => <Text>{translate.formatMessage({ id: convertEnumValueToCamelCase(item) })}</Text>}
       />
-      <SelectList>
-        <SelectItem value={PageType.Default}>
-          <Text>{translate.formatMessage({ id: "default" })}</Text>
-        </SelectItem>
-        <SelectItem value={PageType.External}>
-          <Text>{translate.formatMessage({ id: "external" })}</Text>
-        </SelectItem>
-      </SelectList>
-    </Select>
+      <SingleSelectCombobox>
+        <SingleSelectOptions>
+          <SingleSelectOption value={PageType.Default}>
+            <Text>{translate.formatMessage({ id: "default" })}</Text>
+          </SingleSelectOption>
+          <SingleSelectOption value={PageType.External}>
+            <Text>{translate.formatMessage({ id: "external" })}</Text>
+          </SingleSelectOption>
+        </SingleSelectOptions>
+      </SingleSelectCombobox>
+    </SingleSelect>
   );
 };

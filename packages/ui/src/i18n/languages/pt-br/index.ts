@@ -3,6 +3,7 @@ export const ptBRMessages = {
   monthAndYearFormat: "MM/yyyy",
   yearFormat: "yyyy",
   search: "Pesquisar",
+  font: "Fonte",
   transparent: "Transparente",
   color: "Cor",
   brandColors: "Cores da marca",

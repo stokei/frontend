@@ -43,10 +43,8 @@ export const OrderFilters = ({
     coupons,
     customers,
     setStatus,
-    onChooseCustomer,
-    onRemoveChooseCustomer,
-    onChooseCoupon,
-    onRemoveChooseCoupon,
+    onChangeCustomer,
+    onChangeCoupon,
     onClearFilters: onClearCurrentFilters,
   } = useFilters({
     customers: customersFilter,
@@ -77,18 +75,15 @@ export const OrderFilters = ({
             hasCurrentAccount={false}
             currentMembers={customers}
             label={translate.formatMessage({ id: "customer" })}
-            onChooseCurrentMember={onChooseCustomer}
-            onRemoveChooseCurrentMember={onRemoveChooseCustomer}
+            onChange={onChangeCustomer}
           />
           <SelectFilterStatus
-            status={status}
-            onChooseStatus={setStatus}
-            onRemoveChooseStatus={setStatus}
+            value={status}
+            onChange={setStatus}
           />
           <SelectCoupons
             value={coupons}
-            onChooseCoupon={onChooseCoupon}
-            onRemoveChooseCoupon={onRemoveChooseCoupon}
+            onChange={onChangeCoupon}
           />
         </Stack>
       </DrawerBody>

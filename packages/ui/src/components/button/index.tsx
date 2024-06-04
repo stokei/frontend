@@ -77,6 +77,7 @@ export const Button = forwardRef<ButtonProps, "button">(
         paddingY={padding.y}
         ref={ref}
         whiteSpace="break-spaces"
+        type="button"
         {...props}
         colorScheme={props.colorScheme || "primary"}
         textColor={buttonTextColor}
