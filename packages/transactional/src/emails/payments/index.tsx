@@ -1,2 +1,2 @@
-export * from "./payment-error";
-export * from "./payment-successfully";
+export * as PaymentsCustomers from "./customers";
+export * as PaymentsSellers from "./sellers";

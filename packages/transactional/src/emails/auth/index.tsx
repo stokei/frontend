@@ -1,3 +1,2 @@
-export * from "./forgot-password";
-export * from "./update-own-password";
-export * from "./user-created-with-configuration-pending";
+export * as AuthCustomers from "./customers";
+export * as AuthSellers from "./sellers";
