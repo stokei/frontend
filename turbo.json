@@ -1,16 +1,27 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "globalEnv": [
+    "NODE_ENV",
+    "NEXT_PUBLIC_\\*"
+  ],
+  "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
     },
     "lint": {},
     "codegen:generate:watch": {},
     "dev": {
       "cache": false,
-      "outputs": ["dist/**", "build/**"]
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
     }
-  },
-  "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_*"]
+  }
 }

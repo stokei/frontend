@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { sendgridClient } from "@/clients/sendgrid";
+import { sendEmail } from "@/services/send-email";
 import {
-  render,
-  defaultEmails,
-  SubscriptionActivatedEmail,
   AppModel,
   EmailData,
+  SubscriptionActivatedEmail,
+  defaultEmails,
+  render,
 } from "@stokei/transactional";
 
 interface SubscriptionItem {
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     })
   );
 
-  await sendgridClient.send({
+  await sendEmail({
     replyTo: data?.app?.email,
     from: {
       name: data?.app?.name,

@@ -1,12 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
-import { sendgridClient } from "@/clients/sendgrid";
+import { sendEmail } from "@/services/send-email";
 import {
-  render,
-  defaultEmails,
-  UpdateOwnPasswordEmail,
   AppModel,
   EmailData,
+  UpdateOwnPasswordEmail,
+  defaultEmails,
+  render,
 } from "@stokei/transactional";
+import { NextRequest, NextResponse } from "next/server";
 
 interface BodyData {
   to: EmailData;
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     })
   );
 
-  await sendgridClient.send({
+  await sendEmail({
     replyTo: data?.app?.email,
     from: {
       name: data?.app?.name,

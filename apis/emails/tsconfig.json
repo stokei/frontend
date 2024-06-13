@@ -2,7 +2,8 @@
   "extends": "@stokei/tsconfig/nextjs.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "react": ["./node_modules/@types/react"]
     },
     "plugins": [
       {
