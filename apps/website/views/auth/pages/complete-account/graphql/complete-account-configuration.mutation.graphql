@@ -1,0 +1,25 @@
+mutation CompleteAccountConfiguration(
+  $input: CompleteAccountConfigurationInput!
+) {
+  completeAccountConfiguration(input: $input) {
+    accessToken
+    refreshToken
+    prefixToken
+    account {
+      id
+      fullname
+      isOwner
+      roles {
+        totalCount
+        items {
+          name
+        }
+      }
+      app {
+        id
+        name
+      }
+      email
+    }
+  }
+}

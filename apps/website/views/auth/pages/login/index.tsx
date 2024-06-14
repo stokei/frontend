@@ -53,7 +53,7 @@ export const LoginPage = () => {
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
