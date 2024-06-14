@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { AuthLayout } from "../../layout";
 import { useLoginMutation } from "./graphql/login.mutation.graphql.generated";
+import { AccountStatus } from "@/services/graphql/stokei";
 
 export const LoginPage = () => {
   const router = useRouter();
@@ -43,9 +44,11 @@ export const LoginPage = () => {
           title: translate.formatMessage({ id: "loginSuccessfully" }),
           status: "success",
         });
-        return window.location.assign(
-          redirectToWhenLoginSuccessfully || websiteRoutes.apps.home
-        );
+        let url = redirectToWhenLoginSuccessfully || websiteRoutes.apps.home
+        if (data.account.status === AccountStatus.ConfigurationPending) {
+          url = websiteRoutes.auth.completeAccountConfiguration({ account: data.account.id })
+        }
+        return window.location.assign(url);
       }
 
       if (!!response.error?.graphQLErrors?.length) {
