@@ -85,14 +85,9 @@ export const CompleteAccountConfigurationPage = () => {
           title: translate.formatMessage({ id: "loginSuccessfully" }),
           status: "success",
         });
-        const isAdmin =
-          !!data.account?.isOwner ||
-          !!data.account?.roles?.items?.some(
-            (role) => role.name === RoleName.ADMIN
-          );
         let url = redirectToWhenCompleteAccountConfigurationSuccessfully || "";
         if (!redirectToWhenCompleteAccountConfigurationSuccessfully) {
-          url = websiteRoutes.app({ appId: currentApp?.id }).home;
+          url = websiteRoutes.apps.home;
         }
         window?.location?.assign(url);
         return;
