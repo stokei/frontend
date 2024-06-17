@@ -1,3 +1,4 @@
+import { appRoutes } from "@stokei/routes";
 import { Button } from "../../../components/button";
 import { Spacer } from "../../../components/spacer";
 import { Template } from "../../../components/template";
@@ -5,14 +6,15 @@ import { Text } from "../../../components/text";
 import { Title } from "../../../components/title";
 import { defaultApp } from "../../../constants/default-app";
 import { BaseEmailProps } from "../../../types/base-email-props";
+import { appendAppBaseURLToPathname } from "../../../utils/append-app-baseurl-to-pathname";
 
 interface UpdateOwnPasswordEmailProps extends BaseEmailProps {
-  buttonUpdateOwnPasswordLink: string;
+  forgotPasswordCode: string;
 }
 
 export const UpdateOwnPasswordEmail = ({
   app,
-  buttonUpdateOwnPasswordLink,
+  forgotPasswordCode,
 }: UpdateOwnPasswordEmailProps) => {
   return (
     <Template app={app}>
@@ -23,8 +25,8 @@ export const UpdateOwnPasswordEmail = ({
         entre em contato conosco.
       </Text>
       <Spacer />
-      {buttonUpdateOwnPasswordLink && (
-        <Button href={buttonUpdateOwnPasswordLink} color={app?.colors?.primary}>
+      {forgotPasswordCode && (
+        <Button href={appendAppBaseURLToPathname(app, `${appRoutes.auth.changePassword}?code=${forgotPasswordCode}`)} color={app?.colors?.primary}>
           Criar nova senha
         </Button>
       )}
@@ -35,7 +37,7 @@ export const UpdateOwnPasswordEmail = ({
 const UpdateOwnPasswordEmailExample = () => (
   <UpdateOwnPasswordEmail
     app={defaultApp}
-    buttonUpdateOwnPasswordLink="https://google.com"
+    forgotPasswordCode="anyCode"
   />
 );
 

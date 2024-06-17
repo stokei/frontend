@@ -1,4 +1,5 @@
-import { Column, Img, Row, Section } from "@react-email/components";
+import { Column, Img, Link, Row, Section } from "@react-email/components";
+import { appRoutes } from "@stokei/routes";
 import { Button } from "../../../components/button";
 import { Spacer } from "../../../components/spacer";
 import { Template } from "../../../components/template";
@@ -7,6 +8,8 @@ import { Title } from "../../../components/title";
 import { defaultApp } from "../../../constants/default-app";
 import { noImageURL } from "../../../constants/no-image";
 import { BaseEmailProps } from "../../../types/base-email-props";
+import { appendAppBaseURLToPathname } from "../../../utils/append-app-baseurl-to-pathname";
+import { getProductParentURL } from "../../../utils/get-product-parent-url";
 
 interface OrderItem {
   productId: string;
@@ -17,6 +20,7 @@ interface OrderItem {
 }
 
 interface OrderCreatedEmailProps extends BaseEmailProps {
+  orderId: string;
   items: OrderItem[];
   totalAmount: string;
   subtotalAmount?: string;
@@ -25,6 +29,7 @@ interface OrderCreatedEmailProps extends BaseEmailProps {
 export const OrderCreatedEmail = ({
   app,
   items,
+  orderId,
   totalAmount,
   subtotalAmount,
 }: OrderCreatedEmailProps) => {
@@ -63,7 +68,9 @@ export const OrderCreatedEmail = ({
               />
             </Column>
             <Column>
-              <Text fontWeight="600">{item.productName}</Text>
+              <Link href={getProductParentURL(app, item.productId)}>
+                <Text fontWeight="600">{item.productName}</Text>
+              </Link>
               <Text>
                 {item.fromPrice && (
                   <span
@@ -118,8 +125,8 @@ export const OrderCreatedEmail = ({
       </Text>
       <Spacer />
       {app?.url && (
-        <Button href={app?.url} color={app?.colors?.primary}>
-          Visitar plataforma
+        <Button href={appendAppBaseURLToPathname(app, appRoutes.customers.orders.order({ order: orderId }))} color={app?.colors?.primary}>
+          Acessar pedido
         </Button>
       )}
     </Template>
@@ -129,18 +136,19 @@ export const OrderCreatedEmail = ({
 const OrderCreatedEmailExample = () => (
   <OrderCreatedEmail
     app={defaultApp}
+    orderId="orderId"
     subtotalAmount="R$ 200,00"
     totalAmount="R$ 200,00"
     items={[
       {
-        productId: "1",
+        productId: "material_1",
         productName: "Produto 1",
         fromPrice: "R$ 199,00",
         price: "R$ 100,00",
         image: "https://stokei.com/assets/logo.png",
       },
       {
-        productId: "2",
+        productId: "course_1",
         productName: "Produto 2",
         fromPrice: "R$ 136,00",
         price: "R$ 100,00",

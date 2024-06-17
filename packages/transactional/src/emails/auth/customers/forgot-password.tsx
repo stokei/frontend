@@ -1,3 +1,4 @@
+import { appRoutes } from '@stokei/routes';
 import { Button } from "../../../components/button";
 import { Spacer } from "../../../components/spacer";
 import { Template } from "../../../components/template";
@@ -5,14 +6,15 @@ import { Text } from "../../../components/text";
 import { Title } from "../../../components/title";
 import { defaultApp } from "../../../constants/default-app";
 import { BaseEmailProps } from "../../../types/base-email-props";
+import { appendAppBaseURLToPathname } from '../../../utils/append-app-baseurl-to-pathname';
 
 interface ForgotPasswordEmailProps extends BaseEmailProps {
-  buttonForgotPasswordLink: string;
+  forgotPasswordCode: string;
 }
 
 export const ForgotPasswordEmail = ({
   app,
-  buttonForgotPasswordLink,
+  forgotPasswordCode,
 }: ForgotPasswordEmailProps) => {
   return (
     <Template app={app}>
@@ -20,8 +22,8 @@ export const ForgotPasswordEmail = ({
       <Spacer />
       <Text>Clique no botão abaixo para criar uma nova senha.</Text>
       <Spacer />
-      {buttonForgotPasswordLink && (
-        <Button href={buttonForgotPasswordLink} color={app?.colors?.primary}>
+      {forgotPasswordCode && (
+        <Button href={appendAppBaseURLToPathname(app, `${appRoutes.auth.changePassword}?code=${forgotPasswordCode}`)} color={app?.colors?.primary}>
           Criar nova senha
         </Button>
       )}
@@ -32,7 +34,7 @@ export const ForgotPasswordEmail = ({
 const ForgotPasswordEmailExample = () => (
   <ForgotPasswordEmail
     app={defaultApp}
-    buttonForgotPasswordLink="https://google.com"
+    forgotPasswordCode="anyCode"
   />
 );
 
