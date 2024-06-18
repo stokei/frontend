@@ -37,8 +37,14 @@ export const HomePage = () => {
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
+    email: z
+      .string()
+      .min(1, { message: translate.formatMessage({ id: "required" }) })
+      .email({
+        message: translate.formatMessage({ id: "mustBeAValidEmail" }),
+      }),
   });
 
   const {
@@ -63,16 +69,18 @@ export const HomePage = () => {
     if (currentApp) {
       reset({
         name: currentApp?.name || "",
+        email: currentApp?.email || "",
       });
     }
   }, [currentApp, reset]);
 
-  const onSubmit = async ({ name }: z.infer<typeof validationSchema>) => {
+  const onSubmit = async ({ name, email }: z.infer<typeof validationSchema>) => {
     try {
       const response = await onUpdateApp({
         input: {
           data: {
             name,
+            email,
             logo: logoId,
           },
         },
@@ -118,6 +126,22 @@ export const HomePage = () => {
                     />
                   </InputGroup>
                   <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+                </FormControl>
+                <FormControl isInvalid={!!errors?.email}>
+                  <Label htmlFor="email">
+                    {translate.formatMessage({ id: "email" })}
+                  </Label>
+                  <InputGroup>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder={translate.formatMessage({
+                        id: "emailPlaceholder",
+                      })}
+                      {...register("email")}
+                    />
+                  </InputGroup>
+                  <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
                 </FormControl>
                 <FormControl>
                   <Label htmlFor="app-image">
