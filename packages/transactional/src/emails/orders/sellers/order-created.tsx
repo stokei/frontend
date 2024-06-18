@@ -1,15 +1,17 @@
 import { Column, Img, Link, Row, Section } from "@react-email/components";
-import { appRoutes } from "@stokei/routes";
+import { websiteRoutes } from "@stokei/routes";
 import { Button } from "../../../components/button";
 import { Spacer } from "../../../components/spacer";
 import { Template } from "../../../components/template";
 import { Text } from "../../../components/text";
 import { Title } from "../../../components/title";
+import { defaultAccount } from "../../../constants/default-account";
 import { defaultApp } from "../../../constants/default-app";
 import { noImageURL } from "../../../constants/no-image";
+import { AccountModel } from "../../../types/account";
 import { BaseEmailProps } from "../../../types/base-email-props";
 import { appendAppBaseURLToPathname } from "../../../utils/append-app-baseurl-to-pathname";
-import { getProductParentURLFromAppRoutes } from "../../../utils/get-product-parent-url";
+import { getProductParentURLFromWebsiteRoutes } from "../../../utils/get-product-parent-url";
 
 interface OrderItem {
   productId: string;
@@ -22,6 +24,7 @@ interface OrderItem {
 export interface OrderCreatedEmailProps extends BaseEmailProps {
   orderId: string;
   items: OrderItem[];
+  customer: AccountModel;
   totalAmount: string;
   subtotalAmount?: string;
 }
@@ -29,6 +32,7 @@ export interface OrderCreatedEmailProps extends BaseEmailProps {
 export const OrderCreatedEmail = ({
   app,
   items,
+  customer,
   orderId,
   totalAmount,
   subtotalAmount,
@@ -36,12 +40,11 @@ export const OrderCreatedEmail = ({
   return (
     <Template app={app}>
       <Title level="h2" textAlign="center">
-        Parabéns por escolher comprar conosco!
+        Parabéns pela nova venda!
       </Title>
       <Spacer />
       <Text>
-        Agradecemos pela sua confiança em nossos produtos. Agora basta aguardar
-        a confirmação de pagamento para liberação dos seus produtos.
+        O cliente <Link href={appendAppBaseURLToPathname(app, websiteRoutes.app({ appId: app?.id }).member({ member: customer.id }).home)}><b>{customer.fullname} ({customer.email})</b></Link> realizou a compra dos produtos abaixo.
       </Text>
       <Spacer />
       <Section>
@@ -68,7 +71,7 @@ export const OrderCreatedEmail = ({
               />
             </Column>
             <Column>
-              <Link href={getProductParentURLFromAppRoutes(app, item.productId)}>
+              <Link href={getProductParentURLFromWebsiteRoutes(app, item.productId)}>
                 <Text fontWeight="600">{item.productName}</Text>
               </Link>
               <Text>
@@ -125,7 +128,7 @@ export const OrderCreatedEmail = ({
       </Text>
       <Spacer />
       {app?.url && (
-        <Button href={appendAppBaseURLToPathname(app, appRoutes.customers.orders.order({ order: orderId }))} color={app?.colors?.primary}>
+        <Button href={appendAppBaseURLToPathname(app, websiteRoutes.app({ appId: app.id }).orders.order({ order: orderId }))} color={app?.colors?.primary}>
           Acessar pedido
         </Button>
       )}
@@ -137,6 +140,7 @@ const OrderCreatedEmailExample = () => (
   <OrderCreatedEmail
     app={defaultApp}
     orderId="orderId"
+    customer={defaultAccount}
     subtotalAmount="R$ 200,00"
     totalAmount="R$ 200,00"
     items={[

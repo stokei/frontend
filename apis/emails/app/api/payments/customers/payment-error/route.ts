@@ -2,18 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sendEmail } from "@/services/send-email";
 import {
-  AppModel,
   EmailData,
   PaymentsCustomers,
   defaultEmails,
   render,
 } from "@stokei/transactional";
 
-interface BodyData {
+interface BodyData extends PaymentsCustomers.PaymentErrorEmailProps {
   to: EmailData;
-  totalAmount: string;
-  subtotalAmount: string;
-  app: AppModel;
 }
 
 export async function POST(request: NextRequest) {
@@ -21,13 +17,7 @@ export async function POST(request: NextRequest) {
   if (!data) {
     return NextResponse.error();
   }
-  const emailHtml = render(
-    PaymentsCustomers.PaymentErrorEmail({
-      app: data?.app,
-      totalAmount: data?.totalAmount,
-      subtotalAmount: data?.subtotalAmount,
-    })
-  );
+  const emailHtml = render(PaymentsCustomers.PaymentErrorEmail(data));
 
   await sendEmail({
     replyTo: data?.app?.email,

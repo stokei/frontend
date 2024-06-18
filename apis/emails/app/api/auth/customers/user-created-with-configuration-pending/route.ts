@@ -1,21 +1,15 @@
 import { sendEmail } from "@/services/send-email";
 import {
-  AppModel,
-  EmailData,
   AuthCustomers,
+  EmailData,
   defaultEmails,
   render,
 } from "@stokei/transactional";
 import { NextRequest, NextResponse } from "next/server";
 
-interface User {
-  email: string;
-  password: string;
-}
-interface BodyData {
+interface BodyData
+  extends AuthCustomers.UserCreatedWithConfigurationPendingEmailProps {
   to: EmailData;
-  user: User;
-  app: AppModel;
 }
 
 export async function POST(request: NextRequest) {
@@ -24,10 +18,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.error();
   }
   const emailHtml = render(
-    AuthCustomers.UserCreatedWithConfigurationPendingEmail({
-      app: data?.app,
-      user: data?.user,
-    })
+    AuthCustomers.UserCreatedWithConfigurationPendingEmail(data)
   );
 
   await sendEmail({

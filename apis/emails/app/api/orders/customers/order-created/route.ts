@@ -2,26 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sendEmail } from "@/services/send-email";
 import {
-  AppModel,
   EmailData,
   OrdersCustomers,
   defaultEmails,
   render,
 } from "@stokei/transactional";
 
-interface OrderItem {
-  productId: string;
-  productName: string;
-  price: string;
-  image?: string;
-  fromPrice?: string;
-}
-interface BodyData {
+interface BodyData extends OrdersCustomers.OrderCreatedEmailProps {
   to: EmailData;
-  totalAmount: string;
-  subtotalAmount: string;
-  app: AppModel;
-  items: OrderItem[];
 }
 
 export async function POST(request: NextRequest) {
@@ -29,14 +17,7 @@ export async function POST(request: NextRequest) {
   if (!data) {
     return NextResponse.error();
   }
-  const emailHtml = render(
-    OrdersCustomers.OrderCreatedEmail({
-      app: data?.app,
-      items: data?.items,
-      totalAmount: data?.totalAmount,
-      subtotalAmount: data?.subtotalAmount,
-    })
-  );
+  const emailHtml = render(OrdersCustomers.OrderCreatedEmail(data));
 
   await sendEmail({
     replyTo: data?.app?.email,

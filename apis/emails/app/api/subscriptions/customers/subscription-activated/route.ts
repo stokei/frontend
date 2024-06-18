@@ -2,22 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sendEmail } from "@/services/send-email";
 import {
-  AppModel,
   EmailData,
   SubscriptionsCustomers,
   defaultEmails,
   render,
 } from "@stokei/transactional";
 
-interface SubscriptionItem {
-  productId: string;
-  productName: string;
-  image?: string;
-}
-interface BodyData {
+interface BodyData
+  extends SubscriptionsCustomers.SubscriptionActivatedEmailProps {
   to: EmailData;
-  app: AppModel;
-  items: SubscriptionItem[];
 }
 
 export async function POST(request: NextRequest) {
@@ -26,10 +19,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.error();
   }
   const emailHtml = render(
-    SubscriptionsCustomers.SubscriptionActivatedEmail({
-      app: data?.app,
-      items: data?.items,
-    })
+    SubscriptionsCustomers.SubscriptionActivatedEmail(data)
   );
 
   await sendEmail({

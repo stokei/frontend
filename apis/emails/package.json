@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "predev": "yarn maildev",
     "dev": "next dev --port 4040",
     "build": "next build",
     "start": "next start",

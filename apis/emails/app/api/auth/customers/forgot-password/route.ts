@@ -1,17 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
-import {
-  render,
-  defaultEmails,
-  AuthCustomers,
-  AppModel,
-  EmailData,
-} from "@stokei/transactional";
 import { sendEmail } from "@/services/send-email";
+import {
+  AuthCustomers,
+  EmailData,
+  defaultEmails,
+  render,
+} from "@stokei/transactional";
+import { NextRequest, NextResponse } from "next/server";
 
-interface BodyData {
+interface BodyData extends AuthCustomers.ForgotPasswordEmailProps {
   to: EmailData;
-  buttonForgotPasswordLink: string;
-  app: AppModel;
 }
 
 export async function POST(request: NextRequest) {
@@ -19,12 +16,7 @@ export async function POST(request: NextRequest) {
   if (!data) {
     return NextResponse.error();
   }
-  const emailHtml = render(
-    AuthCustomers.ForgotPasswordEmail({
-      app: data?.app,
-      buttonForgotPasswordLink: data?.buttonForgotPasswordLink,
-    })
-  );
+  const emailHtml = render(AuthCustomers.ForgotPasswordEmail(data));
 
   await sendEmail({
     replyTo: data?.app?.email,

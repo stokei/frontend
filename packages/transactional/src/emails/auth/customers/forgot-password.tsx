@@ -8,7 +8,7 @@ import { defaultApp } from "../../../constants/default-app";
 import { BaseEmailProps } from "../../../types/base-email-props";
 import { appendAppBaseURLToPathname } from '../../../utils/append-app-baseurl-to-pathname';
 
-interface ForgotPasswordEmailProps extends BaseEmailProps {
+export interface ForgotPasswordEmailProps extends BaseEmailProps {
   forgotPasswordCode: string;
 }
 

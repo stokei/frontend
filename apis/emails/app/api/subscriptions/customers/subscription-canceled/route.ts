@@ -1,6 +1,5 @@
 import { sendEmail } from "@/services/send-email";
 import {
-  AppModel,
   EmailData,
   SubscriptionsCustomers,
   defaultEmails,
@@ -8,15 +7,9 @@ import {
 } from "@stokei/transactional";
 import { NextRequest, NextResponse } from "next/server";
 
-interface SubscriptionItem {
-  productId: string;
-  productName: string;
-  image?: string;
-}
-interface BodyData {
+interface BodyData
+  extends SubscriptionsCustomers.SubscriptionCanceledEmailProps {
   to: EmailData;
-  app: AppModel;
-  items: SubscriptionItem[];
 }
 
 export async function POST(request: NextRequest) {
@@ -25,10 +18,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.error();
   }
   const emailHtml = render(
-    SubscriptionsCustomers.SubscriptionCanceledEmail({
-      app: data?.app,
-      items: data?.items,
-    })
+    SubscriptionsCustomers.SubscriptionCanceledEmail(data)
   );
 
   await sendEmail({

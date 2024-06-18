@@ -9,7 +9,7 @@ interface User {
   email: string;
   password: string;
 }
-interface UserCreatedWithConfigurationPendingEmailProps extends BaseEmailProps {
+export interface UserCreatedWithConfigurationPendingEmailProps extends BaseEmailProps {
   user: User;
 }
 

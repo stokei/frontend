@@ -1,3 +1,4 @@
+import { appRoutes } from "@stokei/routes";
 import { Button } from "../../../components/button";
 import { Icon } from "../../../components/icon";
 import { Spacer } from "../../../components/spacer";
@@ -6,13 +7,16 @@ import { Text } from "../../../components/text";
 import { Title } from "../../../components/title";
 import { defaultApp } from "../../../constants/default-app";
 import { BaseEmailProps } from "../../../types/base-email-props";
+import { appendAppBaseURLToPathname } from "../../../utils/append-app-baseurl-to-pathname";
 
-interface PaymentSuccessfullyEmailProps extends BaseEmailProps {
+export interface PaymentSuccessfullyEmailProps extends BaseEmailProps {
+  orderId: string;
   totalAmount: string;
   subtotalAmount?: string;
 }
 
 export const PaymentSuccessfullyEmail = ({
+  orderId,
   app,
   totalAmount,
   subtotalAmount,
@@ -58,8 +62,8 @@ export const PaymentSuccessfullyEmail = ({
       </Text>
       <Spacer />
       {app?.url && (
-        <Button href={app?.url} color={app?.colors?.primary}>
-          Visitar plataforma
+        <Button href={appendAppBaseURLToPathname(app, appRoutes.customers.orders.order({ order: orderId }))} color={app?.colors?.primary}>
+          Acessar pedido
         </Button>
       )}
     </Template>
@@ -68,6 +72,7 @@ export const PaymentSuccessfullyEmail = ({
 
 const PaymentSuccessfullyEmailExample = () => (
   <PaymentSuccessfullyEmail
+    orderId="orderId"
     app={defaultApp}
     subtotalAmount="R$ 200,00"
     totalAmount="R$ 200,00"

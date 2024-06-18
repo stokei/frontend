@@ -1,13 +1,14 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { sendEmail } from "@/services/send-email";
 import {
-  AuthCustomers,
   EmailData,
+  OrdersSellers,
   defaultEmails,
   render,
 } from "@stokei/transactional";
-import { NextRequest, NextResponse } from "next/server";
 
-interface BodyData extends AuthCustomers.UpdateOwnPasswordEmailProps {
+interface BodyData extends OrdersSellers.OrderCreatedEmailProps {
   to: EmailData;
 }
 
@@ -16,7 +17,7 @@ export async function POST(request: NextRequest) {
   if (!data) {
     return NextResponse.error();
   }
-  const emailHtml = render(AuthCustomers.UpdateOwnPasswordEmail(data));
+  const emailHtml = render(OrdersSellers.OrderCreatedEmail(data));
 
   await sendEmail({
     replyTo: data?.app?.email,
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest) {
       email: defaultEmails.contact,
     },
     to: data.to,
-    subject: "Alteração de senha",
+    subject: "Pedido criado",
     html: emailHtml,
   });
 

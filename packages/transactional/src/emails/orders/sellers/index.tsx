@@ -1,3 +1,1 @@
-export default () => {
-    return <p>Oie</p>
-};
+export * from "./order-created";

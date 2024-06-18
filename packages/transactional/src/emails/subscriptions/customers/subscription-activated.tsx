@@ -1,4 +1,4 @@
-import { Section, Row, Column, Img } from "@react-email/components";
+import { Section, Row, Column, Img, Link } from "@react-email/components";
 import { Spacer } from "../../../components/spacer";
 import { Template } from "../../../components/template";
 import { Title } from "../../../components/title";
@@ -7,6 +7,9 @@ import { BaseEmailProps } from "../../../types/base-email-props";
 import { Text } from "../../../components/text";
 import { Button } from "../../../components/button";
 import { noImageURL } from "../../../constants/no-image";
+import { getProductParentURLFromAppRoutes } from "../../../utils/get-product-parent-url";
+import { appendAppBaseURLToPathname } from "../../../utils/append-app-baseurl-to-pathname";
+import { appRoutes } from "@stokei/routes";
 
 interface SubscriptionItem {
   productId: string;
@@ -14,11 +17,13 @@ interface SubscriptionItem {
   image?: string;
 }
 
-interface SubscriptionActivatedEmailProps extends BaseEmailProps {
+export interface SubscriptionActivatedEmailProps extends BaseEmailProps {
+  subscriptionId: string;
   items: SubscriptionItem[];
 }
 
 export const SubscriptionActivatedEmail = ({
+  subscriptionId,
   app,
   items,
 }: SubscriptionActivatedEmailProps) => {
@@ -52,15 +57,20 @@ export const SubscriptionActivatedEmail = ({
               />
             </Column>
             <Column>
-              <Text fontWeight="600">{item.productName}</Text>
+              <Link href={getProductParentURLFromAppRoutes(app, item.productId)}>
+                <Text fontWeight="600">{item.productName}</Text>
+              </Link>
             </Column>
           </Row>
         ))}
       </Section>
       <Spacer />
       {app?.url && (
-        <Button href={app?.url} color={app?.colors?.primary}>
-          Visitar plataforma
+        <Button
+          href={appendAppBaseURLToPathname(app, appRoutes.customers.subscriptions.subscription({ subscription: subscriptionId }))}
+          color={app?.colors?.primary}
+        >
+          Acessar assinatura
         </Button>
       )}
     </Template>
@@ -69,15 +79,16 @@ export const SubscriptionActivatedEmail = ({
 
 const SubscriptionActivatedEmailExample = () => (
   <SubscriptionActivatedEmail
+    subscriptionId="subscriptionId"
     app={defaultApp}
     items={[
       {
-        productId: "1",
+        productId: "material_1",
         productName: "Produto 1",
         image: "https://stokei.com/assets/logo.png",
       },
       {
-        productId: "2",
+        productId: "course_1",
         productName: "Produto 2",
         image: "https://stokei.com/assets/logo.png",
       },

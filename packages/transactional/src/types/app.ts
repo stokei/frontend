@@ -3,6 +3,7 @@ export interface AppModelColor {
 }
 
 export interface AppModel {
+  id: string;
   url?: string;
   logoURL?: string;
   name: string;
