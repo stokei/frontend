@@ -10,10 +10,13 @@ const nextConfig = {
     defaultLocale: "pt-BR",
   },
   transpilePackages: [
+    "@stokei/builder",
+    "@stokei/graphql",
+    "@stokei/plugins",
+    "@stokei/routes",
+    "@stokei/translations",
     "@stokei/ui",
     "@stokei/utils",
-    "@stokei/graphql",
-    "@stokei/translations",
   ],
   experimental: {},
 };

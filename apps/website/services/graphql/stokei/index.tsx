@@ -3847,6 +3847,7 @@ export type UpdateDataAddressInput = {
 export type UpdateDataAppInput = {
   avatar?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
   hero?: InputMaybe<Scalars['String']>;
   icon?: InputMaybe<Scalars['String']>;
   logo?: InputMaybe<Scalars['String']>;
