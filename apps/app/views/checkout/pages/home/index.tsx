@@ -3,11 +3,12 @@ import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/p
 import { CheckoutStep } from "@/constants/checkout-steps";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { appRoutes } from "@stokei/routes";
 import {
   CreateOrderItemInput,
   PaymentMethodType,
 } from "@/services/graphql/stokei";
+import { useShoppingCart } from "@stokei/builder";
+import { appRoutes } from "@stokei/routes";
 import {
   Box,
   Card,
@@ -30,24 +31,17 @@ import {
   useCreateCheckoutMutation,
 } from "./graphql/create-checkout.mutation.graphql.generated";
 import { useCreateOrderMutation } from "./graphql/create-order.mutation.graphql.generated";
-import { AccountStep } from "./steps/account";
-import { AddressStep } from "./steps/address";
-import { PaymentStep } from "./steps/payment";
 import { PaymentMethodStep } from "./steps/payment-method";
 import { ProductsStep } from "./steps/products";
 import { SummaryStep } from "./steps/summary";
-import { useShoppingCart } from "@stokei/builder";
 
 export const CheckoutPage = () => {
   const { activeSteps, onActivateStep, onDeactivateStep } =
     useActiveSteps<CheckoutStep>({
       initialState: {
         [CheckoutStep.PRODUCTS]: true,
-        [CheckoutStep.ADDRESS]: false,
-        [CheckoutStep.ACCOUNT]: false,
         [CheckoutStep.PAYMENT_METHOD]: false,
         [CheckoutStep.SUMMARY]: false,
-        [CheckoutStep.PAYMENT]: false,
       },
     });
   const [address, setAddress] = useState<AddressManagementAddressFragment>();
@@ -229,21 +223,6 @@ export const CheckoutPage = () => {
   const onGoToProductsStep = () => {
     setCurrentStep(CheckoutStep.PRODUCTS);
   };
-  const onGoToAddressStep = () => {
-    if (!isAuthenticated) {
-      router.push({
-        pathname: appRoutes.auth.login,
-        query: { redirectTo: router.asPath },
-      });
-      return;
-    }
-    onActivateStep(CheckoutStep.ADDRESS);
-    setCurrentStep(CheckoutStep.ADDRESS);
-  };
-  const onGoToAccountStep = () => {
-    onActivateStep(CheckoutStep.ACCOUNT);
-    setCurrentStep(CheckoutStep.ACCOUNT);
-  };
   const onGoToPaymentMethodStep = () => {
     onActivateStep(CheckoutStep.PAYMENT_METHOD);
     setCurrentStep(CheckoutStep.PAYMENT_METHOD);
@@ -251,21 +230,6 @@ export const CheckoutPage = () => {
   const onGoToSummaryStep = () => {
     onActivateStep(CheckoutStep.SUMMARY);
     setCurrentStep(CheckoutStep.SUMMARY);
-  };
-
-  const onGoToAccountOrPaymentMethod = () => {
-    if (!addressIsBR) {
-      onGoToPaymentMethodStep();
-      return;
-    }
-    onGoToAccountStep();
-  };
-  const onGoBackToAccountOrAddress = () => {
-    if (!addressIsBR) {
-      onGoToAddressStep();
-      return;
-    }
-    onGoToAccountStep();
   };
 
   const onGoToPayment = async () => {
@@ -298,18 +262,6 @@ export const CheckoutPage = () => {
               <StepItem
                 title={translate.formatMessage({ id: "products" })}
                 stepIndex={CheckoutStep.PRODUCTS}
-                isCompleted={activeSteps?.[CheckoutStep.ADDRESS]}
-              />
-              <StepItem
-                title={translate.formatMessage({ id: "address" })}
-                stepIndex={CheckoutStep.ADDRESS}
-                isDisabled={!activeSteps?.[CheckoutStep.ADDRESS]}
-                isCompleted={activeSteps?.[CheckoutStep.ACCOUNT]}
-              />
-              <StepItem
-                title={translate.formatMessage({ id: "account" })}
-                stepIndex={CheckoutStep.ACCOUNT}
-                isDisabled={!activeSteps?.[CheckoutStep.ACCOUNT]}
                 isCompleted={activeSteps?.[CheckoutStep.PAYMENT_METHOD]}
               />
               <StepItem
@@ -322,33 +274,14 @@ export const CheckoutPage = () => {
                 title={translate.formatMessage({ id: "summary" })}
                 stepIndex={CheckoutStep.SUMMARY}
                 isDisabled={!activeSteps?.[CheckoutStep.SUMMARY]}
-                isCompleted={activeSteps?.[CheckoutStep.PAYMENT]}
-              />
-              <StepItem
-                title={translate.formatMessage({ id: "payment" })}
-                stepIndex={CheckoutStep.PAYMENT}
-                isDisabled={!activeSteps?.[CheckoutStep.PAYMENT]}
+                isCompleted={activeSteps?.[CheckoutStep.SUMMARY]}
               />
             </StepList>
             <StepPanels>
               <Card background="background.50">
                 <CardBody>
                   <StepPanel stepIndex={CheckoutStep.PRODUCTS}>
-                    <ProductsStep onNextStep={onGoToAddressStep} />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.ADDRESS}>
-                    <AddressStep
-                      address={address}
-                      onChangeAddress={setAddress}
-                      onPreviousStep={onGoToProductsStep}
-                      onNextStep={onGoToAccountOrPaymentMethod}
-                    />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.ACCOUNT}>
-                    <AccountStep
-                      onPreviousStep={onGoToAddressStep}
-                      onNextStep={onGoToPaymentMethodStep}
-                    />
+                    <ProductsStep onNextStep={onGoToPaymentMethodStep} />
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.PAYMENT_METHOD}>
                     <PaymentMethodStep
@@ -357,7 +290,7 @@ export const CheckoutPage = () => {
                       paymentMethodType={paymentMethodType}
                       onChoosePaymentMethod={setPaymentMethod}
                       onChoosePaymentMethodType={setPaymentMethodType}
-                      onPreviousStep={onGoBackToAccountOrAddress}
+                      onPreviousStep={onGoToProductsStep}
                       onNextStep={onGoToSummaryStep}
                     />
                   </StepPanel>
@@ -377,15 +310,6 @@ export const CheckoutPage = () => {
                       onGoToPaymentMethod={onGoToPaymentMethodStep}
                       onPreviousStep={onGoToPaymentMethodStep}
                       onNextStep={onGoToPayment}
-                    />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.PAYMENT}>
-                    <PaymentStep
-                      orderId={orderId}
-                      totalAmount={totalAmount}
-                      checkout={checkoutResponse}
-                      paymentMethodType={paymentMethodType}
-                      onPreviousStep={onGoToSummaryStep}
                     />
                   </StepPanel>
                 </CardBody>
