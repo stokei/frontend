@@ -1,6 +1,7 @@
 import { I18nKeyWithoutOtherTranslations } from "../../../types/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
+  chooseYourPlan: "Choose your plan",
   loginSuccessfully: "Login successfully!",
   signUpSuccessfully: "Sign up successfully!",
   page: "Page",

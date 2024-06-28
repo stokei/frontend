@@ -5,8 +5,6 @@ query CurrentGlobalApp {
     email
     slug
     isStokei
-    isIntegratedWithPagarme
-    isIntegratedWithStripe
     stripeAccount
     status
     currentSubscriptionContract {

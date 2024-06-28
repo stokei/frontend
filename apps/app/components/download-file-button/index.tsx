@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { useCreateFileDownloadURL } from "@/hooks/create-file-download-url";
+import { useCreateFileDownloadURL } from "@/hooks/use-create-file-download-url";
 import { Box, Button, Icon } from "@stokei/ui";
 
 interface DownloadFileButtonProps {

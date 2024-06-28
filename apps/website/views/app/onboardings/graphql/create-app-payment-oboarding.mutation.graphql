@@ -1,0 +1,7 @@
+mutation CreateAppPaymentOnboardingLink(
+  $input: CreateAppPaymentOnboardingLinkInput!
+) {
+  createAppPaymentOnboardingLink(input: $input) {
+    url
+  }
+}

@@ -118,7 +118,7 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
             <Box width="full">
               {!!product?.prices?.items?.length && (
                 <SelectPrice
-                  showLabel={false}
+                  label={translate.formatMessage({ id: "chooseYourPlan" })}
                   onChange={onChoosePrice}
                   prices={product?.prices?.items}
                   currentPrice={currentPrice}

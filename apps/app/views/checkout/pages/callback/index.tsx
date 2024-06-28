@@ -8,7 +8,7 @@ import { PaymentRequiresPaymentMethod } from "./components/payment-requires-paym
 import { PaymentSuccessfully } from "./components/payment-successfully";
 import { useShoppingCart } from "@stokei/builder";
 
-enum PaymentStatus {
+export enum PaymentStatus {
   SUCCEEDED = "succeeded",
   PROCESSING = "processing",
   REQUIRES_PAYMENT_METHOD = "requires_payment_method",

@@ -15,6 +15,7 @@ export const ProductsPage = () => {
   );
   const [{ data: dataCatalog, fetching: isLoadingCatalog }] =
     useGetCatalogPageCatalogQuery({
+      requestPolicy: 'network-only',
       variables: {
         catalog: catalogId,
       },

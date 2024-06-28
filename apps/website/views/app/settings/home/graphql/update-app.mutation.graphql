@@ -4,7 +4,6 @@ mutation UpdateApp($input: UpdateAppInput!) {
     name
     slug
     isStokei
-    isIntegratedWithPagarme
     stripeAccount
     currency {
       id
