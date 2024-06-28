@@ -38,8 +38,6 @@ query CurrentGlobalApp($slug: String, $site: String) {
       id
       name
       isStokei
-      isIntegratedWithPagarme
-      isIntegratedWithStripe
       stripeAccount
       currency {
         id

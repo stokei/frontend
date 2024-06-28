@@ -30,7 +30,6 @@ export interface SummaryStepProps {
   coupon?: CheckoutPageCouponFragment;
   isLoadingCheckout: boolean;
   isLoadingGetApplyCouponToValue: boolean;
-  paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment;
   paymentMethodType?: PaymentMethodType;
   onChangeCoupon: (coupon?: CheckoutPageCouponFragment) => void;
   onGoToPaymentMethod: () => void;
@@ -41,7 +40,6 @@ export interface SummaryStepProps {
 
 export const SummaryStep = ({
   coupon,
-  paymentMethod,
   paymentMethodType,
   isLoadingCheckout,
   totalAmount,
@@ -105,7 +103,6 @@ export const SummaryStep = ({
           {paymentMethodType && (
             <PaymentMethod
               paymentMethodType={paymentMethodType}
-              paymentMethod={paymentMethod}
             />
           )}
         </ChoiseEditable>
