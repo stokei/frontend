@@ -1,0 +1,22 @@
+query GetPlugins(
+  $where: WhereDataFindAllPluginsInput
+  $orderBy: OrderByDataFindAllPluginsInput
+  $page: PaginationInput
+) {
+  plugins(where: $where, page: $page, orderBy: $orderBy) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...GetPluginsPlugin
+    }
+  }
+}
+
+fragment GetPluginsPlugin on Plugin {
+  id
+  type
+}

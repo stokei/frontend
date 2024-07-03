@@ -1,10 +1,10 @@
 import { AppLayout } from "@/views/app/layout";
 import { Container, SimpleGrid, Stack, Title } from "@stokei/ui";
 
-import { Navbar } from "../../components/navbar";
-import { PagarmeOnboarding } from "../../components/pagarme-onboarding";
 import { useTranslations } from "@/hooks";
-import { StripeOnboarding } from "../../components/stripe-onboarding";
+import { Navbar } from "../../components/navbar";
+import { StripeOnboarding } from "./components/stripe-onboarding";
+import { MercadopagoOnboarding } from "./components/mercadopago-onboarding";
 
 export const OnboardingsPage = () => {
   const translate = useTranslations();
@@ -17,8 +17,8 @@ export const OnboardingsPage = () => {
             {translate.formatMessage({ id: "paymentMethods" })}
           </Title>
           <SimpleGrid columns={[1, 1, 2, 2]} spacing="5">
-            <PagarmeOnboarding />
             <StripeOnboarding />
+            <MercadopagoOnboarding />
           </SimpleGrid>
         </Container>
       </Stack>

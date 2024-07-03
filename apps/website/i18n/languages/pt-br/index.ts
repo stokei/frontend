@@ -1,5 +1,7 @@
 export const ptBRMessages = {
   me: "Eu",
+  visit: "Visitar",
+  acceptInstallment: "Aceita parcelamento",
   accesses: "Acessos",
   mostAccessedTimes: "Horários mais acessados",
   productsBestSeller: "Produtos mais vendidos",
@@ -485,6 +487,8 @@ export const ptBRMessages = {
   paymentMethods: "Meio de pagamentos",
   integrateYourBusinessWithStripesPaymentsPlatform:
     "Integre sua empresa na plataforma de pagamentos da Stripe.",
+  integrateYourBusinessWithMercadoPagosPaymentsPlatform:
+    "Integre sua empresa na plataforma de pagamentos da Mercado Pago.",
   integrateThePagarmePaymentMethodIntoYourPlatform:
     "Integre na sua plataforma o meio de pagamento Pagar.me.",
   financial: "Financeiro",

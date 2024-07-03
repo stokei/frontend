@@ -27,6 +27,8 @@ export const routesApp = (data: { appId?: string }) => {
     },
     onboardings: {
       home: baseURL + "/onboardings",
+      callback: (pluginType: string) =>
+        baseURL + `/onboardings/${pluginType}/callback`,
       pagarme: {
         home: baseURL + "/onboardings/pagarme",
         callback: baseURL + "/onboardings/pagarme/callback",
