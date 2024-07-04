@@ -39,9 +39,9 @@ export const ProductInformation = ({
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
-    description: z.string(),
+    description: z.string().optional(),
   });
 
   const {
@@ -108,7 +108,7 @@ export const ProductInformation = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -153,7 +153,7 @@ export const ProductInformation = ({
                 uploadURL={imageUploadURL}
                 previewURL={currentProduct?.avatar?.file?.url || ""}
                 onSuccess={onCompleteImageUpload}
-                onError={() => {}}
+                onError={() => { }}
               />
             </FormControl>
             <FormControl isInvalid={!!errors?.name}>
