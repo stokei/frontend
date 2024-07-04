@@ -1,4 +1,4 @@
-import { useTranslations } from "@/hooks";
+import { useCurrentApp, useTranslations } from "@/hooks";
 import { usePlugins } from "@/hooks/use-plugins";
 import { PaymentGatewayType, PluginType } from "@/services/graphql/stokei";
 import {
@@ -9,10 +9,15 @@ import {
   CardFooter,
   Icon,
   Link,
-  Stack
+  List,
+  ListIcon,
+  ListItem,
+  Stack,
+  Text
 } from "@stokei/ui";
 import { PropsWithChildren, useMemo } from "react";
 import { useCreateAppPaymentOnboarding } from "../../hooks/use-create-app-payment-onboarding";
+import { paymentGatewayFees } from "@/constants/payment-gateway-fees";
 
 interface PaymentGatewayOnboardingItemProps {
   paymentGatewayType: PaymentGatewayType;
@@ -20,9 +25,11 @@ interface PaymentGatewayOnboardingItemProps {
 }
 
 export const PaymentGatewayOnboardingItem = ({ paymentGatewayType, gatewayExternalURL, children }: PropsWithChildren<PaymentGatewayOnboardingItemProps>) => {
+  const { currentApp } = useCurrentApp();
   const translate = useTranslations();
   const { isLoadingCreateAppPaymentOnboarding, onCreateAppPaymentOnboardingAndGoToLink } = useCreateAppPaymentOnboarding();
   const { isLoading, getPluginByType } = usePlugins();
+  const paymentGateway = paymentGatewayFees[paymentGatewayType];
 
   const isIntegrated = useMemo(
     () => !!getPluginByType(paymentGatewayType as unknown as PluginType),
@@ -34,6 +41,18 @@ export const PaymentGatewayOnboardingItem = ({ paymentGatewayType, gatewayExtern
       <CardBody>
         <Stack direction="column" spacing="5">
           {children}
+          <Text>
+            {paymentGateway?.percentage ? paymentGateway?.percentage + '%' : ''}
+            {paymentGateway?.fixAmount ? ` + ${translate.formatMoney({
+              showSymbol: true,
+              amount: paymentGateway?.fixAmount,
+              currency: currentApp?.currency?.id || "",
+              minorUnit: currentApp?.currency?.minorUnit,
+            })}` : ''}
+            {` ${translate.formatMessage({
+              id: "each",
+            })} ${translate.formatMessage({ id: "sale" })}`}
+          </Text>
         </Stack>
       </CardBody>
       <CardFooter>

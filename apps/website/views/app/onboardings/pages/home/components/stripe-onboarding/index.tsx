@@ -49,13 +49,13 @@ export const StripeOnboarding = () => {
         <ListItem>
           <ListIcon name="check" color="green.500" />
           {translate.formatMessage({
-            id: "pix",
+            id: "internationalPayment",
           })}
         </ListItem>
         <ListItem>
-          <ListIcon name="check" color="green.500" />
+          <ListIcon name="uncheck" color="gray.500" />
           {translate.formatMessage({
-            id: "internationalPayment",
+            id: "pix",
           })}
         </ListItem>
       </List>
