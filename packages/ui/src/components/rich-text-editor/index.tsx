@@ -3,7 +3,8 @@ import StarterKit from "@tiptap/starter-kit";
 import { PropsWithChildren, useState } from "react";
 import { Box } from "../box";
 import { Skeleton } from "../skeleton";
-import { RichTextEditorMenu } from "./menu";
+import { RichTextEditorMenu } from "./components";
+import { IframePlugin } from "./plugins";
 
 export interface RichTextEditorProps {
   id: string;
@@ -19,7 +20,7 @@ export const RichTextEditor = ({
 }: PropsWithChildren<RichTextEditorProps>) => {
   const [isLoading, setIsLoading] = useState(true);
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, IframePlugin],
     onCreate: () => setIsLoading(false),
     onUpdate({ editor }) {
       const html = editor.getHTML();
