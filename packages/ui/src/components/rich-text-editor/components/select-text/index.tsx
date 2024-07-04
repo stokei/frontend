@@ -1,16 +1,16 @@
 import { Editor } from "@tiptap/react";
 import { PropsWithChildren, useCallback, useEffect, useState } from "react";
-import { useTranslations } from "../../../hooks";
-import { Box } from "../../box";
+import { useTranslations } from "../../../../hooks";
+import { Box } from "../../../box";
 import {
   SingleSelect,
   SingleSelectButton,
   SingleSelectCombobox,
   SingleSelectOption,
   SingleSelectOptions
-} from "../../selects";
-import { Text } from "../../text";
-import { Title } from "../../title";
+} from "../../../selects";
+import { Text } from "../../../text";
+import { Title } from "../../../title";
 
 export enum RichTextEditorSelectTextValue {
   PARAGRAPH = "paragraph",
