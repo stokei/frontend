@@ -1,4 +1,5 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
+import { usePlugins } from "@/hooks/use-plugins";
 import { websiteRoutes } from "@stokei/routes";
 import { Button, Icon, Spacer, Stack, Title } from "@stokei/ui";
 import { useRouter } from "next/router";
@@ -10,7 +11,8 @@ interface HeaderProps {
 
 export const Header = ({ productsTotalCount, onOpenFilters }: HeaderProps) => {
   const router = useRouter();
-  const { currentApp, hasPaymentIntegrations } = useCurrentApp();
+  const { currentApp } = useCurrentApp();
+  const { hasPaymentGateways } = usePlugins();
   const translate = useTranslations();
   const onGoToAddProductsPage = () => {
     return router.push(
@@ -37,7 +39,7 @@ export const Header = ({ productsTotalCount, onOpenFilters }: HeaderProps) => {
       <Button
         leftIcon={<Icon name="plus" />}
         onClick={onGoToAddProductsPage}
-        isDisabled={!hasPaymentIntegrations}
+        isDisabled={!hasPaymentGateways}
       >
         {translate.formatMessage({ id: "add" })}
       </Button>

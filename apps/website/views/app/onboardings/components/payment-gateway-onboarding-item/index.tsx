@@ -8,6 +8,7 @@ import {
   CardBody,
   CardFooter,
   Icon,
+  Label,
   Link,
   List,
   ListIcon,
@@ -30,6 +31,13 @@ export const PaymentGatewayOnboardingItem = ({ paymentGatewayType, gatewayExtern
   const { isLoadingCreateAppPaymentOnboarding, onCreateAppPaymentOnboardingAndGoToLink } = useCreateAppPaymentOnboarding();
   const { isLoading, getPluginByType } = usePlugins();
   const paymentGateway = paymentGatewayFees[paymentGatewayType];
+  const feePercentage = paymentGateway?.percentage ? paymentGateway?.percentage + '%' : '';
+  const feeFixAmount = paymentGateway?.fixAmount ? ` + ${translate.formatMoney({
+    showSymbol: true,
+    amount: paymentGateway?.fixAmount,
+    currency: currentApp?.currency?.id || "",
+    minorUnit: currentApp?.currency?.minorUnit,
+  })}` : '';
 
   const isIntegrated = useMemo(
     () => !!getPluginByType(paymentGatewayType as unknown as PluginType),
@@ -41,18 +49,12 @@ export const PaymentGatewayOnboardingItem = ({ paymentGatewayType, gatewayExtern
       <CardBody>
         <Stack direction="column" spacing="5">
           {children}
-          <Text>
-            {paymentGateway?.percentage ? paymentGateway?.percentage + '%' : ''}
-            {paymentGateway?.fixAmount ? ` + ${translate.formatMoney({
-              showSymbol: true,
-              amount: paymentGateway?.fixAmount,
-              currency: currentApp?.currency?.id || "",
-              minorUnit: currentApp?.currency?.minorUnit,
-            })}` : ''}
-            {` ${translate.formatMessage({
-              id: "each",
-            })} ${translate.formatMessage({ id: "sale" })}`}
-          </Text>
+          <Stack direction="column" spacing="0">
+            <Label>{translate.formatMessage({ id: 'fee' })}</Label>
+            <Text>
+              {`+ ${feePercentage}${feeFixAmount} ${translate.formatMessage({ id: "eachSale" })}`}
+            </Text>
+          </Stack>
         </Stack>
       </CardBody>
       <CardFooter>
@@ -71,6 +73,7 @@ export const PaymentGatewayOnboardingItem = ({ paymentGatewayType, gatewayExtern
               paymentGatewayType
             })}
             variant={isIntegrated ? "outline" : undefined}
+            isDisabled={isIntegrated}
           >
             {translate.formatMessage({
               id: isIntegrated ? "update" : "add",

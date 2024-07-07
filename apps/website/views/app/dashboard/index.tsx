@@ -1,10 +1,10 @@
 import { AppLayout } from "@/views/app/layout";
-import { Box, Card, CardBody, Container, DatePicker, DatePickerGroup, Grid, GridItem, Label, Stack } from "@stokei/ui";
+import { Box, Container, DatePicker, DatePickerGroup, Grid, GridItem, Label, Stack } from "@stokei/ui";
 
+import { OnboardingAlerts } from "@/components/onboarding-alerts";
 import { useTranslations } from "@/hooks";
 import { addMonths, convertToISODateString } from "@stokei/utils";
 import { useMemo, useState } from "react";
-import { Alerts } from "./components/alerts";
 import { ChartAccessesFrequency } from "./components/charts/acesses-frequency";
 import { ChartAccessesHours } from "./components/charts/acesses-hours";
 import { ChartOrdersFrequency } from "./components/charts/orders-frequency";
@@ -39,7 +39,7 @@ export const DashboardPage = () => {
       <Navbar />
       <Container>
         <Stack direction="column" paddingY="5" spacing="5">
-          <Alerts />
+          <OnboardingAlerts />
           <Box flexDirection="column">
             <Label>{translate.formatMessage({ id: 'period' })}</Label>
             <DatePickerGroup>

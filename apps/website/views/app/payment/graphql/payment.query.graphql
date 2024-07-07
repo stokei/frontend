@@ -28,6 +28,7 @@ fragment PaymentPagePayment on Payment {
   feeAmount
   totalAmount
   subtotalAmount
+  paymentGatewayType
   paidAt
   canceledAt
   paymentErrorAt

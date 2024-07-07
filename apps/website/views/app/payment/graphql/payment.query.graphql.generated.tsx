@@ -9,9 +9,9 @@ export type GetPaymentPagePaymentQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetPaymentPagePaymentQuery = { __typename?: 'Query', payment: { __typename?: 'Payment', id: string, status: Types.PaymentStatus, feeAmount: number, totalAmount: number, subtotalAmount: number, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, updatedAt?: string | null, createdAt?: string | null, payer?: { __typename?: 'Account', id: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, type?: Types.PaymentMethodType | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } } };
+export type GetPaymentPagePaymentQuery = { __typename?: 'Query', payment: { __typename?: 'Payment', id: string, status: Types.PaymentStatus, feeAmount: number, totalAmount: number, subtotalAmount: number, paymentGatewayType: Types.PaymentGatewayType, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, updatedAt?: string | null, createdAt?: string | null, payer?: { __typename?: 'Account', id: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, type?: Types.PaymentMethodType | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } } };
 
-export type PaymentPagePaymentFragment = { __typename?: 'Payment', id: string, status: Types.PaymentStatus, feeAmount: number, totalAmount: number, subtotalAmount: number, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, updatedAt?: string | null, createdAt?: string | null, payer?: { __typename?: 'Account', id: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, type?: Types.PaymentMethodType | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } };
+export type PaymentPagePaymentFragment = { __typename?: 'Payment', id: string, status: Types.PaymentStatus, feeAmount: number, totalAmount: number, subtotalAmount: number, paymentGatewayType: Types.PaymentGatewayType, paidAt?: string | null, canceledAt?: string | null, paymentErrorAt?: string | null, updatedAt?: string | null, createdAt?: string | null, payer?: { __typename?: 'Account', id: string, fullname: string, email: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, type?: Types.PaymentMethodType | null, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number } };
 
 export const PaymentPagePaymentFragmentDoc = gql`
     fragment PaymentPagePayment on Payment {
@@ -38,6 +38,7 @@ export const PaymentPagePaymentFragmentDoc = gql`
   feeAmount
   totalAmount
   subtotalAmount
+  paymentGatewayType
   paidAt
   canceledAt
   paymentErrorAt

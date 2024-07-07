@@ -43,6 +43,7 @@ export const usePlugins = () => {
     isLoading,
     data: dataGetPlugins,
     paymentGateways,
+    hasPaymentGateways: !!paymentGateways?.length,
     defaultPaymentGateway,
     hasInternationalPayment,
     hasPlugins: !!dataGetPlugins?.plugins?.totalCount,

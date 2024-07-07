@@ -64,6 +64,7 @@ fragment OrderPagePayment on Payment {
   status
   totalAmount
   subtotalAmount
+  paymentGatewayType
   paidAt
   canceledAt
   paymentErrorAt

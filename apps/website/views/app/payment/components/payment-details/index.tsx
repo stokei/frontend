@@ -5,6 +5,8 @@ import {
   Box,
   Card,
   CardBody,
+  Icon,
+  IconName,
   Label,
   Stack,
   Text,
@@ -47,12 +49,14 @@ export const PaymentDetails = ({ payment }: PaymentDetailsProps) => {
                 </Stack>
               )}
             </Box>
-            {payment?.paymentMethod && (
-              <Box flexDirection="column">
-                <Label>{translate.formatMessage({ id: "value" })}</Label>
+            <Box flexDirection="column">
+              <Label>{translate.formatMessage({ id: "paymentMethod" })}</Label>
+              {payment?.paymentMethod ? (
                 <PaymentMethod paymentMethod={payment?.paymentMethod} />
-              </Box>
-            )}
+              ) : (
+                <Icon name={payment?.paymentGatewayType?.toLowerCase() as IconName} />
+              )}
+            </Box>
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "value" })}</Label>
               <Text fontWeight="semibold">

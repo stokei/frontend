@@ -6,6 +6,8 @@ import {
   Avatar,
   Badge,
   Box,
+  Icon,
+  IconName,
   Stack,
   TableCell,
   TableRow,
@@ -56,8 +58,10 @@ export const PaymentItem = ({ payment }: PaymentItemProps) => {
         )}
       </TableCell>
       <TableCell>
-        {payment?.paymentMethod && (
+        {payment?.paymentMethod ? (
           <PaymentMethod paymentMethod={payment?.paymentMethod} />
+        ) : (
+          <Icon name={payment?.paymentGatewayType?.toLowerCase() as IconName} />
         )}
       </TableCell>
       <TableCell>

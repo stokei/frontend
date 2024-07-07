@@ -2484,6 +2484,7 @@ export type Payment = {
   parent: Scalars['String'];
   payer?: Maybe<Account>;
   paymentErrorAt?: Maybe<Scalars['String']>;
+  paymentGatewayType: PaymentGatewayType;
   paymentMethod?: Maybe<PaymentMethod>;
   status: PaymentStatus;
   subtotalAmount: Scalars['Float'];

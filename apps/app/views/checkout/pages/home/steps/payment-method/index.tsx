@@ -88,7 +88,8 @@ export const PaymentMethodStep = ({
 
                   {paymentGateways?.map(paymentGateway => (
                     <RadioCard
-                      id={paymentGateway.type}
+                      id={paymentGateway.id}
+                      key={paymentGateway.id}
                       value={paymentGateway.type}
                       isChecked={paymentMethodType === paymentGateway.type as any}
                     >

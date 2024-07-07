@@ -161,7 +161,7 @@ export const CheckoutPage = () => {
           input: {
             order,
             cancelURL: new URL(appRoutes.checkout.home, window.location.origin).toString(),
-            successURL: new URL(`${appRoutes.checkout.home}?redirect_status=${PaymentStatus.SUCCEEDED}`, window.location.origin).toString(),
+            successURL: new URL(`${appRoutes.checkout.callback}?redirect_status=${PaymentStatus.SUCCEEDED}`, window.location.origin).toString(),
             paymentGatewayType: (isDefaultPaymentMethod ? defaultPaymentGateway?.type : paymentMethodType) as unknown as PaymentGatewayType,
           },
         });

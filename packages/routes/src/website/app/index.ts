@@ -2,9 +2,6 @@ export const routesApp = (data: { appId?: string }) => {
   const baseURL = `/apps/${data?.appId}`;
   return {
     home: baseURL,
-    financial: {
-      home: baseURL + "/financial",
-    },
     coupons: {
       home: baseURL + "/coupons",
     },

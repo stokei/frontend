@@ -246,6 +246,8 @@ export const ptBRMessages = {
     "Após o pagamento do pix, o valor é disponibilizado em ate 2 dias úteis.",
   doYouHaveALargeVolumeOfData: "Você tem um grande volume de dados?",
   getInTouchWithUsViaEmail: "Entre em contato conosco pelo email",
+  fee: "Taxa",
+  eachSale: "a cada venda",
   stripeTax: "taxa da Stripe",
   kb: "kbyte",
   mb: "mbyte",

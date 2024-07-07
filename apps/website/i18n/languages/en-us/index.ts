@@ -244,6 +244,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
     "After payment of the pix, the amount is available within 2 business days.",
   doYouHaveALargeVolumeOfData: "Do you have a large volume of data?",
   getInTouchWithUsViaEmail: "Get in touch with us via email",
+  fee: "Fee",
+  eachSale: "each sale",
   stripeTax: "Stripe tax",
   kb: "kbyte",
   mb: "mbyte",
