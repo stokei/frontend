@@ -1,5 +1,5 @@
-import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
 import { PaymentMethodItem } from "@/components/payment-method-management/payment-method-item";
+import { PaymentMethodComponentFragment } from "@/components/payment-method/graphql/payment-method.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { I18nKey } from "@/interfaces/i18n-key";
 import { PaymentMethodType } from "@/services/graphql/stokei";
@@ -16,7 +16,7 @@ interface PaymentMethodData {
 export interface PaymentMethodProps {
   isDisabled?: boolean;
   paymentMethodType: PaymentMethodType;
-  paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment;
+  paymentMethod?: PaymentMethodComponentFragment;
 }
 
 export const PaymentMethod = ({

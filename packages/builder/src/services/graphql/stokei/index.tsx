@@ -2246,6 +2246,14 @@ export type OrderByDataFindAllPlansInput = {
   updatedBy?: InputMaybe<OrderBy>;
 };
 
+export type OrderByDataFindAllPluginsInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  type?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
 export type OrderByDataFindAllPriceTiersInput = {
   amount?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
@@ -2476,6 +2484,7 @@ export type Payment = {
   parent: Scalars['String'];
   payer?: Maybe<Account>;
   paymentErrorAt?: Maybe<Scalars['String']>;
+  paymentGatewayType: PaymentGatewayType;
   paymentMethod?: Maybe<PaymentMethod>;
   status: PaymentStatus;
   subtotalAmount: Scalars['Float'];
@@ -2634,6 +2643,37 @@ export type Plans = {
   hasNextPage: Scalars['Boolean'];
   hasPreviousPage: Scalars['Boolean'];
   items?: Maybe<Array<Plan>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
+export type Plugin = {
+  __typename?: 'Plugin';
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  type: PluginType;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export enum PluginType {
+  Mercadopago = 'MERCADOPAGO',
+  Pagarme = 'PAGARME',
+  Pagseguro = 'PAGSEGURO',
+  Stripe = 'STRIPE'
+}
+
+export type Plugins = {
+  __typename?: 'Plugins';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<Plugin>>;
   lastPage: Scalars['Int'];
   nextPage: Scalars['Int'];
   previousPage: Scalars['Int'];
@@ -2837,6 +2877,8 @@ export type Query = {
   phones: Phones;
   plan: Plan;
   plans: Plans;
+  plugin: Plugin;
+  plugins: Plugins;
   price: Price;
   prices: Prices;
   product: Product;
@@ -3228,6 +3270,18 @@ export type QueryPlansArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPlansInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllPlansInput>;
+};
+
+
+export type QueryPluginArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryPluginsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllPluginsInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllPluginsInput>;
 };
 
 
@@ -4260,7 +4314,7 @@ export type WhereDataFindAllAppsDataInput = {
   description?: InputMaybe<WhereDataSearchInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
   name?: InputMaybe<WhereDataSearchInput>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
   plan?: InputMaybe<WhereDataStringInput>;
   status?: InputMaybe<AppStatus>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -4653,6 +4707,21 @@ export type WhereDataFindAllPlansInput = {
   AND?: InputMaybe<WhereDataFindAllPlansDataInput>;
   NOT?: InputMaybe<WhereDataFindAllPlansDataInput>;
   OR?: InputMaybe<Array<WhereDataFindAllPlansDataInput>>;
+};
+
+export type WhereDataFindAllPluginsDataInput = {
+  app?: InputMaybe<WhereDataStringInput>;
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  type?: InputMaybe<PluginType>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllPluginsInput = {
+  AND?: InputMaybe<WhereDataFindAllPluginsDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllPluginsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllPluginsDataInput>>;
 };
 
 export type WhereDataFindAllPricesDataInput = {

@@ -3,17 +3,7 @@ query PaymentMethodManagementPaymentMethods(
 ) {
   paymentMethods(where: $where) {
     items {
-      ...PaymentMethodManagementPaymentMethodCard
+      ...PaymentMethodComponent
     }
   }
-}
-
-fragment PaymentMethodManagementPaymentMethodCard on PaymentMethod {
-  id
-  parent
-  referenceId
-  cardBrand
-  cardExpiryMonth
-  cardExpiryYear
-  lastFourCardNumber
 }

@@ -2,6 +2,6 @@ mutation PaymentMethodManagementCreatePaymentMethodCard(
   $input: CreatePaymentMethodCardInput!
 ) {
   createPaymentMethodCard(input: $input) {
-    ...PaymentMethodManagementPaymentMethodCard
+    ...PaymentMethodComponent
   }
 }

@@ -1,11 +1,10 @@
+import { PaymentMethodComponentFragment } from "@/components/payment-method/graphql/payment-method.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
 import { getCardFlagURL } from "@/utils";
 import { Box, Image, Stack, Text } from "@stokei/ui";
 
-import { PaymentMethodManagementPaymentMethodCardFragment } from "../graphql/payment-methods.query.graphql.generated";
-
 interface PaymentMethodItemProps {
-  readonly paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment | null;
+  readonly paymentMethod?: PaymentMethodComponentFragment | null;
 }
 
 export const PaymentMethodItem = ({

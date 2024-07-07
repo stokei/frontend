@@ -1,12 +1,12 @@
-import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
+import { PaymentMethodComponentFragment } from "@/components/payment-method/graphql/payment-method.fragment.graphql.generated";
 import { useCallback, useState } from "react";
 
 export const usePaymentMethodManagement = () => {
   const [paymentMethod, setPaymentMethod] =
-    useState<PaymentMethodManagementPaymentMethodCardFragment>();
+    useState<PaymentMethodComponentFragment>();
 
   const onChangePaymentMethod = useCallback(
-    (newPaymentMethod?: PaymentMethodManagementPaymentMethodCardFragment) =>
+    (newPaymentMethod?: PaymentMethodComponentFragment) =>
       setPaymentMethod(newPaymentMethod),
     []
   );

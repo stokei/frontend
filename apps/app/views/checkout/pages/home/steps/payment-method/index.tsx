@@ -1,4 +1,5 @@
-import { useCurrentApp, useTranslations } from "@/hooks";
+import { useTranslations } from "@/hooks";
+import { usePlugins } from "@/hooks/use-plugins";
 import { PaymentMethodType } from "@/services/graphql/stokei";
 import {
   Button,
@@ -11,7 +12,6 @@ import {
   Title,
 } from "@stokei/ui";
 import { PaymentMethod } from "../../components/payment-method";
-import { usePlugins } from "@/hooks/use-plugins";
 
 export interface PaymentMethodStepProps {
   paymentMethodType?: PaymentMethodType;
