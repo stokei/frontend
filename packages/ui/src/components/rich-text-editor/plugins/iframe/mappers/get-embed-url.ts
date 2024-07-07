@@ -1,113 +1,71 @@
-const embedProviders: Record<string, (url: string) => string | null> = {
-  youtube: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
-    );
-    if (match && match[1]) {
-      const videoId = match[1];
-      return `https://www.youtube.com/embed/${videoId}`;
-    }
-    return null;
+const embedProviders: {
+  name: string;
+  regex: RegExp;
+  embedUrl: (matches: RegExpMatchArray) => string;
+}[] = [
+  {
+    name: "youtube",
+    regex:
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+    embedUrl: (matches) => `https://www.youtube.com/embed/${matches[1]}`,
   },
-  vimeo: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:www\.)?(?:vimeo\.com\/(?:video\/)?)?(\d+)/
-    );
-    if (match && match[1]) {
-      const videoId = match[1];
-      return `https://player.vimeo.com/video/${videoId}`;
-    }
-    return null;
+  {
+    name: "vimeo",
+    regex: /(?:https?:\/\/)?(?:www\.)?(?:vimeo\.com\/(?:video\/)?)?(\d+)/,
+    embedUrl: (matches) => `https://player.vimeo.com/video/${matches[1]}`,
   },
-  dailymotion: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:www\.)?(?:dai\.ly\/|dailymotion\.com\/(?:embed\/video\/|video\/))([a-zA-Z0-9_-]+)/
-    );
-    if (match && match[1]) {
-      const videoId = match[1];
-      return `https://www.dailymotion.com/embed/video/${videoId}`;
-    }
-    return null;
+  {
+    name: "dailymotion",
+    regex:
+      /(?:https?:\/\/)?(?:www\.)?(?:dai\.ly\/|dailymotion\.com\/(?:embed\/video\/|video\/))([a-zA-Z0-9_-]+)/,
+    embedUrl: (matches) =>
+      `https://www.dailymotion.com/embed/video/${matches[1]}`,
   },
-  facebookPost: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:www\.)?facebook\.com\/([^\/]+)\/posts\/([^\/]+)/
-    );
-    if (match && match[1] && match[2]) {
-      const postId = match[2];
-      return `https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F${match[1]}%2Fposts%2F${postId}&width=500`;
-    }
-    return null;
+  {
+    name: "facebookPost",
+    regex: /(?:https?:\/\/)?(?:www\.)?facebook\.com\/([^\/]+)\/posts\/([^\/]+)/,
+    embedUrl: (matches) =>
+      `https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2F${matches[1]}%2Fposts%2F${matches[2]}&width=500`,
   },
-  facebookVideo: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:[^\/\n\s]+\/videos\/(?:[^\/\n\s]+\/)?(\d+))/
-    );
-    if (match && match[1]) {
-      const videoId = match[1];
-      return `https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fvideo.php%3Fv%3D${videoId}&show_text=0&width=560`;
-    }
-    return null;
+  {
+    name: "facebookVideo",
+    regex:
+      /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:[^\/\n\s]+\/videos\/(?:[^\/\n\s]+\/)?(\d+))/,
+    embedUrl: (matches) =>
+      `https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fvideo.php%3Fv%3D${matches[1]}&show_text=0&width=560`,
   },
-  flickr: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:www\.)?flickr\.com\/photos\/([^\/]+)\/(\d+)/
-    );
-    if (match && match[1] && match[2]) {
-      const userId = match[1];
-      const photoId = match[2];
-      return `https://www.flickr.com/photos/${userId}/${photoId}/player/`;
-    }
-    return null;
+  {
+    name: "flickr",
+    regex: /(?:https?:\/\/)?(?:www\.)?flickr\.com\/photos\/([^\/]+)\/(\d+)/,
+    embedUrl: (matches) =>
+      `https://www.flickr.com/photos/${matches[1]}/${matches[2]}/player/`,
   },
-  soundcloud: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:www\.)?soundcloud\.com\/(?:[^\/\n\s]+\/)?([^\/\n\s]+)/
-    );
-    if (match && match[1]) {
-      const trackId = match[1];
-      return `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${trackId}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
-    }
-    return null;
+  {
+    name: "spotify",
+    regex:
+      /(?:https?:\/\/)?(?:open\.spotify\.com\/(?:embed\/|track\/|album\/|playlist\/))([a-zA-Z0-9]+)/,
+    embedUrl: (matches) => `https://open.spotify.com/embed/${matches[1]}`,
   },
-  spotify: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:open\.spotify\.com\/(?:embed\/|track\/|album\/|playlist\/))([a-zA-Z0-9]+)/
-    );
-    if (match && match[1]) {
-      const spotifyId = match[1];
-      return `https://open.spotify.com/embed/${spotifyId}`;
-    }
-    return null;
+  {
+    name: "tumblr",
+    regex: /(?:https?:\/\/)?([^\/\n\s]+)\.tumblr\.com\/post\/(\d+)/,
+    embedUrl: (matches) =>
+      `https://${matches[1]}.tumblr.com/post/${matches[2]}/embed`,
   },
-  tumblr: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?([^\/\n\s]+)\.tumblr\.com\/post\/(\d+)/
-    );
-    if (match && match[1] && match[2]) {
-      const tumblrId = match[2];
-      return `https://${match[1]}.tumblr.com/post/${tumblrId}/embed`;
-    }
-    return null;
+  {
+    name: "videopress",
+    regex:
+      /(?:https?:\/\/)?(?:www\.)?(?:videopress\.com\/(?:embed\/|v\/))([a-zA-Z0-9]+)/,
+    embedUrl: (matches) => `https://videopress.com/embed/${matches[1]}`,
   },
-  videopress: (url: string) => {
-    const match = url.match(
-      /(?:https?:\/\/)?(?:www\.)?(?:videopress\.com\/(?:embed\/|v\/))([a-zA-Z0-9]+)/
-    );
-    if (match && match[1]) {
-      const videoId = match[1];
-      return `https://videopress.com/embed/${videoId}`;
-    }
-    return null;
-  },
-};
+];
 
-export const getEmbedURL = (url: string): string | null => {
-  for (const provider in embedProviders) {
-    if (url.includes(provider)) {
-      const handler = embedProviders?.[provider];
-      return handler?.(url);
+export const getEmbedURL = (url: string): string | undefined => {
+  for (const provider of embedProviders) {
+    const matches = url.match(provider.regex);
+    if (matches) {
+      return provider.embedUrl(matches);
     }
   }
-  return null;
+  return;
 };
