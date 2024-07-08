@@ -2,6 +2,8 @@ import { I18nKeyWithoutOtherTranslations } from "@/interfaces/i18n-key";
 
 export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   me: "Me",
+  visit: "Visit",
+  acceptInstallment: "Accept installment",
   accesses: "Accesses",
   mostAccessedTimes: "Most Accessed Times",
   productsBestSeller: "Best Selling Products",
@@ -242,6 +244,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
     "After payment of the pix, the amount is available within 2 business days.",
   doYouHaveALargeVolumeOfData: "Do you have a large volume of data?",
   getInTouchWithUsViaEmail: "Get in touch with us via email",
+  fee: "Fee",
+  eachSale: "each sale",
   stripeTax: "Stripe tax",
   kb: "kbyte",
   mb: "mbyte",
@@ -469,6 +473,8 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   paymentMethods: "Payment methods",
   integrateYourBusinessWithStripesPaymentsPlatform:
     "Integrate your business with Stripe's payments platform.",
+  integrateYourBusinessWithMercadoPagosPaymentsPlatform:
+    "Integrate your business with Mercado Pago's payments platform.",
   admin: "Admin",
   admins: "Admins",
   module: "Module",

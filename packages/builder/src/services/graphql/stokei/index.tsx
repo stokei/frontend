@@ -150,8 +150,6 @@ export type App = {
   email?: Maybe<Scalars['String']>;
   icon?: Maybe<Image>;
   id: Scalars['ID'];
-  isIntegratedWithPagarme: Scalars['Boolean'];
-  isIntegratedWithStripe: Scalars['Boolean'];
   isStokei: Scalars['Boolean'];
   logo?: Maybe<Image>;
   name: Scalars['String'];
@@ -604,22 +602,10 @@ export type CreateAppInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
-export type CreateAppPagarmeAccountInput = {
-  defaultBankAccount: CreateAppPagarmeDefaultBankAccountInput;
-  document: Scalars['String'];
-  documentType: PagarmeAccountType;
-};
-
-export type CreateAppPagarmeDefaultBankAccountInput = {
-  accountCheckDigit: Scalars['String'];
-  accountNumber: Scalars['String'];
-  bank: Scalars['String'];
-  bankAccountType: PagarmeBankAccountType;
-  branchCheckDigit: Scalars['String'];
-  branchNumber: Scalars['String'];
-  holderDocument: Scalars['String'];
-  holderName: Scalars['String'];
-  holderType: PagarmeAccountType;
+export type CreateAppPaymentOnboardingLinkInput = {
+  cancelURL: Scalars['String'];
+  paymentGatewayType: PaymentGatewayType;
+  successURL: Scalars['String'];
 };
 
 export type CreateCatalogInput = {
@@ -634,9 +620,10 @@ export type CreateCatalogItemInput = {
 };
 
 export type CreateCheckoutInput = {
+  cancelURL: Scalars['String'];
   order: Scalars['String'];
-  paymentMethod?: InputMaybe<Scalars['String']>;
-  paymentMethodType: PaymentMethodType;
+  paymentGatewayType: PaymentGatewayType;
+  successURL: Scalars['String'];
 };
 
 export type CreateColorInput = {
@@ -1212,6 +1199,7 @@ export type Languages = {
 
 export type Link = {
   __typename?: 'Link';
+  id?: Maybe<Scalars['String']>;
   url: Scalars['String'];
 };
 
@@ -1345,8 +1333,7 @@ export type Mutation = {
   createAccountPagarmeCustomer: Account;
   createAddress: Address;
   createApp: App;
-  createAppPagarmeAccount: App;
-  createAppStripeOnboarding: Link;
+  createAppPaymentOnboardingLink: Link;
   createCatalog: Catalog;
   createCatalogItem: CatalogItem;
   createCheckout: Checkout;
@@ -1493,8 +1480,8 @@ export type MutationCreateAppArgs = {
 };
 
 
-export type MutationCreateAppPagarmeAccountArgs = {
-  input: CreateAppPagarmeAccountInput;
+export type MutationCreateAppPaymentOnboardingLinkArgs = {
+  input: CreateAppPaymentOnboardingLinkInput;
 };
 
 
@@ -2259,6 +2246,14 @@ export type OrderByDataFindAllPlansInput = {
   updatedBy?: InputMaybe<OrderBy>;
 };
 
+export type OrderByDataFindAllPluginsInput = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdBy?: InputMaybe<OrderBy>;
+  type?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  updatedBy?: InputMaybe<OrderBy>;
+};
+
 export type OrderByDataFindAllPriceTiersInput = {
   amount?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
@@ -2431,18 +2426,6 @@ export type Orders = {
   totalPages: Scalars['Int'];
 };
 
-export enum PagarmeAccountType {
-  Company = 'COMPANY',
-  Individual = 'INDIVIDUAL'
-}
-
-export enum PagarmeBankAccountType {
-  Checking = 'CHECKING',
-  ConjunctChecking = 'CONJUNCT_CHECKING',
-  ConjunctSavings = 'CONJUNCT_SAVINGS',
-  Savings = 'SAVINGS'
-}
-
 export type Page = {
   __typename?: 'Page';
   app?: Maybe<App>;
@@ -2501,6 +2484,7 @@ export type Payment = {
   parent: Scalars['String'];
   payer?: Maybe<Account>;
   paymentErrorAt?: Maybe<Scalars['String']>;
+  paymentGatewayType: PaymentGatewayType;
   paymentMethod?: Maybe<PaymentMethod>;
   status: PaymentStatus;
   subtotalAmount: Scalars['Float'];
@@ -2510,7 +2494,9 @@ export type Payment = {
 };
 
 export enum PaymentGatewayType {
+  Mercadopago = 'MERCADOPAGO',
   Pagarme = 'PAGARME',
+  Pagseguro = 'PAGSEGURO',
   Stripe = 'STRIPE'
 }
 
@@ -2537,6 +2523,9 @@ export type PaymentMethod = {
 export enum PaymentMethodType {
   Boleto = 'BOLETO',
   Card = 'CARD',
+  Mercadopago = 'MERCADOPAGO',
+  Pagarme = 'PAGARME',
+  Pagseguro = 'PAGSEGURO',
   Pix = 'PIX',
   Stripe = 'STRIPE'
 }
@@ -2654,6 +2643,37 @@ export type Plans = {
   hasNextPage: Scalars['Boolean'];
   hasPreviousPage: Scalars['Boolean'];
   items?: Maybe<Array<Plan>>;
+  lastPage: Scalars['Int'];
+  nextPage: Scalars['Int'];
+  previousPage: Scalars['Int'];
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
+export type Plugin = {
+  __typename?: 'Plugin';
+  createdAt?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Account>;
+  id: Scalars['ID'];
+  type: PluginType;
+  updatedAt?: Maybe<Scalars['String']>;
+  updatedBy?: Maybe<Account>;
+};
+
+export enum PluginType {
+  Mercadopago = 'MERCADOPAGO',
+  Pagarme = 'PAGARME',
+  Pagseguro = 'PAGSEGURO',
+  Stripe = 'STRIPE'
+}
+
+export type Plugins = {
+  __typename?: 'Plugins';
+  currentPage: Scalars['Int'];
+  firstPage: Scalars['Int'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  items?: Maybe<Array<Plugin>>;
   lastPage: Scalars['Int'];
   nextPage: Scalars['Int'];
   previousPage: Scalars['Int'];
@@ -2857,6 +2877,8 @@ export type Query = {
   phones: Phones;
   plan: Plan;
   plans: Plans;
+  plugin: Plugin;
+  plugins: Plugins;
   price: Price;
   prices: Prices;
   product: Product;
@@ -3248,6 +3270,18 @@ export type QueryPlansArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllPlansInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllPlansInput>;
+};
+
+
+export type QueryPluginArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryPluginsArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllPluginsInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllPluginsInput>;
 };
 
 
@@ -3847,6 +3881,7 @@ export type UpdateDataAddressInput = {
 export type UpdateDataAppInput = {
   avatar?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
   hero?: InputMaybe<Scalars['String']>;
   icon?: InputMaybe<Scalars['String']>;
   logo?: InputMaybe<Scalars['String']>;
@@ -4279,7 +4314,7 @@ export type WhereDataFindAllAppsDataInput = {
   description?: InputMaybe<WhereDataSearchInput>;
   ids?: InputMaybe<Array<Scalars['String']>>;
   name?: InputMaybe<WhereDataSearchInput>;
-  parent?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
   plan?: InputMaybe<WhereDataStringInput>;
   status?: InputMaybe<AppStatus>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
@@ -4672,6 +4707,21 @@ export type WhereDataFindAllPlansInput = {
   AND?: InputMaybe<WhereDataFindAllPlansDataInput>;
   NOT?: InputMaybe<WhereDataFindAllPlansDataInput>;
   OR?: InputMaybe<Array<WhereDataFindAllPlansDataInput>>;
+};
+
+export type WhereDataFindAllPluginsDataInput = {
+  app?: InputMaybe<WhereDataStringInput>;
+  createdBy?: InputMaybe<WhereDataStringInput>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  type?: InputMaybe<PluginType>;
+  updatedBy?: InputMaybe<WhereDataStringInput>;
+};
+
+export type WhereDataFindAllPluginsInput = {
+  AND?: InputMaybe<WhereDataFindAllPluginsDataInput>;
+  NOT?: InputMaybe<WhereDataFindAllPluginsDataInput>;
+  OR?: InputMaybe<Array<WhereDataFindAllPluginsDataInput>>;
 };
 
 export type WhereDataFindAllPricesDataInput = {

@@ -1,3 +1,4 @@
+import { PaymentMethodComponentFragment } from "@/components/payment-method/graphql/payment-method.fragment.graphql.generated";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { createPagarmeCardToken } from "@/services/pagarme/create-card-token";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,17 +17,16 @@ import {
   Label,
   Stack,
 } from "@stokei/ui";
-import { useState } from "react";
 import { getOnlyNumbers } from "@stokei/utils";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { usePaymentMethodManagementCreatePaymentMethodCardMutation } from "../graphql/create-payment-method.mutation.graphql.generated";
-import { PaymentMethodManagementPaymentMethodCardFragment } from "../graphql/payment-methods.query.graphql.generated";
 
 interface CreateCreditCardFormProps {
   readonly address?: string;
   readonly onSuccess: (
-    paymentMethod: PaymentMethodManagementPaymentMethodCardFragment
+    paymentMethod: PaymentMethodComponentFragment
   ) => void;
 }
 
@@ -43,7 +43,7 @@ export const CreateCreditCardForm = ({
   const translate = useTranslations();
   const { onShowAPIError } = useAPIErrors();
 
-  const [{}, onCreatePaymentMethod] =
+  const [{ }, onCreatePaymentMethod] =
     usePaymentMethodManagementCreatePaymentMethodCardMutation();
 
   const validationSchema = z.object({
@@ -126,7 +126,7 @@ export const CreateCreditCardForm = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
     setIsCreatingPaymentMethod(false);
   };
 

@@ -1,5 +1,5 @@
 import { useTranslations } from "@/hooks";
-import { ChartData, PaymentMethodType } from "@/services/graphql/stokei";
+import { ChartData } from "@/services/graphql/stokei";
 import { convertEnumValueToCamelCase } from "@/utils";
 import {
   DonutChart
@@ -13,9 +13,7 @@ export const ChartPaymentMethodsMostUsed = ({ isLoading, data }: { data: ChartDa
     return data?.map((item) => ({
       ...item,
       label: translate.formatMessage({
-        id: item.label === PaymentMethodType.Stripe ?
-          'internationalPayment' :
-          convertEnumValueToCamelCase(item.label)
+        id: convertEnumValueToCamelCase(item.label)
       }) || ""
     }));
   }, [data, translate]);

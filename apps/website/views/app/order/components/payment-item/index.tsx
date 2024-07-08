@@ -1,14 +1,13 @@
-import { PaymentMethod } from "@/components/payment-method";
 import { useTranslations } from "@/hooks";
 import { getPaymentStatusColor } from "@/utils/get-payment-status-color";
 import {
   Badge,
   Box,
-  Image,
-  Stack,
+  Icon,
+  IconName,
   TableCell,
   TableRow,
-  Text,
+  Text
 } from "@stokei/ui";
 import { useMemo } from "react";
 import { OrderPagePaymentFragment } from "../../graphql/order.query.graphql.generated";
@@ -28,9 +27,7 @@ export const PaymentItem = ({ payment }: PaymentItemProps) => {
   return (
     <TableRow>
       <TableCell>
-        {payment?.paymentMethod && (
-          <PaymentMethod paymentMethod={payment?.paymentMethod} />
-        )}
+        <Icon name={payment?.paymentGatewayType?.toLowerCase() as IconName} />
       </TableCell>
       <TableCell>
         <Text fontWeight="semibold">

@@ -14,6 +14,7 @@ import {
   Image,
   Link,
   Stack,
+  Text,
   Title,
 } from "@stokei/ui";
 import NextLink from "next/link";
@@ -69,7 +70,7 @@ export const ProductItem = ({ product, price }: ProductItemProps) => {
 
           {!!product?.prices?.items?.length && (
             <SelectPrice
-              showLabel={false}
+              label={translate.formatMessage({ id: "chooseYourPlan" })}
               onChange={onChoosePrice}
               prices={product?.prices?.items}
               currentPrice={price}

@@ -15,18 +15,18 @@ import { useCallback, useEffect, useState } from "react";
 import { CreateCreditCardForm } from "./create-credit-card-form";
 import { CreateCreditCardModal } from "./create-credit-card-modal";
 import {
-  PaymentMethodManagementPaymentMethodCardFragment,
   usePaymentMethodManagementPaymentMethodsQuery,
 } from "./graphql/payment-methods.query.graphql.generated";
 import { PaymentMethodItem } from "./payment-method-item";
+import { PaymentMethodComponentFragment } from "../payment-method/graphql/payment-method.fragment.graphql.generated";
 
 interface PaymentMethodManagementProps {
   readonly title?: string;
   readonly subtitle?: string;
   readonly address?: string;
-  readonly selectedPaymentMethod?: PaymentMethodManagementPaymentMethodCardFragment;
+  readonly selectedPaymentMethod?: PaymentMethodComponentFragment;
   readonly onChoosePaymentMethod: (
-    paymentMethod: PaymentMethodManagementPaymentMethodCardFragment
+    paymentMethod: PaymentMethodComponentFragment
   ) => void;
 }
 
@@ -38,7 +38,7 @@ export const PaymentMethodManagement = ({
   onChoosePaymentMethod,
 }: PaymentMethodManagementProps) => {
   const [paymentMethods, setPaymentMethods] = useState<
-    PaymentMethodManagementPaymentMethodCardFragment[]
+    PaymentMethodComponentFragment[]
   >([]);
 
   const {
@@ -74,7 +74,7 @@ export const PaymentMethodManagement = ({
   }, [dataPaymentMethods, onChoosePaymentMethod, selectedPaymentMethod]);
 
   const onAddNewPaymentMethod = useCallback(
-    (paymentMethod?: PaymentMethodManagementPaymentMethodCardFragment) => {
+    (paymentMethod?: PaymentMethodComponentFragment) => {
       if (!paymentMethod) {
         return;
       }

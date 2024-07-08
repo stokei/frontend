@@ -2,9 +2,6 @@ export const routesApp = (data: { appId?: string }) => {
   const baseURL = `/apps/${data?.appId}`;
   return {
     home: baseURL,
-    financial: {
-      home: baseURL + "/financial",
-    },
     coupons: {
       home: baseURL + "/coupons",
     },
@@ -27,6 +24,8 @@ export const routesApp = (data: { appId?: string }) => {
     },
     onboardings: {
       home: baseURL + "/onboardings",
+      callback: (pluginType: string) =>
+        baseURL + `/onboardings/${pluginType}/callback`,
       pagarme: {
         home: baseURL + "/onboardings/pagarme",
         callback: baseURL + "/onboardings/pagarme/callback",

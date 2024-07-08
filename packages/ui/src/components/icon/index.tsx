@@ -4,6 +4,10 @@ import {
   IconProps as ChakraIconProps,
 } from "@chakra-ui/react";
 import * as IconComponent from "./components";
+import { PagarmeIcon } from "./components/pagarme";
+import { StripeIcon } from "./components/stripe";
+import { MercadopagoIcon } from "./components/mercadopago";
+import { PagseguroIcon } from "./components/pagserguro";
 
 export const icons = {
   passwordShow: IconComponent.PasswordShowIcon,
@@ -112,6 +116,10 @@ export const icons = {
   metadata: IconComponent.MetadataIcon,
   version: IconComponent.VersionIcon,
   color: IconComponent.ColorIcon,
+  pagarme: PagarmeIcon,
+  stripe: StripeIcon,
+  mercadopago: MercadopagoIcon,
+  pagseguro: PagseguroIcon,
 };
 
 export type IconName = keyof typeof icons;

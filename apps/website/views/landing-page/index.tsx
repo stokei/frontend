@@ -8,7 +8,6 @@ import { CreateYourPricesHero } from "./components/heros/create-your-prices";
 import { CreateYourProductHero } from "./components/heros/create-your-product";
 import { EndHero } from "./components/heros/end";
 import { PrimaryHero } from "./components/heros/primary";
-import { PaymentMethods } from "./components/payment-methods";
 import { Plans } from "./components/plans";
 import { LandingPageLayout } from "./layout";
 
@@ -24,7 +23,6 @@ export const LandingPage = () => {
         <EndHero />
       </Container>
       <Plans />
-      <PaymentMethods />
       <CommonQuestions />
       <Contact />
     </LandingPageLayout>

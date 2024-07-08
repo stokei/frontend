@@ -8,7 +8,6 @@ export interface CurrentAppProviderProps {
 export type CurrentApp = CurrentGlobalAppQuery["currentApp"];
 export interface CurrentAppProviderValues {
   readonly currentApp?: CurrentApp;
-  readonly hasPaymentIntegrations: boolean;
   readonly isLoadingCurrentApp: boolean;
   readonly onReloadCurrentApp: () => void
 }
@@ -39,23 +38,15 @@ export const CurrentAppProvider = ({
     setCurrentApp(currentAppProp);
   }, [currentAppProp]);
 
-  const hasPaymentIntegrations = useMemo(
-    () =>
-      !!currentApp?.isIntegratedWithPagarme ||
-      !!currentApp?.isIntegratedWithStripe ||
-      !!currentApp?.isStokei,
-    [currentApp]
-  );
   const onReloadCurrentApp = useCallback(() => onExecuteReloadCurrentApp({ requestPolicy: 'network-only' }), [onExecuteReloadCurrentApp]);
 
   const values: CurrentAppProviderValues = useMemo(
     () => ({
       isLoadingCurrentApp,
       currentApp,
-      hasPaymentIntegrations,
       onReloadCurrentApp
     }),
-    [currentApp, hasPaymentIntegrations, isLoadingCurrentApp, onReloadCurrentApp]
+    [currentApp, isLoadingCurrentApp, onReloadCurrentApp]
   );
 
   return (

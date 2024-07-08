@@ -68,14 +68,6 @@ export const AppLayout = ({ children }: PropsWithChildren<AppLayoutProps>) => {
             >
               {translate.formatMessage({ id: "dashboard" })}
             </SidebarNavLink>
-            <SidebarNavLink
-              leftIcon="price"
-              as={NextLink}
-              href={baseRoutes.financial.home}
-              isActive={isActiveRoute(baseRoutes.financial.home)}
-            >
-              {translate.formatMessage({ id: "financial" })}
-            </SidebarNavLink>
             <SidebarGroup isActive={isActiveSales}>
               <SidebarGroupButton leftIcon="sale">
                 {translate.formatMessage({ id: "sales" })}

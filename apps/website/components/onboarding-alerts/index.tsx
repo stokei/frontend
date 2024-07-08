@@ -1,4 +1,5 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
+import { usePlugins } from "@/hooks/use-plugins";
 import { websiteRoutes } from "@stokei/routes";
 import {
   Alert,
@@ -6,18 +7,18 @@ import {
   AlertIcon,
   Box,
   Button,
-  Container,
-  Stack,
+  Stack
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 export const OnboardingAlerts = () => {
   const router = useRouter();
   const translate = useTranslations();
-  const { currentApp, hasPaymentIntegrations } = useCurrentApp();
+  const { currentApp } = useCurrentApp();
+  const { hasPaymentGateways } = usePlugins();
 
-  const goToStripeOnboarding = useCallback(
+  const goToOnboarding = useCallback(
     () =>
       router.push(
         websiteRoutes.app({ appId: currentApp?.id }).onboardings.home
@@ -25,7 +26,7 @@ export const OnboardingAlerts = () => {
     [currentApp?.id, router]
   );
 
-  if (hasPaymentIntegrations) {
+  if (hasPaymentGateways) {
     return <></>;
   }
 
@@ -50,7 +51,7 @@ export const OnboardingAlerts = () => {
             <Button
               variant="ghost"
               colorScheme="black"
-              onClick={goToStripeOnboarding}
+              onClick={goToOnboarding}
             >
               {translate.formatMessage({
                 id: "clickHereToConfigure",

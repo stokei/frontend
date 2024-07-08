@@ -1,7 +1,7 @@
 import { useTranslations } from "@/hooks";
 import { Modal, ModalBody, ModalHeader } from "@stokei/ui";
 
-import { PaymentMethodManagementPaymentMethodCardFragment } from "../graphql/payment-methods.query.graphql.generated";
+import { PaymentMethodComponentFragment } from "@/components/payment-method/graphql/payment-method.fragment.graphql.generated";
 import { CreateCreditCardForm } from "../create-credit-card-form";
 
 interface CreateCreditCardModalProps {
@@ -9,7 +9,7 @@ interface CreateCreditCardModalProps {
   readonly address?: string;
   readonly onClose: () => void;
   readonly onSuccess: (
-    paymentMethod: PaymentMethodManagementPaymentMethodCardFragment
+    paymentMethod: PaymentMethodComponentFragment
   ) => void;
 }
 

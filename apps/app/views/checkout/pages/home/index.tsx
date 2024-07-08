@@ -1,13 +1,13 @@
-import { AddressManagementAddressFragment } from "@/components/address-management/graphql/addresses.query.graphql.generated";
-import { PaymentMethodManagementPaymentMethodCardFragment } from "@/components/payment-method-management/graphql/payment-methods.query.graphql.generated";
 import { CheckoutStep } from "@/constants/checkout-steps";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
-import { appRoutes } from "@stokei/routes";
 import {
   CreateOrderItemInput,
+  PaymentGatewayType,
   PaymentMethodType,
 } from "@/services/graphql/stokei";
+import { useShoppingCart } from "@stokei/builder";
+import { appRoutes } from "@stokei/routes";
 import {
   Box,
   Card,
@@ -21,40 +21,29 @@ import {
   useActiveSteps,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { CheckoutLayout } from "../../layout";
 import { useGetCheckoutPageApplyCouponToValueQuery } from "./graphql/apply-coupon-to-value.query.graphql.generated";
 import { CheckoutPageCouponFragment } from "./graphql/coupon.query.graphql.generated";
 import {
-  CreateCheckoutPageCheckoutFragment,
-  useCreateCheckoutMutation,
+  useCreateCheckoutMutation
 } from "./graphql/create-checkout.mutation.graphql.generated";
 import { useCreateOrderMutation } from "./graphql/create-order.mutation.graphql.generated";
-import { AccountStep } from "./steps/account";
-import { AddressStep } from "./steps/address";
-import { PaymentStep } from "./steps/payment";
 import { PaymentMethodStep } from "./steps/payment-method";
 import { ProductsStep } from "./steps/products";
 import { SummaryStep } from "./steps/summary";
-import { useShoppingCart } from "@stokei/builder";
+import { PaymentStatus } from "@/views/checkout/pages/callback";
+import { usePlugins } from "@/hooks/use-plugins";
 
 export const CheckoutPage = () => {
-  const { activeSteps, onActivateStep, onDeactivateStep } =
+  const { activeSteps, onActivateStep } =
     useActiveSteps<CheckoutStep>({
       initialState: {
         [CheckoutStep.PRODUCTS]: true,
-        [CheckoutStep.ADDRESS]: false,
-        [CheckoutStep.ACCOUNT]: false,
         [CheckoutStep.PAYMENT_METHOD]: false,
         [CheckoutStep.SUMMARY]: false,
-        [CheckoutStep.PAYMENT]: false,
       },
     });
-  const [address, setAddress] = useState<AddressManagementAddressFragment>();
-  const [paymentMethod, setPaymentMethod] =
-    useState<PaymentMethodManagementPaymentMethodCardFragment>();
-  const [checkoutResponse, setCheckoutResponse] =
-    useState<CreateCheckoutPageCheckoutFragment>();
   const [orderId, setOrderId] = useState("");
   const [coupon, setCoupon] = useState<CheckoutPageCouponFragment>();
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(
@@ -69,8 +58,9 @@ export const CheckoutPage = () => {
   const { onShowAPIError } = useAPIErrors();
   const { shoppingCartItems, totalAmount: shoppingCartTotalAmount } =
     useShoppingCart();
-
-  const addressIsBR = address?.country?.toLowerCase() === "br";
+  const {
+    defaultPaymentGateway
+  } = usePlugins();
 
   const [{ fetching: isLoadingCheckout }, onExecuteCheckout] =
     useCreateCheckoutMutation();
@@ -110,18 +100,6 @@ export const CheckoutPage = () => {
     shoppingCartTotalAmount,
     coupon,
   ]);
-
-  useEffect(() => {
-    if (paymentMethodType !== PaymentMethodType.Card) {
-      setPaymentMethod(undefined);
-    }
-  }, [paymentMethodType]);
-
-  useEffect(() => {
-    if (!addressIsBR) {
-      onDeactivateStep(CheckoutStep.ACCOUNT);
-    }
-  }, [addressIsBR, onDeactivateStep]);
 
   const onCreateOrder = useCallback(async () => {
     if (!isAuthenticated) {
@@ -172,37 +150,30 @@ export const CheckoutPage = () => {
   const onCreatePayment = useCallback(
     async (order: string) => {
       try {
-        if (!paymentMethodType) {
+        if (!paymentMethodType || !defaultPaymentGateway?.type) {
           onShowAPIError({
             message: translate.formatMessage({ id: "paymentMethodNotFound" }),
           });
           return;
         }
+        const isDefaultPaymentMethod = [PaymentMethodType.Boleto, PaymentMethodType.Card, PaymentMethodType.Pix].includes(paymentMethodType)
         const response = await onExecuteCheckout({
           input: {
             order,
-            paymentMethod: paymentMethod?.id,
-            paymentMethodType,
+            cancelURL: new URL(appRoutes.checkout.home, window.location.origin).toString(),
+            successURL: new URL(`${appRoutes.checkout.callback}?redirect_status=${PaymentStatus.SUCCEEDED}`, window.location.origin).toString(),
+            paymentGatewayType: (isDefaultPaymentMethod ? defaultPaymentGateway?.type : paymentMethodType) as unknown as PaymentGatewayType,
           },
         });
 
         if (!!response?.data?.createCheckout) {
           const checkout = response.data.createCheckout;
-          if (paymentMethodType === PaymentMethodType.Card) {
-            if (checkout.card) {
-              return router.push(appRoutes.checkout.callback);
-            } else {
-              return onShowAPIError({
-                message: translate.formatMessage({ id: "somethingWentWrong" }),
-              });
-            }
-          }
-          onActivateStep(CheckoutStep.PAYMENT);
           if (checkout.url) {
             return router.push(checkout.url);
           }
-          setCheckoutResponse(checkout);
-          return setCurrentStep(CheckoutStep.PAYMENT);
+          onShowAPIError({
+            message: translate.formatMessage({ id: "somethingWentWrong" }),
+          });
         }
         if (!!response.error?.graphQLErrors?.length) {
           response.error.graphQLErrors.map((error) =>
@@ -215,34 +186,11 @@ export const CheckoutPage = () => {
         });
       }
     },
-    [
-      onActivateStep,
-      onExecuteCheckout,
-      onShowAPIError,
-      paymentMethod?.id,
-      paymentMethodType,
-      router,
-      translate,
-    ]
+    [defaultPaymentGateway?.type, onExecuteCheckout, onShowAPIError, paymentMethodType, router, translate]
   );
 
   const onGoToProductsStep = () => {
     setCurrentStep(CheckoutStep.PRODUCTS);
-  };
-  const onGoToAddressStep = () => {
-    if (!isAuthenticated) {
-      router.push({
-        pathname: appRoutes.auth.login,
-        query: { redirectTo: router.asPath },
-      });
-      return;
-    }
-    onActivateStep(CheckoutStep.ADDRESS);
-    setCurrentStep(CheckoutStep.ADDRESS);
-  };
-  const onGoToAccountStep = () => {
-    onActivateStep(CheckoutStep.ACCOUNT);
-    setCurrentStep(CheckoutStep.ACCOUNT);
   };
   const onGoToPaymentMethodStep = () => {
     onActivateStep(CheckoutStep.PAYMENT_METHOD);
@@ -251,21 +199,6 @@ export const CheckoutPage = () => {
   const onGoToSummaryStep = () => {
     onActivateStep(CheckoutStep.SUMMARY);
     setCurrentStep(CheckoutStep.SUMMARY);
-  };
-
-  const onGoToAccountOrPaymentMethod = () => {
-    if (!addressIsBR) {
-      onGoToPaymentMethodStep();
-      return;
-    }
-    onGoToAccountStep();
-  };
-  const onGoBackToAccountOrAddress = () => {
-    if (!addressIsBR) {
-      onGoToAddressStep();
-      return;
-    }
-    onGoToAccountStep();
   };
 
   const onGoToPayment = async () => {
@@ -298,18 +231,6 @@ export const CheckoutPage = () => {
               <StepItem
                 title={translate.formatMessage({ id: "products" })}
                 stepIndex={CheckoutStep.PRODUCTS}
-                isCompleted={activeSteps?.[CheckoutStep.ADDRESS]}
-              />
-              <StepItem
-                title={translate.formatMessage({ id: "address" })}
-                stepIndex={CheckoutStep.ADDRESS}
-                isDisabled={!activeSteps?.[CheckoutStep.ADDRESS]}
-                isCompleted={activeSteps?.[CheckoutStep.ACCOUNT]}
-              />
-              <StepItem
-                title={translate.formatMessage({ id: "account" })}
-                stepIndex={CheckoutStep.ACCOUNT}
-                isDisabled={!activeSteps?.[CheckoutStep.ACCOUNT]}
                 isCompleted={activeSteps?.[CheckoutStep.PAYMENT_METHOD]}
               />
               <StepItem
@@ -322,42 +243,20 @@ export const CheckoutPage = () => {
                 title={translate.formatMessage({ id: "summary" })}
                 stepIndex={CheckoutStep.SUMMARY}
                 isDisabled={!activeSteps?.[CheckoutStep.SUMMARY]}
-                isCompleted={activeSteps?.[CheckoutStep.PAYMENT]}
-              />
-              <StepItem
-                title={translate.formatMessage({ id: "payment" })}
-                stepIndex={CheckoutStep.PAYMENT}
-                isDisabled={!activeSteps?.[CheckoutStep.PAYMENT]}
+                isCompleted={activeSteps?.[CheckoutStep.SUMMARY]}
               />
             </StepList>
             <StepPanels>
               <Card background="background.50">
                 <CardBody>
                   <StepPanel stepIndex={CheckoutStep.PRODUCTS}>
-                    <ProductsStep onNextStep={onGoToAddressStep} />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.ADDRESS}>
-                    <AddressStep
-                      address={address}
-                      onChangeAddress={setAddress}
-                      onPreviousStep={onGoToProductsStep}
-                      onNextStep={onGoToAccountOrPaymentMethod}
-                    />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.ACCOUNT}>
-                    <AccountStep
-                      onPreviousStep={onGoToAddressStep}
-                      onNextStep={onGoToPaymentMethodStep}
-                    />
+                    <ProductsStep onNextStep={onGoToPaymentMethodStep} />
                   </StepPanel>
                   <StepPanel stepIndex={CheckoutStep.PAYMENT_METHOD}>
                     <PaymentMethodStep
-                      address={address}
-                      paymentMethod={paymentMethod}
                       paymentMethodType={paymentMethodType}
-                      onChoosePaymentMethod={setPaymentMethod}
                       onChoosePaymentMethodType={setPaymentMethodType}
-                      onPreviousStep={onGoBackToAccountOrAddress}
+                      onPreviousStep={onGoToProductsStep}
                       onNextStep={onGoToSummaryStep}
                     />
                   </StepPanel>
@@ -370,22 +269,12 @@ export const CheckoutPage = () => {
                       isLoadingGetApplyCouponToValue={
                         isLoadingGetApplyCouponToValue
                       }
-                      paymentMethod={paymentMethod}
                       paymentMethodType={paymentMethodType}
                       isLoadingCheckout={isLoadingCheckout || isLoadingOrder}
                       onGoToProducts={onGoToProductsStep}
                       onGoToPaymentMethod={onGoToPaymentMethodStep}
                       onPreviousStep={onGoToPaymentMethodStep}
                       onNextStep={onGoToPayment}
-                    />
-                  </StepPanel>
-                  <StepPanel stepIndex={CheckoutStep.PAYMENT}>
-                    <PaymentStep
-                      orderId={orderId}
-                      totalAmount={totalAmount}
-                      checkout={checkoutResponse}
-                      paymentMethodType={paymentMethodType}
-                      onPreviousStep={onGoToSummaryStep}
                     />
                   </StepPanel>
                 </CardBody>

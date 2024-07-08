@@ -118,7 +118,7 @@ export const CatalogItem = ({
             <Box>
               {!!prices?.length && (
                 <SelectPrice
-                  showLabel={false}
+                  label={translate.formatMessage({ id: "chooseYourPlan" })}
                   onChange={onChoosePrice}
                   prices={prices}
                   currentPrice={currentPrice}

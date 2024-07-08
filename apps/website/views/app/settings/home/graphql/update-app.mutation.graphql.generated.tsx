@@ -8,7 +8,7 @@ export type UpdateAppMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdateAppMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', id: string, name: string, slug: string, isStokei: boolean, isIntegratedWithPagarme: boolean, stripeAccount?: string | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, icon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } };
+export type UpdateAppMutation = { __typename?: 'Mutation', updateApp: { __typename?: 'App', id: string, name: string, slug: string, isStokei: boolean, stripeAccount?: string | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, icon?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, colors?: { __typename?: 'Colors', items?: Array<{ __typename?: 'Color', color: string, themeMode: Types.ThemeMode, type: Types.ColorType }> | null } | null } };
 
 
 export const UpdateAppDocument = gql`
@@ -18,7 +18,6 @@ export const UpdateAppDocument = gql`
     name
     slug
     isStokei
-    isIntegratedWithPagarme
     stripeAccount
     currency {
       id
