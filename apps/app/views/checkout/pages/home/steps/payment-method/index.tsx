@@ -56,33 +56,18 @@ export const PaymentMethodStep = ({
                 <Stack spacing="5" direction="column">
                   {defaultPaymentGateway && (
                     <>
-                      <RadioCard
-                        id={PaymentMethodType.Boleto}
-                        value={PaymentMethodType.Boleto}
-                        isChecked={paymentMethodType === PaymentMethodType.Boleto}
-                      >
-                        <PaymentMethod
-                          paymentMethodType={PaymentMethodType.Boleto}
-                        />
-                      </RadioCard>
-                      <RadioCard
-                        id={PaymentMethodType.Pix}
-                        value={PaymentMethodType.Pix}
-                        isChecked={paymentMethodType === PaymentMethodType.Pix}
-                      >
-                        <PaymentMethod
-                          paymentMethodType={PaymentMethodType.Pix}
-                        />
-                      </RadioCard>
-                      <RadioCard
-                        id={PaymentMethodType.Card}
-                        value={PaymentMethodType.Card}
-                        isChecked={paymentMethodType === PaymentMethodType.Card}
-                      >
-                        <PaymentMethod
-                          paymentMethodType={PaymentMethodType.Card}
-                        />
-                      </RadioCard>
+                      {defaultPaymentGateway?.paymentMethods?.map(type => (
+                        <RadioCard
+                          id={type}
+                          key={type}
+                          value={type}
+                          isChecked={paymentMethodType === type}
+                        >
+                          <PaymentMethod
+                            paymentMethodType={type}
+                          />
+                        </RadioCard>
+                      ))}
                     </>
                   )}
 

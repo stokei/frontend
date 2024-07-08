@@ -2,13 +2,17 @@ import { PluginType } from "@/services/graphql/stokei";
 import { convertPluginTypeToPaymentGatewayType } from "@/utils/convert-plugin-type-to-payment-gateway-type";
 import { useCallback, useMemo } from "react";
 import { useCurrentApp } from "../use-current-app";
-import { useGetPluginsQuery } from "./plugins.query.graphql.generated";
+import { GetPluginsPluginFragment, useGetPluginsQuery } from "./plugins.query.graphql.generated";
+import { PaymentGatewaysPaymentGatewayFragment, useGetPaymentGatewaysQuery } from "./payment-gateways.query.graphql.generated";
+
+export type DefaultPaymentGateway = GetPluginsPluginFragment & { paymentMethods: PaymentGatewaysPaymentGatewayFragment['paymentMethods'] };
 
 export const usePlugins = () => {
   const { currentApp } = useCurrentApp();
   const [{ fetching: isLoading, data: dataGetPlugins }] =
     useGetPluginsQuery({
       pause: !currentApp?.id,
+      requestPolicy: 'network-only',
       variables: {
         where: {
           AND: {
@@ -19,8 +23,26 @@ export const usePlugins = () => {
         }
       },
     });
+  const [{ fetching: isLoadingGetAllPaymentGateways, data: dataGetAllPaymentGateways }] =
+    useGetPaymentGatewaysQuery({
+      pause: !currentApp?.id,
+      requestPolicy: 'network-only'
+    });
 
-  const paymentGateways = useMemo(() => dataGetPlugins?.plugins?.items?.filter(plugin => !!convertPluginTypeToPaymentGatewayType(plugin.type)), [dataGetPlugins?.plugins?.items])
+  const allPaymentGateways = useMemo(() => dataGetAllPaymentGateways?.paymentGateways || [], [dataGetAllPaymentGateways?.paymentGateways]);
+
+  const paymentGateways: DefaultPaymentGateway[] = useMemo(() => {
+    const gateways = dataGetPlugins?.plugins?.items?.filter(plugin => !!convertPluginTypeToPaymentGatewayType(plugin.type))?.map(
+      plugin => {
+        const paymentGateway = allPaymentGateways.find(item => item.type === convertPluginTypeToPaymentGatewayType(plugin.type));
+        return {
+          ...plugin,
+          paymentMethods: paymentGateway?.paymentMethods || []
+        }
+      }
+    )
+    return gateways || []
+  }, [dataGetPlugins?.plugins?.items, allPaymentGateways])
 
   const getPluginByType = useCallback((type: PluginType) => {
     return dataGetPlugins?.plugins?.items?.find(plugin => plugin.type === type);
@@ -40,7 +62,7 @@ export const usePlugins = () => {
   const hasInternationalPayment = useMemo(() => !!getPluginByType(PluginType.Stripe), [getPluginByType]);
 
   return {
-    isLoading,
+    isLoading: isLoading || isLoadingGetAllPaymentGateways,
     data: dataGetPlugins,
     paymentGateways,
     defaultPaymentGateway,

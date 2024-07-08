@@ -2493,6 +2493,12 @@ export type Payment = {
   updatedBy?: Maybe<Account>;
 };
 
+export type PaymentGateway = {
+  __typename?: 'PaymentGateway';
+  paymentMethods: Array<PaymentMethodType>;
+  type: PaymentGatewayType;
+};
+
 export enum PaymentGatewayType {
   Mercadopago = 'MERCADOPAGO',
   Pagarme = 'PAGARME',
@@ -2868,6 +2874,7 @@ export type Query = {
   page: Page;
   pages: Pages;
   payment: Payment;
+  paymentGateways: Array<PaymentGateway>;
   paymentMethod: PaymentMethod;
   paymentMethods: PaymentMethods;
   paymentMethodsMostUsedByPeriod: Array<ChartData>;

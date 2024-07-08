@@ -1,0 +1,11 @@
+query GetPaymentGateways {
+  paymentGateways {
+    type
+    paymentMethods
+  }
+}
+
+fragment PaymentGatewaysPaymentGateway on PaymentGateway {
+  type
+  paymentMethods
+}
