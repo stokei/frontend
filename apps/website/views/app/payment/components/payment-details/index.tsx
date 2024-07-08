@@ -51,14 +51,7 @@ export const PaymentDetails = ({ payment }: PaymentDetailsProps) => {
             </Box>
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "paymentMethod" })}</Label>
-              {payment?.paymentMethod ? (
-                <PaymentMethod
-                  paymentMethodType={payment?.paymentMethod?.type}
-                  paymentMethod={payment?.paymentMethod}
-                />
-              ) : (
-                <Icon name={payment?.paymentGatewayType?.toLowerCase() as IconName} />
-              )}
+              <Icon name={payment?.paymentGatewayType?.toLowerCase() as IconName} />
             </Box>
             <Box flexDirection="column">
               <Label>{translate.formatMessage({ id: "value" })}</Label>
