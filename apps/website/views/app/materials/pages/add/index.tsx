@@ -45,9 +45,9 @@ export const AddMaterialPage = () => {
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
-    description: z.string(),
+    description: z.string().optional(),
   });
 
   const {
@@ -106,7 +106,7 @@ export const AddMaterialPage = () => {
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -139,7 +139,7 @@ export const AddMaterialPage = () => {
                       id="material-file"
                       uploadURL={STOKEI_API_FILE_UPLOAD_URL}
                       onSuccess={(result) => setFileId(result.file)}
-                      onError={() => {}}
+                      onError={() => { }}
                     />
                   </FormControl>
                   <FormControl>
@@ -159,7 +159,7 @@ export const AddMaterialPage = () => {
                       id="material-image"
                       uploadURL={imageUploadURL}
                       onSuccess={onCompleteImageUpload}
-                      onError={() => {}}
+                      onError={() => { }}
                     />
                   </FormControl>
                   <FormControl isInvalid={!!errors?.name}>

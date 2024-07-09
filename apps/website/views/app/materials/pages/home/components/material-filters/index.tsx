@@ -36,7 +36,7 @@ export const MaterialFilters = ({
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
   });
 

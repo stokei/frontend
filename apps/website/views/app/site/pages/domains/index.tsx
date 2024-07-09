@@ -34,7 +34,7 @@ const SiteDomainsPage = () => {
     onOpen: onOpenHowConfigureDomainModal,
   } = useDisclosure();
 
-  const [{ data: dataGetDomains, fetching: isLoadingDomains }] =
+  const [{ data: dataGetDomains, fetching: isLoadingDomains }, onReloadDomains] =
     useGetAppDomainsQuery({
       pause: !site,
       requestPolicy: "network-only",
@@ -64,18 +64,14 @@ const SiteDomainsPage = () => {
   }, [site?.stokeiDomain, dataGetDomains]);
 
   const onDomainCreated = useCallback(
-    (newDomain: AppDomainFragment) => {
-      setDomains((currentDomains) => [...currentDomains, newDomain]);
+    () => {
+      onReloadDomains({ requestPolicy: 'network-only' });
       onCloseAddDomainDrawer();
     },
-    [onCloseAddDomainDrawer]
+    [onCloseAddDomainDrawer, onReloadDomains]
   );
-  const onDomainRemoved = (domain: AppDomainFragment) => {
-    setDomains((currentDomains) =>
-      currentDomains?.filter(
-        (currentDomain) => currentDomain?.id !== domain?.id
-      )
-    );
+  const onDomainRemoved = () => {
+    onReloadDomains({ requestPolicy: 'network-only' });
   };
 
   return (
@@ -104,7 +100,7 @@ const SiteDomainsPage = () => {
           </Button>
         </Stack>
         {domains?.map((domain) => (
-          <DomainItem domain={domain} onDomainRemoved={onDomainRemoved} />
+          <DomainItem key={domain?.id} domain={domain} onDomainRemoved={onDomainRemoved} />
         ))}
         {dataGetDomains?.domains?.totalPages &&
           dataGetDomains?.domains?.totalPages > 1 && (

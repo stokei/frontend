@@ -1,58 +1,51 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import {
-  Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Image,
   Link,
-  Stack,
-  Title,
+  Title
 } from "@stokei/ui";
 import NextLink from "next/link";
 
 import { websiteRoutes } from "@stokei/routes";
 import { AppMaterialFragment } from "../../graphql/materials.query.graphql.generated";
-import { useRouter } from "next/router";
 
 export interface MaterialItemProps {
   readonly material: AppMaterialFragment;
 }
 
 export const MaterialItem = ({ material }: MaterialItemProps) => {
-  const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 
-  const goToEditMaterial = () =>
-    router.push(
-      websiteRoutes
-        .app({ appId: currentApp?.id })
-        .material({ material: material?.id }).home
-    );
-
   return (
-    <Card background="background.50" overflow="hidden">
-      <CardHeader position="relative" padding="0">
-        <Image
-          width="full"
-          src={material?.avatar?.file?.url || ""}
-          fallbackSrc={defaultNoImage.src}
-          alt={translate.formatMessage({ id: "material" })}
-        />
-      </CardHeader>
-      <CardBody>
-        <Stack direction="column" spacing="5">
-          <Title size="md" marginBottom="5">
+    <Link
+      width="full"
+      as={NextLink}
+      href={
+        websiteRoutes
+          .app({ appId: currentApp?.id })
+          .material({ material: material?.id }).home
+      }
+    >
+      <Card background="background.50" overflow="hidden">
+        <CardHeader position="relative" padding="0">
+          <Image
+            width="full"
+            src={material?.avatar?.file?.url || ""}
+            fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "material" })}
+          />
+        </CardHeader>
+        <CardBody>
+          <Title size="md">
             {material?.name}
           </Title>
-          <Button onClick={goToEditMaterial}>
-            {translate.formatMessage({ id: "view" })}
-          </Button>
-        </Stack>
-      </CardBody>
-    </Card>
+        </CardBody>
+      </Card>
+    </Link>
   );
 };

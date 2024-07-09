@@ -34,7 +34,7 @@ export const ProductItem = ({ product, price }: ProductItemProps) => {
 
   const onChoosePrice = useCallback(
     (currentPrice?: PriceComponentFragment) =>
-      onAddOrUpdateShoppingCartItem({
+      onAddOrUpdateShoppingCartItem?.({
         price: currentPrice,
         product: {
           id: product?.id || "",

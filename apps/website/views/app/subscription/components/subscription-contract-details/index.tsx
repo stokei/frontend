@@ -1,6 +1,6 @@
 import { useTranslations } from "@/hooks";
-import { SubscriptionContractType } from "@/services/graphql/stokei";
-import { getCardFlagURL, getProductURL } from "@/utils";
+import { SubscriptionContractStatus, SubscriptionContractType } from "@/services/graphql/stokei";
+import { getCardFlagURL, getProductURL, getSubscriptionContractStatusColor } from "@/utils";
 import {
   Avatar,
   Badge,
@@ -18,6 +18,7 @@ import { useMemo } from "react";
 import { SubscriptionPageSubscriptionContractFragment } from "../../graphql/subscription-contract.query.graphql.generated";
 import { Customer } from "../../interfaces/customer";
 import { Product } from "../../interfaces/product";
+import { SubscriptionContractItemMenu } from "../subscription-contract-item-menu";
 
 interface SubscriptionContractDetailsProps {
   readonly subscriptionContract?: SubscriptionPageSubscriptionContractFragment;
@@ -32,8 +33,18 @@ export const SubscriptionContractDetails = ({
 }: SubscriptionContractDetailsProps) => {
   const translate = useTranslations();
 
+  const statusColor = useMemo(
+    () =>
+      getSubscriptionContractStatusColor(subscriptionContract?.status as any),
+    [subscriptionContract]
+  );
+
   const isRecurringSubscriptionContract = useMemo(
     () => subscriptionContract?.type === SubscriptionContractType.Recurring,
+    [subscriptionContract]
+  );
+  const isCanceledSubscriptionContract = useMemo(
+    () => subscriptionContract?.status === SubscriptionContractStatus.Canceled,
     [subscriptionContract]
   );
 
@@ -41,9 +52,28 @@ export const SubscriptionContractDetails = ({
     <Card width="full" background="background.50">
       <CardBody overflow="hidden" alignItems="center">
         <Stack direction="column" spacing="5">
-          <Title fontSize="md" lineHeight="shorter">
-            {translate.formatMessage({ id: "subscriptionDetails" })}
-          </Title>
+          <Stack direction="row" spacing="5" justify="space-between" align="center">
+            <Stack direction="row" spacing="5" justify="space-between" align="center">
+              <Title fontSize="md" lineHeight="shorter">
+                {translate.formatMessage({ id: "subscriptionDetails" })}
+              </Title>
+              <Badge colorScheme={statusColor}>
+                {translate.formatMessage({
+                  id: subscriptionContract?.status?.toLowerCase() as any,
+                })}
+              </Badge>
+            </Stack>
+
+            {!isCanceledSubscriptionContract && (
+              <Box>
+                <SubscriptionContractItemMenu
+                  subscriptionContractId={subscriptionContract?.id}
+                  customer={customer}
+                  product={product}
+                />
+              </Box>
+            )}
+          </Stack>
 
           <Box flexDirection="column">
             <Label>{translate.formatMessage({ id: "student" })}</Label>

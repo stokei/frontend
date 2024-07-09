@@ -101,7 +101,7 @@ export const MeHomePage = () => {
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -168,7 +168,7 @@ export const MeHomePage = () => {
                     uploadURL={imageUploadURL}
                     previewURL={currentAccount?.avatar?.file?.url || ""}
                     onSuccess={onCompleteImageUpload}
-                    onError={() => {}}
+                    onError={() => { }}
                   />
                 </FormControl>
                 <ButtonGroup>

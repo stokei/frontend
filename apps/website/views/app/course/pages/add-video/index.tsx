@@ -46,9 +46,9 @@ export const AddVideoPage = () => {
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
-    description: z.string(),
+    description: z.string().optional(),
   });
 
   const {
@@ -89,8 +89,8 @@ export const AddVideoPage = () => {
   const title = useMemo(
     () =>
       translate.formatMessage({ id: "addNewVideoToModule" }) +
-        " " +
-        courseModule?.name || "",
+      " " +
+      courseModule?.name || "",
     [courseModule?.name, translate]
   );
 
@@ -170,7 +170,7 @@ export const AddVideoPage = () => {
                         id="module-poster"
                         uploadURL={posterUploadURL}
                         onSuccess={onCompletePosterUpload}
-                        onError={() => {}}
+                        onError={() => { }}
                       />
                     </FormControl>
                     <FormControl>
@@ -192,7 +192,7 @@ export const AddVideoPage = () => {
                         uploadURL={videoUploadURL}
                         onStartUpload={onStartVideoUpload}
                         onSuccess={onUploadComplete}
-                        onError={() => {}}
+                        onError={() => { }}
                       />
                     </FormControl>
                     <FormControl isInvalid={!!errors?.name}>

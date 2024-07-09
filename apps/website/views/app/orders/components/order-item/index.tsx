@@ -1,6 +1,6 @@
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
-import { getProductURL } from "@/utils";
+import { convertEnumValueToCamelCase, getProductURL } from "@/utils";
 import { getOrderStatusColor } from "@/utils/get-order-status-color";
 import {
   Avatar,
@@ -108,7 +108,7 @@ export const OrderItem = ({ order, hasCoupon }: OrderItemProps) => {
         <Box>
           <Badge colorScheme={statusColor}>
             {translate.formatMessage({
-              id: order?.status?.toLowerCase() as any,
+              id: convertEnumValueToCamelCase(order?.status || "") as any,
             })}
           </Badge>
         </Box>

@@ -39,7 +39,7 @@ export const EditModuleDrawer = ({
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
   });
 
@@ -90,7 +90,7 @@ export const EditModuleDrawer = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (

@@ -60,7 +60,7 @@ export const RemoveDomainModal = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -77,13 +77,12 @@ export const RemoveDomainModal = ({
               id: "wouldYouReallyLikeToRemoveDomain",
             },
             {
-              domain: (
-                <Text as="b" color="primary.500" marginLeft="1">
-                  {domain?.name}
-                </Text>
-              ),
+              domain: domain?.name,
             }
           )}
+        </Text>
+        <Text as="b" color="primary.500">
+          {domain?.name}
         </Text>
       </ModalBody>
       <ModalFooter>

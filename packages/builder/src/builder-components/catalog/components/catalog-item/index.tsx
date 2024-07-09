@@ -64,7 +64,7 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
   }, []);
 
   const onAddToCart = useCallback(() =>
-    onAddOrUpdateShoppingCartItem({
+    onAddOrUpdateShoppingCartItem?.({
       price: currentPrice,
       product: {
         id: product?.id || "",

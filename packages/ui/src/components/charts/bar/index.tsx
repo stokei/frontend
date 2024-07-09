@@ -18,6 +18,8 @@ export const BarChart = ({
             series: [{ name: '', data: series }],
             options: {
                 chart: {
+                    offsetY: -20,
+                    offsetX: -20,
                     toolbar: {
                         show: true,
                         tools: {

@@ -74,6 +74,7 @@ export const ptBRMessages = {
   imageNotFound: "Imagem não encontrada",
   imagesNotFound: "Imagens não encontradas",
   invalidEmailOrPassword: "E-mail ou senha inválidos",
+  invalidURL: "URL inválido",
   invalidFile: "arquivo inválido",
   invoiceNotFound: "Fatura não encontrada",
   invoicesNotFound: "Faturas não encontradas",

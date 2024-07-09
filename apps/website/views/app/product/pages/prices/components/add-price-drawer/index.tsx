@@ -29,7 +29,6 @@ import {
   SingleSelectOption,
   SingleSelectOptions,
   Stack,
-  Switch,
   Text,
   useToast
 } from "@stokei/ui";
@@ -61,7 +60,7 @@ export const AddPriceDrawer = ({
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
     amount: z.string().min(1, {
       message: translate.formatMessage({ id: "amountIsRequired" }),
@@ -224,8 +223,7 @@ export const AddPriceDrawer = ({
               </InputGroup>
               <FormErrorMessage>{errors?.amount?.message}</FormErrorMessage>
             </FormControl>
-
-            <FormControl isInvalid={!!errors?.automaticRenew}>
+            <FormControl isInvalid={!type}>
               <Label htmlFor="price-type">
                 {translate.formatMessage({ id: "type" })}
               </Label>
@@ -261,32 +259,12 @@ export const AddPriceDrawer = ({
             </FormControl>
 
             {type === PriceType.Recurring && (
-              <>
-                <RecurringIntervalInput
-                  interval={interval}
-                  intervalCount={intervalCount}
-                  onChangeInterval={setInterval}
-                  onChangeIntervalCount={setIntervalCount}
-                />
-                <FormControl isInvalid={!!errors?.automaticRenew}>
-                  <Stack direction="row" align="center" spacing="5">
-                    <Label
-                      width="fit-content"
-                      margin="0"
-                      htmlFor="automaticRenew"
-                    >
-                      {translate.formatMessage({ id: "automaticRenew" })}
-                    </Label>
-                    <Switch
-                      id="automaticRenew"
-                      {...register("automaticRenew")}
-                    />
-                  </Stack>
-                  <FormErrorMessage>
-                    {errors?.automaticRenew?.message}
-                  </FormErrorMessage>
-                </FormControl>
-              </>
+              <RecurringIntervalInput
+                interval={interval}
+                intervalCount={intervalCount}
+                onChangeInterval={setInterval}
+                onChangeIntervalCount={setIntervalCount}
+              />
             )}
 
             <Button

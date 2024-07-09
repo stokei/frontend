@@ -11,7 +11,6 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { Header } from "./components/header";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
 import { SubscriptionContractDetails } from "./components/subscription-contract-details";
@@ -127,13 +126,6 @@ export const SubscriptionContractPage = () => {
     <AppLayout>
       <Navbar />
       <Stack direction="column" paddingY="5" spacing="5">
-        <Container>
-          <Header
-            subscriptionContract={subscriptionContract}
-            product={product}
-            customer={customer}
-          />
-        </Container>
         <Container>
           <SubscriptionContractDetails
             subscriptionContract={subscriptionContract}

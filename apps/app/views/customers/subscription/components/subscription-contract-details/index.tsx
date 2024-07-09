@@ -18,6 +18,7 @@ import { useMemo } from "react";
 import { SubscriptionPageSubscriptionContractFragment } from "../../graphql/subscription-contract.query.graphql.generated";
 import { Customer } from "../../interfaces/customer";
 import { Product } from "../../interfaces/product";
+import { getSubscriptionContractStatusColor } from "@/utils/get-subscription-contract-status-color";
 
 interface SubscriptionContractDetailsProps {
   readonly subscriptionContract?: SubscriptionPageSubscriptionContractFragment;
@@ -31,6 +32,12 @@ export const SubscriptionContractDetails = ({
   product,
 }: SubscriptionContractDetailsProps) => {
   const translate = useTranslations();
+
+  const statusColor = useMemo(
+    () =>
+      getSubscriptionContractStatusColor(subscriptionContract?.status as any),
+    [subscriptionContract]
+  );
 
   const isRecurringSubscriptionContract = useMemo(
     () => subscriptionContract?.type === SubscriptionContractType.Recurring,
@@ -48,9 +55,16 @@ export const SubscriptionContractDetails = ({
     <Card width="full" background="background.50">
       <CardBody overflow="hidden" alignItems="center">
         <Stack direction="column" spacing="5">
-          <Title fontSize="md" lineHeight="shorter">
-            {translate.formatMessage({ id: "subscriptionDetails" })}
-          </Title>
+          <Stack direction="row" spacing="5" justify="space-between" align="center">
+            <Title fontSize="md" lineHeight="shorter">
+              {translate.formatMessage({ id: "subscriptionDetails" })}
+            </Title>
+            <Badge colorScheme={statusColor}>
+              {translate.formatMessage({
+                id: subscriptionContract?.status?.toLowerCase() as any,
+              })}
+            </Badge>
+          </Stack>
 
           <Box flexDirection="column">
             <Label>{translate.formatMessage({ id: "student" })}</Label>

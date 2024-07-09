@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Button } from "../button";
 import { ButtonGroup, ButtonGroupProps } from "../button-group";
 import { Icon } from "../icon";
@@ -22,6 +23,21 @@ export const Pagination = ({
   previousPage,
   ...props
 }: PaginationProps) => {
+  const pages = useMemo(() => {
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, startPage + 4);
+
+    if (endPage - startPage < 4) {
+      startPage = Math.max(1, endPage - 4);
+    }
+
+    let pages = [];
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }, [currentPage, totalPages]);
+
   return (
     <ButtonGroup
       isAttached
@@ -37,44 +53,23 @@ export const Pagination = ({
         paddingRight="5"
         isDisabled={!hasPreviousPage}
         background="background.50"
-        onClick={
-          hasPreviousPage ? () => onChangePage(currentPage - 1) : undefined
-        }
+        onClick={hasPreviousPage ? () => onChangePage(currentPage - 1) : undefined}
       >
         <Icon name="arrowLeft" />
       </Button>
-      {hasPreviousPage && (
+      {pages.map(page => (
         <Button
+          key={page}
           h="10"
           colorScheme="gray"
           paddingX="5"
           paddingY="3"
-          onClick={() => onChangePage(currentPage - 1)}
+          isActive={page === currentPage}
+          onClick={() => onChangePage(page)}
         >
-          {currentPage - 1}
+          {page}
         </Button>
-      )}
-      <Button
-        h="10"
-        isActive
-        colorScheme="gray"
-        paddingX="5"
-        paddingY="3"
-        cursor="default"
-      >
-        {currentPage}
-      </Button>
-      {hasNextPage && (
-        <Button
-          h="10"
-          colorScheme="gray"
-          paddingX="5"
-          paddingY="3"
-          onClick={() => onChangePage(currentPage + 1)}
-        >
-          {currentPage + 1}
-        </Button>
-      )}
+      ))}
       <Button
         h="10"
         colorScheme="gray"

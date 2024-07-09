@@ -15,41 +15,32 @@ import {
 
 import { SelectFilterStatus } from "../select-filter-status";
 import { SelectFilterSubscriptionType } from "../select-filter-subscription-type";
+import { useFilters, UseFiltersResponse } from "../../hooks/use-filters";
 
 interface SubscriptionContractFiltersProps {
   readonly isOpen: boolean;
+  readonly currentFilters: UseFiltersResponse;
   readonly onClose: () => void;
-  readonly currentStatus: SubscriptionContractStatusFilter;
-  readonly currentSubscriptionType: SubscriptionContractTypeFilter;
-  readonly currentCustomers?: AppAccountFragment[];
-  readonly onChooseCurrentCustomer: (value?: AppAccountFragment) => void;
-  readonly onChooseCurrentSubscriptionType: (
-    value?: SubscriptionContractTypeFilter
-  ) => void;
-  readonly onChooseCurrentStatus: (
-    value?: SubscriptionContractStatusFilter
-  ) => void;
-  readonly onResetCurrentCustomer: () => void;
 }
 
 export const SubscriptionContractFilters = ({
   isOpen,
+  currentFilters,
   onClose,
-  currentStatus,
-  currentSubscriptionType,
-  currentCustomers,
-  onResetCurrentCustomer,
-  onChooseCurrentCustomer,
-  onChooseCurrentStatus,
-  onChooseCurrentSubscriptionType,
 }: SubscriptionContractFiltersProps) => {
   const translate = useTranslations();
+  const newFilters = useFilters(currentFilters);
 
+  const onSubmit = () => {
+    currentFilters.setCustomers(newFilters.customers);
+    currentFilters.setStatus(newFilters.status);
+    currentFilters.setType(newFilters.type);
+    onClose();
+  };
   const onClean = () => {
-    onChooseCurrentCustomer();
-    onChooseCurrentStatus();
-    onChooseCurrentSubscriptionType();
-    onResetCurrentCustomer();
+    onClose();
+    currentFilters.onClearFilters();
+    newFilters.onClearFilters();
   };
 
   return (
@@ -59,16 +50,16 @@ export const SubscriptionContractFilters = ({
         <Stack direction="column" spacing="5">
           <SelectMembers
             hasCurrentAccount={false}
-            currentMembers={currentCustomers}
-            onChange={onChooseCurrentCustomer}
+            currentMembers={newFilters.customers}
+            onChange={newFilters.onChangeCustomer}
           />
           <SelectFilterSubscriptionType
-            value={currentSubscriptionType}
-            onChange={onChooseCurrentSubscriptionType}
+            value={newFilters.type}
+            onChange={newFilters.setType}
           />
           <SelectFilterStatus
-            value={currentStatus}
-            onChange={onChooseCurrentStatus}
+            value={newFilters.status}
+            onChange={newFilters.setStatus}
           />
         </Stack>
       </DrawerBody>
@@ -76,6 +67,9 @@ export const SubscriptionContractFilters = ({
         <ButtonGroup>
           <Button variant="ghost" onClick={onClean}>
             {translate.formatMessage({ id: "clear" })}
+          </Button>
+          <Button onClick={onSubmit}>
+            {translate.formatMessage({ id: "save" })}
           </Button>
         </ButtonGroup>
       </DrawerFooter>

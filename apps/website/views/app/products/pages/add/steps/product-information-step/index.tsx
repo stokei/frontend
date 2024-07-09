@@ -35,9 +35,9 @@ export const ProductInformationStep = ({
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
-    description: z.string(),
+    description: z.string().optional(),
   });
 
   const {

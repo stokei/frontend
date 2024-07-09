@@ -59,7 +59,7 @@ export const EditCouponDrawer = ({
     useUpdateCouponMutation();
 
   const {
-    reset,
+    setValue,
     register,
     setError,
     clearErrors,
@@ -99,16 +99,14 @@ export const EditCouponDrawer = ({
         setDiscountType(DiscountType.AMOUNT);
       }
 
-      reset({
-        code: coupon?.code,
-        active: !!coupon?.active,
-        percentOff: coupon?.percentOff || 0,
-        amountOff: coupon?.amountOff
-          ? convertAmountToMoney(coupon?.amountOff + "")
-          : "",
-      });
+      setValue('code', coupon?.code);
+      setValue('active', !!coupon?.active);
+      setValue('percentOff', coupon?.percentOff || 0);
+      setValue('amountOff', coupon?.amountOff
+        ? convertAmountToMoney(coupon?.amountOff + "")
+        : "");
     }
-  }, [convertAmountToMoney, coupon, reset]);
+  }, [convertAmountToMoney, coupon, setValue]);
 
   const onSubmit = async ({
     code,
@@ -151,7 +149,7 @@ export const EditCouponDrawer = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (

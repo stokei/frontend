@@ -18,7 +18,8 @@ export const LineChart = ({
             series: [{ name: '', data: series }],
             options: {
                 chart: {
-                    height: 350,
+                    offsetY: -24,
+                    offsetX: -16,
                     type: 'line',
                     toolbar: {
                         show: true,
@@ -41,16 +42,22 @@ export const LineChart = ({
                     enabled: false
                 },
                 stroke: {
-                    curve: 'straight',
                     width: 2,
+                    curve: 'smooth',
                 },
                 grid: {
-                    row: {
-                        colors: ['transparent']
-                    },
+                    borderColor: '#D9D9D9',
+                    strokeDashArray: 3,
+                    padding: {
+                        left: 20,
+                        right: 0
+                    }
                 },
                 xaxis: {
                     categories,
+                    tooltip: {
+                        enabled: false
+                    }
                 }
             } as ApexOptions,
         })

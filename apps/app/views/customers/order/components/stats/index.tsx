@@ -11,6 +11,7 @@ import {
 } from "@stokei/ui";
 import { useMemo } from "react";
 import { OrderPageOrderFragment } from "../../graphql/order.query.graphql.generated";
+import { convertEnumValueToCamelCase } from "@/utils";
 
 interface StatsProps {
   readonly order?: OrderPageOrderFragment;
@@ -33,7 +34,7 @@ export const Stats = ({ order }: StatsProps) => {
               <Label>{translate.formatMessage({ id: "status" })}</Label>
               <Badge colorScheme={statusColor}>
                 {translate.formatMessage({
-                  id: order?.status?.toLowerCase() as any,
+                  id: convertEnumValueToCamelCase(order?.status || "") as any,
                 })}
               </Badge>
             </Stack>

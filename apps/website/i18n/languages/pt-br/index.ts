@@ -1,5 +1,6 @@
 export const ptBRMessages = {
   me: "Eu",
+  url: "URL",
   visit: "Visitar",
   acceptInstallment: "Aceita parcelamento",
   accesses: "Acessos",

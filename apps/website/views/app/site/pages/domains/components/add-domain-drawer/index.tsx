@@ -8,13 +8,14 @@ import {
   Form,
   FormControl,
   FormErrorMessage,
-  Input,
   InputGroup,
+  InputURL,
   Label,
   Stack,
-  useToast,
+  useToast
 } from "@stokei/ui";
 
+import { isValidURL } from "@stokei/utils";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateDomainMutation } from "../../graphql/create-domain.mutation.graphql.generated";
@@ -38,7 +39,7 @@ export const AddDomainDrawer = ({
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
   });
 
@@ -48,7 +49,7 @@ export const AddDomainDrawer = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
     mode: "all",
     resolver: zodResolver(validationSchema),
@@ -87,23 +88,27 @@ export const AddDomainDrawer = ({
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing="5">
-            <FormControl isInvalid={!!errors?.name}>
+            <FormControl isInvalid={!!errors?.name?.message && !isValidURL(errors?.name?.message)}>
               <Label htmlFor="name">
-                {translate.formatMessage({ id: "name" })}
+                {translate.formatMessage({ id: "url" })}
               </Label>
               <InputGroup>
-                <Input
+                <InputURL
                   id="name"
                   type="name"
                   placeholder={translate.formatMessage({
-                    id: "namePlaceholder",
+                    id: "linkPlaceholder",
                   })}
                   {...register("name")}
                 />
               </InputGroup>
               <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
             </FormControl>
-            <Button type="submit" isLoading={isLoadingCreateDomain}>
+            <Button
+              type="submit"
+              isLoading={isLoadingCreateDomain}
+              isDisabled={!isValid}
+            >
               {translate.formatMessage({
                 id: "save",
               })}

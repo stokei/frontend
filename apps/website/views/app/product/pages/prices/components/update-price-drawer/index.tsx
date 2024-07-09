@@ -1,6 +1,5 @@
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
-import { PriceType } from "@/services/graphql/stokei";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -15,9 +14,8 @@ import {
   InputLeftAddon,
   Label,
   Stack,
-  Switch,
   Text,
-  useToast,
+  useToast
 } from "@stokei/ui";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -75,7 +73,6 @@ export const UpdatePriceDrawer = ({
   const {
     register,
     handleSubmit,
-    reset,
     setValue,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof validationSchema>>({
@@ -208,24 +205,6 @@ export const UpdatePriceDrawer = ({
               </InputGroup>
               <FormErrorMessage>{errors?.amount?.message}</FormErrorMessage>
             </FormControl>
-
-            {price?.type === PriceType.Recurring && (
-              <FormControl isInvalid={!!errors?.automaticRenew}>
-                <Stack direction="row" align="center" spacing="5">
-                  <Label
-                    width="fit-content"
-                    margin="0"
-                    htmlFor="automaticRenew"
-                  >
-                    {translate.formatMessage({ id: "automaticRenew" })}
-                  </Label>
-                  <Switch id="automaticRenew" {...register("automaticRenew")} />
-                </Stack>
-                <FormErrorMessage>
-                  {errors?.automaticRenew?.message}
-                </FormErrorMessage>
-              </FormControl>
-            )}
 
             <Button
               type="submit"

@@ -74,6 +74,7 @@ export const enUSMessages: Record<I18nKey, string> = {
   imageNotFound: "Image not found",
   imagesNotFound: "Images not found",
   invalidEmailOrPassword: "Invalid email or password",
+  invalidURL: "Invalid URL",
   invalidFile: "Invalid file",
   invoiceNotFound: "Invoice not found",
   invoicesNotFound: "Invoices not found",

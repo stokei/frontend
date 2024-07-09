@@ -27,7 +27,7 @@ interface SelectMembersProps {
   readonly isOptional?: boolean;
   readonly hasCurrentAccount?: boolean;
   readonly currentMembers?: AppAccountFragment[];
-  readonly onChange: (value?: AppAccountFragment) => void;
+  readonly onChange: (value: AppAccountFragment) => void;
 }
 
 export const SelectMembers = ({

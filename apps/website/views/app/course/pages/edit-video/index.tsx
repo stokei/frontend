@@ -65,9 +65,9 @@ export const EditVideoPage = () => {
 
   const validationSchema = z.object({
     name: z.string().min(1, {
-      message: translate.formatMessage({ id: "nameIsRequired" }),
+      message: translate.formatMessage({ id: "required" }),
     }),
-    description: z.string(),
+    description: z.string().optional(),
   });
 
   const [{ data: dataModule }] = useGetAdminCoursePageModuleEditVideoQuery({
@@ -110,8 +110,8 @@ export const EditVideoPage = () => {
   const title = useMemo(
     () =>
       translate.formatMessage({ id: "editVideoOfTheModule" }) +
-        " " +
-        courseModule?.name || "",
+      " " +
+      courseModule?.name || "",
     [courseModule?.name, translate]
   );
 
@@ -180,7 +180,7 @@ export const EditVideoPage = () => {
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const onSuccessRemoveVideo = () => {
@@ -258,7 +258,7 @@ export const EditVideoPage = () => {
                         uploadURL={posterUploadURL}
                         previewURL={currentVideo?.poster?.file?.url || ""}
                         onSuccess={onCompletePosterUpload}
-                        onError={() => {}}
+                        onError={() => { }}
                       />
                     </FormControl>
                     <FormControl>
@@ -286,14 +286,14 @@ export const EditVideoPage = () => {
                         preview={
                           currentVideo?.file
                             ? {
-                                url: currentVideo?.file?.url || "",
-                                filename: currentVideo?.file?.filename || "",
-                              }
+                              url: currentVideo?.file?.url || "",
+                              filename: currentVideo?.file?.filename || "",
+                            }
                             : undefined
                         }
                         onStartUpload={onStartVideoUpload}
                         onSuccess={onUploadComplete}
-                        onError={() => {}}
+                        onError={() => { }}
                       />
                     </FormControl>
                     <FormControl isInvalid={!!errors?.name}>

@@ -66,7 +66,7 @@ export const CheckoutInfo = ({
 
   const onRedirectToCheckout = async () => {
     const checkoutURL = appRoutes.checkout.home;
-    onAddOrUpdateShoppingCartItem({
+    onAddOrUpdateShoppingCartItem?.({
       price: currentPrice,
       product: {
         id: product?.id || "",

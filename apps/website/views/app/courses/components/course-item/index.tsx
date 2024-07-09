@@ -1,20 +1,19 @@
+import NextLink from 'next/link';
 import {
   Avatar,
   AvatarGroup,
   Box,
-  Button,
   Card,
   CardBody,
   CardHeader,
   Image,
-  Stack,
-  Title,
+  Link,
+  Title
 } from "@stokei/ui";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
-import { useRouter } from "next/router";
 import { AppCourseFragment } from "../../graphql/course.fragment.graphql.generated";
 
 export interface CourseItemProps {
@@ -22,28 +21,34 @@ export interface CourseItemProps {
 }
 
 export const CourseItem = ({ course }: CourseItemProps) => {
-  const router = useRouter();
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
 
   return (
-    <Card background="background.50" overflow="hidden">
-      <CardHeader position="relative" padding="0">
-        <Image
-          width="full"
-          src={course?.avatar?.file?.url || ""}
-          fallbackSrc={defaultNoImage.src}
-          alt={translate.formatMessage({ id: "course" })}
-        />
-      </CardHeader>
-      <CardBody>
-        <Box width="full" flexDirection="column" height="full">
-          <Title size="md" marginBottom="5">
-            {course?.name}
-          </Title>
-          <Box width="full" flexDirection="column" flex="1">
-            <Stack spacing="5" flex="1" justify="flex-end">
-              {!!course?.instructors?.items?.length && (
+    <Link
+      width="full"
+      as={NextLink}
+      href={websiteRoutes
+        .app({ appId: currentApp?.id })
+        .course({ course: course?.id }).home
+      }
+    >
+      <Card background="background.50" overflow="hidden">
+        <CardHeader position="relative" padding="0">
+          <Image
+            width="full"
+            src={course?.avatar?.file?.url || ""}
+            fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "course" })}
+          />
+        </CardHeader>
+        <CardBody>
+          <Box width="full" flexDirection="column" height="full">
+            <Title size="md">
+              {course?.name}
+            </Title>
+            {!!course?.instructors?.items?.length && (
+              <Box width="full" flexDirection="column" flex="1" marginTop="5">
                 <AvatarGroup>
                   {course?.instructors?.items?.map(({ instructor }) => (
                     <Avatar
@@ -54,23 +59,11 @@ export const CourseItem = ({ course }: CourseItemProps) => {
                     />
                   ))}
                 </AvatarGroup>
-              )}
-              <Button
-                width="full"
-                onClick={() =>
-                  router.push(
-                    websiteRoutes
-                      .app({ appId: currentApp?.id })
-                      .course({ course: course?.id }).home
-                  )
-                }
-              >
-                {translate.formatMessage({ id: "showDetails" })}
-              </Button>
-            </Stack>
+              </Box>
+            )}
           </Box>
-        </Box>
-      </CardBody>
-    </Card>
+        </CardBody>
+      </Card>
+    </Link>
   );
 };

@@ -27,7 +27,7 @@ export const VersionItem = ({ version }: VersionItemProps) => {
       isActive={router.asPath === versionURL}
       badge={
         page?.version?.id === version?.id ? (
-          <Badge>{translate.formatMessage({ id: "active" })}</Badge>
+          <Badge colorScheme="green">{translate.formatMessage({ id: "active" })}</Badge>
         ) : undefined
       }
     >
