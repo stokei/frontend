@@ -13,8 +13,25 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   unlimitedAdmins: "Unlimited admins",
   unlimitedInstructors: "Unlimited instructors",
   unlimitedDomains: "Unlimited custom domains",
-  unlimitedProducts: "Unlimited products",
-  unlimitedSites: "Unlimited sites",
+  mainFeatures: "Main Features",
+  editablePages: "Editable Pages",
+  editablePagesDescription:
+    "Create and customize your pages easily using our Drag and Drop editor.",
+  customDomains: "Custom Domains",
+  customDomainsDescription:
+    "Strengthen your brand with custom domains for your sites.",
+  unlimitedAdminsInstructors: "Unlimited Admins and Instructors",
+  unlimitedAdminsInstructorsDescription:
+    "Add as many admins and instructors as you need, without limits.",
+  unlimitedProducts: "Unlimited Products",
+  unlimitedProductsDescription:
+    "Create and sell an unlimited number of courses and materials.",
+  unlimitedSites: "Unlimited Sites",
+  unlimitedSitesDescription:
+    "Have as many sites as you want for different audiences and niches.",
+  paymentTools: "Payment Tools",
+  paymentToolsDescription:
+    "Integration with Mercado Pago and Stripe to facilitate your transactions.",
   calculatePlanPrice: "Calculate the plan price",
   storageAndVideoSecure: "Secure storage of the materials and videos",
   allOfTheFreePlan: "All of the free plan",

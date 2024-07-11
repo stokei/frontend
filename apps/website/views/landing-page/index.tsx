@@ -10,6 +10,7 @@ import { EndHero } from "./components/heros/end";
 import { PrimaryHero } from "./components/heros/primary";
 import { Plans } from "./components/plans";
 import { LandingPageLayout } from "./layout";
+import { Functionalities } from "./components/functionalities";
 
 export const LandingPage = () => {
   return (
@@ -21,6 +22,7 @@ export const LandingPage = () => {
         <CreateYourProductHero />
         <CreateYourPricesHero />
         <EndHero />
+        <Functionalities />
       </Container>
       <Plans />
       <CommonQuestions />

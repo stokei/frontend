@@ -11,8 +11,25 @@ export const ptBRMessages = {
   unlimitedAdmins: "Administradores ilimitados",
   unlimitedInstructors: "Instrutores ilimitados",
   unlimitedDomains: "Domínios personalizados ilimitados",
-  unlimitedProducts: "Produtos ilimitados",
-  unlimitedSites: "Sites ilimitados",
+  mainFeatures: "Principais Funcionalidades",
+  editablePages: "Páginas Editáveis",
+  editablePagesDescription:
+    "Crie e personalize suas páginas com facilidade usando nosso editor Drag and Drop.",
+  customDomains: "Domínios Personalizados",
+  customDomainsDescription:
+    "Fortaleça sua marca com domínios personalizados para seus sites.",
+  unlimitedAdminsInstructors: "Administradores e Instrutores Ilimitados",
+  unlimitedAdminsInstructorsDescription:
+    "Adicione quantos administradores e instrutores precisar, sem limites.",
+  unlimitedProducts: "Produtos Ilimitados",
+  unlimitedProductsDescription:
+    "Crie e venda um número ilimitado de cursos e materiais.",
+  unlimitedSites: "Sites Ilimitados",
+  unlimitedSitesDescription:
+    "Tenha quantos sites desejar para diferentes públicos e nichos.",
+  paymentTools: "Ferramentas de Pagamento",
+  paymentToolsDescription:
+    "Integração com Mercado Pago e Stripe para facilitar suas transações.",
   calculatePlanPrice: "Calcule o valor aproximado da sua mensalidade",
   storageAndVideoSecure:
     "Armazenamento de materiais e videos de forma segura em nossa plataforma",
