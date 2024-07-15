@@ -16,7 +16,12 @@ export const RadioCard = forwardRef(
     const checkbox = getRadioProps();
     return (
       <Box as="label" width="full" flexDirection="column" cursor="pointer">
-        <Radio {...input} id={id} position="relative" width="fit-content" />
+        <Radio
+          {...input}
+          id={id}
+          position="relative"
+          width="fit-content"
+        />
         <Box
           {...checkbox}
           width="full"

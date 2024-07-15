@@ -1,9 +1,11 @@
 import { useCallback } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
-import { SelectPrice } from "@/components";
+import { Price } from "@/components";
 import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
 import { useTranslations } from "@/hooks";
+import { CheckoutProductFragment } from "@/views/checkout/graphql/product.query.graphql.generated";
+import { useShoppingCart } from "@stokei/builder";
 import { appRoutes } from "@stokei/routes";
 import {
   Button,
@@ -13,13 +15,12 @@ import {
   Icon,
   Image,
   Link,
+  RadioCard,
+  RadioGroup,
   Stack,
-  Text,
-  Title,
+  Title
 } from "@stokei/ui";
 import NextLink from "next/link";
-import { CheckoutProductFragment } from "@/views/checkout/graphql/product.query.graphql.generated";
-import { useShoppingCart } from "@stokei/builder";
 
 export interface ProductItemProps {
   readonly price?: PriceComponentFragment | null;
@@ -33,15 +34,19 @@ export const ProductItem = ({ product, price }: ProductItemProps) => {
     useShoppingCart();
 
   const onChoosePrice = useCallback(
-    (currentPrice?: PriceComponentFragment) =>
-      onAddOrUpdateShoppingCartItem?.({
-        price: currentPrice,
+    (priceId: string) => {
+      const priceToAdd = product?.prices?.items?.find(
+        (productPrice) => productPrice?.id === priceId
+      );
+      return onAddOrUpdateShoppingCartItem?.({
+        price: priceToAdd,
         product: {
           id: product?.id || "",
           name: product?.name || "",
           avatarURL: product?.avatar?.file?.url || "",
         },
-      }),
+      })
+    },
     [onAddOrUpdateShoppingCartItem, product]
   );
 
@@ -69,12 +74,25 @@ export const ProductItem = ({ product, price }: ProductItemProps) => {
           </Stack>
 
           {!!product?.prices?.items?.length && (
-            <SelectPrice
-              label={translate.formatMessage({ id: "chooseYourPlan" })}
-              onChange={onChoosePrice}
-              prices={product?.prices?.items}
-              currentPrice={price}
-            />
+            <RadioGroup value={price?.id} onChange={onChoosePrice}>
+              <Stack spacing="5" direction="column">
+                {product?.prices?.items?.map((currentPrice) => (
+                  <RadioCard
+                    key={currentPrice?.id}
+                    id={currentPrice?.id}
+                    value={currentPrice?.id}
+                    isChecked={currentPrice?.id === price?.id}
+                  >
+                    <Stack direction="column" spacing="3">
+                      {currentPrice?.nickname && (
+                        <Title fontSize="md">{currentPrice?.nickname}</Title>
+                      )}
+                      <Price price={currentPrice} withUnitDescription />
+                    </Stack>
+                  </RadioCard>
+                ))}
+              </Stack>
+            </RadioGroup>
           )}
 
           <ButtonGroup justifyContent="flex-end">
