@@ -25,7 +25,7 @@ export const FunctionalityItem = ({ icon, title, description }: FunctionalityIte
             />
           </Box>
           <Title fontSize="2xl" color="primary.500" textAlign="center">{title}</Title>
-          <Text>{description}</Text>
+          <Text textAlign="center">{description}</Text>
         </Stack>
       </CardBody>
     </Card>
