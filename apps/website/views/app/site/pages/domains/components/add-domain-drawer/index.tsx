@@ -8,14 +8,13 @@ import {
   Form,
   FormControl,
   FormErrorMessage,
+  Input,
   InputGroup,
-  InputURL,
   Label,
   Stack,
   useToast
 } from "@stokei/ui";
 
-import { isValidURL } from "@stokei/utils";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateDomainMutation } from "../../graphql/create-domain.mutation.graphql.generated";
@@ -88,17 +87,15 @@ export const AddDomainDrawer = ({
       <DrawerBody>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing="5">
-            <FormControl isInvalid={!!errors?.name?.message && !isValidURL(errors?.name?.message)}>
+            <FormControl isInvalid={!!errors?.name?.message}>
               <Label htmlFor="name">
-                {translate.formatMessage({ id: "url" })}
+                {translate.formatMessage({ id: "name" })}
               </Label>
               <InputGroup>
-                <InputURL
+                <Input
                   id="name"
-                  type="name"
-                  placeholder={translate.formatMessage({
-                    id: "linkPlaceholder",
-                  })}
+                  type="text"
+                  placeholder="meudominio.com"
                   {...register("name")}
                 />
               </InputGroup>
