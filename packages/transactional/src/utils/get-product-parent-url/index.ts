@@ -8,12 +8,14 @@ export const getProductParentURLFromAppRoutes = (
   const productTypes: Record<string, string> = {
     material: appRoutes.customers.material({ material: productId }),
     course: appRoutes.customers.course({ course: productId }).home,
+    prod: appRoutes.product.home({ product: productId }),
   };
   const productTypeIdList = productId?.split("_") || [];
   const productType = productTypeIdList
     ?.slice(0, productTypeIdList.length - 1)
     ?.join("_");
-  return `${app.url}${productTypes[productType]}`;
+  const pathname = productTypes[productType];
+  return `${app.url}${pathname || ""}`;
 };
 
 export const getProductParentURLFromWebsiteRoutes = (

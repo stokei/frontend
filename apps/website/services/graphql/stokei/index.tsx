@@ -3782,6 +3782,7 @@ export type SubscriptionContractParentUnion = Account | App;
 export enum SubscriptionContractStatus {
   Active = 'ACTIVE',
   Canceled = 'CANCELED',
+  Expired = 'EXPIRED',
   Pending = 'PENDING'
 }
 
