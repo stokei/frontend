@@ -1,9 +1,9 @@
 import { useTranslations } from "@/hooks";
 import { convertEnumValueToCamelCase } from "@/utils";
-import { FormControl, Input, InputGroup, InputLeftAddon, Label, Loading, Stack, Title } from "@stokei/ui";
+import { Input, InputGroup, InputLeftAddon, Label, Loading, Stack, Title } from "@stokei/ui";
 import { getOnlyNumbers } from "@stokei/utils";
 import { LandingPageProductFragment } from "../../../graphql/products.query.graphql.generated";
-import { Price } from "@/components";
+import { Price } from "@stokei/builder";
 
 interface PlanInputProps {
   id: string;

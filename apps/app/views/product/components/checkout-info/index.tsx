@@ -1,6 +1,5 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components/price";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { Price, PriceComponentFragment } from "@stokei/builder";
 import { useTranslations } from "@/hooks";
 import { useCurrentAccount } from "@/hooks/use-current-account";
 import { appRoutes } from "@stokei/routes";

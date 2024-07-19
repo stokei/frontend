@@ -1,4 +1,4 @@
-import { CatalogItem } from "@/components";
+import { CatalogItem } from "@stokei/builder";
 import { StoreProductFragment } from "../../graphql/products.query.graphql.generated";
 
 export interface ProductItemProps {
@@ -8,11 +8,7 @@ export interface ProductItemProps {
 export const ProductItem = ({ product }: ProductItemProps) => {
   return (
     <CatalogItem
-      productId={product?.id}
-      name={product?.name}
-      avatarURL={product?.avatar?.file?.url || ""}
-      defaultPrice={product?.defaultPrice}
-      prices={product?.prices?.items || []}
+      product={product}
     />
   );
 };

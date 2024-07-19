@@ -1,4 +1,5 @@
 export const ptBRMessages = {
+  viewDetails: "Ver detalhes",
   chooseYourPlan: "Escolha seu plano",
   loginSuccessfully: "Login efetuado com successo!",
   signUpSuccessfully: "Cadastro efetuado com successo!",

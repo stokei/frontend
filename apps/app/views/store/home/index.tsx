@@ -116,7 +116,7 @@ export const HomePage = () => {
       }
       return 1;
     });
-    return sortedProducts;
+    return sortedProducts?.filter(prod => !!prod.defaultPrice);
   }, [dataProducts?.products?.items]);
 
   useEffect(() => {

@@ -1,5 +1,4 @@
-import { Price } from "@/components/price";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { Price, PriceComponentFragment } from "@stokei/builder";
 import { Stack } from "@stokei/ui";
 
 interface PriceSelectItemContentProps {

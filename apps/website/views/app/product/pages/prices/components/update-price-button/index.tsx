@@ -1,4 +1,4 @@
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { PriceComponentFragment } from "@stokei/builder";
 import { useTranslations } from "@/hooks";
 import { Icon, MenuItem, useDisclosure } from "@stokei/ui";
 

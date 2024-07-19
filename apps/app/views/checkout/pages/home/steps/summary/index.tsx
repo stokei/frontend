@@ -1,5 +1,5 @@
 import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components";
+import { Price } from "@stokei/builder";
 import { useTranslations } from "@/hooks";
 import { PaymentMethodType } from "@/services/graphql/stokei";
 import { useShoppingCart } from "@stokei/builder";
