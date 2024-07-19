@@ -7,7 +7,6 @@ import {
   CardHeader,
   Description,
   Image,
-  Link,
   Stack,
   Title,
   useDisclosure
@@ -57,7 +56,14 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
         product={product}
         productURL={productURL}
       />
-      <Card background="background.50" onClick={onToggleProductModal}>
+      <Card
+        background="background.50"
+        onClick={onToggleProductModal}
+        cursor="pointer"
+        _hover={{
+          shadow: "md",
+        }}
+      >
         <CardHeader
           position="relative"
           padding="0"
@@ -71,8 +77,8 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
             alt={translate.formatMessage({ id: "product" })}
           />
           {product?.defaultPrice?.discountPercent && (
-            <Box position="absolute" transform="rotate(45deg)" right="-7" top="3">
-              <Badge variant="solid" width="24">
+            <Box position="absolute" transform="rotate(45deg)" right="-7" top="5">
+              <Badge variant="solid" width="28" colorScheme="red" color="white.500">
                 {product?.defaultPrice?.discountPercent}% OFF
               </Badge>
             </Box>
@@ -80,11 +86,9 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
         </CardHeader>
         <CardBody display="flex" flexDirection="column" justifyContent="flex-end">
           <Stack spacing="5" direction="column">
-            <Link width="fit-content" href={productURL}>
-              <Title fontSize="md" color="inherit">
-                {product?.name}
-              </Title>
-            </Link>
+            <Title fontSize="md" color="inherit">
+              {product?.name}
+            </Title>
             {!!course?.instructors?.items?.length && (
               <Description>
                 {course?.instructors?.items

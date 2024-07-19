@@ -15,7 +15,7 @@ import NextLink from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { PriceComponentFragment } from "@stokei/builder";
 import { useTranslations } from "@/hooks";
 import { useShoppingCart } from "@stokei/builder";
 import { appRoutes } from "@stokei/routes";

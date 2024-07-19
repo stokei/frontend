@@ -119,7 +119,7 @@ export const ProductModal = ({ product, isOpen, productURL, onClose, ...props }:
               isDisabled={!isAvailable}
               leftIcon={<Icon name="cart" />}
               onClick={onAddToCart}
-              variant="outline"
+              variant="ghost"
             >
               {translate.formatMessage({
                 id: isAvailable ? "addToCart" : "unavailable",
