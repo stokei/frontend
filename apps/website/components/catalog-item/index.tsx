@@ -13,8 +13,7 @@ import {
 import { useCallback, useMemo } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components/price";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { Price, PriceComponentFragment } from "@stokei/builder";
 import { useCurrentApp, useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
 import { useRouter } from "next/router";
@@ -26,8 +25,8 @@ export interface CatalogItemProps {
   readonly avatar?: string;
   readonly avatarURL?: string;
   readonly parent?:
-    | SortedItemComponentCatalogItemProductFragment["parent"]
-    | null;
+  | SortedItemComponentCatalogItemProductFragment["parent"]
+  | null;
   readonly defaultPrice?: PriceComponentFragment | null;
 }
 

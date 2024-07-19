@@ -1,4 +1,4 @@
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { PriceComponentFragment } from "@stokei/builder";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { Icon, MenuItem, useToast } from "@stokei/ui";
 
@@ -43,7 +43,7 @@ export const DeactivatePriceButton = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (

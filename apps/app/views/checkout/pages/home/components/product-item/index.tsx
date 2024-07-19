@@ -1,8 +1,7 @@
 import { useCallback } from "react";
 
 import defaultNoImage from "@/assets/no-image.png";
-import { Price } from "@/components";
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { Price, PriceComponentFragment } from "@stokei/builder";
 import { useTranslations } from "@/hooks";
 import { CheckoutProductFragment } from "@/views/checkout/graphql/product.query.graphql.generated";
 import { useShoppingCart } from "@stokei/builder";

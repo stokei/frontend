@@ -1,51 +1,46 @@
 import {
   Badge,
   Box,
-  Button,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
   Description,
-  Icon,
   Image,
-  Link,
   Stack,
-  Title
+  Title,
+  useDisclosure
 } from "@stokei/ui";
-import NextLink from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import defaultNoImage from "../../../../assets/no-image.png";
-import { PriceComponentFragment } from "../../../../components/price/price.fragment.graphql.generated";
-import { SelectPrice } from "../../../../components/select-price";
+import { Price } from "../../../../components";
 import {
   useBuilder,
-  useShoppingCart,
-  useTranslations,
+  useTranslations
 } from "../../../../hooks";
 import { BuilderComponentCatalogItemProductFragment } from "../../graphql/catalog.query.graphql.generated";
+import { ProductModal } from "../product-modal";
 
 export interface CatalogItemProps {
   readonly product?: BuilderComponentCatalogItemProductFragment;
-  readonly onRedirect: (url: string) => void;
 }
 
-export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
+export const CatalogItem = ({ product }: CatalogItemProps) => {
+  const {
+    isOpen: isOpenProductModal,
+    onToggle: onToggleProductModal,
+  } = useDisclosure();
   const { routes } = useBuilder();
-  const [currentPrice, setCurrentPrice] = useState<
-    PriceComponentFragment | undefined | null
-  >();
   const translate = useTranslations();
-  const { onAddOrUpdateShoppingCartItem } = useShoppingCart();
-
-  const isAvailable = useMemo(
-    () => !!product?.prices?.items?.length,
-    [product?.prices?.items?.length]
-  );
 
   const course = useMemo(
     () => (product?.parent?.__typename === "Course" ? product?.parent : null),
     [product?.parent]
+  );
+  const currentPrice = useMemo(
+    () => product?.defaultPrice,
+    [product?.defaultPrice]
   );
   const productURL = useMemo(
     () =>
@@ -53,61 +48,47 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
     [currentPrice?.id, product?.id, routes]
   );
 
-  useEffect(() => {
-    if (product?.defaultPrice) {
-      setCurrentPrice(product?.defaultPrice || undefined);
-    }
-  }, [product?.defaultPrice]);
-
-  const onChoosePrice = useCallback((price?: PriceComponentFragment) => {
-    setCurrentPrice(price || null);
-  }, []);
-
-  const onAddToCart = useCallback(() =>
-    onAddOrUpdateShoppingCartItem?.({
-      price: currentPrice,
-      product: {
-        id: product?.id || "",
-        name: product?.name || "",
-        avatarURL: product?.avatar?.file?.url || "",
-      },
-    })
-    , [currentPrice, onAddOrUpdateShoppingCartItem, product?.avatar?.file?.url, product?.id, product?.name]);
-  const onBuy = useCallback(async () => {
-    await onAddToCart();
-    window.open(routes.checkout(), "_blank")
-  }, [onAddToCart, routes]);
-
   return (
-    <Card background="background.50">
-      <CardHeader
-        position="relative"
-        padding="0"
-        borderTopRadius="md"
-        overflow="hidden"
+    <>
+      <ProductModal
+        isOpen={isOpenProductModal}
+        onClose={onToggleProductModal}
+        product={product}
+        productURL={productURL}
+      />
+      <Card
+        background="background.50"
+        onClick={onToggleProductModal}
+        cursor="pointer"
+        _hover={{
+          shadow: "md",
+        }}
       >
-        <Image
-          width="full"
-          src={product?.avatar?.file?.url || ""}
-          fallbackSrc={defaultNoImage.src}
-          alt={translate.formatMessage({ id: "product" })}
-        />
-        {product?.defaultPrice?.discountPercent && (
-          <Box position="absolute" transform="rotate(45deg)" right="-7" top="3">
-            <Badge variant="solid" width="24">
-              {product?.defaultPrice?.discountPercent}% OFF
-            </Badge>
-          </Box>
-        )}
-      </CardHeader>
-      <CardBody display="flex" flexDirection="column" justifyContent="flex-end">
-        <Stack spacing="5" direction="column">
-          <Link width="fit-content" as={NextLink} href={productURL}>
-            <Title size="md" color="inherit">
+        <CardHeader
+          position="relative"
+          padding="0"
+          borderTopRadius="md"
+          overflow="hidden"
+        >
+          <Image
+            width="full"
+            src={product?.avatar?.file?.url || ""}
+            fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "product" })}
+          />
+          {product?.defaultPrice?.discountPercent && (
+            <Box position="absolute" transform="rotate(45deg)" right="-7" top="5">
+              <Badge variant="solid" width="28" colorScheme="red" color="white.500">
+                {product?.defaultPrice?.discountPercent}% OFF
+              </Badge>
+            </Box>
+          )}
+        </CardHeader>
+        <CardBody display="flex" flexDirection="column" justifyContent="flex-end">
+          <Stack spacing="5" direction="column">
+            <Title fontSize="md" color="inherit">
               {product?.name}
             </Title>
-          </Link>
-          <Stack spacing="3" direction="column">
             {!!course?.instructors?.items?.length && (
               <Description>
                 {course?.instructors?.items
@@ -115,42 +96,18 @@ export const CatalogItem = ({ product, onRedirect }: CatalogItemProps) => {
                   .join(", ")}
               </Description>
             )}
-            <Box width="full">
-              {!!product?.prices?.items?.length && (
-                <SelectPrice
-                  label={translate.formatMessage({ id: "chooseYourPlan" })}
-                  onChange={onChoosePrice}
-                  prices={product?.prices?.items}
-                  currentPrice={currentPrice}
-                />
-              )}
-            </Box>
-            <Stack direction="column" spacing="2">
-              {isAvailable && (
-                <Button
-                  width="full"
-                  onClick={onBuy}
-                >
-                  {translate.formatMessage({
-                    id: "buyNow"
-                  })}
-                </Button>
-              )}
-              <Button
-                width="full"
-                isDisabled={!isAvailable}
-                leftIcon={<Icon name="cart" />}
-                onClick={onAddToCart}
-                variant="outline"
-              >
-                {translate.formatMessage({
-                  id: isAvailable ? "addToCart" : "unavailable",
-                })}
-              </Button>
-            </Stack>
           </Stack>
-        </Stack>
-      </CardBody>
-    </Card>
+        </CardBody>
+        <CardFooter
+          paddingTop="0"
+        >
+          <Box width="full">
+            <Price
+              price={currentPrice}
+            />
+          </Box>
+        </CardFooter>
+      </Card>
+    </>
   );
 };

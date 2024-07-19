@@ -1,4 +1,4 @@
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { PriceComponentFragment } from "@stokei/builder";
 import { usePagination, useTranslations } from "@/hooks";
 import { OrderBy } from "@/services/graphql/stokei";
 import {

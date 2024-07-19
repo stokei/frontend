@@ -1,4 +1,4 @@
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { PriceComponentFragment } from "@stokei/builder";
 import { PaymentMethodType } from "@/services/graphql/stokei";
 import { PaymentBoleto } from "../../components/payment-boleto";
 import { PaymentPix } from "../../components/payment-pix";

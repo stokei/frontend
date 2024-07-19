@@ -7,3 +7,4 @@ export const Catalog: ComponentBuilder = {
   [ComponentBuilderType.BLOCK_EDITABLE]: Editable,
   [ComponentBuilderType.BLOCK_READABLE]: Readable,
 };
+export * from './components/catalog-item'

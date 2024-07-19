@@ -15,7 +15,7 @@ import {
 import NextLink from "next/link";
 import { useMemo } from "react";
 
-import { Price } from "@/components";
+import { Price } from "@stokei/builder";
 import { websiteRoutes } from "@stokei/routes";
 import { AdminProductPageProductFragment } from "../../graphql/products.query.graphql.generated";
 

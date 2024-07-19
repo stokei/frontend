@@ -5,18 +5,14 @@ import { Stack, StackProps, Text } from "@stokei/ui";
 import { useMemo } from "react";
 import { PriceComponentFragment } from "./price.fragment.graphql.generated";
 
+export type { PriceComponentFragment };
 export interface PriceProps extends StackProps {
   price?: PriceComponentFragment | null;
-  readonly withPriceAndUnitDirectionColumn?: boolean;
-  readonly withUnitDescription?: boolean;
-  readonly withRecurring?: boolean;
+  withUnitDescription?: boolean;
 }
 export const Price = ({
   price,
-  justify,
-  withRecurring = true,
   withUnitDescription,
-  withPriceAndUnitDirectionColumn,
   ...props
 }: PriceProps) => {
   const translate = useTranslations();
@@ -46,7 +42,7 @@ export const Price = ({
   }, [price, translate]);
 
   const priceRecurringIntervalTypeKey = useMemo(() => {
-    if (!price?.recurring?.interval || !withRecurring) {
+    if (!price?.recurring?.interval) {
       return undefined;
     }
     const key = getI18nKeyFromRecurringInterval(price?.recurring?.interval);
@@ -54,14 +50,14 @@ export const Price = ({
       return key.plural;
     }
     return key.singular;
-  }, [price?.recurring, withRecurring]);
+  }, [price?.recurring?.interval, price?.recurring?.intervalCount]);
 
   const perUnitDescription = useMemo(
-    () => (withUnitDescription ? translate.formatMessage({ id: "per" }) : "/"),
-    [translate, withUnitDescription]
+    () => translate.formatMessage({ id: "per" }),
+    [translate]
   );
   const eachUnitDescription = useMemo(
-    () => (withUnitDescription ? translate.formatMessage({ id: "each" }) : "/"),
+    () => (withUnitDescription ? translate.formatMessage({ id: "each" }) : ""),
     [translate, withUnitDescription]
   );
 
@@ -69,17 +65,16 @@ export const Price = ({
     () =>
       price?.unit && withUnitDescription
         ? translate.formatMessage({ id: price?.unit?.toLowerCase() as any })
-        : price?.unit,
+        : '',
     [price?.unit, translate, withUnitDescription]
   );
+
   const recurringText = useMemo(() => {
-    const text: string[] = [];
-    if (unitDescription) {
-      text.push(`${eachUnitDescription} ${unitDescription}`)
-    }
-    text.push(perUnitDescription);
-    if (price?.recurring?.intervalCount &&
-      price?.recurring?.intervalCount > 1) {
+    const text: string[] = [
+      `${eachUnitDescription} ${unitDescription}`,
+      perUnitDescription
+    ];
+    if (price?.recurring?.intervalCount) {
       text.push(price?.recurring?.intervalCount + '');
     }
     text.push(
@@ -102,7 +97,7 @@ export const Price = ({
   return (
     <Stack width="full" direction="column" spacing="1" {...props}>
       {fromPriceAmount && (
-        <Stack direction="row" align="center" justify={justify}>
+        <Stack direction="row" align="center">
           <Text
             fontSize="sm"
             color="text.300"
@@ -116,10 +111,14 @@ export const Price = ({
 
       <Stack
         width="full"
-        direction={withPriceAndUnitDirectionColumn ? "column" : "row"}
-        align="center"
-        justify={justify}
+        direction="column"
+        spacing="1"
       >
+        {priceRecurringIntervalTypeKey && (
+          <Text fontSize="md" color="text.200">
+            {recurringText}
+          </Text>
+        )}
         <Stack
           width="fit-content"
           direction="row"
@@ -138,11 +137,6 @@ export const Price = ({
             {priceAmount}
           </Text>
         </Stack>
-        {priceRecurringIntervalTypeKey && (
-          <Text fontSize="md" color="text.200">
-            {recurringText}
-          </Text>
-        )}
       </Stack>
     </Stack>
   );

@@ -1,4 +1,4 @@
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { PriceComponentFragment } from "@stokei/builder";
 import { RecurringIntervalInput } from "@/components/recurring-interval-input";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import {

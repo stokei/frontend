@@ -6,13 +6,12 @@ import {
   SimpleGrid,
   Stack,
   Text,
-  Title,
+  Title
 } from "@stokei/ui";
 import { useMemo } from "react";
-import { OrderBy } from "../../../../services/graphql/stokei";
+import { useBuilder, useTranslations } from "../../../../hooks";
 import { useBuilderComponentCatalogQuery } from "../../graphql/catalog.query.graphql.generated";
 import { CatalogItem } from "../catalog-item";
-import { useBuilder, useTranslations } from "../../../../hooks";
 
 interface CatalogProps {
   readonly catalogId: string;
@@ -59,12 +58,11 @@ export const Catalog = ({ catalogId, onRedirect, ...props }: CatalogProps) => {
         <>
           {!!catalogItems?.length && (
             <Stack direction="column" spacing="5">
-              <SimpleGrid columns={[1, 1, 2, 4]} spacing="5">
+              <SimpleGrid columns={[2, 2, 2, 4]} spacing="5">
                 {catalogItems?.map(({ product }) => (
                   <CatalogItem
                     key={product?.id}
                     product={product}
-                    onRedirect={onRedirect}
                   />
                 ))}
               </SimpleGrid>

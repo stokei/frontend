@@ -1,4 +1,4 @@
-import { PriceComponentFragment } from "@/components/price/price.fragment.graphql.generated";
+import { PriceComponentFragment } from "@stokei/builder";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -48,7 +48,6 @@ export const UpdatePriceDrawer = ({
       message: translate.formatMessage({ id: "required" }),
     }),
     fromAmount: z.string().optional(),
-    automaticRenew: z.boolean().default(false),
   });
 
   const [{ fetching: isLoadingCreatePrice }, onUpdatePrice] =
@@ -83,7 +82,6 @@ export const UpdatePriceDrawer = ({
   useEffect(() => {
     if (price) {
       setValue("nickname", price.nickname || "");
-      setValue("automaticRenew", price.automaticRenew);
       setValue("amount", convertAmountToMoney(price?.amount + ""));
       setValue("fromAmount", convertAmountToMoney(price?.fromAmount + ""));
     }
@@ -93,14 +91,13 @@ export const UpdatePriceDrawer = ({
     nickname,
     amount,
     fromAmount,
-    automaticRenew,
   }: z.infer<typeof validationSchema>) => {
     try {
       const response = await onUpdatePrice({
         input: {
           data: {
             nickname,
-            automaticRenew,
+            automaticRenew: false,
             fromAmount: fromAmount
               ? translate.formatMoneyToNumber(fromAmount)
               : undefined,
