@@ -70,10 +70,10 @@ export const Price = ({
   );
 
   const recurringText = useMemo(() => {
-    const text: string[] = [
-      `${eachUnitDescription} ${unitDescription}`,
-      perUnitDescription
-    ];
+    const text: string[] = [perUnitDescription];
+    if (unitDescription && eachUnitDescription) {
+      text.unshift(`${eachUnitDescription} ${unitDescription}`);
+    }
     if (price?.recurring?.intervalCount) {
       text.push(price?.recurring?.intervalCount + '');
     }
@@ -84,7 +84,7 @@ export const Price = ({
         })
         ?.toLowerCase()
     );
-    return text.join(' ');
+    return text?.join(' ')?.trim();
   }, [
     eachUnitDescription,
     perUnitDescription,

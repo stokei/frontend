@@ -82,7 +82,7 @@ export const ProductModal = ({ product, isOpen, productURL, onClose, ...props }:
           />
           <Stack direction="column" spacing="0">
             <Title fontSize="xl">{product?.name}</Title>
-            <Link href={productURL}>{translate.formatMessage({ id: 'viewDetails' })}</Link>
+            <Link fontSize="md" href={productURL}>{translate.formatMessage({ id: 'viewDetails' })}</Link>
           </Stack>
         </Stack>
       </ModalHeader>
