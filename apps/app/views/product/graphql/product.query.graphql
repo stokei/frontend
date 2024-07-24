@@ -1,36 +1,5 @@
 query GetProductPageProduct($product: String!) {
   product(id: $product) {
-    ...ProductPageProduct
-  }
-}
-
-fragment ProductPageProduct on Product {
-  id
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  features {
-    totalCount
-    items {
-      id
-      name
-      description
-    }
-  }
-  defaultPrice {
-    ...PriceComponent
-  }
-  prices {
-    items {
-      ...PriceComponent
-    }
-  }
-  parent
-  externalReference {
-    __typename
+    ...GeneralProduct
   }
 }

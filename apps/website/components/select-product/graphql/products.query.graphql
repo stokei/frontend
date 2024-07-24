@@ -11,56 +11,7 @@ query GetAppProducts(
     nextPage
     previousPage
     items {
-      ...AppProduct
-    }
-  }
-}
-
-fragment AppProduct on Product {
-  id
-  parent
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  defaultPrice {
-    ...PriceComponent
-  }
-
-  externalReference {
-    __typename
-    ...AppProductCourse
-    ...AppProductMaterial
-  }
-}
-
-fragment AppProductCourse on Course {
-  courseId: id
-  courseName: name
-  avatar {
-    file {
-      url
-    }
-  }
-  instructors {
-    items {
-      id
-      instructor {
-        fullname
-      }
-    }
-  }
-}
-
-fragment AppProductMaterial on Material {
-  materialId: id
-  materialName: name
-  avatar {
-    file {
-      url
+      ...GeneralProduct
     }
   }
 }

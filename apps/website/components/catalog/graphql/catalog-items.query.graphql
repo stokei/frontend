@@ -14,50 +14,6 @@ query CatalogItems(
 fragment LandingPageCatalogItem on CatalogItem {
   id
   product {
-    ...LandingPageCatalogItemProduct
-  }
-}
-
-fragment LandingPageCatalogItemProduct on Product {
-  id
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  defaultPrice {
-    ...PriceComponent
-  }
-  externalReference {
-    __typename
-    ...LandingPageCatalogItemProductCourse
-    ...LandingPageCatalogItemProductPlan
-  }
-}
-
-fragment LandingPageCatalogItemProductPlan on Plan {
-  planId: id
-  planName: name
-  features {
-    items {
-      id
-      name
-      description
-    }
-  }
-}
-
-fragment LandingPageCatalogItemProductCourse on Course {
-  courseId: id
-  courseName: name
-  instructors {
-    items {
-      id
-      instructor {
-        fullname
-      }
-    }
+    ...GeneralProduct
   }
 }

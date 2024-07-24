@@ -1,0 +1,40 @@
+fragment GeneralProduct on Product {
+  id
+  parent
+  name
+  description
+  avatar {
+    file {
+      url
+    }
+  }
+  features {
+    items {
+      id
+      name
+      description
+    }
+  }
+  defaultPrice {
+    ...PriceComponent
+  }
+  prices {
+    totalCount
+    items {
+      ...PriceComponent
+    }
+  }
+  externalReference {
+    __typename
+    ... on Course {
+      instructors {
+        items {
+          id
+          instructor {
+            fullname
+          }
+        }
+      }
+    }
+  }
+}
