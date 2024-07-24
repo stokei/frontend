@@ -1,7 +1,7 @@
 import * as Types from '../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
-import { PriceComponentFragmentDoc } from '../../../components/price/price.fragment.graphql.generated';
+import { GeneralProductFragmentDoc } from '../../../services/graphql/types/product.fragment.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type GetLandingPageProductsQueryVariables = Types.Exact<{
@@ -11,55 +11,9 @@ export type GetLandingPageProductsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetLandingPageProductsQuery = { __typename?: 'Query', products: { __typename?: 'Products', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, defaultPrice?: { __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, automaticRenew: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null } | null, features?: { __typename?: 'Features', items?: Array<{ __typename?: 'Feature', id: string, name: string, description?: string | null }> | null } | null, externalReference?: { __typename: 'App' } | { __typename: 'Course' } | { __typename: 'Material' } | { __typename: 'Plan', id: string, name: string, icon?: string | null, type: Types.PlanType } | { __typename: 'Product' } | null }> | null } };
+export type GetLandingPageProductsQuery = { __typename?: 'Query', products: { __typename?: 'Products', totalCount: number, totalPages: number, hasNextPage: boolean, hasPreviousPage: boolean, nextPage: number, previousPage: number, items?: Array<{ __typename?: 'Product', id: string, parent?: string | null, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, features?: { __typename?: 'Features', items?: Array<{ __typename?: 'Feature', id: string, name: string, description?: string | null }> | null } | null, defaultPrice?: { __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, automaticRenew: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null } | null, prices?: { __typename?: 'Prices', totalCount: number, items?: Array<{ __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, automaticRenew: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null }> | null } | null, externalReference?: { __typename: 'App' } | { __typename: 'Course', instructors?: { __typename?: 'CourseInstructors', items?: Array<{ __typename?: 'CourseInstructor', id: string, instructor: { __typename?: 'Account', fullname: string } }> | null } | null } | { __typename: 'Material' } | { __typename: 'Plan' } | { __typename: 'Product' } | null }> | null } };
 
-export type LandingPageProductFragment = { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, defaultPrice?: { __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, automaticRenew: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null } | null, features?: { __typename?: 'Features', items?: Array<{ __typename?: 'Feature', id: string, name: string, description?: string | null }> | null } | null, externalReference?: { __typename: 'App' } | { __typename: 'Course' } | { __typename: 'Material' } | { __typename: 'Plan', id: string, name: string, icon?: string | null, type: Types.PlanType } | { __typename: 'Product' } | null };
 
-export type LandingPageProductPlanFragment = { __typename?: 'Plan', id: string, name: string, icon?: string | null, type: Types.PlanType };
-
-export type LandingPageProductFeatureFragment = { __typename?: 'Feature', id: string, name: string, description?: string | null };
-
-export const LandingPageProductFeatureFragmentDoc = gql`
-    fragment LandingPageProductFeature on Feature {
-  id
-  name
-  description
-}
-    `;
-export const LandingPageProductPlanFragmentDoc = gql`
-    fragment LandingPageProductPlan on Plan {
-  id
-  name
-  icon
-  type
-}
-    `;
-export const LandingPageProductFragmentDoc = gql`
-    fragment LandingPageProduct on Product {
-  id
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  defaultPrice {
-    ...PriceComponent
-  }
-  features {
-    items {
-      ...LandingPageProductFeature
-    }
-  }
-  externalReference {
-    __typename
-    ...LandingPageProductPlan
-  }
-}
-    ${PriceComponentFragmentDoc}
-${LandingPageProductFeatureFragmentDoc}
-${LandingPageProductPlanFragmentDoc}`;
 export const GetLandingPageProductsDocument = gql`
     query GetLandingPageProducts($where: WhereDataFindAllProductsInput, $orderBy: OrderByDataFindAllProductsInput, $page: PaginationInput) {
   products(where: $where, page: $page, orderBy: $orderBy) {
@@ -70,11 +24,11 @@ export const GetLandingPageProductsDocument = gql`
     nextPage
     previousPage
     items {
-      ...LandingPageProduct
+      ...GeneralProduct
     }
   }
 }
-    ${LandingPageProductFragmentDoc}`;
+    ${GeneralProductFragmentDoc}`;
 
 export function useGetLandingPageProductsQuery(options?: Omit<Urql.UseQueryArgs<GetLandingPageProductsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetLandingPageProductsQuery, GetLandingPageProductsQueryVariables>({ query: GetLandingPageProductsDocument, ...options });

@@ -1,6 +1,7 @@
 import * as Types from '../../../../../../services/graphql/stokei/index';
 
 import gql from 'graphql-tag';
+import { GeneralProductFragmentDoc } from '../../../../../../services/graphql/types/product.fragment.graphql.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type GetAdminCatalogPageCatalogItemsQueryVariables = Types.Exact<{
@@ -10,74 +11,19 @@ export type GetAdminCatalogPageCatalogItemsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetAdminCatalogPageCatalogItemsQuery = { __typename?: 'Query', catalogItems: { __typename?: 'CatalogItems', totalCount: number, items?: Array<{ __typename?: 'CatalogItem', id: string, catalog: string, product: { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, externalReference?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | { __typename: 'Product' } | null } }> | null } };
+export type GetAdminCatalogPageCatalogItemsQuery = { __typename?: 'Query', catalogItems: { __typename?: 'CatalogItems', totalCount: number, items?: Array<{ __typename?: 'CatalogItem', id: string, catalog: string, product: { __typename?: 'Product', id: string, parent?: string | null, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, features?: { __typename?: 'Features', items?: Array<{ __typename?: 'Feature', id: string, name: string, description?: string | null }> | null } | null, defaultPrice?: { __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, automaticRenew: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null } | null, prices?: { __typename?: 'Prices', totalCount: number, items?: Array<{ __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, automaticRenew: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null }> | null } | null, externalReference?: { __typename: 'App' } | { __typename: 'Course', instructors?: { __typename?: 'CourseInstructors', items?: Array<{ __typename?: 'CourseInstructor', id: string, instructor: { __typename?: 'Account', fullname: string } }> | null } | null } | { __typename: 'Material' } | { __typename: 'Plan' } | { __typename: 'Product' } | null } }> | null } };
 
-export type AdminCatalogPageCatalogItemFragment = { __typename?: 'CatalogItem', id: string, catalog: string, product: { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, externalReference?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | { __typename: 'Product' } | null } };
+export type AdminCatalogPageCatalogItemFragment = { __typename?: 'CatalogItem', id: string, catalog: string, product: { __typename?: 'Product', id: string, parent?: string | null, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, features?: { __typename?: 'Features', items?: Array<{ __typename?: 'Feature', id: string, name: string, description?: string | null }> | null } | null, defaultPrice?: { __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, automaticRenew: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null } | null, prices?: { __typename?: 'Prices', totalCount: number, items?: Array<{ __typename?: 'Price', id: string, parent: string, type: Types.PriceType, nickname?: string | null, fromAmount?: number | null, amount?: number | null, discountPercent?: number | null, unit?: string | null, active: boolean, automaticRenew: boolean, isDefault: boolean, billingScheme?: Types.BillingScheme | null, tiersMode?: Types.TiersMode | null, currency: { __typename?: 'Currency', id: string, symbol: string, minorUnit: number }, tiers?: { __typename?: 'PriceTiers', items?: Array<{ __typename?: 'PriceTier', id: string, amount: number, upTo?: number | null, infinite: boolean }> | null } | null, recurring?: { __typename?: 'Recurring', usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null }> | null } | null, externalReference?: { __typename: 'App' } | { __typename: 'Course', instructors?: { __typename?: 'CourseInstructors', items?: Array<{ __typename?: 'CourseInstructor', id: string, instructor: { __typename?: 'Account', fullname: string } }> | null } | null } | { __typename: 'Material' } | { __typename: 'Plan' } | { __typename: 'Product' } | null } };
 
-export type AdminCatalogPageCatalogItemProductFragment = { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, externalReference?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | { __typename: 'Product' } | null };
-
-export type AdminCatalogPageCatalogItemProductAppFragment = { __typename?: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
-
-export type AdminCatalogPageCatalogItemProductCourseFragment = { __typename?: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
-
-export type AdminCatalogPageCatalogItemProductMaterialFragment = { __typename?: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
-
-export const AdminCatalogPageCatalogItemProductCourseFragmentDoc = gql`
-    fragment AdminCatalogPageCatalogItemProductCourse on Course {
-  avatar {
-    file {
-      url
-    }
-  }
-}
-    `;
-export const AdminCatalogPageCatalogItemProductMaterialFragmentDoc = gql`
-    fragment AdminCatalogPageCatalogItemProductMaterial on Material {
-  avatar {
-    file {
-      url
-    }
-  }
-}
-    `;
-export const AdminCatalogPageCatalogItemProductAppFragmentDoc = gql`
-    fragment AdminCatalogPageCatalogItemProductApp on App {
-  avatar {
-    file {
-      url
-    }
-  }
-}
-    `;
-export const AdminCatalogPageCatalogItemProductFragmentDoc = gql`
-    fragment AdminCatalogPageCatalogItemProduct on Product {
-  id
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  externalReference {
-    __typename
-    ...AdminCatalogPageCatalogItemProductCourse
-    ...AdminCatalogPageCatalogItemProductMaterial
-    ...AdminCatalogPageCatalogItemProductApp
-  }
-}
-    ${AdminCatalogPageCatalogItemProductCourseFragmentDoc}
-${AdminCatalogPageCatalogItemProductMaterialFragmentDoc}
-${AdminCatalogPageCatalogItemProductAppFragmentDoc}`;
 export const AdminCatalogPageCatalogItemFragmentDoc = gql`
     fragment AdminCatalogPageCatalogItem on CatalogItem {
   id
   catalog
   product {
-    ...AdminCatalogPageCatalogItemProduct
+    ...GeneralProduct
   }
 }
-    ${AdminCatalogPageCatalogItemProductFragmentDoc}`;
+    ${GeneralProductFragmentDoc}`;
 export const GetAdminCatalogPageCatalogItemsDocument = gql`
     query GetAdminCatalogPageCatalogItems($where: WhereDataFindAllCatalogItemsInput!, $orderBy: OrderByDataFindAllCatalogItemsInput, $page: PaginationInput) {
   catalogItems(where: $where, orderBy: $orderBy, page: $page) {
