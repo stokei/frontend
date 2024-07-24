@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { ProductParent } from "../../@types/product-parent";
 import { ProductPayload } from "../../@types/product-payload";
 import { useCreateProductMutation } from "../../graphql/create-product.mutation.graphql.generated";
+import { ProductType } from "@/services/graphql/stokei";
 
 interface SummaryStepProps {
   catalogs?: AppCatalogFragment[];
@@ -50,6 +51,7 @@ export const SummaryStep = ({
       const response = await onCreateProduct({
         input: {
           parent: parent || "",
+          type: ProductType.Unique,
           name: productPayload?.name || "",
           description: productPayload?.description,
           catalogs: catalogsIds,
@@ -73,7 +75,7 @@ export const SummaryStep = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (

@@ -23,11 +23,11 @@ import { z } from "zod";
 import { Section } from "../../../../components/section";
 import { SectionContent } from "../../../../components/section-content";
 import { SectionInformation } from "../../../../components/section-information";
-import { ProductPageProductFragment } from "../../../../graphql/product.query.graphql.generated";
 import { useUpdateProductMutation } from "../../../../graphql/update-product.mutation.graphql.generated";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 interface ProductInformationProps {
-  currentProduct?: ProductPageProductFragment;
+  currentProduct?: GeneralProductFragment;
 }
 
 export const ProductInformation = ({

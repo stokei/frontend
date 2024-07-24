@@ -1,9 +1,8 @@
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 import { Avatar, Box, Stack, Text } from "@stokei/ui";
 
-import { AppProductFragment } from "../graphql/products.query.graphql.generated";
-
 interface ProductSelectItemContentProps {
-  readonly product?: AppProductFragment;
+  readonly product?: GeneralProductFragment;
 }
 
 export const ProductSelectItemContent = ({

@@ -1,9 +1,9 @@
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 import { SimpleGrid } from "@stokei/ui";
-import { AdminProductPageProductFragment } from "../../graphql/products.query.graphql.generated";
 import { ProductItem } from "../product-item";
 
 interface ProductsListProps {
-  readonly products?: AdminProductPageProductFragment[];
+  readonly products?: GeneralProductFragment[];
 }
 
 export const ProductsList = ({ products }: ProductsListProps) => {

@@ -1,8 +1,8 @@
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 import { CatalogItem } from "@stokei/builder";
-import { StoreProductFragment } from "../../graphql/products.query.graphql.generated";
 
 export interface ProductItemProps {
-  readonly product: StoreProductFragment;
+  readonly product: GeneralProductFragment;
 }
 
 export const ProductItem = ({ product }: ProductItemProps) => {

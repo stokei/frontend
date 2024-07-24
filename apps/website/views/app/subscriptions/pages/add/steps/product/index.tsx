@@ -1,11 +1,11 @@
 import { SelectProducts } from "@/components/select-product";
-import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
 import { useTranslations } from "@/hooks";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 import { Button, ButtonGroup, Stack, Title } from "@stokei/ui";
 
 interface ProductStepProps {
-  product?: AppProductFragment;
-  onChooseProduct: (product?: AppProductFragment) => void;
+  product?: GeneralProductFragment;
+  onChooseProduct: (product?: GeneralProductFragment) => void;
   onPreviousStep: () => void;
   onNextStep: () => void;
 }

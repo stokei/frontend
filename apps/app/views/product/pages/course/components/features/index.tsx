@@ -1,10 +1,9 @@
 import { useTranslations } from "@/hooks";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 import { Description, Stack, Title } from "@stokei/ui";
 
-import { ProductPageProductFragment } from "../../../../graphql/product.query.graphql.generated";
-
 export interface FeaturesProps {
-  readonly features?: ProductPageProductFragment["features"];
+  readonly features?: GeneralProductFragment["features"];
 }
 
 export const Features = ({ features }: FeaturesProps) => {

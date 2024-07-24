@@ -1,11 +1,11 @@
 import { SimpleGrid } from "@stokei/ui";
 
 import { PageBuilderProvider } from "@/contexts";
-import { StoreProductFragment } from "../../graphql/products.query.graphql.generated";
 import { ProductItem } from "../product-item";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 interface ProductsListProps {
-  readonly products?: StoreProductFragment[];
+  readonly products?: GeneralProductFragment[];
 }
 
 export const ProductsList = ({ products }: ProductsListProps) => {

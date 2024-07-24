@@ -9,6 +9,12 @@ fragment GeneralProduct on Product {
     }
   }
   features {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
     items {
       id
       name
@@ -20,12 +26,20 @@ fragment GeneralProduct on Product {
   }
   prices {
     totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
     items {
       ...PriceComponent
     }
   }
   externalReference {
     __typename
+    ... on Plan {
+      type
+    }
     ... on Course {
       instructors {
         items {

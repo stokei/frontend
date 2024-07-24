@@ -13,15 +13,15 @@ import {
   Title
 } from "@stokei/ui";
 import { useBuilder, useShoppingCart, useTranslations } from "../../../../hooks";
-import { BuilderComponentCatalogItemProductFragment } from "../../graphql/catalog.query.graphql.generated";
 import { SelectPrice } from "../../../../components";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { PriceComponentFragment } from "../../../../components/price/price.fragment.graphql.generated";
+import { GeneralProductFragment } from "../../../../services/graphql/types/product.fragment.graphql.generated";
 
 interface ProductModalProps {
   readonly isOpen: boolean;
   readonly productURL: string;
-  readonly product?: BuilderComponentCatalogItemProductFragment;
+  readonly product?: GeneralProductFragment;
   readonly onClose: () => void;
 }
 

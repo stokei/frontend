@@ -1,14 +1,14 @@
 import { Container, Stack } from "@stokei/ui";
 
-import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
 import { CheckoutInfo } from "../../components/checkout-info";
 import { Features } from "./components/features";
 import { GenericProductDescription } from "./components/generic-product-description";
 import { Header } from "./components/header";
 import { GenericProductLayout } from "./layout";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 interface GenericProductPageProps {
-  readonly product: ProductPageProductFragment;
+  readonly product: GeneralProductFragment;
 }
 
 export const GenericProductPage = ({ product }: GenericProductPageProps) => {

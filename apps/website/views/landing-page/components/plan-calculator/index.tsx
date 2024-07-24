@@ -33,8 +33,8 @@ export const PlanCalculator = () => {
   });
 
   const plans = useMemo(() => dataGetPlanProducts?.products?.items || [], [dataGetPlanProducts?.products?.items]);
-  const storagePlan = useMemo(() => plans?.find(plan => plan.parent?.__typename === "Plan" && plan.parent.type === PlanType.Storage), [plans]);
-  const videoPlan = useMemo(() => plans?.find(plan => plan.parent?.__typename === "Plan" && plan.parent.type === PlanType.Video), [plans]);
+  const storagePlan = useMemo(() => plans?.find(plan => plan.externalReference?.__typename === "Plan" && plan.externalReference.type === PlanType.Storage), [plans]);
+  const videoPlan = useMemo(() => plans?.find(plan => plan.externalReference?.__typename === "Plan" && plan.externalReference.type === PlanType.Video), [plans]);
 
   const price = useMemo(() => {
     const getTotal = (quantity?: number, amount?: number) => !!amount && !!quantity ? amount * quantity : 0;

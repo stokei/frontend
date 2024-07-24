@@ -19,11 +19,11 @@ import {
   useBuilder,
   useTranslations
 } from "../../../../hooks";
-import { BuilderComponentCatalogItemProductFragment } from "../../graphql/catalog.query.graphql.generated";
 import { ProductModal } from "../product-modal";
+import { GeneralProductFragment } from "../../../../services/graphql/types/product.fragment.graphql.generated";
 
 export interface CatalogItemProps {
-  readonly product?: BuilderComponentCatalogItemProductFragment;
+  readonly product?: GeneralProductFragment;
 }
 
 export const CatalogItem = ({ product }: CatalogItemProps) => {
@@ -35,8 +35,8 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
   const translate = useTranslations();
 
   const course = useMemo(
-    () => (product?.parent?.__typename === "Course" ? product?.parent : null),
-    [product?.parent]
+    () => (product?.externalReference?.__typename === "Course" ? product?.externalReference : null),
+    [product?.externalReference]
   );
   const currentPrice = useMemo(
     () => product?.defaultPrice,

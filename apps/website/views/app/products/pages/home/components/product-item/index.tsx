@@ -17,10 +17,10 @@ import { useMemo } from "react";
 
 import { Price } from "@stokei/builder";
 import { websiteRoutes } from "@stokei/routes";
-import { AdminProductPageProductFragment } from "../../graphql/products.query.graphql.generated";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 export interface ProductItemProps {
-  readonly product: AdminProductPageProductFragment;
+  readonly product: GeneralProductFragment;
 }
 
 export const ProductItem = ({ product }: ProductItemProps) => {
@@ -32,7 +32,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
     .product({ product: product?.id }).home;
 
   const course = useMemo(
-    () => (product?.parent?.__typename === "Course" ? product?.parent : null),
+    () => (product?.externalReference?.__typename === "Course" ? product?.externalReference : null),
     [product]
   );
 
