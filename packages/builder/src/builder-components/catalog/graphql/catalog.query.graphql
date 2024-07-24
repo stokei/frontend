@@ -38,7 +38,7 @@ fragment BuilderComponentCatalogItemProduct on Product {
       ...PriceComponent
     }
   }
-  parent {
+  externalReference {
     __typename
     ...BuilderComponentCatalogItemProductCourse
     ...BuilderComponentCatalogItemProductPlan

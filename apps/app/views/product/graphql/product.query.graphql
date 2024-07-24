@@ -29,8 +29,8 @@ fragment ProductPageProduct on Product {
       ...PriceComponent
     }
   }
-  parentId
-  parent {
+  parent
+  externalReference {
     __typename
   }
 }

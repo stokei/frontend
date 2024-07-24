@@ -28,7 +28,7 @@ fragment AdminProductPageProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
-  parent {
+  externalReference {
     __typename
     ...AdminProductPageProductCourse
     ...AdminProductPageProductMaterial

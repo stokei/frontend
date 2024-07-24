@@ -30,7 +30,7 @@ fragment LandingPageCatalogItemProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
-  parent {
+  externalReference {
     __typename
     ...LandingPageCatalogItemProductCourse
     ...LandingPageCatalogItemProductPlan

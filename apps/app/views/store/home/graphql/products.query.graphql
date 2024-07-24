@@ -34,7 +34,7 @@ fragment StoreProduct on Product {
       ...PriceComponent
     }
   }
-  parent {
+  externalReference {
     __typename
     ...StoreProductCourse
     ...StoreProductPlan

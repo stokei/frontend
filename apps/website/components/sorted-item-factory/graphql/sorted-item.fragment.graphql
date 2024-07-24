@@ -59,7 +59,7 @@ fragment SortedItemComponentCatalogItemProduct on Product {
   defaultPrice {
     ...PriceComponent
   }
-  parent {
+  externalReference {
     __typename
     ...SortedItemComponentCatalogItemProductCourse
     ...SortedItemComponentCatalogItemProductPlan

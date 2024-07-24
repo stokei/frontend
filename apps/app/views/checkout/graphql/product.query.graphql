@@ -29,7 +29,7 @@ fragment CheckoutProduct on Product {
       ...PriceComponent
     }
   }
-  parent {
+  externalReference {
     __typename
     ...CheckoutProductCourse
     ...CheckoutProductPlan

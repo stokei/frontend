@@ -28,7 +28,7 @@ fragment AdminCatalogPageCatalogItemProduct on Product {
       url
     }
   }
-  parent {
+  externalReference {
     __typename
     ...AdminCatalogPageCatalogItemProductCourse
     ...AdminCatalogPageCatalogItemProductMaterial

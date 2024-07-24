@@ -817,9 +817,11 @@ export type CreatePriceTierInput = {
 
 export type CreateProductInput = {
   catalogs?: InputMaybe<Array<Scalars['String']>>;
+  comboProducts?: InputMaybe<Array<Scalars['String']>>;
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   parent: Scalars['String'];
+  type: ProductType;
 };
 
 export type CreateRecurringInput = {
@@ -2774,17 +2776,19 @@ export type Product = {
   active: Scalars['Boolean'];
   app?: Maybe<App>;
   avatar?: Maybe<Image>;
+  combo?: Maybe<Array<Product>>;
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   deactivatedAt?: Maybe<Scalars['String']>;
   defaultPrice?: Maybe<Price>;
   description?: Maybe<Scalars['String']>;
+  externalReference?: Maybe<ProductExternalReferenceUnion>;
   features?: Maybe<Features>;
   id: Scalars['ID'];
   name: Scalars['String'];
-  parent?: Maybe<ProductParentUnion>;
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<Scalars['String']>;
   prices?: Maybe<Prices>;
+  type: ProductType;
   updatedAt?: Maybe<Scalars['String']>;
   updatedBy?: Maybe<Account>;
 };
@@ -2795,7 +2799,12 @@ export type ProductBestSeller = {
   quantity: Scalars['Float'];
 };
 
-export type ProductParentUnion = App | Course | Material | Plan;
+export type ProductExternalReferenceUnion = App | Course | Material | Plan | Product;
+
+export enum ProductType {
+  Combo = 'COMBO',
+  Unique = 'UNIQUE'
+}
 
 export type Products = {
   __typename?: 'Products';
@@ -4758,6 +4767,7 @@ export type WhereDataFindAllProductsDataInput = {
   ids?: InputMaybe<Array<Scalars['String']>>;
   name?: InputMaybe<WhereDataSearchInput>;
   parent?: InputMaybe<WhereDataSearchInput>;
+  type?: InputMaybe<ProductType>;
   updatedBy?: InputMaybe<WhereDataStringInput>;
 };
 

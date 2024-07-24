@@ -9,7 +9,7 @@ export type CreateCatalogItemMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateCatalogItemMutation = { __typename?: 'Mutation', createCatalogItem: { __typename?: 'CatalogItem', id: string, catalog: string, product: { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, parent?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | null } } };
+export type CreateCatalogItemMutation = { __typename?: 'Mutation', createCatalogItem: { __typename?: 'CatalogItem', id: string, catalog: string, product: { __typename?: 'Product', id: string, name: string, description?: string | null, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null, externalReference?: { __typename: 'App', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Course', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan' } | { __typename: 'Product' } | null } } };
 
 
 export const CreateCatalogItemDocument = gql`

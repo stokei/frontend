@@ -33,7 +33,7 @@ fragment LandingPageProduct on Product {
       ...LandingPageProductFeature
     }
   }
-  parent {
+  externalReference {
     __typename
     ...LandingPageProductPlan
   }

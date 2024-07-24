@@ -18,7 +18,7 @@ query GetAppProducts(
 
 fragment AppProduct on Product {
   id
-  parentId
+  parent
   name
   description
   avatar {
@@ -30,7 +30,7 @@ fragment AppProduct on Product {
     ...PriceComponent
   }
 
-  parent {
+  externalReference {
     __typename
     ...AppProductCourse
     ...AppProductMaterial
