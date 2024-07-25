@@ -165,6 +165,7 @@ export const AddProductPage = () => {
                   </StepPanel>
                   <StepPanel stepIndex={AddProductStep.SUMMARY}>
                     <SummaryStep
+                      productType={productType}
                       comboProducts={comboProducts}
                       productExternalReference={productExternalReference}
                       productPayload={productPayload}

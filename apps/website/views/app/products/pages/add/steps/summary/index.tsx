@@ -20,10 +20,12 @@ import { useRouter } from "next/router";
 import { ProductExternalReference } from "../../@types/product-external-reference";
 import { ProductPayload } from "../../@types/product-payload";
 import { useCreateProductMutation } from "../../graphql/create-product.mutation.graphql.generated";
-import { ProductType } from "@/services/graphql/stokei";
+import { ProductType as ProductTypeAPI } from "@/services/graphql/stokei";
 import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
+import { ProductType } from "@/constants/product-type";
 
 interface SummaryStepProps {
+  productType?: ProductType;
   comboProducts?: GeneralProductFragment[];
   catalogs?: AppCatalogFragment[];
   productPayload?: ProductPayload;
@@ -32,6 +34,7 @@ interface SummaryStepProps {
 }
 
 export const SummaryStep = ({
+  productType,
   comboProducts,
   catalogs,
   productExternalReference,
@@ -55,7 +58,7 @@ export const SummaryStep = ({
       const response = await onCreateProduct({
         input: {
           parent: parent || "",
-          type: ProductType.Unique,
+          type: ProductType.COMBO === productType ? ProductTypeAPI.Combo : ProductTypeAPI.Unique,
           name: productPayload?.name || "",
           description: productPayload?.description,
           catalogs: catalogsIds,
