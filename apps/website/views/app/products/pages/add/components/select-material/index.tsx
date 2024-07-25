@@ -14,19 +14,19 @@ import {
   useDebounce
 } from "@stokei/ui";
 import { useMemo, useState } from "react";
-import { ProductParent } from "../../@types/product-parent";
+import { ProductExternalReference } from "../../@types/product-external-reference";
 import {
   AddProductMaterialSelectFragment,
   useGetAddProductMaterialsSelectQuery,
 } from "../../graphql/materials.query.graphql.generated";
 
 export interface SelectMaterialProps {
-  productParent?: ProductParent;
-  onChangeProductParent: (parent?: ProductParent) => void;
+  productExternalReference?: ProductExternalReference;
+  onChangeProductExternalReference: (productExternalReference?: ProductExternalReference) => void;
 }
 export const SelectMaterial = ({
-  productParent,
-  onChangeProductParent,
+  productExternalReference,
+  onChangeProductExternalReference,
 }: SelectMaterialProps) => {
   const [materialQuery, setMaterialQuery] = useState<string>("");
   const translate = useTranslations();
@@ -57,7 +57,7 @@ export const SelectMaterial = ({
     [dataMaterials]
   );
 
-  const mapMaterialToProductParent = (
+  const mapMaterialToProductExternalReference = (
     currentMaterial?: AddProductMaterialSelectFragment
   ) => {
     return (
@@ -73,19 +73,19 @@ export const SelectMaterial = ({
   const onChooseProductTypeItem = (
     currentMaterial?: AddProductMaterialSelectFragment
   ) => {
-    onChangeProductParent(mapMaterialToProductParent(currentMaterial));
+    onChangeProductExternalReference(mapMaterialToProductExternalReference(currentMaterial));
   };
 
   return (
     <Stack direction="column" spacing="5">
-      <FormControl isInvalid={!productParent}>
+      <FormControl isInvalid={!productExternalReference}>
         <Label htmlFor="select-couse">
           {translate.formatMessage({ id: "material" })}
         </Label>
         <SingleSelect
           id="select-couse"
           isLoading={isLoading}
-          value={productParent}
+          value={productExternalReference}
           onChange={onChooseProductTypeItem}
         >
           <SingleSelectButton
@@ -111,7 +111,7 @@ export const SelectMaterial = ({
               {materials?.map((material) => (
                 <SingleSelectOption
                   key={material?.id}
-                  value={mapMaterialToProductParent(material)}
+                  value={mapMaterialToProductExternalReference(material)}
                 >
                   <Stack direction="row" spacing="4" align="center">
                     <Avatar

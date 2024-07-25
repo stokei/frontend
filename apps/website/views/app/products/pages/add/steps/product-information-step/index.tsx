@@ -15,18 +15,18 @@ import {
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ProductParent } from "../../@types/product-parent";
+import { ProductExternalReference } from "../../@types/product-external-reference";
 import { ProductPayload } from "../../@types/product-payload";
 
 interface ProductInformationStepProps {
-  productParent?: ProductParent;
+  productExternalReference?: ProductExternalReference;
   onChangeProductPayload: (productPayload: ProductPayload) => void;
   onPreviousStep: () => void;
   onNextStep: () => void;
 }
 
 export const ProductInformationStep = ({
-  productParent,
+  productExternalReference,
   onChangeProductPayload,
   onPreviousStep,
   onNextStep,
@@ -52,23 +52,23 @@ export const ProductInformationStep = ({
   });
 
   useEffect(() => {
-    register("description", { value: productParent?.description });
-  }, [productParent?.description, register]);
+    register("description", { value: productExternalReference?.description });
+  }, [productExternalReference?.description, register]);
 
   useEffect(() => {
-    if (productParent) {
+    if (productExternalReference) {
       reset({
-        name: productParent?.name || "",
-        description: productParent?.description || "",
+        name: productExternalReference?.name || "",
+        description: productExternalReference?.description || "",
       });
-      if (productParent?.name || productParent?.description) {
+      if (productExternalReference?.name || productExternalReference?.description) {
         onChangeProductPayload({
-          name: productParent?.name || "",
-          description: productParent?.description || "",
+          name: productExternalReference?.name || "",
+          description: productExternalReference?.description || "",
         });
       }
     }
-  }, [onChangeProductPayload, productParent, reset]);
+  }, [onChangeProductPayload, productExternalReference, reset]);
 
   const onSuccess = (data: z.infer<typeof validationSchema>) => {
     onChangeProductPayload(data);
@@ -100,7 +100,7 @@ export const ProductInformationStep = ({
           <InputGroup>
             <RichTextEditor
               id="description"
-              defaultValue={productParent?.description}
+              defaultValue={productExternalReference?.description}
               onChange={(value) => setValue("description", value)}
             />
           </InputGroup>

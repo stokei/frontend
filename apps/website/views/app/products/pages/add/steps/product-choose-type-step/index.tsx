@@ -2,24 +2,30 @@ import { ProductType } from "@/constants/product-type";
 import { useTranslations } from "@/hooks";
 import { Button, ButtonGroup, Stack, Title } from "@stokei/ui";
 
-import { ProductParent } from "../../@types/product-parent";
+import { ProductExternalReference } from "../../@types/product-external-reference";
 import { SelectCurse } from "../../components/select-course";
 import { SelectMaterial } from "../../components/select-material";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
+import { SelectProducts } from "@/components/select-products";
 
 interface ProductChooseTypeStepProps {
   productType: ProductType;
-  productParent?: ProductParent;
-  onChangeProductParent: (parent?: ProductParent) => void;
+  comboProducts?: GeneralProductFragment[];
+  productExternalReference?: ProductExternalReference;
+  onChangeComboProduct: (comboProduct?: GeneralProductFragment) => void;
+  onChangeProductExternalReference: (externalReference?: ProductExternalReference) => void;
   onPreviousStep: () => void;
   onNextStep: () => void;
 }
 
 export const ProductChooseTypeStep = ({
   productType,
-  productParent,
+  productExternalReference,
+  comboProducts,
+  onChangeComboProduct,
   onNextStep,
   onPreviousStep,
-  onChangeProductParent,
+  onChangeProductExternalReference,
 }: ProductChooseTypeStepProps) => {
   const translate = useTranslations();
 
@@ -32,23 +38,29 @@ export const ProductChooseTypeStep = ({
           })}
         </Title>
 
+        {productType === ProductType.COMBO && (
+          <SelectProducts
+            value={comboProducts}
+            onChange={onChangeComboProduct}
+          />
+        )}
         {productType === ProductType.COURSE && (
           <SelectCurse
-            productParent={productParent}
-            onChangeProductParent={onChangeProductParent}
+            productExternalReference={productExternalReference}
+            onChangeProductExternalReference={onChangeProductExternalReference}
           />
         )}
         {productType === ProductType.MATERIAL && (
           <SelectMaterial
-            productParent={productParent}
-            onChangeProductParent={onChangeProductParent}
+            productExternalReference={productExternalReference}
+            onChangeProductExternalReference={onChangeProductExternalReference}
           />
         )}
         <ButtonGroup width="full" justifyContent="space-between">
           <Button variant="ghost" onClick={onPreviousStep}>
             {translate.formatMessage({ id: "previous" })}
           </Button>
-          <Button onClick={onNextStep} isDisabled={!productParent}>
+          <Button onClick={onNextStep} isDisabled={productType === ProductType.COMBO ? !comboProducts?.length : !productExternalReference}>
             {translate.formatMessage({ id: "next" })}
           </Button>
         </ButtonGroup>

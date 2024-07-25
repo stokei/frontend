@@ -5,6 +5,7 @@ import {
   FormControl,
   Label,
   MultiSelect,
+  MultiSelectAddButton,
   MultiSelectButton,
   MultiSelectCombobox,
   MultiSelectOptions,
@@ -20,6 +21,8 @@ import {
   AppCatalogFragment,
   useGetAppCatalogsQuery,
 } from "./graphql/catalogs.query.graphql.generated";
+import { useRouter } from "next/router";
+import { websiteRoutes } from "@stokei/routes";
 
 export type SelectCatalogValue = AppCatalogFragment;
 
@@ -36,6 +39,7 @@ export const SelectCatalogs = ({
 }: SelectCatalogsProps) => {
   const translate = useTranslations();
   const { currentApp } = useCurrentApp();
+  const router = useRouter();
 
   const validationSchema = z.object({
     searchCatalog: z.string(),
@@ -80,6 +84,10 @@ export const SelectCatalogs = ({
     [dataGetCatalogs?.catalogs?.items]
   );
 
+  const goToAddCatalog = () => {
+    router.push(websiteRoutes.app({ appId: currentApp?.id }).catalogs.add);
+  }
+
   return (
     <FormControl>
       <Label htmlFor="catalog-select-search-input">
@@ -103,6 +111,11 @@ export const SelectCatalogs = ({
             <MultiSelectSearchInput
               {...register('searchCatalog')}
             />
+            <MultiSelectAddButton
+              onClick={goToAddCatalog}
+            >
+              {translate.formatMessage({ id: 'addCatalog' })}
+            </MultiSelectAddButton>
             {catalogsList?.map((catalog) => (
               <CatalogSelectItem key={catalog.id} catalog={catalog} />
             ))}

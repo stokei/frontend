@@ -1,4 +1,4 @@
-export interface ProductParent {
+export interface ProductExternalReference {
   id: string;
   name?: string;
   description?: string;
