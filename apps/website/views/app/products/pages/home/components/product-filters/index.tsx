@@ -107,6 +107,10 @@ export const ProductFilters = ({
         }),
         iconName: "material",
       },
+      [ProductType.COMBO]: {
+        text: translate.formatMessage({ id: "combo" }),
+        iconName: "combo"
+      }
     };
 
     return items[item];
@@ -161,6 +165,7 @@ export const ProductFilters = ({
                     );
                   }}
                 />
+
                 <SingleSelectCombobox>
                   <SingleSelectOptions>
                     <SingleSelectOption value={ProductType.ALL}>
@@ -181,6 +186,12 @@ export const ProductFilters = ({
                         <Text>
                           {translate.formatMessage({ id: "materials" })}
                         </Text>
+                      </Stack>
+                    </SingleSelectOption>
+                    <SingleSelectOption value={ProductType.COMBO}>
+                      <Stack direction="row" spacing="5" align="center">
+                        <Icon name="combo" color="primary.500" />
+                        <Text>{translate.formatMessage({ id: "combo" })}</Text>
                       </Stack>
                     </SingleSelectOption>
                   </SingleSelectOptions>

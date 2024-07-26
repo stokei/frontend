@@ -97,47 +97,38 @@ export const Price = ({
   return (
     <Stack width="full" direction="column" spacing="1" {...props}>
       {fromPriceAmount && (
-        <Stack direction="row" align="center">
-          <Text
-            fontSize="sm"
-            color="text.300"
-            fontWeight="600"
-            textDecoration="line-through"
-          >
-            {price?.currency?.symbol} {fromPriceAmount}
-          </Text>
-        </Stack>
-      )}
-
-      <Stack
-        width="full"
-        direction="column"
-        spacing="1"
-      >
-        {priceRecurringIntervalTypeKey && (
-          <Text fontSize="md" color="text.200">
-            {recurringText}
-          </Text>
-        )}
-        <Stack
-          width="fit-content"
-          direction="row"
-          align="center"
-          justify="center"
+        <Text
+          fontSize="sm"
+          color="text.300"
+          fontWeight="600"
+          textDecoration="line-through"
         >
-          <Text fontSize="md" fontWeight="600">
-            {price?.currency?.symbol}
-          </Text>
-          <Text
-            fontSize="xl"
-            color="primary.500"
-            fontWeight="900"
-            lineHeight="shorter"
-          >
-            {priceAmount}
-          </Text>
-        </Stack>
+          {price?.currency?.symbol} {fromPriceAmount}
+        </Text>
+      )}
+      <Stack
+        width="fit-content"
+        direction="row"
+        align="center"
+        justify="center"
+      >
+        <Text fontSize="md" fontWeight="600">
+          {price?.currency?.symbol}
+        </Text>
+        <Text
+          fontSize="xl"
+          color="primary.500"
+          fontWeight="900"
+          lineHeight="shorter"
+        >
+          {priceAmount}
+        </Text>
       </Stack>
+      {priceRecurringIntervalTypeKey && (
+        <Text fontSize="md" color="text.200">
+          {recurringText}
+        </Text>
+      )}
     </Stack>
   );
 };

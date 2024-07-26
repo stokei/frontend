@@ -15,16 +15,18 @@ import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
-  AppProductFragment,
   useGetAppProductsQuery,
 } from "./graphql/products.query.graphql.generated";
 import { ProductSelectItem } from "./product-select-item";
 import { ProductSelectItemContent } from "./product-select-item-content";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
+
+export type SelectProductValue = GeneralProductFragment;
 
 interface SelectProductsProps {
   readonly label?: string;
-  readonly value?: AppProductFragment[];
-  readonly onChange: (value?: AppProductFragment) => void;
+  readonly value?: SelectProductValue[];
+  readonly onChange: (value?: SelectProductValue) => void;
 }
 
 export const SelectProducts = ({

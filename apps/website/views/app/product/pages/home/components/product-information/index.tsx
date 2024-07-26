@@ -2,6 +2,7 @@ import { useAPIErrors, useTranslations } from "@/hooks";
 import { useUploadImage } from "@/hooks/use-upload-image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  Badge,
   Button,
   ButtonGroup,
   Form,
@@ -23,11 +24,12 @@ import { z } from "zod";
 import { Section } from "../../../../components/section";
 import { SectionContent } from "../../../../components/section-content";
 import { SectionInformation } from "../../../../components/section-information";
-import { ProductPageProductFragment } from "../../../../graphql/product.query.graphql.generated";
 import { useUpdateProductMutation } from "../../../../graphql/update-product.mutation.graphql.generated";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
+import { ProductType } from "@/services/graphql/stokei";
 
 interface ProductInformationProps {
-  currentProduct?: ProductPageProductFragment;
+  currentProduct?: GeneralProductFragment;
 }
 
 export const ProductInformation = ({
@@ -114,21 +116,18 @@ export const ProductInformation = ({
   return (
     <Section>
       <SectionInformation>
-        <Stack
-          direction={["column", "column", "row", "row"]}
-          spacing="5"
-          align={["flex-start", "flex-start", "center", "center"]}
-        >
-          <Stack direction="column" spacing="1">
-            <Title fontSize="lg">
-              {translate.formatMessage({ id: "product" })}
-            </Title>
-            <Text fontSize="md">
-              {translate.formatMessage({
-                id: "fillInYourProductInformationAndStartSellingRightAway",
-              })}
-            </Text>
-          </Stack>
+        <Stack direction="column" spacing="1">
+          <Title fontSize="lg">
+            {translate.formatMessage({ id: "product" })}
+          </Title>
+          <Text fontSize="md">
+            {translate.formatMessage({
+              id: "fillInYourProductInformationAndStartSellingRightAway",
+            })}
+          </Text>
+          <Badge variant="outline" colorScheme="blue">
+            {translate.formatMessage({ id: currentProduct?.type === ProductType.Combo ? "combo" : "unique" })}
+          </Badge>
         </Stack>
       </SectionInformation>
       <SectionContent>

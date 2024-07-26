@@ -1,5 +1,4 @@
 import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
-import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
 import { AddSubscriptionContractStep } from "@/constants/add-subscription-contract-steps";
 import { useTranslations } from "@/hooks";
 import {
@@ -25,13 +24,14 @@ import { PeriodStep } from "./steps/period";
 import { ProductStep } from "./steps/product";
 import { ReviewStep } from "./steps/review";
 import { StudentStep } from "./steps/student";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 export const AddSubscriptionContractPage = () => {
   const [currentStep, setCurrentStep] = useState<AddSubscriptionContractStep>(
     AddSubscriptionContractStep.STUDENT
   );
   const [student, setStudent] = useState<AppAccountFragment>();
-  const [product, setProduct] = useState<AppProductFragment>();
+  const [product, setProduct] = useState<GeneralProductFragment>();
   const [startAt, setStartAt] = useState<Date>(new Date());
   const [endAt, setEndAt] = useState<Date>();
   const [recurringInterval, setRecurringInterval] = useState<IntervalType>(

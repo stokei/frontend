@@ -14,19 +14,19 @@ import {
   useDebounce
 } from "@stokei/ui";
 import { useMemo, useState } from "react";
-import { ProductParent } from "../../@types/product-parent";
+import { ProductExternalReference } from "../../@types/product-external-reference";
 import {
   AddProductCourseSelectFragment,
   useGetAddProductCoursesSelectQuery,
 } from "../../graphql/courses.query.graphql.generated";
 
 export interface SelectCurseProps {
-  productParent?: ProductParent;
-  onChangeProductParent: (parent?: ProductParent) => void;
+  productExternalReference?: ProductExternalReference;
+  onChangeProductExternalReference: (externalReference?: ProductExternalReference) => void;
 }
 export const SelectCurse = ({
-  productParent,
-  onChangeProductParent,
+  productExternalReference,
+  onChangeProductExternalReference,
 }: SelectCurseProps) => {
   const [courseQuery, setCourseQuery] = useState<string>("");
   const translate = useTranslations();
@@ -52,7 +52,7 @@ export const SelectCurse = ({
 
   const courses = useMemo(() => dataCourses?.courses?.items, [dataCourses]);
 
-  const mapCourseToProductParent = (
+  const mapCourseToProductExternalReference = (
     currentCourse?: AddProductCourseSelectFragment
   ) => {
     return (
@@ -68,19 +68,19 @@ export const SelectCurse = ({
   const onChooseProductTypeItem = (
     currentCourse?: AddProductCourseSelectFragment
   ) => {
-    onChangeProductParent(mapCourseToProductParent(currentCourse));
+    onChangeProductExternalReference(mapCourseToProductExternalReference(currentCourse));
   };
 
   return (
     <Stack direction="column" spacing="5">
-      <FormControl isInvalid={!productParent}>
+      <FormControl isInvalid={!productExternalReference}>
         <Label htmlFor="select-couse">
           {translate.formatMessage({ id: "course" })}
         </Label>
         <SingleSelect
           id="select-couse"
           isLoading={isLoading}
-          value={productParent}
+          value={productExternalReference}
           onChange={onChooseProductTypeItem}
         >
           <SingleSelectButton
@@ -105,7 +105,7 @@ export const SelectCurse = ({
               {courses?.map((course) => (
                 <SingleSelectOption
                   key={course?.id}
-                  value={mapCourseToProductParent(course)}
+                  value={mapCourseToProductExternalReference(course)}
                 >
                   <Stack direction="row" spacing="4" align="center">
                     <Avatar

@@ -1,6 +1,5 @@
 export * from "./app-logo";
 export * from "./card-input";
-export * from "./catalog-item";
 export * from "./download-file-button";
 export * from "./footer";
 export * from "./navbar";

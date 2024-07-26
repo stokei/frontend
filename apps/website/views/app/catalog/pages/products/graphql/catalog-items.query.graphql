@@ -15,47 +15,6 @@ fragment AdminCatalogPageCatalogItem on CatalogItem {
   id
   catalog
   product {
-    ...AdminCatalogPageCatalogItemProduct
-  }
-}
-
-fragment AdminCatalogPageCatalogItemProduct on Product {
-  id
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  parent {
-    __typename
-    ...AdminCatalogPageCatalogItemProductCourse
-    ...AdminCatalogPageCatalogItemProductMaterial
-    ...AdminCatalogPageCatalogItemProductApp
-  }
-}
-
-fragment AdminCatalogPageCatalogItemProductApp on App {
-  avatar {
-    file {
-      url
-    }
-  }
-}
-
-fragment AdminCatalogPageCatalogItemProductCourse on Course {
-  avatar {
-    file {
-      url
-    }
-  }
-}
-
-fragment AdminCatalogPageCatalogItemProductMaterial on Material {
-  avatar {
-    file {
-      url
-    }
+    ...GeneralProduct
   }
 }

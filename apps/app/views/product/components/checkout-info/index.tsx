@@ -16,16 +16,16 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ProductPageProductFragment } from "../../graphql/product.query.graphql.generated";
 import { Features } from "../../pages/generic/components/features";
 import { useShoppingCart } from "@stokei/builder";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 export interface CheckoutInfoProps {
-  readonly product?: ProductPageProductFragment;
+  readonly product?: GeneralProductFragment;
   readonly avatarURL?: string;
   readonly defaultPrice?: PriceComponentFragment | null;
-  readonly features?: ProductPageProductFragment["features"];
-  readonly prices?: ProductPageProductFragment["prices"];
+  readonly features?: GeneralProductFragment["features"];
+  readonly prices?: GeneralProductFragment["prices"];
 }
 
 export const CheckoutInfo = ({

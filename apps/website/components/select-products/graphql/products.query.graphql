@@ -1,0 +1,17 @@
+query GetAppProducts(
+  $where: WhereDataFindAllProductsInput
+  $orderBy: OrderByDataFindAllProductsInput
+  $page: PaginationInput
+) {
+  products(where: $where, orderBy: $orderBy, page: $page) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...GeneralProduct
+    }
+  }
+}

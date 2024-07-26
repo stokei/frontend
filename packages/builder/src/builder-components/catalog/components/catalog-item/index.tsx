@@ -19,11 +19,11 @@ import {
   useBuilder,
   useTranslations
 } from "../../../../hooks";
-import { BuilderComponentCatalogItemProductFragment } from "../../graphql/catalog.query.graphql.generated";
 import { ProductModal } from "../product-modal";
+import { GeneralProductFragment } from "../../../../services/graphql/types/product.fragment.graphql.generated";
 
 export interface CatalogItemProps {
-  readonly product?: BuilderComponentCatalogItemProductFragment;
+  readonly product?: GeneralProductFragment;
 }
 
 export const CatalogItem = ({ product }: CatalogItemProps) => {
@@ -35,17 +35,17 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
   const translate = useTranslations();
 
   const course = useMemo(
-    () => (product?.parent?.__typename === "Course" ? product?.parent : null),
-    [product?.parent]
+    () => (product?.externalReference?.__typename === "Course" ? product?.externalReference : null),
+    [product?.externalReference]
   );
-  const currentPrice = useMemo(
+  const price = useMemo(
     () => product?.defaultPrice,
     [product?.defaultPrice]
   );
   const productURL = useMemo(
     () =>
-      routes.product({ product: product?.id || "", price: currentPrice?.id }),
-    [currentPrice?.id, product?.id, routes]
+      routes.product({ product: product?.id || "", price: price?.id }),
+    [price?.id, product?.id, routes]
   );
 
   return (
@@ -98,15 +98,17 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
             )}
           </Stack>
         </CardBody>
-        <CardFooter
-          paddingTop="0"
-        >
-          <Box width="full">
-            <Price
-              price={currentPrice}
-            />
-          </Box>
-        </CardFooter>
+        {price && (
+          <CardFooter
+            paddingTop="0"
+          >
+            <Box width="full">
+              <Price
+                price={price}
+              />
+            </Box>
+          </CardFooter>
+        )}
       </Card>
     </>
   );

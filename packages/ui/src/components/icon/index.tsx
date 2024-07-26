@@ -116,6 +116,7 @@ export const icons = {
   metadata: IconComponent.MetadataIcon,
   version: IconComponent.VersionIcon,
   color: IconComponent.ColorIcon,
+  combo: IconComponent.ComboIcon,
   pagarme: PagarmeIcon,
   stripe: StripeIcon,
   mercadopago: MercadopagoIcon,

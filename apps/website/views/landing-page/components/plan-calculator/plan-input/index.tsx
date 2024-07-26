@@ -1,15 +1,15 @@
 import { useTranslations } from "@/hooks";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 import { convertEnumValueToCamelCase } from "@/utils";
-import { Input, InputGroup, InputLeftAddon, Label, Loading, Stack, Title } from "@stokei/ui";
-import { getOnlyNumbers } from "@stokei/utils";
-import { LandingPageProductFragment } from "../../../graphql/products.query.graphql.generated";
 import { Price } from "@stokei/builder";
+import { Input, InputGroup, InputLeftAddon, Loading, Stack, Title } from "@stokei/ui";
+import { getOnlyNumbers } from "@stokei/utils";
 
 interface PlanInputProps {
   id: string;
   value?: number;
   onChangeValue: (value: number) => void;
-  plan?: LandingPageProductFragment;
+  plan?: GeneralProductFragment;
   isLoading?: boolean;
 }
 export const PlanInput = ({

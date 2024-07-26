@@ -1,7 +1,6 @@
 import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { MemberSelectItemContent } from "@/components/select-members/member-select-item-content";
-import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
-import { ProductSelectItemContent } from "@/components/select-product/product-select-item-content";
+import { ProductSelectItemContent } from "@/components/select-products/product-select-item-content";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
 import {
@@ -23,10 +22,11 @@ import {
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { useCreateSubscriptionContractMutation } from "../../graphql/create-subscription-contract.mutation.graphql.generated";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 interface ReviewStepProps {
   subscriptionType: SubscriptionContractType;
-  product?: AppProductFragment;
+  product?: GeneralProductFragment;
   student?: AppAccountFragment;
   startAt?: Date;
   endAt?: Date;
@@ -78,7 +78,7 @@ export const ReviewStep = ({
           items: [
             {
               quantity: 1,
-              product: product?.parentId || "",
+              product: product?.parent || "",
               ...(subscriptionType === SubscriptionContractType.Recurring && {
                 recurring: {
                   interval: recurringInterval,
@@ -110,7 +110,7 @@ export const ReviewStep = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (

@@ -3,6 +3,7 @@ import { AppCatalogFragment } from "@/components/select-catalogs/graphql/catalog
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
 import {
+  Avatar,
   Button,
   ButtonGroup,
   Card,
@@ -16,20 +17,27 @@ import {
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 
-import { ProductParent } from "../../@types/product-parent";
+import { ProductExternalReference } from "../../@types/product-external-reference";
 import { ProductPayload } from "../../@types/product-payload";
 import { useCreateProductMutation } from "../../graphql/create-product.mutation.graphql.generated";
+import { ProductType as ProductTypeAPI } from "@/services/graphql/stokei";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
+import { ProductType } from "@/constants/product-type";
 
 interface SummaryStepProps {
+  productType?: ProductType;
+  comboProducts?: GeneralProductFragment[];
   catalogs?: AppCatalogFragment[];
   productPayload?: ProductPayload;
-  productParent?: ProductParent;
+  productExternalReference?: ProductExternalReference;
   onPreviousStep: () => void;
 }
 
 export const SummaryStep = ({
+  productType,
+  comboProducts,
   catalogs,
-  productParent,
+  productExternalReference,
   productPayload,
   onPreviousStep,
 }: SummaryStepProps) => {
@@ -46,13 +54,15 @@ export const SummaryStep = ({
     try {
       const catalogsIds = catalogs?.map(({ id }) => id);
 
-      const parent = productParent?.id || currentApp?.id;
+      const parent = productExternalReference?.id || currentApp?.id;
       const response = await onCreateProduct({
         input: {
           parent: parent || "",
+          type: ProductType.COMBO === productType ? ProductTypeAPI.Combo : ProductTypeAPI.Unique,
           name: productPayload?.name || "",
           description: productPayload?.description,
           catalogs: catalogsIds,
+          comboProducts: comboProducts?.map(({ id }) => id)
         },
       });
       if (!!response?.data?.createProduct) {
@@ -73,13 +83,35 @@ export const SummaryStep = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
     <Form onSubmit={onSubmit}>
       <Stack direction="column" spacing="5">
         <Title fontSize="lg">{productPayload?.name}</Title>
+
+        {comboProducts?.length && (
+          <Stack direction="column" spacing="3">
+            <Title fontSize="sm" color="text.700">
+              {translate.formatMessage({ id: "comboProducts" })}
+            </Title>
+
+            {comboProducts?.map((comboProduct) => (
+              <Card key={comboProduct.id} size="sm">
+                <CardBody>
+                  <Stack direction="row" spacing="3" align="center">
+                    <Avatar
+                      name={comboProduct.name}
+                      src={comboProduct.avatar?.file.url || ""}
+                    />
+                    <Text fontWeight="semibold">{comboProduct.name}</Text>
+                  </Stack>
+                </CardBody>
+              </Card>
+            ))}
+          </Stack>
+        )}
 
         <Stack direction="column" spacing="3">
           <Title fontSize="sm" color="text.700">

@@ -1,6 +1,6 @@
 import { Price } from "../../price";
 import { PriceComponentFragment } from "../../price/price.fragment.graphql.generated";
-import { Stack } from "@stokei/ui";
+import { Box, Stack } from "@stokei/ui";
 
 interface PriceSelectItemContentProps {
   readonly price?: PriceComponentFragment;
@@ -10,8 +10,8 @@ export const PriceSelectItemContent = ({
   price,
 }: PriceSelectItemContentProps) => {
   return (
-    <Stack direction="row" spacing="2" align="center">
+    <Box width="full" paddingY="2">
       <Price price={price} />
-    </Stack>
+    </Box>
   );
 };

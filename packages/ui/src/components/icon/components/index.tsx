@@ -42,6 +42,7 @@ import {
   BsArrowUpRightSquare,
   BsBell,
   BsBox,
+  BsBoxes,
   BsCart,
   BsCheckCircleFill,
   BsFilter,
@@ -65,6 +66,7 @@ import { FaMoneyBill, FaUserShield, FaUserTie } from "react-icons/fa";
 import { FiPlus, FiSettings } from "react-icons/fi";
 import { HiOutlineAcademicCap } from "react-icons/hi";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
+import { IoIosColorFilter } from "react-icons/io";
 import { IoBookOutline, IoClose } from "react-icons/io5";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import {
@@ -88,16 +90,15 @@ import {
   MdOutlineWebAsset,
 } from "react-icons/md";
 import {
-  RxComponent1,
-} from "react-icons/rx";
-import {
   PiCaretDownBold,
   PiCaretLeftBold,
   PiCaretRightBold,
   PiCaretUpBold,
 } from 'react-icons/pi';
+import {
+  RxComponent1,
+} from "react-icons/rx";
 import { TbApps, TbSeo, TbVersions } from "react-icons/tb";
-import { IoIosColorFilter } from "react-icons/io";
 
 import {
   RiCheckboxBlankCircleLine,
@@ -215,3 +216,4 @@ export const ComponentIcon = RxComponent1;
 export const MetadataIcon = TbSeo;
 export const VersionIcon = TbVersions;
 export const ColorIcon = IoIosColorFilter;
+export const ComboIcon = BsBoxes;

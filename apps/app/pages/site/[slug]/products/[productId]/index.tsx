@@ -4,19 +4,19 @@ import { GenericProductPage } from "@/views/product/pages/generic";
 import {
   GetProductPageProductDocument,
   GetProductPageProductQuery,
-  ProductPageProductFragment,
 } from "@/views/product/graphql/product.query.graphql.generated";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import { getSiteSlugFromContext } from "@/utils/get-site-slug-from-context";
 import { getSiteBySlug } from "@/services/graphql/queries/get-app-by-slug";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 interface Props {
-  readonly product: ProductPageProductFragment;
+  readonly product: GeneralProductFragment;
   readonly productId: string;
 }
 
 const Page: NextPage<Props> = ({ product }) => {
-  if (product?.parent?.__typename === "Course") {
+  if (product?.externalReference?.__typename === "Course") {
     return <CoursePage product={product} />;
   }
   return <GenericProductPage product={product} />;

@@ -55,6 +55,15 @@ export const ProductTypeStep = ({
                   {translate.formatMessage({ id: "material" })}
                 </Title>
               </RadioCard>
+              <RadioCard
+                id="product-type-combo"
+                value={ProductType.COMBO}
+                isChecked={productType === ProductType.COMBO}
+              >
+                <Title fontSize="md">
+                  {translate.formatMessage({ id: "comboProducts" })}
+                </Title>
+              </RadioCard>
               {/* <RadioCard
                 id={"product-type-" + productType}
                 value={ProductType.OTHER}

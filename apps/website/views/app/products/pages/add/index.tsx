@@ -2,6 +2,7 @@ import { AddProductStep } from "@/constants/add-product-steps";
 import { ProductType } from "@/constants/product-type";
 import { useTranslations } from "@/hooks";
 import { useSelectCatalogs } from "@/hooks/use-select-catalogs";
+import { useSelectProducts } from "@/hooks/use-select-products";
 import { AppLayout } from "@/views/app/layout";
 import {
   Card,
@@ -13,9 +14,10 @@ import {
   StepPanel,
   StepPanels,
   Steps,
+  useActiveSteps,
 } from "@stokei/ui";
 import { useState } from "react";
-import { ProductParent } from "./@types/product-parent";
+import { ProductExternalReference } from "./@types/product-external-reference";
 import { ProductPayload } from "./@types/product-payload";
 import { Navbar } from "./components/navbar";
 import { CatalogsStep } from "./steps/catalogs-step";
@@ -28,8 +30,7 @@ export const AddProductPage = () => {
   const [productType, setProductType] = useState<ProductType>(
     ProductType.COURSE
   );
-  const { catalogs, onChooseCatalog } = useSelectCatalogs();
-  const [productParent, setProductParent] = useState<ProductParent>();
+  const [productExternalReference, setProductExternalReference] = useState<ProductExternalReference>();
   const [productPayload, setProductPayload] = useState<ProductPayload>();
   const [isEnabledProductStep, setIsEnabledProductStep] =
     useState<boolean>(false);
@@ -37,25 +38,48 @@ export const AddProductPage = () => {
     AddProductStep.PRODUCT_TYPE
   );
   const translate = useTranslations();
+  const {
+    activeSteps,
+    onActivateStep,
+    onDeactivateStep
+  } = useActiveSteps<AddProductStep>({
+    initialState: {
+      [AddProductStep.PRODUCT_TYPE]: true,
+      [AddProductStep.PRODUCT_CHOOSE_TYPE]: false,
+      [AddProductStep.PRODUCT_INFORMATION]: false,
+      [AddProductStep.CATALOG]: false,
+      [AddProductStep.SUMMARY]: false,
+    }
+  });
+  const {
+    products: comboProducts,
+    onChooseProduct: onChooseComboProduct
+  } = useSelectProducts();
+  const { catalogs, onChooseCatalog } = useSelectCatalogs();
 
   const onSuccessProductType = () => {
-    setCurrentStep(
-      productType !== ProductType.OTHER
-        ? AddProductStep.PRODUCT_CHOOSE_TYPE
-        : AddProductStep.PRODUCT_INFORMATION
-    );
+    if (productType !== ProductType.OTHER) {
+      onActivateStep(AddProductStep.PRODUCT_CHOOSE_TYPE);
+      setCurrentStep(AddProductStep.PRODUCT_CHOOSE_TYPE);
+      return
+    }
+    onActivateStep(AddProductStep.PRODUCT_INFORMATION);
+    setCurrentStep(AddProductStep.PRODUCT_INFORMATION);
   };
   const onSuccessChooseProductType = () => {
     setIsEnabledProductStep(true);
     setCurrentStep(AddProductStep.PRODUCT_INFORMATION);
+    onActivateStep(AddProductStep.PRODUCT_INFORMATION);
   };
   const onPreviousProductInformation = () => {
     setIsEnabledProductStep(false);
-    setCurrentStep(
-      productType !== ProductType.OTHER
-        ? AddProductStep.PRODUCT_CHOOSE_TYPE
-        : AddProductStep.PRODUCT_TYPE
-    );
+    if (productType !== ProductType.OTHER) {
+      onDeactivateStep(AddProductStep.PRODUCT_CHOOSE_TYPE);
+      setCurrentStep(AddProductStep.PRODUCT_CHOOSE_TYPE);
+      return
+    }
+    onDeactivateStep(AddProductStep.PRODUCT_INFORMATION);
+    setCurrentStep(AddProductStep.PRODUCT_INFORMATION);
   };
 
   return (
@@ -71,26 +95,31 @@ export const AddProductPage = () => {
               <StepItem
                 title={translate.formatMessage({ id: "productType" })}
                 stepIndex={AddProductStep.PRODUCT_TYPE}
+                isCompleted={activeSteps?.[AddProductStep.PRODUCT_TYPE]}
               />
               <StepItem
                 isDisabled={productType === ProductType.OTHER}
                 title={translate.formatMessage({ id: "chooseType" })}
                 stepIndex={AddProductStep.PRODUCT_CHOOSE_TYPE}
+                isCompleted={activeSteps?.[AddProductStep.PRODUCT_CHOOSE_TYPE]}
               />
               <StepItem
                 isDisabled={!isEnabledProductStep}
                 title={translate.formatMessage({ id: "informations" })}
                 stepIndex={AddProductStep.PRODUCT_INFORMATION}
+                isCompleted={activeSteps?.[AddProductStep.PRODUCT_INFORMATION]}
               />
               <StepItem
                 isDisabled={!productPayload}
                 title={translate.formatMessage({ id: "catalogs" })}
                 stepIndex={AddProductStep.CATALOG}
+                isCompleted={activeSteps?.[AddProductStep.CATALOG]}
               />
               <StepItem
                 isDisabled={!productPayload}
                 title={translate.formatMessage({ id: "summary" })}
                 stepIndex={AddProductStep.SUMMARY}
+                isCompleted={activeSteps?.[AddProductStep.SUMMARY]}
               />
             </StepList>
             <StepPanels>
@@ -105,9 +134,11 @@ export const AddProductPage = () => {
                   </StepPanel>
                   <StepPanel stepIndex={AddProductStep.PRODUCT_CHOOSE_TYPE}>
                     <ProductChooseTypeStep
-                      productParent={productParent}
+                      comboProducts={comboProducts}
+                      productExternalReference={productExternalReference}
+                      onChangeComboProduct={onChooseComboProduct}
                       productType={productType}
-                      onChangeProductParent={setProductParent}
+                      onChangeProductExternalReference={setProductExternalReference}
                       onNextStep={onSuccessChooseProductType}
                       onPreviousStep={() =>
                         setCurrentStep(AddProductStep.PRODUCT_TYPE)
@@ -116,7 +147,7 @@ export const AddProductPage = () => {
                   </StepPanel>
                   <StepPanel stepIndex={AddProductStep.PRODUCT_INFORMATION}>
                     <ProductInformationStep
-                      productParent={productParent}
+                      productExternalReference={productExternalReference}
                       onChangeProductPayload={setProductPayload}
                       onNextStep={() => setCurrentStep(AddProductStep.CATALOG)}
                       onPreviousStep={onPreviousProductInformation}
@@ -134,7 +165,9 @@ export const AddProductPage = () => {
                   </StepPanel>
                   <StepPanel stepIndex={AddProductStep.SUMMARY}>
                     <SummaryStep
-                      productParent={productParent}
+                      productType={productType}
+                      comboProducts={comboProducts}
+                      productExternalReference={productExternalReference}
                       productPayload={productPayload}
                       catalogs={catalogs}
                       onPreviousStep={() =>

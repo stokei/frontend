@@ -11,43 +11,7 @@ query GetLandingPageProducts(
     nextPage
     previousPage
     items {
-      ...LandingPageProduct
+      ...GeneralProduct
     }
   }
-}
-
-fragment LandingPageProduct on Product {
-  id
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  defaultPrice {
-    ...PriceComponent
-  }
-  features {
-    items {
-      ...LandingPageProductFeature
-    }
-  }
-  parent {
-    __typename
-    ...LandingPageProductPlan
-  }
-}
-
-fragment LandingPageProductPlan on Plan {
-  id
-  name
-  icon
-  type
-}
-
-fragment LandingPageProductFeature on Feature {
-  id
-  name
-  description
 }

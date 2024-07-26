@@ -17,10 +17,11 @@ import { useMemo } from "react";
 
 import { Price } from "@stokei/builder";
 import { websiteRoutes } from "@stokei/routes";
-import { AdminProductPageProductFragment } from "../../graphql/products.query.graphql.generated";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
+import { ProductType } from "@/services/graphql/stokei";
 
 export interface ProductItemProps {
-  readonly product: AdminProductPageProductFragment;
+  readonly product: GeneralProductFragment;
 }
 
 export const ProductItem = ({ product }: ProductItemProps) => {
@@ -32,13 +33,17 @@ export const ProductItem = ({ product }: ProductItemProps) => {
     .product({ product: product?.id }).home;
 
   const course = useMemo(
-    () => (product?.parent?.__typename === "Course" ? product?.parent : null),
+    () => (product?.externalReference?.__typename === "Course" ? product?.externalReference : null),
     [product]
   );
 
   return (
     <Link width="full" as={NextLink} href={editProductURL}>
-      <Card background="background.50" overflow="hidden">
+      <Card
+        height="full"
+        background="background.50"
+        overflow="hidden"
+      >
         <CardHeader position="relative" padding="0">
           <Image
             width="full"
@@ -60,10 +65,20 @@ export const ProductItem = ({ product }: ProductItemProps) => {
           )}
         </CardHeader>
         <CardBody>
-          <Box width="full" flexDirection="column" height="full">
-            <Title size="md" marginBottom="5">
+          <Box width="full" flexDirection="column">
+            <Title size="md">
               {product?.name}
             </Title>
+            {product?.type === ProductType.Combo && (
+              <Badge
+                variant="outline"
+                colorScheme="blue"
+                marginTop="2"
+                marginBottom="5"
+              >
+                {translate.formatMessage({ id: "combo" })}
+              </Badge>
+            )}
             <Box width="full" flexDirection="column" flex="1">
               <Stack spacing="3" flex="1">
                 {!!course?.instructors?.items?.length && (

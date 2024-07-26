@@ -17,12 +17,12 @@ import { ProductFilters } from "./components/product-filters";
 import { ProductsList } from "./components/products-list";
 import { Navbar } from "./components/navbar";
 import {
-  AdminProductPageProductFragment,
   useGetAdminProductPageProductsQuery,
 } from "./graphql/products.query.graphql.generated";
 import { Loading } from "./loading";
-import { StokeiApiIdPrefix } from "@/constants/stokei-api-id-prefix";
 import { ProductType } from "@/constants/product-type";
+import { ProductType as ProductTypeAPI } from "@/services/graphql/stokei";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 export const ProductsPage = () => {
   const translate = useTranslations();
@@ -30,7 +30,7 @@ export const ProductsPage = () => {
     ProductType.ALL
   );
   const [filteredProductQuery, setFilteredProductQuery] = useState<string>();
-  const [products, setProducts] = useState<AdminProductPageProductFragment[]>(
+  const [products, setProducts] = useState<GeneralProductFragment[]>(
     []
   );
   const { currentApp } = useCurrentApp();
@@ -52,11 +52,14 @@ export const ProductsPage = () => {
             app: {
               equals: currentApp?.id,
             },
-            ...(currentProductType !== ProductType.ALL && {
+            ...(currentProductType !== ProductType.ALL && currentProductType !== ProductType.COMBO && {
               parent: {
                 startsWith: currentProductType,
               },
             }),
+            ...(currentProductType === ProductType.COMBO && ({
+              type: ProductTypeAPI.Combo
+            })),
             ...(filteredProductQuery && {
               name: {
                 startsWith: filteredProductQuery,

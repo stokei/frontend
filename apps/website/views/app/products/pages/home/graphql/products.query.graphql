@@ -11,54 +11,7 @@ query GetAdminProductPageProducts(
     nextPage
     previousPage
     items {
-      ...AdminProductPageProduct
-    }
-  }
-}
-
-fragment AdminProductPageProduct on Product {
-  id
-  name
-  description
-  avatar {
-    file {
-      url
-    }
-  }
-  defaultPrice {
-    ...PriceComponent
-  }
-  parent {
-    __typename
-    ...AdminProductPageProductCourse
-    ...AdminProductPageProductMaterial
-  }
-}
-
-fragment AdminProductPageProductCourse on Course {
-  courseId: id
-  courseName: name
-  avatar {
-    file {
-      url
-    }
-  }
-  instructors {
-    items {
-      id
-      instructor {
-        fullname
-      }
-    }
-  }
-}
-
-fragment AdminProductPageProductMaterial on Material {
-  materialId: id
-  materialName: name
-  avatar {
-    file {
-      url
+      ...GeneralProduct
     }
   }
 }

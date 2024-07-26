@@ -1,5 +1,8 @@
 export const ptBRMessages = {
   me: "Eu",
+  unique: "Único",
+  combo: "Combo",
+  comboProducts: "Combo de produtos",
   url: "URL",
   visit: "Visitar",
   acceptInstallment: "Aceita parcelamento",

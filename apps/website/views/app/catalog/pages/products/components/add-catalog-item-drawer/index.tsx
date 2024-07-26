@@ -1,5 +1,4 @@
-import { SelectProducts } from "@/components/select-product";
-import { AppProductFragment } from "@/components/select-product/graphql/products.query.graphql.generated";
+import { SelectProducts } from "@/components/select-products";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useRunMultipleRequests } from "@/hooks/use-run-multiple-requests";
 import {
@@ -14,6 +13,7 @@ import {
 import { useCallback, useMemo, useState } from "react";
 import { useCreateCatalogItemMutation } from "../../graphql/create-catalog-item.mutation.graphql.generated";
 import { addOrRemoveItemFromArray } from "@stokei/utils";
+import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 interface AddCatalogItemDrawerProps {
   catalogId: string;
@@ -28,7 +28,7 @@ export const AddCatalogItemDrawer = ({
   isOpenDrawer,
   onCloseDrawer,
 }: AddCatalogItemDrawerProps) => {
-  const [products, setProducts] = useState<AppProductFragment[]>([]);
+  const [products, setProducts] = useState<GeneralProductFragment[]>([]);
   const translate = useTranslations();
   const { onShowToast } = useToast();
   const { onShowAPIError } = useAPIErrors();
@@ -82,7 +82,7 @@ export const AddCatalogItemDrawer = ({
     handlers: addCatalogItemsHandlers,
   });
 
-  const onChangeProduct = useCallback((product?: AppProductFragment) => {
+  const onChangeProduct = useCallback((product?: GeneralProductFragment) => {
     if (product) {
       setProducts((currentProducts) => addOrRemoveItemFromArray(currentProducts, product, 'id'));
     }
