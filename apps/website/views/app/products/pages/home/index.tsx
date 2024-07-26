@@ -21,6 +21,7 @@ import {
 } from "./graphql/products.query.graphql.generated";
 import { Loading } from "./loading";
 import { ProductType } from "@/constants/product-type";
+import { ProductType as ProductTypeAPI } from "@/services/graphql/stokei";
 import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 
 export const ProductsPage = () => {
@@ -51,11 +52,14 @@ export const ProductsPage = () => {
             app: {
               equals: currentApp?.id,
             },
-            ...(currentProductType !== ProductType.ALL && {
+            ...(currentProductType !== ProductType.ALL && currentProductType !== ProductType.COMBO && {
               parent: {
                 startsWith: currentProductType,
               },
             }),
+            ...(currentProductType === ProductType.COMBO && ({
+              type: ProductTypeAPI.Combo
+            })),
             ...(filteredProductQuery && {
               name: {
                 startsWith: filteredProductQuery,

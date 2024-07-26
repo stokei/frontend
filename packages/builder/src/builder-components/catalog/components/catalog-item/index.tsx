@@ -38,14 +38,14 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
     () => (product?.externalReference?.__typename === "Course" ? product?.externalReference : null),
     [product?.externalReference]
   );
-  const currentPrice = useMemo(
+  const price = useMemo(
     () => product?.defaultPrice,
     [product?.defaultPrice]
   );
   const productURL = useMemo(
     () =>
-      routes.product({ product: product?.id || "", price: currentPrice?.id }),
-    [currentPrice?.id, product?.id, routes]
+      routes.product({ product: product?.id || "", price: price?.id }),
+    [price?.id, product?.id, routes]
   );
 
   return (
@@ -98,15 +98,17 @@ export const CatalogItem = ({ product }: CatalogItemProps) => {
             )}
           </Stack>
         </CardBody>
-        <CardFooter
-          paddingTop="0"
-        >
-          <Box width="full">
-            <Price
-              price={currentPrice}
-            />
-          </Box>
-        </CardFooter>
+        {price && (
+          <CardFooter
+            paddingTop="0"
+          >
+            <Box width="full">
+              <Price
+                price={price}
+              />
+            </Box>
+          </CardFooter>
+        )}
       </Card>
     </>
   );

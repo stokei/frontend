@@ -3,6 +3,7 @@ fragment GeneralProduct on Product {
   parent
   name
   description
+  type
   avatar {
     file {
       url
@@ -33,6 +34,17 @@ fragment GeneralProduct on Product {
     previousPage
     items {
       ...PriceComponent
+    }
+  }
+  combo {
+    id
+    name
+    description
+    type
+    avatar {
+      file {
+        url
+      }
     }
   }
   externalReference {

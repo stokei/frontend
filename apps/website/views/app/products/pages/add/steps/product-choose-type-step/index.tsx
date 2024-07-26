@@ -40,6 +40,9 @@ export const ProductChooseTypeStep = ({
 
         {productType === ProductType.COMBO && (
           <SelectProducts
+            label={translate.formatMessage({
+              id: "products",
+            })}
             value={comboProducts}
             onChange={onChangeComboProduct}
           />

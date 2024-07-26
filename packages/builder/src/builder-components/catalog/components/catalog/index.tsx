@@ -39,7 +39,7 @@ export const Catalog = ({ catalogId, onRedirect, ...props }: CatalogProps) => {
       }
       return 1;
     });
-    return sortedItems;
+    return sortedItems?.filter(item => !!item.product?.defaultPrice);
   }, [catalog?.items]);
 
   return (

@@ -6,6 +6,7 @@ import { ProductLayout } from "../../layout";
 import { Navbar } from "./components/navbar";
 import { ProductInformation } from "./components/product-information";
 import { Loading } from "./loading";
+import { ComboProducts } from "./components/combo-products";
 
 export const ProductPage = () => {
   const router = useRouter();
@@ -34,6 +35,9 @@ export const ProductPage = () => {
         <Container paddingY="5">
           <Stack direction="column" spacing="5">
             <ProductInformation currentProduct={currentProduct} />
+            {currentProduct?.combo?.length && (
+              <ComboProducts product={currentProduct} />
+            )}
           </Stack>
         </Container>
       )}

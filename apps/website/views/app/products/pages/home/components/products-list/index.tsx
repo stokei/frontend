@@ -8,7 +8,7 @@ interface ProductsListProps {
 
 export const ProductsList = ({ products }: ProductsListProps) => {
   return (
-    <SimpleGrid columns={[1, 1, 2, 3]} spacing="5">
+    <SimpleGrid columns={[1, 1, 2, 3]} spacing="5" alignItems="stretch">
       {products?.map((product) => (
         <ProductItem key={product?.id} product={product} />
       ))}
