@@ -69,7 +69,7 @@ export const SubscriptionExpiredEmail = ({
       <Spacer />
       {app?.url && (
         <Button
-          href={appendAppBaseURLToPathname(app, appRoutes.product.home({ product: items?.[0]?.productId }))}
+          href={appendAppBaseURLToPathname(app, appRoutes.store.home)}
           color={app?.colors?.primary}
         >
           Quero renovar

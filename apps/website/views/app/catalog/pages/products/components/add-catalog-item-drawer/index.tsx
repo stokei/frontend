@@ -1,4 +1,4 @@
-import { SelectProducts } from "@/components/select-product";
+import { SelectProducts } from "@/components/select-products";
 import { useAPIErrors, useTranslations } from "@/hooks";
 import { useRunMultipleRequests } from "@/hooks/use-run-multiple-requests";
 import {

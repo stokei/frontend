@@ -1,4 +1,4 @@
-import { SelectProducts } from "@/components/select-product";
+import { SelectProducts } from "@/components/select-products";
 import { useTranslations } from "@/hooks";
 import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
 import { Button, ButtonGroup, Stack, Title } from "@stokei/ui";

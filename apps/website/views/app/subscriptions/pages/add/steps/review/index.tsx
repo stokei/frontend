@@ -1,6 +1,6 @@
 import { AppAccountFragment } from "@/components/select-members/graphql/accounts.query.graphql.generated";
 import { MemberSelectItemContent } from "@/components/select-members/member-select-item-content";
-import { ProductSelectItemContent } from "@/components/select-product/product-select-item-content";
+import { ProductSelectItemContent } from "@/components/select-products/product-select-item-content";
 import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
 import {
