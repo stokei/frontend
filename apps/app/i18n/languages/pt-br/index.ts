@@ -1,6 +1,8 @@
 export const ptBRMessages = {
   me: "Eu",
   code: "Código",
+  renew: "Renovar",
+  renewSubscriptionRightNow: "Renove agora mesmo a sua assinatura",
   lastUpdate: "Última atualização",
   promitionItems: "Items em promoção",
   discount: "Desconto",

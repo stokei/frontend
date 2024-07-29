@@ -12,6 +12,7 @@ import { appendAppBaseURLToPathname } from "../../../utils/append-app-baseurl-to
 import { getProductParentURLFromAppRoutes } from "../../../utils/get-product-parent-url";
 
 interface SubscriptionItem {
+  orderProduct?: string;
   productId: string;
   productName: string;
   image?: string;
@@ -24,6 +25,7 @@ export interface SubscriptionExpiredEmailProps extends BaseEmailProps {
 
 export const SubscriptionExpiredEmail = ({
   app,
+  subscriptionId,
   items,
 }: SubscriptionExpiredEmailProps) => {
   return (
@@ -59,7 +61,7 @@ export const SubscriptionExpiredEmail = ({
               />
             </Column>
             <Column>
-              <Link href={getProductParentURLFromAppRoutes(app, item.productId)}>
+              <Link href={getProductParentURLFromAppRoutes(app, item.orderProduct || item.productId)}>
                 <Text fontWeight="600">{item.productName}</Text>
               </Link>
             </Column>
@@ -69,7 +71,7 @@ export const SubscriptionExpiredEmail = ({
       <Spacer />
       {app?.url && (
         <Button
-          href={appendAppBaseURLToPathname(app, appRoutes.store.home)}
+          href={appendAppBaseURLToPathname(app, appRoutes.checkout.subscriptionRenew(subscriptionId))}
           color={app?.colors?.primary}
         >
           Quero renovar

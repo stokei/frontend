@@ -12,6 +12,7 @@ import { appendAppBaseURLToPathname } from "../../../utils/append-app-baseurl-to
 import { appRoutes } from "@stokei/routes";
 
 interface SubscriptionItem {
+  orderProduct?: string;
   productId: string;
   productName: string;
   image?: string;
@@ -57,7 +58,7 @@ export const SubscriptionActivatedEmail = ({
               />
             </Column>
             <Column>
-              <Link href={getProductParentURLFromAppRoutes(app, item.productId)}>
+              <Link href={getProductParentURLFromAppRoutes(app, item.orderProduct || item.productId)}>
                 <Text fontWeight="600">{item.productName}</Text>
               </Link>
             </Column>
