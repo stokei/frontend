@@ -51,6 +51,7 @@ fragment SubscriptionRenewPageSubscriptionContract on SubscriptionContract {
 fragment SubscriptionRenewPageSubscriptionContractItem on SubscriptionContractItem {
   id
   quantity
+  orderProduct
   recurring {
     id
     usageType

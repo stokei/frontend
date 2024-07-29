@@ -3763,6 +3763,7 @@ export type SubscriptionContractItem = {
   createdAt?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Account>;
   id: Scalars['ID'];
+  orderProduct?: Maybe<Scalars['String']>;
   parent: Scalars['String'];
   price?: Maybe<Price>;
   product?: Maybe<SubscriptionContractItemProductUnion>;

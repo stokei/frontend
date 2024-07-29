@@ -12,6 +12,7 @@ import { appendAppBaseURLToPathname } from "../../../utils/append-app-baseurl-to
 import { getProductParentURLFromAppRoutes } from "../../../utils/get-product-parent-url";
 
 interface SubscriptionItem {
+  orderProduct?: string;
   productId: string;
   productName: string;
   image?: string;
@@ -57,7 +58,7 @@ export const SubscriptionCanceledEmail = ({
               />
             </Column>
             <Column>
-              <Link href={getProductParentURLFromAppRoutes(app, item.productId)}>
+              <Link href={getProductParentURLFromAppRoutes(app, item.orderProduct || item.productId)}>
                 <Text fontWeight="600">{item.productName}</Text>
               </Link>
             </Column>

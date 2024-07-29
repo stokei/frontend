@@ -66,7 +66,10 @@ export const SubscriptionRenewPage = () => {
       const product = getSubscriptionContractItemProduct(item);
       if (product) {
         onAddOrUpdateShoppingCartItem({
-          product,
+          product: {
+            ...product,
+            id: item.orderProduct || product.id,
+          },
           price: item.price
         });
       }
@@ -79,7 +82,7 @@ export const SubscriptionRenewPage = () => {
     <CheckoutLayout isLoading={isLoadingSubscription}>
       <Container paddingY="10" align="center">
         <Box
-          width={["full", "full", "584px", "584px"]}
+          width={["full", "full", "780px", "780px"]}
           height="fit-content"
           flexDirection="column"
         >
@@ -99,7 +102,7 @@ export const SubscriptionRenewPage = () => {
                     const product = getSubscriptionContractItemProduct(item);
                     return (
                       <Stack
-                        key={product?.id} // ESSE AQUI TA ERRADO (colocar o id do produto)
+                        key={item?.id}
                         direction="row"
                         spacing="5"
                         align="center"
