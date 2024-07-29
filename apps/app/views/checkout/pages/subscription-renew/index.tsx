@@ -99,7 +99,7 @@ export const SubscriptionRenewPage = () => {
                     const product = getSubscriptionContractItemProduct(item);
                     return (
                       <Stack
-                        key={product?.id}
+                        key={product?.id} // ESSE AQUI TA ERRADO (colocar o id do produto)
                         direction="row"
                         spacing="5"
                         align="center"
