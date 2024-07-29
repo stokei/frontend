@@ -819,6 +819,7 @@ export type CreateProductInput = {
   catalogs?: InputMaybe<Array<Scalars['String']>>;
   comboProducts?: InputMaybe<Array<Scalars['String']>>;
   description?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   parent: Scalars['String'];
   type: ProductType;
@@ -850,6 +851,7 @@ export type CreateSubscriptionContractInput = {
 };
 
 export type CreateSubscriptionContractItemInput = {
+  orderProduct?: InputMaybe<Scalars['String']>;
   product: Scalars['String'];
   quantity: Scalars['Float'];
   recurring?: InputMaybe<CreateRecurringInput>;
