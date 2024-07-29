@@ -53,16 +53,17 @@ export const SummaryStep = ({
   const onSubmit = async () => {
     try {
       const catalogsIds = catalogs?.map(({ id }) => id);
-
-      const parent = productExternalReference?.id || currentApp?.id;
+      const comboProductsIds = comboProducts?.map(({ id }) => id)
+      const externalReference = productExternalReference?.id;
       const response = await onCreateProduct({
         input: {
-          parent: parent || "",
+          parent: currentApp?.id || "",
+          externalReference,
           type: ProductType.COMBO === productType ? ProductTypeAPI.Combo : ProductTypeAPI.Unique,
           name: productPayload?.name || "",
           description: productPayload?.description,
           catalogs: catalogsIds,
-          comboProducts: comboProducts?.map(({ id }) => id)
+          comboProducts: comboProductsIds
         },
       });
       if (!!response?.data?.createProduct) {
