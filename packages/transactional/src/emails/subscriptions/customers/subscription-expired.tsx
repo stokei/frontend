@@ -24,6 +24,7 @@ export interface SubscriptionExpiredEmailProps extends BaseEmailProps {
 
 export const SubscriptionExpiredEmail = ({
   app,
+  subscriptionId,
   items,
 }: SubscriptionExpiredEmailProps) => {
   return (
@@ -69,7 +70,7 @@ export const SubscriptionExpiredEmail = ({
       <Spacer />
       {app?.url && (
         <Button
-          href={appendAppBaseURLToPathname(app, appRoutes.store.home)}
+          href={appendAppBaseURLToPathname(app, appRoutes.checkout.subscriptionRenew(subscriptionId))}
           color={app?.colors?.primary}
         >
           Quero renovar

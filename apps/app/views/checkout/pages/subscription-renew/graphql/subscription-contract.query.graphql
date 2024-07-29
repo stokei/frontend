@@ -1,0 +1,105 @@
+query GetSubscriptionRenewPageSubscriptionContract(
+  $subscriptionContractId: String!
+) {
+  subscriptionContract(id: $subscriptionContractId) {
+    ...SubscriptionRenewPageSubscriptionContract
+  }
+}
+
+fragment SubscriptionRenewPageSubscriptionContract on SubscriptionContract {
+  id
+  type
+  status
+  startAt
+  endAt
+  canceledAt
+  createdAt
+  parent {
+    __typename
+    ... on App {
+      id
+      name
+      accountEmail: email
+      logo {
+        file {
+          url
+        }
+      }
+    }
+    ... on Account {
+      id
+      firstname
+      fullname
+      appEmail: email
+      avatar {
+        file {
+          url
+        }
+      }
+    }
+  }
+  items {
+    totalCount
+    items {
+      ...SubscriptionRenewPageSubscriptionContractItem
+    }
+  }
+  paymentMethod {
+    ...PaymentMethodComponent
+  }
+}
+fragment SubscriptionRenewPageSubscriptionContractItem on SubscriptionContractItem {
+  id
+  quantity
+  recurring {
+    id
+    usageType
+    intervalCount
+    interval
+  }
+  price {
+    ...PriceComponent
+  }
+  product {
+    __typename
+    ...SubscriptionRenewPageSubscriptionContractProductCourse
+    ...SubscriptionRenewPageSubscriptionContractProductPlan
+    ...SubscriptionRenewPageSubscriptionContractProductMaterial
+    ...SubscriptionRenewPageSubscriptionContractProductProduct
+  }
+}
+
+fragment SubscriptionRenewPageSubscriptionContractProductCourse on Course {
+  courseId: id
+  courseName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment SubscriptionRenewPageSubscriptionContractProductPlan on Plan {
+  planId: id
+  planName: name
+}
+
+fragment SubscriptionRenewPageSubscriptionContractProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+
+fragment SubscriptionRenewPageSubscriptionContractProductProduct on Product {
+  productId: id
+  productName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
