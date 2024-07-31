@@ -78,7 +78,7 @@ export const ReviewStep = ({
           items: [
             {
               quantity: 1,
-              product: product?.parent || "",
+              product: product?.externalReferenceId || "",
               orderProduct: product?.id || "",
               ...(subscriptionType === SubscriptionContractType.Recurring && {
                 recurring: {

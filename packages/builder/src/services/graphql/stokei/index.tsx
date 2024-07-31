@@ -2785,6 +2785,7 @@ export type Product = {
   defaultPrice?: Maybe<Price>;
   description?: Maybe<Scalars['String']>;
   externalReference?: Maybe<ProductExternalReferenceUnion>;
+  externalReferenceId?: Maybe<Scalars['String']>;
   features?: Maybe<Features>;
   id: Scalars['ID'];
   name: Scalars['String'];
