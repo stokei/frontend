@@ -5,6 +5,7 @@ import { useAPIErrors, useCurrentApp, useTranslations } from "@/hooks";
 import { websiteRoutes } from "@stokei/routes";
 import {
   IntervalType,
+  ProductType,
   SubscriptionContractType,
   UsageType,
 } from "@/services/graphql/stokei";
@@ -69,17 +70,22 @@ export const ReviewStep = ({
 
   const onCreateSubscriptionContract = async () => {
     try {
+      const products = (product?.type === ProductType.Combo ? product?.combo : [product])?.filter(Boolean);
+      if (!products?.length) {
+        return
+      }
       const response = await onExecuteCreateSubscriptionContract({
         input: {
           parent: student?.id || "",
           type: subscriptionType,
           startAt: startAt?.toISOString(),
           endAt: endAt?.toISOString(),
-          items: [
-            {
+          items: products?.map(item => {
+            const orderProduct = product?.type === ProductType.Combo ? product?.id : item?.id;
+            return ({
               quantity: 1,
-              product: product?.externalReferenceId || "",
-              orderProduct: product?.id || "",
+              product: item?.externalReferenceId || "",
+              orderProduct: orderProduct || "",
               ...(subscriptionType === SubscriptionContractType.Recurring && {
                 recurring: {
                   interval: recurringInterval,
@@ -87,8 +93,8 @@ export const ReviewStep = ({
                   usageType: UsageType.Licensed,
                 },
               }),
-            },
-          ],
+            })
+          })
         },
       });
       if (!!response?.data?.createSubscriptionContract) {
