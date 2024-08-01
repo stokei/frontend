@@ -53,11 +53,12 @@ export const MaterialsHomePage = () => {
   const materials = useMemo(() => {
     const items = dataGetMaterials?.subscriptionContractsByItem?.items
       ?.map((item) => {
-        const subscriptionContractItem = item?.items?.items?.[0];
-        return subscriptionContractItem?.product?.__typename === "Material"
-          ? subscriptionContractItem.product
-          : undefined;
+        const subscriptionContractItems = item?.items?.items
+          ?.filter(item => item?.product?.__typename === "Material")
+          ?.map(item => item.product);
+        return subscriptionContractItems;
       })
+      .flat()
       .filter(Boolean);
     return (items ||
       []) as AppSubscriptionContractsByItemMaterialProductMaterialFragment[];
@@ -96,7 +97,7 @@ export const MaterialsHomePage = () => {
             <Container>
               {dataGetMaterials?.subscriptionContractsByItem?.totalPages &&
                 dataGetMaterials?.subscriptionContractsByItem?.totalPages >
-                  1 && (
+                1 && (
                   <Pagination
                     currentPage={currentPage}
                     onChangePage={onChangePage}

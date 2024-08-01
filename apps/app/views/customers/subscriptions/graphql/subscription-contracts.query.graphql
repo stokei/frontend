@@ -58,11 +58,7 @@ fragment AppSubscriptionContract on SubscriptionContract {
         interval
       }
       product {
-        __typename
-        ...SubscriptionContractProductCourse
-        ...SubscriptionContractProductPlan
-        ...SubscriptionContractProductProduct
-        ...SubscriptionContractProductMaterial
+        ...SubscriptionContractProduct
       }
     }
   }
@@ -73,6 +69,14 @@ fragment AppSubscriptionContract on SubscriptionContract {
     cardExpiryYear
     lastFourCardNumber
   }
+}
+
+fragment SubscriptionContractProduct on SubscriptionContractItemProductUnion {
+  __typename
+  ...SubscriptionContractProductCourse
+  ...SubscriptionContractProductPlan
+  ...SubscriptionContractProductProduct
+  ...SubscriptionContractProductMaterial
 }
 
 fragment SubscriptionContractProductCourse on Course {

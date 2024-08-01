@@ -10,13 +10,13 @@ import {
   Title,
 } from "@stokei/ui";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { CustomerLayout } from "../layout";
 import { InvoicesList } from "./components/invoices-list";
 import { Navbar } from "./components/navbar";
 import { SubscriptionContractDetails } from "./components/subscription-contract-details";
 import { useSubscriptionPageInvoicesQuery } from "./graphql/invoices.query.graphql.generated";
-import { useGetSubscriptionPageSubscriptionContractQuery } from "./graphql/subscription-contract.query.graphql.generated";
+import { SubscriptionPageSubscriptionContractProductFragment, useGetSubscriptionPageSubscriptionContractQuery } from "./graphql/subscription-contract.query.graphql.generated";
 import { Customer } from "./interfaces/customer";
 import { Product } from "./interfaces/product";
 import { Loading as LoadingPage } from "./loading";
@@ -91,37 +91,40 @@ export const SubscriptionContractPage = () => {
     return;
   }, [subscriptionContract]);
 
-  const product = useMemo<Product | undefined>(() => {
-    const currentProduct = subscriptionContract?.items?.items?.[0]?.product;
+
+  const getProductInfo = useCallback((currentProduct?: SubscriptionPageSubscriptionContractProductFragment | null) => {
     if (currentProduct?.__typename === "Course") {
       return {
         id: currentProduct?.courseId,
         name: currentProduct?.courseName,
         avatarURL: currentProduct?.avatar?.file?.url || "",
-      };
+      } as Product;
     }
     if (currentProduct?.__typename === "Plan") {
       return {
         id: currentProduct?.planId,
         name: currentProduct?.planName,
-      };
+      } as Product;
     }
     if (currentProduct?.__typename === "Material") {
       return {
         id: currentProduct?.materialId,
         name: currentProduct?.materialName,
         avatarURL: currentProduct?.avatar?.file?.url || "",
-      };
+      } as Product;
     }
     if (currentProduct?.__typename === "Product") {
       return {
         id: currentProduct?.productId,
         name: currentProduct?.productName,
         avatarURL: currentProduct?.avatar?.file?.url || "",
-      };
+      } as Product;
     }
     return;
-  }, [subscriptionContract]);
+  }, []);
+
+  const subscriptionProducts = subscriptionContract?.items?.items?.filter(item => !!item?.product)?.map(item => getProductInfo(item?.product)) as Product[];
+
 
   return (
     <CustomerLayout>
@@ -130,7 +133,7 @@ export const SubscriptionContractPage = () => {
         <Container>
           <SubscriptionContractDetails
             subscriptionContract={subscriptionContract}
-            product={product}
+            subscriptionProducts={subscriptionProducts}
             customer={customer}
           />
         </Container>

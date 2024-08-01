@@ -14,6 +14,16 @@ export type GetAppSubscriptionContractsQuery = { __typename?: 'Query', subscript
 
 export type AppSubscriptionContractFragment = { __typename?: 'SubscriptionContract', id: string, type: Types.SubscriptionContractType, status: Types.SubscriptionContractStatus, startAt?: string | null, endAt?: string | null, canceledAt?: string | null, createdAt?: string | null, parent?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, items?: { __typename?: 'SubscriptionContractItems', totalCount: number, items?: Array<{ __typename?: 'SubscriptionContractItem', recurring?: { __typename?: 'Recurring', id: string, usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null, product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null }> | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null };
 
+export type SubscriptionContractProduct_Course_Fragment = { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+
+export type SubscriptionContractProduct_Material_Fragment = { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+
+export type SubscriptionContractProduct_Plan_Fragment = { __typename: 'Plan', planId: string, planName: string };
+
+export type SubscriptionContractProduct_Product_Fragment = { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+
+export type SubscriptionContractProductFragment = SubscriptionContractProduct_Course_Fragment | SubscriptionContractProduct_Material_Fragment | SubscriptionContractProduct_Plan_Fragment | SubscriptionContractProduct_Product_Fragment;
+
 export type SubscriptionContractProductCourseFragment = { __typename?: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
 export type SubscriptionContractProductPlanFragment = { __typename?: 'Plan', planId: string, planName: string };
@@ -39,17 +49,6 @@ export const SubscriptionContractProductPlanFragmentDoc = gql`
   planName: name
 }
     `;
-export const SubscriptionContractProductMaterialFragmentDoc = gql`
-    fragment SubscriptionContractProductMaterial on Material {
-  materialId: id
-  materialName: name
-  avatar {
-    file {
-      url
-    }
-  }
-}
-    `;
 export const SubscriptionContractProductProductFragmentDoc = gql`
     fragment SubscriptionContractProductProduct on Product {
   productId: id
@@ -61,6 +60,29 @@ export const SubscriptionContractProductProductFragmentDoc = gql`
   }
 }
     `;
+export const SubscriptionContractProductMaterialFragmentDoc = gql`
+    fragment SubscriptionContractProductMaterial on Material {
+  materialId: id
+  materialName: name
+  avatar {
+    file {
+      url
+    }
+  }
+}
+    `;
+export const SubscriptionContractProductFragmentDoc = gql`
+    fragment SubscriptionContractProduct on SubscriptionContractItemProductUnion {
+  __typename
+  ...SubscriptionContractProductCourse
+  ...SubscriptionContractProductPlan
+  ...SubscriptionContractProductProduct
+  ...SubscriptionContractProductMaterial
+}
+    ${SubscriptionContractProductCourseFragmentDoc}
+${SubscriptionContractProductPlanFragmentDoc}
+${SubscriptionContractProductProductFragmentDoc}
+${SubscriptionContractProductMaterialFragmentDoc}`;
 export const AppSubscriptionContractFragmentDoc = gql`
     fragment AppSubscriptionContract on SubscriptionContract {
   id
@@ -104,11 +126,7 @@ export const AppSubscriptionContractFragmentDoc = gql`
         interval
       }
       product {
-        __typename
-        ...SubscriptionContractProductCourse
-        ...SubscriptionContractProductPlan
-        ...SubscriptionContractProductMaterial
-        ...SubscriptionContractProductProduct
+        ...SubscriptionContractProduct
       }
     }
   }
@@ -120,10 +138,7 @@ export const AppSubscriptionContractFragmentDoc = gql`
     lastFourCardNumber
   }
 }
-    ${SubscriptionContractProductCourseFragmentDoc}
-${SubscriptionContractProductPlanFragmentDoc}
-${SubscriptionContractProductMaterialFragmentDoc}
-${SubscriptionContractProductProductFragmentDoc}`;
+    ${SubscriptionContractProductFragmentDoc}`;
 export const GetAppSubscriptionContractsDocument = gql`
     query GetAppSubscriptionContracts($where: WhereDataFindAllSubscriptionContractsInput, $orderBy: OrderByDataFindAllSubscriptionContractsInput, $page: PaginationInput) {
   subscriptionContracts(where: $where, orderBy: $orderBy, page: $page) {

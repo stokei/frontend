@@ -6,6 +6,7 @@ import {
   ButtonGroup,
   Icon,
   Image,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
@@ -34,13 +35,13 @@ interface CancelSubscriptionContractModalProps {
   readonly onClose: () => void;
   readonly subscriptionContractId?: string;
   readonly customer?: CancelSubscriptionContractModalCustomer;
-  readonly product?: CancelSubscriptionContractModalProduct;
+  readonly products?: CancelSubscriptionContractModalProduct[];
 }
 
 export const CancelSubscriptionContractModal = ({
   subscriptionContractId,
   customer,
-  product,
+  products,
   isOpen,
   onClose,
 }: CancelSubscriptionContractModalProps) => {
@@ -76,7 +77,7 @@ export const CancelSubscriptionContractModal = ({
           onShowAPIError({ message: error?.message })
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -91,36 +92,48 @@ export const CancelSubscriptionContractModal = ({
           <Text>
             {translate.formatMessage({ id: "wouldYouReallyLikeToUnsubscribe" })}
           </Text>
-          <Stack direction="row" spacing="5" align="center">
+          <Stack direction="column" spacing="5">
             {customer && (
-              <Stack direction="row" spacing="4" align="center">
-                <Avatar
-                  size="sm"
-                  src={customer?.avatarURL}
-                  name={customer?.name}
-                />
-                <Stack direction="column" spacing="0">
-                  <Text fontWeight="bold">{customer?.name}</Text>
-                  <Text fontSize="xs" color="text.300">
-                    {customer?.email}
-                  </Text>
+              <Stack direction="column" spacing="0">
+                <Label>
+                  {translate.formatMessage({ id: "customer" })}
+                </Label>
+                <Stack direction="row" spacing="4" align="center">
+                  <Avatar
+                    size="sm"
+                    src={customer?.avatarURL}
+                    name={customer?.name}
+                  />
+                  <Stack direction="column" spacing="0">
+                    <Text fontWeight="bold">{customer?.name}</Text>
+                    <Text fontSize="xs" color="text.300">
+                      {customer?.email}
+                    </Text>
+                  </Stack>
                 </Stack>
               </Stack>
             )}
-            <Icon name="arrowRight" />
-            {product && (
-              <Stack direction="row" spacing="4" align="center">
-                <Image
-                  width="10"
-                  rounded="sm"
-                  src={getProductURL(product?.avatarURL)}
-                  alt={translate.formatMessage({ id: "product" })}
-                />
-                <Stack direction="column" spacing="4">
-                  <Text fontWeight="bold">{product?.name}</Text>
-                </Stack>
+
+            <Stack direction="column" spacing="0">
+              <Label>
+                {translate.formatMessage({ id: "products" })}
+              </Label>
+              <Stack direction="column" spacing="2">
+                {products?.map(product => (
+                  <Stack key={product.id} direction="row" spacing="4" align="center">
+                    <Image
+                      width="10"
+                      rounded="sm"
+                      src={getProductURL(product?.avatarURL)}
+                      alt={translate.formatMessage({ id: "product" })}
+                    />
+                    <Stack direction="column" spacing="4">
+                      <Text fontWeight="bold">{product?.name}</Text>
+                    </Stack>
+                  </Stack>
+                ))}
               </Stack>
-            )}
+            </Stack>
           </Stack>
         </Stack>
       </ModalBody>
@@ -130,6 +143,7 @@ export const CancelSubscriptionContractModal = ({
             variant="ghost"
             isLoading={isLoadingCancelSubscriptionContract}
             onClick={onCancelSubscriptionContract}
+            colorScheme="red"
           >
             {translate.formatMessage({ id: "unsubscribe" })}
           </Button>

@@ -23,13 +23,13 @@ import { getSubscriptionContractStatusColor } from "@/utils/get-subscription-con
 interface SubscriptionContractDetailsProps {
   readonly subscriptionContract?: SubscriptionPageSubscriptionContractFragment;
   readonly customer?: Customer;
-  readonly product?: Product;
+  readonly subscriptionProducts?: Product[];
 }
 
 export const SubscriptionContractDetails = ({
   subscriptionContract,
   customer,
-  product,
+  subscriptionProducts,
 }: SubscriptionContractDetailsProps) => {
   const translate = useTranslations();
 
@@ -84,17 +84,21 @@ export const SubscriptionContractDetails = ({
             </Stack>
           </Box>
           <Box flexDirection="column">
-            <Label>{translate.formatMessage({ id: "product" })}</Label>
-            <Stack direction="row" spacing="4" align="center">
-              <Image
-                width="10"
-                rounded="sm"
-                src={getProductURL(product?.avatarURL)}
-                alt={translate.formatMessage({ id: "product" })}
-              />
-              <Stack direction="column" spacing="4">
-                <Text fontWeight="bold">{product?.name}</Text>
-              </Stack>
+            <Label>{translate.formatMessage({ id: "products" })}</Label>
+            <Stack direction="column" spacing="4">
+              {subscriptionProducts?.map(productInfo => (
+                <Stack key={productInfo.id} direction="row" spacing="4" align="center">
+                  <Image
+                    width="10"
+                    rounded="sm"
+                    src={getProductURL(productInfo?.avatarURL)}
+                    alt={productInfo?.name}
+                  />
+                  <Stack direction="column" spacing="4">
+                    <Text fontWeight="bold">{productInfo?.name}</Text>
+                  </Stack>
+                </Stack>
+              ))}
             </Stack>
           </Box>
 

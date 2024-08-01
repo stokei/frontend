@@ -17,6 +17,7 @@ import {
   StepPanel,
   StepPanels,
   Steps,
+  useActiveSteps,
 } from "@stokei/ui";
 import { useEffect, useState } from "react";
 import { Navbar } from "./components/navbar";
@@ -25,13 +26,25 @@ import { ProductStep } from "./steps/product";
 import { ReviewStep } from "./steps/review";
 import { StudentStep } from "./steps/student";
 import { GeneralProductFragment } from "@/services/graphql/types/product.fragment.graphql.generated";
+import { addOrRemoveItemFromArray } from "@stokei/utils";
 
 export const AddSubscriptionContractPage = () => {
+  const {
+    activeSteps,
+    onActivateStep
+  } = useActiveSteps<AddSubscriptionContractStep>({
+    initialState: {
+      [AddSubscriptionContractStep.STUDENT]: true,
+      [AddSubscriptionContractStep.PRODUCT]: false,
+      [AddSubscriptionContractStep.PERIOD]: false,
+      [AddSubscriptionContractStep.REVIEW]: false,
+    }
+  });
   const [currentStep, setCurrentStep] = useState<AddSubscriptionContractStep>(
     AddSubscriptionContractStep.STUDENT
   );
   const [student, setStudent] = useState<AppAccountFragment>();
-  const [product, setProduct] = useState<GeneralProductFragment>();
+  const [products, setProducts] = useState<GeneralProductFragment[]>();
   const [startAt, setStartAt] = useState<Date>(new Date());
   const [endAt, setEndAt] = useState<Date>();
   const [recurringInterval, setRecurringInterval] = useState<IntervalType>(
@@ -57,22 +70,31 @@ export const AddSubscriptionContractPage = () => {
 
   const onGoToStudent = () => {
     setCurrentStep(AddSubscriptionContractStep.STUDENT);
+    onActivateStep(AddSubscriptionContractStep.STUDENT);
   };
   const onGoToProduct = () => {
     if (student) {
       setCurrentStep(AddSubscriptionContractStep.PRODUCT);
+      onActivateStep(AddSubscriptionContractStep.PRODUCT);
     }
   };
   const onGoToPeriod = () => {
-    if (product) {
+    if (products?.length) {
       setCurrentStep(AddSubscriptionContractStep.PERIOD);
+      onActivateStep(AddSubscriptionContractStep.PERIOD);
     }
   };
   const onGoToReview = () => {
-    if (product && student) {
+    if (products?.length && student) {
       setCurrentStep(AddSubscriptionContractStep.REVIEW);
+      onActivateStep(AddSubscriptionContractStep.REVIEW);
     }
   };
+  const onChooseProduct = (product?: GeneralProductFragment) => {
+    if (product) {
+      setProducts(currentProducts => addOrRemoveItemFromArray(currentProducts || [], product, 'id'));
+    }
+  }
 
   return (
     <AppLayout>
@@ -87,21 +109,25 @@ export const AddSubscriptionContractPage = () => {
               <StepItem
                 title={translate.formatMessage({ id: "student" })}
                 stepIndex={AddSubscriptionContractStep.STUDENT}
+                isCompleted={activeSteps?.[AddSubscriptionContractStep.STUDENT]}
               />
               <StepItem
                 isDisabled={!student}
                 title={translate.formatMessage({ id: "product" })}
                 stepIndex={AddSubscriptionContractStep.PRODUCT}
+                isCompleted={activeSteps?.[AddSubscriptionContractStep.PRODUCT]}
               />
               <StepItem
-                isDisabled={!student || !product}
+                isDisabled={!student || !products?.length}
                 title={translate.formatMessage({ id: "period" })}
                 stepIndex={AddSubscriptionContractStep.PERIOD}
+                isCompleted={activeSteps?.[AddSubscriptionContractStep.PERIOD]}
               />
               <StepItem
-                isDisabled={!student || !product}
+                isDisabled={!student || !products?.length}
                 title={translate.formatMessage({ id: "review" })}
                 stepIndex={AddSubscriptionContractStep.REVIEW}
+                isCompleted={activeSteps?.[AddSubscriptionContractStep.REVIEW]}
               />
             </StepList>
             <StepPanels>
@@ -116,10 +142,10 @@ export const AddSubscriptionContractPage = () => {
                   </StepPanel>
                   <StepPanel stepIndex={AddSubscriptionContractStep.PRODUCT}>
                     <ProductStep
-                      product={product}
+                      products={products}
                       onPreviousStep={onGoToStudent}
                       onNextStep={onGoToPeriod}
-                      onChooseProduct={setProduct}
+                      onChooseProduct={onChooseProduct}
                     />
                   </StepPanel>
                   <StepPanel stepIndex={AddSubscriptionContractStep.PERIOD}>
@@ -140,7 +166,7 @@ export const AddSubscriptionContractPage = () => {
                   </StepPanel>
                   <StepPanel stepIndex={AddSubscriptionContractStep.REVIEW}>
                     <ReviewStep
-                      product={product}
+                      products={products}
                       student={student}
                       startAt={startAt}
                       endAt={endAt}

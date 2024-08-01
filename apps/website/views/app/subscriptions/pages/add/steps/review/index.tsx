@@ -27,7 +27,7 @@ import { GeneralProductFragment } from "@/services/graphql/types/product.fragmen
 
 interface ReviewStepProps {
   subscriptionType: SubscriptionContractType;
-  product?: GeneralProductFragment;
+  products?: GeneralProductFragment[];
   student?: AppAccountFragment;
   startAt?: Date;
   endAt?: Date;
@@ -38,7 +38,7 @@ interface ReviewStepProps {
 
 export const ReviewStep = ({
   subscriptionType,
-  product,
+  products,
   student,
   startAt,
   endAt,
@@ -70,8 +70,12 @@ export const ReviewStep = ({
 
   const onCreateSubscriptionContract = async () => {
     try {
-      const products = (product?.type === ProductType.Combo ? product?.combo : [product])?.filter(Boolean);
-      if (!products?.length) {
+      const productsMapped = products?.map(product => {
+        return product?.type === ProductType.Combo ? product?.combo : [product]
+      })
+        ?.flat()
+        ?.filter(Boolean);
+      if (!productsMapped?.length) {
         return
       }
       const response = await onExecuteCreateSubscriptionContract({
@@ -80,22 +84,19 @@ export const ReviewStep = ({
           type: subscriptionType,
           startAt: startAt?.toISOString(),
           endAt: endAt?.toISOString(),
-          items: products?.map(item => {
-            const orderProduct = product?.type === ProductType.Combo ? product?.id : item?.id;
-            return ({
-              quantity: 1,
-              product: item?.externalReferenceId || "",
-              orderProduct: orderProduct || "",
-              ...(subscriptionType === SubscriptionContractType.Recurring && {
-                recurring: {
-                  interval: recurringInterval,
-                  intervalCount: parseInt(recurringIntervalCount),
-                  usageType: UsageType.Licensed,
-                },
-              }),
-            })
-          })
-        },
+          items: productsMapped?.map(item => ({
+            quantity: 1,
+            product: item?.externalReferenceId || "",
+            orderProduct: item?.id || "",
+            ...(subscriptionType === SubscriptionContractType.Recurring && {
+              recurring: {
+                interval: recurringInterval,
+                intervalCount: parseInt(recurringIntervalCount),
+                usageType: UsageType.Licensed,
+              },
+            }),
+          }))
+        }
       });
       if (!!response?.data?.createSubscriptionContract) {
         onShowToast({
@@ -134,10 +135,12 @@ export const ReviewStep = ({
       <Stack direction="column" spacing="2">
         <Label>
           {translate.formatMessage({
-            id: "product",
+            id: "products",
           })}
         </Label>
-        <ProductSelectItemContent product={product} />
+        {products?.map(product => (
+          <ProductSelectItemContent product={product} />
+        ))}
       </Stack>
 
       <Stack direction="column" spacing="2">

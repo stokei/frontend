@@ -209,7 +209,7 @@ export const ptBRMessages = {
   removeMaterial: "Remover material",
   material: "Material",
   materials: "Materiais",
-  chooseProduct: "Escolha o produto",
+  chooseProducts: "Escolha os produtos",
   chooseStudent: "Escolha o aluno",
   clear: "Limpar",
   yes: "Sim",

@@ -1,22 +1,21 @@
 import { useTranslations } from "@/hooks";
-import { appRoutes } from "@stokei/routes";
 import { SubscriptionContractType } from "@/services/graphql/stokei";
-import { getProductURL } from "@/utils";
 import { getSubscriptionContractStatusColor } from "@/utils/get-subscription-contract-status-color";
+import { appRoutes } from "@stokei/routes";
 import {
   Avatar,
+  AvatarGroup,
   Badge,
   Box,
   DatePickerGroup,
-  Image,
   Stack,
   TableCell,
   TableRow,
-  Text,
+  Text
 } from "@stokei/ui";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
-import { AppSubscriptionContractFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
+import { AppSubscriptionContractFragment, SubscriptionContractProductFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
 
 export interface SubscriptionContractItemProps {
   readonly subscriptionContract?: AppSubscriptionContractFragment;
@@ -57,37 +56,39 @@ export const SubscriptionContractItem = ({
     return;
   }, [subscriptionContract]);
 
-  const product = useMemo<Product | undefined>(() => {
-    const currentProduct = subscriptionContract?.items?.items?.[0]?.product;
+  const getProductInfo = useCallback((currentProduct?: SubscriptionContractProductFragment | null) => {
     if (currentProduct?.__typename === "Course") {
       return {
         id: currentProduct?.courseId,
         name: currentProduct?.courseName,
         avatarURL: currentProduct?.avatar?.file?.url || "",
-      };
+      } as Product;
     }
     if (currentProduct?.__typename === "Plan") {
       return {
         id: currentProduct?.planId,
         name: currentProduct?.planName,
-      };
+      } as Product;
     }
     if (currentProduct?.__typename === "Material") {
       return {
         id: currentProduct?.materialId,
         name: currentProduct?.materialName,
         avatarURL: currentProduct?.avatar?.file?.url || "",
-      };
+      } as Product;
     }
     if (currentProduct?.__typename === "Product") {
       return {
         id: currentProduct?.productId,
         name: currentProduct?.productName,
         avatarURL: currentProduct?.avatar?.file?.url || "",
-      };
+      } as Product;
     }
     return;
-  }, [subscriptionContract]);
+  }, []);
+
+  const subscriptionProducts = subscriptionContract?.items?.items?.filter(item => !!item?.product)?.map(item => getProductInfo(item?.product)) as Product[];
+
 
   const statusColor = useMemo(
     () =>
@@ -124,17 +125,15 @@ export const SubscriptionContractItem = ({
         </Stack>
       </TableCell>
       <TableCell>
-        <Stack direction="row" spacing="4" align="center">
-          <Image
-            width="10"
-            rounded="sm"
-            src={getProductURL(product?.avatarURL)}
-            alt={translate.formatMessage({ id: "product" })}
-          />
-          <Stack direction="column" spacing="4">
-            <Text fontWeight="bold">{product?.name}</Text>
-          </Stack>
-        </Stack>
+        <AvatarGroup>
+          {subscriptionProducts?.map(item => (
+            <Avatar
+              size="sm"
+              name={item?.name}
+              src={item?.avatarURL}
+            />
+          ))}
+        </AvatarGroup>
       </TableCell>
       <TableCell>
         <Box>

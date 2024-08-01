@@ -30,6 +30,12 @@ export const theme = (config?: StokeiConfig) => {
   return extendTheme({
     ...components,
     ...foundations,
+    semanticTokens: {
+      "colors-chakra-border-color": {
+        _light: "var(--chakra-colors-gray-300)",
+        _dark: "var(--chakra-colors-whiteAlpha-300)",
+      },
+    },
     styles: {
       global: {
         initialColorMode: "light",

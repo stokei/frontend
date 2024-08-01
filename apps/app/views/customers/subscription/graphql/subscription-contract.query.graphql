@@ -48,17 +48,21 @@ fragment SubscriptionPageSubscriptionContract on SubscriptionContract {
         interval
       }
       product {
-        __typename
-        ...SubscriptionPageSubscriptionContractProductCourse
-        ...SubscriptionPageSubscriptionContractProductPlan
-        ...SubscriptionPageSubscriptionContractProductMaterial
-        ...SubscriptionPageSubscriptionContractProductProduct
+        ...SubscriptionPageSubscriptionContractProduct
       }
     }
   }
   paymentMethod {
     ...PaymentMethodComponent
   }
+}
+
+fragment SubscriptionPageSubscriptionContractProduct on SubscriptionContractItemProductUnion {
+  __typename
+  ...SubscriptionPageSubscriptionContractProductCourse
+  ...SubscriptionPageSubscriptionContractProductPlan
+  ...SubscriptionPageSubscriptionContractProductProduct
+  ...SubscriptionPageSubscriptionContractProductMaterial
 }
 
 fragment SubscriptionPageSubscriptionContractProductCourse on Course {

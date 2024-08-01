@@ -8,9 +8,19 @@ export type GetSubscriptionPageSubscriptionContractQueryVariables = Types.Exact<
 }>;
 
 
-export type GetSubscriptionPageSubscriptionContractQuery = { __typename?: 'Query', subscriptionContract: { __typename?: 'SubscriptionContract', id: string, type: Types.SubscriptionContractType, status: Types.SubscriptionContractStatus, startAt?: string | null, endAt?: string | null, canceledAt?: string | null, createdAt?: string | null, parent?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, items?: { __typename?: 'SubscriptionContractItems', totalCount: number, items?: Array<{ __typename?: 'SubscriptionContractItem', recurring?: { __typename?: 'Recurring', id: string, usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null, product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null }> | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null } };
+export type GetSubscriptionPageSubscriptionContractQuery = { __typename?: 'Query', subscriptionContract: { __typename?: 'SubscriptionContract', id: string, type: Types.SubscriptionContractType, status: Types.SubscriptionContractStatus, startAt?: string | null, endAt?: string | null, canceledAt?: string | null, createdAt?: string | null, parent?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, items?: { __typename?: 'SubscriptionContractItems', totalCount: number, items?: Array<{ __typename?: 'SubscriptionContractItem', id: string, recurring?: { __typename?: 'Recurring', id: string, usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null, product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null }> | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null } };
 
-export type SubscriptionPageSubscriptionContractFragment = { __typename?: 'SubscriptionContract', id: string, type: Types.SubscriptionContractType, status: Types.SubscriptionContractStatus, startAt?: string | null, endAt?: string | null, canceledAt?: string | null, createdAt?: string | null, parent?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, items?: { __typename?: 'SubscriptionContractItems', totalCount: number, items?: Array<{ __typename?: 'SubscriptionContractItem', recurring?: { __typename?: 'Recurring', id: string, usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null, product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null }> | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null };
+export type SubscriptionPageSubscriptionContractFragment = { __typename?: 'SubscriptionContract', id: string, type: Types.SubscriptionContractType, status: Types.SubscriptionContractStatus, startAt?: string | null, endAt?: string | null, canceledAt?: string | null, createdAt?: string | null, parent?: { __typename: 'Account', id: string, firstname: string, fullname: string, appEmail: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'App', id: string, name: string, accountEmail?: string | null, logo?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null, items?: { __typename?: 'SubscriptionContractItems', totalCount: number, items?: Array<{ __typename?: 'SubscriptionContractItem', id: string, recurring?: { __typename?: 'Recurring', id: string, usageType?: Types.UsageType | null, intervalCount: number, interval?: Types.IntervalType | null } | null, product?: { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | { __typename: 'Plan', planId: string, planName: string } | { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null } | null }> | null } | null, paymentMethod?: { __typename?: 'PaymentMethod', id: string, cardBrand?: string | null, cardExpiryMonth?: string | null, cardExpiryYear?: string | null, lastFourCardNumber?: string | null } | null };
+
+export type SubscriptionPageSubscriptionContractProduct_Course_Fragment = { __typename: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+
+export type SubscriptionPageSubscriptionContractProduct_Material_Fragment = { __typename: 'Material', materialId: string, materialName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+
+export type SubscriptionPageSubscriptionContractProduct_Plan_Fragment = { __typename: 'Plan', planId: string, planName: string };
+
+export type SubscriptionPageSubscriptionContractProduct_Product_Fragment = { __typename: 'Product', productId: string, productName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
+
+export type SubscriptionPageSubscriptionContractProductFragment = SubscriptionPageSubscriptionContractProduct_Course_Fragment | SubscriptionPageSubscriptionContractProduct_Material_Fragment | SubscriptionPageSubscriptionContractProduct_Plan_Fragment | SubscriptionPageSubscriptionContractProduct_Product_Fragment;
 
 export type SubscriptionPageSubscriptionContractProductCourseFragment = { __typename?: 'Course', courseId: string, courseName: string, avatar?: { __typename?: 'Image', file: { __typename?: 'File', url?: string | null } } | null };
 
@@ -59,6 +69,18 @@ export const SubscriptionPageSubscriptionContractProductMaterialFragmentDoc = gq
   }
 }
     `;
+export const SubscriptionPageSubscriptionContractProductFragmentDoc = gql`
+    fragment SubscriptionPageSubscriptionContractProduct on SubscriptionContractItemProductUnion {
+  __typename
+  ...SubscriptionPageSubscriptionContractProductCourse
+  ...SubscriptionPageSubscriptionContractProductPlan
+  ...SubscriptionPageSubscriptionContractProductProduct
+  ...SubscriptionPageSubscriptionContractProductMaterial
+}
+    ${SubscriptionPageSubscriptionContractProductCourseFragmentDoc}
+${SubscriptionPageSubscriptionContractProductPlanFragmentDoc}
+${SubscriptionPageSubscriptionContractProductProductFragmentDoc}
+${SubscriptionPageSubscriptionContractProductMaterialFragmentDoc}`;
 export const SubscriptionPageSubscriptionContractFragmentDoc = gql`
     fragment SubscriptionPageSubscriptionContract on SubscriptionContract {
   id
@@ -95,6 +117,7 @@ export const SubscriptionPageSubscriptionContractFragmentDoc = gql`
   items {
     totalCount
     items {
+      id
       recurring {
         id
         usageType
@@ -102,11 +125,7 @@ export const SubscriptionPageSubscriptionContractFragmentDoc = gql`
         interval
       }
       product {
-        __typename
-        ...SubscriptionPageSubscriptionContractProductCourse
-        ...SubscriptionPageSubscriptionContractProductPlan
-        ...SubscriptionPageSubscriptionContractProductProduct
-        ...SubscriptionPageSubscriptionContractProductMaterial
+        ...SubscriptionPageSubscriptionContractProduct
       }
     }
   }
@@ -118,10 +137,7 @@ export const SubscriptionPageSubscriptionContractFragmentDoc = gql`
     lastFourCardNumber
   }
 }
-    ${SubscriptionPageSubscriptionContractProductCourseFragmentDoc}
-${SubscriptionPageSubscriptionContractProductPlanFragmentDoc}
-${SubscriptionPageSubscriptionContractProductProductFragmentDoc}
-${SubscriptionPageSubscriptionContractProductMaterialFragmentDoc}`;
+    ${SubscriptionPageSubscriptionContractProductFragmentDoc}`;
 export const GetSubscriptionPageSubscriptionContractDocument = gql`
     query GetSubscriptionPageSubscriptionContract($subscriptionContractId: String!) {
   subscriptionContract(id: $subscriptionContractId) {

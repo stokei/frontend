@@ -14,22 +14,22 @@ import {
   Text,
   Title,
 } from "@stokei/ui";
-import { useMemo } from "react";
-import { SubscriptionPageSubscriptionContractFragment } from "../../graphql/subscription-contract.query.graphql.generated";
+import { useCallback, useMemo } from "react";
+import { SubscriptionPageSubscriptionContractFragment, SubscriptionPageSubscriptionContractProductFragment } from "../../graphql/subscription-contract.query.graphql.generated";
 import { Customer } from "../../interfaces/customer";
 import { Product } from "../../interfaces/product";
 import { SubscriptionContractItemMenu } from "../subscription-contract-item-menu";
 
 interface SubscriptionContractDetailsProps {
   readonly subscriptionContract?: SubscriptionPageSubscriptionContractFragment;
+  readonly subscriptionProducts?: Product[];
   readonly customer?: Customer;
-  readonly product?: Product;
 }
 
 export const SubscriptionContractDetails = ({
   subscriptionContract,
+  subscriptionProducts,
   customer,
-  product,
 }: SubscriptionContractDetailsProps) => {
   const translate = useTranslations();
 
@@ -47,7 +47,6 @@ export const SubscriptionContractDetails = ({
     () => subscriptionContract?.status === SubscriptionContractStatus.Canceled,
     [subscriptionContract]
   );
-
   return (
     <Card width="full" background="background.50">
       <CardBody overflow="hidden" alignItems="center">
@@ -69,7 +68,7 @@ export const SubscriptionContractDetails = ({
                 <SubscriptionContractItemMenu
                   subscriptionContractId={subscriptionContract?.id}
                   customer={customer}
-                  product={product}
+                  products={subscriptionProducts || []}
                 />
               </Box>
             )}
@@ -93,17 +92,21 @@ export const SubscriptionContractDetails = ({
             </Stack>
           </Box>
           <Box flexDirection="column">
-            <Label>{translate.formatMessage({ id: "product" })}</Label>
-            <Stack direction="row" spacing="4" align="center">
-              <Image
-                width="10"
-                rounded="sm"
-                src={getProductURL(product?.avatarURL)}
-                alt={translate.formatMessage({ id: "product" })}
-              />
-              <Stack direction="column" spacing="4">
-                <Text fontWeight="bold">{product?.name}</Text>
-              </Stack>
+            <Label>{translate.formatMessage({ id: "products" })}</Label>
+            <Stack direction="column" spacing="4">
+              {subscriptionProducts?.map(productInfo => (
+                <Stack key={productInfo.id} direction="row" spacing="4" align="center">
+                  <Image
+                    width="10"
+                    rounded="sm"
+                    src={getProductURL(productInfo?.avatarURL)}
+                    alt={productInfo?.name}
+                  />
+                  <Stack direction="column" spacing="4">
+                    <Text fontWeight="bold">{productInfo?.name}</Text>
+                  </Stack>
+                </Stack>
+              ))}
             </Stack>
           </Box>
           <Box flexDirection="column">

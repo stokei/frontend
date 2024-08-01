@@ -2,19 +2,17 @@ import {
   Avatar,
   AvatarGroup,
   Box,
-  Button,
   Card,
   CardBody,
   CardHeader,
   Image,
-  Stack,
-  Title,
+  Link,
+  Title
 } from "@stokei/ui";
 
 import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
 import { appRoutes } from "@stokei/routes";
-import { useRouter } from "next/router";
 import { CustomersCoursePageCourseFragment } from "../../graphql/courses.query.graphql.generated";
 
 export interface CourseItemProps {
@@ -22,26 +20,29 @@ export interface CourseItemProps {
 }
 
 export const CourseItem = ({ course }: CourseItemProps) => {
-  const router = useRouter();
   const translate = useTranslations();
 
   return (
-    <Card background="background.50" overflow="hidden">
-      <CardHeader position="relative" padding="0">
-        <Image
-          width="full"
-          src={course?.avatar?.file?.url || ""}
-          fallbackSrc={defaultNoImage.src}
-          alt={translate.formatMessage({ id: "course" })}
-        />
-      </CardHeader>
-      <CardBody>
-        <Box width="full" flexDirection="column" height="full">
-          <Title size="md" marginBottom="5">
-            {course?.name}
-          </Title>
-          <Box width="full" flexDirection="column" flex="1">
-            <Stack spacing="5" flex="1" justify="flex-end">
+    <Link
+      width="full"
+      height="full"
+      href={appRoutes.customers.course({ course: course?.id }).home}
+    >
+      <Card background="background.50" overflow="hidden">
+        <CardHeader position="relative" padding="0">
+          <Image
+            width="full"
+            src={course?.avatar?.file?.url || ""}
+            fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "course" })}
+          />
+        </CardHeader>
+        <CardBody>
+          <Box width="full" flexDirection="column" height="full">
+            <Title size="md" marginBottom="5">
+              {course?.name}
+            </Title>
+            <Box width="full" flexDirection="column" flex="1">
               {!!course?.instructors?.items?.length && (
                 <AvatarGroup>
                   {course?.instructors?.items?.map(({ instructor }) => (
@@ -54,20 +55,10 @@ export const CourseItem = ({ course }: CourseItemProps) => {
                   ))}
                 </AvatarGroup>
               )}
-              <Button
-                width="full"
-                onClick={() =>
-                  window.location.assign(
-                    appRoutes.customers.course({ course: course?.id }).home
-                  )
-                }
-              >
-                {translate.formatMessage({ id: "showDetails" })}
-              </Button>
-            </Stack>
+            </Box>
           </Box>
-        </Box>
-      </CardBody>
-    </Card>
+        </CardBody>
+      </Card>
+    </Link>
   );
 };

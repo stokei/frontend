@@ -1,17 +1,16 @@
 import defaultNoImage from "@/assets/no-image.png";
 import { useTranslations } from "@/hooks";
 import {
-  Button,
   Card,
   CardBody,
   CardHeader,
   Image,
-  Stack,
-  Title,
+  Link,
+  Title
 } from "@stokei/ui";
+import NextLink from "next/link";
 
 import { appRoutes } from "@stokei/routes";
-import { useRouter } from "next/router";
 import { AppSubscriptionContractsByItemMaterialProductMaterialFragment } from "../../../../graphql/subscription-contracts.query.graphql.generated";
 
 export interface MaterialItemProps {
@@ -19,32 +18,30 @@ export interface MaterialItemProps {
 }
 
 export const MaterialItem = ({ material }: MaterialItemProps) => {
-  const router = useRouter();
   const translate = useTranslations();
 
-  const goToEditMaterial = () =>
-    router.push(appRoutes.customers.material({ material: material?.id }));
-
   return (
-    <Card background="background.50" overflow="hidden">
-      <CardHeader position="relative" padding="0">
-        <Image
-          width="full"
-          src={material?.avatar?.file?.url || ""}
-          fallbackSrc={defaultNoImage.src}
-          alt={translate.formatMessage({ id: "material" })}
-        />
-      </CardHeader>
-      <CardBody>
-        <Stack direction="column" spacing="5">
-          <Title size="md" marginBottom="5">
+    <Link
+      as={NextLink}
+      width="full"
+      height="full"
+      href={appRoutes.customers.material({ material: material?.id })}
+    >
+      <Card background="background.50" overflow="hidden">
+        <CardHeader position="relative" padding="0">
+          <Image
+            width="full"
+            src={material?.avatar?.file?.url || ""}
+            fallbackSrc={defaultNoImage.src}
+            alt={translate.formatMessage({ id: "material" })}
+          />
+        </CardHeader>
+        <CardBody>
+          <Title size="md">
             {material?.name}
           </Title>
-          <Button onClick={goToEditMaterial}>
-            {translate.formatMessage({ id: "view" })}
-          </Button>
-        </Stack>
-      </CardBody>
-    </Card>
+        </CardBody>
+      </Card>
+    </Link>
   );
 };

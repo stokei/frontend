@@ -208,7 +208,7 @@ export const enUSMessages: Record<I18nKeyWithoutOtherTranslations, string> = {
   removeMaterial: "Remove material",
   material: "Material",
   materials: "Materials",
-  chooseProduct: "Choose product",
+  chooseProducts: "Choose products",
   chooseStudent: "Choose student",
   review: "Review",
   clear: "Clear",

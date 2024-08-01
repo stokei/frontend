@@ -4,14 +4,14 @@ import { GeneralProductFragment } from "@/services/graphql/types/product.fragmen
 import { Button, ButtonGroup, Stack, Title } from "@stokei/ui";
 
 interface ProductStepProps {
-  product?: GeneralProductFragment;
+  products?: GeneralProductFragment[];
   onChooseProduct: (product?: GeneralProductFragment) => void;
   onPreviousStep: () => void;
   onNextStep: () => void;
 }
 
 export const ProductStep = ({
-  product,
+  products,
   onPreviousStep,
   onNextStep,
   onChooseProduct,
@@ -22,12 +22,15 @@ export const ProductStep = ({
     <Stack direction="column" spacing="5">
       <Title fontSize="lg">
         {translate.formatMessage({
-          id: "chooseProduct",
+          id: "chooseProducts",
         })}
       </Title>
 
       <SelectProducts
-        value={product ? [product] : []}
+        label={translate.formatMessage({
+          id: "products",
+        })}
+        value={products?.length ? products : []}
         onChange={onChooseProduct}
       />
 
@@ -35,7 +38,7 @@ export const ProductStep = ({
         <Button onClick={onPreviousStep} variant="ghost">
           {translate.formatMessage({ id: "previous" })}
         </Button>
-        <Button onClick={onNextStep} isDisabled={!product}>
+        <Button onClick={onNextStep} isDisabled={!products?.length}>
           {translate.formatMessage({ id: "next" })}
         </Button>
       </ButtonGroup>

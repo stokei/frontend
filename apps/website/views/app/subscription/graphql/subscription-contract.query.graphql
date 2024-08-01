@@ -41,6 +41,7 @@ fragment SubscriptionPageSubscriptionContract on SubscriptionContract {
   items {
     totalCount
     items {
+      id
       recurring {
         id
         usageType
@@ -48,11 +49,7 @@ fragment SubscriptionPageSubscriptionContract on SubscriptionContract {
         interval
       }
       product {
-        __typename
-        ...SubscriptionPageSubscriptionContractProductCourse
-        ...SubscriptionPageSubscriptionContractProductPlan
-        ...SubscriptionPageSubscriptionContractProductProduct
-        ...SubscriptionPageSubscriptionContractProductMaterial
+        ...SubscriptionPageSubscriptionContractProduct
       }
     }
   }
@@ -63,6 +60,14 @@ fragment SubscriptionPageSubscriptionContract on SubscriptionContract {
     cardExpiryYear
     lastFourCardNumber
   }
+}
+
+fragment SubscriptionPageSubscriptionContractProduct on SubscriptionContractItemProductUnion {
+  __typename
+  ...SubscriptionPageSubscriptionContractProductCourse
+  ...SubscriptionPageSubscriptionContractProductPlan
+  ...SubscriptionPageSubscriptionContractProductProduct
+  ...SubscriptionPageSubscriptionContractProductMaterial
 }
 
 fragment SubscriptionPageSubscriptionContractProductCourse on Course {

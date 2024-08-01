@@ -20,13 +20,13 @@ import {
 interface SubscriptionContractItemMenuProps {
   readonly subscriptionContractId?: string;
   readonly customer?: CancelSubscriptionContractModalCustomer;
-  readonly product?: CancelSubscriptionContractModalProduct;
+  readonly products?: CancelSubscriptionContractModalProduct[];
 }
 
 export const SubscriptionContractItemMenu = ({
   subscriptionContractId,
   customer,
-  product,
+  products,
 }: SubscriptionContractItemMenuProps) => {
   const {
     isOpen: isOpenCancelSubscriptionContractModal,
@@ -56,7 +56,7 @@ export const SubscriptionContractItemMenu = ({
       </Menu>
       <CancelSubscriptionContractModal
         customer={customer}
-        product={product}
+        products={products}
         isOpen={isOpenCancelSubscriptionContractModal}
         subscriptionContractId={subscriptionContractId}
         onClose={onCloseCancelSubscriptionContractModal}
