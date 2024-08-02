@@ -1042,6 +1042,10 @@ export type FindProductsBestSellerByPeriodInput = {
   startAt: Scalars['String'];
 };
 
+export type FindSubscriptionContractActiveByProductInput = {
+  product: Scalars['String'];
+};
+
 export type ForgotPasswordInput = {
   email: Scalars['String'];
 };
@@ -2320,17 +2324,17 @@ export type OrderByDataFindAllSortedItemsInput = {
   index?: InputMaybe<OrderBy>;
 };
 
-export type OrderByDataFindAllSubscriptionContractItemsInput = {
+export type OrderByDataFindAllSubscriptionContractItemsBySubscriptionInput = {
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
-  quantity?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
 
-export type OrderByDataFindAllSubscriptionContractsByItemInput = {
+export type OrderByDataFindAllSubscriptionContractItemsInput = {
   createdAt?: InputMaybe<OrderBy>;
   createdBy?: InputMaybe<OrderBy>;
+  quantity?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   updatedBy?: InputMaybe<OrderBy>;
 };
@@ -2908,10 +2912,11 @@ export type Query = {
   sortedItem: SortedItem;
   sortedItems: SortedItems;
   subscriptionContract: SubscriptionContract;
+  subscriptionContractActiveByProduct: SubscriptionContract;
   subscriptionContractItem: SubscriptionContractItem;
   subscriptionContractItems: SubscriptionContractItems;
+  subscriptionContractItemsBySubscription: SubscriptionContractItems;
   subscriptionContracts: SubscriptionContracts;
-  subscriptionContractsByItem: SubscriptionContracts;
   version: Version;
   versions: Versions;
   video: Video;
@@ -3363,6 +3368,11 @@ export type QuerySubscriptionContractArgs = {
 };
 
 
+export type QuerySubscriptionContractActiveByProductArgs = {
+  input: FindSubscriptionContractActiveByProductInput;
+};
+
+
 export type QuerySubscriptionContractItemArgs = {
   id: Scalars['String'];
 };
@@ -3375,17 +3385,17 @@ export type QuerySubscriptionContractItemsArgs = {
 };
 
 
+export type QuerySubscriptionContractItemsBySubscriptionArgs = {
+  orderBy?: InputMaybe<OrderByDataFindAllSubscriptionContractItemsBySubscriptionInput>;
+  page?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<WhereDataFindAllSubscriptionContractItemsBySubscriptionInput>;
+};
+
+
 export type QuerySubscriptionContractsArgs = {
   orderBy?: InputMaybe<OrderByDataFindAllSubscriptionContractsInput>;
   page?: InputMaybe<PaginationInput>;
   where?: InputMaybe<WhereDataFindAllSubscriptionContractsInput>;
-};
-
-
-export type QuerySubscriptionContractsByItemArgs = {
-  orderBy?: InputMaybe<OrderByDataFindAllSubscriptionContractsByItemInput>;
-  page?: InputMaybe<PaginationInput>;
-  where?: InputMaybe<WhereDataFindAllSubscriptionContractsByItemInput>;
 };
 
 
@@ -4811,6 +4821,13 @@ export type WhereDataFindAllSortedItemsInput = {
   OR?: InputMaybe<Array<WhereDataFindAllSortedItemsDataInput>>;
 };
 
+export type WhereDataFindAllSubscriptionContractItemsBySubscriptionInput = {
+  app?: InputMaybe<WhereDataStringInput>;
+  parent?: InputMaybe<WhereDataSearchInput>;
+  product?: InputMaybe<WhereDataSearchInput>;
+  status?: InputMaybe<SubscriptionContractStatus>;
+};
+
 export type WhereDataFindAllSubscriptionContractItemsDataInput = {
   app?: InputMaybe<WhereDataStringInput>;
   createdBy?: InputMaybe<WhereDataStringInput>;
@@ -4825,13 +4842,6 @@ export type WhereDataFindAllSubscriptionContractItemsInput = {
   AND?: InputMaybe<WhereDataFindAllSubscriptionContractItemsDataInput>;
   NOT?: InputMaybe<WhereDataFindAllSubscriptionContractItemsDataInput>;
   OR?: InputMaybe<Array<WhereDataFindAllSubscriptionContractItemsDataInput>>;
-};
-
-export type WhereDataFindAllSubscriptionContractsByItemInput = {
-  app?: InputMaybe<WhereDataStringInput>;
-  parent?: InputMaybe<WhereDataSearchInput>;
-  product?: InputMaybe<WhereDataSearchInput>;
-  status?: InputMaybe<SubscriptionContractStatus>;
 };
 
 export type WhereDataFindAllSubscriptionContractsDataInput = {

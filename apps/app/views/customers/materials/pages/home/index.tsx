@@ -12,9 +12,9 @@ import {
 } from "@stokei/ui";
 import { useMemo } from "react";
 import {
-  AppSubscriptionContractsByItemMaterialProductMaterialFragment,
-  useGetAppSubscriptionContractsByItemMaterialsQuery,
-} from "../../graphql/subscription-contracts.query.graphql.generated";
+  AppSubscriptionContractItemsBySubscriptionMaterialProductMaterialFragment,
+  useGetAppSubscriptionContractItemsBySubscriptionMaterialsQuery,
+} from "./graphql/subscription-contracts.query.graphql.generated";
 import { Header } from "./components/header";
 import { MaterialsList } from "./components/materials-list";
 import { Navbar } from "./components/navbar";
@@ -27,7 +27,7 @@ export const MaterialsHomePage = () => {
   const translate = useTranslations();
 
   const [{ data: dataGetMaterials, fetching: isLoadingGetMaterials }] =
-    useGetAppSubscriptionContractsByItemMaterialsQuery({
+    useGetAppSubscriptionContractItemsBySubscriptionMaterialsQuery({
       pause: !currentAccount,
       requestPolicy: "network-only",
       variables: {
@@ -51,28 +51,21 @@ export const MaterialsHomePage = () => {
     });
 
   const materials = useMemo(() => {
-    const items = dataGetMaterials?.subscriptionContractsByItem?.items
-      ?.map((item) => {
-        const subscriptionContractItems = item?.items?.items
-          ?.filter(item => item?.product?.__typename === "Material")
-          ?.map(item => item.product);
-        return subscriptionContractItems;
-      })
-      .flat()
-      .filter(Boolean);
+    const items = dataGetMaterials?.subscriptionContractItemsBySubscription?.items
+      ?.map(({ product }) => product);
     return (items ||
-      []) as AppSubscriptionContractsByItemMaterialProductMaterialFragment[];
-  }, [dataGetMaterials?.subscriptionContractsByItem?.items]);
+      []) as AppSubscriptionContractItemsBySubscriptionMaterialProductMaterialFragment[];
+  }, [dataGetMaterials?.subscriptionContractItemsBySubscription?.items]);
 
   return (
     <CustomerLayout>
       <Navbar />
       <Stack direction="column" paddingY="5" spacing="5">
-        {dataGetMaterials?.subscriptionContractsByItem?.totalCount && (
+        {dataGetMaterials?.subscriptionContractItemsBySubscription?.totalCount && (
           <Container>
             <Header
               materialsTotalCount={
-                dataGetMaterials?.subscriptionContractsByItem?.totalCount || 0
+                dataGetMaterials?.subscriptionContractItemsBySubscription?.totalCount || 0
               }
             />
           </Container>
@@ -95,22 +88,22 @@ export const MaterialsHomePage = () => {
               )}
             </Container>
             <Container>
-              {dataGetMaterials?.subscriptionContractsByItem?.totalPages &&
-                dataGetMaterials?.subscriptionContractsByItem?.totalPages >
+              {dataGetMaterials?.subscriptionContractItemsBySubscription?.totalPages &&
+                dataGetMaterials?.subscriptionContractItemsBySubscription?.totalPages >
                 1 && (
                   <Pagination
                     currentPage={currentPage}
                     onChangePage={onChangePage}
                     hasNextPage={
-                      !!dataGetMaterials?.subscriptionContractsByItem
+                      !!dataGetMaterials?.subscriptionContractItemsBySubscription
                         ?.hasNextPage
                     }
                     hasPreviousPage={
-                      !!dataGetMaterials?.subscriptionContractsByItem
+                      !!dataGetMaterials?.subscriptionContractItemsBySubscription
                         ?.hasPreviousPage
                     }
                     totalPages={
-                      dataGetMaterials?.subscriptionContractsByItem
+                      dataGetMaterials?.subscriptionContractItemsBySubscription
                         ?.totalPages || 1
                     }
                   />

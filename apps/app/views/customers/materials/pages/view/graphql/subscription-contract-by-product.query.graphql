@@ -1,0 +1,35 @@
+query GetSubscriptionContractActiveByProduct(
+  $input: FindSubscriptionContractActiveByProductInput!
+) {
+  subscriptionContractActiveByProduct(input: $input) {
+    id
+    items {
+      totalCount
+      items {
+        ...SubscriptionContractActiveByProductItem
+      }
+    }
+  }
+}
+
+fragment SubscriptionContractActiveByProductItem on SubscriptionContractItem {
+  product {
+    __typename
+    ...SubscriptionContractActiveByProductItemMaterial
+  }
+}
+
+fragment SubscriptionContractActiveByProductItemMaterial on Material {
+  id
+  name
+  description
+  file {
+    id
+    url
+  }
+  avatar {
+    file {
+      url
+    }
+  }
+}

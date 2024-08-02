@@ -1,9 +1,9 @@
 import { SimpleGrid } from "@stokei/ui";
 import { MaterialItem } from "../material-item";
-import { AppSubscriptionContractsByItemMaterialProductMaterialFragment } from "../../../../graphql/subscription-contracts.query.graphql.generated";
+import { AppSubscriptionContractItemsBySubscriptionMaterialProductMaterialFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
 
 interface MaterialsListProps {
-  readonly materials?: AppSubscriptionContractsByItemMaterialProductMaterialFragment[];
+  readonly materials?: AppSubscriptionContractItemsBySubscriptionMaterialProductMaterialFragment[];
 }
 
 export const MaterialsList = ({ materials }: MaterialsListProps) => {

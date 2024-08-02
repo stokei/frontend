@@ -11,10 +11,10 @@ import {
 import NextLink from "next/link";
 
 import { appRoutes } from "@stokei/routes";
-import { AppSubscriptionContractsByItemMaterialProductMaterialFragment } from "../../../../graphql/subscription-contracts.query.graphql.generated";
+import { AppSubscriptionContractItemsBySubscriptionMaterialProductMaterialFragment } from "../../graphql/subscription-contracts.query.graphql.generated";
 
 export interface MaterialItemProps {
-  readonly material: AppSubscriptionContractsByItemMaterialProductMaterialFragment;
+  readonly material: AppSubscriptionContractItemsBySubscriptionMaterialProductMaterialFragment;
 }
 
 export const MaterialItem = ({ material }: MaterialItemProps) => {
@@ -27,7 +27,11 @@ export const MaterialItem = ({ material }: MaterialItemProps) => {
       height="full"
       href={appRoutes.customers.material({ material: material?.id })}
     >
-      <Card background="background.50" overflow="hidden">
+      <Card
+        height="full"
+        background="background.50"
+        overflow="hidden"
+      >
         <CardHeader position="relative" padding="0">
           <Image
             width="full"

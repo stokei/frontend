@@ -1,0 +1,43 @@
+query GetAppSubscriptionContractItemsBySubscriptionMaterials(
+  $where: WhereDataFindAllSubscriptionContractItemsBySubscriptionInput
+  $orderBy: OrderByDataFindAllSubscriptionContractItemsBySubscriptionInput
+  $page: PaginationInput
+) {
+  subscriptionContractItemsBySubscription(
+    where: $where
+    orderBy: $orderBy
+    page: $page
+  ) {
+    totalCount
+    totalPages
+    hasNextPage
+    hasPreviousPage
+    nextPage
+    previousPage
+    items {
+      ...AppSubscriptionContractItemsBySubscriptionMaterial
+    }
+  }
+}
+
+fragment AppSubscriptionContractItemsBySubscriptionMaterial on SubscriptionContractItem {
+  product {
+    __typename
+    ...AppSubscriptionContractItemsBySubscriptionMaterialProductMaterial
+  }
+}
+
+fragment AppSubscriptionContractItemsBySubscriptionMaterialProductMaterial on Material {
+  id
+  name
+  description
+  file {
+    id
+    url
+  }
+  avatar {
+    file {
+      url
+    }
+  }
+}
